@@ -224,21 +224,21 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'equipo_asc':      $order_by = 'ORDER BY telemetria_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Equipo Ascendente'; break;
-		case 'equipo_desc':     $order_by = 'ORDER BY telemetria_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Equipo Descendente';break;
-		case 'usuario_asc':     $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
-		case 'usuario_desc':    $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'fechacarga_asc':  $order_by = 'ORDER BY telemetria_carga_bam.FechaCarga ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Carga Ascendente'; break;
-		case 'fechacarga_desc': $order_by = 'ORDER BY telemetria_carga_bam.FechaCarga DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Carga Descendente';break;
-		case 'fechavenc_asc':   $order_by = 'ORDER BY telemetria_carga_bam.FechaVencimiento ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Vencimiento Ascendente';break;
-		case 'fechavenc_desc':  $order_by = 'ORDER BY telemetria_carga_bam.FechaVencimiento DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Vencimiento Descendente';break;
-		case 'monto_asc':       $order_by = 'ORDER BY telemetria_carga_bam.Monto ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Monto Ascendente';break;
-		case 'monto_desc':      $order_by = 'ORDER BY telemetria_carga_bam.Monto DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Monto Descendente';break;
+		case 'equipo_asc':      $order_by = 'telemetria_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Equipo Ascendente'; break;
+		case 'equipo_desc':     $order_by = 'telemetria_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Equipo Descendente';break;
+		case 'usuario_asc':     $order_by = 'usuarios_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
+		case 'usuario_desc':    $order_by = 'usuarios_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'fechacarga_asc':  $order_by = 'telemetria_carga_bam.FechaCarga ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Carga Ascendente'; break;
+		case 'fechacarga_desc': $order_by = 'telemetria_carga_bam.FechaCarga DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Carga Descendente';break;
+		case 'fechavenc_asc':   $order_by = 'telemetria_carga_bam.FechaVencimiento ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Vencimiento Ascendente';break;
+		case 'fechavenc_desc':  $order_by = 'telemetria_carga_bam.FechaVencimiento DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Vencimiento Descendente';break;
+		case 'monto_asc':       $order_by = 'telemetria_carga_bam.Monto ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Monto Ascendente';break;
+		case 'monto_desc':      $order_by = 'telemetria_carga_bam.Monto DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Monto Descendente';break;
 		
-		default: $order_by = 'ORDER BY telemetria_carga_bam.FechaVencimiento DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Vencimiento Descendente';
+		default: $order_by = 'telemetria_carga_bam.FechaVencimiento DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Vencimiento Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY telemetria_carga_bam.FechaVencimiento DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Vencimiento Descendente';
+	$order_by = 'telemetria_carga_bam.FechaVencimiento DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Vencimiento Descendente';
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
@@ -248,66 +248,38 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_carga_bam.idCarga!=0";
+$SIS_where = "telemetria_carga_bam.idCarga!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){          $z .= " AND telemetria_carga_bam.idTelemetria=".$_GET['idTelemetria'];}
-if(isset($_GET['FechaCarga']) && $_GET['FechaCarga'] != ''){              $z .= " AND telemetria_carga_bam.FechaCarga='".$_GET['FechaCarga']."'";}
-if(isset($_GET['FechaVencimiento']) && $_GET['FechaVencimiento'] != ''){  $z .= " AND telemetria_carga_bam.FechaVencimiento='".$_GET['FechaVencimiento']."'";}
-if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){                $z .= " AND telemetria_carga_bam.idDocPago=".$_GET['idDocPago'];}
-if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){                $z .= " AND telemetria_carga_bam.N_DocPago LIKE '%".$_GET['N_DocPago']."%'";}
-if(isset($_GET['Monto']) && $_GET['Monto'] != ''){                        $z .= " AND telemetria_carga_bam.Monto LIKE '%".$_GET['Monto']."%'";}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){          $SIS_where .= " AND telemetria_carga_bam.idTelemetria=".$_GET['idTelemetria'];}
+if(isset($_GET['FechaCarga']) && $_GET['FechaCarga'] != ''){              $SIS_where .= " AND telemetria_carga_bam.FechaCarga='".$_GET['FechaCarga']."'";}
+if(isset($_GET['FechaVencimiento']) && $_GET['FechaVencimiento'] != ''){  $SIS_where .= " AND telemetria_carga_bam.FechaVencimiento='".$_GET['FechaVencimiento']."'";}
+if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){                $SIS_where .= " AND telemetria_carga_bam.idDocPago=".$_GET['idDocPago'];}
+if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){                $SIS_where .= " AND telemetria_carga_bam.N_DocPago LIKE '%".$_GET['N_DocPago']."%'";}
+if(isset($_GET['Monto']) && $_GET['Monto'] != ''){                        $SIS_where .= " AND telemetria_carga_bam.Monto LIKE '%".$_GET['Monto']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idCarga FROM `telemetria_carga_bam` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idCarga', 'telemetria_carga_bam', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrCarga = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_carga_bam.idCarga,
 telemetria_listado.Nombre AS EquipoTel,
 usuarios_listado.Nombre AS Usuario,
 telemetria_carga_bam.FechaCarga,
 telemetria_carga_bam.FechaVencimiento,
-telemetria_carga_bam.Monto
-
-FROM `telemetria_carga_bam`
+telemetria_carga_bam.Monto';
+$SIS_join  = '
 LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria  = telemetria_carga_bam.idTelemetria
-LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario       = telemetria_carga_bam.idUsuario
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCarga,$row );
-}?>
+LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario       = telemetria_carga_bam.idUsuario';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrCarga = array();
+$arrCarga = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCarga');
+
+?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

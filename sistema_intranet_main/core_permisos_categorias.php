@@ -176,58 +176,27 @@ if (!$num_pag){
 } else {
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
-//Creo la variable con la ubicacion
-	$z="";
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT id_pmcat FROM `core_permisos_categorias` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'id_pmcat', 'core_permisos_categorias', '', '', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrCatpem = array();
-$query = "SELECT 
+$SIS_query = '
 core_permisos_categorias.id_pmcat,
 core_permisos_categorias.Nombre,
 core_permisos_categorias.IconColor,
 core_font_awesome.Codigo,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE id_pmcat = core_permisos_categorias.id_pmcat  LIMIT 1) AS Cuenta
-FROM `core_permisos_categorias`
-LEFT JOIN `core_font_awesome`         ON core_font_awesome.idFont        = core_permisos_categorias.idFont
-".$z."
-ORDER BY core_permisos_categorias.Nombre ASC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCatpem,$row );
-}
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE id_pmcat = core_permisos_categorias.id_pmcat  LIMIT 1) AS Cuenta';
+$SIS_join  = 'LEFT JOIN `core_font_awesome` ON core_font_awesome.idFont = core_permisos_categorias.idFont';
+$SIS_order = 'core_permisos_categorias.Nombre ASC LIMIT '.$comienzo.', '.$cant_reg;
+$arrCatpem = array();
+$arrCatpem = db_select_array (false, $SIS_query, 'core_permisos_categorias', $SIS_join, '', $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCatpem');
+
 //variable de busqueda
 $search='';
 ?>
+
 <div class="col-sm-12">
 	<a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Categoria</a>
 </div>

@@ -265,59 +265,44 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'rut_asc':       $order_by = 'ORDER BY alumnos_listado.Rut ASC ';                                              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
-		case 'rut_desc':      $order_by = 'ORDER BY alumnos_listado.Rut DESC ';                                             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
-		case 'nombre_asc':    $order_by = 'ORDER BY alumnos_listado.ApellidoPat ASC, alumnos_listado.ApellidoMat ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
-		case 'nombre_desc':   $order_by = 'ORDER BY alumnos_listado.ApellidoPat DESC, alumnos_listado.ApellidoMat DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY alumnos_listado.idEstado ASC ';                                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':   $order_by = 'ORDER BY alumnos_listado.idEstado DESC ';                                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'curso_asc':     $order_by = 'ORDER BY cursos_listado.Nombre ASC ';                                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Curso Ascendente';break;
-		case 'curso_desc':    $order_by = 'ORDER BY cursos_listado.Nombre DESC ';                                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Curso Descendente';break;
+		case 'rut_asc':       $order_by = 'alumnos_listado.Rut ASC ';                                              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
+		case 'rut_desc':      $order_by = 'alumnos_listado.Rut DESC ';                                             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
+		case 'nombre_asc':    $order_by = 'alumnos_listado.ApellidoPat ASC, alumnos_listado.ApellidoMat ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
+		case 'nombre_desc':   $order_by = 'alumnos_listado.ApellidoPat DESC, alumnos_listado.ApellidoMat DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':    $order_by = 'alumnos_listado.idEstado ASC ';                                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':   $order_by = 'alumnos_listado.idEstado DESC ';                                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'curso_asc':     $order_by = 'cursos_listado.Nombre ASC ';                                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Curso Ascendente';break;
+		case 'curso_desc':    $order_by = 'cursos_listado.Nombre DESC ';                                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Curso Descendente';break;
 		
-		default: $order_by = 'ORDER BY cursos_listado.Nombre ASC, alumnos_listado.ApellidoPat ASC, alumnos_listado.ApellidoMat ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'cursos_listado.Nombre ASC, alumnos_listado.ApellidoPat ASC, alumnos_listado.ApellidoMat ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY cursos_listado.Nombre ASC, alumnos_listado.ApellidoPat ASC, alumnos_listado.ApellidoMat ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'cursos_listado.Nombre ASC, alumnos_listado.ApellidoPat ASC, alumnos_listado.ApellidoMat ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE alumnos_listado.idAlumno!=0";
-//verifico que sea un administrador
-$z.=" AND alumnos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "alumnos_listado.idAlumno!=0";
+$SIS_where.= " AND alumnos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//verifico que sea un administrador	
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCurso']) && $_GET['idCurso'] != ''){           $z .= " AND alumnos_listado.idCurso=".$_GET['idCurso'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){             $z .= " AND alumnos_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat'] != ''){   $z .= " AND alumnos_listado.ApellidoPat LIKE '%".$_GET['ApellidoPat']."%'";}
-if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat'] != ''){   $z .= " AND alumnos_listado.ApellidoMat LIKE '%".$_GET['ApellidoMat']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                   $z .= " AND alumnos_listado.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){   $z .= " AND alumnos_listado.fNacimiento='".$_GET['fNacimiento']."'";}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){         $z .= " AND alumnos_listado.idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){         $z .= " AND alumnos_listado.idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){       $z .= " AND alumnos_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
+if(isset($_GET['idCurso']) && $_GET['idCurso'] != ''){           $SIS_where .= " AND alumnos_listado.idCurso=".$_GET['idCurso'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){             $SIS_where .= " AND alumnos_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat'] != ''){   $SIS_where .= " AND alumnos_listado.ApellidoPat LIKE '%".$_GET['ApellidoPat']."%'";}
+if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat'] != ''){   $SIS_where .= " AND alumnos_listado.ApellidoMat LIKE '%".$_GET['ApellidoMat']."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                   $SIS_where .= " AND alumnos_listado.Rut LIKE '%".$_GET['Rut']."%'";}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){   $SIS_where .= " AND alumnos_listado.fNacimiento='".$_GET['fNacimiento']."'";}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){         $SIS_where .= " AND alumnos_listado.idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){         $SIS_where .= " AND alumnos_listado.idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){       $SIS_where .= " AND alumnos_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT alumnos_listado.idAlumno FROM `alumnos_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'alumnos_listado.idAlumno', 'alumnos_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 alumnos_listado.idAlumno,
 alumnos_listado.Rut,
 alumnos_listado.Nombre,
@@ -326,37 +311,19 @@ alumnos_listado.ApellidoMat,
 core_estados.Nombre AS estado,
 core_sistemas.Nombre AS sistema,
 cursos_listado.Nombre AS Curso,
-alumnos_listado.idEstado
-
-FROM `alumnos_listado`
+alumnos_listado.idEstado';
+$SIS_join  = '
 LEFT JOIN `core_estados`    ON core_estados.idEstado       = alumnos_listado.idEstado
 LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema     = alumnos_listado.idSistema
-LEFT JOIN `cursos_listado`  ON cursos_listado.idCurso      = alumnos_listado.idCurso
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+LEFT JOIN `cursos_listado`  ON cursos_listado.idCurso      = alumnos_listado.idCurso';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'alumnos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
+
 //filtro para el curso
 $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-
 		
 ?>
-
 								
 <div class="col-sm-12 breadcrumb-bar">
 

@@ -196,74 +196,45 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':      $order_by = 'ORDER BY soporte_software_listado.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':     $order_by = 'ORDER BY soporte_software_listado.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'licencia_asc':    $order_by = 'ORDER BY soporte_software_listado_licencias.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Licencia Ascendente';break;
-		case 'licencia_desc':   $order_by = 'ORDER BY soporte_software_listado_licencias.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Licencia Descendente';break;
+		case 'nombre_asc':      $order_by = 'soporte_software_listado.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':     $order_by = 'soporte_software_listado.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'licencia_asc':    $order_by = 'soporte_software_listado_licencias.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Licencia Ascendente';break;
+		case 'licencia_desc':   $order_by = 'soporte_software_listado_licencias.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Licencia Descendente';break;
 		
-		default: $order_by = 'ORDER BY soporte_software_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'soporte_software_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY soporte_software_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'soporte_software_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE soporte_software_listado.idSoftware!=0";
+$SIS_where = "soporte_software_listado.idSoftware!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){               $z .= " AND soporte_software_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Descripcion']) && $_GET['Descripcion'] != ''){     $z .= " AND soporte_software_listado.Descripcion LIKE '%".$_GET['Descripcion']."%'";}
-if(isset($_GET['idLicencia']) && $_GET['idLicencia'] != ''){       $z .= " AND soporte_software_listado.idLicencia=".$_GET['idLicencia'];}
-if(isset($_GET['SitioWeb']) && $_GET['SitioWeb'] != ''){           $z .= " AND soporte_software_listado.SitioWeb LIKE '%".$_GET['SitioWeb']."%'";}
-if(isset($_GET['SitioDescarga']) && $_GET['SitioDescarga'] != ''){ $z .= " AND soporte_software_listado.SitioDescarga LIKE '%".$_GET['SitioDescarga']."%'";}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){     $z .= " AND soporte_software_listado.idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){               $SIS_where .= " AND soporte_software_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Descripcion']) && $_GET['Descripcion'] != ''){     $SIS_where .= " AND soporte_software_listado.Descripcion LIKE '%".$_GET['Descripcion']."%'";}
+if(isset($_GET['idLicencia']) && $_GET['idLicencia'] != ''){       $SIS_where .= " AND soporte_software_listado.idLicencia=".$_GET['idLicencia'];}
+if(isset($_GET['SitioWeb']) && $_GET['SitioWeb'] != ''){           $SIS_where .= " AND soporte_software_listado.SitioWeb LIKE '%".$_GET['SitioWeb']."%'";}
+if(isset($_GET['SitioDescarga']) && $_GET['SitioDescarga'] != ''){ $SIS_where .= " AND soporte_software_listado.SitioDescarga LIKE '%".$_GET['SitioDescarga']."%'";}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){     $SIS_where .= " AND soporte_software_listado.idCategoria=".$_GET['idCategoria'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idSoftware FROM `soporte_software_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idSoftware', 'soporte_software_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrImpuestos = array();
-$query = "SELECT 
+$SIS_query = '
 soporte_software_listado.idSoftware,
 soporte_software_listado.Nombre, 
-soporte_software_listado_licencias.Nombre AS Licencia
-FROM `soporte_software_listado`
-LEFT JOIN `soporte_software_listado_licencias` ON soporte_software_listado_licencias.idLicencia = soporte_software_listado.idLicencia
+soporte_software_listado_licencias.Nombre AS Licencia';
+$SIS_join  = 'LEFT JOIN `soporte_software_listado_licencias` ON soporte_software_listado_licencias.idLicencia = soporte_software_listado.idLicencia';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrImpuestos = array();
+$arrImpuestos = db_select_array (false, $SIS_query, 'soporte_software_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrImpuestos');
 
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrImpuestos,$row );
-}?>
+?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

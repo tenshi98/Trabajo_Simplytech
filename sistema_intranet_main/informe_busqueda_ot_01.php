@@ -61,96 +61,64 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'id_asc':         $order_by = 'ORDER BY orden_trabajo_listado.idOT ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> ID Ascendente'; break;
-		case 'id_desc':        $order_by = 'ORDER BY orden_trabajo_listado.idOT DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';break;
-		case 'fprog_asc':      $order_by = 'ORDER BY orden_trabajo_listado.f_programacion ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> F Prog Ascendente';break;
-		case 'fprog_desc':     $order_by = 'ORDER BY orden_trabajo_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> F Prog Descendente';break;
-		case 'maquina_asc':    $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente';break;
-		case 'maquina_desc':   $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
-		case 'prioridad_asc':  $order_by = 'ORDER BY core_ot_prioridad.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ascendente';break;
-		case 'prioridad_desc': $order_by = 'ORDER BY core_ot_prioridad.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
-		case 'tipotrab_asc':   $order_by = 'ORDER BY core_ot_tipos.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Trabajo Ascendente';break;
-		case 'tipotrab_desc':  $order_by = 'ORDER BY core_ot_tipos.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Trabajo Descendente';break;
-		case 'obs_asc':        $order_by = 'ORDER BY orden_trabajo_listado.Observaciones ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Observaciones Ascendente';break;
-		case 'obs_desc':       $order_by = 'ORDER BY orden_trabajo_listado.Observaciones DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Observaciones Descendente';break;
+		case 'id_asc':         $order_by = 'orden_trabajo_listado.idOT ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> ID Ascendente'; break;
+		case 'id_desc':        $order_by = 'orden_trabajo_listado.idOT DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';break;
+		case 'fprog_asc':      $order_by = 'orden_trabajo_listado.f_programacion ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> F Prog Ascendente';break;
+		case 'fprog_desc':     $order_by = 'orden_trabajo_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> F Prog Descendente';break;
+		case 'maquina_asc':    $order_by = 'maquinas_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente';break;
+		case 'maquina_desc':   $order_by = 'maquinas_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
+		case 'prioridad_asc':  $order_by = 'core_ot_prioridad.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ascendente';break;
+		case 'prioridad_desc': $order_by = 'core_ot_prioridad.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
+		case 'tipotrab_asc':   $order_by = 'core_ot_tipos.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Trabajo Ascendente';break;
+		case 'tipotrab_desc':  $order_by = 'core_ot_tipos.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Trabajo Descendente';break;
+		case 'obs_asc':        $order_by = 'orden_trabajo_listado.Observaciones ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Observaciones Ascendente';break;
+		case 'obs_desc':       $order_by = 'orden_trabajo_listado.Observaciones DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Observaciones Descendente';break;
 		
-		default: $order_by = 'ORDER BY orden_trabajo_listado.idOT DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';
+		default: $order_by = 'orden_trabajo_listado.idOT DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY orden_trabajo_listado.idOT DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';
+	$order_by = 'orden_trabajo_listado.idOT DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE orden_trabajo_listado.idOT>=0";
+$SIS_where  = "orden_trabajo_listado.idOT>=0";
 //Verifico el tipo de usuario que esta ingresando
-$z .= " AND orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){        $z.=" AND orden_trabajo_listado.idMaquina=".$_GET['idMaquina'];}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){          $z.=" AND orden_trabajo_listado.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['idPrioridad'])&&$_GET['idPrioridad']!=''){    $z.=" AND orden_trabajo_listado.idPrioridad=".$_GET['idPrioridad'];}
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){              $z.=" AND orden_trabajo_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){  $z.=" AND orden_trabajo_listado.idLicitacion=".$_GET['idLicitacion'];}
-if(isset($_GET['idOT'])&&$_GET['idOT']!=''){                  $z.=" AND orden_trabajo_listado.idOT=".$_GET['idOT'];}
+$SIS_where .= " AND orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+if(isset($_GET['idMaquina'])&&$_GET['idMaquina']!=''){        $SIS_where.= " AND orden_trabajo_listado.idMaquina=".$_GET['idMaquina'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){          $SIS_where.= " AND orden_trabajo_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idPrioridad'])&&$_GET['idPrioridad']!=''){    $SIS_where.= " AND orden_trabajo_listado.idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){              $SIS_where.= " AND orden_trabajo_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){  $SIS_where.= " AND orden_trabajo_listado.idLicitacion=".$_GET['idLicitacion'];}
+if(isset($_GET['idOT'])&&$_GET['idOT']!=''){                  $SIS_where.= " AND orden_trabajo_listado.idOT=".$_GET['idOT'];}
 if(isset($_GET['f_programacion_inicio'])&&$_GET['f_programacion_inicio']!=''&&isset($_GET['f_programacion_termino'])&&$_GET['f_programacion_termino']!=''){
-	$z.=" AND orden_trabajo_listado.f_programacion BETWEEN '".$_GET['f_programacion_inicio']."' AND '".$_GET['f_programacion_termino']."'";
+	$SIS_where.= " AND orden_trabajo_listado.f_programacion BETWEEN '".$_GET['f_programacion_inicio']."' AND '".$_GET['f_programacion_termino']."'";
 }
 if(isset($_GET['f_termino_inicio'])&&$_GET['f_termino_inicio']!=''&&isset($_GET['f_termino_termino'])&&$_GET['f_termino_termino']!=''){
-	$z.=" AND orden_trabajo_listado.f_termino BETWEEN '".$_GET['f_termino_inicio']."' AND '".$_GET['f_termino_termino']."'";
-}
-
+	$SIS_where.= " AND orden_trabajo_listado.f_termino BETWEEN '".$_GET['f_termino_inicio']."' AND '".$_GET['f_termino_termino']."'";
+}				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idOT FROM `orden_trabajo_listado`  ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idOT', 'orden_trabajo_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrOTS = array();
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_listado.idOT,
 orden_trabajo_listado.f_programacion,
 orden_trabajo_listado.Observaciones,
 maquinas_listado.Nombre AS NombreMaquina,
 core_ot_prioridad.Nombre AS NombrePrioridad,
-core_ot_tipos.Nombre AS NombreTipo
-
-FROM `orden_trabajo_listado`
+core_ot_tipos.Nombre AS NombreTipo';
+$SIS_join  = '
 LEFT JOIN `maquinas_listado`     ON maquinas_listado.idMaquina      = orden_trabajo_listado.idMaquina
 LEFT JOIN `core_ot_prioridad`    ON core_ot_prioridad.idPrioridad   = orden_trabajo_listado.idPrioridad
-LEFT JOIN `core_ot_tipos`        ON core_ot_tipos.idTipo            = orden_trabajo_listado.idTipo
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOTS,$row );
-}
+LEFT JOIN `core_ot_tipos`        ON core_ot_tipos.idTipo            = orden_trabajo_listado.idTipo';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrOTS = array();
+$arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOTS');
 
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

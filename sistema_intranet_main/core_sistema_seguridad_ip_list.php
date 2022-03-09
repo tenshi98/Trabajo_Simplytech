@@ -65,74 +65,37 @@ if (!$num_pag){
 }
 //se selecciona la tabla
 switch ($_GET['idSeguridad']) {
-    case 1: $xtabla = 'usuarios_listado_ip';    $yrelacion = 'del usuario ';     $xrelacion = 'LEFT JOIN `usuarios_listado`    relacion ON relacion.idUsuario    = '.$xtabla.'.idUsuario';      break;
-    case 2: $xtabla = 'clientes_listado_ip';    $yrelacion = 'del cliente ';     $xrelacion = 'LEFT JOIN `clientes_listado`    relacion ON relacion.idCliente    = '.$xtabla.'.idCliente';      break;
-    case 3: $xtabla = 'transportes_listado_ip'; $yrelacion = 'del transporte ';  $xrelacion = 'LEFT JOIN `transportes_listado` relacion ON relacion.idTransporte = '.$xtabla.'.idTransporte';   break;
-    case 4: $xtabla = 'apoderados_listado_ip';  $yrelacion = 'del apoderado';    $xrelacion = 'LEFT JOIN `apoderados_listado`  relacion ON relacion.idApoderado  = '.$xtabla.'.idApoderado';    break;
-    case 5: $xtabla = 'alumnos_listado_ip';     $yrelacion = 'de alumno ';       $xrelacion = 'LEFT JOIN `alumnos_listado`     relacion ON relacion.idAlumno     = '.$xtabla.'.idAlumno';       break;
+    case 1: $xtabla = 'usuarios_listado_ip';    $yrelacion = 'del usuario ';     $SIS_join = 'LEFT JOIN `usuarios_listado`    relacion ON relacion.idUsuario    = '.$xtabla.'.idUsuario';      break;
+    case 2: $xtabla = 'clientes_listado_ip';    $yrelacion = 'del cliente ';     $SIS_join = 'LEFT JOIN `clientes_listado`    relacion ON relacion.idCliente    = '.$xtabla.'.idCliente';      break;
+    case 3: $xtabla = 'transportes_listado_ip'; $yrelacion = 'del transporte ';  $SIS_join = 'LEFT JOIN `transportes_listado` relacion ON relacion.idTransporte = '.$xtabla.'.idTransporte';   break;
+    case 4: $xtabla = 'apoderados_listado_ip';  $yrelacion = 'del apoderado';    $SIS_join = 'LEFT JOIN `apoderados_listado`  relacion ON relacion.idApoderado  = '.$xtabla.'.idApoderado';    break;
+    case 5: $xtabla = 'alumnos_listado_ip';     $yrelacion = 'de alumno ';       $SIS_join = 'LEFT JOIN `alumnos_listado`     relacion ON relacion.idAlumno     = '.$xtabla.'.idAlumno';       break;
 }
 //Inicia variable
-$z="WHERE ".$xtabla.".idIpUsuario!=0"; 
+$SIS_where = $xtabla.".idIpUsuario!=0"; 
 //verifico si existen los parametros de fecha
-if(isset($_GET['idUsuario'])&&$_GET['idUsuario']!=''){        $z.=' AND '.$xtabla.'.idUsuario='.$_GET['idUsuario'];}
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){        $z.=' AND '.$xtabla.'.idCliente='.$_GET['idCliente'];}
-if(isset($_GET['idTransporte'])&&$_GET['idTransporte']!=''){  $z.=' AND '.$xtabla.'.idTransporte='.$_GET['idTransporte'];}
-if(isset($_GET['idApoderado'])&&$_GET['idApoderado']!=''){    $z.=' AND '.$xtabla.'.idApoderado='.$_GET['idApoderado'];}
-if(isset($_GET['idAlumno'])&&$_GET['idAlumno']!=''){          $z.=' AND '.$xtabla.'.idAlumno='.$_GET['idAlumno'];}
-
-			
+if(isset($_GET['idUsuario'])&&$_GET['idUsuario']!=''){        $SIS_where.=' AND '.$xtabla.'.idUsuario='.$_GET['idUsuario'];}
+if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){        $SIS_where.=' AND '.$xtabla.'.idCliente='.$_GET['idCliente'];}
+if(isset($_GET['idTransporte'])&&$_GET['idTransporte']!=''){  $SIS_where.=' AND '.$xtabla.'.idTransporte='.$_GET['idTransporte'];}
+if(isset($_GET['idApoderado'])&&$_GET['idApoderado']!=''){    $SIS_where.=' AND '.$xtabla.'.idApoderado='.$_GET['idApoderado'];}
+if(isset($_GET['idAlumno'])&&$_GET['idAlumno']!=''){          $SIS_where.=' AND '.$xtabla.'.idAlumno='.$_GET['idAlumno'];}
+				
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT ".$xtabla.".IP_Client FROM `".$xtabla."` ".$xrelacion." ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, $xtabla.'.IP_Client', $xtabla, $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);
-
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrIpRelacionadas = array();
-$query = "SELECT 
-".$xtabla.".IP_Client,
-".$xtabla.".IP_Client AS IPP,
+$SIS_query = '
+'.$xtabla.'.IP_Client,
+'.$xtabla.'.IP_Client AS IPP,
 relacion.Nombre AS Relacion,
-(SELECT COUNT(idBloqueo) FROM `sistema_seguridad_bloqueo_ip` WHERE IP_Client=IPP) AS Count
-FROM `".$xtabla."`
-".$xrelacion."
-".$z."
-ORDER BY IP_Client ASC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrIpRelacionadas,$row );
-}	
+(SELECT COUNT(idBloqueo) FROM `sistema_seguridad_bloqueo_ip` WHERE IP_Client=IPP) AS Count';
+$SIS_order = 'IP_Client ASC LIMIT '.$comienzo.', '.$cant_reg;
+$arrIpRelacionadas = array();
+$arrIpRelacionadas = db_select_array (false, $SIS_query, $xtabla, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrIpRelacionadas');
 	
 ?>
- 
-
-
 
 <div class="col-sm-12">
 	<div class="box">

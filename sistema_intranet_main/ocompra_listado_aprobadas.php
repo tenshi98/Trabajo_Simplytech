@@ -84,88 +84,55 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'ndoc_asc':          $order_by = 'ORDER BY ocompra_listado.idOcompra ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Doc Ascendente';break;
-		case 'ndoc_desc':         $order_by = 'ORDER BY ocompra_listado.idOcompra DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Doc Descendente';break;
-		case 'proveedor_asc':     $order_by = 'ORDER BY proveedor_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Proveedor Ascendente';break;
-		case 'proveedor_desc':    $order_by = 'ORDER BY proveedor_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Proveedor Descendente';break;
-		case 'estado_asc':        $order_by = 'ORDER BY core_oc_estado.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':       $order_by = 'ORDER BY core_oc_estado.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'fecha_asc':         $order_by = 'ORDER BY ocompra_listado.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':        $order_by = 'ORDER BY ocompra_listado.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'ndoc_asc':          $order_by = 'ocompra_listado.idOcompra ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Doc Ascendente';break;
+		case 'ndoc_desc':         $order_by = 'ocompra_listado.idOcompra DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Doc Descendente';break;
+		case 'proveedor_asc':     $order_by = 'proveedor_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Proveedor Ascendente';break;
+		case 'proveedor_desc':    $order_by = 'proveedor_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Proveedor Descendente';break;
+		case 'estado_asc':        $order_by = 'core_oc_estado.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':       $order_by = 'core_oc_estado.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'fecha_asc':         $order_by = 'ocompra_listado.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':        $order_by = 'ocompra_listado.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
 		
-		default: $order_by = 'ORDER BY core_oc_estado.idEstado DESC,ocompra_listado.idOcompra DESC, ocompra_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado, N° Doc, Fecha Descendente';
+		default: $order_by = 'core_oc_estado.idEstado DESC,ocompra_listado.idOcompra DESC, ocompra_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado, N° Doc, Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY core_oc_estado.idEstado DESC,ocompra_listado.idOcompra DESC, ocompra_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado, N° Doc, Fecha Descendente';
+	$order_by = 'core_oc_estado.idEstado DESC,ocompra_listado.idOcompra DESC, ocompra_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado, N° Doc, Fecha Descendente';
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE ocompra_listado.idEstado=2";
+$SIS_where = "ocompra_listado.idEstado=2";
 //verifico que sea un administrador
-$z.=" AND ocompra_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND ocompra_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idProveedor']) && $_GET['idProveedor'] != ''){        $z .= " AND ocompra_listado.idProveedor=".$_GET['idProveedor'];}
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $z .= " AND ocompra_listado.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['idProveedor']) && $_GET['idProveedor'] != ''){        $SIS_where .= " AND ocompra_listado.idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $SIS_where .= " AND ocompra_listado.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idOcompra FROM `ocompra_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idOcompra', 'ocompra_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);
-
-//consulta
-$arrSolicitudes = array();
-$query = "SELECT 
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los elementos
+$SIS_query = '
 ocompra_listado.idOcompra,
 ocompra_listado.idEstado,
 ocompra_listado.Solicitud,
 ocompra_listado.Creacion_fecha,
 core_oc_estado.Nombre AS Estado,
-proveedor_listado.Nombre AS Proveedor
-
-FROM `ocompra_listado`
+proveedor_listado.Nombre AS Proveedor';
+$SIS_join  = '
 LEFT JOIN `core_oc_estado`      ON core_oc_estado.idEstado         = ocompra_listado.idEstado 
-LEFT JOIN `proveedor_listado`   ON proveedor_listado.idProveedor   = ocompra_listado.idProveedor 
-
-".$z." 
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrSolicitudes,$row );
-}
-
+LEFT JOIN `proveedor_listado`   ON proveedor_listado.idProveedor   = ocompra_listado.idProveedor';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrSolicitudes = array();
+$arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSolicitudes');
 
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

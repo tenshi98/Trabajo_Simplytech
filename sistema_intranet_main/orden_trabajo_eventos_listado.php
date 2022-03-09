@@ -282,27 +282,27 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'usuario_asc':      $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                                                                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
-		case 'usuario_desc':     $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                                                                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'hora_asc':         $order_by = 'ORDER BY orden_trabajo_eventos_listado.Hora ASC ';                                                                           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Ascendente'; break;
-		case 'hora_desc':        $order_by = 'ORDER BY orden_trabajo_eventos_listado.Hora DESC ';                                                                          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Descendente';break;
-		case 'fecha_asc':        $order_by = 'ORDER BY orden_trabajo_eventos_listado.Fecha ASC ';                                                                          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':       $order_by = 'ORDER BY orden_trabajo_eventos_listado.Fecha DESC ';                                                                         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'trabajador_asc':   $order_by = 'ORDER BY trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Trabajador Ascendente'; break;
-		case 'trabajador_desc':  $order_by = 'ORDER BY trabajadores_listado.ApellidoPat DESC, trabajadores_listado.ApellidoMat DESC, trabajadores_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Trabajador Descendente';break;
-		case 'maquina_asc':      $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';                                                                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente'; break;
-		case 'maquina_desc':     $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';                                                                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
+		case 'usuario_asc':      $order_by = 'usuarios_listado.Nombre ASC ';                                                                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
+		case 'usuario_desc':     $order_by = 'usuarios_listado.Nombre DESC ';                                                                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'hora_asc':         $order_by = 'orden_trabajo_eventos_listado.Hora ASC ';                                                                           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Ascendente'; break;
+		case 'hora_desc':        $order_by = 'orden_trabajo_eventos_listado.Hora DESC ';                                                                          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Descendente';break;
+		case 'fecha_asc':        $order_by = 'orden_trabajo_eventos_listado.Fecha ASC ';                                                                          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':       $order_by = 'orden_trabajo_eventos_listado.Fecha DESC ';                                                                         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'trabajador_asc':   $order_by = 'trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Trabajador Ascendente'; break;
+		case 'trabajador_desc':  $order_by = 'trabajadores_listado.ApellidoPat DESC, trabajadores_listado.ApellidoMat DESC, trabajadores_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Trabajador Descendente';break;
+		case 'maquina_asc':      $order_by = 'maquinas_listado.Nombre ASC ';                                                                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente'; break;
+		case 'maquina_desc':     $order_by = 'maquinas_listado.Nombre DESC ';                                                                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
 		
-		default: $order_by = 'ORDER BY orden_trabajo_eventos_listado.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
+		default: $order_by = 'orden_trabajo_eventos_listado.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY orden_trabajo_eventos_listado.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
+	$order_by = 'orden_trabajo_eventos_listado.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE orden_trabajo_eventos_listado.idEvento!=0";
+$SIS_where = "orden_trabajo_eventos_listado.idEvento!=0";
+$SIS_where.= " AND orden_trabajo_eventos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
-$z.= " AND orden_trabajo_eventos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_1=1 AND idEstado=1";		
@@ -314,43 +314,22 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {        $z .= " AND orden_trabajo_eventos_listado.idUsuario = '".$_GET['idUsuario']."'" ;}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != '')  {  $z .= " AND orden_trabajo_eventos_listado.idTrabajador = '".$_GET['idUsuario']."'" ;}
-if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {        $z .= " AND orden_trabajo_eventos_listado.idMaquina = '".$_GET['idMaquina']."'" ;}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {        $SIS_where .= " AND orden_trabajo_eventos_listado.idUsuario = '".$_GET['idUsuario']."'" ;}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != '')  {  $SIS_where .= " AND orden_trabajo_eventos_listado.idTrabajador = '".$_GET['idUsuario']."'" ;}
+if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {        $SIS_where .= " AND orden_trabajo_eventos_listado.idMaquina = '".$_GET['idMaquina']."'" ;}
 if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
-	$z .= " AND orden_trabajo_eventos_listado.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'" ;
+	$SIS_where .= " AND orden_trabajo_eventos_listado.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'" ;
 }
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$z .= " AND orden_trabajo_eventos_listado.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'" ;
-}
-
+	$SIS_where .= " AND orden_trabajo_eventos_listado.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'" ;
+}				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idEvento FROM `orden_trabajo_eventos_listado` 
-LEFT JOIN `usuarios_listado`      ON usuarios_listado.idUsuario         = orden_trabajo_eventos_listado.idUsuario
-LEFT JOIN `core_sistemas`         ON core_sistemas.idSistema            = orden_trabajo_eventos_listado.idSistema
-LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador  = orden_trabajo_eventos_listado.idTrabajador
-LEFT JOIN `maquinas_listado`      ON maquinas_listado.idMaquina         = orden_trabajo_eventos_listado.idMaquina
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idEvento', 'orden_trabajo_eventos_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_eventos_listado.idEvento,
 orden_trabajo_eventos_listado.Fecha,
 orden_trabajo_eventos_listado.Hora,
@@ -360,34 +339,19 @@ trabajadores_listado.ApellidoPat AS TrabApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabApellidoMat,
 trabajadores_listado.Nombre AS TrabNombre,
 maquinas_listado.Nombre AS NombreMaquina,
-clientes_listado.Nombre AS NombreCliente
-
-FROM `orden_trabajo_eventos_listado`
+clientes_listado.Nombre AS NombreCliente';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`      ON usuarios_listado.idUsuario         = orden_trabajo_eventos_listado.idUsuario
 LEFT JOIN `core_sistemas`         ON core_sistemas.idSistema            = orden_trabajo_eventos_listado.idSistema
 LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador  = orden_trabajo_eventos_listado.idTrabajador
 LEFT JOIN `maquinas_listado`      ON maquinas_listado.idMaquina         = orden_trabajo_eventos_listado.idMaquina
-LEFT JOIN `clientes_listado`      ON clientes_listado.idCliente         = orden_trabajo_eventos_listado.idCliente
+LEFT JOIN `clientes_listado`      ON clientes_listado.idCliente         = orden_trabajo_eventos_listado.idCliente';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'orden_trabajo_eventos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}?>
+?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

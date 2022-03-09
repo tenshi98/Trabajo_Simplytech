@@ -65,93 +65,57 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':      $order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha ASC ';                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha del informe Ascendente';break;
-		case 'fecha_desc':     $order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha DESC ';                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';break;
-		case 'producto_asc':   $order_by = 'ORDER BY sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Producto Ascendente';break;
-		case 'producto_desc':  $order_by = 'ORDER BY sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Producto Descendente';break;
-		case 'creador_asc':    $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
-		case 'creador_desc':   $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
-		case 'ctn_asc':        $order_by = 'ORDER BY cross_shipping_consolidacion.CTNNombreCompañia ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Contenedor Ascendente';break;
-		case 'ctn_desc':       $order_by = 'ORDER BY cross_shipping_consolidacion.CTNNombreCompañia DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Contenedor Descendente';break;
+		case 'fecha_asc':      $order_by = 'cross_shipping_consolidacion.Creacion_fecha ASC ';                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha del informe Ascendente';break;
+		case 'fecha_desc':     $order_by = 'cross_shipping_consolidacion.Creacion_fecha DESC ';                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';break;
+		case 'producto_asc':   $order_by = 'sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Producto Ascendente';break;
+		case 'producto_desc':  $order_by = 'sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Producto Descendente';break;
+		case 'creador_asc':    $order_by = 'usuarios_listado.Nombre ASC ';                                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
+		case 'creador_desc':   $order_by = 'usuarios_listado.Nombre DESC ';                                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
+		case 'ctn_asc':        $order_by = 'cross_shipping_consolidacion.CTNNombreCompañia ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Contenedor Ascendente';break;
+		case 'ctn_desc':       $order_by = 'cross_shipping_consolidacion.CTNNombreCompañia DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Contenedor Descendente';break;
 
 				
-		default: $order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';
+		default: $order_by = 'cross_shipping_consolidacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY cross_shipping_consolidacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';
+	$order_by = 'cross_shipping_consolidacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha del informe Descendente';
 }
 /**********************************************************/
 //Variable con la ubicacion
-$z="WHERE cross_shipping_consolidacion.idConsolidacion!=0";
-//Solo las que esten en espera de aprobacion
-$z.=" AND cross_shipping_consolidacion.idEstado=3";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND cross_shipping_consolidacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "cross_shipping_consolidacion.idConsolidacion!=0";
+$SIS_where.= " AND cross_shipping_consolidacion.idEstado=3";//Solo las que esten en espera de aprobacion
+$SIS_where.= " AND cross_shipping_consolidacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){        $z .= " AND cross_shipping_consolidacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){              $z .= " AND cross_shipping_consolidacion.idCategoria=".$_GET['idCategoria'];}
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){                $z .= " AND cross_shipping_consolidacion.idProducto=".$_GET['idProducto'];}
-if(isset($_GET['CTNNombreCompañia']) && $_GET['CTNNombreCompañia'] != ''){  $z .= " AND cross_shipping_consolidacion.CTNNombreCompañia LIKE '%".$_GET['CTNNombreCompañia']."%'";}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){        $SIS_where .= " AND cross_shipping_consolidacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){              $SIS_where .= " AND cross_shipping_consolidacion.idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){                $SIS_where .= " AND cross_shipping_consolidacion.idProducto=".$_GET['idProducto'];}
+if(isset($_GET['CTNNombreCompañia']) && $_GET['CTNNombreCompañia'] != ''){  $SIS_where .= " AND cross_shipping_consolidacion.CTNNombreCompañia LIKE '%".$_GET['CTNNombreCompañia']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idConsolidacion FROM `cross_shipping_consolidacion` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idConsolidacion', 'cross_shipping_consolidacion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 cross_shipping_consolidacion.idConsolidacion,
 cross_shipping_consolidacion.Creacion_fecha,
 cross_shipping_consolidacion.CTNNombreCompañia,
 usuarios_listado.Nombre AS Usuario,
 core_sistemas.Nombre AS Sistema,
 sistema_variedades_categorias.Nombre AS ProductoCategoria,
-variedades_listado.Nombre AS ProductoNombre
+variedades_listado.Nombre AS ProductoNombre';
+$SIS_join  = '
+LEFT JOIN `usuarios_listado`               ON usuarios_listado.idUsuario                = cross_shipping_consolidacion.idUsuario
+LEFT JOIN `core_sistemas`                  ON core_sistemas.idSistema                   = cross_shipping_consolidacion.idSistema
+LEFT JOIN `sistema_variedades_categorias`  ON sistema_variedades_categorias.idCategoria = cross_shipping_consolidacion.idCategoria
+LEFT JOIN `variedades_listado`             ON variedades_listado.idProducto             = cross_shipping_consolidacion.idProducto';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
-
-FROM `cross_shipping_consolidacion`
-LEFT JOIN `usuarios_listado`                      ON usuarios_listado.idUsuario                   = cross_shipping_consolidacion.idUsuario
-LEFT JOIN `core_sistemas`                         ON core_sistemas.idSistema                      = cross_shipping_consolidacion.idSistema
-LEFT JOIN `sistema_variedades_categorias`          ON sistema_variedades_categorias.idCategoria     = cross_shipping_consolidacion.idCategoria
-LEFT JOIN `variedades_listado`                     ON variedades_listado.idProducto                 = cross_shipping_consolidacion.idProducto
-
-						
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}?>
-
-
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

@@ -203,29 +203,29 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'usuario_asc':    $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
-		case 'usuario_desc':   $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'hora_asc':       $order_by = 'ORDER BY seguridad_recepcion_documentos.Hora ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Ascendente'; break;
-		case 'hora_desc':      $order_by = 'ORDER BY seguridad_recepcion_documentos.Hora DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Descendente';break;
-		case 'fecha_asc':      $order_by = 'ORDER BY seguridad_recepcion_documentos.Fecha ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':     $order_by = 'ORDER BY seguridad_recepcion_documentos.Fecha DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'tipo_asc':       $order_by = 'ORDER BY core_tipo_recepcion.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Documento Ascendente'; break;
-		case 'tipo_desc':      $order_by = 'ORDER BY core_tipo_recepcion.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Documento Descendente';break;
-		case 'de_asc':         $order_by = 'ORDER BY seguridad_recepcion_documentos.De ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> De Ascendente'; break;
-		case 'de_desc':        $order_by = 'ORDER BY seguridad_recepcion_documentos.De DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> De Descendente';break;
-		case 'para_asc':       $order_by = 'ORDER BY seguridad_recepcion_documentos.Para ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Para Ascendente'; break;
-		case 'para_desc':      $order_by = 'ORDER BY seguridad_recepcion_documentos.Para DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Para Descendente';break;
+		case 'usuario_asc':    $order_by = 'usuarios_listado.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
+		case 'usuario_desc':   $order_by = 'usuarios_listado.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'hora_asc':       $order_by = 'seguridad_recepcion_documentos.Hora ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Ascendente'; break;
+		case 'hora_desc':      $order_by = 'seguridad_recepcion_documentos.Hora DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Descendente';break;
+		case 'fecha_asc':      $order_by = 'seguridad_recepcion_documentos.Fecha ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':     $order_by = 'seguridad_recepcion_documentos.Fecha DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'tipo_asc':       $order_by = 'core_tipo_recepcion.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Documento Ascendente'; break;
+		case 'tipo_desc':      $order_by = 'core_tipo_recepcion.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Documento Descendente';break;
+		case 'de_asc':         $order_by = 'seguridad_recepcion_documentos.De ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> De Ascendente'; break;
+		case 'de_desc':        $order_by = 'seguridad_recepcion_documentos.De DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> De Descendente';break;
+		case 'para_asc':       $order_by = 'seguridad_recepcion_documentos.Para ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Para Ascendente'; break;
+		case 'para_desc':      $order_by = 'seguridad_recepcion_documentos.Para DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Para Descendente';break;
 		
-		default: $order_by = 'ORDER BY seguridad_recepcion_documentos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
+		default: $order_by = 'seguridad_recepcion_documentos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY seguridad_recepcion_documentos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
+	$order_by = 'seguridad_recepcion_documentos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE seguridad_recepcion_documentos.idRecepcion!=0";
+$SIS_where = "seguridad_recepcion_documentos.idRecepcion!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND seguridad_recepcion_documentos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND seguridad_recepcion_documentos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
 //Verifico el tipo de usuario que esta ingresando
@@ -235,40 +235,25 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
-	$z .= " AND seguridad_recepcion_documentos.idUsuario = '".$_GET['idUsuario']."'" ;
+	$SIS_where .= " AND seguridad_recepcion_documentos.idUsuario = '".$_GET['idUsuario']."'" ;
 }
 if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
-	$z .= " AND seguridad_recepcion_documentos.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'" ;
+	$SIS_where .= " AND seguridad_recepcion_documentos.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'" ;
 }
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$z .= " AND seguridad_recepcion_documentos.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'" ;
+	$SIS_where .= " AND seguridad_recepcion_documentos.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'" ;
 }
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){  $z .= " AND seguridad_recepcion_documentos.idTipo='".$_GET['idTipo']."'";}
-if(isset($_GET['De']) && $_GET['De'] != ''){          $z .= " AND seguridad_recepcion_documentos.De LIKE '%".$_GET['De']."%'";}
-if(isset($_GET['Para']) && $_GET['Para'] != ''){      $z .= " AND seguridad_recepcion_documentos.Para LIKE '%".$_GET['Para']."%'";}
-
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){  $SIS_where .= " AND seguridad_recepcion_documentos.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['De']) && $_GET['De'] != ''){          $SIS_where .= " AND seguridad_recepcion_documentos.De LIKE '%".$_GET['De']."%'";}
+if(isset($_GET['Para']) && $_GET['Para'] != ''){      $SIS_where .= " AND seguridad_recepcion_documentos.Para LIKE '%".$_GET['Para']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idRecepcion FROM `seguridad_recepcion_documentos` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idRecepcion', 'seguridad_recepcion_documentos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 seguridad_recepcion_documentos.idRecepcion,
 seguridad_recepcion_documentos.Fecha,
 seguridad_recepcion_documentos.Hora,
@@ -276,33 +261,16 @@ seguridad_recepcion_documentos.De,
 seguridad_recepcion_documentos.Para,
 core_sistemas.Nombre AS Sistema,
 usuarios_listado.Nombre AS Usuario,
-core_tipo_recepcion.Nombre AS Tipo
-
-FROM `seguridad_recepcion_documentos`
+core_tipo_recepcion.Nombre AS Tipo';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario  = seguridad_recepcion_documentos.idUsuario
 LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema     = seguridad_recepcion_documentos.idSistema
-LEFT JOIN `core_tipo_recepcion`  ON core_tipo_recepcion.idTipo  = seguridad_recepcion_documentos.idTipo
+LEFT JOIN `core_tipo_recepcion`  ON core_tipo_recepcion.idTipo  = seguridad_recepcion_documentos.idTipo';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'seguridad_recepcion_documentos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
-
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}?>
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

@@ -190,59 +190,44 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':           $order_by = 'ORDER BY aguas_mediciones_tasas_interes.Fecha ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':          $order_by = 'ORDER BY aguas_mediciones_tasas_interes.Fecha DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'dia_asc':             $order_by = 'ORDER BY aguas_mediciones_tasas_interes.Dia ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Dia Ascendente'; break;
-		case 'dia_desc':            $order_by = 'ORDER BY aguas_mediciones_tasas_interes.Dia DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Dia Descendente';break;
-		case 'mes_asc':             $order_by = 'ORDER BY aguas_mediciones_tasas_interes.idMes ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mes Ascendente'; break;
-		case 'mes_desc':            $order_by = 'ORDER BY aguas_mediciones_tasas_interes.idMes DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mes Descendente';break;
-		case 'ano_asc':             $order_by = 'ORDER BY aguas_mediciones_tasas_interes.Ano ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año Ascendente'; break;
-		case 'ano_desc':            $order_by = 'ORDER BY aguas_mediciones_tasas_interes.Ano DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Año Descendente';break;
-		case 'tasacorriente_asc':   $order_by = 'ORDER BY aguas_mediciones_tasas_interes.TasaCorriente ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tasa Corriente Ascendente'; break;
-		case 'tasacorriente_desc':  $order_by = 'ORDER BY aguas_mediciones_tasas_interes.TasaCorriente DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasa Corriente Descendente';break;
-		case 'tasadia_asc':         $order_by = 'ORDER BY aguas_mediciones_tasas_interes.TasaDia ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tasa Dia Ascendente'; break;
-		case 'tasadia_desc':        $order_by = 'ORDER BY aguas_mediciones_tasas_interes.TasaDia DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasa Dia Descendente';break;
-		case 'mc_asc':              $order_by = 'ORDER BY aguas_mediciones_tasas_interes.MC ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> MC Ascendente'; break;
-		case 'mc_desc':             $order_by = 'ORDER BY aguas_mediciones_tasas_interes.MC DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> MC Descendente';break;
+		case 'fecha_asc':           $order_by = 'aguas_mediciones_tasas_interes.Fecha ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':          $order_by = 'aguas_mediciones_tasas_interes.Fecha DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'dia_asc':             $order_by = 'aguas_mediciones_tasas_interes.Dia ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Dia Ascendente'; break;
+		case 'dia_desc':            $order_by = 'aguas_mediciones_tasas_interes.Dia DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Dia Descendente';break;
+		case 'mes_asc':             $order_by = 'aguas_mediciones_tasas_interes.idMes ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mes Ascendente'; break;
+		case 'mes_desc':            $order_by = 'aguas_mediciones_tasas_interes.idMes DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mes Descendente';break;
+		case 'ano_asc':             $order_by = 'aguas_mediciones_tasas_interes.Ano ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año Ascendente'; break;
+		case 'ano_desc':            $order_by = 'aguas_mediciones_tasas_interes.Ano DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Año Descendente';break;
+		case 'tasacorriente_asc':   $order_by = 'aguas_mediciones_tasas_interes.TasaCorriente ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tasa Corriente Ascendente'; break;
+		case 'tasacorriente_desc':  $order_by = 'aguas_mediciones_tasas_interes.TasaCorriente DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasa Corriente Descendente';break;
+		case 'tasadia_asc':         $order_by = 'aguas_mediciones_tasas_interes.TasaDia ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tasa Dia Ascendente'; break;
+		case 'tasadia_desc':        $order_by = 'aguas_mediciones_tasas_interes.TasaDia DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tasa Dia Descendente';break;
+		case 'mc_asc':              $order_by = 'aguas_mediciones_tasas_interes.MC ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> MC Ascendente'; break;
+		case 'mc_desc':             $order_by = 'aguas_mediciones_tasas_interes.MC DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> MC Descendente';break;
 		
-		default: $order_by = 'ORDER BY aguas_mediciones_tasas_interes.Fecha ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';
+		default: $order_by = 'aguas_mediciones_tasas_interes.Fecha ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY aguas_mediciones_tasas_interes.Fecha ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';
+	$order_by = 'aguas_mediciones_tasas_interes.Fecha ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE aguas_mediciones_tasas_interes.idTasasInteres!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND aguas_mediciones_tasas_interes.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "aguas_mediciones_tasas_interes.idTasasInteres!=0";
+$SIS_where.= " AND aguas_mediciones_tasas_interes.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                   $z .= " AND aguas_mediciones_tasas_interes.Fecha='".$_GET['Fecha']."'";}
-if(isset($_GET['TasaCorriente']) && $_GET['TasaCorriente'] != ''){   $z .= " AND aguas_mediciones_tasas_interes.TasaCorriente='".$_GET['TasaCorriente']."'";}
-if(isset($_GET['TasaDia']) && $_GET['TasaDia'] != ''){               $z .= " AND aguas_mediciones_tasas_interes.TasaDia='".$_GET['TasaDia']."'";}
-if(isset($_GET['MC']) && $_GET['MC'] != ''){                         $z .= " AND aguas_mediciones_tasas_interes.MC='".$_GET['MC']."'";}
+if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                   $SIS_where .= " AND aguas_mediciones_tasas_interes.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['TasaCorriente']) && $_GET['TasaCorriente'] != ''){   $SIS_where .= " AND aguas_mediciones_tasas_interes.TasaCorriente='".$_GET['TasaCorriente']."'";}
+if(isset($_GET['TasaDia']) && $_GET['TasaDia'] != ''){               $SIS_where .= " AND aguas_mediciones_tasas_interes.TasaDia='".$_GET['TasaDia']."'";}
+if(isset($_GET['MC']) && $_GET['MC'] != ''){                         $SIS_where .= " AND aguas_mediciones_tasas_interes.MC='".$_GET['MC']."'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idTasasInteres FROM `aguas_mediciones_tasas_interes` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idTasasInteres', 'aguas_mediciones_tasas_interes', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUML = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_mediciones_tasas_interes.idTasasInteres,
 aguas_mediciones_tasas_interes.Dia, 
 aguas_mediciones_tasas_interes.Ano,
@@ -251,30 +236,15 @@ aguas_mediciones_tasas_interes.TasaCorriente,
 aguas_mediciones_tasas_interes.TasaDia,
 aguas_mediciones_tasas_interes.MC,
 core_sistemas.Nombre AS sistema,
-core_tiempo_meses.Nombre AS Mes
-
-FROM `aguas_mediciones_tasas_interes`
+core_tiempo_meses.Nombre AS Mes';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema    = aguas_mediciones_tasas_interes.idSistema
-LEFT JOIN `core_tiempo_meses`   ON core_tiempo_meses.idMes    = aguas_mediciones_tasas_interes.idMes
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUML,$row );
-}?>
+LEFT JOIN `core_tiempo_meses`   ON core_tiempo_meses.idMes    = aguas_mediciones_tasas_interes.idMes';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUML = array();
+$arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_tasas_interes', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUML');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

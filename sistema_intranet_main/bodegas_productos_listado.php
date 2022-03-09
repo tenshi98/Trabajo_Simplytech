@@ -216,68 +216,40 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY bodegas_productos_listado.Nombre ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY bodegas_productos_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'nombre_asc':    $order_by = 'bodegas_productos_listado.Nombre ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'bodegas_productos_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
 		
-		default: $order_by = 'ORDER BY bodegas_productos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'bodegas_productos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY bodegas_productos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'bodegas_productos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z="WHERE bodegas_productos_listado.idBodega!=0";
-$z.=" AND bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "bodegas_productos_listado.idBodega!=0";
+$SIS_where.= " AND bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){  $z .= " AND bodegas_productos_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){  $SIS_where .= " AND bodegas_productos_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idBodega FROM `bodegas_productos_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idBodega', 'bodegas_productos_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 bodegas_productos_listado.idBodega,
 bodegas_productos_listado.Nombre,
-core_sistemas.Nombre AS RazonSocial
-FROM `bodegas_productos_listado`
-LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = bodegas_productos_listado.idSistema
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}?>
+core_sistemas.Nombre AS RazonSocial';
+$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = bodegas_productos_listado.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
+?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

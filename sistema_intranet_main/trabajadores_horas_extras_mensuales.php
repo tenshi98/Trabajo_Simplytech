@@ -466,77 +466,46 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'periodo_asc':  $order_by = 'ORDER BY trabajadores_horas_extras_mensuales_facturacion.Ano ASC, trabajadores_horas_extras_mensuales_facturacion.idMes ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Periodo Ascendente'; break;
-		case 'periodo_desc': $order_by = 'ORDER BY trabajadores_horas_extras_mensuales_facturacion.Ano DESC, trabajadores_horas_extras_mensuales_facturacion.idMes DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Periodo Descendente';break;
-		case 'fechas_asc':   $order_by = 'ORDER BY trabajadores_horas_extras_mensuales_facturacion.Creacion_fecha ASC ';                                                    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Facturacion Ascendente';break;
-		case 'fechas_desc':  $order_by = 'ORDER BY trabajadores_horas_extras_mensuales_facturacion.Creacion_fecha DESC ';                                                   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';break;
+		case 'periodo_asc':  $order_by = 'trabajadores_horas_extras_mensuales_facturacion.Ano ASC, trabajadores_horas_extras_mensuales_facturacion.idMes ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Periodo Ascendente'; break;
+		case 'periodo_desc': $order_by = 'trabajadores_horas_extras_mensuales_facturacion.Ano DESC, trabajadores_horas_extras_mensuales_facturacion.idMes DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Periodo Descendente';break;
+		case 'fechas_asc':   $order_by = 'trabajadores_horas_extras_mensuales_facturacion.Creacion_fecha ASC ';                                                    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Facturacion Ascendente';break;
+		case 'fechas_desc':  $order_by = 'trabajadores_horas_extras_mensuales_facturacion.Creacion_fecha DESC ';                                                   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';break;
 	
-		default: $order_by = 'ORDER BY trabajadores_horas_extras_mensuales_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
+		default: $order_by = 'trabajadores_horas_extras_mensuales_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY trabajadores_horas_extras_mensuales_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
+	$order_by = 'trabajadores_horas_extras_mensuales_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
 }
 /**********************************************************/
 //Variable con la ubicacion
-$z="WHERE trabajadores_horas_extras_mensuales_facturacion.idFacturacion!=0";//Solo ingresos
+$SIS_where = "trabajadores_horas_extras_mensuales_facturacion.idFacturacion!=0";//Solo ingresos
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND trabajadores_horas_extras_mensuales_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where.= " AND trabajadores_horas_extras_mensuales_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $z .= " AND trabajadores_horas_extras_mensuales_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['Creacion_mes']) && $_GET['Creacion_mes'] != ''){      $z .= " AND trabajadores_horas_extras_mensuales_facturacion.Creacion_mes=".$_GET['Creacion_mes'];}
-if(isset($_GET['Creacion_ano']) && $_GET['Creacion_ano'] != ''){      $z .= " AND trabajadores_horas_extras_mensuales_facturacion.Creacion_ano=".$_GET['Creacion_ano'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $SIS_where .= " AND trabajadores_horas_extras_mensuales_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['Creacion_mes']) && $_GET['Creacion_mes'] != ''){      $SIS_where .= " AND trabajadores_horas_extras_mensuales_facturacion.Creacion_mes=".$_GET['Creacion_mes'];}
+if(isset($_GET['Creacion_ano']) && $_GET['Creacion_ano'] != ''){      $SIS_where .= " AND trabajadores_horas_extras_mensuales_facturacion.Creacion_ano=".$_GET['Creacion_ano'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idFacturacion FROM `trabajadores_horas_extras_mensuales_facturacion` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idFacturacion', 'trabajadores_horas_extras_mensuales_facturacion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_horas_extras_mensuales_facturacion.idFacturacion,
 trabajadores_horas_extras_mensuales_facturacion.Creacion_fecha,
 trabajadores_horas_extras_mensuales_facturacion.Ano,
 trabajadores_horas_extras_mensuales_facturacion.idMes,
-core_sistemas.Nombre AS Sistema
+core_sistemas.Nombre AS Sistema';
+$SIS_join  = 'LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema = trabajadores_horas_extras_mensuales_facturacion.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_mensuales_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
-FROM `trabajadores_horas_extras_mensuales_facturacion`
-LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema             = trabajadores_horas_extras_mensuales_facturacion.idSistema
-
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}?>
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

@@ -462,80 +462,44 @@ if (!$num_pag){
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE seg_vecinal_reportes_comment_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$z .= " AND seg_vecinal_reportes_comment_listado.idRevisado=1"; //solo los no revisados
+$SIS_where  = "seg_vecinal_reportes_comment_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where .= " AND seg_vecinal_reportes_comment_listado.idRevisado=1"; //solo los no revisados
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){      $z .= " AND seg_vecinal_reportes_comment_listado.idCliente='".$_GET['idCliente']."'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $z .= " AND seg_vecinal_reportes_comment_listado.idTipo='".$_GET['idTipo']."'";}
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){              $z .= " AND seg_vecinal_reportes_comment_listado.Fecha='".$_GET['Fecha']."'";}
-if(isset($_GET['Hora']) && $_GET['Hora'] != ''){                $z .= " AND seg_vecinal_reportes_comment_listado.Hora='".$_GET['Hora']."'";}
+if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){      $SIS_where .= " AND seg_vecinal_reportes_comment_listado.idCliente='".$_GET['idCliente']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $SIS_where .= " AND seg_vecinal_reportes_comment_listado.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){              $SIS_where .= " AND seg_vecinal_reportes_comment_listado.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['Hora']) && $_GET['Hora'] != ''){                $SIS_where .= " AND seg_vecinal_reportes_comment_listado.Hora='".$_GET['Hora']."'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idReportes FROM `seg_vecinal_reportes_comment_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idReportes', 'seg_vecinal_reportes_comment_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrReportes = array();
-$query = "SELECT 
+$SIS_query = '
 seg_vecinal_reportes_comment_listado.idEventoPeligro,
 seg_vecinal_reportes_comment_listado.idComentario,
 seg_vecinal_reportes_comment_listado.idTipo,
 seg_vecinal_reportes_comment_listado.Fecha,
 seg_vecinal_reportes_comment_listado.Hora,
-
 seg_vecinal_reportes_comment_tipos.Nombre AS TipoReporte,
 seg_vecinal_clientes_listado.Nombre AS Vecino,
-
 seg_vecinal_eventos_listado.Direccion AS EventoDireccion,
 seg_vecinal_eventos_tipos.Nombre AS EventoTipo,
-
 seg_vecinal_peligros_listado.Direccion AS PeligroDireccion,
-seg_vecinal_peligros_tipos.Nombre AS PeligroTipo
-
-FROM `seg_vecinal_reportes_comment_listado`
+seg_vecinal_peligros_tipos.Nombre AS PeligroTipo';
+$SIS_join  = '
 LEFT JOIN `seg_vecinal_reportes_comment_tipos` ON seg_vecinal_reportes_comment_tipos.idTipo  = seg_vecinal_reportes_comment_listado.idTipo
 LEFT JOIN `seg_vecinal_clientes_listado`       ON seg_vecinal_clientes_listado.idCliente     = seg_vecinal_reportes_comment_listado.idCliente
-
 LEFT JOIN `seg_vecinal_eventos_listado`        ON seg_vecinal_eventos_listado.idEvento       = seg_vecinal_reportes_comment_listado.idEventoPeligro
 LEFT JOIN `seg_vecinal_eventos_tipos`          ON seg_vecinal_eventos_tipos.idTipo           = seg_vecinal_eventos_listado.idTipo
-
 LEFT JOIN `seg_vecinal_peligros_listado`       ON seg_vecinal_peligros_listado.idPeligro     = seg_vecinal_reportes_comment_listado.idEventoPeligro
-LEFT JOIN `seg_vecinal_peligros_tipos`         ON seg_vecinal_peligros_tipos.idTipo          = seg_vecinal_peligros_listado.idTipo
+LEFT JOIN `seg_vecinal_peligros_tipos`         ON seg_vecinal_peligros_tipos.idTipo          = seg_vecinal_peligros_listado.idTipo';
+$SIS_order = 'seg_vecinal_reportes_comment_listado.Fecha DESC, seg_vecinal_reportes_comment_listado.Hora DESC LIMIT '.$comienzo.', '.$cant_reg;
+$arrReportes = array();
+$arrReportes = db_select_array (false, $SIS_query, 'seg_vecinal_reportes_comment_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrReportes');
 
-".$z."
-ORDER BY seg_vecinal_reportes_comment_listado.Fecha DESC, seg_vecinal_reportes_comment_listado.Hora DESC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrReportes,$row );
-}
 /******************************************************************************/
 //Verifico el tipo de usuario que esta ingresando
 $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';

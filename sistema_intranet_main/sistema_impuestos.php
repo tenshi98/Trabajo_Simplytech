@@ -172,65 +172,37 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':      $order_by = 'ORDER BY sistema_impuestos.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':     $order_by = 'ORDER BY sistema_impuestos.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'porcentaje_asc':  $order_by = 'ORDER BY sistema_impuestos.Porcentaje ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Porcentaje Ascendente';break;
-		case 'porcentaje_desc': $order_by = 'ORDER BY sistema_impuestos.Porcentaje DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Porcentaje Descendente';break;
+		case 'nombre_asc':      $order_by = 'sistema_impuestos.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':     $order_by = 'sistema_impuestos.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'porcentaje_asc':  $order_by = 'sistema_impuestos.Porcentaje ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Porcentaje Ascendente';break;
+		case 'porcentaje_desc': $order_by = 'sistema_impuestos.Porcentaje DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Porcentaje Descendente';break;
 		
-		default: $order_by = 'ORDER BY sistema_impuestos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'sistema_impuestos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY sistema_impuestos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'sistema_impuestos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE sistema_impuestos.idImpuesto!=0";
+$SIS_where = "sistema_impuestos.idImpuesto!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){          $z .= " AND sistema_impuestos.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Porcentaje']) && $_GET['Porcentaje'] != ''){  $z .= " AND sistema_impuestos.Porcentaje LIKE '%".$_GET['Porcentaje']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){          $SIS_where .= " AND sistema_impuestos.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Porcentaje']) && $_GET['Porcentaje'] != ''){  $SIS_where .= " AND sistema_impuestos.Porcentaje LIKE '%".$_GET['Porcentaje']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idImpuesto FROM `sistema_impuestos` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idImpuesto', 'sistema_impuestos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
+$SIS_query = 'idImpuesto,Nombre, Porcentaje';
+$SIS_join  = '';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrImpuestos = array();
-$query = "SELECT idImpuesto,Nombre, Porcentaje
-FROM `sistema_impuestos`
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrImpuestos,$row );
-}?>
+$arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrImpuestos');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

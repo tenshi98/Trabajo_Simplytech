@@ -186,74 +186,43 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY aguas_marcadores_remarcadores.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY aguas_marcadores_remarcadores.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'medidor_asc':   $order_by = 'ORDER BY aguas_marcadores_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Medidor Ascendente'; break;
-		case 'medidor_desc':  $order_by = 'ORDER BY aguas_marcadores_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Medidor Descendente';break;
+		case 'nombre_asc':    $order_by = 'aguas_marcadores_remarcadores.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'aguas_marcadores_remarcadores.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'medidor_asc':   $order_by = 'aguas_marcadores_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Medidor Ascendente'; break;
+		case 'medidor_desc':  $order_by = 'aguas_marcadores_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Medidor Descendente';break;
 		
-		default: $order_by = 'ORDER BY aguas_marcadores_listado.Nombre ASC, aguas_marcadores_remarcadores.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Medidor, Nombre Ascendente';
+		default: $order_by = 'aguas_marcadores_listado.Nombre ASC, aguas_marcadores_remarcadores.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Medidor, Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY aguas_marcadores_listado.Nombre ASC, aguas_marcadores_remarcadores.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Medidor, Nombre Ascendente';
+	$order_by = 'aguas_marcadores_listado.Nombre ASC, aguas_marcadores_remarcadores.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Medidor, Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE aguas_marcadores_remarcadores.idRemarcadores!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND aguas_marcadores_remarcadores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "aguas_marcadores_remarcadores.idRemarcadores!=0";
+$SIS_where.= " AND aguas_marcadores_remarcadores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idMarcadores']) && $_GET['idMarcadores'] != ''){  $z .= " AND aguas_marcadores_remarcadores.idMarcadores='".$_GET['idMarcadores']."'";}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){              $z .= " AND aguas_marcadores_remarcadores.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idMarcadores']) && $_GET['idMarcadores'] != ''){  $SIS_where .= " AND aguas_marcadores_remarcadores.idMarcadores='".$_GET['idMarcadores']."'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){              $SIS_where .= " AND aguas_marcadores_remarcadores.Nombre LIKE '%".$_GET['Nombre']."%'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idRemarcadores FROM `aguas_marcadores_remarcadores` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idRemarcadores', 'aguas_marcadores_remarcadores', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUML = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_marcadores_remarcadores.idRemarcadores,
 aguas_marcadores_remarcadores.Nombre, 
 aguas_marcadores_listado.Nombre AS Medidor, 
-core_sistemas.Nombre AS sistema
-
-FROM `aguas_marcadores_remarcadores`
+core_sistemas.Nombre AS sistema';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`              ON core_sistemas.idSistema                  = aguas_marcadores_remarcadores.idSistema
-LEFT JOIN `aguas_marcadores_listado`   ON aguas_marcadores_listado.idMarcadores    = aguas_marcadores_remarcadores.idMarcadores
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUML,$row );
-}
+LEFT JOIN `aguas_marcadores_listado`   ON aguas_marcadores_listado.idMarcadores    = aguas_marcadores_remarcadores.idMarcadores';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUML = array();
+$arrUML = db_select_array (false, $SIS_query, 'aguas_marcadores_remarcadores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUML');
+
 //filtro para el curso
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>

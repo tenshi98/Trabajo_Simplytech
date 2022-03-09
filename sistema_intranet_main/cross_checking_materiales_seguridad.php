@@ -184,75 +184,43 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY cross_checking_materiales_seguridad.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY cross_checking_materiales_seguridad.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'codigo_asc':    $order_by = 'ORDER BY cross_checking_materiales_seguridad.Codigo ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Ascendente'; break;
-		case 'codigo_desc':   $order_by = 'ORDER BY cross_checking_materiales_seguridad.Codigo DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY core_estados.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':   $order_by = 'ORDER BY core_estados.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'nombre_asc':    $order_by = 'cross_checking_materiales_seguridad.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'cross_checking_materiales_seguridad.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'codigo_asc':    $order_by = 'cross_checking_materiales_seguridad.Codigo ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Ascendente'; break;
+		case 'codigo_desc':   $order_by = 'cross_checking_materiales_seguridad.Codigo DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Descendente';break;
+		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY cross_checking_materiales_seguridad.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'cross_checking_materiales_seguridad.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY cross_checking_materiales_seguridad.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'cross_checking_materiales_seguridad.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE cross_checking_materiales_seguridad.idMatSeguridad!=0";
+$SIS_where = "cross_checking_materiales_seguridad.idMatSeguridad!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){      $z .= " AND cross_checking_materiales_seguridad.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Codigo']) && $_GET['Codigo'] != ''){      $z .= " AND cross_checking_materiales_seguridad.Codigo LIKE '%".$_GET['Codigo']."%'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){  $z .= " AND cross_checking_materiales_seguridad.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){      $SIS_where .= " AND cross_checking_materiales_seguridad.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Codigo']) && $_GET['Codigo'] != ''){      $SIS_where .= " AND cross_checking_materiales_seguridad.Codigo LIKE '%".$_GET['Codigo']."%'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){  $SIS_where .= " AND cross_checking_materiales_seguridad.idEstado=".$_GET['idEstado'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idMatSeguridad FROM `cross_checking_materiales_seguridad` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idMatSeguridad', 'cross_checking_materiales_seguridad', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrCategorias = array();
-$query = "SELECT 
+$SIS_query = '
 cross_checking_materiales_seguridad.idMatSeguridad,
 cross_checking_materiales_seguridad.Nombre AS NombreNaviera,
 cross_checking_materiales_seguridad.Codigo AS Codigo,
 cross_checking_materiales_seguridad.idEstado,
-core_estados.Nombre AS Estado
-
-FROM `cross_checking_materiales_seguridad`
-LEFT JOIN `core_estados`    ON core_estados.idEstado     = cross_checking_materiales_seguridad.idEstado
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCategorias,$row );
-}
+core_estados.Nombre AS Estado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = cross_checking_materiales_seguridad.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrCategorias = array();
+$arrCategorias = db_select_array (false, $SIS_query, 'cross_checking_materiales_seguridad', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
 
 ?>
 

@@ -717,17 +717,17 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'origen_asc':         $order_by = 'ORDER BY bodega1.Nombre ASC ';                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Origen Ascendente'; break;
-		case 'origen_desc':        $order_by = 'ORDER BY bodega1.Nombre DESC ';                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Origen Descendente';break;
-		case 'destino_asc':        $order_by = 'ORDER BY bodega2.Nombre ASC ';                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Destino Ascendente';break;
-		case 'destino_desc':       $order_by = 'ORDER BY bodega2.Nombre DESC ';                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Destino Descendente';break;
-		case 'fecha_asc':          $order_by = 'ORDER BY bodegas_productos_facturacion.Creacion_fecha ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';break;
-		case 'fecha_desc':         $order_by = 'ORDER BY bodegas_productos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'origen_asc':         $order_by = 'bodega1.Nombre ASC ';                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Origen Ascendente'; break;
+		case 'origen_desc':        $order_by = 'bodega1.Nombre DESC ';                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Origen Descendente';break;
+		case 'destino_asc':        $order_by = 'bodega2.Nombre ASC ';                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Destino Ascendente';break;
+		case 'destino_desc':       $order_by = 'bodega2.Nombre DESC ';                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Destino Descendente';break;
+		case 'fecha_asc':          $order_by = 'bodegas_productos_facturacion.Creacion_fecha ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';break;
+		case 'fecha_desc':         $order_by = 'bodegas_productos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
 		
-		default: $order_by = 'ORDER BY bodegas_productos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+		default: $order_by = 'bodegas_productos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY bodegas_productos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+	$order_by = 'bodegas_productos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
@@ -737,74 +737,42 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Variable con la ubicacion
-$z="WHERE bodegas_productos_facturacion.idTipo=6";//Solo traspaso a otra empresa
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "bodegas_productos_facturacion.idTipo=6";//Solo traspaso a otra empresa
+$SIS_where.= " AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){       $z .= " AND bodegas_productos_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['Creacion_ano']) && $_GET['Creacion_ano'] != ''){           $z .= " AND bodegas_productos_facturacion.Creacion_ano='".$_GET['Creacion_ano']."'";}
-if(isset($_GET['Creacion_mes']) && $_GET['Creacion_mes'] != ''){           $z .= " AND bodegas_productos_facturacion.Creacion_mes='".$_GET['Creacion_mes']."'";}
-if(isset($_GET['idBodegaOrigen']) && $_GET['idBodegaOrigen'] != ''){       $z .= " AND bodegas_productos_facturacion.idBodegaOrigen=".$_GET['idBodegaOrigen'];}
-if(isset($_GET['idSistemaDestino']) && $_GET['idSistemaDestino'] != ''){   $z .= " AND bodegas_productos_facturacion.idSistemaDestino=".$_GET['idSistemaDestino'];}
-if(isset($_GET['idBodegaDestino']) && $_GET['idBodegaDestino'] != ''){     $z .= " AND bodegas_productos_facturacion.idBodegaDestino=".$_GET['idBodegaDestino'];}
-if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){         $z .= " AND bodegas_productos_facturacion.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){       $SIS_where .= " AND bodegas_productos_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['Creacion_ano']) && $_GET['Creacion_ano'] != ''){           $SIS_where .= " AND bodegas_productos_facturacion.Creacion_ano='".$_GET['Creacion_ano']."'";}
+if(isset($_GET['Creacion_mes']) && $_GET['Creacion_mes'] != ''){           $SIS_where .= " AND bodegas_productos_facturacion.Creacion_mes='".$_GET['Creacion_mes']."'";}
+if(isset($_GET['idBodegaOrigen']) && $_GET['idBodegaOrigen'] != ''){       $SIS_where .= " AND bodegas_productos_facturacion.idBodegaOrigen=".$_GET['idBodegaOrigen'];}
+if(isset($_GET['idSistemaDestino']) && $_GET['idSistemaDestino'] != ''){   $SIS_where .= " AND bodegas_productos_facturacion.idSistemaDestino=".$_GET['idSistemaDestino'];}
+if(isset($_GET['idBodegaDestino']) && $_GET['idBodegaDestino'] != ''){     $SIS_where .= " AND bodegas_productos_facturacion.idBodegaDestino=".$_GET['idBodegaDestino'];}
+if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){         $SIS_where .= " AND bodegas_productos_facturacion.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idFacturacion FROM `bodegas_productos_facturacion` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idFacturacion', 'bodegas_productos_facturacion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 bodegas_productos_facturacion.idFacturacion,
 bodegas_productos_facturacion.Creacion_fecha,
 bodega1.Nombre AS BodegaOrigen,
 bodega2.Nombre AS BodegaDestino,
 sisorigen.Nombre AS SistemaOrigen,
-sisdestino.Nombre AS SistemaDestino
-
-FROM `bodegas_productos_facturacion`
+sisdestino.Nombre AS SistemaDestino';
+$SIS_join  = '
 LEFT JOIN `bodegas_productos_listado`  bodega1     ON bodega1.idBodega         = bodegas_productos_facturacion.idBodegaOrigen
 LEFT JOIN `bodegas_productos_listado`  bodega2     ON bodega2.idBodega         = bodegas_productos_facturacion.idBodegaDestino
 LEFT JOIN `core_sistemas`              sisorigen   ON sisorigen.idSistema      = bodegas_productos_facturacion.idSistema
-LEFT JOIN `core_sistemas`              sisdestino  ON sisdestino.idSistema     = bodegas_productos_facturacion.idSistemaDestino
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}?>
+LEFT JOIN `core_sistemas`              sisdestino  ON sisdestino.idSistema     = bodegas_productos_facturacion.idSistemaDestino';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
-
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

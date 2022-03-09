@@ -278,53 +278,39 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'marca_asc':        $order_by = 'ORDER BY insumos_listado.Marca ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Marca Ascendente'; break;
-		case 'marca_desc':       $order_by = 'ORDER BY insumos_listado.Marca DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Marca Descendente';break;
-		case 'nombre_asc':       $order_by = 'ORDER BY insumos_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
-		case 'nombre_desc':      $order_by = 'ORDER BY insumos_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'categoria_asc':    $order_by = 'ORDER BY sistema_productos_categorias.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente';break;
-		case 'categoria_desc':   $order_by = 'ORDER BY sistema_productos_categorias.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Categoria Descendente';break;
-		case 'unimed_asc':       $order_by = 'ORDER BY sistema_productos_uml.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Unidad Medida Ascendente';break;
-		case 'unimed_desc':      $order_by = 'ORDER BY sistema_productos_uml.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Unidad Medida Descendente';break;
-		case 'estado_asc':       $order_by = 'ORDER BY insumos_listado.idEstado ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':      $order_by = 'ORDER BY insumos_listado.idEstado DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'marca_asc':        $order_by = 'insumos_listado.Marca ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Marca Ascendente'; break;
+		case 'marca_desc':       $order_by = 'insumos_listado.Marca DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Marca Descendente';break;
+		case 'nombre_asc':       $order_by = 'insumos_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
+		case 'nombre_desc':      $order_by = 'insumos_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'categoria_asc':    $order_by = 'sistema_productos_categorias.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente';break;
+		case 'categoria_desc':   $order_by = 'sistema_productos_categorias.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Categoria Descendente';break;
+		case 'unimed_asc':       $order_by = 'sistema_productos_uml.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Unidad Medida Ascendente';break;
+		case 'unimed_desc':      $order_by = 'sistema_productos_uml.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Unidad Medida Descendente';break;
+		case 'estado_asc':       $order_by = 'insumos_listado.idEstado ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':      $order_by = 'insumos_listado.idEstado DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY insumos_listado.idEstado ASC, insumos_listado.Marca ASC, insumos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado, Marca, Nombre Ascendente';
+		default: $order_by = 'insumos_listado.idEstado ASC, insumos_listado.Marca ASC, insumos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado, Marca, Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY insumos_listado.idEstado ASC, insumos_listado.Marca ASC, insumos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado, Marca, Nombre Ascendente';
+	$order_by = 'insumos_listado.idEstado ASC, insumos_listado.Marca ASC, insumos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado, Marca, Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE insumos_listado.idProducto >= 1";
+$SIS_where = "insumos_listado.idProducto >= 1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){           $z .= " AND insumos_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){ $z .= " AND insumos_listado.idCategoria=".$_GET['idCategoria'];}
-if(isset($_GET['Marca']) && $_GET['Marca'] != ''){             $z .= " AND insumos_listado.Marca LIKE '%".$_GET['Marca']."%'";}
-if(isset($_GET['idUml']) && $_GET['idUml'] != ''){             $z .= " AND insumos_listado.idUml=".$_GET['idUml'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){           $SIS_where .= " AND insumos_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){ $SIS_where .= " AND insumos_listado.idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['Marca']) && $_GET['Marca'] != ''){             $SIS_where .= " AND insumos_listado.Marca LIKE '%".$_GET['Marca']."%'";}
+if(isset($_GET['idUml']) && $_GET['idUml'] != ''){             $SIS_where .= " AND insumos_listado.idUml=".$_GET['idUml'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT insumos_listado.idProducto FROM `insumos_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idProducto', 'insumos_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 insumos_listado.idProducto,
 insumos_listado.Nombre AS NombreProd,
 insumos_listado.Marca,
@@ -333,33 +319,17 @@ insumos_listado.idTipoImagen,
 sistema_productos_categorias.Nombre AS Categoria,
 sistema_productos_uml.Nombre AS Unimed,
 core_estados.Nombre AS Estado,
-insumos_listado.idEstado
-
-FROM `insumos_listado`
-LEFT JOIN `sistema_productos_categorias`     ON sistema_productos_categorias.idCategoria         = insumos_listado.idCategoria
-LEFT JOIN `sistema_productos_uml`            ON sistema_productos_uml.idUml                      = insumos_listado.idUml
-LEFT JOIN `core_estados`                     ON core_estados.idEstado                            = insumos_listado.idEstado
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
+insumos_listado.idEstado';
+$SIS_join  = '
+LEFT JOIN `sistema_productos_categorias`  ON sistema_productos_categorias.idCategoria = insumos_listado.idCategoria
+LEFT JOIN `sistema_productos_uml`         ON sistema_productos_uml.idUml              = insumos_listado.idUml
+LEFT JOIN `core_estados`                  ON core_estados.idEstado                    = insumos_listado.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

@@ -195,84 +195,55 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':     $order_by = 'ORDER BY vehiculos_costos.Creacion_fecha ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':    $order_by = 'ORDER BY vehiculos_costos.Creacion_fecha DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'tipo_asc':      $order_by = 'ORDER BY vehiculos_costos_tipo.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente';break;
-		case 'tipo_desc':     $order_by = 'ORDER BY vehiculos_costos_tipo.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
-		case 'vehiculo_asc':  $order_by = 'ORDER BY vehiculos_listado.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Vehiculo Ascendente'; break;
-		case 'vehiculo_desc': $order_by = 'ORDER BY vehiculos_listado.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Vehiculo Descendente';break;
-		case 'valor_asc':     $order_by = 'ORDER BY vehiculos_costos.Valor ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Ascendente';break;
-		case 'valor_desc':    $order_by = 'ORDER BY vehiculos_costos.Valor DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Descendente';break;
+		case 'fecha_asc':     $order_by = 'vehiculos_costos.Creacion_fecha ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':    $order_by = 'vehiculos_costos.Creacion_fecha DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'tipo_asc':      $order_by = 'vehiculos_costos_tipo.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente';break;
+		case 'tipo_desc':     $order_by = 'vehiculos_costos_tipo.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
+		case 'vehiculo_asc':  $order_by = 'vehiculos_listado.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Vehiculo Ascendente'; break;
+		case 'vehiculo_desc': $order_by = 'vehiculos_listado.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Vehiculo Descendente';break;
+		case 'valor_asc':     $order_by = 'vehiculos_costos.Valor ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Ascendente';break;
+		case 'valor_desc':    $order_by = 'vehiculos_costos.Valor DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Descendente';break;
 		
-		default: $order_by = 'ORDER BY vehiculos_costos.Creacion_fecha ASC, vehiculos_costos_tipo.Nombre ASC, vehiculos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha, Tipo, Vehiculo Ascendente';
+		default: $order_by = 'vehiculos_costos.Creacion_fecha ASC, vehiculos_costos_tipo.Nombre ASC, vehiculos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha, Tipo, Vehiculo Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY vehiculos_costos.Creacion_fecha ASC, vehiculos_costos_tipo.Nombre ASC, vehiculos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha, Tipo, Vehiculo Ascendente';
+	$order_by = 'vehiculos_costos.Creacion_fecha ASC, vehiculos_costos_tipo.Nombre ASC, vehiculos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha, Tipo, Vehiculo Ascendente';
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE vehiculos_costos.idCosto!=0";
+$SIS_where = "vehiculos_costos.idCosto!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                  $z .= " AND vehiculos_costos_tipo.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['idVehiculo']) && $_GET['idVehiculo'] != ''){          $z .= " AND vehiculos_costos_tipo.idVehiculo=".$_GET['idVehiculo'];}
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $z .= " AND vehiculos_costos_tipo.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['Valor']) && $_GET['Valor'] != ''){                    $z .= " AND vehiculos_costos_tipo.Valor LIKE '%".$_GET['Valor']."%'";}
-if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){    $z .= " AND vehiculos_costos_tipo.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                  $SIS_where .= " AND vehiculos_costos_tipo.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idVehiculo']) && $_GET['idVehiculo'] != ''){          $SIS_where .= " AND vehiculos_costos_tipo.idVehiculo=".$_GET['idVehiculo'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $SIS_where .= " AND vehiculos_costos_tipo.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['Valor']) && $_GET['Valor'] != ''){                    $SIS_where .= " AND vehiculos_costos_tipo.Valor LIKE '%".$_GET['Valor']."%'";}
+if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){    $SIS_where .= " AND vehiculos_costos_tipo.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idCosto FROM `vehiculos_costos` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idCosto', 'vehiculos_costos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrCategorias = array();
-$query = "SELECT 
+$SIS_query = '
 vehiculos_costos.idCosto,
 vehiculos_costos_tipo.Nombre AS Tipo,
 vehiculos_listado.Nombre AS VehiculoNombre,
 vehiculos_listado.Patente AS VehiculoPatente,
 vehiculos_costos.Creacion_fecha,
-vehiculos_costos.Valor
-
-FROM `vehiculos_costos`
+vehiculos_costos.Valor';
+$SIS_join  = '
 LEFT JOIN `vehiculos_costos_tipo`   ON vehiculos_costos_tipo.idTipo   = vehiculos_costos.idTipo
-LEFT JOIN `vehiculos_listado`       ON vehiculos_listado.idVehiculo   = vehiculos_costos.idVehiculo
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCategorias,$row );
-}?>
+LEFT JOIN `vehiculos_listado`       ON vehiculos_listado.idVehiculo   = vehiculos_costos.idVehiculo';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrCategorias = array();
+$arrCategorias = db_select_array (false, $SIS_query, 'vehiculos_costos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

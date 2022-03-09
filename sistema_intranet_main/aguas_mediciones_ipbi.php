@@ -184,78 +184,48 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'mes_asc':     $order_by = 'ORDER BY core_tiempo_meses.Nombre ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mes Ascendente'; break;
-		case 'mes_desc':    $order_by = 'ORDER BY core_tiempo_meses.Nombre DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mes Descendente';break;
-		case 'ano_asc':     $order_by = 'ORDER BY aguas_mediciones_ipbi.Ano ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año Ascendente'; break;
-		case 'ano_desc':    $order_by = 'ORDER BY aguas_mediciones_ipbi.Ano DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Año Descendente';break;
-		case 'valor_asc':   $order_by = 'ORDER BY aguas_mediciones_ipbi.Valor ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Ascendente'; break;
-		case 'valor_desc':  $order_by = 'ORDER BY aguas_mediciones_ipbi.Valor DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Descendente';break;
+		case 'mes_asc':     $order_by = 'core_tiempo_meses.Nombre ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mes Ascendente'; break;
+		case 'mes_desc':    $order_by = 'core_tiempo_meses.Nombre DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mes Descendente';break;
+		case 'ano_asc':     $order_by = 'aguas_mediciones_ipbi.Ano ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año Ascendente'; break;
+		case 'ano_desc':    $order_by = 'aguas_mediciones_ipbi.Ano DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Año Descendente';break;
+		case 'valor_asc':   $order_by = 'aguas_mediciones_ipbi.Valor ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Ascendente'; break;
+		case 'valor_desc':  $order_by = 'aguas_mediciones_ipbi.Valor DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Descendente';break;
 		
-		default: $order_by = 'ORDER BY aguas_mediciones_ipbi.Ano ASC, core_tiempo_meses.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año, Mes Ascendente';
+		default: $order_by = 'aguas_mediciones_ipbi.Ano ASC, core_tiempo_meses.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año, Mes Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY aguas_mediciones_ipbi.Ano ASC, core_tiempo_meses.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año, Mes Ascendente';
+	$order_by = 'aguas_mediciones_ipbi.Ano ASC, core_tiempo_meses.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año, Mes Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE aguas_mediciones_ipbi.idIPBI!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND aguas_mediciones_ipbi.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "aguas_mediciones_ipbi.idIPBI!=0";
+$SIS_where.= " AND aguas_mediciones_ipbi.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Ano']) && $_GET['Ano'] != ''){       $z .= " AND aguas_mediciones_ipbi.Ano='".$_GET['Ano']."'";}
-if(isset($_GET['idMes']) && $_GET['idMes'] != ''){   $z .= " AND aguas_mediciones_ipbi.idMes='".$_GET['idMes']."'";}
-if(isset($_GET['Valor']) && $_GET['Valor'] != ''){   $z .= " AND aguas_mediciones_ipbi.Valor='".$_GET['Valor']."'";}
+if(isset($_GET['Ano']) && $_GET['Ano'] != ''){       $SIS_where .= " AND aguas_mediciones_ipbi.Ano='".$_GET['Ano']."'";}
+if(isset($_GET['idMes']) && $_GET['idMes'] != ''){   $SIS_where .= " AND aguas_mediciones_ipbi.idMes='".$_GET['idMes']."'";}
+if(isset($_GET['Valor']) && $_GET['Valor'] != ''){   $SIS_where .= " AND aguas_mediciones_ipbi.Valor='".$_GET['Valor']."'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idIPBI FROM `aguas_mediciones_ipbi` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idIPBI', 'aguas_mediciones_ipbi', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUML = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_mediciones_ipbi.idIPBI,
 aguas_mediciones_ipbi.Ano, 
 aguas_mediciones_ipbi.Valor,
 core_sistemas.Nombre AS sistema,
-core_tiempo_meses.Nombre AS Mes
-
-FROM `aguas_mediciones_ipbi`
+core_tiempo_meses.Nombre AS Mes';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema    = aguas_mediciones_ipbi.idSistema
-LEFT JOIN `core_tiempo_meses`   ON core_tiempo_meses.idMes    = aguas_mediciones_ipbi.idMes
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUML,$row );
-}?>
+LEFT JOIN `core_tiempo_meses`   ON core_tiempo_meses.idMes    = aguas_mediciones_ipbi.idMes';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUML = array();
+$arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_ipbi', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUML');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

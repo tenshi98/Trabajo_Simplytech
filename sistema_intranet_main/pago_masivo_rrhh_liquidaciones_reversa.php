@@ -236,26 +236,26 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':        $order_by = 'ORDER BY pagos_rrhh_liquidaciones_reversa.Fecha ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':       $order_by = 'ORDER BY pagos_rrhh_liquidaciones_reversa.Fecha DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'documento_asc':    $order_by = 'ORDER BY sistema_documentos_pago.Nombre ASC ';                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Documento Ascendente'; break;
-		case 'documento_desc':   $order_by = 'ORDER BY sistema_documentos_pago.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Documento Descendente';break;
-		case 'n_documento_asc':  $order_by = 'ORDER BY pagos_rrhh_liquidaciones_reversa.N_DocPago ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Documento Ascendente'; break;
-		case 'n_documento_desc': $order_by = 'ORDER BY pagos_rrhh_liquidaciones_reversa.N_DocPago DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Documento Descendente';break;
-		case 'monto_asc':        $order_by = 'ORDER BY pagos_rrhh_liquidaciones_reversa.Monto ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Monto Ascendente'; break;
-		case 'monto_desc':       $order_by = 'ORDER BY pagos_rrhh_liquidaciones_reversa.Monto DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Monto Descendente';break;
-		case 'usuario_asc':      $order_by = 'ORDER BY usuarios_listado.Nombre AS Usuario ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
-		case 'usuario_desc':     $order_by = 'ORDER BY usuarios_listado.Nombre AS Usuario DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'fecha_asc':        $order_by = 'pagos_rrhh_liquidaciones_reversa.Fecha ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':       $order_by = 'pagos_rrhh_liquidaciones_reversa.Fecha DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'documento_asc':    $order_by = 'sistema_documentos_pago.Nombre ASC ';                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Documento Ascendente'; break;
+		case 'documento_desc':   $order_by = 'sistema_documentos_pago.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Documento Descendente';break;
+		case 'n_documento_asc':  $order_by = 'pagos_rrhh_liquidaciones_reversa.N_DocPago ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Documento Ascendente'; break;
+		case 'n_documento_desc': $order_by = 'pagos_rrhh_liquidaciones_reversa.N_DocPago DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Documento Descendente';break;
+		case 'monto_asc':        $order_by = 'pagos_rrhh_liquidaciones_reversa.Monto ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Monto Ascendente'; break;
+		case 'monto_desc':       $order_by = 'pagos_rrhh_liquidaciones_reversa.Monto DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Monto Descendente';break;
+		case 'usuario_asc':      $order_by = 'usuarios_listado.Nombre AS Usuario ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
+		case 'usuario_desc':     $order_by = 'usuarios_listado.Nombre AS Usuario DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
 		
-		default: $order_by = 'ORDER BY pagos_rrhh_liquidaciones_reversa.Fecha ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';
+		default: $order_by = 'pagos_rrhh_liquidaciones_reversa.Fecha ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY pagos_rrhh_liquidaciones_reversa.Fecha ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';
+	$order_by = 'pagos_rrhh_liquidaciones_reversa.Fecha ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';
 }
 
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE pagos_rrhh_liquidaciones_reversa.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = "pagos_rrhh_liquidaciones_reversa.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
 //Verifico el tipo de usuario que esta ingresando
@@ -264,68 +264,35 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){   $z .= " AND pagos_rrhh_liquidaciones_reversa.idDocPago=".$_GET['idDocPago'];}
-if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){   $z .= " AND pagos_rrhh_liquidaciones_reversa.N_DocPago=".$_GET['N_DocPago'];}
-if(isset($_GET['Monto']) && $_GET['Monto'] != ''){           $z .= " AND pagos_rrhh_liquidaciones_reversa.Monto=".$_GET['Monto'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $z .= " AND pagos_rrhh_liquidaciones_reversa.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){   $SIS_where .= " AND pagos_rrhh_liquidaciones_reversa.idDocPago=".$_GET['idDocPago'];}
+if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){   $SIS_where .= " AND pagos_rrhh_liquidaciones_reversa.N_DocPago=".$_GET['N_DocPago'];}
+if(isset($_GET['Monto']) && $_GET['Monto'] != ''){           $SIS_where .= " AND pagos_rrhh_liquidaciones_reversa.Monto=".$_GET['Monto'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $SIS_where .= " AND pagos_rrhh_liquidaciones_reversa.idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['Fecha_Inicio'])&&$_GET['Fecha_Inicio']!=''&&isset($_GET['Fecha_Termino'])&&$_GET['Fecha_Termino']!=''){
-	$z.=" AND pagos_rrhh_liquidaciones_reversa.Fecha BETWEEN '".$_GET['Fecha_Inicio']."' AND '".$_GET['Fecha_Termino']."'";
-}			
+	$SIS_where.= " AND pagos_rrhh_liquidaciones_reversa.Fecha BETWEEN '".$_GET['Fecha_Inicio']."' AND '".$_GET['Fecha_Termino']."'";
+}					
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idReversa FROM `pagos_rrhh_liquidaciones_reversa` 
-LEFT JOIN `usuarios_listado`          ON usuarios_listado.idUsuario          = pagos_rrhh_liquidaciones_reversa.idUsuario
-LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago   = pagos_rrhh_liquidaciones_reversa.idDocPago
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idReversa', 'pagos_rrhh_liquidaciones_reversa', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrAFP = array();
-$query = "SELECT 
+$SIS_query = '
 pagos_rrhh_liquidaciones_reversa.Fecha,
 pagos_rrhh_liquidaciones_reversa.Hora,
 pagos_rrhh_liquidaciones_reversa.N_DocPago,
 pagos_rrhh_liquidaciones_reversa.Monto,
 
 usuarios_listado.Nombre AS Usuario,
-sistema_documentos_pago.Nombre AS DocPago
-
-FROM `pagos_rrhh_liquidaciones_reversa`
+sistema_documentos_pago.Nombre AS DocPago';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`          ON usuarios_listado.idUsuario          = pagos_rrhh_liquidaciones_reversa.idUsuario
-LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago   = pagos_rrhh_liquidaciones_reversa.idDocPago
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrAFP,$row );
-}?>
+LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago   = pagos_rrhh_liquidaciones_reversa.idDocPago';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrAFP = array();
+$arrAFP = db_select_array (false, $SIS_query, 'pagos_rrhh_liquidaciones_reversa', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAFP');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

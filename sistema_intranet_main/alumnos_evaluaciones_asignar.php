@@ -394,70 +394,55 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':        $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.Programada_fecha ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':       $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.Programada_fecha DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'tipo_asc':         $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.idAsignar ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Asignacion Ascendente'; break;
-		case 'tipo_desc':        $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.idAsignar DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Asignacion Descendente';break;
-		case 'curso_asc':        $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.idCurso ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Curso Ascendente'; break;
-		case 'curso_desc':       $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.idCurso DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Curso Descendente';break;
-		case 'evaluacion_asc':   $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.idQuiz ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Evaluacion Ascendente'; break;
-		case 'evaluacion_desc':  $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.idQuiz DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Evaluacion Descendente';break;
-		case 'npreg_asc':        $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.N_preguntas ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Preguntas Ascendente'; break;
-		case 'npreg_desc':       $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.N_preguntas DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Preguntas Descendente';break;
-		case 'nalum_asc':        $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.N_Alumnos ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Alumnos Ascendente'; break;
-		case 'nalum_desc':       $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.N_Alumnos DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Alumnos Descendente';break;
-		case 'reint_asc':        $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.N_Alumnos_Rep ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Reintentos Ascendente'; break;
-		case 'reint_desc':       $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.N_Alumnos_Rep DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Reintentos Descendente';break;
-		case 'semana_asc':       $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.Semana ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Semana Ascendente'; break;
-		case 'semana_desc':      $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.Semana DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Semana Descendente';break;
-		case 'nfallas_asc':      $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.N_Alumnos_Falla ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Fallas Ascendente'; break;
-		case 'nfallas_desc':     $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.N_Alumnos_Falla DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Fallas Descendente';break;
+		case 'fecha_asc':        $order_by = 'alumnos_evaluaciones_asignadas.Programada_fecha ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':       $order_by = 'alumnos_evaluaciones_asignadas.Programada_fecha DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'tipo_asc':         $order_by = 'alumnos_evaluaciones_asignadas.idAsignar ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Asignacion Ascendente'; break;
+		case 'tipo_desc':        $order_by = 'alumnos_evaluaciones_asignadas.idAsignar DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Asignacion Descendente';break;
+		case 'curso_asc':        $order_by = 'alumnos_evaluaciones_asignadas.idCurso ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Curso Ascendente'; break;
+		case 'curso_desc':       $order_by = 'alumnos_evaluaciones_asignadas.idCurso DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Curso Descendente';break;
+		case 'evaluacion_asc':   $order_by = 'alumnos_evaluaciones_asignadas.idQuiz ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Evaluacion Ascendente'; break;
+		case 'evaluacion_desc':  $order_by = 'alumnos_evaluaciones_asignadas.idQuiz DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Evaluacion Descendente';break;
+		case 'npreg_asc':        $order_by = 'alumnos_evaluaciones_asignadas.N_preguntas ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Preguntas Ascendente'; break;
+		case 'npreg_desc':       $order_by = 'alumnos_evaluaciones_asignadas.N_preguntas DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Preguntas Descendente';break;
+		case 'nalum_asc':        $order_by = 'alumnos_evaluaciones_asignadas.N_Alumnos ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Alumnos Ascendente'; break;
+		case 'nalum_desc':       $order_by = 'alumnos_evaluaciones_asignadas.N_Alumnos DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Alumnos Descendente';break;
+		case 'reint_asc':        $order_by = 'alumnos_evaluaciones_asignadas.N_Alumnos_Rep ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Reintentos Ascendente'; break;
+		case 'reint_desc':       $order_by = 'alumnos_evaluaciones_asignadas.N_Alumnos_Rep DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Reintentos Descendente';break;
+		case 'semana_asc':       $order_by = 'alumnos_evaluaciones_asignadas.Semana ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Semana Ascendente'; break;
+		case 'semana_desc':      $order_by = 'alumnos_evaluaciones_asignadas.Semana DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Semana Descendente';break;
+		case 'nfallas_asc':      $order_by = 'alumnos_evaluaciones_asignadas.N_Alumnos_Falla ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Fallas Ascendente'; break;
+		case 'nfallas_desc':     $order_by = 'alumnos_evaluaciones_asignadas.N_Alumnos_Falla DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Fallas Descendente';break;
 		
 		
 		
-		default: $order_by = 'ORDER BY alumnos_evaluaciones_asignadas.Programada_fecha DESC'; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+		default: $order_by = 'alumnos_evaluaciones_asignadas.Programada_fecha DESC'; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY alumnos_evaluaciones_asignadas.Programada_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+	$order_by = 'alumnos_evaluaciones_asignadas.Programada_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE alumnos_evaluaciones_asignadas.idAsignadas!=0";
-//verifico que sea un administrador
-$z.=" AND alumnos_evaluaciones_asignadas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "alumnos_evaluaciones_asignadas.idAsignadas!=0";
+$SIS_where.= " AND alumnos_evaluaciones_asignadas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//verifico que sea un administrador	
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idAsignar']) && $_GET['idAsignar'] != ''){                 $z .= " AND alumnos_evaluaciones_asignadas.idAsignar=".$_GET['idAsignar'];}
-if(isset($_GET['idCurso']) && $_GET['idCurso'] != ''){                     $z .= " AND alumnos_evaluaciones_asignadas.idCurso=".$_GET['idCurso'];}
-if(isset($_GET['idQuiz']) && $_GET['idQuiz'] != ''){                       $z .= " AND alumnos_evaluaciones_asignadas.idQuiz=".$_GET['idQuiz'];}
-if(isset($_GET['Programada_fecha']) && $_GET['Programada_fecha'] != ''){   $z .= " AND alumnos_evaluaciones_asignadas.Programada_fecha='".$_GET['Programada_fecha']."'";}
-if(isset($_GET['N_preguntas']) && $_GET['N_preguntas'] != ''){             $z .= " AND alumnos_evaluaciones_asignadas.N_preguntas=".$_GET['N_preguntas'];}
-if(isset($_GET['N_Alumnos']) && $_GET['N_Alumnos'] != ''){                 $z .= " AND alumnos_evaluaciones_asignadas.N_Alumnos=".$_GET['N_Alumnos'];}
-if(isset($_GET['N_Alumnos_Falla']) && $_GET['N_Alumnos_Falla'] != ''){     $z .= " AND alumnos_evaluaciones_asignadas.N_Alumnos_Falla=".$_GET['N_Alumnos_Falla'];}
-if(isset($_GET['N_Alumnos_Rep']) && $_GET['N_Alumnos_Rep'] != ''){         $z .= " AND alumnos_evaluaciones_asignadas.N_Alumnos_Rep=".$_GET['N_Alumnos_Rep'];}
+if(isset($_GET['idAsignar']) && $_GET['idAsignar'] != ''){                 $SIS_where .= " AND alumnos_evaluaciones_asignadas.idAsignar=".$_GET['idAsignar'];}
+if(isset($_GET['idCurso']) && $_GET['idCurso'] != ''){                     $SIS_where .= " AND alumnos_evaluaciones_asignadas.idCurso=".$_GET['idCurso'];}
+if(isset($_GET['idQuiz']) && $_GET['idQuiz'] != ''){                       $SIS_where .= " AND alumnos_evaluaciones_asignadas.idQuiz=".$_GET['idQuiz'];}
+if(isset($_GET['Programada_fecha']) && $_GET['Programada_fecha'] != ''){   $SIS_where .= " AND alumnos_evaluaciones_asignadas.Programada_fecha='".$_GET['Programada_fecha']."'";}
+if(isset($_GET['N_preguntas']) && $_GET['N_preguntas'] != ''){             $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_preguntas=".$_GET['N_preguntas'];}
+if(isset($_GET['N_Alumnos']) && $_GET['N_Alumnos'] != ''){                 $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_Alumnos=".$_GET['N_Alumnos'];}
+if(isset($_GET['N_Alumnos_Falla']) && $_GET['N_Alumnos_Falla'] != ''){     $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_Alumnos_Falla=".$_GET['N_Alumnos_Falla'];}
+if(isset($_GET['N_Alumnos_Rep']) && $_GET['N_Alumnos_Rep'] != ''){         $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_Alumnos_Rep=".$_GET['N_Alumnos_Rep'];}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT alumnos_evaluaciones_asignadas.idAsignadas FROM `alumnos_evaluaciones_asignadas` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'alumnos_evaluaciones_asignadas.idAsignadas', 'alumnos_evaluaciones_asignadas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 alumnos_evaluaciones_asignadas.idAsignadas,
 alumnos_evaluaciones_asignadas.Programada_fecha,
 alumnos_evaluaciones_asignadas.N_preguntas,
@@ -468,32 +453,16 @@ alumnos_evaluaciones_asignar.Nombre AS Asignar,
 cursos_listado.Nombre AS Curso,
 quiz_listado.Nombre AS Quiz,
 core_sistemas.Nombre AS Sistema,
-alumnos_evaluaciones_asignadas.idQuiz
-
-FROM `alumnos_evaluaciones_asignadas`
+alumnos_evaluaciones_asignadas.idQuiz';
+$SIS_join  = '
 LEFT JOIN `alumnos_evaluaciones_asignar`   ON alumnos_evaluaciones_asignar.idAsignar   = alumnos_evaluaciones_asignadas.idAsignar
 LEFT JOIN `cursos_listado`                 ON cursos_listado.idCurso                   = alumnos_evaluaciones_asignadas.idCurso
 LEFT JOIN `quiz_listado`                   ON quiz_listado.idQuiz                      = alumnos_evaluaciones_asignadas.idQuiz
-LEFT JOIN `core_sistemas`                  ON core_sistemas.idSistema                  = alumnos_evaluaciones_asignadas.idSistema
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+LEFT JOIN `core_sistemas`                  ON core_sistemas.idSistema                  = alumnos_evaluaciones_asignadas.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignadas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
+
 //Verifico el tipo de usuario que esta ingresando
 $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>

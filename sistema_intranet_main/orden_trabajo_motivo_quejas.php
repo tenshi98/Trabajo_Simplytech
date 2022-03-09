@@ -214,58 +214,43 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'ot_asc':        $order_by = 'ORDER BY orden_trabajo_tareas_quejas.idOT ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> OT Ascendente';break;
-		case 'ot_desc':       $order_by = 'ORDER BY orden_trabajo_tareas_quejas.idOT DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> OT Descendente';break;
-		case 'usuario_asc':   $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
-		case 'usuario_desc':  $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'queja_asc':     $order_by = 'ORDER BY usuario_queja.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Queja Ascendente';break;
-		case 'queja_desc':    $order_by = 'ORDER BY usuario_queja.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Queja Descendente';break;
-		case 'tipo_asc':      $order_by = 'ORDER BY core_tipo_queja.Nombre ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Queja Ascendente';break;
-		case 'tipo_desc':     $order_by = 'ORDER BY core_tipo_queja.Nombre DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Queja Descendente';break;
-		case 'fecha_asc':     $order_by = 'ORDER BY orden_trabajo_tareas_quejas.FechaQueja ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Queja Ascendente';break;
-		case 'fecha_desc':    $order_by = 'ORDER BY orden_trabajo_tareas_quejas.FechaQueja DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Queja Descendente';break;
+		case 'ot_asc':        $order_by = 'orden_trabajo_tareas_quejas.idOT ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> OT Ascendente';break;
+		case 'ot_desc':       $order_by = 'orden_trabajo_tareas_quejas.idOT DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> OT Descendente';break;
+		case 'usuario_asc':   $order_by = 'usuarios_listado.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
+		case 'usuario_desc':  $order_by = 'usuarios_listado.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'queja_asc':     $order_by = 'usuario_queja.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Queja Ascendente';break;
+		case 'queja_desc':    $order_by = 'usuario_queja.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Queja Descendente';break;
+		case 'tipo_asc':      $order_by = 'core_tipo_queja.Nombre ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Queja Ascendente';break;
+		case 'tipo_desc':     $order_by = 'core_tipo_queja.Nombre DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Queja Descendente';break;
+		case 'fecha_asc':     $order_by = 'orden_trabajo_tareas_quejas.FechaQueja ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Queja Ascendente';break;
+		case 'fecha_desc':    $order_by = 'orden_trabajo_tareas_quejas.FechaQueja DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Queja Descendente';break;
 		
-		default: $order_by = 'ORDER BY orden_trabajo_tareas_quejas.idOT DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> OT Ascendente';
+		default: $order_by = 'orden_trabajo_tareas_quejas.idOT DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> OT Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY orden_trabajo_tareas_quejas.idOT DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> OT Ascendente';
+	$order_by = 'orden_trabajo_tareas_quejas.idOT DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> OT Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE orden_trabajo_tareas_quejas.idQueja!=0";
+$SIS_where = "orden_trabajo_tareas_quejas.idQueja!=0";
 //sistema
-$z.=" AND orden_trabajo_tareas_quejas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND orden_trabajo_tareas_quejas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){                   $z .= " AND orden_trabajo_tareas_quejas.idUsuario=".$_GET['idUsuario'];}
-if(isset($_GET['idOT']) && $_GET['idOT'] != ''){                             $z .= " AND orden_trabajo_tareas_quejas.idOT='".$_GET['idOT']."'";}
-if(isset($_GET['idUsuarioQueja']) && $_GET['idUsuarioQueja'] != ''){         $z .= " AND orden_trabajo_tareas_quejas.idUsuarioQueja=".$_GET['idUsuarioQueja'];}
-if(isset($_GET['idTrabajadorQueja']) && $_GET['idTrabajadorQueja'] != ''){   $z .= " AND orden_trabajo_tareas_quejas.idTrabajadorQueja=".$_GET['idTrabajadorQueja'];}
-if(isset($_GET['NombreQueja']) && $_GET['NombreQueja'] != ''){               $z .= " AND orden_trabajo_tareas_quejas.NombreQueja=".$_GET['NombreQueja'];}
-if(isset($_GET['idTipoQueja']) && $_GET['idTipoQueja'] != ''){               $z .= " AND orden_trabajo_tareas_quejas.idTipoQueja=".$_GET['idTipoQueja'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){                   $SIS_where .= " AND orden_trabajo_tareas_quejas.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idOT']) && $_GET['idOT'] != ''){                             $SIS_where .= " AND orden_trabajo_tareas_quejas.idOT='".$_GET['idOT']."'";}
+if(isset($_GET['idUsuarioQueja']) && $_GET['idUsuarioQueja'] != ''){         $SIS_where .= " AND orden_trabajo_tareas_quejas.idUsuarioQueja=".$_GET['idUsuarioQueja'];}
+if(isset($_GET['idTrabajadorQueja']) && $_GET['idTrabajadorQueja'] != ''){   $SIS_where .= " AND orden_trabajo_tareas_quejas.idTrabajadorQueja=".$_GET['idTrabajadorQueja'];}
+if(isset($_GET['NombreQueja']) && $_GET['NombreQueja'] != ''){               $SIS_where .= " AND orden_trabajo_tareas_quejas.NombreQueja=".$_GET['NombreQueja'];}
+if(isset($_GET['idTipoQueja']) && $_GET['idTipoQueja'] != ''){               $SIS_where .= " AND orden_trabajo_tareas_quejas.idTipoQueja=".$_GET['idTipoQueja'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idQueja FROM `orden_trabajo_tareas_quejas` 
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idQueja', 'orden_trabajo_tareas_quejas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 orden_trabajo_tareas_quejas.idQueja,
 orden_trabajo_tareas_quejas.idOT,
 core_sistemas.Nombre AS sistema,
@@ -276,33 +261,17 @@ trabajadores_listado.ApellidoMat AS TrabajadorApellidoMat,
 orden_trabajo_tareas_quejas.NombreQueja,
 usuario_queja.Nombre AS UsuarioQueja,
 core_tipo_queja.Nombre AS TipoQueja,
-orden_trabajo_tareas_quejas.FechaQueja
-
-FROM `orden_trabajo_tareas_quejas`
+orden_trabajo_tareas_quejas.FechaQueja';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                   ON core_sistemas.idSistema              = orden_trabajo_tareas_quejas.idSistema
 LEFT JOIN `usuarios_listado`                ON usuarios_listado.idUsuario           = orden_trabajo_tareas_quejas.idUsuario
 LEFT JOIN `trabajadores_listado`            ON trabajadores_listado.idTrabajador    = orden_trabajo_tareas_quejas.idTrabajadorQueja
 LEFT JOIN `usuarios_listado` usuario_queja  ON usuario_queja.idUsuario              = orden_trabajo_tareas_quejas.idUsuarioQueja
-LEFT JOIN `core_tipo_queja`                 ON core_tipo_queja.idTipoQueja          = orden_trabajo_tareas_quejas.idTipoQueja
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+LEFT JOIN `core_tipo_queja`                 ON core_tipo_queja.idTipoQueja          = orden_trabajo_tareas_quejas.idTipoQueja';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
+
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
 //Verifico el tipo de usuario que esta ingresando

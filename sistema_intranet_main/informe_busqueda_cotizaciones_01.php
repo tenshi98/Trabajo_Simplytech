@@ -29,10 +29,6 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
-
-             
-  
-
 //paginador de resultados
 if(isset($_GET["pagina"])){
 	$num_pag = $_GET["pagina"];	
@@ -52,87 +48,54 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'ndoc_asc':          $order_by = 'ORDER BY cotizacion_listado.idCotizacion ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Doc Ascendente';break;
-		case 'ndoc_desc':         $order_by = 'ORDER BY cotizacion_listado.idCotizacion DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Doc Descendente';break;
-		case 'cliente_asc':       $order_by = 'ORDER BY clientes_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente Ascendente';break;
-		case 'cliente_desc':      $order_by = 'ORDER BY clientes_listado.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
-		case 'vendedor_asc':      $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Vendedor Ascendente';break;
-		case 'vendedor_desc':     $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Vendedor Descendente';break;
-		case 'fecha_asc':         $order_by = 'ORDER BY cotizacion_listado.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':        $order_by = 'ORDER BY cotizacion_listado.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'ndoc_asc':          $order_by = 'cotizacion_listado.idCotizacion ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Doc Ascendente';break;
+		case 'ndoc_desc':         $order_by = 'cotizacion_listado.idCotizacion DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Doc Descendente';break;
+		case 'cliente_asc':       $order_by = 'clientes_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente Ascendente';break;
+		case 'cliente_desc':      $order_by = 'clientes_listado.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
+		case 'vendedor_asc':      $order_by = 'usuarios_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Vendedor Ascendente';break;
+		case 'vendedor_desc':     $order_by = 'usuarios_listado.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Vendedor Descendente';break;
+		case 'fecha_asc':         $order_by = 'cotizacion_listado.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':        $order_by = 'cotizacion_listado.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
 		
-		default: $order_by = 'ORDER BY cotizacion_listado.idCotizacion DESC, cotizacion_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Doc, Fecha Descendente';
+		default: $order_by = 'cotizacion_listado.idCotizacion DESC, cotizacion_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Doc, Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY cotizacion_listado.idCotizacion DESC, cotizacion_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Doc, Fecha Descendente';
+	$order_by = 'cotizacion_listado.idCotizacion DESC, cotizacion_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Doc, Fecha Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE cotizacion_listado.idCotizacion>0";
-$z.=" AND cotizacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "cotizacion_listado.idCotizacion>0";
+$SIS_where.= " AND cotizacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z.=" AND cotizacion_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where.= " AND cotizacion_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){            $z .= " AND cotizacion_listado.idCliente=".$_GET['idCliente'];}
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $z .= " AND cotizacion_listado.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $z .= " AND cotizacion_listado.idUsuario='".$_GET['idUsuario']."'";}
+if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){            $SIS_where .= " AND cotizacion_listado.idCliente=".$_GET['idCliente'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $SIS_where .= " AND cotizacion_listado.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $SIS_where .= " AND cotizacion_listado.idUsuario='".$_GET['idUsuario']."'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idCotizacion FROM `cotizacion_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idCotizacion', 'cotizacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);
-
-//consulta
-$arrCotizaciones = array();
-$query = "SELECT 
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los elementos
+$SIS_query = '
 cotizacion_listado.idCotizacion,
 cotizacion_listado.Creacion_fecha,
 clientes_listado.Nombre AS Cliente,
-usuarios_listado.Nombre AS Vendedor
-
-FROM `cotizacion_listado`
+usuarios_listado.Nombre AS Vendedor';
+$SIS_join  = '
 LEFT JOIN `clientes_listado`   ON clientes_listado.idCliente   = cotizacion_listado.idCliente 
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario   = cotizacion_listado.idUsuario 
-
-".$z." 
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCotizaciones,$row );
-}
-
+LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario   = cotizacion_listado.idUsuario ';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrCotizaciones = array();
+$arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCotizaciones');
 
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

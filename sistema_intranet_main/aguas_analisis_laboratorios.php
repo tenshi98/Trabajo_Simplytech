@@ -185,77 +185,46 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY aguas_analisis_laboratorios.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY aguas_analisis_laboratorios.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'codigo_asc':    $order_by = 'ORDER BY aguas_analisis_laboratorios.Codigo ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Ascendente'; break;
-		case 'codigo_desc':   $order_by = 'ORDER BY aguas_analisis_laboratorios.Codigo DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Descendente';break;
-		case 'rut_asc':       $order_by = 'ORDER BY aguas_analisis_laboratorios.Rut ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
-		case 'rut_desc':      $order_by = 'ORDER BY aguas_analisis_laboratorios.Rut DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
+		case 'nombre_asc':    $order_by = 'aguas_analisis_laboratorios.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'aguas_analisis_laboratorios.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'codigo_asc':    $order_by = 'aguas_analisis_laboratorios.Codigo ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Ascendente'; break;
+		case 'codigo_desc':   $order_by = 'aguas_analisis_laboratorios.Codigo DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Descendente';break;
+		case 'rut_asc':       $order_by = 'aguas_analisis_laboratorios.Rut ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
+		case 'rut_desc':      $order_by = 'aguas_analisis_laboratorios.Rut DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
 		
-		default: $order_by = 'ORDER BY aguas_analisis_laboratorios.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'aguas_analisis_laboratorios.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY aguas_analisis_laboratorios.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'aguas_analisis_laboratorios.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE aguas_analisis_laboratorios.idLaboratorio!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND aguas_analisis_laboratorios.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "aguas_analisis_laboratorios.idLaboratorio!=0";
+$SIS_where.= " AND aguas_analisis_laboratorios.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	//Verifico el tipo de usuario que esta ingresando
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){ $z .= " AND aguas_analisis_laboratorios.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Codigo']) && $_GET['Codigo'] != ''){ $z .= " AND aguas_analisis_laboratorios.Codigo LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){       $z .= " AND aguas_analisis_laboratorios.Rut LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){ $SIS_where .= " AND aguas_analisis_laboratorios.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Codigo']) && $_GET['Codigo'] != ''){ $SIS_where .= " AND aguas_analisis_laboratorios.Codigo LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut'] != ''){       $SIS_where .= " AND aguas_analisis_laboratorios.Rut LIKE '%".$_GET['Nombre']."%'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idLaboratorio FROM `aguas_analisis_laboratorios` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idLaboratorio', 'aguas_analisis_laboratorios', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUML = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_analisis_laboratorios.idLaboratorio,
 aguas_analisis_laboratorios.Nombre, 
 aguas_analisis_laboratorios.Codigo, 
 aguas_analisis_laboratorios.Rut,
-core_sistemas.Nombre AS sistema
+core_sistemas.Nombre AS sistema';
+$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = aguas_analisis_laboratorios.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUML = array();
+$arrUML = db_select_array (false, $SIS_query, 'aguas_analisis_laboratorios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUML');
 
-FROM `aguas_analisis_laboratorios`
-LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema    = aguas_analisis_laboratorios.idSistema
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUML,$row );
-}?>
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

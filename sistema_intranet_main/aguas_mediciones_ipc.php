@@ -211,65 +211,50 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'mes_asc':          $order_by = 'ORDER BY core_tiempo_meses.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mes Ascendente'; break;
-		case 'mes_desc':         $order_by = 'ORDER BY core_tiempo_meses.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mes Descendente';break;
-		case 'ano_asc':          $order_by = 'ORDER BY aguas_mediciones_ipc.Ano ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año Ascendente'; break;
-		case 'ano_desc':         $order_by = 'ORDER BY aguas_mediciones_ipc.Ano DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Año Descendente';break;
-		case 'utm_asc':          $order_by = 'ORDER BY aguas_mediciones_ipc.UTM ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> UTM Ascendente'; break;
-		case 'utm_desc':         $order_by = 'ORDER BY aguas_mediciones_ipc.UTM DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> UTM Descendente';break;
-		case 'uta_asc':          $order_by = 'ORDER BY aguas_mediciones_ipc.UTA ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> UTA Ascendente'; break;
-		case 'uta_desc':         $order_by = 'ORDER BY aguas_mediciones_ipc.UTA DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> UTA Descendente';break;
-		case 'valor_asc':        $order_by = 'ORDER BY aguas_mediciones_ipc.ValorPuntos ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Puntos Ascendente'; break;
-		case 'valor_desc':       $order_by = 'ORDER BY aguas_mediciones_ipc.ValorPuntos DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Puntos Descendente';break;
-		case 'mensual_asc':      $order_by = 'ORDER BY aguas_mediciones_ipc.Mensual ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mensual Ascendente'; break;
-		case 'mensual_desc':     $order_by = 'ORDER BY aguas_mediciones_ipc.Mensual DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mensual Descendente';break;
-		case 'acumulado_asc':    $order_by = 'ORDER BY aguas_mediciones_ipc.Acumulado ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Acumulado Ascendente'; break;
-		case 'acumulado_desc':   $order_by = 'ORDER BY aguas_mediciones_ipc.Acumulado DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Acumulado Descendente';break;
-		case 'doce_asc':         $order_by = 'ORDER BY aguas_mediciones_ipc.DoceMeses ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Doce Meses Ascendente'; break;
-		case 'doce_desc':        $order_by = 'ORDER BY aguas_mediciones_ipc.DoceMeses DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Doce Meses Descendente';break;
+		case 'mes_asc':          $order_by = 'core_tiempo_meses.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mes Ascendente'; break;
+		case 'mes_desc':         $order_by = 'core_tiempo_meses.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mes Descendente';break;
+		case 'ano_asc':          $order_by = 'aguas_mediciones_ipc.Ano ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año Ascendente'; break;
+		case 'ano_desc':         $order_by = 'aguas_mediciones_ipc.Ano DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Año Descendente';break;
+		case 'utm_asc':          $order_by = 'aguas_mediciones_ipc.UTM ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> UTM Ascendente'; break;
+		case 'utm_desc':         $order_by = 'aguas_mediciones_ipc.UTM DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> UTM Descendente';break;
+		case 'uta_asc':          $order_by = 'aguas_mediciones_ipc.UTA ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> UTA Ascendente'; break;
+		case 'uta_desc':         $order_by = 'aguas_mediciones_ipc.UTA DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> UTA Descendente';break;
+		case 'valor_asc':        $order_by = 'aguas_mediciones_ipc.ValorPuntos ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Puntos Ascendente'; break;
+		case 'valor_desc':       $order_by = 'aguas_mediciones_ipc.ValorPuntos DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Puntos Descendente';break;
+		case 'mensual_asc':      $order_by = 'aguas_mediciones_ipc.Mensual ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Mensual Ascendente'; break;
+		case 'mensual_desc':     $order_by = 'aguas_mediciones_ipc.Mensual DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Mensual Descendente';break;
+		case 'acumulado_asc':    $order_by = 'aguas_mediciones_ipc.Acumulado ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Acumulado Ascendente'; break;
+		case 'acumulado_desc':   $order_by = 'aguas_mediciones_ipc.Acumulado DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Acumulado Descendente';break;
+		case 'doce_asc':         $order_by = 'aguas_mediciones_ipc.DoceMeses ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Doce Meses Ascendente'; break;
+		case 'doce_desc':        $order_by = 'aguas_mediciones_ipc.DoceMeses DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Doce Meses Descendente';break;
 		
-		default: $order_by = 'ORDER BY aguas_mediciones_ipc.Ano ASC, core_tiempo_meses.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año, Mes Ascendente';
+		default: $order_by = 'aguas_mediciones_ipc.Ano ASC, core_tiempo_meses.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año, Mes Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY aguas_mediciones_ipc.Ano ASC, core_tiempo_meses.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año, Mes Ascendente';
+	$order_by = 'aguas_mediciones_ipc.Ano ASC, core_tiempo_meses.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año, Mes Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE aguas_mediciones_ipc.idIPC!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND aguas_mediciones_ipc.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "aguas_mediciones_ipc.idIPC!=0";
+$SIS_where.= " AND aguas_mediciones_ipc.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; //Verifico el tipo de usuario que esta ingresando
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Ano']) && $_GET['Ano'] != ''){                   $z .= " AND aguas_mediciones_ipc.Ano='".$_GET['Ano']."'";}
-if(isset($_GET['idMes']) && $_GET['idMes'] != ''){               $z .= " AND aguas_mediciones_ipc.idMes='".$_GET['idMes']."'";}
-if(isset($_GET['UTM']) && $_GET['UTM'] != ''){                   $z .= " AND aguas_mediciones_ipc.UTM='".$_GET['UTM']."'";}
-if(isset($_GET['UTA']) && $_GET['UTA'] != ''){                   $z .= " AND aguas_mediciones_ipc.UTA='".$_GET['UTA']."'";}
-if(isset($_GET['ValorPuntos']) && $_GET['ValorPuntos'] != ''){   $z .= " AND aguas_mediciones_ipc.ValorPuntos='".$_GET['ValorPuntos']."'";}
-if(isset($_GET['Mensual']) && $_GET['Mensual'] != ''){           $z .= " AND aguas_mediciones_ipc.Mensual='".$_GET['Mensual']."'";}
-if(isset($_GET['Acumulado']) && $_GET['Acumulado'] != ''){       $z .= " AND aguas_mediciones_ipc.Acumulado='".$_GET['Acumulado']."'";}
-if(isset($_GET['DoceMeses']) && $_GET['DoceMeses'] != ''){       $z .= " AND aguas_mediciones_ipc.DoceMeses='".$_GET['DoceMeses']."'";}
+if(isset($_GET['Ano']) && $_GET['Ano'] != ''){                   $SIS_where .= " AND aguas_mediciones_ipc.Ano='".$_GET['Ano']."'";}
+if(isset($_GET['idMes']) && $_GET['idMes'] != ''){               $SIS_where .= " AND aguas_mediciones_ipc.idMes='".$_GET['idMes']."'";}
+if(isset($_GET['UTM']) && $_GET['UTM'] != ''){                   $SIS_where .= " AND aguas_mediciones_ipc.UTM='".$_GET['UTM']."'";}
+if(isset($_GET['UTA']) && $_GET['UTA'] != ''){                   $SIS_where .= " AND aguas_mediciones_ipc.UTA='".$_GET['UTA']."'";}
+if(isset($_GET['ValorPuntos']) && $_GET['ValorPuntos'] != ''){   $SIS_where .= " AND aguas_mediciones_ipc.ValorPuntos='".$_GET['ValorPuntos']."'";}
+if(isset($_GET['Mensual']) && $_GET['Mensual'] != ''){           $SIS_where .= " AND aguas_mediciones_ipc.Mensual='".$_GET['Mensual']."'";}
+if(isset($_GET['Acumulado']) && $_GET['Acumulado'] != ''){       $SIS_where .= " AND aguas_mediciones_ipc.Acumulado='".$_GET['Acumulado']."'";}
+if(isset($_GET['DoceMeses']) && $_GET['DoceMeses'] != ''){       $SIS_where .= " AND aguas_mediciones_ipc.DoceMeses='".$_GET['DoceMeses']."'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idIPC FROM `aguas_mediciones_ipc` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idIPC', 'aguas_mediciones_ipc', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUML = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_mediciones_ipc.idIPC,
 aguas_mediciones_ipc.Ano,
 aguas_mediciones_ipc.UTM, 
@@ -279,30 +264,15 @@ aguas_mediciones_ipc.Mensual,
 aguas_mediciones_ipc.Acumulado,
 aguas_mediciones_ipc.DoceMeses,
 core_sistemas.Nombre AS sistema,
-core_tiempo_meses.Nombre AS Mes
-
-FROM `aguas_mediciones_ipc`
+core_tiempo_meses.Nombre AS Mes';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`       ON core_sistemas.idSistema    = aguas_mediciones_ipc.idSistema
-LEFT JOIN `core_tiempo_meses`   ON core_tiempo_meses.idMes    = aguas_mediciones_ipc.idMes
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUML,$row );
-}?>
+LEFT JOIN `core_tiempo_meses`   ON core_tiempo_meses.idMes    = aguas_mediciones_ipc.idMes';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUML = array();
+$arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_ipc', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUML');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

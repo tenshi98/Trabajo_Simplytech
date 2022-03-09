@@ -196,25 +196,25 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':        $order_by = 'ORDER BY trabajadores_horas_extras_facturacion_turnos.Creacion_fecha ASC ';                                                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Facturacion Ascendente';break;
-		case 'fecha_desc':       $order_by = 'ORDER BY trabajadores_horas_extras_facturacion_turnos.Creacion_fecha DESC ';                                                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';break;
-		case 'trabajador_asc':   $order_by = 'ORDER BY trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Trabajador Ascendente'; break;
-		case 'trabajador_desc':  $order_by = 'ORDER BY trabajadores_listado.ApellidoPat DESC, trabajadores_listado.ApellidoMat DESC, trabajadores_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Trabajador Descendente';break;
-		case 'usuario_asc':      $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                                                                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
-		case 'usuario_desc':     $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                                                                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'semana_asc':       $order_by = 'ORDER BY trabajadores_horas_extras_facturacion_turnos.nSem ASC ';                                                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Semana Ascendente'; break;
-		case 'semana_desc':      $order_by = 'ORDER BY trabajadores_horas_extras_facturacion_turnos.nSem DESC ';                                                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Semana Descendente';break;
-		case 'turno_asc':        $order_by = 'ORDER BY core_horas_extras_turnos.Nombre ASC ';                                                                              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Turno Ascendente'; break;
-		case 'turno_desc':       $order_by = 'ORDER BY core_horas_extras_turnos.Nombre DESC ';                                                                             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Turno Descendente';break;
+		case 'fecha_asc':        $order_by = 'trabajadores_horas_extras_facturacion_turnos.Creacion_fecha ASC ';                                                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Facturacion Ascendente';break;
+		case 'fecha_desc':       $order_by = 'trabajadores_horas_extras_facturacion_turnos.Creacion_fecha DESC ';                                                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';break;
+		case 'trabajador_asc':   $order_by = 'trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Trabajador Ascendente'; break;
+		case 'trabajador_desc':  $order_by = 'trabajadores_listado.ApellidoPat DESC, trabajadores_listado.ApellidoMat DESC, trabajadores_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Trabajador Descendente';break;
+		case 'usuario_asc':      $order_by = 'usuarios_listado.Nombre ASC ';                                                                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
+		case 'usuario_desc':     $order_by = 'usuarios_listado.Nombre DESC ';                                                                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'semana_asc':       $order_by = 'trabajadores_horas_extras_facturacion_turnos.nSem ASC ';                                                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Semana Ascendente'; break;
+		case 'semana_desc':      $order_by = 'trabajadores_horas_extras_facturacion_turnos.nSem DESC ';                                                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Semana Descendente';break;
+		case 'turno_asc':        $order_by = 'core_horas_extras_turnos.Nombre ASC ';                                                                              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Turno Ascendente'; break;
+		case 'turno_desc':       $order_by = 'core_horas_extras_turnos.Nombre DESC ';                                                                             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Turno Descendente';break;
 		
-		default: $order_by = 'ORDER BY trabajadores_horas_extras_facturacion_turnos.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
+		default: $order_by = 'trabajadores_horas_extras_facturacion_turnos.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY trabajadores_horas_extras_facturacion_turnos.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
+	$order_by = 'trabajadores_horas_extras_facturacion_turnos.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE trabajadores_horas_extras_facturacion_turnos.idFacturacion=0";
+$SIS_where = "trabajadores_horas_extras_facturacion_turnos.idFacturacion=0";
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
@@ -225,39 +225,20 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){      $z .= " AND trabajadores_horas_extras_facturacion_turnos.idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $z .= " AND trabajadores_horas_extras_facturacion_turnos.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['nSem']) && $_GET['nSem'] != ''){                      $z .= " AND trabajadores_horas_extras_facturacion_turnos.nSem=".$_GET['nSem'];}
-if(isset($_GET['idTurnos']) && $_GET['idTurnos'] != ''){              $z .= " AND trabajadores_horas_extras_facturacion_turnos.idTurnos=".$_GET['idTurnos'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $z .= " AND trabajadores_horas_extras_facturacion_turnos.idUsuario=".$_GET['idUsuario'];}
-if(isset($_GET['idUso']) && $_GET['idUso'] != ''){                    $z .= " AND trabajadores_horas_extras_facturacion_turnos.idUso=".$_GET['idUso'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){      $SIS_where .= " AND trabajadores_horas_extras_facturacion_turnos.idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $SIS_where .= " AND trabajadores_horas_extras_facturacion_turnos.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['nSem']) && $_GET['nSem'] != ''){                      $SIS_where .= " AND trabajadores_horas_extras_facturacion_turnos.nSem=".$_GET['nSem'];}
+if(isset($_GET['idTurnos']) && $_GET['idTurnos'] != ''){              $SIS_where .= " AND trabajadores_horas_extras_facturacion_turnos.idTurnos=".$_GET['idTurnos'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $SIS_where .= " AND trabajadores_horas_extras_facturacion_turnos.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idUso']) && $_GET['idUso'] != ''){                    $SIS_where .= " AND trabajadores_horas_extras_facturacion_turnos.idUso=".$_GET['idUso'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idServicios FROM `trabajadores_horas_extras_facturacion_turnos` 
-LEFT JOIN `trabajadores_listado`      ON trabajadores_listado.idTrabajador       = trabajadores_horas_extras_facturacion_turnos.idTrabajador
-LEFT JOIN `usuarios_listado`          ON usuarios_listado.idUsuario              = trabajadores_horas_extras_facturacion_turnos.idUsuario
-LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema                 = trabajadores_horas_extras_facturacion_turnos.idSistema
-LEFT JOIN `core_horas_extras_turnos`  ON core_horas_extras_turnos.idTurnos       = trabajadores_horas_extras_facturacion_turnos.idTurnos
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idServicios', 'trabajadores_horas_extras_facturacion_turnos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrInasHoras = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_horas_extras_facturacion_turnos.idServicios,
 trabajadores_listado.ApellidoPat AS TrabApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabApellidoMat,
@@ -267,32 +248,17 @@ trabajadores_horas_extras_facturacion_turnos.Creacion_fecha,
 trabajadores_horas_extras_facturacion_turnos.nSem,
 core_sistemas.Nombre AS Sistema,
 core_horas_extras_turnos.Nombre AS Turno,
-trabajadores_horas_extras_facturacion_turnos.idUso
-
-FROM `trabajadores_horas_extras_facturacion_turnos`
+trabajadores_horas_extras_facturacion_turnos.idUso';
+$SIS_join  = '
 LEFT JOIN `trabajadores_listado`      ON trabajadores_listado.idTrabajador       = trabajadores_horas_extras_facturacion_turnos.idTrabajador
 LEFT JOIN `usuarios_listado`          ON usuarios_listado.idUsuario              = trabajadores_horas_extras_facturacion_turnos.idUsuario
 LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema                 = trabajadores_horas_extras_facturacion_turnos.idSistema
-LEFT JOIN `core_horas_extras_turnos`  ON core_horas_extras_turnos.idTurnos       = trabajadores_horas_extras_facturacion_turnos.idTurnos
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrInasHoras,$row );
-}?>
+LEFT JOIN `core_horas_extras_turnos`  ON core_horas_extras_turnos.idTurnos       = trabajadores_horas_extras_facturacion_turnos.idTurnos';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrInasHoras = array();
+$arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_facturacion_turnos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrInasHoras');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

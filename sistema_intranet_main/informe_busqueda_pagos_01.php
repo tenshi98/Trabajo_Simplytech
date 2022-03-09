@@ -63,54 +63,37 @@ switch ($_GET['idType']) {
         //ordenamiento
 		if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 			switch ($_GET['order_by']) {
-				case 'tipo_asc':         $order_by = 'ORDER BY pagos_facturas_proveedores_tipo.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente'; break;
-				case 'tipo_desc':        $order_by = 'ORDER BY pagos_facturas_proveedores_tipo.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
-				case 'empresa_asc':      $order_by = 'ORDER BY proveedor_listado.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Proveedor Ascendente';break;
-				case 'empresa_desc':     $order_by = 'ORDER BY proveedor_listado.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Proveedor Descendente';break;
-				case 'documento_asc':    $order_by = 'ORDER BY sistema_documentos_pago.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Documento Ascendente';break;
-				case 'documento_desc':   $order_by = 'ORDER BY sistema_documentos_pago.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Documento Descendente';break;
-				case 'fechapag_asc':     $order_by = 'ORDER BY pagos_facturas_proveedores.F_Pago ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago Ascendente';break;
-				case 'fechapag_desc':    $order_by = 'ORDER BY pagos_facturas_proveedores.F_Pago DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Pago Descendente';break;
+				case 'tipo_asc':         $order_by = 'pagos_facturas_proveedores_tipo.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente'; break;
+				case 'tipo_desc':        $order_by = 'pagos_facturas_proveedores_tipo.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
+				case 'empresa_asc':      $order_by = 'proveedor_listado.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Proveedor Ascendente';break;
+				case 'empresa_desc':     $order_by = 'proveedor_listado.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Proveedor Descendente';break;
+				case 'documento_asc':    $order_by = 'sistema_documentos_pago.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Documento Ascendente';break;
+				case 'documento_desc':   $order_by = 'sistema_documentos_pago.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Documento Descendente';break;
+				case 'fechapag_asc':     $order_by = 'pagos_facturas_proveedores.F_Pago ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago Ascendente';break;
+				case 'fechapag_desc':    $order_by = 'pagos_facturas_proveedores.F_Pago DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Pago Descendente';break;
 				
-				default: $order_by = 'ORDER BY pagos_facturas_proveedores.F_Pago ASC, proveedor_listado.Nombre ASC, pagos_facturas_proveedores.N_DocPago ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago, Proveedor, N° Doc Pago Ascendente';
+				default: $order_by = 'pagos_facturas_proveedores.F_Pago ASC, proveedor_listado.Nombre ASC, pagos_facturas_proveedores.N_DocPago ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago, Proveedor, N° Doc Pago Ascendente';
 			}
 		}else{
-			$order_by = 'ORDER BY pagos_facturas_proveedores.F_Pago ASC, proveedor_listado.Nombre ASC, pagos_facturas_proveedores.N_DocPago ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago, Proveedor, N° Doc Pago Ascendente';
+			$order_by = 'pagos_facturas_proveedores.F_Pago ASC, proveedor_listado.Nombre ASC, pagos_facturas_proveedores.N_DocPago ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago, Proveedor, N° Doc Pago Ascendente';
 		}
 		/**********************************************************/
 		//Variable de busqueda
-		$z    = "WHERE pagos_facturas_proveedores.idPago!=0";
-
-		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){       $z.=" AND pagos_facturas_proveedores.idDocPago=".$_GET['idDocPago'];}
-		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){       $z.=" AND pagos_facturas_proveedores.N_DocPago=".$_GET['N_DocPago'];}
-		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $z.=" AND pagos_facturas_proveedores.idTipo=".$_GET['idTipo'];}
-		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND pagos_facturas_proveedores.idProveedor=".$_GET['idProveedor'];}
-
+		$SIS_where = "pagos_facturas_proveedores.idPago!=0";
+		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){       $SIS_where.= " AND pagos_facturas_proveedores.idDocPago=".$_GET['idDocPago'];}
+		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){       $SIS_where.= " AND pagos_facturas_proveedores.N_DocPago=".$_GET['N_DocPago'];}
+		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $SIS_where.= " AND pagos_facturas_proveedores.idTipo=".$_GET['idTipo'];}
+		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $SIS_where.= " AND pagos_facturas_proveedores.idProveedor=".$_GET['idProveedor'];}
 		if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
-			$z.=" AND pagos_facturas_proveedores.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
-		}
+			$SIS_where.= " AND pagos_facturas_proveedores.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
+		}				
 		/**********************************************************/
 		//Realizo una consulta para saber el total de elementos existentes
-		$query = "SELECT idPago FROM `pagos_facturas_proveedores` ".$z;
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-							
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-		}
-		$cuenta_registros = mysqli_num_rows($resultado);
+		$cuenta_registros = db_select_nrows (false, 'idPago', 'pagos_facturas_proveedores', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 		//Realizo la operacion para saber la cantidad de paginas que hay
 		$total_paginas = ceil($cuenta_registros / $cant_reg);	
 		// Se trae un listado con todos los elementos
-		$arrTipo = array();
-		$query = "SELECT 
+		$SIS_query = '
 		pagos_facturas_proveedores.idTipo,
 		pagos_facturas_proveedores_tipo.Nombre AS Tipo,
 		sistema_documentos_pago.Nombre AS Documento,
@@ -118,33 +101,16 @@ switch ($_GET['idType']) {
 		proveedor_listado.Nombre AS Empresa,
 		core_sistemas.Nombre AS Sistema,
 		pagos_facturas_proveedores.idFacturacion,
-		pagos_facturas_proveedores.F_Pago
-
-
-		FROM `pagos_facturas_proveedores`
+		pagos_facturas_proveedores.F_Pago';
+		$SIS_join  = '
 		LEFT JOIN `core_sistemas`                     ON core_sistemas.idSistema                 = pagos_facturas_proveedores.idSistema
 		LEFT JOIN `sistema_documentos_pago`           ON sistema_documentos_pago.idDocPago       = pagos_facturas_proveedores.idDocPago
 		LEFT JOIN `pagos_facturas_proveedores_tipo`   ON pagos_facturas_proveedores_tipo.idTipo  = pagos_facturas_proveedores.idTipo
-		LEFT JOIN `proveedor_listado`                 ON proveedor_listado.idProveedor           = pagos_facturas_proveedores.idProveedor
-		".$z."
-		".$order_by."
-		LIMIT $comienzo, $cant_reg ";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-							
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
-		array_push( $arrTipo,$row );
-		}
+		LEFT JOIN `proveedor_listado`                 ON proveedor_listado.idProveedor           = pagos_facturas_proveedores.idProveedor';
+		$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+		$arrTipo = array();
+		$arrTipo = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
         break;
     
     
@@ -154,54 +120,37 @@ switch ($_GET['idType']) {
         //ordenamiento
 		if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 			switch ($_GET['order_by']) {
-				case 'tipo_asc':         $order_by = 'ORDER BY pagos_facturas_clientes_tipo.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente'; break;
-				case 'tipo_desc':        $order_by = 'ORDER BY pagos_facturas_clientes_tipo.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
-				case 'empresa_asc':      $order_by = 'ORDER BY clientes_listado.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Proveedor Ascendente';break;
-				case 'empresa_desc':     $order_by = 'ORDER BY clientes_listado.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Proveedor Descendente';break;
-				case 'documento_asc':    $order_by = 'ORDER BY sistema_documentos_pago.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Documento Ascendente';break;
-				case 'documento_desc':   $order_by = 'ORDER BY sistema_documentos_pago.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Documento Descendente';break;
-				case 'fechapag_asc':     $order_by = 'ORDER BY pagos_facturas_clientes.F_Pago ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago Ascendente';break;
-				case 'fechapag_desc':    $order_by = 'ORDER BY pagos_facturas_clientes.F_Pago DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Pago Descendente';break;
+				case 'tipo_asc':         $order_by = 'pagos_facturas_clientes_tipo.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente'; break;
+				case 'tipo_desc':        $order_by = 'pagos_facturas_clientes_tipo.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
+				case 'empresa_asc':      $order_by = 'clientes_listado.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Proveedor Ascendente';break;
+				case 'empresa_desc':     $order_by = 'clientes_listado.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Proveedor Descendente';break;
+				case 'documento_asc':    $order_by = 'sistema_documentos_pago.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Documento Ascendente';break;
+				case 'documento_desc':   $order_by = 'sistema_documentos_pago.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Documento Descendente';break;
+				case 'fechapag_asc':     $order_by = 'pagos_facturas_clientes.F_Pago ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago Ascendente';break;
+				case 'fechapag_desc':    $order_by = 'pagos_facturas_clientes.F_Pago DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Pago Descendente';break;
 				
-				default: $order_by = 'ORDER BY pagos_facturas_clientes.F_Pago ASC, clientes_listado.Nombre ASC, pagos_facturas_clientes.N_DocPago ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago, Proveedor, N° Doc Pago Ascendente';
+				default: $order_by = 'pagos_facturas_clientes.F_Pago ASC, clientes_listado.Nombre ASC, pagos_facturas_clientes.N_DocPago ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago, Proveedor, N° Doc Pago Ascendente';
 			}
 		}else{
-			$order_by = 'ORDER BY pagos_facturas_clientes.F_Pago ASC, clientes_listado.Nombre ASC, pagos_facturas_clientes.N_DocPago ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago, Proveedor, N° Doc Pago Ascendente';
+			$order_by = 'pagos_facturas_clientes.F_Pago ASC, clientes_listado.Nombre ASC, pagos_facturas_clientes.N_DocPago ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago, Proveedor, N° Doc Pago Ascendente';
 		}
 		/**********************************************************/
 		//Variable de busqueda
-		$z    = "WHERE pagos_facturas_clientes.idPago!=0";
-
-		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){       $z.=" AND pagos_facturas_clientes.idDocPago=".$_GET['idDocPago'];}
-		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){       $z.=" AND pagos_facturas_clientes.N_DocPago=".$_GET['N_DocPago'];}
-		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $z.=" AND pagos_facturas_clientes.idTipo=".$_GET['idTipo'];}
-		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND pagos_facturas_clientes.idCliente=".$_GET['idCliente'];}
-
+		$SIS_where = "pagos_facturas_clientes.idPago!=0";
+		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){       $SIS_where.= " AND pagos_facturas_clientes.idDocPago=".$_GET['idDocPago'];}
+		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){       $SIS_where.= " AND pagos_facturas_clientes.N_DocPago=".$_GET['N_DocPago'];}
+		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $SIS_where.= " AND pagos_facturas_clientes.idTipo=".$_GET['idTipo'];}
+		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $SIS_where.= " AND pagos_facturas_clientes.idCliente=".$_GET['idCliente'];}
 		if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
-			$z.=" AND pagos_facturas_clientes.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
-		}
+			$SIS_where.= " AND pagos_facturas_clientes.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
+		}				
 		/**********************************************************/
 		//Realizo una consulta para saber el total de elementos existentes
-		$query = "SELECT idPago FROM `pagos_facturas_clientes` ".$z;
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-							
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-		}
-		$cuenta_registros = mysqli_num_rows($resultado);
+		$cuenta_registros = db_select_nrows (false, 'idPago', 'pagos_facturas_clientes', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 		//Realizo la operacion para saber la cantidad de paginas que hay
 		$total_paginas = ceil($cuenta_registros / $cant_reg);	
 		// Se trae un listado con todos los elementos
-		$arrTipo = array();
-		$query = "SELECT 
+		$SIS_query = '
 		pagos_facturas_clientes.idTipo,
 		pagos_facturas_clientes_tipo.Nombre AS Tipo,
 		sistema_documentos_pago.Nombre AS Documento,
@@ -209,44 +158,18 @@ switch ($_GET['idType']) {
 		clientes_listado.Nombre AS Empresa,
 		core_sistemas.Nombre AS Sistema,
 		pagos_facturas_clientes.idFacturacion,
-		pagos_facturas_clientes.F_Pago
-
-
-		FROM `pagos_facturas_clientes`
+		pagos_facturas_clientes.F_Pago';
+		$SIS_join  = '
 		LEFT JOIN `core_sistemas`                 ON core_sistemas.idSistema              = pagos_facturas_clientes.idSistema
 		LEFT JOIN `sistema_documentos_pago`       ON sistema_documentos_pago.idDocPago    = pagos_facturas_clientes.idDocPago
 		LEFT JOIN `pagos_facturas_clientes_tipo`  ON pagos_facturas_clientes_tipo.idTipo  = pagos_facturas_clientes.idTipo
-		LEFT JOIN `clientes_listado`              ON clientes_listado.idCliente           = pagos_facturas_clientes.idCliente
-		".$z."
-		".$order_by."
-		LIMIT $comienzo, $cant_reg ";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-							
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
-		array_push( $arrTipo,$row );
-		}
+		LEFT JOIN `clientes_listado`              ON clientes_listado.idCliente           = pagos_facturas_clientes.idCliente';
+		$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+		$arrTipo = array();
+		$arrTipo = db_select_array (false, $SIS_query, 'pagos_facturas_clientes', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
         break;
 }
-
-
-	
-
-
-
-
-	
-
 
 ?>
 

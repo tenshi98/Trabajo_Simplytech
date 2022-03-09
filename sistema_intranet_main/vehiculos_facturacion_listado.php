@@ -320,80 +320,49 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fechacreacion_asc':  $order_by = 'ORDER BY vehiculos_facturacion_listado.fCreacion ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente'; break;
-		case 'fechacreacion_desc': $order_by = 'ORDER BY vehiculos_facturacion_listado.fCreacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Creacion Descendente';break;
-		case 'fechafact_asc':      $order_by = 'ORDER BY vehiculos_facturacion_listado.Fecha ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Facturacion Ascendente';break;
-		case 'fechafact_desc':     $order_by = 'ORDER BY vehiculos_facturacion_listado.Fecha DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';break;
-		case 'creador_asc':        $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
-		case 'creador_desc':       $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
+		case 'fechacreacion_asc':  $order_by = 'vehiculos_facturacion_listado.fCreacion ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente'; break;
+		case 'fechacreacion_desc': $order_by = 'vehiculos_facturacion_listado.fCreacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Creacion Descendente';break;
+		case 'fechafact_asc':      $order_by = 'vehiculos_facturacion_listado.Fecha ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Facturacion Ascendente';break;
+		case 'fechafact_desc':     $order_by = 'vehiculos_facturacion_listado.Fecha DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';break;
+		case 'creador_asc':        $order_by = 'usuarios_listado.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
+		case 'creador_desc':       $order_by = 'usuarios_listado.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
 		
-		default: $order_by = 'ORDER BY vehiculos_facturacion_listado.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
+		default: $order_by = 'vehiculos_facturacion_listado.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY vehiculos_facturacion_listado.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
+	$order_by = 'vehiculos_facturacion_listado.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE vehiculos_facturacion_listado.idFacturacion!=0";
+$SIS_where = "vehiculos_facturacion_listado.idFacturacion!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND vehiculos_facturacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND vehiculos_facturacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                  $z .= " AND vehiculos_facturacion_listado.Fecha='".$_GET['Fecha']."'";}
-if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){  $z .= " AND vehiculos_facturacion_listado.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                  $SIS_where .= " AND vehiculos_facturacion_listado.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){  $SIS_where .= " AND vehiculos_facturacion_listado.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idFacturacion FROM `vehiculos_facturacion_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idFacturacion', 'vehiculos_facturacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrDatos = array();
-$query = "SELECT 
+$SIS_query = '
 vehiculos_facturacion_listado.idFacturacion,
 vehiculos_facturacion_listado.fCreacion,
 vehiculos_facturacion_listado.Fecha,
 usuarios_listado.Nombre AS NombreUsuario,
-core_sistemas.Nombre AS Sistema
-
-FROM `vehiculos_facturacion_listado`
+core_sistemas.Nombre AS Sistema';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`     ON core_sistemas.idSistema      = vehiculos_facturacion_listado.idSistema
-LEFT JOIN `usuarios_listado`  ON usuarios_listado.idUsuario   = vehiculos_facturacion_listado.idUsuario
-
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDatos,$row );
-}
+LEFT JOIN `usuarios_listado`  ON usuarios_listado.idUsuario   = vehiculos_facturacion_listado.idUsuario';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrDatos = array();
+$arrDatos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrDatos');
 
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

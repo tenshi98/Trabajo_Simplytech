@@ -969,83 +969,50 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'sol_asc':           $order_by = 'ORDER BY solicitud_listado.idSolicitud ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Solicitud Ascendente'; break;
-		case 'sol_desc':          $order_by = 'ORDER BY solicitud_listado.idSolicitud DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';break;
-		case 'fecha_asc':         $order_by = 'ORDER BY solicitud_listado.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':        $order_by = 'ORDER BY solicitud_listado.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'creador_asc':       $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
-		case 'creador_desc':      $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
-		case 'observacion_asc':   $order_by = 'ORDER BY solicitud_listado.Observaciones ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Observaciones Ascendente';break;
-		case 'observacion_desc':  $order_by = 'ORDER BY solicitud_listado.Observaciones DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Observaciones Descendente';break;
+		case 'sol_asc':           $order_by = 'solicitud_listado.idSolicitud ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Solicitud Ascendente'; break;
+		case 'sol_desc':          $order_by = 'solicitud_listado.idSolicitud DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';break;
+		case 'fecha_asc':         $order_by = 'solicitud_listado.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':        $order_by = 'solicitud_listado.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'creador_asc':       $order_by = 'usuarios_listado.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
+		case 'creador_desc':      $order_by = 'usuarios_listado.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
+		case 'observacion_asc':   $order_by = 'solicitud_listado.Observaciones ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Observaciones Ascendente';break;
+		case 'observacion_desc':  $order_by = 'solicitud_listado.Observaciones DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Observaciones Descendente';break;
 		
-		default: $order_by = 'ORDER BY solicitud_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+		default: $order_by = 'solicitud_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY solicitud_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+	$order_by = 'solicitud_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE solicitud_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = "solicitud_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z.=" AND solicitud_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where.= " AND solicitud_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $z .= " AND solicitud_listado.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){    $z .= " AND solicitud_listado.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){  $SIS_where .= " AND solicitud_listado.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){    $SIS_where .= " AND solicitud_listado.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idSolicitud FROM `solicitud_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idSolicitud', 'solicitud_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);
-
-//consulta
-$arrSolicitudes = array();
-$query = "SELECT 
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los elementos
+$SIS_query = '
 solicitud_listado.idSolicitud,
 solicitud_listado.Creacion_fecha,
 solicitud_listado.Observaciones,
-usuarios_listado.Nombre AS Usuario
-
-FROM `solicitud_listado`
-LEFT JOIN `usuarios_listado`    ON usuarios_listado.idUsuario   = solicitud_listado.idUsuario 
-".$z." 
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrSolicitudes,$row );
-}
-
+usuarios_listado.Nombre AS Usuario';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = solicitud_listado.idUsuario';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrSolicitudes = array();
+$arrSolicitudes = db_select_array (false, $SIS_query, 'solicitud_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSolicitudes');
 
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

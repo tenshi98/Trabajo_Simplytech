@@ -224,33 +224,29 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'usuario_asc':        $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
-		case 'usuario_desc':       $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'solicitante_asc':    $order_by = 'ORDER BY gestion_reserva_oficinas.Solicitante ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Solicitante Ascendente'; break;
-		case 'solicitante_desc':   $order_by = 'ORDER BY gestion_reserva_oficinas.Solicitante DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Solicitante Descendente';break;
-		case 'oficina_asc':        $order_by = 'ORDER BY oficinas_listado.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Oficina Ascendente'; break;
-		case 'oficina_desc':       $order_by = 'ORDER BY oficinas_listado.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Oficina Descendente';break;
-		case 'fecha_asc':          $order_by = 'ORDER BY gestion_reserva_oficinas.Fecha ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':         $order_by = 'ORDER BY gestion_reserva_oficinas.Fecha DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'hora_asc':           $order_by = 'ORDER BY gestion_reserva_oficinas.Hora_Inicio ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Ascendente'; break;
-		case 'hora_desc':          $order_by = 'ORDER BY gestion_reserva_oficinas.Hora_Inicio DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Descendente';break;
-		case 'asistentes_asc':     $order_by = 'ORDER BY gestion_reserva_oficinas.CantidadAsistentes ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Asistentes Ascendente'; break;
-		case 'asistentes_desc':    $order_by = 'ORDER BY gestion_reserva_oficinas.CantidadAsistentes DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Asistentes Descendente';break;
-		case 'estado_asc':         $order_by = 'ORDER BY core_estados.Nombre ASC ';                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
-		case 'estado_desc':        $order_by = 'ORDER BY core_estados.Nombre DESC ';                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'cofee_asc':          $order_by = 'ORDER BY core_sistemas_opciones.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cafeteria Ascendente'; break;
-		case 'cofee_desc':         $order_by = 'ORDER BY core_sistemas_opciones.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cafeteria Descendente';break;
+		case 'usuario_asc':        $order_by = 'usuarios_listado.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
+		case 'usuario_desc':       $order_by = 'usuarios_listado.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'solicitante_asc':    $order_by = 'gestion_reserva_oficinas.Solicitante ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Solicitante Ascendente'; break;
+		case 'solicitante_desc':   $order_by = 'gestion_reserva_oficinas.Solicitante DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Solicitante Descendente';break;
+		case 'oficina_asc':        $order_by = 'oficinas_listado.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Oficina Ascendente'; break;
+		case 'oficina_desc':       $order_by = 'oficinas_listado.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Oficina Descendente';break;
+		case 'fecha_asc':          $order_by = 'gestion_reserva_oficinas.Fecha ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':         $order_by = 'gestion_reserva_oficinas.Fecha DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'hora_asc':           $order_by = 'gestion_reserva_oficinas.Hora_Inicio ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Ascendente'; break;
+		case 'hora_desc':          $order_by = 'gestion_reserva_oficinas.Hora_Inicio DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Descendente';break;
+		case 'asistentes_asc':     $order_by = 'gestion_reserva_oficinas.CantidadAsistentes ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Asistentes Ascendente'; break;
+		case 'asistentes_desc':    $order_by = 'gestion_reserva_oficinas.CantidadAsistentes DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Asistentes Descendente';break;
+		case 'estado_asc':         $order_by = 'core_estados.Nombre ASC ';                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
+		case 'estado_desc':        $order_by = 'core_estados.Nombre DESC ';                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'cofee_asc':          $order_by = 'core_sistemas_opciones.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cafeteria Ascendente'; break;
+		case 'cofee_desc':         $order_by = 'core_sistemas_opciones.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cafeteria Descendente';break;
 				
-		default: $order_by = 'ORDER BY oficinas_listado.idEstado ASC, gestion_reserva_oficinas.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
+		default: $order_by = 'oficinas_listado.idEstado ASC, gestion_reserva_oficinas.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY oficinas_listado.idEstado ASC, gestion_reserva_oficinas.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
+	$order_by = 'oficinas_listado.idEstado ASC, gestion_reserva_oficinas.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
-//Variable de busqueda
-$z = "WHERE gestion_reserva_oficinas.idReserva!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND gestion_reserva_oficinas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
 //Verifico el tipo de usuario que esta ingresando
@@ -258,43 +254,33 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
 /**********************************************************/
+//Variable de busqueda
+$SIS_where = "gestion_reserva_oficinas.idReserva!=0";
+//Verifico el tipo de usuario que esta ingresando
+$SIS_where.= " AND gestion_reserva_oficinas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //Se aplican los filtros
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
-	$z .= " AND gestion_reserva_oficinas.idUsuario = '".$_GET['idUsuario']."'" ;
+	$SIS_where .= " AND gestion_reserva_oficinas.idUsuario = '".$_GET['idUsuario']."'" ;
 }
 if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
-	$z .= " AND gestion_reserva_oficinas.Hora_Inicio BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'" ;
+	$SIS_where .= " AND gestion_reserva_oficinas.Hora_Inicio BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'" ;
 }
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$z .= " AND gestion_reserva_oficinas.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'" ;
+	$SIS_where .= " AND gestion_reserva_oficinas.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'" ;
 }
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                        $z .= " AND gestion_reserva_oficinas.idEstado='".$_GET['idEstado']."'";}
-if(isset($_GET['Solicitante']) && $_GET['Solicitante'] != ''){                  $z .= " AND gestion_reserva_oficinas.Solicitante LIKE '%".$_GET['Solicitante']."%'";}
-if(isset($_GET['idServicioCafeteria']) && $_GET['idServicioCafeteria'] != ''){  $z .= " AND gestion_reserva_oficinas.idServicioCafeteria='".$_GET['idServicioCafeteria']."'";}
-if(isset($_GET['CantidadAsistentes']) && $_GET['CantidadAsistentes'] != ''){    $z .= " AND gestion_reserva_oficinas.CantidadAsistentes='".$_GET['CantidadAsistentes']."'";}
-if(isset($_GET['idOficina']) && $_GET['idOficina'] != ''){                      $z .= " AND gestion_reserva_oficinas.idOficina='".$_GET['idOficina']."'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                        $SIS_where .= " AND gestion_reserva_oficinas.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['Solicitante']) && $_GET['Solicitante'] != ''){                  $SIS_where .= " AND gestion_reserva_oficinas.Solicitante LIKE '%".$_GET['Solicitante']."%'";}
+if(isset($_GET['idServicioCafeteria']) && $_GET['idServicioCafeteria'] != ''){  $SIS_where .= " AND gestion_reserva_oficinas.idServicioCafeteria='".$_GET['idServicioCafeteria']."'";}
+if(isset($_GET['CantidadAsistentes']) && $_GET['CantidadAsistentes'] != ''){    $SIS_where .= " AND gestion_reserva_oficinas.CantidadAsistentes='".$_GET['CantidadAsistentes']."'";}
+if(isset($_GET['idOficina']) && $_GET['idOficina'] != ''){                      $SIS_where .= " AND gestion_reserva_oficinas.idOficina='".$_GET['idOficina']."'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idReserva FROM `gestion_reserva_oficinas` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idReserva', 'gestion_reserva_oficinas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrReserva = array();
-$query = "SELECT 
+$SIS_query = '
 gestion_reserva_oficinas.idReserva,
 gestion_reserva_oficinas.Fecha,
 gestion_reserva_oficinas.Hora_Inicio,
@@ -307,34 +293,18 @@ usuarios_listado.Nombre AS Usuario,
 core_estados.Nombre AS estado,
 gestion_reserva_oficinas.idEstado,
 core_sistemas_opciones.Nombre AS Cafeteria,
-oficinas_listado.Nombre AS Oficina
-
-FROM `gestion_reserva_oficinas`
+oficinas_listado.Nombre AS Oficina';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`            ON core_sistemas.idSistema             = gestion_reserva_oficinas.idSistema
 LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario          = gestion_reserva_oficinas.idUsuario
 LEFT JOIN `core_estados`             ON core_estados.idEstado               = gestion_reserva_oficinas.idEstado
 LEFT JOIN `core_sistemas_opciones`   ON core_sistemas_opciones.idOpciones   = gestion_reserva_oficinas.idServicioCafeteria
-LEFT JOIN `oficinas_listado`         ON oficinas_listado.idOficina          = gestion_reserva_oficinas.idOficina
-	
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrReserva,$row );
-}?>
+LEFT JOIN `oficinas_listado`         ON oficinas_listado.idOficina          = gestion_reserva_oficinas.idOficina';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrReserva = array();
+$arrReserva = db_select_array (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrReserva');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

@@ -222,85 +222,55 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'numero_asc':          $order_by = 'ORDER BY aguas_clientes_eventos.idEventos ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Evento Ascendente'; break;
-		case 'numero_desc':         $order_by = 'ORDER BY aguas_clientes_eventos.idEventos DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Evento Descendente';break;
-		case 'fecha_asc':           $order_by = 'ORDER BY aguas_clientes_eventos.Fecha ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':          $order_by = 'ORDER BY aguas_clientes_eventos.Fecha DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'identificador_asc':   $order_by = 'ORDER BY aguas_clientes_listado.Identificador ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Identificador Ascendente'; break;
-		case 'identificador_desc':  $order_by = 'ORDER BY aguas_clientes_listado.Identificador DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Identificador Descendente';break;
-		case 'creador_asc':         $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
-		case 'creador_desc':        $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
-		case 'tipo_asc':            $order_by = 'ORDER BY aguas_clientes_eventos_tipos.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente';break;
-		case 'tipo_desc':           $order_by = 'ORDER BY aguas_clientes_eventos_tipos.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
+		case 'numero_asc':          $order_by = 'aguas_clientes_eventos.idEventos ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Evento Ascendente'; break;
+		case 'numero_desc':         $order_by = 'aguas_clientes_eventos.idEventos DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Evento Descendente';break;
+		case 'fecha_asc':           $order_by = 'aguas_clientes_eventos.Fecha ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':          $order_by = 'aguas_clientes_eventos.Fecha DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'identificador_asc':   $order_by = 'aguas_clientes_listado.Identificador ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Identificador Ascendente'; break;
+		case 'identificador_desc':  $order_by = 'aguas_clientes_listado.Identificador DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Identificador Descendente';break;
+		case 'creador_asc':         $order_by = 'usuarios_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
+		case 'creador_desc':        $order_by = 'usuarios_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
+		case 'tipo_asc':            $order_by = 'aguas_clientes_eventos_tipos.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente';break;
+		case 'tipo_desc':           $order_by = 'aguas_clientes_eventos_tipos.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
 							
-		default: $order_by = 'ORDER BY aguas_clientes_eventos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
+		default: $order_by = 'aguas_clientes_eventos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY aguas_clientes_eventos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
+	$order_by = 'aguas_clientes_eventos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE aguas_clientes_eventos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "aguas_clientes_eventos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){              $z .= " AND aguas_clientes_eventos.idCliente='".$_GET['idCliente']."'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                    $z .= " AND aguas_clientes_eventos.idTipo='".$_GET['idTipo']."'";}
-if(isset($_GET['FechaEjecucion']) && $_GET['FechaEjecucion'] != ''){    $z .= " AND aguas_clientes_eventos.FechaEjecucion='".$_GET['FechaEjecucion']."'";}
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                      $z .= " AND aguas_clientes_eventos.Fecha='".$_GET['Fecha']."'";}
-if(isset($_GET['NSello']) && $_GET['NSello'] != ''){                    $z .= " AND aguas_clientes_eventos.NSello='".$_GET['NSello']."'";}
+if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){              $SIS_where .= " AND aguas_clientes_eventos.idCliente='".$_GET['idCliente']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                    $SIS_where .= " AND aguas_clientes_eventos.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['FechaEjecucion']) && $_GET['FechaEjecucion'] != ''){    $SIS_where .= " AND aguas_clientes_eventos.FechaEjecucion='".$_GET['FechaEjecucion']."'";}
+if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                      $SIS_where .= " AND aguas_clientes_eventos.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['NSello']) && $_GET['NSello'] != ''){                    $SIS_where .= " AND aguas_clientes_eventos.NSello='".$_GET['NSello']."'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT aguas_clientes_eventos.idEventos FROM `aguas_clientes_eventos` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'aguas_clientes_eventos.idEventos', 'aguas_clientes_eventos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_clientes_eventos.idEventos,
 aguas_clientes_eventos.Fecha,
 aguas_clientes_listado.Identificador,
 usuarios_listado.Nombre AS Creador,
 aguas_clientes_eventos_tipos.Nombre AS Tipo,
-core_sistemas.Nombre AS sistema
-
-FROM `aguas_clientes_eventos`
+core_sistemas.Nombre AS sistema';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                 ON core_sistemas.idSistema                = aguas_clientes_eventos.idSistema
 LEFT JOIN `aguas_clientes_listado`        ON aguas_clientes_listado.idCliente       = aguas_clientes_eventos.idCliente
 LEFT JOIN `aguas_clientes_eventos_tipos`  ON aguas_clientes_eventos_tipos.idTipo    = aguas_clientes_eventos.idTipo
-LEFT JOIN `usuarios_listado`              ON usuarios_listado.idUsuario             = aguas_clientes_eventos.idUsuario
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+LEFT JOIN `usuarios_listado`              ON usuarios_listado.idUsuario             = aguas_clientes_eventos.idUsuario';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_eventos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
+
 //Indico el sistema	 
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';	
 ?>

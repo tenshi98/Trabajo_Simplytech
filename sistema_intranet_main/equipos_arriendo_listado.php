@@ -251,74 +251,42 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'marca_asc':        $order_by = 'ORDER BY equipos_arriendo_listado.Marca ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Marca Ascendente'; break;
-		case 'marca_desc':       $order_by = 'ORDER BY equipos_arriendo_listado.Marca DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Marca Descendente';break;
-		case 'nombre_asc':       $order_by = 'ORDER BY equipos_arriendo_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
-		case 'nombre_desc':      $order_by = 'ORDER BY equipos_arriendo_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':       $order_by = 'ORDER BY equipos_arriendo_listado.idEstado ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':      $order_by = 'ORDER BY equipos_arriendo_listado.idEstado DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'marca_asc':        $order_by = 'equipos_arriendo_listado.Marca ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Marca Ascendente'; break;
+		case 'marca_desc':       $order_by = 'equipos_arriendo_listado.Marca DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Marca Descendente';break;
+		case 'nombre_asc':       $order_by = 'equipos_arriendo_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
+		case 'nombre_desc':      $order_by = 'equipos_arriendo_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':       $order_by = 'equipos_arriendo_listado.idEstado ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':      $order_by = 'equipos_arriendo_listado.idEstado DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY equipos_arriendo_listado.idEstado ASC, equipos_arriendo_listado.Marca ASC, equipos_arriendo_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado, Marca, Nombre Ascendente';
+		default: $order_by = 'equipos_arriendo_listado.idEstado ASC, equipos_arriendo_listado.Marca ASC, equipos_arriendo_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado, Marca, Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY equipos_arriendo_listado.idEstado ASC, equipos_arriendo_listado.Marca ASC, equipos_arriendo_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado, Marca, Nombre Ascendente';
+	$order_by = 'equipos_arriendo_listado.idEstado ASC, equipos_arriendo_listado.Marca ASC, equipos_arriendo_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado, Marca, Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE equipos_arriendo_listado.idEquipo >= 1";
+$SIS_where = "equipos_arriendo_listado.idEquipo >= 1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){ $z .= " AND equipos_arriendo_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Marca']) && $_GET['Marca'] != ''){   $z .= " AND equipos_arriendo_listado.Marca LIKE '%".$_GET['Marca']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){ $SIS_where .= " AND equipos_arriendo_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Marca']) && $_GET['Marca'] != ''){   $SIS_where .= " AND equipos_arriendo_listado.Marca LIKE '%".$_GET['Marca']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT equipos_arriendo_listado.idEquipo FROM `equipos_arriendo_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'equipos_arriendo_listado.idEquipo', 'equipos_arriendo_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 equipos_arriendo_listado.idEquipo,
 equipos_arriendo_listado.Nombre AS NombreProd,
 equipos_arriendo_listado.Marca,
 core_estados.Nombre AS Estado,
-equipos_arriendo_listado.idEstado
-
-FROM `equipos_arriendo_listado`
-LEFT JOIN `core_estados`      ON core_estados.idEstado      = equipos_arriendo_listado.idEstado
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
+equipos_arriendo_listado.idEstado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = equipos_arriendo_listado.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'equipos_arriendo_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
 ?>
 <div class="col-sm-12 breadcrumb-bar">

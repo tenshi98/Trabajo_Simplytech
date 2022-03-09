@@ -759,59 +759,45 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY vehiculos_listado.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY vehiculos_listado.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'marca_asc':     $order_by = 'ORDER BY vehiculos_listado.Marca ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Marca Ascendente';break;
-		case 'marca_desc':    $order_by = 'ORDER BY vehiculos_listado.Marca DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Marca Descendente';break;
-		case 'modelo_asc':    $order_by = 'ORDER BY vehiculos_listado.Modelo ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Modelo Ascendente';break;
-		case 'modelo_desc':   $order_by = 'ORDER BY vehiculos_listado.Modelo DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Modelo Descendente';break;
-		case 'tipo_asc':      $order_by = 'ORDER BY vehiculos_tipo.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente';break;
-		case 'tipo_desc':     $order_by = 'ORDER BY vehiculos_tipo.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY core_estados.Nombre ASC ';                       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':   $order_by = 'ORDER BY core_estados.Nombre DESC ';                      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'proceso_asc':   $order_by = 'ORDER BY core_estado_aprobacion_vehiculos.Nombre ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Proceso Ascendente';break;
-		case 'proceso_desc':  $order_by = 'ORDER BY core_estado_aprobacion_vehiculos.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Proceso Descendente';break;
+		case 'nombre_asc':    $order_by = 'vehiculos_listado.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'vehiculos_listado.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'marca_asc':     $order_by = 'vehiculos_listado.Marca ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Marca Ascendente';break;
+		case 'marca_desc':    $order_by = 'vehiculos_listado.Marca DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Marca Descendente';break;
+		case 'modelo_asc':    $order_by = 'vehiculos_listado.Modelo ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Modelo Ascendente';break;
+		case 'modelo_desc':   $order_by = 'vehiculos_listado.Modelo DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Modelo Descendente';break;
+		case 'tipo_asc':      $order_by = 'vehiculos_tipo.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente';break;
+		case 'tipo_desc':     $order_by = 'vehiculos_tipo.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
+		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';                       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';                      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'proceso_asc':   $order_by = 'core_estado_aprobacion_vehiculos.Nombre ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Proceso Ascendente';break;
+		case 'proceso_desc':  $order_by = 'core_estado_aprobacion_vehiculos.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Proceso Descendente';break;
 		
-		default: $order_by = 'ORDER BY vehiculos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'vehiculos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY vehiculos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'vehiculos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE vehiculos_listado.idVehiculo!=0";
+$SIS_where = "vehiculos_listado.idVehiculo!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND vehiculos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND vehiculos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $z .= " AND vehiculos_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){        $z .= " AND vehiculos_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Marca']) && $_GET['Marca'] != ''){          $z .= " AND vehiculos_listado.Marca LIKE '%".$_GET['Marca']."%'";}
-if(isset($_GET['Modelo']) && $_GET['Modelo'] != ''){        $z .= " AND vehiculos_listado.Modelo LIKE '%".$_GET['Modelo']."%'";}
-if(isset($_GET['Patente']) && $_GET['Patente'] != ''){      $z .= " AND vehiculos_listado.Patente LIKE '%".$_GET['Patente']."%'";}
-if(isset($_GET['idProceso']) && $_GET['idProceso'] != ''){  $z .= " AND vehiculos_listado.idProceso=".$_GET['idProceso'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $SIS_where .= " AND vehiculos_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){        $SIS_where .= " AND vehiculos_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Marca']) && $_GET['Marca'] != ''){          $SIS_where .= " AND vehiculos_listado.Marca LIKE '%".$_GET['Marca']."%'";}
+if(isset($_GET['Modelo']) && $_GET['Modelo'] != ''){        $SIS_where .= " AND vehiculos_listado.Modelo LIKE '%".$_GET['Modelo']."%'";}
+if(isset($_GET['Patente']) && $_GET['Patente'] != ''){      $SIS_where .= " AND vehiculos_listado.Patente LIKE '%".$_GET['Patente']."%'";}
+if(isset($_GET['idProceso']) && $_GET['idProceso'] != ''){  $SIS_where .= " AND vehiculos_listado.idProceso=".$_GET['idProceso'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idVehiculo FROM `vehiculos_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idVehiculo', 'vehiculos_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTrabajador = array();
-$query = "SELECT 
+$SIS_query = '
 vehiculos_listado.idVehiculo,
 vehiculos_listado.Nombre, 
 vehiculos_listado.Marca, 
@@ -820,33 +806,18 @@ vehiculos_tipo.Nombre AS Tipo,
 core_sistemas.Nombre AS RazonSocial,
 core_estados.Nombre AS Estado,
 vehiculos_listado.idEstado,
-core_estado_aprobacion_vehiculos.Nombre AS Proceso
-
-FROM `vehiculos_listado`
+core_estado_aprobacion_vehiculos.Nombre AS Proceso';
+$SIS_join  = '
 LEFT JOIN `vehiculos_tipo`                     ON vehiculos_tipo.idTipo                       = vehiculos_listado.idTipo
 LEFT JOIN `core_sistemas`                      ON core_sistemas.idSistema                     = vehiculos_listado.idSistema
 LEFT JOIN `core_estados`                       ON core_estados.idEstado                       = vehiculos_listado.idEstado
-LEFT JOIN `core_estado_aprobacion_vehiculos`   ON core_estado_aprobacion_vehiculos.idProceso  = vehiculos_listado.idProceso
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTrabajador,$row );
-}
+LEFT JOIN `core_estado_aprobacion_vehiculos`   ON core_estado_aprobacion_vehiculos.idProceso  = vehiculos_listado.idProceso';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTrabajador = array();
+$arrTrabajador = db_select_array (false, $SIS_query, 'vehiculos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTrabajador');
+
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

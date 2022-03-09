@@ -402,76 +402,45 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'rut_asc':      $order_by = 'ORDER BY core_sistemas.Rut ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
-		case 'rut_desc':     $order_by = 'ORDER BY core_sistemas.Rut DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
-		case 'nombre_asc':   $order_by = 'ORDER BY core_sistemas.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
-		case 'nombre_desc':  $order_by = 'ORDER BY core_sistemas.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':   $order_by = 'ORDER BY core_estados.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':  $order_by = 'ORDER BY core_estados.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'rut_asc':      $order_by = 'core_sistemas.Rut ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
+		case 'rut_desc':     $order_by = 'core_sistemas.Rut DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
+		case 'nombre_asc':   $order_by = 'core_sistemas.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
+		case 'nombre_desc':  $order_by = 'core_sistemas.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':   $order_by = 'core_estados.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':  $order_by = 'core_estados.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY core_sistemas.idEstado ASC, core_sistemas.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'core_sistemas.idEstado ASC, core_sistemas.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY core_sistemas.idEstado ASC, core_sistemas.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'core_sistemas.idEstado ASC, core_sistemas.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE core_sistemas.idSistema!=0";
+$SIS_where = "core_sistemas.idSistema!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){             $z .= " AND core_sistemas.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                   $z .= " AND core_sistemas.Rut LIKE '%".$_GET['Rut']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){  $SIS_where .= " AND core_sistemas.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut'] != ''){        $SIS_where .= " AND core_sistemas.Rut LIKE '%".$_GET['Rut']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT core_sistemas.idSistema FROM `core_sistemas` LEFT JOIN `core_estados`  ON core_estados.idEstado  = core_sistemas.idEstado ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idSistema', 'core_sistemas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 core_sistemas.idSistema,
 core_sistemas.Nombre,
 core_sistemas.Rut,
 core_sistemas.idEstado,
-core_estados.Nombre AS estado
-
-FROM `core_sistemas`
-LEFT JOIN `core_estados`  ON core_estados.idEstado  = core_sistemas.idEstado
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+core_estados.Nombre AS estado';
+$SIS_join  = 'LEFT JOIN `core_estados`  ON core_estados.idEstado = core_sistemas.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
 
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

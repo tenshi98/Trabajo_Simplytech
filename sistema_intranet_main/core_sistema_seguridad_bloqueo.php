@@ -171,52 +171,22 @@ if (!$num_pag){
 } else {
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
-//Creo la variable con la ubicacion
-	$z="";
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idBloqueo FROM `sistema_seguridad_bloqueo_ip` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idBloqueo', 'sistema_seguridad_bloqueo_ip', '', '', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
+$SIS_query = 'idBloqueo, Fecha, Hora,IP_Client,Motivo';
+$SIS_join  = '';
+$SIS_order = 'Fecha DESC LIMIT '.$comienzo.', '.$cant_reg;
 $arrBloqueo = array();
-$query = "SELECT  idBloqueo, Fecha, Hora,IP_Client,Motivo
-FROM `sistema_seguridad_bloqueo_ip`
-".$z."
-ORDER BY Fecha DESC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBloqueo,$row );
-}
+$arrBloqueo = db_select_array (false, $SIS_query, 'sistema_seguridad_bloqueo_ip', $SIS_join, '', $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBloqueo');
+
 //variable de busqueda
 $search='';
 ?>
+
 <div class="col-sm-12">
 	<a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear IP Bloqueada</a>
 </div>

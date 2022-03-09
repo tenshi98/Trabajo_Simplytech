@@ -446,63 +446,49 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'tipo_asc':      $order_by = 'ORDER BY vehiculos_ruta_alternativa_tipos.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente'; break;
-		case 'tipo_desc':     $order_by = 'ORDER BY vehiculos_ruta_alternativa_tipos.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
-		case 'ruta_asc':      $order_by = 'ORDER BY vehiculos_rutas.Nombre ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ruta Ascendente';break;
-		case 'ruta_desc':     $order_by = 'ORDER BY vehiculos_rutas.Nombre DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Ruta Descendente';break;
-		case 'nombre_asc':    $order_by = 'ORDER BY vehiculos_ruta_alternativa.Nombre ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY vehiculos_ruta_alternativa.Nombre DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'lapso_asc':     $order_by = 'ORDER BY vehiculos_ruta_alternativa.Fecha ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Lapso Ascendente';break;
-		case 'lapso_desc':    $order_by = 'ORDER BY vehiculos_ruta_alternativa.Fecha DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Lapso Descendente';break;
-		case 'hinicio_asc':   $order_by = 'ORDER BY vehiculos_ruta_alternativa.HoraInicio ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Inicio Ascendente'; break;
-		case 'hinicio_desc':  $order_by = 'ORDER BY vehiculos_ruta_alternativa.HoraInicio DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Inicio Descendente';break;
-		case 'htermino_asc':  $order_by = 'ORDER BY vehiculos_ruta_alternativa.HoraTermino ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Termino Ascendente';break;
-		case 'htermino_desc': $order_by = 'ORDER BY vehiculos_ruta_alternativa.HoraTermino DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Termino Descendente';break;
+		case 'tipo_asc':      $order_by = 'vehiculos_ruta_alternativa_tipos.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente'; break;
+		case 'tipo_desc':     $order_by = 'vehiculos_ruta_alternativa_tipos.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
+		case 'ruta_asc':      $order_by = 'vehiculos_rutas.Nombre ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ruta Ascendente';break;
+		case 'ruta_desc':     $order_by = 'vehiculos_rutas.Nombre DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Ruta Descendente';break;
+		case 'nombre_asc':    $order_by = 'vehiculos_ruta_alternativa.Nombre ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'vehiculos_ruta_alternativa.Nombre DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'lapso_asc':     $order_by = 'vehiculos_ruta_alternativa.Fecha ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Lapso Ascendente';break;
+		case 'lapso_desc':    $order_by = 'vehiculos_ruta_alternativa.Fecha DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Lapso Descendente';break;
+		case 'hinicio_asc':   $order_by = 'vehiculos_ruta_alternativa.HoraInicio ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Inicio Ascendente'; break;
+		case 'hinicio_desc':  $order_by = 'vehiculos_ruta_alternativa.HoraInicio DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Inicio Descendente';break;
+		case 'htermino_asc':  $order_by = 'vehiculos_ruta_alternativa.HoraTermino ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Termino Ascendente';break;
+		case 'htermino_desc': $order_by = 'vehiculos_ruta_alternativa.HoraTermino DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Termino Descendente';break;
 		
-		default: $order_by = 'ORDER BY vehiculos_ruta_alternativa_tipos.idTipo ASC, vehiculos_ruta_alternativa.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Nombre Ascendente';
+		default: $order_by = 'vehiculos_ruta_alternativa_tipos.idTipo ASC, vehiculos_ruta_alternativa.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY vehiculos_ruta_alternativa_tipos.idTipo ASC, vehiculos_ruta_alternativa.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Nombre Ascendente';
+	$order_by = 'vehiculos_ruta_alternativa_tipos.idTipo ASC, vehiculos_ruta_alternativa.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Nombre Ascendente';
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Variable de busqueda
-$z="WHERE vehiculos_ruta_alternativa.idRutaAlt!=0";
+$SIS_where = "vehiculos_ruta_alternativa.idRutaAlt!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND vehiculos_ruta_alternativa.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND vehiculos_ruta_alternativa.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idRuta']) && $_GET['idRuta'] != ''){            $z .= " AND vehiculos_ruta_alternativa.idRuta=".$_GET['idRuta'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $z .= " AND vehiculos_ruta_alternativa.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){              $z .= " AND vehiculos_ruta_alternativa.Fecha='".$_GET['Fecha']."'";}
-if(isset($_GET['idDia']) && $_GET['idDia'] != ''){              $z .= " AND vehiculos_ruta_alternativa.idDia=".$_GET['idDia'];}
-if(isset($_GET['HoraInicio']) && $_GET['HoraInicio'] != ''){    $z .= " AND vehiculos_ruta_alternativa.HoraInicio=".$_GET['HoraInicio'];}
-if(isset($_GET['HoraTermino']) && $_GET['HoraTermino'] != ''){  $z .= " AND vehiculos_ruta_alternativa.HoraTermino=".$_GET['HoraTermino'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $z .= " AND vehiculos_ruta_alternativa.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idRuta']) && $_GET['idRuta'] != ''){            $SIS_where .= " AND vehiculos_ruta_alternativa.idRuta=".$_GET['idRuta'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $SIS_where .= " AND vehiculos_ruta_alternativa.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){              $SIS_where .= " AND vehiculos_ruta_alternativa.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['idDia']) && $_GET['idDia'] != ''){              $SIS_where .= " AND vehiculos_ruta_alternativa.idDia=".$_GET['idDia'];}
+if(isset($_GET['HoraInicio']) && $_GET['HoraInicio'] != ''){    $SIS_where .= " AND vehiculos_ruta_alternativa.HoraInicio=".$_GET['HoraInicio'];}
+if(isset($_GET['HoraTermino']) && $_GET['HoraTermino'] != ''){  $SIS_where .= " AND vehiculos_ruta_alternativa.HoraTermino=".$_GET['HoraTermino'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $SIS_where .= " AND vehiculos_ruta_alternativa.Nombre LIKE '%".$_GET['Nombre']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idRutaAlt FROM `vehiculos_ruta_alternativa` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idRutaAlt', 'vehiculos_ruta_alternativa', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 vehiculos_ruta_alternativa.idRutaAlt,
 vehiculos_ruta_alternativa.Nombre,
 vehiculos_ruta_alternativa.Fecha,
@@ -512,32 +498,16 @@ core_sistemas.Nombre AS sistema,
 vehiculos_ruta_alternativa.idTipo,
 vehiculos_ruta_alternativa_tipos.Nombre AS  Tipo,
 vehiculos_rutas.Nombre AS Ruta,
-core_tiempo_dias.Nombre AS Dia
-
-FROM `vehiculos_ruta_alternativa`
+core_tiempo_dias.Nombre AS Dia';
+$SIS_join  = '
 LEFT JOIN `vehiculos_ruta_alternativa_tipos`   ON vehiculos_ruta_alternativa_tipos.idTipo      = vehiculos_ruta_alternativa.idTipo
 LEFT JOIN `core_tiempo_dias`                   ON core_tiempo_dias.idDia                       = vehiculos_ruta_alternativa.idDia
 LEFT JOIN `vehiculos_rutas`                    ON vehiculos_rutas.idRuta                       = vehiculos_ruta_alternativa.idRuta
-LEFT JOIN `core_sistemas`                      ON core_sistemas.idSistema                      = vehiculos_ruta_alternativa.idSistema
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+LEFT JOIN `core_sistemas`                      ON core_sistemas.idSistema                      = vehiculos_ruta_alternativa.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
+
 ?>
 
 <div class="col-sm-12 breadcrumb-bar">

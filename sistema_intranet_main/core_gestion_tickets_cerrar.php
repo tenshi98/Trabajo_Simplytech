@@ -127,76 +127,62 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'id_asc':              $order_by = 'ORDER BY gestion_tickets.idTicket ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Ticket Ascendente';break;
-		case 'id_desc':             $order_by = 'ORDER BY gestion_tickets.idTicket DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Ticket Descendente';break;
-		case 'usuario_asc':         $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
-		case 'usuario_desc':        $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'tipo_asc':            $order_by = 'ORDER BY core_tipo_ticket.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ticket Ascendente';break;
-		case 'tipo_desc':           $order_by = 'ORDER BY core_tipo_ticket.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Ticket Descendente';break;
-		case 'titulo_asc':          $order_by = 'ORDER BY gestion_tickets.Titulo ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Titulo Ticket Ascendente';break;
-		case 'titulo_desc':         $order_by = 'ORDER BY gestion_tickets.Titulo DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Titulo Ticket Descendente';break;
-		case 'estado_asc':          $order_by = 'ORDER BY core_estado_ticket.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ticket Ascendente';break;
-		case 'estado_desc':         $order_by = 'ORDER BY core_estado_ticket.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Ticket Descendente';break;
-		case 'prioridad_asc':       $order_by = 'ORDER BY core_ot_prioridad.Nombre ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ticket Ascendente';break;
-		case 'prioridad_desc':      $order_by = 'ORDER BY core_ot_prioridad.Nombre DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Ticket Descendente';break;
-		case 'fechacreacion_asc':   $order_by = 'ORDER BY gestion_tickets.FechaCreacion ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ticket Ascendente';break;
-		case 'fechacreacion_desc':  $order_by = 'ORDER BY gestion_tickets.FechaCreacion DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Creacion Ticket Descendente';break;
-		case 'fechacierre_asc':     $order_by = 'ORDER BY gestion_tickets.FechaCierre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Cierre Ticket Ascendente';break;
-		case 'fechacierre_desc':    $order_by = 'ORDER BY gestion_tickets.FechaCierre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Cierre Ticket Descendente';break;
-		case 'area_asc':            $order_by = 'ORDER BY gestion_tickets_area.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Area Ascendente';break;
-		case 'area_desc':           $order_by = 'ORDER BY gestion_tickets_area.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Area Descendente';break;
+		case 'id_asc':              $order_by = 'gestion_tickets.idTicket ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Ticket Ascendente';break;
+		case 'id_desc':             $order_by = 'gestion_tickets.idTicket DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Ticket Descendente';break;
+		case 'usuario_asc':         $order_by = 'usuarios_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
+		case 'usuario_desc':        $order_by = 'usuarios_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'tipo_asc':            $order_by = 'core_tipo_ticket.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ticket Ascendente';break;
+		case 'tipo_desc':           $order_by = 'core_tipo_ticket.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Ticket Descendente';break;
+		case 'titulo_asc':          $order_by = 'gestion_tickets.Titulo ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Titulo Ticket Ascendente';break;
+		case 'titulo_desc':         $order_by = 'gestion_tickets.Titulo DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Titulo Ticket Descendente';break;
+		case 'estado_asc':          $order_by = 'core_estado_ticket.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ticket Ascendente';break;
+		case 'estado_desc':         $order_by = 'core_estado_ticket.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Ticket Descendente';break;
+		case 'prioridad_asc':       $order_by = 'core_ot_prioridad.Nombre ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ticket Ascendente';break;
+		case 'prioridad_desc':      $order_by = 'core_ot_prioridad.Nombre DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Ticket Descendente';break;
+		case 'fechacreacion_asc':   $order_by = 'gestion_tickets.FechaCreacion ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ticket Ascendente';break;
+		case 'fechacreacion_desc':  $order_by = 'gestion_tickets.FechaCreacion DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Creacion Ticket Descendente';break;
+		case 'fechacierre_asc':     $order_by = 'gestion_tickets.FechaCierre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Cierre Ticket Ascendente';break;
+		case 'fechacierre_desc':    $order_by = 'gestion_tickets.FechaCierre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Cierre Ticket Descendente';break;
+		case 'area_asc':            $order_by = 'gestion_tickets_area.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Area Ascendente';break;
+		case 'area_desc':           $order_by = 'gestion_tickets_area.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Area Descendente';break;
 						
 						
-		default: $order_by = 'ORDER BY gestion_tickets.FechaCreacion DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente';
+		default: $order_by = 'gestion_tickets.FechaCreacion DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY gestion_tickets.FechaCreacion DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente';
+	$order_by = 'gestion_tickets.FechaCreacion DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE gestion_tickets.idTicket!=0";
-$z.= " AND gestion_tickets.idEstado=1";       //solo abierto
-$z.= " AND gestion_tickets.idTipoTicket!=1";  //Bug, Sugerencia, Caracteristica
-//sistema
-$z.= " AND gestion_tickets.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = "gestion_tickets.idTicket!=0";
+$SIS_where.= " AND gestion_tickets.idEstado=1";       //solo abierto
+$SIS_where.= " AND gestion_tickets.idTipoTicket!=1";  //Bug, Sugerencia, Caracteristica
+$SIS_where.= " AND gestion_tickets.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//sistema
 //solo mostrar los tickets propios
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z.= " AND gestion_tickets_area_correos.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_where.= " AND gestion_tickets_area_correos.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }						
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){                  $z .= " AND gestion_tickets.idUsuario=".$_GET['idUsuario'];}
-if(isset($_GET['idTipoTicket']) && $_GET['idTipoTicket'] != ''){            $z .= " AND gestion_tickets.idTipoTicket=".$_GET['idTipoTicket'];}
-if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){                        $z .= " AND gestion_tickets.Titulo='%".$_GET['Titulo']."%'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                    $z .= " AND gestion_tickets.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){              $z .= " AND gestion_tickets.idPrioridad=".$_GET['idPrioridad'];}
-if(isset($_GET['FechaCreacion']) && $_GET['FechaCreacion'] != ''){          $z .= " AND gestion_tickets.FechaCreacion='".$_GET['FechaCreacion']."'";}
-if(isset($_GET['FechaCierre']) && $_GET['FechaCierre'] != ''){              $z .= " AND gestion_tickets.FechaCierre='".$_GET['FechaCierre']."'";}
-if(isset($_GET['idUsuarioAsignado']) && $_GET['idUsuarioAsignado'] != ''){  $z .= " AND gestion_tickets.idUsuarioAsignado=".$_GET['idUsuarioAsignado'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){                  $SIS_where .= " AND gestion_tickets.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idTipoTicket']) && $_GET['idTipoTicket'] != ''){            $SIS_where .= " AND gestion_tickets.idTipoTicket=".$_GET['idTipoTicket'];}
+if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){                        $SIS_where .= " AND gestion_tickets.Titulo='%".$_GET['Titulo']."%'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                    $SIS_where .= " AND gestion_tickets.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){              $SIS_where .= " AND gestion_tickets.idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['FechaCreacion']) && $_GET['FechaCreacion'] != ''){          $SIS_where .= " AND gestion_tickets.FechaCreacion='".$_GET['FechaCreacion']."'";}
+if(isset($_GET['FechaCierre']) && $_GET['FechaCierre'] != ''){              $SIS_where .= " AND gestion_tickets.FechaCierre='".$_GET['FechaCierre']."'";}
+if(isset($_GET['idUsuarioAsignado']) && $_GET['idUsuarioAsignado'] != ''){  $SIS_where .= " AND gestion_tickets.idUsuarioAsignado=".$_GET['idUsuarioAsignado'];}
+$SIS_join  = 'LEFT JOIN `gestion_tickets_area_correos` ON gestion_tickets_area_correos.idArea = gestion_tickets.idArea';				
+$SIS_where.= " GROUP BY gestion_tickets.idTicket";
+
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT gestion_tickets.idTicket FROM `gestion_tickets` 
-LEFT JOIN `gestion_tickets_area_correos` ON gestion_tickets_area_correos.idArea = gestion_tickets.idArea
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'gestion_tickets.idTicket', 'gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 gestion_tickets.idTicket,
 gestion_tickets.Titulo,
 gestion_tickets.FechaCreacion,
@@ -207,42 +193,26 @@ usuarios_listado.Nombre AS Usuario,
 core_tipo_ticket.Nombre AS TipoTicket,
 core_estado_ticket.Nombre AS EstadoTicket,
 core_ot_prioridad.Nombre AS PrioridadTicket,
-gestion_tickets_area.Nombre AS AreaTicket
+gestion_tickets_area.Nombre AS AreaTicket';
+$SIS_join .= '
+LEFT JOIN `core_sistemas`         ON core_sistemas.idSistema         = gestion_tickets.idSistema
+LEFT JOIN `usuarios_listado`      ON usuarios_listado.idUsuario      = gestion_tickets.idUsuario
+LEFT JOIN `core_tipo_ticket`      ON core_tipo_ticket.idTipoTicket   = gestion_tickets.idTipoTicket
+LEFT JOIN `core_estado_ticket`    ON core_estado_ticket.idEstado     = gestion_tickets.idEstado
+LEFT JOIN `core_ot_prioridad`     ON core_ot_prioridad.idPrioridad   = gestion_tickets.idPrioridad
+LEFT JOIN `gestion_tickets_area`  ON gestion_tickets_area.idArea     = gestion_tickets.idArea';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
 
-FROM `gestion_tickets`
-LEFT JOIN `core_sistemas`                  ON core_sistemas.idSistema                  = gestion_tickets.idSistema
-LEFT JOIN `usuarios_listado`               ON usuarios_listado.idUsuario               = gestion_tickets.idUsuario
-LEFT JOIN `core_tipo_ticket`               ON core_tipo_ticket.idTipoTicket            = gestion_tickets.idTipoTicket
-LEFT JOIN `core_estado_ticket`             ON core_estado_ticket.idEstado              = gestion_tickets.idEstado
-LEFT JOIN `core_ot_prioridad`              ON core_ot_prioridad.idPrioridad            = gestion_tickets.idPrioridad
-LEFT JOIN `gestion_tickets_area`           ON gestion_tickets_area.idArea              = gestion_tickets.idArea
-LEFT JOIN `gestion_tickets_area_correos`   ON gestion_tickets_area_correos.idArea      = gestion_tickets.idArea
-".$z."
-GROUP BY gestion_tickets.idTicket
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-}?>
+}
+?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

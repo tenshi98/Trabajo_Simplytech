@@ -181,70 +181,38 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'categoria_asc':  $order_by = 'ORDER BY seg_vecinal_canales_categorias.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente'; break;
-		case 'categoria_desc': $order_by = 'ORDER BY seg_vecinal_canales_categorias.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Categoria Descendente';break;
-		case 'nombre_asc':     $order_by = 'ORDER BY seg_vecinal_canales_listado.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':    $order_by = 'ORDER BY seg_vecinal_canales_listado.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'categoria_asc':  $order_by = 'seg_vecinal_canales_categorias.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente'; break;
+		case 'categoria_desc': $order_by = 'seg_vecinal_canales_categorias.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Categoria Descendente';break;
+		case 'nombre_asc':     $order_by = 'seg_vecinal_canales_listado.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':    $order_by = 'seg_vecinal_canales_listado.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
 		
-		default: $order_by = 'ORDER BY seg_vecinal_canales_categorias.Nombre ASC, seg_vecinal_canales_listado.Nombre ASC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente, Nombre Ascendente';
+		default: $order_by = 'seg_vecinal_canales_categorias.Nombre ASC, seg_vecinal_canales_listado.Nombre ASC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente, Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY seg_vecinal_canales_categorias.Nombre ASC, seg_vecinal_canales_listado.Nombre ASC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente, Nombre Ascendente';
+	$order_by = 'seg_vecinal_canales_categorias.Nombre ASC, seg_vecinal_canales_listado.Nombre ASC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente, Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE seg_vecinal_canales_listado.idCanal!=0";
+$SIS_where = "seg_vecinal_canales_listado.idCanal!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){  $z .= " AND seg_vecinal_canales_listado.idCategoria='".$_GET['idCategoria']."'";}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $z .= " AND seg_vecinal_canales_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){  $SIS_where .= " AND seg_vecinal_canales_listado.idCategoria='".$_GET['idCategoria']."'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $SIS_where .= " AND seg_vecinal_canales_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT seg_vecinal_canales_listado.idCanal FROM `seg_vecinal_canales_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idCanal', 'seg_vecinal_canales_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrCanales = array();
-$query = "SELECT 
+$SIS_query = '
 seg_vecinal_canales_listado.idCanal,
 seg_vecinal_canales_listado.Nombre AS NombreCanal,
-seg_vecinal_canales_categorias.Nombre AS NombreCategoria
-
-FROM `seg_vecinal_canales_listado`
-LEFT JOIN `seg_vecinal_canales_categorias` ON seg_vecinal_canales_categorias.idCategoria = seg_vecinal_canales_listado.idCategoria
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCanales,$row );
-}
+seg_vecinal_canales_categorias.Nombre AS NombreCategoria';
+$SIS_join  = 'LEFT JOIN `seg_vecinal_canales_categorias` ON seg_vecinal_canales_categorias.idCategoria = seg_vecinal_canales_listado.idCategoria';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrCanales = array();
+$arrCanales = db_select_array (false, $SIS_query, 'seg_vecinal_canales_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCanales');
 
 ?>
 

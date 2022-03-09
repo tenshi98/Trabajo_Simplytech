@@ -66,78 +66,59 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'id_asc':           $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.NSolicitud ASC ';                          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Solicitud Ascendente'; break;
-		case 'id_desc':          $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.NSolicitud DESC ';                         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';break;
-		case 'fprog_asc':        $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.f_programacion ASC ';                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Solicitud Ascendente';break;
-		case 'fprog_desc':       $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.f_programacion DESC ';                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Solicitud Descendente';break;
-		case 'predio_asc':       $order_by = 'ORDER BY cross_predios_listado.Nombre ASC ';                                           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Predio Ascendente'; break;
-		case 'predio_desc':      $order_by = 'ORDER BY cross_predios_listado.Nombre DESC ';                                          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Predio Descendente';break;
-		case 'prioridad_asc':    $order_by = 'ORDER BY core_cross_prioridad.Nombre ASC ';                                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ascendente'; break;
-		case 'prioridad_desc':   $order_by = 'ORDER BY core_cross_prioridad.Nombre DESC ';                                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
-		case 'feje_asc':         $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.f_ejecucion ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Programacion Ascendente'; break;
-		case 'feje_desc':        $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.f_ejecucion DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Programacion Descendente';break;
-		case 'especie_asc':      $order_by = 'ORDER BY sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Especie/Variedad Ascendente'; break;
-		case 'especie_desc':     $order_by = 'ORDER BY sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Especie/Variedad Descendente';break;
-		case 'fcierre_asc':      $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.f_termino ASC ';                           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Cierre Ascendente'; break;
-		case 'fcierre_desc':     $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.f_termino DESC ';                          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Cierre Descendente';break;
+		case 'id_asc':           $order_by = 'cross_solicitud_aplicacion_listado.NSolicitud ASC ';                          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Solicitud Ascendente'; break;
+		case 'id_desc':          $order_by = 'cross_solicitud_aplicacion_listado.NSolicitud DESC ';                         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';break;
+		case 'fprog_asc':        $order_by = 'cross_solicitud_aplicacion_listado.f_programacion ASC ';                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Solicitud Ascendente';break;
+		case 'fprog_desc':       $order_by = 'cross_solicitud_aplicacion_listado.f_programacion DESC ';                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Solicitud Descendente';break;
+		case 'predio_asc':       $order_by = 'cross_predios_listado.Nombre ASC ';                                           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Predio Ascendente'; break;
+		case 'predio_desc':      $order_by = 'cross_predios_listado.Nombre DESC ';                                          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Predio Descendente';break;
+		case 'prioridad_asc':    $order_by = 'core_cross_prioridad.Nombre ASC ';                                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ascendente'; break;
+		case 'prioridad_desc':   $order_by = 'core_cross_prioridad.Nombre DESC ';                                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
+		case 'feje_asc':         $order_by = 'cross_solicitud_aplicacion_listado.f_ejecucion ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Programacion Ascendente'; break;
+		case 'feje_desc':        $order_by = 'cross_solicitud_aplicacion_listado.f_ejecucion DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Programacion Descendente';break;
+		case 'especie_asc':      $order_by = 'sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Especie/Variedad Ascendente'; break;
+		case 'especie_desc':     $order_by = 'sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Especie/Variedad Descendente';break;
+		case 'fcierre_asc':      $order_by = 'cross_solicitud_aplicacion_listado.f_termino ASC ';                           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Cierre Ascendente'; break;
+		case 'fcierre_desc':     $order_by = 'cross_solicitud_aplicacion_listado.f_termino DESC ';                          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Cierre Descendente';break;
 		
-		default: $order_by = 'ORDER BY cross_solicitud_aplicacion_listado.NSolicitud DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';
+		default: $order_by = 'cross_solicitud_aplicacion_listado.NSolicitud DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY cross_solicitud_aplicacion_listado.NSolicitud DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';
+	$order_by = 'cross_solicitud_aplicacion_listado.NSolicitud DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE cross_solicitud_aplicacion_listado.idSolicitud!=0";
-$z .= " AND cross_solicitud_aplicacion_listado.idEstado = 3"; //Solo terminadas
+$SIS_where = "cross_solicitud_aplicacion_listado.idSolicitud!=0";
+$SIS_where .= " AND cross_solicitud_aplicacion_listado.idEstado = 3"; //Solo terminadas
 //Verifico el tipo de usuario que esta ingresando
-$z.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['NSolicitud']) && $_GET['NSolicitud'] != ''){          $z .= " AND cross_solicitud_aplicacion_listado.NSolicitud=".$_GET['NSolicitud'];}
-if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idPrioridad=".$_GET['idPrioridad'];}
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $z .= " AND cross_solicitud_aplicacion_listado.idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idTemporada']) && $_GET['idTemporada'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idTemporada=".$_GET['idTemporada'];}
-if(isset($_GET['idEstadoFen']) && $_GET['idEstadoFen'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idEstadoFen=".$_GET['idEstadoFen'];}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){        $z .= " AND cross_solicitud_aplicacion_listado.idCategoria=".$_GET['idCategoria'];}
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){          $z .= " AND cross_solicitud_aplicacion_listado.idProducto=".$_GET['idProducto'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $z .= " AND cross_solicitud_aplicacion_listado.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['NSolicitud']) && $_GET['NSolicitud'] != ''){          $SIS_where .= " AND cross_solicitud_aplicacion_listado.NSolicitud=".$_GET['NSolicitud'];}
+if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){        $SIS_where .= " AND cross_solicitud_aplicacion_listado.idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $SIS_where .= " AND cross_solicitud_aplicacion_listado.idPredio=".$_GET['idPredio'];}
+if(isset($_GET['idTemporada']) && $_GET['idTemporada'] != ''){        $SIS_where .= " AND cross_solicitud_aplicacion_listado.idTemporada=".$_GET['idTemporada'];}
+if(isset($_GET['idEstadoFen']) && $_GET['idEstadoFen'] != ''){        $SIS_where .= " AND cross_solicitud_aplicacion_listado.idEstadoFen=".$_GET['idEstadoFen'];}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){        $SIS_where .= " AND cross_solicitud_aplicacion_listado.idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){          $SIS_where .= " AND cross_solicitud_aplicacion_listado.idProducto=".$_GET['idProducto'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $SIS_where .= " AND cross_solicitud_aplicacion_listado.idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['f_programacion_desde'])&&$_GET['f_programacion_desde']!=''&&isset($_GET['f_programacion_hasta'])&&$_GET['f_programacion_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_programacion BETWEEN '".$_GET['f_programacion_desde']."' AND '".$_GET['f_programacion_hasta']."'";
+	$SIS_where.=" AND cross_solicitud_aplicacion_listado.f_programacion BETWEEN '".$_GET['f_programacion_desde']."' AND '".$_GET['f_programacion_hasta']."'";
 }
 if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GET['f_ejecucion_hasta'])&&$_GET['f_ejecucion_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_ejecucion BETWEEN '".$_GET['f_ejecucion_desde']."' AND '".$_GET['f_ejecucion_hasta']."'";
+	$SIS_where.=" AND cross_solicitud_aplicacion_listado.f_ejecucion BETWEEN '".$_GET['f_ejecucion_desde']."' AND '".$_GET['f_ejecucion_hasta']."'";
 }
 if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f_termino_hasta'])&&$_GET['f_termino_hasta']!=''){
-	$z.=" AND cross_solicitud_aplicacion_listado.f_termino BETWEEN '".$_GET['f_termino_desde']."' AND '".$_GET['f_termino_hasta']."'";
+	$SIS_where.=" AND cross_solicitud_aplicacion_listado.f_termino BETWEEN '".$_GET['f_termino_desde']."' AND '".$_GET['f_termino_hasta']."'";
 }
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idSolicitud FROM `cross_solicitud_aplicacion_listado` 
-LEFT JOIN `cross_predios_listado`           ON cross_predios_listado.idPredio             = cross_solicitud_aplicacion_listado.idPredio
-LEFT JOIN `core_cross_prioridad`            ON core_cross_prioridad.idPrioridad           = cross_solicitud_aplicacion_listado.idPrioridad
-LEFT JOIN `sistema_variedades_categorias`   ON sistema_variedades_categorias.idCategoria  = cross_solicitud_aplicacion_listado.idCategoria
-LEFT JOIN `variedades_listado`              ON variedades_listado.idProducto              = cross_solicitud_aplicacion_listado.idProducto
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idSolicitud', 'cross_solicitud_aplicacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrOTS = array();
-$query = "SELECT 
+$SIS_query = '
 cross_solicitud_aplicacion_listado.idSolicitud,
 cross_solicitud_aplicacion_listado.NSolicitud,
 cross_solicitud_aplicacion_listado.f_programacion,
@@ -146,33 +127,18 @@ cross_solicitud_aplicacion_listado.f_termino,
 cross_predios_listado.Nombre AS NombrePredio,
 core_cross_prioridad.Nombre AS Prioridad,
 sistema_variedades_categorias.Nombre AS Especie,
-variedades_listado.Nombre AS Variedad
-
-FROM `cross_solicitud_aplicacion_listado`
+variedades_listado.Nombre AS Variedad';
+$SIS_join  = '
 LEFT JOIN `cross_predios_listado`           ON cross_predios_listado.idPredio             = cross_solicitud_aplicacion_listado.idPredio
 LEFT JOIN `core_cross_prioridad`            ON core_cross_prioridad.idPrioridad           = cross_solicitud_aplicacion_listado.idPrioridad
 LEFT JOIN `sistema_variedades_categorias`   ON sistema_variedades_categorias.idCategoria  = cross_solicitud_aplicacion_listado.idCategoria
-LEFT JOIN `variedades_listado`              ON variedades_listado.idProducto              = cross_solicitud_aplicacion_listado.idProducto
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOTS,$row );
-}
+LEFT JOIN `variedades_listado`              ON variedades_listado.idProducto              = cross_solicitud_aplicacion_listado.idProducto';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrOTS = array();
+$arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOTS');
+
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

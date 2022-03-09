@@ -197,89 +197,57 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY clientes_listado.Nombre ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY clientes_listado.Nombre DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'rut_asc':       $order_by = 'ORDER BY clientes_listado.Rut ASC ';                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
-		case 'rut_desc':      $order_by = 'ORDER BY clientes_listado.Rut DESC ';                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
-		case 'fecha_asc':     $order_by = 'ORDER BY contabilidad_clientes_previred.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Facturacion Ascendente'; break;
-		case 'fecha_desc':    $order_by = 'ORDER BY contabilidad_clientes_previred.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY core_estado_facturacion.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
-		case 'estado_desc':   $order_by = 'ORDER BY core_estado_facturacion.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'tipo_asc':      $order_by = 'ORDER BY contabilidad_clientes_previred_tipo.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Facturacion Ascendente'; break;
-		case 'tipo_desc':     $order_by = 'ORDER BY contabilidad_clientes_previred_tipo.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Facturacion Descendente';break;
+		case 'nombre_asc':    $order_by = 'clientes_listado.Nombre ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'clientes_listado.Nombre DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'rut_asc':       $order_by = 'clientes_listado.Rut ASC ';                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
+		case 'rut_desc':      $order_by = 'clientes_listado.Rut DESC ';                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
+		case 'fecha_asc':     $order_by = 'contabilidad_clientes_previred.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Facturacion Ascendente'; break;
+		case 'fecha_desc':    $order_by = 'contabilidad_clientes_previred.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';break;
+		case 'estado_asc':    $order_by = 'core_estado_facturacion.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
+		case 'estado_desc':   $order_by = 'core_estado_facturacion.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'tipo_asc':      $order_by = 'contabilidad_clientes_previred_tipo.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Facturacion Ascendente'; break;
+		case 'tipo_desc':     $order_by = 'contabilidad_clientes_previred_tipo.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Facturacion Descendente';break;
 		
-		default: $order_by = 'ORDER BY contabilidad_clientes_previred.idEstado ASC, clientes_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'contabilidad_clientes_previred.idEstado ASC, clientes_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY contabilidad_clientes_previred.idEstado ASC, clientes_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'contabilidad_clientes_previred.idEstado ASC, clientes_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE contabilidad_clientes_previred.idContabPrevired!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND contabilidad_clientes_previred.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "contabilidad_clientes_previred.idContabPrevired!=0";
+$SIS_where.= " AND contabilidad_clientes_previred.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){           $z .= " AND contabilidad_clientes_previred.idCliente='".$_GET['idCliente']."'";}
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){ $z .= " AND contabilidad_clientes_previred.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){             $z .= " AND contabilidad_clientes_previred.idEstado='".$_GET['idEstado']."'";}
-if(isset($_GET['Cierre_fecha']) && $_GET['Cierre_fecha'] != ''){     $z .= " AND contabilidad_clientes_previred.Cierre_fecha='".$_GET['Cierre_fecha']."'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                 $z .= " AND contabilidad_clientes_previred.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){           $SIS_where .= " AND contabilidad_clientes_previred.idCliente='".$_GET['idCliente']."'";}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){ $SIS_where .= " AND contabilidad_clientes_previred.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){             $SIS_where .= " AND contabilidad_clientes_previred.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['Cierre_fecha']) && $_GET['Cierre_fecha'] != ''){     $SIS_where .= " AND contabilidad_clientes_previred.Cierre_fecha='".$_GET['Cierre_fecha']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                 $SIS_where .= " AND contabilidad_clientes_previred.idTipo='".$_GET['idTipo']."'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idContabPrevired FROM `contabilidad_clientes_previred` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idContabPrevired', 'contabilidad_clientes_previred', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrClientes = array();
-$query = "SELECT 
+$SIS_query = '
 contabilidad_clientes_previred.idContabPrevired,
 clientes_listado.Nombre AS ClienteNombre,
 clientes_listado.Rut AS ClienteRut,
 core_sistemas.Nombre AS Sistema,
 contabilidad_clientes_previred.Creacion_fecha,
 core_estado_facturacion.Nombre AS Estado,
-contabilidad_clientes_previred_tipo.Nombre AS Tipo
-
-FROM `contabilidad_clientes_previred`
+contabilidad_clientes_previred_tipo.Nombre AS Tipo';
+$SIS_join  = '
 LEFT JOIN `clientes_listado`                      ON clientes_listado.idCliente                    = contabilidad_clientes_previred.idCliente
 LEFT JOIN `core_sistemas`                         ON core_sistemas.idSistema                       = contabilidad_clientes_previred.idSistema
 LEFT JOIN `core_estado_facturacion`               ON core_estado_facturacion.idEstado              = contabilidad_clientes_previred.idEstado
-LEFT JOIN `contabilidad_clientes_previred_tipo`   ON contabilidad_clientes_previred_tipo.idTipo    = contabilidad_clientes_previred.idTipo
+LEFT JOIN `contabilidad_clientes_previred_tipo`   ON contabilidad_clientes_previred_tipo.idTipo    = contabilidad_clientes_previred.idTipo';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrClientes = array();
+$arrClientes = db_select_array (false, $SIS_query, 'contabilidad_clientes_previred', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrClientes');
 
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrClientes,$row );
-}
 //filtro
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>

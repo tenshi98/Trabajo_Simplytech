@@ -1360,65 +1360,50 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'tipo_asc':       $order_by = 'ORDER BY core_cross_quality_analisis_calidad.Nombre ASC ';                             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente'; break;
-		case 'tipo_desc':      $order_by = 'ORDER BY core_cross_quality_analisis_calidad.Nombre DESC ';                            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
-		case 'fecha_asc':      $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Creacion_fecha ASC ';                    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ingreso Ascendente';break;
-		case 'fecha_desc':     $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Creacion_fecha DESC ';                   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ingreso Descendente';break;
-		case 'temporada_asc':  $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Temporada ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Temporada Ascendente';break;
-		case 'temporada_desc': $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Temporada DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Temporada Descendente';break;
-		case 'producto_asc':   $order_by = 'ORDER BY sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Producto Ascendente';break;
-		case 'producto_desc':  $order_by = 'ORDER BY sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Producto Descendente';break;
-		case 'zona_asc':       $order_by = 'ORDER BY ubicacion_listado.Nombre ASC ';                                               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Zona Ascendente';break;
-		case 'zona_desc':      $order_by = 'ORDER BY ubicacion_listado.Nombre DESC ';                                              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Zona Descendente';break;
-		case 'creador_asc':    $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
-		case 'creador_desc':   $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
+		case 'tipo_asc':       $order_by = 'core_cross_quality_analisis_calidad.Nombre ASC ';                             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente'; break;
+		case 'tipo_desc':      $order_by = 'core_cross_quality_analisis_calidad.Nombre DESC ';                            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
+		case 'fecha_asc':      $order_by = 'cross_quality_registrar_inspecciones.Creacion_fecha ASC ';                    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ingreso Ascendente';break;
+		case 'fecha_desc':     $order_by = 'cross_quality_registrar_inspecciones.Creacion_fecha DESC ';                   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ingreso Descendente';break;
+		case 'temporada_asc':  $order_by = 'cross_quality_registrar_inspecciones.Temporada ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Temporada Ascendente';break;
+		case 'temporada_desc': $order_by = 'cross_quality_registrar_inspecciones.Temporada DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Temporada Descendente';break;
+		case 'producto_asc':   $order_by = 'sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Producto Ascendente';break;
+		case 'producto_desc':  $order_by = 'sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Producto Descendente';break;
+		case 'zona_asc':       $order_by = 'ubicacion_listado.Nombre ASC ';                                               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Zona Ascendente';break;
+		case 'zona_desc':      $order_by = 'ubicacion_listado.Nombre DESC ';                                              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Zona Descendente';break;
+		case 'creador_asc':    $order_by = 'usuarios_listado.Nombre ASC ';                                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
+		case 'creador_desc':   $order_by = 'usuarios_listado.Nombre DESC ';                                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
 
 				
-		default: $order_by = 'ORDER BY cross_quality_registrar_inspecciones.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ingreso Descendente';
+		default: $order_by = 'cross_quality_registrar_inspecciones.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ingreso Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY cross_quality_registrar_inspecciones.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ingreso Descendente';
+	$order_by = 'cross_quality_registrar_inspecciones.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ingreso Descendente';
 }
 /**********************************************************/
 //Variable con la ubicacion
-$z="WHERE cross_quality_registrar_inspecciones.idAnalisis!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND cross_quality_registrar_inspecciones.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "cross_quality_registrar_inspecciones.idAnalisis!=0";
+$SIS_where.= " AND cross_quality_registrar_inspecciones.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){        $z .= " AND cross_quality_registrar_inspecciones.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                        $z .= " AND cross_quality_registrar_inspecciones.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Temporada']) && $_GET['Temporada'] != ''){                  $z .= " AND cross_quality_registrar_inspecciones.Temporada=".$_GET['Temporada'];}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){              $z .= " AND cross_quality_registrar_inspecciones.idCategoria=".$_GET['idCategoria'];}
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){                $z .= " AND cross_quality_registrar_inspecciones.idProducto=".$_GET['idProducto'];}
-if(isset($_GET['idUbicacion']) && $_GET['idUbicacion'] != ''){              $z .= " AND cross_quality_registrar_inspecciones.idUbicacion=".$_GET['idUbicacion'];}
-if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1'] != ''){  $z .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];}
-if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2'] != ''){  $z .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];}
-if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3'] != ''){  $z .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];}
-if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4'] != ''){  $z .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];}
-if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5'] != ''){  $z .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){        $SIS_where .= " AND cross_quality_registrar_inspecciones.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                        $SIS_where .= " AND cross_quality_registrar_inspecciones.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Temporada']) && $_GET['Temporada'] != ''){                  $SIS_where .= " AND cross_quality_registrar_inspecciones.Temporada=".$_GET['Temporada'];}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){              $SIS_where .= " AND cross_quality_registrar_inspecciones.idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){                $SIS_where .= " AND cross_quality_registrar_inspecciones.idProducto=".$_GET['idProducto'];}
+if(isset($_GET['idUbicacion']) && $_GET['idUbicacion'] != ''){              $SIS_where .= " AND cross_quality_registrar_inspecciones.idUbicacion=".$_GET['idUbicacion'];}
+if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1'] != ''){  $SIS_where .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];}
+if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2'] != ''){  $SIS_where .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];}
+if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3'] != ''){  $SIS_where .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];}
+if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4'] != ''){  $SIS_where .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];}
+if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5'] != ''){  $SIS_where .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idAnalisis FROM `cross_quality_registrar_inspecciones` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idAnalisis', 'cross_quality_registrar_inspecciones', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 cross_quality_registrar_inspecciones.idAnalisis,
 cross_quality_registrar_inspecciones.Creacion_fecha,
 cross_quality_registrar_inspecciones.Temporada,
@@ -1434,42 +1419,22 @@ ubicacion_listado_level_1.Nombre AS UbicacionLVL_1,
 ubicacion_listado_level_2.Nombre AS UbicacionLVL_2,
 ubicacion_listado_level_3.Nombre AS UbicacionLVL_3,
 ubicacion_listado_level_4.Nombre AS UbicacionLVL_4,
-ubicacion_listado_level_5.Nombre AS UbicacionLVL_5
-
-
-FROM `cross_quality_registrar_inspecciones`
+ubicacion_listado_level_5.Nombre AS UbicacionLVL_5';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`                      ON usuarios_listado.idUsuario                   = cross_quality_registrar_inspecciones.idUsuario
 LEFT JOIN `core_sistemas`                         ON core_sistemas.idSistema                      = cross_quality_registrar_inspecciones.idSistema
 LEFT JOIN `core_cross_quality_analisis_calidad`   ON core_cross_quality_analisis_calidad.idTipo   = cross_quality_registrar_inspecciones.idTipo
-LEFT JOIN `sistema_variedades_categorias`          ON sistema_variedades_categorias.idCategoria     = cross_quality_registrar_inspecciones.idCategoria
-LEFT JOIN `variedades_listado`                     ON variedades_listado.idProducto                 = cross_quality_registrar_inspecciones.idProducto
+LEFT JOIN `sistema_variedades_categorias`         ON sistema_variedades_categorias.idCategoria    = cross_quality_registrar_inspecciones.idCategoria
+LEFT JOIN `variedades_listado`                    ON variedades_listado.idProducto                = cross_quality_registrar_inspecciones.idProducto
 LEFT JOIN `ubicacion_listado`                     ON ubicacion_listado.idUbicacion                = cross_quality_registrar_inspecciones.idUbicacion
 LEFT JOIN `ubicacion_listado_level_1`             ON ubicacion_listado_level_1.idLevel_1          = cross_quality_registrar_inspecciones.idUbicacion_lvl_1
 LEFT JOIN `ubicacion_listado_level_2`             ON ubicacion_listado_level_2.idLevel_2          = cross_quality_registrar_inspecciones.idUbicacion_lvl_2
 LEFT JOIN `ubicacion_listado_level_3`             ON ubicacion_listado_level_3.idLevel_3          = cross_quality_registrar_inspecciones.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`             ON ubicacion_listado_level_4.idLevel_4          = cross_quality_registrar_inspecciones.idUbicacion_lvl_4
-LEFT JOIN `ubicacion_listado_level_5`             ON ubicacion_listado_level_5.idLevel_5          = cross_quality_registrar_inspecciones.idUbicacion_lvl_5
-
-						
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}
+LEFT JOIN `ubicacion_listado_level_5`             ON ubicacion_listado_level_5.idLevel_5          = cross_quality_registrar_inspecciones.idUbicacion_lvl_5';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
 /*************************************************************/
 //filtro
@@ -1477,57 +1442,16 @@ $zx1 = "idCategoria=0";
 $zx2 = "idProducto=0";
 /************************************/
 //Se revisan los permisos a las especies
-$arrPermisos = array();
-$query = "SELECT idCategoria
-FROM `core_sistemas_variedades_categorias`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
-foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idCategoria={$prod['idCategoria']})";
-}
-/************************************/
-//Se revisan los permisos a las variantes
-$arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_variedades_listado`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
-foreach ($arrPermisos as $prod) {
-	$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
-}
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 0;
+$arrCategorias = array();
+$arrCategorias = db_select_array (false, 'idCategoria', 'core_sistemas_variedades_categorias', '', $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
+$arrProductos  = array();
+$arrProductos  = db_select_array (false, 'idProducto', 'core_sistemas_variedades_listado', '', $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
+
+foreach ($arrCategorias as $prod) { $zx1 .= " OR (idCategoria={$prod['idCategoria']})";}
+foreach ($arrProductos as $prod) {  $zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";}
 ?>
-
-
 
 <div class="col-sm-12 breadcrumb-bar">
 

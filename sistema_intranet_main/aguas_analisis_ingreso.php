@@ -653,89 +653,59 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':        $order_by = 'ORDER BY aguas_analisis_aguas.f_muestra ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Muestra Ascendente'; break;
-		case 'fecha_desc':       $order_by = 'ORDER BY aguas_analisis_aguas.f_muestra DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Muestra Descendente';break;
-		case 'periodo_asc':      $order_by = 'ORDER BY aguas_analisis_aguas.f_muestra ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Periodo Ascendente'; break;
-		case 'periodo_desc':     $order_by = 'ORDER BY aguas_analisis_aguas.f_muestra DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Periodo Descendente';break;
-		case 'codigo_asc':       $order_by = 'ORDER BY aguas_analisis_aguas.CodigoLaboratorio ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Muestra Lab Ascendente'; break;
-		case 'codigo_desc':      $order_by = 'ORDER BY aguas_analisis_aguas.CodigoLaboratorio DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Muestra Lab Descendente';break;
-		case 'parametro_asc':    $order_by = 'ORDER BY aguas_analisis_parametros.Nombre ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Parametro Revision Ascendente'; break;
-		case 'parametro_desc':   $order_by = 'ORDER BY aguas_analisis_parametros.Nombre DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Parametro Revision Descendente';break;
-		case 'valor_asc':        $order_by = 'ORDER BY aguas_analisis_aguas.valorAnalisis ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Ascendente'; break;
-		case 'valor_desc':       $order_by = 'ORDER BY aguas_analisis_aguas.valorAnalisis DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Descendente';break;
-		case 'cliente_asc':      $order_by = 'ORDER BY aguas_clientes_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente Ascendente'; break;
-		case 'cliente_desc':     $order_by = 'ORDER BY aguas_clientes_listado.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
+		case 'fecha_asc':        $order_by = 'aguas_analisis_aguas.f_muestra ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Muestra Ascendente'; break;
+		case 'fecha_desc':       $order_by = 'aguas_analisis_aguas.f_muestra DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Muestra Descendente';break;
+		case 'periodo_asc':      $order_by = 'aguas_analisis_aguas.f_muestra ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Periodo Ascendente'; break;
+		case 'periodo_desc':     $order_by = 'aguas_analisis_aguas.f_muestra DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Periodo Descendente';break;
+		case 'codigo_asc':       $order_by = 'aguas_analisis_aguas.CodigoLaboratorio ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Muestra Lab Ascendente'; break;
+		case 'codigo_desc':      $order_by = 'aguas_analisis_aguas.CodigoLaboratorio DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Muestra Lab Descendente';break;
+		case 'parametro_asc':    $order_by = 'aguas_analisis_parametros.Nombre ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Parametro Revision Ascendente'; break;
+		case 'parametro_desc':   $order_by = 'aguas_analisis_parametros.Nombre DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Parametro Revision Descendente';break;
+		case 'valor_asc':        $order_by = 'aguas_analisis_aguas.valorAnalisis ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Ascendente'; break;
+		case 'valor_desc':       $order_by = 'aguas_analisis_aguas.valorAnalisis DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Descendente';break;
+		case 'cliente_asc':      $order_by = 'aguas_clientes_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente Ascendente'; break;
+		case 'cliente_desc':     $order_by = 'aguas_clientes_listado.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
 
-		default: $order_by = 'ORDER BY aguas_analisis_aguas.idAnalisisAgua DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Analisis Agua Descendente';
+		default: $order_by = 'aguas_analisis_aguas.idAnalisisAgua DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Analisis Agua Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY aguas_analisis_aguas.idAnalisisAgua DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Analisis Agua Descendente';
+	$order_by = 'aguas_analisis_aguas.idAnalisisAgua DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Analisis Agua Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['f_muestra']) && $_GET['f_muestra'] != ''){                    $z .= " AND aguas_analisis_aguas.f_muestra='".$_GET['f_muestra']."'";}
-if(isset($_GET['f_recibida']) && $_GET['f_recibida'] != ''){                  $z .= " AND aguas_analisis_aguas.f_recibida='".$_GET['f_recibida']."'";}
-if(isset($_GET['idLaboratorio']) && $_GET['idLaboratorio'] != ''){            $z .= " AND aguas_analisis_aguas.idLaboratorio='".$_GET['idLaboratorio']."'";}
-if(isset($_GET['codigoMuestra']) && $_GET['codigoMuestra'] != ''){            $z .= " AND aguas_analisis_aguas.codigoMuestra='".$_GET['codigoMuestra']."'";}
-if(isset($_GET['CodigoLaboratorio']) && $_GET['CodigoLaboratorio'] != ''){    $z .= " AND aguas_analisis_aguas.CodigoLaboratorio='".$_GET['CodigoLaboratorio']."'";}
+if(isset($_GET['f_muestra']) && $_GET['f_muestra'] != ''){                    $SIS_where .= " AND aguas_analisis_aguas.f_muestra='".$_GET['f_muestra']."'";}
+if(isset($_GET['f_recibida']) && $_GET['f_recibida'] != ''){                  $SIS_where .= " AND aguas_analisis_aguas.f_recibida='".$_GET['f_recibida']."'";}
+if(isset($_GET['idLaboratorio']) && $_GET['idLaboratorio'] != ''){            $SIS_where .= " AND aguas_analisis_aguas.idLaboratorio='".$_GET['idLaboratorio']."'";}
+if(isset($_GET['codigoMuestra']) && $_GET['codigoMuestra'] != ''){            $SIS_where .= " AND aguas_analisis_aguas.codigoMuestra='".$_GET['codigoMuestra']."'";}
+if(isset($_GET['CodigoLaboratorio']) && $_GET['CodigoLaboratorio'] != ''){    $SIS_where .= " AND aguas_analisis_aguas.CodigoLaboratorio='".$_GET['CodigoLaboratorio']."'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idAnalisisAgua FROM `aguas_analisis_aguas` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idAnalisisAgua', 'aguas_analisis_aguas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_analisis_aguas.idAnalisisAgua,
 aguas_analisis_aguas.f_muestra,
 aguas_analisis_aguas.valorAnalisis,
 aguas_analisis_aguas.CodigoLaboratorio,
 aguas_analisis_parametros.Nombre AS Parametro,
 aguas_clientes_listado.Nombre AS Cliente,
-core_sistemas.Nombre AS sistema
-
-FROM `aguas_analisis_aguas`
+core_sistemas.Nombre AS sistema';
+$SIS_join  = '
 LEFT JOIN `aguas_analisis_parametros`   ON aguas_analisis_parametros.idParametros   = aguas_analisis_aguas.idParametros
 LEFT JOIN `aguas_clientes_listado`      ON aguas_clientes_listado.idCliente         = aguas_analisis_aguas.idCliente
-LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema                  = aguas_analisis_aguas.idSistema
+LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema                  = aguas_analisis_aguas.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
-
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}?>
+$z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

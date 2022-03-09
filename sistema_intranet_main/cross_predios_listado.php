@@ -475,80 +475,49 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY cross_predios_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY cross_predios_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY core_estados.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':   $order_by = 'ORDER BY core_estados.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'nombre_asc':    $order_by = 'cross_predios_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'cross_predios_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY cross_predios_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'cross_predios_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY cross_predios_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'cross_predios_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z="WHERE cross_predios_listado.idPredio!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND cross_predios_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "cross_predios_listado.idPredio!=0";
+$SIS_where.= " AND cross_predios_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){           $z .= " AND cross_predios_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){       $z .= " AND cross_predios_listado.idEstado=".$_GET['idPais'];}
-if(isset($_GET['idPais']) && $_GET['idPais'] != ''){           $z .= " AND cross_predios_listado.idPais=".$_GET['idPais'];}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){       $z .= " AND cross_predios_listado.idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){       $z .= " AND cross_predios_listado.idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){     $z .= " AND cross_predios_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){           $SIS_where .= " AND cross_predios_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){       $SIS_where .= " AND cross_predios_listado.idEstado=".$_GET['idPais'];}
+if(isset($_GET['idPais']) && $_GET['idPais'] != ''){           $SIS_where .= " AND cross_predios_listado.idPais=".$_GET['idPais'];}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){       $SIS_where .= " AND cross_predios_listado.idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){       $SIS_where .= " AND cross_predios_listado.idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){     $SIS_where .= " AND cross_predios_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idPredio FROM `cross_predios_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idPredio', 'cross_predios_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 cross_predios_listado.idPredio,
 cross_predios_listado.Nombre,
 core_sistemas.Nombre AS sistema,
 core_estados.Nombre AS estado,
-cross_predios_listado.idEstado
-
-FROM `cross_predios_listado`
+cross_predios_listado.idEstado';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`    ON core_sistemas.idSistema   = cross_predios_listado.idSistema
-LEFT JOIN `core_estados`     ON core_estados.idEstado     = cross_predios_listado.idEstado
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+LEFT JOIN `core_estados`     ON core_estados.idEstado     = cross_predios_listado.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
+
 ?>
 
 <div class="col-sm-12 breadcrumb-bar">

@@ -183,76 +183,46 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':        $order_by = 'ORDER BY sistema_planes.Nombre ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':       $order_by = 'ORDER BY sistema_planes.Nombre DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'valor_asc':         $order_by = 'ORDER BY sistema_planes.Valor ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Ascendente';break;
-		case 'valor_desc':        $order_by = 'ORDER BY sistema_planes.Valor DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Descendente';break;
-		case 'transporte_asc':    $order_by = 'ORDER BY transportes_listado.Nombre ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Transportista Ascendente';break;
-		case 'transporte_desc':   $order_by = 'ORDER BY transportes_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Transportista Descendente';break;
+		case 'nombre_asc':        $order_by = 'sistema_planes.Nombre ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':       $order_by = 'sistema_planes.Nombre DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'valor_asc':         $order_by = 'sistema_planes.Valor ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Ascendente';break;
+		case 'valor_desc':        $order_by = 'sistema_planes.Valor DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Descendente';break;
+		case 'transporte_asc':    $order_by = 'transportes_listado.Nombre ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Transportista Ascendente';break;
+		case 'transporte_desc':   $order_by = 'transportes_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Transportista Descendente';break;
 		
-		default: $order_by = 'ORDER BY sistema_planes.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'sistema_planes.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY sistema_planes.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'sistema_planes.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE sistema_planes.idPlan!=0";
+$SIS_where = "sistema_planes.idPlan!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){               $z .= " AND sistema_planes.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Valor']) && $_GET['Valor'] != ''){                 $z .= " AND sistema_planes.Valor LIKE '%".$_GET['Valor']."%'";}
-if(isset($_GET['idTransporte']) && $_GET['idTransporte'] != ''){   $z .= " AND sistema_planes.idTransporte=".$_GET['idTransporte'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){               $SIS_where .= " AND sistema_planes.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Valor']) && $_GET['Valor'] != ''){                 $SIS_where .= " AND sistema_planes.Valor LIKE '%".$_GET['Valor']."%'";}
+if(isset($_GET['idTransporte']) && $_GET['idTransporte'] != ''){   $SIS_where .= " AND sistema_planes.idTransporte=".$_GET['idTransporte'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idPlan FROM `sistema_planes` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idPlan', 'sistema_planes', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrPlan = array();
-$query = "SELECT 
+$SIS_query = '
 sistema_planes.idPlan,
 sistema_planes.Nombre, 
 sistema_planes.Valor,
-transportes_listado.Nombre AS Transportista
+transportes_listado.Nombre AS Transportista';
+$SIS_join  = 'LEFT JOIN `transportes_listado` ON transportes_listado.idTransporte = sistema_planes.idTransporte';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrPlan = array();
+$arrPlan = db_select_array (false, $SIS_query, 'sistema_planes', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPlan');
 
-FROM `sistema_planes`
-LEFT JOIN `transportes_listado` ON transportes_listado.idTransporte = sistema_planes.idTransporte
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPlan,$row );
-}
 //Verifico el tipo de usuario que esta ingresando
-$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";?>
+$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

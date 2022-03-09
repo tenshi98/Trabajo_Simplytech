@@ -346,87 +346,57 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'rut_asc':      $order_by = 'ORDER BY proveedor_listado.Rut ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
-		case 'rut_desc':     $order_by = 'ORDER BY proveedor_listado.Rut DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
-		case 'nombre_asc':   $order_by = 'ORDER BY proveedor_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
-		case 'nombre_desc':  $order_by = 'ORDER BY proveedor_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':   $order_by = 'ORDER BY core_estados.Nombre ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':  $order_by = 'ORDER BY core_estados.Nombre DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'rut_asc':      $order_by = 'proveedor_listado.Rut ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
+		case 'rut_desc':     $order_by = 'proveedor_listado.Rut DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
+		case 'nombre_asc':   $order_by = 'proveedor_listado.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
+		case 'nombre_desc':  $order_by = 'proveedor_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':   $order_by = 'core_estados.Nombre ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':  $order_by = 'core_estados.Nombre DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY proveedor_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'proveedor_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY proveedor_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'proveedor_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE proveedor_listado.idProveedor!=0";
+$SIS_where = "proveedor_listado.idProveedor!=0";
 //verifico que sea un administrador
-$z.=" AND proveedor_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND proveedor_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){           $z .= " AND proveedor_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){           $z .= " AND proveedor_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                 $z .= " AND proveedor_listado.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){ $z .= " AND proveedor_listado.fNacimiento='".$_GET['fNacimiento']."'";}
-if(isset($_GET['idPais']) && $_GET['idPais'] != ''){           $z .= " AND proveedor_listado.idPais=".$_GET['idPais'];}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){       $z .= " AND proveedor_listado.idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){       $z .= " AND proveedor_listado.idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){     $z .= " AND proveedor_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
-if(isset($_GET['Giro']) && $_GET['Giro'] != ''){               $z .= " AND proveedor_listado.Giro LIKE '%".$_GET['Giro']."%'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){           $SIS_where .= " AND proveedor_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){           $SIS_where .= " AND proveedor_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                 $SIS_where .= " AND proveedor_listado.Rut LIKE '%".$_GET['Rut']."%'";}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){ $SIS_where .= " AND proveedor_listado.fNacimiento='".$_GET['fNacimiento']."'";}
+if(isset($_GET['idPais']) && $_GET['idPais'] != ''){           $SIS_where .= " AND proveedor_listado.idPais=".$_GET['idPais'];}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){       $SIS_where .= " AND proveedor_listado.idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){       $SIS_where .= " AND proveedor_listado.idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){     $SIS_where .= " AND proveedor_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
+if(isset($_GET['Giro']) && $_GET['Giro'] != ''){               $SIS_where .= " AND proveedor_listado.Giro LIKE '%".$_GET['Giro']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT proveedor_listado.idProveedor FROM `proveedor_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idProveedor', 'proveedor_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 proveedor_listado.idProveedor,
 proveedor_listado.Rut,
 proveedor_listado.Nombre,
 core_estados.Nombre AS estado,
 core_sistemas.Nombre AS sistema,
-proveedor_listado.idEstado
-
-FROM `proveedor_listado`
+proveedor_listado.idEstado';
+$SIS_join  = '
 LEFT JOIN `core_estados`   ON core_estados.idEstado       = proveedor_listado.idEstado
-LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema     = proveedor_listado.idSistema
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema     = proveedor_listado.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'proveedor_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
 
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

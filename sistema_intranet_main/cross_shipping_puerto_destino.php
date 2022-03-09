@@ -173,69 +173,38 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY cross_shipping_puerto_destino.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY cross_shipping_puerto_destino.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'codigo_asc':    $order_by = 'ORDER BY cross_shipping_puerto_destino.Codigo ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Ascendente'; break;
-		case 'codigo_desc':   $order_by = 'ORDER BY cross_shipping_puerto_destino.Codigo DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Descendente';break;
+		case 'nombre_asc':    $order_by = 'cross_shipping_puerto_destino.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'cross_shipping_puerto_destino.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'codigo_asc':    $order_by = 'cross_shipping_puerto_destino.Codigo ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Codigo Ascendente'; break;
+		case 'codigo_desc':   $order_by = 'cross_shipping_puerto_destino.Codigo DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Descendente';break;
 		
-		default: $order_by = 'ORDER BY cross_shipping_puerto_destino.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'cross_shipping_puerto_destino.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY cross_shipping_puerto_destino.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'cross_shipping_puerto_destino.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE cross_shipping_puerto_destino.idPuertoDestino!=0";
+$SIS_where = "cross_shipping_puerto_destino.idPuertoDestino!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){  $z .= " AND cross_shipping_puerto_destino.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Codigo']) && $_GET['Codigo'] != ''){  $z .= " AND cross_shipping_puerto_destino.Codigo LIKE '%".$_GET['Codigo']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){  $SIS_where .= " AND cross_shipping_puerto_destino.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Codigo']) && $_GET['Codigo'] != ''){  $SIS_where .= " AND cross_shipping_puerto_destino.Codigo LIKE '%".$_GET['Codigo']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idPuertoDestino FROM `cross_shipping_puerto_destino` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idPuertoDestino', 'cross_shipping_puerto_destino', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrCategorias = array();
-$query = "SELECT 
+$SIS_query = '
 cross_shipping_puerto_destino.idPuertoDestino,
 cross_shipping_puerto_destino.Nombre AS NombrePuerto,
-cross_shipping_puerto_destino.Codigo AS Codigo
-
-FROM `cross_shipping_puerto_destino`
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCategorias,$row );
-}
+cross_shipping_puerto_destino.Codigo AS Codigo';
+$SIS_join  = '';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrCategorias = array();
+$arrCategorias = db_select_array (false, $SIS_query, 'cross_shipping_puerto_destino', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
 
 ?>
 

@@ -310,88 +310,58 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY seguridad_camaras_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY seguridad_camaras_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY core_estados.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':   $order_by = 'ORDER BY core_estados.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'ncamaras_asc':  $order_by = 'ORDER BY core_estados.N_Camaras ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Camaras Ascendente';break;
-		case 'ncamaras_desc': $order_by = 'ORDER BY core_estados.N_Camaras DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Camaras Descendente';break;
-		case 'subconf_asc':   $order_by = 'ORDER BY core_sistemas_opciones.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Subconfiguracion Ascendente';break;
-		case 'subconf_desc':  $order_by = 'ORDER BY core_sistemas_opciones.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Subconfiguracion Descendente';break;
+		case 'nombre_asc':    $order_by = 'seguridad_camaras_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'seguridad_camaras_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'ncamaras_asc':  $order_by = 'core_estados.N_Camaras ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Camaras Ascendente';break;
+		case 'ncamaras_desc': $order_by = 'core_estados.N_Camaras DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Camaras Descendente';break;
+		case 'subconf_asc':   $order_by = 'core_sistemas_opciones.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Subconfiguracion Ascendente';break;
+		case 'subconf_desc':  $order_by = 'core_sistemas_opciones.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Subconfiguracion Descendente';break;
 		
-		default: $order_by = 'ORDER BY seguridad_camaras_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'seguridad_camaras_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY seguridad_camaras_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'seguridad_camaras_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z="WHERE seguridad_camaras_listado.idCamara!=0";
+$SIS_where = "seguridad_camaras_listado.idCamara!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND seguridad_camaras_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND seguridad_camaras_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                          $z .= " AND seguridad_camaras_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                      $z .= " AND seguridad_camaras_listado.idEstado=".$_GET['idPais'];}
-if(isset($_GET['idPais']) && $_GET['idPais'] != ''){                          $z .= " AND seguridad_camaras_listado.idPais=".$_GET['idPais'];}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){                      $z .= " AND seguridad_camaras_listado.idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){                      $z .= " AND seguridad_camaras_listado.idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){                    $z .= " AND seguridad_camaras_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
-if(isset($_GET['N_Camaras']) && $_GET['N_Camaras'] != ''){                    $z .= " AND seguridad_camaras_listado.N_Camaras=".$_GET['N_Camaras'];}
-if(isset($_GET['idSubconfiguracion']) && $_GET['idSubconfiguracion'] != ''){  $z .= " AND seguridad_camaras_listado.idSubconfiguracion=".$_GET['idSubconfiguracion'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                          $SIS_where .= " AND seguridad_camaras_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                      $SIS_where .= " AND seguridad_camaras_listado.idEstado=".$_GET['idPais'];}
+if(isset($_GET['idPais']) && $_GET['idPais'] != ''){                          $SIS_where .= " AND seguridad_camaras_listado.idPais=".$_GET['idPais'];}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){                      $SIS_where .= " AND seguridad_camaras_listado.idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){                      $SIS_where .= " AND seguridad_camaras_listado.idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){                    $SIS_where .= " AND seguridad_camaras_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
+if(isset($_GET['N_Camaras']) && $_GET['N_Camaras'] != ''){                    $SIS_where .= " AND seguridad_camaras_listado.N_Camaras=".$_GET['N_Camaras'];}
+if(isset($_GET['idSubconfiguracion']) && $_GET['idSubconfiguracion'] != ''){  $SIS_where .= " AND seguridad_camaras_listado.idSubconfiguracion=".$_GET['idSubconfiguracion'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idCamara FROM `seguridad_camaras_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idCamara', 'seguridad_camaras_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrCamaras = array();
-$query = "SELECT 
+$SIS_query = '
 seguridad_camaras_listado.idCamara,
 seguridad_camaras_listado.Nombre,
 seguridad_camaras_listado.N_Camaras,
 core_sistemas.Nombre AS sistema,
 core_estados.Nombre AS estado,
 seguridad_camaras_listado.idEstado,
-core_sistemas_opciones.Nombre AS Subconfiguracion
-
-FROM `seguridad_camaras_listado`
+core_sistemas_opciones.Nombre AS Subconfiguracion';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema            = seguridad_camaras_listado.idSistema
 LEFT JOIN `core_estados`            ON core_estados.idEstado              = seguridad_camaras_listado.idEstado
-LEFT JOIN `core_sistemas_opciones`  ON core_sistemas_opciones.idOpciones  = seguridad_camaras_listado.idSubconfiguracion
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCamaras,$row );
-}
+LEFT JOIN `core_sistemas_opciones`  ON core_sistemas_opciones.idOpciones  = seguridad_camaras_listado.idSubconfiguracion';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrCamaras = array();
+$arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCamaras');
+
 ?>
 
 <div class="col-sm-12 breadcrumb-bar">

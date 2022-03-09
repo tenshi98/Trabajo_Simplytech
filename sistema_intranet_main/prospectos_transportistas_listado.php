@@ -210,79 +210,49 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY prospectos_transportistas_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
-		case 'nombre_desc':   $order_by = 'ORDER BY prospectos_transportistas_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'etapa_asc':     $order_by = 'ORDER BY prospectos_transportistas_etapa.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Etapa Ascendente';break;
-		case 'etapa_desc':    $order_by = 'ORDER BY prospectos_transportistas_etapa.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Etapa Descendente';break;
+		case 'nombre_asc':    $order_by = 'prospectos_transportistas_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
+		case 'nombre_desc':   $order_by = 'prospectos_transportistas_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'etapa_asc':     $order_by = 'prospectos_transportistas_etapa.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Etapa Ascendente';break;
+		case 'etapa_desc':    $order_by = 'prospectos_transportistas_etapa.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Etapa Descendente';break;
 	
-		default: $order_by = 'ORDER BY prospectos_transportistas_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'prospectos_transportistas_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY prospectos_transportistas_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'prospectos_transportistas_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE prospectos_transportistas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = "prospectos_transportistas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z.= " AND prospectos_transportistas_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where.= " AND prospectos_transportistas_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                              $z .= " AND prospectos_transportistas_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idEstadoFidelizacion']) && $_GET['idEstadoFidelizacion'] != ''){  $z .= " AND prospectos_transportistas_listado.idEstadoFidelizacion=".$_GET['idEstadoFidelizacion'];}
-if(isset($_GET['idEtapa']) && $_GET['idEtapa'] != ''){                            $z .= " AND prospectos_transportistas_listado.idEtapa=".$_GET['idEtapa'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                              $SIS_where .= " AND prospectos_transportistas_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idEstadoFidelizacion']) && $_GET['idEstadoFidelizacion'] != ''){  $SIS_where .= " AND prospectos_transportistas_listado.idEstadoFidelizacion=".$_GET['idEstadoFidelizacion'];}
+if(isset($_GET['idEtapa']) && $_GET['idEtapa'] != ''){                            $SIS_where .= " AND prospectos_transportistas_listado.idEtapa=".$_GET['idEtapa'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT prospectos_transportistas_listado.idProspecto FROM `prospectos_transportistas_listado` LEFT JOIN `prospectos_transportistas_etapa`  ON prospectos_transportistas_etapa.idEtapa = prospectos_transportistas_listado.idEtapa ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idProspecto', 'prospectos_transportistas_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 prospectos_transportistas_listado.idProspecto,
 prospectos_transportistas_listado.Nombre,
 core_sistemas.Nombre AS sistema,
-prospectos_transportistas_etapa.Nombre AS Etapa
-
-FROM `prospectos_transportistas_listado`
+prospectos_transportistas_etapa.Nombre AS Etapa';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                    ON core_sistemas.idSistema                     = prospectos_transportistas_listado.idSistema
-LEFT JOIN `prospectos_transportistas_etapa`  ON prospectos_transportistas_etapa.idEtapa     = prospectos_transportistas_listado.idEtapa
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+LEFT JOIN `prospectos_transportistas_etapa`  ON prospectos_transportistas_etapa.idEtapa     = prospectos_transportistas_listado.idEtapa';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'prospectos_transportistas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
 
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

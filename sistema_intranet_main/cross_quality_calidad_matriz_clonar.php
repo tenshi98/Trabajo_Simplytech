@@ -108,91 +108,56 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'npuntos_asc':   $order_by = 'ORDER BY cross_quality_calidad_matriz.cantPuntos ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N Puntos Ascendente'; break;
-		case 'npuntos_desc':  $order_by = 'ORDER BY cross_quality_calidad_matriz.cantPuntos DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N Puntos Descendente';break;
-		case 'nombre_asc':    $order_by = 'ORDER BY cross_quality_calidad_matriz.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY cross_quality_calidad_matriz.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY core_estados.Nombre ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
-		case 'estado_desc':   $order_by = 'ORDER BY core_estados.Nombre DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'planilla_asc':  $order_by = 'ORDER BY core_cross_quality_analisis_calidad.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Planilla Ascendente'; break;
-		case 'planilla_desc': $order_by = 'ORDER BY core_cross_quality_analisis_calidad.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Planilla Descendente';break;
-		case 'sistema_asc':   $order_by = 'ORDER BY core_sistemas.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Sistema Ascendente'; break;
-		case 'sistema_desc':  $order_by = 'ORDER BY core_sistemas.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Sistema Descendente';break;
+		case 'npuntos_asc':   $order_by = 'cross_quality_calidad_matriz.cantPuntos ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N Puntos Ascendente'; break;
+		case 'npuntos_desc':  $order_by = 'cross_quality_calidad_matriz.cantPuntos DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N Puntos Descendente';break;
+		case 'nombre_asc':    $order_by = 'cross_quality_calidad_matriz.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'cross_quality_calidad_matriz.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';                         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
+		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'planilla_asc':  $order_by = 'core_cross_quality_analisis_calidad.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Planilla Ascendente'; break;
+		case 'planilla_desc': $order_by = 'core_cross_quality_analisis_calidad.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Planilla Descendente';break;
+		case 'sistema_asc':   $order_by = 'core_sistemas.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Sistema Ascendente'; break;
+		case 'sistema_desc':  $order_by = 'core_sistemas.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Sistema Descendente';break;
 		
-		default: $order_by = 'ORDER BY cross_quality_calidad_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'cross_quality_calidad_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY cross_quality_calidad_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'cross_quality_calidad_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE cross_quality_calidad_matriz.idMatriz!=0";
+$SIS_where = "cross_quality_calidad_matriz.idMatriz!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){      $z .= " AND cross_quality_calidad_matriz.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['cantPuntos']) && $_GET['cantPuntos'] != ''){  $z .= " AND cross_quality_calidad_matriz.cantPuntos=".$_GET['cantPuntos'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){          $z .= " AND cross_quality_calidad_matriz.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){          $z .= " AND cross_quality_calidad_matriz.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){    $z .= " AND cross_quality_calidad_matriz.idSistema=".$_GET['idSistema'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){      $SIS_where .= " AND cross_quality_calidad_matriz.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['cantPuntos']) && $_GET['cantPuntos'] != ''){  $SIS_where .= " AND cross_quality_calidad_matriz.cantPuntos=".$_GET['cantPuntos'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){          $SIS_where .= " AND cross_quality_calidad_matriz.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){          $SIS_where .= " AND cross_quality_calidad_matriz.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){    $SIS_where .= " AND cross_quality_calidad_matriz.idSistema=".$_GET['idSistema'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idMatriz FROM `cross_quality_calidad_matriz` 
-LEFT JOIN `core_estados`                         ON core_estados.idEstado                        = cross_quality_calidad_matriz.idEstado
-LEFT JOIN `core_cross_quality_analisis_calidad`  ON core_cross_quality_analisis_calidad.idTipo   = cross_quality_calidad_matriz.idTipo
-LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                      = cross_quality_calidad_matriz.idSistema
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idMatriz', 'cross_quality_calidad_matriz', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrMatriz = array();
-$query = "SELECT 
+$SIS_query = '
 cross_quality_calidad_matriz.idMatriz, 
 cross_quality_calidad_matriz.Nombre, 
 cross_quality_calidad_matriz.cantPuntos,
 core_estados.Nombre AS Estado,
 core_cross_quality_analisis_calidad.Nombre AS Planilla,
 core_sistemas.Nombre AS RazonSocial,
-cross_quality_calidad_matriz.idEstado
-
-
-FROM `cross_quality_calidad_matriz`
+cross_quality_calidad_matriz.idEstado';
+$SIS_join  = '
 LEFT JOIN `core_estados`                         ON core_estados.idEstado                        = cross_quality_calidad_matriz.idEstado
 LEFT JOIN `core_cross_quality_analisis_calidad`  ON core_cross_quality_analisis_calidad.idTipo   = cross_quality_calidad_matriz.idTipo
-LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                      = cross_quality_calidad_matriz.idSistema
+LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                      = cross_quality_calidad_matriz.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrMatriz = array();
+$arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMatriz');
 
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMatriz,$row );
-}?>
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

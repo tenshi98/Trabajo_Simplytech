@@ -53,76 +53,47 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':     $order_by = 'ORDER BY telemetria_historial_mantencion.Fecha ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':    $order_by = 'ORDER BY telemetria_historial_mantencion.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'usuario_asc':   $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
-		case 'usuario_desc':  $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'equipo_asc':    $order_by = 'ORDER BY telemetria_listado.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Equipo Ascendente'; break;
-		case 'equipo_desc':   $order_by = 'ORDER BY telemetria_listado.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Equipo Descendente';break;
+		case 'fecha_asc':     $order_by = 'telemetria_historial_mantencion.Fecha ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':    $order_by = 'telemetria_historial_mantencion.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'usuario_asc':   $order_by = 'usuarios_listado.Nombre ASC ';                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente';break;
+		case 'usuario_desc':  $order_by = 'usuarios_listado.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'equipo_asc':    $order_by = 'telemetria_listado.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Equipo Ascendente'; break;
+		case 'equipo_desc':   $order_by = 'telemetria_listado.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Equipo Descendente';break;
 		
-		default: $order_by = 'ORDER BY telemetria_historial_mantencion.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+		default: $order_by = 'telemetria_historial_mantencion.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY telemetria_historial_mantencion.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+	$order_by = 'telemetria_historial_mantencion.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_historial_mantencion.idMantencion!=0";
+$SIS_where = "telemetria_historial_mantencion.idMantencion!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){ $z .= " AND telemetria_historial_mantencion.idTelemetria=".$_GET['idTelemetria'];}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){ $SIS_where .= " AND telemetria_historial_mantencion.idTelemetria=".$_GET['idTelemetria'];}
 if(isset($_GET['Fecha_ini']) && $_GET['Fecha_ini'] != ''&&isset($_GET['Fecha_ter']) && $_GET['Fecha_ter'] != ''){ 
-	$z .= " AND telemetria_historial_mantencion.Fecha BETWEEN '".$_GET['Fecha_ini']."' AND '".$_GET['Fecha_ter']."'" ;
-}
+	$SIS_where .= " AND telemetria_historial_mantencion.Fecha BETWEEN '".$_GET['Fecha_ini']."' AND '".$_GET['Fecha_ter']."'" ;
+}				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idMantencion FROM `telemetria_historial_mantencion` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idMantencion', 'telemetria_historial_mantencion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrMantenciones = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_historial_mantencion.idMantencion,
 telemetria_historial_mantencion.Fecha,
 usuarios_listado.Nombre AS Usuario,
-telemetria_listado.Nombre AS Equipo
-
-FROM `telemetria_historial_mantencion`
+telemetria_listado.Nombre AS Equipo';
+$SIS_join  = '
 LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria   = telemetria_historial_mantencion.idTelemetria
-LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario        = telemetria_historial_mantencion.idUsuario
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMantenciones,$row );
-}?>
+LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario        = telemetria_historial_mantencion.idUsuario';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrMantenciones = array();
+$arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMantenciones');
+
+?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

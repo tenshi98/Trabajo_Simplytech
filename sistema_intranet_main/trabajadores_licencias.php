@@ -230,23 +230,23 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':        $order_by = 'ORDER BY trabajadores_licencias.Fecha_inicio ASC ';                                                                          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';break;
-		case 'fecha_desc':       $order_by = 'ORDER BY trabajadores_licencias.Fecha_inicio DESC ';                                                                         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'ndias_asc':        $order_by = 'ORDER BY trabajadores_licencias.N_Dias ASC ';                                                                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Dias Ascendente';break;
-		case 'ndias_desc':       $order_by = 'ORDER BY trabajadores_licencias.N_Dias DESC ';                                                                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Dias Descendente';break;
-		case 'trabajador_asc':   $order_by = 'ORDER BY trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Trabajador Ascendente'; break;
-		case 'trabajador_desc':  $order_by = 'ORDER BY trabajadores_listado.ApellidoPat DESC, trabajadores_listado.ApellidoMat DESC, trabajadores_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Trabajador Descendente';break;
-		case 'usuario_asc':      $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';                                                                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
-		case 'usuario_desc':     $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';                                                                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'fecha_asc':        $order_by = 'trabajadores_licencias.Fecha_inicio ASC ';                                                                          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';break;
+		case 'fecha_desc':       $order_by = 'trabajadores_licencias.Fecha_inicio DESC ';                                                                         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'ndias_asc':        $order_by = 'trabajadores_licencias.N_Dias ASC ';                                                                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Dias Ascendente';break;
+		case 'ndias_desc':       $order_by = 'trabajadores_licencias.N_Dias DESC ';                                                                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Dias Descendente';break;
+		case 'trabajador_asc':   $order_by = 'trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Trabajador Ascendente'; break;
+		case 'trabajador_desc':  $order_by = 'trabajadores_listado.ApellidoPat DESC, trabajadores_listado.ApellidoMat DESC, trabajadores_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Trabajador Descendente';break;
+		case 'usuario_asc':      $order_by = 'usuarios_listado.Nombre ASC ';                                                                                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
+		case 'usuario_desc':     $order_by = 'usuarios_listado.Nombre DESC ';                                                                                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
 		
-		default: $order_by = 'ORDER BY trabajadores_licencias.Fecha_inicio DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+		default: $order_by = 'trabajadores_licencias.Fecha_inicio DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY trabajadores_licencias.Fecha_inicio DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+	$order_by = 'trabajadores_licencias.Fecha_inicio DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE trabajadores_licencias.idLicencia!=0";
+$SIS_where = "trabajadores_licencias.idLicencia!=0";
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
@@ -257,37 +257,19 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){      $z .= " AND trabajadores_licencias.idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $z .= " AND trabajadores_licencias.idUsuario=".$_GET['idUsuario'];}
-if(isset($_GET['Fecha_inicio']) && $_GET['Fecha_inicio'] != ''){      $z .= " AND trabajadores_licencias.Fecha_inicio=".$_GET['Fecha_inicio'];}
-if(isset($_GET['Fecha_termino']) && $_GET['Fecha_termino'] != ''){    $z .= " AND trabajadores_licencias.Fecha_termino=".$_GET['Fecha_termino'];}
-if(isset($_GET['N_Dias']) && $_GET['N_Dias'] != ''){                  $z .= " AND trabajadores_licencias.N_Dias=".$_GET['N_Dias'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){      $SIS_where .= " AND trabajadores_licencias.idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $SIS_where .= " AND trabajadores_licencias.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['Fecha_inicio']) && $_GET['Fecha_inicio'] != ''){      $SIS_where .= " AND trabajadores_licencias.Fecha_inicio=".$_GET['Fecha_inicio'];}
+if(isset($_GET['Fecha_termino']) && $_GET['Fecha_termino'] != ''){    $SIS_where .= " AND trabajadores_licencias.Fecha_termino=".$_GET['Fecha_termino'];}
+if(isset($_GET['N_Dias']) && $_GET['N_Dias'] != ''){                  $SIS_where .= " AND trabajadores_licencias.N_Dias=".$_GET['N_Dias'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idLicencia FROM `trabajadores_licencias` 
-LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador  = trabajadores_licencias.idTrabajador
-LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario         = trabajadores_licencias.idUsuario
-LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema            = trabajadores_licencias.idSistema
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idLicencia', 'trabajadores_licencias', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrInasHoras = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_licencias.idLicencia,
 trabajadores_listado.ApellidoPat AS TrabApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabApellidoMat,
@@ -297,31 +279,16 @@ trabajadores_licencias.Fecha_inicio,
 trabajadores_licencias.Fecha_termino,
 trabajadores_licencias.N_Dias,
 core_sistemas.Nombre AS Sistema,
-trabajadores_licencias.idUso
-
-FROM `trabajadores_licencias`
+trabajadores_licencias.idUso';
+$SIS_join  = '
 LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador  = trabajadores_licencias.idTrabajador
 LEFT JOIN `usuarios_listado`     ON usuarios_listado.idUsuario         = trabajadores_licencias.idUsuario
-LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema            = trabajadores_licencias.idSistema
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrInasHoras,$row );
-}?>
+LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema            = trabajadores_licencias.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrInasHoras = array();
+$arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_licencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrInasHoras');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

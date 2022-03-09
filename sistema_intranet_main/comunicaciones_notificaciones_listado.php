@@ -192,68 +192,39 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'fecha_asc':     $order_by = 'ORDER BY Fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':    $order_by = 'ORDER BY Fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'titulo_asc':    $order_by = 'ORDER BY Titulo ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Titulo Ascendente';break;
-		case 'titulo_desc':   $order_by = 'ORDER BY Titulo DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Titulo Descendente';break;
+		case 'fecha_asc':     $order_by = 'Fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':    $order_by = 'Fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'titulo_asc':    $order_by = 'Titulo ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Titulo Ascendente';break;
+		case 'titulo_desc':   $order_by = 'Titulo DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Titulo Descendente';break;
 		
-		default: $order_by = 'ORDER BY Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+		default: $order_by = 'Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
+	$order_by = 'Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z="WHERE principal_notificaciones_listado.idNotificaciones!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND principal_notificaciones_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "principal_notificaciones_listado.idNotificaciones!=0";
+$SIS_where.= " AND principal_notificaciones_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){               $z .= " AND principal_notificaciones_listado.Titulo LIKE '%".$_GET['Titulo']."%'";}
-if(isset($_GET['Notificacion']) && $_GET['Notificacion'] != ''){   $z .= " AND principal_notificaciones_listado.Notificacion LIKE '%".$_GET['Notificacion']."%'";}
+if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){               $SIS_where .= " AND principal_notificaciones_listado.Titulo LIKE '%".$_GET['Titulo']."%'";}
+if(isset($_GET['Notificacion']) && $_GET['Notificacion'] != ''){   $SIS_where .= " AND principal_notificaciones_listado.Notificacion LIKE '%".$_GET['Notificacion']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idNotificaciones FROM `principal_notificaciones_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idNotificaciones', 'principal_notificaciones_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
+$SIS_query = 'idNotificaciones,Titulo, Fecha';
+$SIS_join  = '';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrNotificaciones = array();
-$query = "SELECT idNotificaciones,Titulo, Fecha
-FROM `principal_notificaciones_listado`
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrNotificaciones,$row );
-}?>
+$arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificaciones_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrNotificaciones');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

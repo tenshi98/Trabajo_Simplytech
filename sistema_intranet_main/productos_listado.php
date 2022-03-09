@@ -449,59 +449,45 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':      $order_by = 'ORDER BY productos_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
-		case 'nombre_desc':     $order_by = 'ORDER BY productos_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'categoria_asc':   $order_by = 'ORDER BY sistema_productos_categorias.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente';break;
-		case 'categoria_desc':  $order_by = 'ORDER BY sistema_productos_categorias.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Categoria Descendente';break;
-		case 'tipo_asc':        $order_by = 'ORDER BY sistema_productos_tipo.Nombre ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo de Producto Ascendente';break;
-		case 'tipo_desc':       $order_by = 'ORDER BY sistema_productos_tipo.Nombre DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo de Producto Descendente';break;
-		case 'unidad_asc':      $order_by = 'ORDER BY sistema_productos_uml.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Unidad Medida Ascendente';break;
-		case 'unidad_desc':     $order_by = 'ORDER BY sistema_productos_uml.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Unidad Medida Descendente';break;
-		case 'tipoprod_asc':    $order_by = 'ORDER BY core_tipo_producto.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Producto Ascendente';break;
-		case 'tipoprod_desc':   $order_by = 'ORDER BY core_tipo_producto.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Producto Descendente';break;
-		case 'estado_asc':      $order_by = 'ORDER BY core_estados.Nombre ASC ';                    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':     $order_by = 'ORDER BY core_estados.Nombre DESC ';                   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'nombre_asc':      $order_by = 'productos_listado.Nombre ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
+		case 'nombre_desc':     $order_by = 'productos_listado.Nombre DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'categoria_asc':   $order_by = 'sistema_productos_categorias.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria Ascendente';break;
+		case 'categoria_desc':  $order_by = 'sistema_productos_categorias.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Categoria Descendente';break;
+		case 'tipo_asc':        $order_by = 'sistema_productos_tipo.Nombre ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo de Producto Ascendente';break;
+		case 'tipo_desc':       $order_by = 'sistema_productos_tipo.Nombre DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo de Producto Descendente';break;
+		case 'unidad_asc':      $order_by = 'sistema_productos_uml.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Unidad Medida Ascendente';break;
+		case 'unidad_desc':     $order_by = 'sistema_productos_uml.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Unidad Medida Descendente';break;
+		case 'tipoprod_asc':    $order_by = 'core_tipo_producto.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Producto Ascendente';break;
+		case 'tipoprod_desc':   $order_by = 'core_tipo_producto.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Producto Descendente';break;
+		case 'estado_asc':      $order_by = 'core_estados.Nombre ASC ';                    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':     $order_by = 'core_estados.Nombre DESC ';                   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY sistema_productos_tipo.Nombre ASC, productos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Nombre Ascendente';
+		default: $order_by = 'sistema_productos_tipo.Nombre ASC, productos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY sistema_productos_tipo.Nombre ASC, productos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Nombre Ascendente';
+	$order_by = 'sistema_productos_tipo.Nombre ASC, productos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Nombre Ascendente';
 }
 /**********************************************************/
-$z="WHERE productos_listado.idProducto >= 1";
+$SIS_where = "productos_listado.idProducto >= 1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                  $z .= " AND productos_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                  $z .= " AND productos_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){        $z .= " AND productos_listado.idCategoria=".$_GET['idCategoria'];}
-if(isset($_GET['Marca']) && $_GET['Marca'] != ''){                    $z .= " AND productos_listado.Marca LIKE '%".$_GET['Marca']."%'";}
-if(isset($_GET['idUml']) && $_GET['idUml'] != ''){                    $z .= " AND productos_listado.idUml=".$_GET['idUml'];}
-if(isset($_GET['idTipoProducto']) && $_GET['idTipoProducto'] != ''){  $z .= " AND productos_listado.idTipoProducto=".$_GET['idTipoProducto'];}
-if(isset($_GET['idTipoReceta']) && $_GET['idTipoReceta'] != ''){      $z .= " AND productos_listado.idTipoReceta=".$_GET['idTipoReceta'];}
-if(isset($_GET['idSubTipo']) && $_GET['idSubTipo'] != ''){            $z .= " AND productos_listado.idSubTipo=".$_GET['idSubTipo'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $z .= " AND productos_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                  $SIS_where .= " AND productos_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                  $SIS_where .= " AND productos_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){        $SIS_where .= " AND productos_listado.idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['Marca']) && $_GET['Marca'] != ''){                    $SIS_where .= " AND productos_listado.Marca LIKE '%".$_GET['Marca']."%'";}
+if(isset($_GET['idUml']) && $_GET['idUml'] != ''){                    $SIS_where .= " AND productos_listado.idUml=".$_GET['idUml'];}
+if(isset($_GET['idTipoProducto']) && $_GET['idTipoProducto'] != ''){  $SIS_where .= " AND productos_listado.idTipoProducto=".$_GET['idTipoProducto'];}
+if(isset($_GET['idTipoReceta']) && $_GET['idTipoReceta'] != ''){      $SIS_where .= " AND productos_listado.idTipoReceta=".$_GET['idTipoReceta'];}
+if(isset($_GET['idSubTipo']) && $_GET['idSubTipo'] != ''){            $SIS_where .= " AND productos_listado.idSubTipo=".$_GET['idSubTipo'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $SIS_where .= " AND productos_listado.idEstado=".$_GET['idEstado'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT productos_listado.idProducto FROM `productos_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idProducto', 'productos_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 productos_listado.idProducto,
 productos_listado.Nombre AS NombreProd,
 productos_listado.Direccion_img,
@@ -511,35 +497,19 @@ sistema_productos_categorias.Nombre AS Categoria,
 sistema_productos_uml.Nombre AS UnidadMedida,
 core_tipo_producto.Nombre AS TipoProd,
 core_estados.Nombre AS Estado,
-productos_listado.idEstado
-
-FROM `productos_listado`
-LEFT JOIN `sistema_productos_tipo`           ON sistema_productos_tipo.idTipo                    = productos_listado.idTipo
-LEFT JOIN `sistema_productos_categorias`     ON sistema_productos_categorias.idCategoria         = productos_listado.idCategoria
-LEFT JOIN `sistema_productos_uml`            ON sistema_productos_uml.idUml                      = productos_listado.idUml
-LEFT JOIN `core_tipo_producto`               ON core_tipo_producto.idTipoProducto                = productos_listado.idTipoProducto
-LEFT JOIN `core_estados`                     ON core_estados.idEstado                            = productos_listado.idEstado
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
+productos_listado.idEstado';
+$SIS_join  = '
+LEFT JOIN `sistema_productos_tipo`       ON sistema_productos_tipo.idTipo             = productos_listado.idTipo
+LEFT JOIN `sistema_productos_categorias` ON sistema_productos_categorias.idCategoria  = productos_listado.idCategoria
+LEFT JOIN `sistema_productos_uml`        ON sistema_productos_uml.idUml               = productos_listado.idUml
+LEFT JOIN `core_tipo_producto`           ON core_tipo_producto.idTipoProducto         = productos_listado.idTipoProducto
+LEFT JOIN `core_estados`                 ON core_estados.idEstado                     = productos_listado.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

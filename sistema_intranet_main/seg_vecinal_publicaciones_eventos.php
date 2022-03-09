@@ -153,39 +153,25 @@ if (!$num_pag){
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE seg_vecinal_eventos_listado.idEvento!=0";
+$SIS_where = "seg_vecinal_eventos_listado.idEvento!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){      $z .= " AND seg_vecinal_eventos_listado.idCliente='".$_GET['idCliente']."'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $z .= " AND seg_vecinal_eventos_listado.idTipo='".$_GET['idTipo']."'";}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){        $z .= " AND seg_vecinal_eventos_listado.idCiudad='".$_GET['idCiudad']."'";}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){        $z .= " AND seg_vecinal_eventos_listado.idComuna='".$_GET['idComuna']."'";}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){      $z .= " AND seg_vecinal_eventos_listado.Direccion='".$_GET['Direccion']."'";}
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){              $z .= " AND seg_vecinal_eventos_listado.Fecha='".$_GET['Fecha']."'";}
-if(isset($_GET['Hora']) && $_GET['Hora'] != ''){                $z .= " AND seg_vecinal_eventos_listado.Hora='".$_GET['Hora']."'";}
-if(isset($_GET['idValidado']) && $_GET['idValidado'] != ''){    $z .= " AND seg_vecinal_eventos_listado.idValidado='".$_GET['idValidado']."'";}
+if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){      $SIS_where .= " AND seg_vecinal_eventos_listado.idCliente='".$_GET['idCliente']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $SIS_where .= " AND seg_vecinal_eventos_listado.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){        $SIS_where .= " AND seg_vecinal_eventos_listado.idCiudad='".$_GET['idCiudad']."'";}
+if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){        $SIS_where .= " AND seg_vecinal_eventos_listado.idComuna='".$_GET['idComuna']."'";}
+if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){      $SIS_where .= " AND seg_vecinal_eventos_listado.Direccion='".$_GET['Direccion']."'";}
+if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){              $SIS_where .= " AND seg_vecinal_eventos_listado.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['Hora']) && $_GET['Hora'] != ''){                $SIS_where .= " AND seg_vecinal_eventos_listado.Hora='".$_GET['Hora']."'";}
+if(isset($_GET['idValidado']) && $_GET['idValidado'] != ''){    $SIS_where .= " AND seg_vecinal_eventos_listado.idValidado='".$_GET['idValidado']."'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idEvento FROM `seg_vecinal_eventos_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idEvento', 'seg_vecinal_eventos_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrEventos = array();
-$query = "SELECT 
+$SIS_query = '
 seg_vecinal_eventos_listado.idEvento,
 seg_vecinal_eventos_listado.Direccion,
 seg_vecinal_eventos_listado.Fecha,
@@ -196,34 +182,17 @@ core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
 seg_vecinal_clientes_listado.Nombre AS Vecino,
 seg_vecinal_eventos_listado.idValidado,
-core_seguridad_validacion.Nombre AS Validacion
-
-FROM `seg_vecinal_eventos_listado`
+core_seguridad_validacion.Nombre AS Validacion';
+$SIS_join  = '
 LEFT JOIN `seg_vecinal_eventos_tipos`     ON seg_vecinal_eventos_tipos.idTipo       = seg_vecinal_eventos_listado.idTipo
 LEFT JOIN `core_ubicacion_ciudad`         ON core_ubicacion_ciudad.idCiudad         = seg_vecinal_eventos_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`        ON core_ubicacion_comunas.idComuna        = seg_vecinal_eventos_listado.idComuna
 LEFT JOIN `seg_vecinal_clientes_listado`  ON seg_vecinal_clientes_listado.idCliente = seg_vecinal_eventos_listado.idCliente
-LEFT JOIN `core_seguridad_validacion`     ON core_seguridad_validacion.idValidado   = seg_vecinal_eventos_listado.idValidado
+LEFT JOIN `core_seguridad_validacion`     ON core_seguridad_validacion.idValidado   = seg_vecinal_eventos_listado.idValidado';
+$SIS_order = 'seg_vecinal_eventos_listado.Fecha DESC, seg_vecinal_eventos_listado.Hora DESC LIMIT '.$comienzo.', '.$cant_reg;
+$arrEventos = array();
+$arrEventos = db_select_array (false, $SIS_query, 'seg_vecinal_eventos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEventos');
 
-".$z."
-ORDER BY seg_vecinal_eventos_listado.Fecha DESC, seg_vecinal_eventos_listado.Hora DESC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrEventos,$row );
-}
 /******************************************************************************/
 //Verifico el tipo de usuario que esta ingresando
 $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';

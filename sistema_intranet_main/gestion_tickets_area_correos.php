@@ -184,17 +184,17 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'categoria_asc':  $order_by = 'ORDER BY gestion_tickets_area.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Area Ascendente';break;
-		case 'categoria_desc': $order_by = 'ORDER BY gestion_tickets_area.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Area Descendente';break;
-		case 'nombre_asc':     $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':    $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'email_asc':      $order_by = 'ORDER BY usuarios_listado.email ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Email Ascendente';break;
-		case 'email_desc':     $order_by = 'ORDER BY usuarios_listado.email DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Email Descendente';break;
+		case 'categoria_asc':  $order_by = 'gestion_tickets_area.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Area Ascendente';break;
+		case 'categoria_desc': $order_by = 'gestion_tickets_area.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Area Descendente';break;
+		case 'nombre_asc':     $order_by = 'usuarios_listado.Nombre ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':    $order_by = 'usuarios_listado.Nombre DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'email_asc':      $order_by = 'usuarios_listado.email ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Email Ascendente';break;
+		case 'email_desc':     $order_by = 'usuarios_listado.email DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Email Descendente';break;
 		
-		default: $order_by = 'ORDER BY gestion_tickets_area.Nombre ASC, usuarios_listado.email ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Area, Email Ascendente';
+		default: $order_by = 'gestion_tickets_area.Nombre ASC, usuarios_listado.email ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Area, Email Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY gestion_tickets_area.Nombre ASC, usuarios_listado.email ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Area, Email Ascendente';
+	$order_by = 'gestion_tickets_area.Nombre ASC, usuarios_listado.email ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Area, Email Ascendente';
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
@@ -205,61 +205,32 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE gestion_tickets_area_correos.idCorreos!=0";
+$SIS_where = "gestion_tickets_area_correos.idCorreos!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idArea']) && $_GET['idArea'] != ''){         $z .= " AND gestion_tickets_area_correos.idArea=".$_GET['idArea'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $z .= " AND gestion_tickets_area_correos.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idArea']) && $_GET['idArea'] != ''){         $SIS_where .= " AND gestion_tickets_area_correos.idArea=".$_GET['idArea'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $SIS_where .= " AND gestion_tickets_area_correos.idUsuario=".$_GET['idUsuario'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT gestion_tickets_area_correos.idCorreos FROM `gestion_tickets_area_correos` 
-LEFT JOIN `gestion_tickets_area` ON gestion_tickets_area.idArea  = gestion_tickets_area_correos.idArea
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'gestion_tickets_area_correos.idCorreos', 'gestion_tickets_area_correos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrComunas = array();
-$query = "SELECT 
+$SIS_query = '
 gestion_tickets_area_correos.idCorreos,
 usuarios_listado.Nombre AS NombreEmail,
 usuarios_listado.email AS Email,
-gestion_tickets_area.Nombre AS Categoria
-FROM `gestion_tickets_area_correos`
+gestion_tickets_area.Nombre AS Categoria';
+$SIS_join  = '
 LEFT JOIN `gestion_tickets_area`   ON gestion_tickets_area.idArea   = gestion_tickets_area_correos.idArea
-LEFT JOIN `usuarios_listado`       ON usuarios_listado.idUsuario    = gestion_tickets_area_correos.idUsuario
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrComunas,$row );
-}?>
+LEFT JOIN `usuarios_listado`       ON usuarios_listado.idUsuario    = gestion_tickets_area_correos.idUsuario';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrComunas = array();
+$arrComunas = db_select_array (false, $SIS_query, 'gestion_tickets_area_correos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrComunas');
+
+?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

@@ -403,80 +403,46 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':   $order_by = 'ORDER BY telemetria_mantencion_matriz.Nombre ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':  $order_by = 'ORDER BY telemetria_mantencion_matriz.Nombre DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'puntos_asc':   $order_by = 'ORDER BY telemetria_mantencion_matriz.cantPuntos ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Puntos Ascendente'; break;
-		case 'puntos_desc':  $order_by = 'ORDER BY telemetria_mantencion_matriz.cantPuntos DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Puntos Descendente';break;
-		case 'estado_asc':   $order_by = 'ORDER BY core_estados.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':  $order_by = 'ORDER BY core_estados.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'nombre_asc':   $order_by = 'telemetria_mantencion_matriz.Nombre ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':  $order_by = 'telemetria_mantencion_matriz.Nombre DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'puntos_asc':   $order_by = 'telemetria_mantencion_matriz.cantPuntos ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Puntos Ascendente'; break;
+		case 'puntos_desc':  $order_by = 'telemetria_mantencion_matriz.cantPuntos DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Puntos Descendente';break;
+		case 'estado_asc':   $order_by = 'core_estados.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':  $order_by = 'core_estados.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY telemetria_mantencion_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'telemetria_mantencion_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY telemetria_mantencion_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'telemetria_mantencion_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_mantencion_matriz.idMatriz!=0";
+$SIS_where = "telemetria_mantencion_matriz.idMatriz!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND telemetria_mantencion_matriz.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND telemetria_mantencion_matriz.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $z .= " AND telemetria_mantencion_matriz.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){    $z .= " AND telemetria_mantencion_matriz.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $SIS_where .= " AND telemetria_mantencion_matriz.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){    $SIS_where .= " AND telemetria_mantencion_matriz.idEstado=".$_GET['idEstado'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idMatriz FROM `telemetria_mantencion_matriz` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idMatriz', 'telemetria_mantencion_matriz', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg); 
-// Se trae un listado de la matriz
-$arrMatriz = array();
-$query = "SELECT 
+$total_paginas = ceil($cuenta_registros / $cant_reg);	
+// Se trae un listado con todos los elementos
+$SIS_query = '
 telemetria_mantencion_matriz.idMatriz, 
 telemetria_mantencion_matriz.Nombre, 
 telemetria_mantencion_matriz.cantPuntos,
 core_estados.Nombre AS Estado,
-telemetria_mantencion_matriz.idEstado
-
-FROM `telemetria_mantencion_matriz`
-LEFT JOIN `core_estados` ON core_estados.idEstado = telemetria_mantencion_matriz.idEstado
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrMatriz,$row );
-}
-
+telemetria_mantencion_matriz.idEstado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = telemetria_mantencion_matriz.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrMatriz = array();
+$arrMatriz = db_select_array (false, $SIS_query, 'telemetria_mantencion_matriz', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMatriz');
 
 ?>
-
 
 <div class="col-sm-12 breadcrumb-bar">
 

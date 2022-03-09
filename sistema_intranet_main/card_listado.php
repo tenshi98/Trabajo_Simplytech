@@ -201,81 +201,51 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':     $order_by = 'ORDER BY card_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
-		case 'nombre_desc':    $order_by = 'ORDER BY card_listado.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'tipo_asc':       $order_by = 'ORDER BY core_card_type.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Tarjeta Ascendente';break;
-		case 'tipo_desc':      $order_by = 'ORDER BY core_card_type.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Tarjeta Descendente';break;
-		case 'image_asc':      $order_by = 'ORDER BY core_sistemas_opciones.Nombre ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Uso Avatar Ascendente';break;
-		case 'image_desc':     $order_by = 'ORDER BY core_sistemas_opciones.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Uso Avatar Descendente';break;
-		case 'posicion_asc':   $order_by = 'ORDER BY core_card_position.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Posicion Texto Ascendente';break;
-		case 'posicion_desc':  $order_by = 'ORDER BY core_card_position.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Posicion Texto Descendente';break;
+		case 'nombre_asc':     $order_by = 'card_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
+		case 'nombre_desc':    $order_by = 'card_listado.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'tipo_asc':       $order_by = 'core_card_type.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Tarjeta Ascendente';break;
+		case 'tipo_desc':      $order_by = 'core_card_type.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Tarjeta Descendente';break;
+		case 'image_asc':      $order_by = 'core_sistemas_opciones.Nombre ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Uso Avatar Ascendente';break;
+		case 'image_desc':     $order_by = 'core_sistemas_opciones.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Uso Avatar Descendente';break;
+		case 'posicion_asc':   $order_by = 'core_card_position.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Posicion Texto Ascendente';break;
+		case 'posicion_desc':  $order_by = 'core_card_position.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Posicion Texto Descendente';break;
 		
-		default: $order_by = 'ORDER BY card_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'card_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY card_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'card_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
-$z="WHERE card_listado.idCard >= 1";
+$SIS_where = "card_listado.idCard >= 1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $z .= " AND card_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idCardImage']) && $_GET['idCardImage'] != ''){  $z .= " AND card_listado.idCardImage=".$_GET['idCardImage'];}
-if(isset($_GET['idCardType']) && $_GET['idCardType'] != ''){    $z .= " AND card_listado.idCardType=".$_GET['idCardType'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $SIS_where .= " AND card_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idCardImage']) && $_GET['idCardImage'] != ''){  $SIS_where .= " AND card_listado.idCardImage=".$_GET['idCardImage'];}
+if(isset($_GET['idCardType']) && $_GET['idCardType'] != ''){    $SIS_where .= " AND card_listado.idCardType=".$_GET['idCardType'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT card_listado.idCard FROM `card_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'card_listado.idCard', 'card_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 card_listado.idCard,
 card_listado.Nombre AS CardNombre,
 card_listado.Direccion_img,
 core_sistemas_opciones.Nombre AS Imagen,
 core_card_type.Nombre AS Tipo,
-core_card_position.Nombre AS Posicion
-
-FROM `card_listado`
+core_card_position.Nombre AS Posicion';
+$SIS_join  = '
 LEFT JOIN `core_sistemas_opciones`  ON core_sistemas_opciones.idOpciones   = card_listado.idCardImage
 LEFT JOIN `core_card_type`          ON core_card_type.idCardType           = card_listado.idCardType
-LEFT JOIN `core_card_position`      ON core_card_position.idPosition       = card_listado.idPosition
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
+LEFT JOIN `core_card_position`      ON core_card_position.idPosition       = card_listado.idPosition';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'card_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

@@ -285,54 +285,40 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY alumnos_cursos.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY alumnos_cursos.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'semana_asc':    $order_by = 'ORDER BY alumnos_cursos.Semanas ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Semanas Ascendente'; break;
-		case 'semana_desc':   $order_by = 'ORDER BY alumnos_cursos.Semanas DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Semanas Descendente';break;
-		case 'fini_asc':      $order_by = 'ORDER BY alumnos_cursos.F_inicio ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Inicio Ascendente'; break;
-		case 'fini_desc':     $order_by = 'ORDER BY alumnos_cursos.F_inicio DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Inicio Descendente';break;
-		case 'fter_asc':      $order_by = 'ORDER BY alumnos_cursos.F_termino ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Termino Ascendente'; break;
-		case 'fter_desc':     $order_by = 'ORDER BY alumnos_cursos.F_termino DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Termino Descendente';break;
-		case 'estado_asc':    $order_by = 'ORDER BY core_estados.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
-		case 'estado_desc':   $order_by = 'ORDER BY core_estados.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'nombre_asc':    $order_by = 'alumnos_cursos.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'alumnos_cursos.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'semana_asc':    $order_by = 'alumnos_cursos.Semanas ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Semanas Ascendente'; break;
+		case 'semana_desc':   $order_by = 'alumnos_cursos.Semanas DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Semanas Descendente';break;
+		case 'fini_asc':      $order_by = 'alumnos_cursos.F_inicio ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Inicio Ascendente'; break;
+		case 'fini_desc':     $order_by = 'alumnos_cursos.F_inicio DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Inicio Descendente';break;
+		case 'fter_asc':      $order_by = 'alumnos_cursos.F_termino ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Termino Ascendente'; break;
+		case 'fter_desc':     $order_by = 'alumnos_cursos.F_termino DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Termino Descendente';break;
+		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
+		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 
-		default: $order_by = 'ORDER BY alumnos_cursos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'alumnos_cursos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY alumnos_cursos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'alumnos_cursos.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE alumnos_cursos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = "alumnos_cursos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $z .= " AND alumnos_cursos.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Semanas']) && $_GET['Semanas'] != ''){      $z .= " AND alumnos_cursos.Semanas='".$_GET['Semanas']."'";}
-if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''){    $z .= " AND alumnos_cursos.F_inicio='".$_GET['F_inicio']."'";}
-if(isset($_GET['F_termino']) && $_GET['F_termino'] != ''){  $z .= " AND alumnos_cursos.F_termino='".$_GET['F_termino']."'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){    $z .= " AND alumnos_cursos.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $SIS_where .= " AND alumnos_cursos.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Semanas']) && $_GET['Semanas'] != ''){      $SIS_where .= " AND alumnos_cursos.Semanas='".$_GET['Semanas']."'";}
+if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''){    $SIS_where .= " AND alumnos_cursos.F_inicio='".$_GET['F_inicio']."'";}
+if(isset($_GET['F_termino']) && $_GET['F_termino'] != ''){  $SIS_where .= " AND alumnos_cursos.F_termino='".$_GET['F_termino']."'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){    $SIS_where .= " AND alumnos_cursos.idEstado='".$_GET['idEstado']."'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idCurso FROM `alumnos_cursos` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idCurso', 'alumnos_cursos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrCiudad = array();
-$query = "SELECT 
+$SIS_query = '
 alumnos_cursos.idCurso, 
 alumnos_cursos.Nombre, 
 alumnos_cursos.Semanas, 
@@ -340,29 +326,15 @@ alumnos_cursos.F_inicio,
 alumnos_cursos.F_termino,
 alumnos_cursos.idEstado,
 core_estados.Nombre AS Estado,
-core_sistemas.Nombre AS sistema
-FROM `alumnos_cursos`
+core_sistemas.Nombre AS sistema';
+$SIS_join  = '
 LEFT JOIN `core_estados`    ON core_estados.idEstado    = alumnos_cursos.idEstado
-LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema  = alumnos_cursos.idSistema
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCiudad,$row );
-}?>
+LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema  = alumnos_cursos.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrCiudad = array();
+$arrCiudad = db_select_array (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCiudad');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

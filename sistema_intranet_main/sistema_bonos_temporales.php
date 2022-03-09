@@ -172,69 +172,40 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':    $order_by = 'ORDER BY sistema_bonos_temporales.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':   $order_by = 'ORDER BY sistema_bonos_temporales.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'tipo_asc':      $order_by = 'ORDER BY core_tipos_bonos.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Bono Ascendente'; break;
-		case 'tipo_desc':     $order_by = 'ORDER BY core_tipos_bonos.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Bono Descendente';break;
+		case 'nombre_asc':    $order_by = 'sistema_bonos_temporales.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':   $order_by = 'sistema_bonos_temporales.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'tipo_asc':      $order_by = 'core_tipos_bonos.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Bono Ascendente'; break;
+		case 'tipo_desc':     $order_by = 'core_tipos_bonos.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Bono Descendente';break;
 		
-		default: $order_by = 'ORDER BY sistema_bonos_temporales.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'sistema_bonos_temporales.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY sistema_bonos_temporales.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'sistema_bonos_temporales.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE sistema_bonos_temporales.idBonoTemporal!=0";
+$SIS_where = "sistema_bonos_temporales.idBonoTemporal!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){ $z .= " AND sistema_bonos_temporales.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){ $z .= " AND sistema_bonos_temporales.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){ $SIS_where .= " AND sistema_bonos_temporales.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){ $SIS_where .= " AND sistema_bonos_temporales.idTipo='".$_GET['idTipo']."'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idBonoTemporal FROM `sistema_bonos_temporales` LEFT JOIN `core_tipos_bonos` ON core_tipos_bonos.idTipo = sistema_bonos_temporales.idTipo  ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idBonoTemporal', 'sistema_bonos_temporales', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrAFP = array();
-$query = "SELECT 
+$SIS_query = '
 sistema_bonos_temporales.idBonoTemporal,
 sistema_bonos_temporales.Nombre,
-core_tipos_bonos.Nombre AS TipoBono
-FROM `sistema_bonos_temporales`
-LEFT JOIN `core_tipos_bonos` ON core_tipos_bonos.idTipo = sistema_bonos_temporales.idTipo
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrAFP,$row );
-}?>
+core_tipos_bonos.Nombre AS TipoBono';
+$SIS_join  = 'LEFT JOIN `core_tipos_bonos` ON core_tipos_bonos.idTipo = sistema_bonos_temporales.idTipo';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrAFP = array();
+$arrAFP = db_select_array (false, $SIS_query, 'sistema_bonos_temporales', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAFP');
+
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

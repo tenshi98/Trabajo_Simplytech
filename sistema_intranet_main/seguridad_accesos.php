@@ -214,37 +214,37 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'usuario_asc':           $order_by = 'ORDER BY usuarios_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
-		case 'usuario_desc':          $order_by = 'ORDER BY usuarios_listado.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
-		case 'hora_entrada_asc':      $order_by = 'ORDER BY seguridad_accesos.Hora ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Entrada Ascendente'; break;
-		case 'hora_entrada_desc':     $order_by = 'ORDER BY seguridad_accesos.Hora DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Entrada Descendente';break;
-		case 'hora_salida_asc':       $order_by = 'ORDER BY seguridad_accesos.HoraSalida ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Salida Ascendente'; break;
-		case 'hora_salida_desc':      $order_by = 'ORDER BY seguridad_accesos.HoraSalida DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Salida Descendente';break;
-		case 'fecha_asc':             $order_by = 'ORDER BY seguridad_accesos.Fecha ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
-		case 'fecha_desc':            $order_by = 'ORDER BY seguridad_accesos.Fecha DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'nombre_asc':            $order_by = 'ORDER BY seguridad_accesos.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':           $order_by = 'ORDER BY seguridad_accesos.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'rut_asc':               $order_by = 'ORDER BY seguridad_accesos.Rut ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
-		case 'rut_desc':              $order_by = 'ORDER BY seguridad_accesos.Rut DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
-		case 'ndoc_asc':              $order_by = 'ORDER BY seguridad_accesos.NDocCedula ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Documento Ascendente'; break;
-		case 'ndoc_desc':             $order_by = 'ORDER BY seguridad_accesos.NDocCedula DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Documento Descendente';break;
-		case 'destino_asc':           $order_by = 'ORDER BY seguridad_accesos.Destino ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Destino Ascendente'; break;
-		case 'destino_desc':          $order_by = 'ORDER BY seguridad_accesos.Destino DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Destino Descendente';break;
-		case 'persona_asc':           $order_by = 'ORDER BY seguridad_accesos.PersonaReunion ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Persona de Reunion Ascendente'; break;
-		case 'persona_desc':          $order_by = 'ORDER BY seguridad_accesos.PersonaReunion DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Persona de Reunion Descendente';break;
-		case 'estado_asc':            $order_by = 'ORDER BY core_estado_caja.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
-		case 'estado_desc':           $order_by = 'ORDER BY core_estado_caja.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'usuario_asc':           $order_by = 'usuarios_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Usuario Ascendente'; break;
+		case 'usuario_desc':          $order_by = 'usuarios_listado.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
+		case 'hora_entrada_asc':      $order_by = 'seguridad_accesos.Hora ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Entrada Ascendente'; break;
+		case 'hora_entrada_desc':     $order_by = 'seguridad_accesos.Hora DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Entrada Descendente';break;
+		case 'hora_salida_asc':       $order_by = 'seguridad_accesos.HoraSalida ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Hora Salida Ascendente'; break;
+		case 'hora_salida_desc':      $order_by = 'seguridad_accesos.HoraSalida DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Salida Descendente';break;
+		case 'fecha_asc':             $order_by = 'seguridad_accesos.Fecha ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
+		case 'fecha_desc':            $order_by = 'seguridad_accesos.Fecha DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
+		case 'nombre_asc':            $order_by = 'seguridad_accesos.Nombre ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':           $order_by = 'seguridad_accesos.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'rut_asc':               $order_by = 'seguridad_accesos.Rut ASC ';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
+		case 'rut_desc':              $order_by = 'seguridad_accesos.Rut DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
+		case 'ndoc_asc':              $order_by = 'seguridad_accesos.NDocCedula ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Documento Ascendente'; break;
+		case 'ndoc_desc':             $order_by = 'seguridad_accesos.NDocCedula DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Documento Descendente';break;
+		case 'destino_asc':           $order_by = 'seguridad_accesos.Destino ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Destino Ascendente'; break;
+		case 'destino_desc':          $order_by = 'seguridad_accesos.Destino DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Destino Descendente';break;
+		case 'persona_asc':           $order_by = 'seguridad_accesos.PersonaReunion ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Persona de Reunion Ascendente'; break;
+		case 'persona_desc':          $order_by = 'seguridad_accesos.PersonaReunion DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Persona de Reunion Descendente';break;
+		case 'estado_asc':            $order_by = 'core_estado_caja.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
+		case 'estado_desc':           $order_by = 'core_estado_caja.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'ORDER BY seguridad_accesos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
+		default: $order_by = 'seguridad_accesos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY seguridad_accesos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
+	$order_by = 'seguridad_accesos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE seguridad_accesos.idAcceso!=0";
+$SIS_where = "seguridad_accesos.idAcceso!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND seguridad_accesos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND seguridad_accesos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
 //Verifico el tipo de usuario que esta ingresando
@@ -254,46 +254,31 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
-	$z .= " AND seguridad_accesos.idUsuario = '".$_GET['idUsuario']."'" ;
+	$SIS_where .= " AND seguridad_accesos.idUsuario = '".$_GET['idUsuario']."'" ;
 }
 if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
-	$z .= " AND seguridad_accesos.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'";
+	$SIS_where .= " AND seguridad_accesos.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'";
 }
 if(isset($_GET['h_salida_inicio']) && $_GET['h_salida_inicio'] != ''&&isset($_GET['h_salida_termino']) && $_GET['h_salida_termino'] != ''){ 
-	$z .= " AND seguridad_accesos.HoraSalida BETWEEN '".$_GET['h_salida_inicio']."' AND '".$_GET['h_salida_termino']."'";
+	$SIS_where .= " AND seguridad_accesos.HoraSalida BETWEEN '".$_GET['h_salida_inicio']."' AND '".$_GET['h_salida_termino']."'";
 }
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$z .= " AND seguridad_accesos.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
+	$SIS_where .= " AND seguridad_accesos.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                  $z .= " AND seguridad_accesos.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                        $z .= " AND seguridad_accesos.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['NDocCedula']) && $_GET['NDocCedula'] != ''){          $z .= " AND seguridad_accesos.NDocCedula LIKE '%".$_GET['NDocCedula']."%'";}
-if(isset($_GET['Destino']) && $_GET['Destino'] != ''){                $z .= " AND seguridad_accesos.Destino LIKE '%".$_GET['Destino']."%'";}
-if(isset($_GET['PersonaReunion']) && $_GET['PersonaReunion'] != ''){  $z .= " AND seguridad_accesos.PersonaReunion LIKE '%".$_GET['PersonaReunion']."%'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $z .= " AND seguridad_accesos.idEstado='".$_GET['idEstado']."'";}
-
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                  $SIS_where .= " AND seguridad_accesos.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                        $SIS_where .= " AND seguridad_accesos.Rut LIKE '%".$_GET['Rut']."%'";}
+if(isset($_GET['NDocCedula']) && $_GET['NDocCedula'] != ''){          $SIS_where .= " AND seguridad_accesos.NDocCedula LIKE '%".$_GET['NDocCedula']."%'";}
+if(isset($_GET['Destino']) && $_GET['Destino'] != ''){                $SIS_where .= " AND seguridad_accesos.Destino LIKE '%".$_GET['Destino']."%'";}
+if(isset($_GET['PersonaReunion']) && $_GET['PersonaReunion'] != ''){  $SIS_where .= " AND seguridad_accesos.PersonaReunion LIKE '%".$_GET['PersonaReunion']."%'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $SIS_where .= " AND seguridad_accesos.idEstado='".$_GET['idEstado']."'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idAcceso FROM `seguridad_accesos` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idAcceso', 'seguridad_accesos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 seguridad_accesos.idAcceso,
 seguridad_accesos.Fecha,
 seguridad_accesos.Hora,
@@ -306,32 +291,16 @@ core_sistemas.Nombre AS Sistema,
 usuarios_listado.Nombre AS Usuario,
 seguridad_accesos.PersonaReunion,
 core_estado_caja.Nombre AS Estado,
-seguridad_accesos.idEstado
-
-FROM `seguridad_accesos`
+seguridad_accesos.idEstado';
+$SIS_join  = '
 LEFT JOIN `usuarios_listado`  ON usuarios_listado.idUsuario  = seguridad_accesos.idUsuario
 LEFT JOIN `core_sistemas`     ON core_sistemas.idSistema     = seguridad_accesos.idSistema
-LEFT JOIN `core_estado_caja`  ON core_estado_caja.idEstado   = seguridad_accesos.idEstado
+LEFT JOIN `core_estado_caja`  ON core_estado_caja.idEstado   = seguridad_accesos.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}?>
+?>
 
 <div class="col-sm-12 breadcrumb-bar">
 

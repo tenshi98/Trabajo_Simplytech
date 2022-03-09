@@ -64,70 +64,54 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'id_asc':              $order_by = 'ORDER BY crosstech_gestion_tickets.idTicket ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Ticket Ascendente';break;
-		case 'id_desc':             $order_by = 'ORDER BY crosstech_gestion_tickets.idTicket DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Ticket Descendente';break;
-		case 'cliente_asc':         $order_by = 'ORDER BY clientes_listado.Nombre ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente Ascendente';break;
-		case 'cliente_desc':        $order_by = 'ORDER BY clientes_listado.Nombre DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
-		case 'tipo_asc':            $order_by = 'ORDER BY core_tipo_ticket.Nombre ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ticket Ascendente';break;
-		case 'tipo_desc':           $order_by = 'ORDER BY core_tipo_ticket.Nombre DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Ticket Descendente';break;
-		case 'titulo_asc':          $order_by = 'ORDER BY crosstech_gestion_tickets.Titulo ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Titulo Ticket Ascendente';break;
-		case 'titulo_desc':         $order_by = 'ORDER BY crosstech_gestion_tickets.Titulo DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Titulo Ticket Descendente';break;
-		case 'estado_asc':          $order_by = 'ORDER BY core_estado_ticket.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ticket Ascendente';break;
-		case 'estado_desc':         $order_by = 'ORDER BY core_estado_ticket.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Ticket Descendente';break;
-		case 'prioridad_asc':       $order_by = 'ORDER BY core_ot_prioridad.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ticket Ascendente';break;
-		case 'prioridad_desc':      $order_by = 'ORDER BY core_ot_prioridad.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Ticket Descendente';break;
-		case 'fechacreacion_asc':   $order_by = 'ORDER BY crosstech_gestion_tickets.FechaCreacion ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ticket Ascendente';break;
-		case 'fechacreacion_desc':  $order_by = 'ORDER BY crosstech_gestion_tickets.FechaCreacion DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Creacion Ticket Descendente';break;
-		case 'fechacierre_asc':     $order_by = 'ORDER BY crosstech_gestion_tickets.FechaCierre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Cierre Ticket Ascendente';break;
-		case 'fechacierre_desc':    $order_by = 'ORDER BY crosstech_gestion_tickets.FechaCierre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Cierre Ticket Descendente';break;
-		case 'area_asc':            $order_by = 'ORDER BY crosstech_gestion_tickets_area.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Area Ascendente';break;
-		case 'area_desc':           $order_by = 'ORDER BY crosstech_gestion_tickets_area.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Area Descendente';break;
+		case 'id_asc':              $order_by = 'crosstech_gestion_tickets.idTicket ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Ticket Ascendente';break;
+		case 'id_desc':             $order_by = 'crosstech_gestion_tickets.idTicket DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Ticket Descendente';break;
+		case 'cliente_asc':         $order_by = 'clientes_listado.Nombre ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente Ascendente';break;
+		case 'cliente_desc':        $order_by = 'clientes_listado.Nombre DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
+		case 'tipo_asc':            $order_by = 'core_tipo_ticket.Nombre ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ticket Ascendente';break;
+		case 'tipo_desc':           $order_by = 'core_tipo_ticket.Nombre DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Ticket Descendente';break;
+		case 'titulo_asc':          $order_by = 'crosstech_gestion_tickets.Titulo ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Titulo Ticket Ascendente';break;
+		case 'titulo_desc':         $order_by = 'crosstech_gestion_tickets.Titulo DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Titulo Ticket Descendente';break;
+		case 'estado_asc':          $order_by = 'core_estado_ticket.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ticket Ascendente';break;
+		case 'estado_desc':         $order_by = 'core_estado_ticket.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Ticket Descendente';break;
+		case 'prioridad_asc':       $order_by = 'core_ot_prioridad.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ticket Ascendente';break;
+		case 'prioridad_desc':      $order_by = 'core_ot_prioridad.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Ticket Descendente';break;
+		case 'fechacreacion_asc':   $order_by = 'crosstech_gestion_tickets.FechaCreacion ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ticket Ascendente';break;
+		case 'fechacreacion_desc':  $order_by = 'crosstech_gestion_tickets.FechaCreacion DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Creacion Ticket Descendente';break;
+		case 'fechacierre_asc':     $order_by = 'crosstech_gestion_tickets.FechaCierre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Cierre Ticket Ascendente';break;
+		case 'fechacierre_desc':    $order_by = 'crosstech_gestion_tickets.FechaCierre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Cierre Ticket Descendente';break;
+		case 'area_asc':            $order_by = 'crosstech_gestion_tickets_area.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Area Ascendente';break;
+		case 'area_desc':           $order_by = 'crosstech_gestion_tickets_area.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Area Descendente';break;
 						
-		default: $order_by = 'ORDER BY crosstech_gestion_tickets.FechaCreacion DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente';
+		default: $order_by = 'crosstech_gestion_tickets.FechaCreacion DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY crosstech_gestion_tickets.FechaCreacion DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente';
+	$order_by = 'crosstech_gestion_tickets.FechaCreacion DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Creacion Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE crosstech_gestion_tickets.idTicket!=0";
-$z.= " AND crosstech_gestion_tickets.idEstado=2";      //solo ejecutados
-$z.= " AND crosstech_gestion_tickets.idTipoTicket=1";  //solo tickets
-//sistema
-$z.= " AND crosstech_gestion_tickets.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];					
+$SIS_where = "crosstech_gestion_tickets.idTicket!=0";
+$SIS_where.= " AND crosstech_gestion_tickets.idEstado=2";      //solo ejecutados
+$SIS_where.= " AND crosstech_gestion_tickets.idTipoTicket=1";  //solo tickets
+$SIS_where.= " AND crosstech_gestion_tickets.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//sistema
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){                  $z .= " AND crosstech_gestion_tickets.idCliente=".$_GET['idCliente'];}
-if(isset($_GET['idArea']) && $_GET['idArea'] != ''){                        $z .= " AND crosstech_gestion_tickets.idArea=".$_GET['idArea'];}
-if(isset($_GET['idTipoTicket']) && $_GET['idTipoTicket'] != ''){            $z .= " AND crosstech_gestion_tickets.idTipoTicket=".$_GET['idTipoTicket'];}
-if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){              $z .= " AND crosstech_gestion_tickets.idPrioridad=".$_GET['idPrioridad'];}
-if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){                        $z .= " AND crosstech_gestion_tickets.Titulo='%".$_GET['Titulo']."%'";}
-if(isset($_GET['FechaCreacion']) && $_GET['FechaCreacion'] != ''){          $z .= " AND crosstech_gestion_tickets.FechaCreacion='".$_GET['FechaCreacion']."'";}
-if(isset($_GET['FechaCierre']) && $_GET['FechaCierre'] != ''){              $z .= " AND crosstech_gestion_tickets.FechaCierre='".$_GET['FechaCierre']."'";}
-if(isset($_GET['idUsuarioAsignado']) && $_GET['idUsuarioAsignado'] != ''){  $z .= " AND crosstech_gestion_tickets.idUsuarioAsignado=".$_GET['idUsuarioAsignado'];}
+if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){                  $SIS_where .= " AND crosstech_gestion_tickets.idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idArea']) && $_GET['idArea'] != ''){                        $SIS_where .= " AND crosstech_gestion_tickets.idArea=".$_GET['idArea'];}
+if(isset($_GET['idTipoTicket']) && $_GET['idTipoTicket'] != ''){            $SIS_where .= " AND crosstech_gestion_tickets.idTipoTicket=".$_GET['idTipoTicket'];}
+if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){              $SIS_where .= " AND crosstech_gestion_tickets.idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){                        $SIS_where .= " AND crosstech_gestion_tickets.Titulo='%".$_GET['Titulo']."%'";}
+if(isset($_GET['FechaCreacion']) && $_GET['FechaCreacion'] != ''){          $SIS_where .= " AND crosstech_gestion_tickets.FechaCreacion='".$_GET['FechaCreacion']."'";}
+if(isset($_GET['FechaCierre']) && $_GET['FechaCierre'] != ''){              $SIS_where .= " AND crosstech_gestion_tickets.FechaCierre='".$_GET['FechaCierre']."'";}
+if(isset($_GET['idUsuarioAsignado']) && $_GET['idUsuarioAsignado'] != ''){  $SIS_where .= " AND crosstech_gestion_tickets.idUsuarioAsignado=".$_GET['idUsuarioAsignado'];}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idTicket FROM `crosstech_gestion_tickets` 
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idTicket', 'crosstech_gestion_tickets', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 crosstech_gestion_tickets.idTicket,
 crosstech_gestion_tickets.Titulo,
 crosstech_gestion_tickets.FechaCreacion,
@@ -138,35 +122,18 @@ clientes_listado.Nombre AS Cliente,
 core_tipo_ticket.Nombre AS TipoTicket,
 core_estado_ticket.Nombre AS EstadoTicket,
 core_ot_prioridad.Nombre AS PrioridadTicket,
-crosstech_gestion_tickets_area.Nombre AS AreaTicket
-
-FROM `crosstech_gestion_tickets`
+crosstech_gestion_tickets_area.Nombre AS AreaTicket';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                    ON core_sistemas.idSistema                    = crosstech_gestion_tickets.idSistema
 LEFT JOIN `clientes_listado`                 ON clientes_listado.idCliente                 = crosstech_gestion_tickets.idCliente
 LEFT JOIN `core_tipo_ticket`                 ON core_tipo_ticket.idTipoTicket              = crosstech_gestion_tickets.idTipoTicket
 LEFT JOIN `core_estado_ticket`               ON core_estado_ticket.idEstado                = crosstech_gestion_tickets.idEstado
 LEFT JOIN `core_ot_prioridad`                ON core_ot_prioridad.idPrioridad              = crosstech_gestion_tickets.idPrioridad
-LEFT JOIN `crosstech_gestion_tickets_area`   ON crosstech_gestion_tickets_area.idArea      = crosstech_gestion_tickets.idArea
+LEFT JOIN `crosstech_gestion_tickets_area`   ON crosstech_gestion_tickets_area.idArea      = crosstech_gestion_tickets.idArea';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
 
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
 //Verifico el tipo de usuario que esta ingresando
 $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
 //Verifico el tipo de usuario que esta ingresando
@@ -176,6 +143,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

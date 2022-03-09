@@ -588,63 +588,48 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'maquina_asc':    $order_by = 'ORDER BY maquinas_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente'; break;
-		case 'maquina_desc':   $order_by = 'ORDER BY maquinas_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
-		case 'analisis_asc':   $order_by = 'ORDER BY maquinas_listado_matriz.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Analisis Ascendente';break;
-		case 'analisis_desc':  $order_by = 'ORDER BY maquinas_listado_matriz.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Analisis Descendente';break;
-		case 'nmuestra_asc':   $order_by = 'ORDER BY analisis_listado.n_muestra ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Muestra Ascendente'; break;
-		case 'nmuestra_desc':  $order_by = 'ORDER BY analisis_listado.n_muestra DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Muestra Descendente';break;
-		case 'fmuestreo_asc':  $order_by = 'ORDER BY analisis_listado.f_muestreo ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Muestreo Ascendente';break;
-		case 'fmuestreo_desc': $order_by = 'ORDER BY analisis_listado.f_muestreo DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Muestreo Descendente';break;
-		case 'frecibida_asc':  $order_by = 'ORDER BY analisis_listado.f_recibida ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Recibida Ascendente'; break;
-		case 'frecibida_desc': $order_by = 'ORDER BY analisis_listado.f_recibida DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Recibida Descendente';break;
-		case 'freporte_asc':   $order_by = 'ORDER BY analisis_listado.f_reporte ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Reporte Ascendente';break;
-		case 'freporte_desc':  $order_by = 'ORDER BY analisis_listado.f_reporte DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Reporte Descendente';break;
+		case 'maquina_asc':    $order_by = 'maquinas_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Maquina Ascendente'; break;
+		case 'maquina_desc':   $order_by = 'maquinas_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
+		case 'analisis_asc':   $order_by = 'maquinas_listado_matriz.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Analisis Ascendente';break;
+		case 'analisis_desc':  $order_by = 'maquinas_listado_matriz.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Analisis Descendente';break;
+		case 'nmuestra_asc':   $order_by = 'analisis_listado.n_muestra ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Muestra Ascendente'; break;
+		case 'nmuestra_desc':  $order_by = 'analisis_listado.n_muestra DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Muestra Descendente';break;
+		case 'fmuestreo_asc':  $order_by = 'analisis_listado.f_muestreo ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Muestreo Ascendente';break;
+		case 'fmuestreo_desc': $order_by = 'analisis_listado.f_muestreo DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Muestreo Descendente';break;
+		case 'frecibida_asc':  $order_by = 'analisis_listado.f_recibida ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Recibida Ascendente'; break;
+		case 'frecibida_desc': $order_by = 'analisis_listado.f_recibida DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Recibida Descendente';break;
+		case 'freporte_asc':   $order_by = 'analisis_listado.f_reporte ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Reporte Ascendente';break;
+		case 'freporte_desc':  $order_by = 'analisis_listado.f_reporte DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Reporte Descendente';break;
 		
-		default: $order_by = 'ORDER BY analisis_listado.idAnalisis DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';
+		default: $order_by = 'analisis_listado.idAnalisis DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';
 	}
 }else{
-	$order_by = 'ORDER BY analisis_listado.idAnalisis DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';
+	$order_by = 'analisis_listado.idAnalisis DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 
 /**********************************************************/
 //Variable de busqueda
-$z="WHERE analisis_listado.idAnalisis!=0";
-//Verifico el tipo de usuario que esta ingresando
-$z.=" AND analisis_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "analisis_listado.idAnalisis!=0";
+$SIS_where.= " AND analisis_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	//Verifico el tipo de usuario que esta ingresando
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['f_muestreo']) && $_GET['f_muestreo'] != ''){  $z .= " AND analisis_listado.f_muestreo='".$_GET['f_muestreo']."'";}
-if(isset($_GET['f_recibida']) && $_GET['f_recibida'] != ''){  $z .= " AND analisis_listado.f_recibida='".$_GET['f_recibida']."'";}
-if(isset($_GET['f_reporte']) && $_GET['f_reporte'] != ''){    $z .= " AND analisis_listado.f_reporte='".$_GET['f_reporte']."'";}
-if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != ''){    $z .= " AND analisis_listado.idMaquina=".$_GET['idMaquina'];}
-if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != ''){      $z .= " AND analisis_listado.idMatriz=".$_GET['idMatriz'];}
+if(isset($_GET['f_muestreo']) && $_GET['f_muestreo'] != ''){  $SIS_where .= " AND analisis_listado.f_muestreo='".$_GET['f_muestreo']."'";}
+if(isset($_GET['f_recibida']) && $_GET['f_recibida'] != ''){  $SIS_where .= " AND analisis_listado.f_recibida='".$_GET['f_recibida']."'";}
+if(isset($_GET['f_reporte']) && $_GET['f_reporte'] != ''){    $SIS_where .= " AND analisis_listado.f_reporte='".$_GET['f_reporte']."'";}
+if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != ''){    $SIS_where .= " AND analisis_listado.idMaquina=".$_GET['idMaquina'];}
+if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != ''){      $SIS_where .= " AND analisis_listado.idMatriz=".$_GET['idMatriz'];}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idAnalisis FROM `analisis_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idAnalisis', 'analisis_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 analisis_listado.idAnalisis,
 analisis_listado.n_muestra,
 analisis_listado.f_muestreo,
@@ -652,31 +637,14 @@ analisis_listado.f_recibida,
 analisis_listado.f_reporte,
 core_sistemas.Nombre AS RazonSocial,
 maquinas_listado.Nombre AS NombreMaquina,
-maquinas_listado_matriz.Nombre AS TipoAnalisis
-
-FROM `analisis_listado`
+maquinas_listado_matriz.Nombre AS TipoAnalisis';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`            ON core_sistemas.idSistema           = analisis_listado.idSistema
 LEFT JOIN `maquinas_listado`         ON maquinas_listado.idMaquina        = analisis_listado.idMaquina
-LEFT JOIN `maquinas_listado_matriz`  ON maquinas_listado_matriz.idMatriz  = analisis_listado.idMatriz
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}
+LEFT JOIN `maquinas_listado_matriz`  ON maquinas_listado_matriz.idMatriz  = analisis_listado.idMatriz';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
 ?>
 
