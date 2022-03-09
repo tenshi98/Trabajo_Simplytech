@@ -224,7 +224,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				if(isset($f_termino)) {     $x3  = $f_termino;     }else{$x3  = '';}
 				if(isset($h_termino)) {     $x4  = $h_termino;     }else{$x4  = '';}
 				//if(isset($idGrafico)) {     $x5  = $idGrafico;     }else{$x5  = '';}
-				if(isset($idTelemetria)) {  $x6  = $idTelemetria;  }else{$x6  = '';}
+				if(isset($idTelemetria)) {  $x6  = $idTelemetria;  }else{if(isset($_GET['idTel'])&&$_GET['idTel']!=''){$x6  = $_GET['idTel'];}else{$x6  = '';}}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
