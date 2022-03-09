@@ -23,7 +23,7 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$SIS_query = 'idOpcionesGen_6, idOpcionesGen_4, idOpcionesGen_10';
+$SIS_query = 'idOpcionesGen_6';
 $SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $n_permisos = db_select_data (false, $SIS_query, 'core_sistemas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'n_permisos');
 /************************************************************************************/
@@ -89,13 +89,6 @@ $x_nperm++; $trans[$x_nperm] = "informe_crossenergy_01.php";                    
 $x_nperm++; $trans[$x_nperm] = "informe_crossenergy_02.php";                    //46 - Resumen Hora
 
 
-
-//permisos a las transacciones
-$prm_x[301] = 1;$trans[301] = "telemetria_gestion_flota.php";                    //301 - Acceso a la transaccion de administracion de gestion de flota (vehiculos)
-$prm_x[302] = 1;$trans[302] = "telemetria_gestion_sensores.php";                 //302 - Acceso a la transaccion de administracion de gestion sensores (colegios)
-$prm_x[303] = 1;$trans[303] = "telemetria_gestion_equipos.php";                  //303 - Acceso a la transaccion de administracion de gestion de equipos (todos los sensores)
-
-
 //Genero los permisos
 for ($i = 1; $i <= $x_nperm; $i++) {
 	//Seteo la variable a 0
@@ -143,93 +136,37 @@ foreach ($arrTabMenu as $tab) {
 .noborderbox .header .nav-tabs > li > a {color: #665F5F !important;}
 .noborderbox .header .nav-tabs > li > a:hover, .noborderbox .header .nav-tabs > li > a:focus {color: #fff !important;background-color: #2E2424;}
 .noborderbox .header .nav-tabs > li.active > a:hover, .noborderbox .header .nav-tabs > li.active > a:focus{color: #333 !important;}
-.float_table table{margin-right: auto !important;margin-left: auto !important;float: none !important;}
-#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
 </style>
 
 <div class="">
 	<div class="box noborderbox">
 		<header class="header">
 			<ul class="nav nav-tabs nav-center">
-				<li>                                       <a href="principal.php">Inicio</a></li>
-				<?php if($Tab_2!=0){ ?><li class="active"> <a href="principal_6_2.php"><?php echo $arrOrderTabMenu[2]; ?></a></li><?php } ?>
-				<?php if($Tab_1!=0){ ?><li>                <a href="principal_6_1.php"><?php echo $arrOrderTabMenu[1]; ?></a></li><?php } ?>
-				<?php if($Tab_6!=0){ ?><li>                <a href="principal_6_6.php"><?php echo $arrOrderTabMenu[6]; ?></a></li><?php } ?>
-				<?php if($Tab_3!=0){ ?><li>                <a href="principal_6_3.php"><?php echo $arrOrderTabMenu[3]; ?></a></li><?php } ?>
-				<?php if($Tab_5!=0){ ?><li>                <a href="principal_6_5.php"><?php echo $arrOrderTabMenu[5]; ?></a></li><?php } ?>
-				<?php if($Tab_4!=0){ ?><li>                <a href="principal_6_4.php"><?php echo $arrOrderTabMenu[4]; ?></a></li><?php } ?>
-				<?php if($Tab_7!=0){ ?><li>                <a href="principal_6_7.php"><?php echo $arrOrderTabMenu[9]; ?></a></li><?php } ?>
-				<li><a href="principal_6_8.php"><span style="color: #9900ff;"><i class="fa fa-book" aria-hidden="true"></i> Tutoriales</span></a></li>
+				<li>                        <a href="principal.php">Inicio</a></li>
+				<?php if($Tab_2!=0){ ?><li> <a href="principal_6_2.php"><?php echo $arrOrderTabMenu[2]; ?></a></li><?php } ?>
+				<?php if($Tab_1!=0){ ?><li> <a href="principal_6_1.php"><?php echo $arrOrderTabMenu[1]; ?></a></li><?php } ?>
+				<?php if($Tab_6!=0){ ?><li> <a href="principal_6_6.php"><?php echo $arrOrderTabMenu[6]; ?></a></li><?php } ?>
+				<?php if($Tab_3!=0){ ?><li> <a href="principal_6_3.php"><?php echo $arrOrderTabMenu[3]; ?></a></li><?php } ?>
+				<?php if($Tab_5!=0){ ?><li> <a href="principal_6_5.php"><?php echo $arrOrderTabMenu[5]; ?></a></li><?php } ?>
+				<?php if($Tab_4!=0){ ?><li> <a href="principal_6_4.php"><?php echo $arrOrderTabMenu[4]; ?></a></li><?php } ?>
+				<?php if($Tab_7!=0){ ?><li> <a href="principal_6_7.php"><?php echo $arrOrderTabMenu[9]; ?></a></li><?php } ?>
+				<li class="active"><a href="principal_6_8.php"><span style="color: #9900ff;"><i class="fa fa-book" aria-hidden="true"></i> Tutoriales</span></a></li>
 			</ul>
 		</header>
 		<div class="tab-content">
-			<?php
-			
-			/*********************************************************/
-			//Si esta configurado para usar el nuevo widget
-			if($n_permisos['idOpcionesGen_10']==1){
-				
-				echo widget_CrossC('Gestion de equipos', '06:00:00', 2, 
-									$_SESSION['usuario']['basic_data']['idSistema'], 
-									$_SESSION['usuario']['basic_data']['idTipoUsuario'], 
-									$_SESSION['usuario']['basic_data']['idUsuario'], 
-									$dbConn);
-				
-			/*********************************************************/
-			//los seleccionados para mostrar la antigua
-			}else{
-				//si los segundos no estan configurados
-				if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
-					$x_seg = $n_permisos['idOpcionesGen_6'] * 1000;
-				}else{
-					$x_seg = 60000;
+			<script type = "text/javascript">
+				//se desactiva el boton f5
+				window.onload = function () {
+					document.onkeydown = function (e) {
+						return (e.which || e.keyCode) != 116;
+					};
 				}
-					
-				//Verifico si esta activada la actualizacion de la pagina
-				if($n_permisos['idOpcionesGen_4']=='1') { 
-					
-					$Url  = 'principal_telemetria_alt_crosstech.php';
-					$Url .= '?bla=bla';
-					$Url .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
-					$Url .= '&prm_x_7='.$prm_x[301];
-					$Url .= '&prm_x_8='.$prm_x[302];
-					$Url .= '&prm_x_9='.$prm_x[303];
-					$Url .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-					$Url .= '&Config_IDGoogle='.$_SESSION['usuario']['basic_data']['Config_IDGoogle'];
-					$Url .= '&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
-					$Url .= '&trans_8='.$prm_x[302];
-					$Url .= '&trans_9='.$prm_x[303];
-						
-					echo '
-					<script type="text/javascript">
-						function actualiza_contenido() {
-							$("#update_tel").load('.$Url.');
-						}
-						setInterval("actualiza_contenido()", '.$x_seg.');
+			</script>
+			 
+			<?php 
+				//Se dibuja el explorador de archivos
+				echo file_explorer(1, 'connector_tutoriales', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
 
-					</script>';
-				}
-				echo '
-				<div class="panel-heading">
-					<span class="panel-title"  style="color: #666;font-weight: 700 !important;">Telemetria</span>
-				</div>';
-					
-				echo '
-				<div class="col-sm-12" id="update_tel">
-					<span class="panel-title"  style="color: #1E90FF;font-weight: 700 !important;" id="update_text_HoraRefresco">Hora Refresco: '.hora_actual().'</span>';
-				
-					echo widget_Equipos_Crosstech('Equipos Telemetria', 2, 0,$prm_x[303], $_SESSION['usuario']['basic_data']['idSistema'],
-													$_SESSION['usuario']['basic_data']['idTipoUsuario'],
-													$_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
-					echo widget_Promedios_equipo_grupos_Crosstech('Mediciones Promedios Actuales', 2, 0, 0, 
-																$_SESSION['usuario']['basic_data']['idSistema'],
-																$_SESSION['usuario']['basic_data']['idTipoUsuario'],
-																$_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
-																
-				echo '</div>';
-			}
-			
-			?>
 
 			
 		</div>
