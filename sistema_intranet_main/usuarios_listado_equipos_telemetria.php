@@ -322,7 +322,7 @@ array_push( $arrEquipos,$row );
 				<thead>
 					<tr role="row">
 						<th>Nombre</th>
-						<th width="160">Estado</th>
+						<th width="100">Estado</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
