@@ -56,9 +56,6 @@ if($HoraTermino<$timeBack){
 		$consql .= ',SensoresGrupo_'.$i;
 		$consql .= ',SensoresRevisionGrupo_'.$i;
 		$consql .= ',SensoresUniMed_'.$i;
-		$consql .= ',SensoresMedMin_'.$i;
-		$consql .= ',SensoresMedMax_'.$i;
-		$consql .= ',SensoresMedActual_'.$i;
 		$consql .= ',SensoresActivo_'.$i;
 	}
 	/*****************************/
@@ -334,25 +331,10 @@ if($HoraTermino<$timeBack){
 					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountProm'] = 0;
 				}
 				
-				//estado
-				//si esta configurado
-				if($rowEquipo['SensoresMedMin_'.$i]!=0&&$rowEquipo['SensoresMedMax_'.$i]!=0){
-					//si esta fuera de parametros
-					if($rowEquipo['SensoresMedActual_'.$i] < $rowEquipo['SensoresMedMin_'.$i] OR $rowEquipo['SensoresMedActual_'.$i]>$rowEquipo['SensoresMedMax_'.$i]){
-						//Error del grupo de uso
-						if(isset($arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'])&&$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']!=''){
-							$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']++;
-						}else{
-							$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
-						}
-						//Error de grupo
-						if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']!=''){
-							$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']++;
-						}else{
-							$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
-						}
-					}
-				}
+				//estado (siempre pasa)
+				$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
+				$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
+				
 			//si es humedad	
 			}elseif($rowEquipo['SensoresUniMed_'.$i]==2){
 				//valido que este dentro del rango deseado
@@ -366,25 +348,10 @@ if($HoraTermino<$timeBack){
 						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountHum'] = 1;
 					}
 				}
-				//estado
-				//si esta configurado
-				if($rowEquipo['SensoresMedMin_'.$i]!=0&&$rowEquipo['SensoresMedMax_'.$i]!=0){
-					//si esta fuera de parametros
-					if($rowEquipo['SensoresMedActual_'.$i] < $rowEquipo['SensoresMedMin_'.$i] OR $rowEquipo['SensoresMedActual_'.$i]>$rowEquipo['SensoresMedMax_'.$i]){
-						//Error del grupo de uso
-						if(isset($arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'])&&$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']!=''){
-							$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']++;
-						}else{
-							$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
-						}
-						//Error de grupo
-						if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']!=''){
-							$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']++;
-						}else{
-							$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
-						}
-					}
-				}
+				//estado (siempre pasa)
+				$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
+				$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
+				
 			}	
 		}
 	}
@@ -444,7 +411,8 @@ $widget = '
 										//imprimo
 										$widget .= '
 											<tr class="odd">
-												<th colspan="9">'.$in_eq_fueralinea.' Ultima Medicion: '.fecha_estandar($rowEquipo['LastUpdateFecha']).' a las '.$rowEquipo['LastUpdateHora'].' hrs.</th>
+												<th colspan="8">'.$in_eq_fueralinea.' Ultima Medicion: '.fecha_estandar($rowEquipo['LastUpdateFecha']).' a las '.$rowEquipo['LastUpdateHora'].' hrs.</th>
+												<th><a href="view_alertas_personalizadas.php?view='.simpleEncode($_SESSION['usuario']['widget_CrossC']['idTelemetria'], fecha_actual()).'" class="iframe btn btn-danger btn-sm"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas</a></th>
 											</tr>';
 										
 										foreach ($arrTempGrupos as $gruUso) {
@@ -515,7 +483,7 @@ $widget = '
 						<div class="row" id="update_graphics">';
 							//si hay datos
 							if(isset($x_graph_count)&&$x_graph_count!=0){
-								$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$arrGruposUso[0]['idGrupo']];
+								$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$arrGruposUso[0]['idGrupo']].' últimas 3 horas.';
 								$gr_unimed = '°C';
 								$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
 							//si no hay datos	
@@ -531,4 +499,4 @@ $widget = '
 echo $widget;
 ?>
 
-
+<?php widget_modal(80, 95); ?>

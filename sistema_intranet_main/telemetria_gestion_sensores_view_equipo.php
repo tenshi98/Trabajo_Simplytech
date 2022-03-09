@@ -118,11 +118,9 @@ foreach ($arrUnimed as $sen) {
 						$subquery = '';
 						for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 							$subquery .= ',SensoresNombre_'.$i;
-							$subquery .= ',SensoresMedMin_'.$i;
-							$subquery .= ',SensoresMedMax_'.$i;
 							$subquery .= ',SensoresUniMed_'.$i;
-							$subquery .= ',SensoresMedActual_'.$i;
 							$subquery .= ',SensoresActivo_'.$i;
+							$subquery .= ',SensoresMedActual_'.$i;
 						}
 						// consulto los datos
 						$query = "SELECT Nombre, id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,
@@ -163,8 +161,6 @@ foreach ($arrUnimed as $sen) {
 											<th>Nombre</th>
 											<th>Fecha/hora</th>
 											<th>Medicion Actual</th>
-											<th>Minimo</th>
-											<th>Maximo</th>
 										</tr>
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -173,7 +169,7 @@ foreach ($arrUnimed as $sen) {
 											if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){ 
 												$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]];
 												?>
-												<tr class="odd <?php if($rowMed['SensoresMedActual_'.$i] < $rowMed['SensoresMedMin_'.$i] OR $rowMed['SensoresMedActual_'.$i]>$rowMed['SensoresMedMax_'.$i]){echo 'danger';}?>">		
+												<tr class="odd">		
 													<td><?php echo 's'.$i ?></td>
 													<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>	
 													<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
@@ -184,8 +180,6 @@ foreach ($arrUnimed as $sen) {
 														echo 'Sin Datos';
 													} ?>
 													</td>
-													<td><?php echo Cantidades_decimales_justos($rowMed['SensoresMedMin_'.$i]).$unimed;?></td>		
-													<td><?php echo Cantidades_decimales_justos($rowMed['SensoresMedMax_'.$i]).$unimed; ?></td>
 												</tr>
 											<?php } ?> 
 										<?php } ?>                    

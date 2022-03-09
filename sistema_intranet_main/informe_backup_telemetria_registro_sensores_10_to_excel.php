@@ -93,24 +93,8 @@ foreach ($arrUnimed as $uni) {
 /*******************************************************************************/
 // Se trae un listado con todos los grupos
 $arrGrupo = array();
-$query = "SELECT idGrupo, Nombre
-FROM `telemetria_listado_grupos`
-ORDER BY idGrupo ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+$arrGrupo = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrGrupo,$row );
-}
 //Creo un arreglo con los datos
 $arrGru = array();
 foreach ($arrGrupo as $uni) {
@@ -130,37 +114,20 @@ function crear_data($limite, $idTelemetria, $f_inicio, $f_termino, $dbConn ) {
 		$subquery .= ',backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.' AS SensorValue_'.$i;
 	}
 	//Se traen todos los registros
-	$arrRutas = array();
-	$query = "SELECT 
+	$SIS_query = '
 	telemetria_listado.Nombre AS NombreEquipo,
 	telemetria_listado.cantSensores,
-	backup_telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema,
-	backup_telemetria_listado_tablarelacionada_".$idTelemetria.".HoraSistema
-	".$subquery."
-	
-	FROM `backup_telemetria_listado_tablarelacionada_".$idTelemetria."`
-	LEFT JOIN `telemetria_listado`     ON telemetria_listado.idTelemetria   = backup_telemetria_listado_tablarelacionada_".$idTelemetria.".idTelemetria
-	WHERE (FechaSistema BETWEEN '".$f_inicio."' AND '".$f_termino."') 
-	LIMIT ".$limite.", 5000";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema,
+	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.HoraSistema
+	'.$subquery;
+	$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria';
+	$SIS_where = '(FechaSistema BETWEEN "'.$f_inicio.'" AND "'.$f_termino.'") LIMIT '.$limite.', 5000';
+	$SIS_order = 0;
+	$arrRutas = array();
+	$arrRutas = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrRutas');
 
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrRutas,$row );
-	}
-	
 	return $arrRutas;
 	
-
 }
 
 

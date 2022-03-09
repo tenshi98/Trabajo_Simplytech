@@ -50,7 +50,6 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
-	$subquery .= ',SensoresErrorActual_'.$i;
 }						
 
 //Se consultan datos
@@ -195,14 +194,10 @@ foreach ($arrGrupos as $sen) {
 									}
 									//Verifico que no sea el mismo sensor
 									if(isset($rowDatos['SensoresMedActual_'.$i])&&$rowDatos['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($rowDatos['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
-									if($rowDatos['SensoresErrorActual_'.$i]> 0){
-										$arrGruposTitulo[$Titulo][$i]['Descripcion'] = '<span style="color:red;">'.$rowDatos['SensoresNombre_'.$i].' : '.$xdata.'</span>';
-									}else{
-										$arrGruposTitulo[$Titulo][$i]['Descripcion'] = $rowDatos['SensoresNombre_'.$i].' : '.$xdata;
-									}
 									//Guardo el valor correspondiente
-									$arrGruposTitulo[$Titulo][$i]['valor'] = $rowDatos['SensoresMedActual_'.$i];
-									$arrGruposTitulo[$Titulo][$i]['unimed'] = $unimed;
+									$arrGruposTitulo[$Titulo][$i]['Descripcion'] = $rowDatos['SensoresNombre_'.$i].' : '.$xdata;
+									$arrGruposTitulo[$Titulo][$i]['valor']       = $rowDatos['SensoresMedActual_'.$i];
+									$arrGruposTitulo[$Titulo][$i]['unimed']      = $unimed;
 								}
 								
 								//Ordenamiento por titulo de grupo

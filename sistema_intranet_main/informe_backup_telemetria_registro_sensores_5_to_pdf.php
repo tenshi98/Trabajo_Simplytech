@@ -24,7 +24,6 @@ if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){           $h_inicio      = 
 if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){         $h_termino     = $_GET['h_termino'];     }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){        $h_termino     = $_POST['h_termino'];}
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){   $idTelemetria  = $_GET['idTelemetria'];  }elseif(isset($_POST['idTelemetria'])&&$_POST['idTelemetria']!=''){  $idTelemetria  = $_POST['idTelemetria'];}
 if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){             $idGrupo       = $_GET['idGrupo'];       }elseif(isset($_POST['idGrupo'])&&$_POST['idGrupo']!=''){            $idGrupo       = $_POST['idGrupo'];}
-if(isset($_GET['idDetalle'])&&$_GET['idDetalle']!=''){         $idDetalle     = $_GET['idDetalle'];     }elseif(isset($_POST['idDetalle'])&&$_POST['idDetalle']!=''){        $idDetalle     = $_POST['idDetalle'];}
 				
 //Se buscan la imagen i el tipo de PDF
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
@@ -54,8 +53,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 		$consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
 		$consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
-		$consql .= ',telemetria_listado.SensoresMedMin_'.$i.' AS SensoresMedMin_'.$i;
-		$consql .= ',telemetria_listado.SensoresMedMax_'.$i.' AS SensoresMedMax_'.$i;
 		$consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
 		$consql .= ',backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.' AS SensorValue_'.$i;
 	}
@@ -107,13 +104,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 				for ($i = 1; $i <= $arrEquipos[0]['cantSensores']; $i++) { 
 					if($arrEquipos[0]['SensoresGrupo_'.$i]==$idGrupo){
-						//Si se ven detalles
-						if(isset($idDetalle)&&$idDetalle==1){
-							$html .='<th colspan="3"   style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';			
-						//Si no se ven detalles	
-						}elseif(isset($idDetalle)&&$idDetalle==2){
-							$html .='<th  style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';			
-						}
+						$html .='<th  style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';			
 					}
 				}
 			$html .='				
@@ -123,16 +114,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Hora</th>';
 				for ($i = 1; $i <= $arrEquipos[0]['cantSensores']; $i++) { 
 					if($arrEquipos[0]['SensoresGrupo_'.$i]==$idGrupo){
-						//Si se ven detalles
-						if(isset($idDetalle)&&$idDetalle==1){
-							$html .='
-							<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion</th>
-							<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Minimo</th>
-							<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Maximo</th>';
-						//Si no se ven detalles	
-						}elseif(isset($idDetalle)&&$idDetalle==2){
-							$html .='<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion</th>';
-						}
+						$html .='<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion</th>';
 					}
 				}			
 			$html .='</tr>';
@@ -154,15 +136,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							}else{
 								$xdata='Sin Datos';
 							}
-							//Si se ven detalles
-							if(isset($idDetalle)&&$idDetalle==1){
-								$html .='<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$xdata.'</td>';
-								$html .='<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($rutas['SensoresMedMin_'.$i]).$Unimed[$rutas['SensoresUniMed_'.$i]].'</td>';
-								$html .='<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($rutas['SensoresMedMax_'.$i]).$Unimed[$rutas['SensoresUniMed_'.$i]].'</td>';
-							//Si no se ven detalles	
-							}elseif(isset($idDetalle)&&$idDetalle==2){
-								$html .='<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$xdata.'</td>';
-							}
+							$html .='<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$xdata.'</td>';
 						}
 					}
 				$html .='</tr>';

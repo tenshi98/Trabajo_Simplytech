@@ -105,7 +105,6 @@ $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS Tel_Sensor_Nombre_'.$i;
-	$subquery .= ',telemetria_listado.SensoresMant_'.$i.' AS Tel_Sensor_Valor_'.$i;
 	$subquery .= ',telemetria_listado.SensoresTipo_'.$i.' AS Tel_Sensor_Tipo_'.$i;
 	
 	$subquery .= ',telemetria_mantencion_matriz.PuntoNombre_'.$i.' AS Matriz_Punto_'.$i;
@@ -232,7 +231,6 @@ echo '
 							<th>Tipo Sensor <br/>Revisado</th>
 							<th>Funcion</th>
 							<th style="text-align: center;" width="120">Valor Pruebas</th>
-							<th style="text-align: center;" width="120">Valor Actual</th>
 							<th style="text-align: center;" width="120">Estado</th>
 						</tr>
 					</thead>
@@ -246,8 +244,7 @@ echo '
 								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$rowdata['Tel_Sensor_Tipo_'.$i]]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>	
 								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>	
 								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['SensorFuncion'];}} ?></td>	
-								<td align="center"><?php echo $rowdata['Matriz_Sensor_Valor_'.$i]; ?></td>	
-								<td align="center"><?php echo Cantidades_decimales_justos($rowdata['Tel_Sensor_Valor_'.$i]); ?></td>
+								<td align="center"><?php echo $rowdata['Matriz_Sensor_Valor_'.$i]; ?></td>
 								<td align="center">
 									<?php
 									if($rowdata['Matriz_Sensor_Valor_'.$i]<$rowdata['Tel_Sensor_Valor_'.$i]){
@@ -380,75 +377,44 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':           $order_by = 'ORDER BY telemetria_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':          $order_by = 'ORDER BY telemetria_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'identificador_asc':    $order_by = 'ORDER BY telemetria_listado.Identificador ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Identificador Ascendente';break;
-		case 'identificador_desc':   $order_by = 'ORDER BY telemetria_listado.Identificador DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Identificador Descendente';break;
+		case 'nombre_asc':           $order_by = 'telemetria_listado.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':          $order_by = 'telemetria_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'identificador_asc':    $order_by = 'telemetria_listado.Identificador ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Identificador Ascendente';break;
+		case 'identificador_desc':   $order_by = 'telemetria_listado.Identificador DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Identificador Descendente';break;
 		
-		default: $order_by = 'ORDER BY telemetria_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'telemetria_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY telemetria_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'telemetria_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE telemetria_listado.idEstado=2 AND telemetria_listado.idMantencion=1";//Solo los que estan en mantencion
+$SIS_where = "telemetria_listado.idEstado=2 AND telemetria_listado.idMantencion=1";//Solo los que estan en mantencion
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Identificador']) && $_GET['Identificador'] != ''){  $z .= " AND telemetria_listado.Identificador LIKE '%".$_GET['Identificador']."%'";}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $z .= " AND telemetria_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Identificador']) && $_GET['Identificador'] != ''){  $SIS_where .= " AND telemetria_listado.Identificador LIKE '%".$_GET['Identificador']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $SIS_where .= " AND telemetria_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idTelemetria FROM `telemetria_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idTelemetria', 'telemetria_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado.idTelemetria,
 telemetria_listado.Identificador,
 telemetria_listado.Nombre,
-core_sistemas.Nombre AS sistema
-
-FROM `telemetria_listado`
-LEFT JOIN `core_sistemas`   ON core_sistemas.idSistema    = telemetria_listado.idSistema
-
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+core_sistemas.Nombre AS sistema';
+$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
+	
 ?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">

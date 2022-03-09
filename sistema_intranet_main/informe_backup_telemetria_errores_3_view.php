@@ -25,13 +25,11 @@ backup_telemetria_listado_errores_999.Fecha,
 backup_telemetria_listado_errores_999.Hora, 
 backup_telemetria_listado_errores_999.Sensor, 
 backup_telemetria_listado_errores_999.Valor,
-backup_telemetria_listado_errores_999.Valor_min,
-backup_telemetria_listado_errores_999.Valor_max,
 backup_telemetria_listado_errores_999.GeoLatitud,
 backup_telemetria_listado_errores_999.GeoLongitud,
 telemetria_listado.Nombre AS NombreEquipo'.$subquery;
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria';
-$SIS_where = 'backup_telemetria_listado_errores_999.idErrores = '.simpleDecode($_GET['view'], fecha_actual()).' AND backup_telemetria_listado_errores_999.idTipo=999';
+$SIS_where = 'backup_telemetria_listado_errores_999.idErrores = '.simpleDecode($_GET['view'], fecha_actual());
 $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_errores_999', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 
@@ -67,8 +65,6 @@ require_once 'core/Web.Header.Views.php';
 			$explanation  = '<strong>'.fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].'</strong><br/>';
 			$explanation .= $rowdata['Descripcion'].'<br/>';
 			$explanation .= '<strong>Medida: </strong>'.Cantidades_decimales_justos($rowdata['Valor']).$unimed.'<br/>';
-			$explanation .= '<strong>Min: </strong>'.Cantidades_decimales_justos($rowdata['Valor_min']).$unimed.'<br/>';
-			$explanation .= '<strong>Max: </strong>'.Cantidades_decimales_justos($rowdata['Valor_max']).$unimed.'<br/>';
 							
 			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
 				

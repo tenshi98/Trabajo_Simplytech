@@ -44,14 +44,13 @@ if (!$num_pag){
 }
 //Inicia variable
 $SIS_where = "telemetria_listado_errores_999.idErrores>0"; 
-$SIS_where.= " AND telemetria_listado_errores_999.idTipo='999'";
 $SIS_where.= " AND telemetria_listado.id_Geo='1'";
 $SIS_where.= " AND telemetria_listado_errores_999.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$search .='&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
-$search .='&submit_filter=Filtrar';
-$search .='&idOpciones=1';
+$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
+$search .= '&submit_filter=Filtrar';
+$search .= '&idOpciones=1';
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 	$SIS_where.= " AND telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
@@ -87,8 +86,6 @@ telemetria_listado_errores_999.Fecha,
 telemetria_listado_errores_999.Hora,
 telemetria_listado_errores_999.Sensor, 
 telemetria_listado_errores_999.Valor,
-telemetria_listado_errores_999.Valor_min,
-telemetria_listado_errores_999.Valor_max,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
 $SIS_order = 'idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
@@ -130,8 +127,6 @@ foreach ($arrUnimed as $sen) {
 						<th>Fecha</th>
 						<th>Hora</th>
                         <th>Medicion Actual</th>
-                        <th>Min</th>
-                        <th>Max</th>
                         <th>Ubicacion</th>  
 					</tr>
 				</thead>
@@ -146,8 +141,6 @@ foreach ($arrUnimed as $sen) {
 							<td><?php echo fecha_estandar($error['Fecha']); ?></td>
 							<td><?php echo $error['Hora']; ?></td>
 							<td><?php echo Cantidades_decimales_justos($error['Valor']).$unimed; ?></td>
-							<td><?php echo Cantidades_decimales_justos($error['Valor_min']).$unimed; ?></td>
-							<td><?php echo Cantidades_decimales_justos($error['Valor_max']).$unimed; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" > 
 									<a href="<?php echo 'informe_telemetria_errores_1_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>

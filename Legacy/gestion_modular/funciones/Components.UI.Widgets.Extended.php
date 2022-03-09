@@ -1580,8 +1580,6 @@ function widget_Resumen_GPS_equipos($titulo, $seguimiento, $idSistema, $idTipoUs
 		$subquery .= ',SensoresNombre_'.$i;
 		$subquery .= ',SensoresUniMed_'.$i;
 		$subquery .= ',SensoresMedActual_'.$i;
-		$subquery .= ',SensoresMedErrores_'.$i;
-		$subquery .= ',SensoresErrorActual_'.$i;
 		$subquery .= ',SensoresActivo_'.$i;
 	}
 	
@@ -1643,14 +1641,6 @@ function widget_Resumen_GPS_equipos($titulo, $seguimiento, $idSistema, $idTipoUs
 											$xy = 0;
 											$xz = 0;
 											$xw = 0;
-											//se recorren las mediciones
-											for ($i = 1; $i <= $equip['cantSensores']; $i++) {
-												//solo sensores activos
-												if(isset($equip['SensoresActivo_'.$i])&&$equip['SensoresActivo_'.$i]==1){
-													$xx = $equip['SensoresMedErrores_'.$i] - $equip['SensoresErrorActual_'.$i];
-													if($xx<0){$xw = 1;}
-												}
-											}
 											//si hay errores
 											if(isset($equip['NErrores'])&&$equip['NErrores']>0){
 												$xw = 1;
@@ -1780,8 +1770,6 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
-	$subquery .= ',SensoresMedErrores_'.$i;
-	$subquery .= ',SensoresErrorActual_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
 }
 
@@ -1955,16 +1943,11 @@ $GPS = '
 															}
 															//Verifico que no sea el mismo sensor
 															if(isset($equip['SensoresMedActual_'.$i])&&$equip['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($equip['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
-															if($equip['SensoresErrorActual_'.$i] > $equip['SensoresMedErrores_'.$i]){
-																$arrGruposTitulo[$Titulo][$i]['Descripcion'] = '<span style="color:red;">'.$equip['SensoresNombre_'.$i].' : '.$xdata.'</span>';
-															}else{
-																$arrGruposTitulo[$Titulo][$i]['Descripcion'] = $equip['SensoresNombre_'.$i].' : '.$xdata;
-															}
-																
 															//Guardo el valor correspondiente
-															$arrGruposTitulo[$Titulo][$i]['valor']     = $equip['SensoresMedActual_'.$i];
-															$arrGruposTitulo[$Titulo][$i]['unimed']    = $unimed;
-															$arrGruposTitulo[$Titulo][$i]['nColumnas'] = $nColumnas;
+															$arrGruposTitulo[$Titulo][$i]['Descripcion'] = $equip['SensoresNombre_'.$i].' : '.$xdata;
+															$arrGruposTitulo[$Titulo][$i]['valor']       = $equip['SensoresMedActual_'.$i];
+															$arrGruposTitulo[$Titulo][$i]['unimed']      = $unimed;
+															$arrGruposTitulo[$Titulo][$i]['nColumnas']   = $nColumnas;
 														}	
 													}
 													
@@ -2763,8 +2746,6 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
-	$subquery .= ',SensoresMedErrores_'.$i;
-	$subquery .= ',SensoresErrorActual_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
 }
 
@@ -2872,13 +2853,8 @@ $GPS = '
 								}else{
 									$s_idGrupo = '';
 								}	
-								//Verificacion de alertas para cambios de color del widget
-								if($equip['SensoresErrorActual_'.$i] > $equip['SensoresMedErrores_'.$i]){
-									$arrGruposTitulo[$Titulo][$i]['Color'] = 'yellow';
-								}else{
-									$arrGruposTitulo[$Titulo][$i]['Color'] = 'blue';
-								}							
 								//Guardo el valor correspondiente
+								$arrGruposTitulo[$Titulo][$i]['Color']     = 'blue';
 								$arrGruposTitulo[$Titulo][$i]['valor']     = $equip['SensoresMedActual_'.$i];
 								$arrGruposTitulo[$Titulo][$i]['unimed']    = $unimed;
 								$arrGruposTitulo[$Titulo][$i]['nColumnas'] = $nColumnas;
@@ -4850,6 +4826,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 		/*************************************************************/
 		//Se consulta
 		$SIS_query = '
+		telemetria_listado.idTelemetria, 
 		telemetria_listado.Nombre, 
 		telemetria_listado.LastUpdateFecha,
 		telemetria_listado.LastUpdateHora,
@@ -4904,7 +4881,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 		$SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
 		$arrPredios = array();
 		$arrPredios = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPredios');
-
+		
 
 		
 		$GPS = '
@@ -5079,7 +5056,8 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 													}
 													$GPS .= '
 													<td width="10">
-														<div class="btn-group" style="width: 35px;" >
+														<div class="btn-group" style="width: 70px;" >
+															<a href="view_telemetria_registro_ruta.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
 															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 														</div>
 													</td>
@@ -5422,7 +5400,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 						});
 					});';
 									
-									
+					$zcounter2++;				
 				} 
 								 
 				$GPS .= '	
@@ -5602,8 +5580,6 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
-	$subquery .= ',SensoresMedErrores_'.$i;
-	$subquery .= ',SensoresErrorActual_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
 }
 
@@ -5714,13 +5690,8 @@ $GPS = '
 								}else{
 									$s_idGrupo = '';
 								}			
-								//Verificacion de alertas para cambios de color del widget
-								if($equip['SensoresErrorActual_'.$i] > $equip['SensoresMedErrores_'.$i]){
-									$arrGruposTitulo[$Titulo][$i]['Color'] = 1;
-								}else{
-									$arrGruposTitulo[$Titulo][$i]['Color'] = 0;
-								}						
 								//Guardo el valor correspondiente
+								$arrGruposTitulo[$Titulo][$i]['Color']     = 0;
 								$arrGruposTitulo[$Titulo][$i]['valor']     = $equip['SensoresMedActual_'.$i];
 								$arrGruposTitulo[$Titulo][$i]['unimed']    = $unimed;
 								$arrGruposTitulo[$Titulo][$i]['nColumnas'] = $nColumnas;
@@ -6401,6 +6372,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 		telemetria_listado.idTelemetria, 
 		telemetria_listado.Nombre, 
 		telemetria_listado.Identificador, 
+		telemetria_listado.NumSerie,
 		telemetria_listado.LastUpdateFecha,
 		telemetria_listado.LastUpdateHora,
 		telemetria_listado.cantSensores,
@@ -6410,8 +6382,12 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 		telemetria_listado.NErrores,  
 		telemetria_listado.NAlertas, 
 		telemetria_listado.id_Sensores, 
+		telemetria_listado.idGenerador, 
+		telemetria_listado.idTelGenerador, 
 		telemetria_listado.SensorActivacionID, 
-		telemetria_listado.SensorActivacionValor'.$subquery;
+		telemetria_listado.SensorActivacionValor, 
+		telemetria_listado.idUsoFTP, 
+		telemetria_listado.FTP_Carpeta'.$subquery;
 		$SIS_order = 'telemetria_listado.Nombre ASC';
 		$arrEquipo = array();
 		$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -6541,24 +6517,24 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 					//inactivo
 					case 0:
 						$status_icon = '';
-						$wid_status = 35;
+						$wid_status  = 35;
 						break;
 					//activo encendido
 					case 1:
 						//$status_icon = '<a href="" title="Encendido Remoto" class="btn btn-success btn-sm tooltip"><i class="fa fa-unlock" aria-hidden="true"></i></a>';
 						//$wid_status = 70;
 						$status_icon = '';
-						$wid_status = 35;
+						$wid_status  = 35;
 						break;
 					//activo apagado
 					case 2:
 						$status_icon = '<a href="" title="Apagado Remoto" class="btn btn-warning btn-sm tooltip"><i class="fa fa-lock" aria-hidden="true"></i></a>';
-						$wid_status = 70;
+						$wid_status  = 70;
 						break;
 				}
 			}else{
 				$status_icon = '';
-				$wid_status = 35;
+				$wid_status  = 35;
 			}
 			
 			/*************************************************************************/
@@ -6627,8 +6603,9 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			/****************************************************/
 			//busco el tipo de equipo
 			$Nombre_equipo = $data['Identificador'];
-			$buscado       = 'elv-';
-			$s_pos         = strpos($Nombre_equipo, $buscado);
+			$NumSerie      = $data['NumSerie'];
+			$buscado       = 'elv';
+			$s_pos         = strpos($NumSerie, $buscado);
 
 			// Nótese el uso de ===. Puesto que == simple no funcionará como se espera
 			// porque la posición de 'elv-' está en el 1° (primer) caracter.
@@ -6640,12 +6617,26 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			
 			/****************************************************/
 			//el resto de los botones
-			$arrGruas[$xdanger][$data['idTelemetria']]['informe_activaciones'] = '<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_activaciones_05.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" title="Uso Grua" class="btn btn-primary btn-sm tooltip"><i class="fa fa-clock-o" aria-hidden="true"></i></a>';
-			$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']            = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
+			$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']             = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
+			$arrGruas[$xdanger][$data['idTelemetria']]['informe_activaciones']  = '<li><a href="view_telemetria_uso.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" class="iframe" style="white-space: normal;" ><i class="fa fa-clock-o" aria-hidden="true"></i> Uso Grua</a></li>';
+			$arrGruas[$xdanger][$data['idTelemetria']]['AlarmasPersonalizadas'] = '<li><a href="view_alertas_personalizadas.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas Personalizadas</a></li>';
+			//si tiene un generador
+			if(isset($data['idGenerador'])&&$data['idGenerador']==1){
+				$arrGruas[$xdanger][$data['idTelemetria']]['Generador'] = '<li><a href="view_generador_data.php?view='.simpleEncode($data['idTelGenerador'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-battery-full" aria-hidden="true"></i> Datos Generador</a></li>';
+			}else{
+				$arrGruas[$xdanger][$data['idTelemetria']]['Generador'] = '';
+			}
+			//si utiliza carpeta ftp
+			if(isset($data['idUsoFTP'])&&$data['idUsoFTP']==1&&isset($data['FTP_Carpeta'])&&$data['FTP_Carpeta']!=''){
+				$arrGruas[$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '<li><a href="view_telemetria_data_files.php?view='.simpleEncode($data['FTP_Carpeta'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-video-camera" aria-hidden="true"></i> Camara</a></li>';
+			}else{
+				$arrGruas[$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '';
+			}
+			
 			//boton de alertas pendientes de ver
 			if(isset($data['NAlertas'])&&$data['NAlertas']!=''&&$data['NAlertas']!=0){
 				//Alertas
-				$link_Alertas  = 'informe_telemetria_errores_6.php';
+				$link_Alertas  = 'view_telemetria_alertas.php';
 				$link_Alertas .= '?pagina=1';
 				//$link_Alertas .= '?f_inicio='.$Fecha_inicio;
 				//$link_Alertas .= '&f_termino='.$Fecha_fin;
@@ -6653,7 +6644,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 				$link_Alertas .= '&idLeido=0';		
 				$link_Alertas .= '&submit_filter=+Filtrar';	
 				//boton
-				$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '<a target="_blank" rel="noopener noreferrer" href="'.$link_Alertas.'" title="'.$data['NAlertas'].' Alertas Pendientes de ver" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle faa-horizontal animated" aria-hidden="true"></i></a>';
+				$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '<a href="'.$link_Alertas.'" title="'.$data['NAlertas'].' Alertas Pendientes de ver" class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle faa-horizontal animated" aria-hidden="true"></i></a>';
 			}else{
 				$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '';
 			}
@@ -6746,9 +6737,18 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 														$GPS .= $grua['in_sens_activ'];
 														$GPS .= $grua['NAlertas'];
 														$GPS .= $grua['crosscrane_estado'];
-														$GPS .= $grua['informe_activaciones'];	
 														$GPS .= $grua['CenterMap'];
 														$GPS .= '
+														<button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															<span class="caret"></span>
+															<span class="sr-only">Toggle Dropdown</span>
+														</button>
+														<ul class="dropdown-menu" style="right: 0;float: right;">
+															'.$grua['informe_activaciones'].'
+															'.$grua['AlarmasPersonalizadas'].'
+															'.$grua['Generador'].'
+															'.$grua['CarpetaFTP'].'
+														</ul>
 													</div>
 												</td>
 											</tr>';
@@ -6778,9 +6778,18 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 														$GPS .= $grua['in_sens_activ'];
 														$GPS .= $grua['NAlertas'];
 														$GPS .= $grua['crosscrane_estado'];
-														$GPS .= $grua['informe_activaciones'];	
 														$GPS .= $grua['CenterMap'];
 														$GPS .= '
+														<button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															<span class="caret"></span>
+															<span class="sr-only">Toggle Dropdown</span>
+														</button>
+														<ul class="dropdown-menu" style="right: 0;float: right;">
+															'.$grua['informe_activaciones'].'
+															'.$grua['AlarmasPersonalizadas'].'
+															'.$grua['Generador'].'
+															'.$grua['CarpetaFTP'].'
+														</ul>
 													</div>
 												</td>
 											</tr>';
@@ -6810,9 +6819,18 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 														$GPS .= $grua['in_sens_activ'];
 														$GPS .= $grua['NAlertas'];
 														$GPS .= $grua['crosscrane_estado'];
-														$GPS .= $grua['informe_activaciones'];	
 														$GPS .= $grua['CenterMap'];
 														$GPS .= '
+														<button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															<span class="caret"></span>
+															<span class="sr-only">Toggle Dropdown</span>
+														</button>
+														<ul class="dropdown-menu" style="right: 0;float: right;">
+															'.$grua['informe_activaciones'].'
+															'.$grua['AlarmasPersonalizadas'].'
+															'.$grua['Generador'].'
+															'.$grua['CarpetaFTP'].'
+														</ul>
 													</div>
 												</td>
 											</tr>';
@@ -8173,9 +8191,6 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 			$consql .= ',SensoresGrupo_'.$i;
 			$consql .= ',SensoresRevisionGrupo_'.$i;
 			$consql .= ',SensoresUniMed_'.$i;
-			$consql .= ',SensoresMedMin_'.$i;
-			$consql .= ',SensoresMedMax_'.$i;
-			$consql .= ',SensoresMedActual_'.$i;
 			$consql .= ',SensoresActivo_'.$i;
 		}
 		/*****************************/
@@ -8451,25 +8466,10 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountProm'] = 0;
 					}
 					
-					//estado
-					//si esta configurado
-					if($rowEquipo['SensoresMedMin_'.$i]!=0&&$rowEquipo['SensoresMedMax_'.$i]!=0){
-						//si esta fuera de parametros
-						if($rowEquipo['SensoresMedActual_'.$i] < $rowEquipo['SensoresMedMin_'.$i] OR $rowEquipo['SensoresMedActual_'.$i]>$rowEquipo['SensoresMedMax_'.$i]){
-							//Error del grupo de uso
-							if(isset($arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'])&&$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']!=''){
-								$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']++;
-							}else{
-								$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
-							}
-							//Error de grupo
-							if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']!=''){
-								$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']++;
-							}else{
-								$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
-							}
-						}
-					}
+					//estado (siempre pasa)
+					$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
+					
 				//si es humedad	
 				}elseif($rowEquipo['SensoresUniMed_'.$i]==2){
 					//valido que este dentro del rango deseado
@@ -8483,25 +8483,10 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 							$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountHum'] = 1;
 						}
 					}
-					//estado
-					//si esta configurado
-					if($rowEquipo['SensoresMedMin_'.$i]!=0&&$rowEquipo['SensoresMedMax_'.$i]!=0){
-						//si esta fuera de parametros
-						if($rowEquipo['SensoresMedActual_'.$i] < $rowEquipo['SensoresMedMin_'.$i] OR $rowEquipo['SensoresMedActual_'.$i]>$rowEquipo['SensoresMedMax_'.$i]){
-							//Error del grupo de uso
-							if(isset($arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'])&&$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']!=''){
-								$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores']++;
-							}else{
-								$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
-							}
-							//Error de grupo
-							if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']!=''){
-								$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores']++;
-							}else{
-								$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
-							}
-						}
-					}
+					//estado (siempre pasa)
+					$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
+					$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
+					
 				}	
 			}
 		}
@@ -8588,7 +8573,8 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 											//imprimo
 											$widget .= '
 												<tr class="odd">
-													<th colspan="9">'.$in_eq_fueralinea.' Ultima Medicion: '.fecha_estandar($rowEquipo['LastUpdateFecha']).' a las '.$rowEquipo['LastUpdateHora'].' hrs.</th>
+													<th colspan="8">'.$in_eq_fueralinea.' Ultima Medicion: '.fecha_estandar($rowEquipo['LastUpdateFecha']).' a las '.$rowEquipo['LastUpdateHora'].' hrs.</th>
+													<th><a href="view_alertas_personalizadas.php?view='.simpleEncode($_SESSION['usuario']['widget_CrossC']['idTelemetria'], fecha_actual()).'" class="iframe btn btn-danger btn-sm"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas</a></th>
 												</tr>';
 											
 											foreach ($arrTempGrupos as $gruUso) {

@@ -35,7 +35,6 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 	$SIS_where.=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
-$search.="&idDetalle=".$_GET['idDetalle'];
 
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
@@ -52,8 +51,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 		$consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
 		$consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
-		$consql .= ',telemetria_listado.SensoresMedMin_'.$i.' AS SensoresMedMin_'.$i;
-		$consql .= ',telemetria_listado.SensoresMedMax_'.$i.' AS SensoresMedMax_'.$i;
 		$consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
 		$consql .= ',telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$i.' AS SensorValue_'.$i;
 	}
@@ -197,7 +194,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<input type="hidden" name="f_termino"     id="f_termino"    value="<?php echo $_GET['f_termino']; ?>" />
 				<input type="hidden" name="idTelemetria"  id="idTelemetria" value="<?php echo $_GET['idTelemetria']; ?>" />
 				<input type="hidden" name="idGrupo"       id="idGrupo"      value="<?php echo $_GET['idGrupo']; ?>" />
-				<input type="hidden" name="idDetalle"     id="idDetalle"    value="<?php echo $_GET['idDetalle']; ?>" />
 				
 				<?php if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){ ?>   <input type="hidden" name="h_inicio"   id="h_inicio"  value="<?php echo $_GET['h_inicio']; ?>" /><?php } ?>
 				<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){ ?> <input type="hidden" name="h_termino"  id="h_termino" value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
@@ -261,13 +257,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<?php 
 							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
 								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-									//Si se ven detalles
-									if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-										echo '<th colspan="3"  style="text-align:center">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';
-									//Si no se ven detalles	
-									}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-										echo '<th style="text-align:center">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';
-									}
+									echo '<th style="text-align:center">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';
 								}
 							}
 							?>
@@ -278,13 +268,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<?php 
 							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
 								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-									//Si se ven detalles
-									if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-										echo '<th>Medicion</th><th>Minimo</th><th>Maximo</th>';
-									//Si no se ven detalles	
-									}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-										echo '<th>Medicion</th>';
-									}
+									echo '<th>Medicion</th>';
 								}
 							}
 							?>
@@ -302,15 +286,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									}else{
 										$xdata='Sin Datos';
 									}
-									//Si se ven detalles
-									if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-										echo '<td>'.$xdata.'</td>';
-										echo '<td>'.Cantidades_decimales_justos($rutas['SensoresMedMin_'.$i]).$Unimed[$rutas['SensoresUniMed_'.$i]].'</td>';
-										echo '<td>'.Cantidades_decimales_justos($rutas['SensoresMedMax_'.$i]).$Unimed[$rutas['SensoresUniMed_'.$i]].'</td>';
-									//Si no se ven detalles	
-									}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-										echo '<td>'.$xdata.'</td>';
-									}
+									echo '<td>'.$xdata.'</td>';
 								}
 							} ?>
 						</tr>
@@ -363,7 +339,6 @@ alert_post_data(2,1,1, $Alert_Text);
 				if(isset($f_termino)) {     $x3  = $f_termino;    }else{$x3  = '';}
 				if(isset($h_termino)) {     $x4  = $h_termino;    }else{$x4  = '';}
 				if(isset($idTelemetria)) {  $x5  = $idTelemetria; }else{$x5  = '';}
-				if(isset($idDetalle)) {     $x6  = $idDetalle;    }else{$x6  = '';}
 				if(isset($idGrafico)) {     $x8  = $idGrafico;    }else{$x8  = '';}
 				//Si es redireccionado desde otra pagina con datos precargados
 				if(isset($_GET['view'])&&$_GET['view']!='') { $x5  = $_GET['view']; }
@@ -381,7 +356,6 @@ alert_post_data(2,1,1, $Alert_Text);
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
-				$Form_Inputs->form_select('Ver Otros Datos','idDetalle', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
 				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
 				?>        
 

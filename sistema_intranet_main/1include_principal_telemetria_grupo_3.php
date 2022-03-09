@@ -22,8 +22,6 @@ $consql = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
     $consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
     $consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
-    $consql .= ',telemetria_listado.SensoresMedMin_'.$i.' AS SensoresMedMin_'.$i;
-    $consql .= ',telemetria_listado.SensoresMedMax_'.$i.' AS SensoresMedMax_'.$i;
     $consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
     $consql .= ',telemetria_listado.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
     $consql .= ',telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.Sensor_'.$i.' AS SensorValue_'.$i;
@@ -84,8 +82,6 @@ array_push( $arrRutas,$row );
 					data.addColumn('string', 'Fecha - Hora'); 
 					data.addColumn('number', "Temperatura");
 					data.addColumn('number', "Humedad");
-					data.addColumn('number', "Minimo Medicion Temperatura");
-					data.addColumn('number', "Maximo Medicion Temperatura");
 					data.addRows([
 						<?php foreach ($arrRutas as $fac) {
 							//numero sensores equipo
@@ -94,8 +90,6 @@ array_push( $arrRutas,$row );
 							$Temperatura_N     = 0;
 							$Humedad           = 0;
 							$Humedad_N         = 0;
-							$TemperaturaMin    = 0;
-							$TemperaturaMax    = 0;
 											
 							//recorro los sensores		
 							for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
@@ -112,8 +106,6 @@ array_push( $arrRutas,$row );
 											//Si es temperatura
 											if($fac['SensoresUniMed_'.$x]==3){
 												$Temperatura     = $Temperatura + $fac['SensorValue_'.$x];
-												$TemperaturaMin  = $TemperaturaMin + $fac['SensoresMedMin_'.$x];
-												$TemperaturaMax  = $TemperaturaMax + $fac['SensoresMedMax_'.$x];
 												$Temperatura_N++;
 											}
 										}
@@ -123,13 +115,9 @@ array_push( $arrRutas,$row );
 								
 							//Si es temperatura
 							if($Temperatura_N!=0){  
-								$New_Temperatura     = $Temperatura/$Temperatura_N;
-								$New_TemperaturaMin  = $TemperaturaMin/$Temperatura_N; 
-								$New_TemperaturaMax  = $TemperaturaMax/$Temperatura_N;  
+								$New_Temperatura     = $Temperatura/$Temperatura_N; 
 							}else{
 								$New_Temperatura     = 0;
-								$New_TemperaturaMin  = 0;
-								$New_TemperaturaMax  = 0;
 							}
 							//Si es humedad
 							if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad = 0;}
@@ -138,7 +126,6 @@ array_push( $arrRutas,$row );
 							if($New_Temperatura!=0 OR $New_Humedad!=0){
 								$chain  = "'".Fecha_estandar($fac['FechaSistema'])." - ".Hora_estandar($fac['HoraSistema'])."'";
 								$chain .= ", ".$New_Temperatura.", ".$New_Humedad;
-								$chain .= ", ".$New_TemperaturaMin.", ".$New_TemperaturaMax;
 								//se imprime dato
 								echo '['.$chain.'],';
 							}
@@ -154,17 +141,13 @@ array_push( $arrRutas,$row );
 						series: {
 							// Gives each series an axis name that matches the Y-axis below.
 							0: {axis: 'Temperatura'},
-							1: {axis: 'Humedad'},
-							2: {axis: 'Minimo Medicion Temperatura'},
-							3: {axis: 'Maximo Medicion Temperatura'}
+							1: {axis: 'Humedad'}
 						},
 						axes: {
 							// Adds labels to each axis; they don't have to match the axis names.
 							y: {
 								Temps: {label: 'Temperatura (Celsius)'},
-								Daylight: {label: 'Humedad (Porcentaje)'},
-								Temps: {label: 'Minimo Medicion Temperatura (Celsius)'},
-								Temps: {label: 'Maximo Medicion Temperatura (Celsius)'}
+								Daylight: {label: 'Humedad (Porcentaje)'}
 							}
 						}
 					};

@@ -21,7 +21,7 @@ backup_telemetria_listado_errores_999.GeoLatitud,
 backup_telemetria_listado_errores_999.GeoLongitud,
 telemetria_listado.Nombre AS NombreEquipo';
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria';
-$SIS_where = 'backup_telemetria_listado_errores_999.idErrores = '.simpleDecode($_GET['view'], fecha_actual()).' AND backup_telemetria_listado_errores_999.idTipo=999';
+$SIS_where = 'backup_telemetria_listado_errores_999.idErrores = '.simpleDecode($_GET['view'], fecha_actual());
 $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_errores_999', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 /**********************************************************************************************************************************/

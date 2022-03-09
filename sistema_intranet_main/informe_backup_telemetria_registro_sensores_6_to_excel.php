@@ -47,8 +47,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 		$consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
 		$consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
-		$consql .= ',telemetria_listado.SensoresMedMin_'.$i.' AS SensoresMedMin_'.$i;
-		$consql .= ',telemetria_listado.SensoresMedMax_'.$i.' AS SensoresMedMax_'.$i;
 		$consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
 		$consql .= ',backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$i.' AS SensorValue_'.$i;
 	}
@@ -218,19 +216,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$x = 1;            
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
 		if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){ 
-			//Si se ven detalles
-			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-				$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue($arrData[$x].'1', $arrEquipos[0]['SensorNombre_'.$i]);
-							$x++;
-							$x++;
-							$x++;						
-			//Si no se ven detalles	
-			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-				$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue($arrData[$x].'1', $arrEquipos[0]['SensorNombre_'.$i]);
-							$x++;						
-			}
+			$objPHPExcel->setActiveSheetIndex(0)
+						->setCellValue($arrData[$x].'1', $arrEquipos[0]['SensorNombre_'.$i]);
+						$x++;						
 		}
 	}           
 
@@ -240,25 +228,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$x = 1;            
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
 		if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){ 
-			$x1 = $x;
-			$x2 = $x+1;
-			$x3 = $x+2;
+			$objPHPExcel->setActiveSheetIndex(0)
+						->setCellValue($arrData[$x].'2', 'Medicion');
+						$x++;						
 			
-			//Si se ven detalles
-			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-				$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue($arrData[$x1].'2', 'Medicion')
-							->setCellValue($arrData[$x2].'2', 'Minimo')
-							->setCellValue($arrData[$x3].'2', 'Maximo');
-							$x++;
-							$x++;
-							$x++;						
-			//Si no se ven detalles	
-			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-				$objPHPExcel->setActiveSheetIndex(0)
-							->setCellValue($arrData[$x1].'2', 'Medicion');
-							$x++;						
-			}
 		}
 	}
 	 
@@ -277,25 +250,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}else{
 					$xdata='Sin Datos';
 				}
-				$x1 = $x;
-				$x2 = $x+1;
-				$x3 = $x+2;
+				$objPHPExcel->setActiveSheetIndex(0)
+							->setCellValue($arrData[$x].$nn, $xdata);
+							$x++;						
 				
-				//Si se ven detalles
-				if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-					$objPHPExcel->setActiveSheetIndex(0)
-								->setCellValue($arrData[$x1].$nn, $xdata)
-								->setCellValue($arrData[$x2].$nn, Cantidades_decimales_justos($rutas['SensoresMedMin_'.$i]))
-								->setCellValue($arrData[$x3].$nn, Cantidades_decimales_justos($rutas['SensoresMedMax_'.$i]));
-								$x++;
-								$x++;
-								$x++;						
-				//Si no se ven detalles	
-				}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-					$objPHPExcel->setActiveSheetIndex(0)
-								->setCellValue($arrData[$x1].$nn, $xdata);
-								$x++;						
-				}
 			}
 		} 
 		$nn++;			

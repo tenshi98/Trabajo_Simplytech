@@ -18,8 +18,6 @@ require_once 'core/Web.Header.Views.php';
 $SIS_query = '
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.SensoresNombre_'.simpleDecode($_GET['sensorn'], fecha_actual()).' AS SensorNombre,
-telemetria_listado.SensoresMedMin_'.simpleDecode($_GET['sensorn'], fecha_actual()).' AS SensorMinMed,
-telemetria_listado.SensoresMedMax_'.simpleDecode($_GET['sensorn'], fecha_actual()).' AS SensorMaxMed,
 
 backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTabla,
 backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.FechaSistema,
@@ -48,8 +46,6 @@ $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablare
 			$explanation .= '<strong>Equipo: </strong>'.$rowdata['NombreEquipo'].'<br/>';
 			$explanation .= '<strong>Sensor: </strong>'.$rowdata['SensorNombre'].'<br/>';
 			$explanation .= '<strong>Medicion: </strong>'.Cantidades_decimales_justos($rowdata['SensorValue']).' '.$rowdata['Unimed'].'<br/>';
-			$explanation .= '<strong>Minimo: </strong>'.Cantidades_decimales_justos($rowdata['SensorMinMed']).' '.$rowdata['Unimed'].'<br/>';
-			$explanation .= '<strong>Maximo: </strong>'.Cantidades_decimales_justos($rowdata['SensorMaxMed']).' '.$rowdata['Unimed'].'<br/>';
 					
 			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
 			

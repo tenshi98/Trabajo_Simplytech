@@ -54,12 +54,8 @@ telemetria_listado.Jornada_inicio AS EquipoJornada_inicio,
 telemetria_listado.Jornada_termino AS EquipoJornada_termino,
 telemetria_listado.Colacion_inicio AS EquipoColacion_inicio,
 telemetria_listado.Colacion_termino AS EquipoColacion_termino,
-telemetria_listado.Microparada AS EquipoMicroparada,
-
-telemetria_listado_contratos.Codigo AS ContratoCodigo';
-$SIS_join  = '
-LEFT JOIN `telemetria_listado`             ON telemetria_listado.idTelemetria          = telemetria_listado_historial_activaciones.idTelemetria
-LEFT JOIN `telemetria_listado_contratos`   ON telemetria_listado_contratos.idContrato  = telemetria_listado_historial_activaciones.idContrato';
+telemetria_listado.Microparada AS EquipoMicroparada';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_historial_activaciones.idTelemetria';
 $SIS_order = 'telemetria_listado_historial_activaciones.idTelemetria ASC, telemetria_listado_historial_activaciones.Fecha ASC, telemetria_listado_historial_activaciones.Hora ASC';
 $arrConsulta = array();
 $arrConsulta = db_select_array (false, $SIS_query, 'telemetria_listado_historial_activaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrConsulta');
@@ -88,13 +84,12 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('B1', 'Codigo Interno')
             ->setCellValue('C1', 'Direccion')
             ->setCellValue('D1', 'Fecha')
-            ->setCellValue('E1', 'Contrato')
-            ->setCellValue('F1', 'Hora Inicio')
-            ->setCellValue('G1', 'Hora Termino')
-            ->setCellValue('H1', 'Tiempo Colacion')
-            ->setCellValue('I1', 'Tiempo Muerto')
-            ->setCellValue('J1', 'Tiempo Perdido')
-            ->setCellValue('K1', 'Sobre Tiempo');
+            ->setCellValue('E1', 'Hora Inicio')
+            ->setCellValue('F1', 'Hora Termino')
+            ->setCellValue('G1', 'Tiempo Colacion')
+            ->setCellValue('H1', 'Tiempo Muerto')
+            ->setCellValue('I1', 'Tiempo Perdido')
+            ->setCellValue('J1', 'Sobre Tiempo');
             
 $nn=2;
 filtrar($arrConsulta, 'EquipoNombre');
@@ -116,12 +111,10 @@ foreach($arrConsulta as $categoria=>$permisos){
 	$FueraHorario       = 0;
 	$Direccion          = '';
 	$CodigoInterno      = '';
-	$ContratoCodigo     = '';
 							
 	//Recorrido
 	foreach ($permisos as $con) { 
 		//Contrato Codigo
-		$ContratoCodigo     = $con['ContratoCodigo'];
 		$Direccion          = $con['Direccion'];
 		$CodigoInterno      = $con['CodigoInterno'];
 		
@@ -210,13 +203,12 @@ foreach($arrConsulta as $categoria=>$permisos){
 					->setCellValue('B'.$nn, $CodigoInterno)
 					->setCellValue('C'.$nn, $Direccion)
 					->setCellValue('D'.$nn, fecha_estandar($fecha))
-					->setCellValue('E'.$nn, $ContratoCodigo)
-					->setCellValue('F'.$nn, $HoraInicio)
-					->setCellValue('G'.$nn, $HoraTermino)
-					->setCellValue('H'.$nn, $TiempoColacionTot)
-					->setCellValue('I'.$nn, $TiempoMuerto)
-					->setCellValue('J'.$nn, $TiempoPerdido)
-					->setCellValue('K'.$nn, sumahoras($SobreTiempo_1,$SobreTiempo_2));
+					->setCellValue('E'.$nn, $HoraInicio)
+					->setCellValue('F'.$nn, $HoraTermino)
+					->setCellValue('G'.$nn, $TiempoColacionTot)
+					->setCellValue('H'.$nn, $TiempoMuerto)
+					->setCellValue('I'.$nn, $TiempoPerdido)
+					->setCellValue('J'.$nn, sumahoras($SobreTiempo_1,$SobreTiempo_2));
 			$nn++;
 			
 			//redeclaro variables
@@ -314,13 +306,12 @@ foreach($arrConsulta as $categoria=>$permisos){
 					->setCellValue('B'.$nn, $CodigoInterno)
 					->setCellValue('C'.$nn, $Direccion)
 					->setCellValue('D'.$nn, fecha_estandar($fecha))
-					->setCellValue('E'.$nn, $ContratoCodigo)
-					->setCellValue('F'.$nn, $HoraInicio)
-					->setCellValue('G'.$nn, $HoraTermino)
-					->setCellValue('H'.$nn, $TiempoColacionTot)
-					->setCellValue('I'.$nn, $TiempoMuerto)
-					->setCellValue('J'.$nn, $TiempoPerdido)
-					->setCellValue('K'.$nn, sumahoras($SobreTiempo_1,$SobreTiempo_2));
+					->setCellValue('E'.$nn, $HoraInicio)
+					->setCellValue('F'.$nn, $HoraTermino)
+					->setCellValue('G'.$nn, $TiempoColacionTot)
+					->setCellValue('H'.$nn, $TiempoMuerto)
+					->setCellValue('I'.$nn, $TiempoPerdido)
+					->setCellValue('J'.$nn, sumahoras($SobreTiempo_1,$SobreTiempo_2));
 	$nn++;		
 		
 }		

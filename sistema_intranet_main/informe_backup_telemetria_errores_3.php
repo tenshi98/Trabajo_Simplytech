@@ -44,7 +44,6 @@ if (!$num_pag){
 }
 //Inicia variable
 $SIS_where = "backup_telemetria_listado_errores_999.idErrores>0"; 
-$SIS_where.= " AND backup_telemetria_listado_errores_999.idTipo='999'";
 $SIS_where.= " AND telemetria_listado.id_Geo='1'";
 $SIS_where.= " AND backup_telemetria_listado_errores_999.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
@@ -87,14 +86,11 @@ backup_telemetria_listado_errores_999.Fecha,
 backup_telemetria_listado_errores_999.Hora,
 backup_telemetria_listado_errores_999.Sensor, 
 backup_telemetria_listado_errores_999.Valor,
-backup_telemetria_listado_errores_999.Valor_min,
-backup_telemetria_listado_errores_999.Valor_max,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
 $SIS_order = 'idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'backup_telemetria_listado_errores_999', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
-
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
@@ -130,8 +126,6 @@ foreach ($arrUnimed as $sen) {
 						<th>Fecha</th>
 						<th>Hora</th>
                         <th>Medicion Actual</th>
-                        <th>Min</th>
-                        <th>Max</th>
                         <th>Ubicacion</th>  
 					</tr>
 				</thead>
@@ -146,8 +140,6 @@ foreach ($arrUnimed as $sen) {
 							<td><?php echo fecha_estandar($error['Fecha']); ?></td>
 							<td><?php echo $error['Hora']; ?></td>
 							<td><?php echo Cantidades_decimales_justos($error['Valor']).$unimed; ?></td>
-							<td><?php echo Cantidades_decimales_justos($error['Valor_min']).$unimed; ?></td>
-							<td><?php echo Cantidades_decimales_justos($error['Valor_max']).$unimed; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" > 
 									<a href="<?php echo 'informe_telemetria_errores_1_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>

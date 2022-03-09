@@ -54,8 +54,6 @@ $N_Maximo_Sensores = 50;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresMedMin_'.$i;
-	$subquery .= ',SensoresMedMax_'.$i;
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
 	$subquery .= ',SensoresMedActual_'.$i;
@@ -192,8 +190,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$alimentacion_total         = 0;
 				$alimentacion_min           = 9999;
 				$alimentacion_max           = -9999;
-				$alimentacion_min_total     = 0;
-				$alimentacion_max_total     = 0;
 				$alimentacion_cuenta        = 0;
 				$alimentacion_promedio      = 0;
 				$alimentacion_min_promedio  = 0;
@@ -202,8 +198,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$elevacion_total            = 0;
 				$elevacion_min              = 9999;
 				$elevacion_max              = -9999;
-				$elevacion_min_total        = 0;
-				$elevacion_max_total        = 0;
 				$elevacion_cuenta           = 0;
 				$elevacion_promedio         = 0;
 				$elevacion_min_promedio     = 0;
@@ -212,8 +206,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$giro_total                 = 0;
 				$giro_min                   = 9999;
 				$giro_max                   = -9999;
-				$giro_min_total             = 0;
-				$giro_max_total             = 0;
 				$giro_cuenta                = 0;
 				$giro_promedio              = 0;
 				$giro_min_promedio          = 0;
@@ -222,8 +214,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$carro_total                = 0;
 				$carro_min                  = 9999;
 				$carro_max                  = -9999;
-				$carro_min_total            = 0;
-				$carro_max_total            = 0;
 				$carro_cuenta               = 0;
 				$carro_promedio             = 0;
 				$carro_min_promedio         = 0;
@@ -246,8 +236,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_amperaje']){
 						//suma totales
 						$alimentacion_total     = $alimentacion_total + $rowResult['Sensor_amperaje_'.$i.'_Prom'];
-						$alimentacion_min_total = $alimentacion_min_total + $rowdata['SensoresMedMin_'.$i];
-						$alimentacion_max_total = $alimentacion_max_total + $rowdata['SensoresMedMax_'.$i];
 						$alimentacion_cuenta++;
 						//busco el valor minimo
 						if($rowResult['Sensor_amperaje_'.$i.'_Prom']<$alimentacion_min){$alimentacion_min = $rowResult['Sensor_amperaje_'.$i.'_Prom'];}
@@ -258,8 +246,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_elevacion']){
 						//suma totales
 						$elevacion_total     = $elevacion_total + $rowResult['Sensor_elevacion_'.$i.'_Prom'];
-						$elevacion_min_total = $elevacion_min_total + $rowdata['SensoresMedMin_'.$i];
-						$elevacion_max_total = $elevacion_max_total + $rowdata['SensoresMedMax_'.$i];
 						$elevacion_cuenta++;
 						//busco el valor minimo
 						if($rowResult['Sensor_elevacion_'.$i.'_Prom']<$elevacion_min){$elevacion_min = $rowResult['Sensor_elevacion_'.$i.'_Prom'];}
@@ -270,8 +256,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_giro']){
 						//suma totales
 						$giro_total     = $giro_total + $rowResult['Sensor_giro_'.$i.'_Prom'];
-						$giro_min_total = $giro_min_total + $rowdata['SensoresMedMin_'.$i];
-						$giro_max_total = $giro_max_total + $rowdata['SensoresMedMax_'.$i];
 						$giro_cuenta++;
 						//busco el valor minimo
 						if($rowResult['Sensor_giro_'.$i.'_Prom']<$giro_min){$giro_min = $rowResult['Sensor_giro_'.$i.'_Prom'];}
@@ -282,8 +266,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_carro']){
 						//suma totales
 						$carro_total     = $carro_total + $rowResult['Sensor_carro_'.$i.'_Prom'];
-						$carro_min_total = $carro_min_total + $rowdata['SensoresMedMin_'.$i];
-						$carro_max_total = $carro_max_total + $rowdata['SensoresMedMax_'.$i];
 						$carro_cuenta++;
 						//busco el valor minimo
 						if($rowResult['Sensor_carro_'.$i.'_Prom']<$carro_min){$carro_min = $rowResult['Sensor_carro_'.$i.'_Prom'];}
@@ -298,9 +280,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						//actual
 						$voltaje_actual_total = $voltaje_actual_total + $rowdata['SensoresMedActual_'.$i];
 						$voltaje_actual_cuenta++;
-						//promedios minimos y maximos
-						$voltaje_promedio_min = $voltaje_promedio_min + $rowdata['SensoresMedMin_'.$i];
-						$voltaje_promedio_max = $voltaje_promedio_max + $rowdata['SensoresMedMax_'.$i];
 					}
 					
 					//Se verifica si el sensor esta habilitado para la supervision
@@ -336,8 +315,8 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				//alimentacion
 				if($alimentacion_cuenta!=0){
 					$alimentacion_promedio     = cantidades($alimentacion_total/$alimentacion_cuenta, 0);
-					$alimentacion_min_promedio = cantidades($alimentacion_min_total/$alimentacion_cuenta, 0);
-					$alimentacion_max_promedio = cantidades($alimentacion_max_total/$alimentacion_cuenta, 0);
+					$alimentacion_min_promedio  = 0;
+					$alimentacion_max_promedio  = 0;
 				}else{
 					$alimentacion_promedio      = 0;
 					$alimentacion_min_promedio  = 0;
@@ -346,8 +325,8 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				//elevacion
 				if($elevacion_cuenta!=0){
 					$elevacion_promedio     = cantidades($elevacion_total/$elevacion_cuenta, 0);
-					$elevacion_min_promedio = cantidades($elevacion_min_total/$elevacion_cuenta, 0);
-					$elevacion_max_promedio = cantidades($elevacion_max_total/$elevacion_cuenta, 0);
+					$elevacion_min_promedio  = 0;
+					$elevacion_max_promedio  = 0;
 				}else{
 					$elevacion_promedio      = 0;
 					$elevacion_min_promedio  = 0;
@@ -356,8 +335,8 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				//giro
 				if($giro_cuenta!=0){
 					$giro_promedio     = cantidades($giro_total/$giro_cuenta, 0);
-					$giro_min_promedio = cantidades($giro_min_total/$giro_cuenta, 0);
-					$giro_max_promedio = cantidades($giro_max_total/$giro_cuenta, 0);
+					$giro_min_promedio  = 0;
+					$giro_max_promedio  = 0;
 				}else{
 					$giro_promedio      = 0;
 					$giro_min_promedio  = 0;
@@ -366,8 +345,8 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				//carro
 				if($carro_cuenta!=0){
 					$carro_promedio     = cantidades($carro_total/$carro_cuenta, 0);
-					$carro_min_promedio = cantidades($carro_min_total/$carro_cuenta, 0);
-					$carro_max_promedio = cantidades($carro_max_total/$carro_cuenta, 0);
+					$carro_min_promedio  = 0;
+					$carro_max_promedio  = 0;
 				}else{
 					$carro_promedio      = 0;
 					$carro_min_promedio  = 0;

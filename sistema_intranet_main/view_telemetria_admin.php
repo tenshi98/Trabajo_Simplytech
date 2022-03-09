@@ -49,36 +49,11 @@ telemetria_listado.TiempoDetencion,
 telemetria_listado.Capacidad,
 opc2.Nombre AS Geo,
 opc3.Nombre AS Sensores,
-opc4.Nombre AS Contratos,
-telemetria_listado.Codigo AS ContratoCodigo,
-telemetria_listado.F_Inicio AS ContratoF_Inicio,
-telemetria_listado.F_Termino AS ContratoF_Termino,
 telemetria_listado.cantSensores,
 telemetria_listado.Direccion_img,
 core_sistemas.Nombre AS sistema,
 telemetria_listado.id_Geo,
 telemetria_listado.id_Sensores,
-telemetria_listado.Hor_idActivo_dia1, 
-telemetria_listado.Hor_idActivo_dia2, 
-telemetria_listado.Hor_idActivo_dia3, 
-telemetria_listado.Hor_idActivo_dia4, 
-telemetria_listado.Hor_idActivo_dia5, 
-telemetria_listado.Hor_idActivo_dia6, 
-telemetria_listado.Hor_idActivo_dia7,
-telemetria_listado.Hor_Inicio_dia1, 
-telemetria_listado.Hor_Inicio_dia2, 
-telemetria_listado.Hor_Inicio_dia3, 
-telemetria_listado.Hor_Inicio_dia4, 
-telemetria_listado.Hor_Inicio_dia5, 
-telemetria_listado.Hor_Inicio_dia6, 
-telemetria_listado.Hor_Inicio_dia7,
-telemetria_listado.Hor_Termino_dia1, 
-telemetria_listado.Hor_Termino_dia2, 
-telemetria_listado.Hor_Termino_dia3, 
-telemetria_listado.Hor_Termino_dia4, 
-telemetria_listado.Hor_Termino_dia5, 
-telemetria_listado.Hor_Termino_dia6, 
-telemetria_listado.Hor_Termino_dia7,
 
 telemetria_listado.Jornada_inicio,
 telemetria_listado.Jornada_termino,
@@ -87,23 +62,19 @@ telemetria_listado.Colacion_termino,
 telemetria_listado.Microparada,
 
 core_estados.Nombre AS Estado,
-telemetria_listado_alarma_general.Nombre AS AlarmaGeneral,
 telemetria_listado.LimiteVelocidad,
 core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
 telemetria_listado.Direccion,
-telemetria_zonas.Nombre AS Zona, 
-telemetria_listado.idUsoContrato';
+telemetria_zonas.Nombre AS Zona';
 $SIS_join  = '
-LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                            = telemetria_listado.idSistema
-LEFT JOIN `core_sistemas_opciones`        opc2   ON opc2.idOpciones                                    = telemetria_listado.id_Geo
-LEFT JOIN `core_sistemas_opciones`        opc3   ON opc3.idOpciones                                    = telemetria_listado.id_Sensores
-LEFT JOIN `core_sistemas_opciones`        opc4   ON opc4.idOpciones                                    = telemetria_listado.idUsoContrato
-LEFT JOIN `core_estados`                         ON core_estados.idEstado                              = telemetria_listado.idEstado
-LEFT JOIN `telemetria_listado_alarma_general`    ON telemetria_listado_alarma_general.idAlarmaGeneral  = telemetria_listado.idAlarmaGeneral
-LEFT JOIN `core_ubicacion_ciudad`                ON core_ubicacion_ciudad.idCiudad                     = telemetria_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`               ON core_ubicacion_comunas.idComuna                    = telemetria_listado.idComuna
-LEFT JOIN `telemetria_zonas`                     ON telemetria_zonas.idZona                            = telemetria_listado.idZona';
+LEFT JOIN `core_sistemas`                    ON core_sistemas.idSistema          = telemetria_listado.idSistema
+LEFT JOIN `core_sistemas_opciones`    opc2   ON opc2.idOpciones                  = telemetria_listado.id_Geo
+LEFT JOIN `core_sistemas_opciones`    opc3   ON opc3.idOpciones                  = telemetria_listado.id_Sensores
+LEFT JOIN `core_estados`                     ON core_estados.idEstado            = telemetria_listado.idEstado
+LEFT JOIN `core_ubicacion_ciudad`            ON core_ubicacion_ciudad.idCiudad   = telemetria_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`           ON core_ubicacion_comunas.idComuna  = telemetria_listado.idComuna
+LEFT JOIN `telemetria_zonas`                 ON telemetria_zonas.idZona          = telemetria_listado.idZona';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
@@ -134,10 +105,6 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 	for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 		$subquery .= ',SensoresNombre_'.$i;
 		$subquery .= ',SensoresTipo_'.$i;
-		$subquery .= ',SensoresMedMin_'.$i;
-		$subquery .= ',SensoresMedMax_'.$i;
-		$subquery .= ',SensoresMedErrores_'.$i;
-		$subquery .= ',SensoresErrorActual_'.$i;
 		$subquery .= ',SensoresGrupo_'.$i;
 		$subquery .= ',SensoresUniMed_'.$i;
 		$subquery .= ',SensoresMedActual_'.$i;
@@ -318,7 +285,6 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Configuracion</h2>
 						<p class="text-muted">
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							<strong>Alarma General : </strong><?php echo $rowdata['AlarmaGeneral']; ?><br/>
 							<strong>Geolocalizacion : </strong><?php echo $rowdata['Geo']; ?><br/>
 							<?php if($rowdata['id_Geo']==1){ ?>
 							<strong>Limite Velocidad : </strong><?php echo Cantidades_decimales_justos($rowdata['LimiteVelocidad']).' KM/h'; ?><br/>
@@ -332,22 +298,8 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 							<?php if($rowdata['id_Geo']==1){ ?>
 							<strong>Tiempo Maximo Detencion : </strong><?php echo $rowdata['TiempoDetencion']; ?> Horas<br/>
 							<?php } ?>
-							<strong>Utilizacion de Contratos : </strong><?php echo $rowdata['Contratos'].' ';if($rowdata['idUsoContrato']==1){ echo '(Contrato Cod <strong>'.$rowdata['ContratoCodigo'].'</strong>, valido del <strong>'.fecha_estandar($rowdata['ContratoF_Inicio']).'</strong> al <strong>'.fecha_estandar($rowdata['ContratoF_Termino']).'</strong>)';} ?><br/>
 							<?php if(isset($rowdata['Capacidad'])&&$rowdata['Capacidad']!=0){ ?>
 								<strong>Capacidad : </strong><?php echo Cantidades_decimales_justos($rowdata['Capacidad']); ?><br/>
-							<?php } ?>
-						</p>
-						
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Horario Notificaciones</h2>
-						<p class="text-muted">
-							<?php
-							for ($i = 1; $i <= 7; $i++) {
-								if(isset($arrFinalOpciones[$rowdata['Hor_idActivo_dia'.$i]])){
-									$bla = $arrFinalOpciones[$rowdata['Hor_idActivo_dia'.$i]];
-								}else{
-									$bla = 'No Asignado';
-								}?>
-								<strong><?php echo numero_nombreDia($i); ?> : </strong><?php echo $bla.' / '.$rowdata['Hor_Inicio_dia'.$i].' - '.$rowdata['Hor_Termino_dia'.$i]; ?><br/>
 							<?php } ?>
 						</p>
 						
@@ -419,10 +371,6 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 										<th>Grupo</th>
 										<th>Fecha/hora</th>
 										<th>Medicion Actual</th>
-										<th>Minimo Medicion</th>
-										<th>Maximo Medicion</th>
-										<th>Maximo Errores</th>
-										<th>Errores Actuales</th>
 									</tr>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -431,12 +379,6 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 										if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){
 											$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]];
 											$s_alert = '';
-											//se verifica que la medicion minima y maxima sean distintas de 0
-											if($rowMed['SensoresMedMin_'.$i]!=0&&$rowMed['SensoresMedMax_'.$i]!=0){
-												if($rowMed['SensoresMedActual_'.$i] < $rowMed['SensoresMedMin_'.$i] OR $rowMed['SensoresMedActual_'.$i]>$rowMed['SensoresMedMax_'.$i]){
-													$s_alert = 'danger';
-												}
-											}
 											?>
 											<tr class="odd <?php echo $s_alert; ?>">		
 												<td><?php echo 's'.$i ?></td>
@@ -451,10 +393,6 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 														echo 'Sin Datos';
 													} ?>
 												</td>
-												<td><?php echo Cantidades_decimales_justos($rowMed['SensoresMedMin_'.$i]).$unimed;?></td>		
-												<td><?php echo Cantidades_decimales_justos($rowMed['SensoresMedMax_'.$i]).$unimed; ?></td>
-												<td><?php echo $rowMed['SensoresMedErrores_'.$i]; ?></td>
-												<td><?php echo $rowMed['SensoresErrorActual_'.$i]; ?></td>
 											</tr>
 										<?php } ?> 
 									<?php } ?>                    

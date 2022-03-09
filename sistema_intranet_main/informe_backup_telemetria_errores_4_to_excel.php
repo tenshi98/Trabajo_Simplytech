@@ -26,7 +26,6 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 //Inicia variable
 $SIS_where = "backup_telemetria_listado_errores_999.idErrores>0"; 
-$SIS_where.= " AND backup_telemetria_listado_errores_999.idTipo='999'";
 $SIS_where.= " AND telemetria_listado.id_Geo='2'";
 $SIS_where.= " AND backup_telemetria_listado_errores_999.idSistema=".$_GET['idSistema'];
 //verifico si existen los parametros de fecha
@@ -59,8 +58,6 @@ backup_telemetria_listado_errores_999.Fecha,
 backup_telemetria_listado_errores_999.Hora,
 backup_telemetria_listado_errores_999.Sensor, 
 backup_telemetria_listado_errores_999.Valor,
-backup_telemetria_listado_errores_999.Valor_min,
-backup_telemetria_listado_errores_999.Valor_max,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
 $SIS_order = 'idErrores DESC';
@@ -98,9 +95,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('C1', 'Fecha')
             ->setCellValue('D1', 'Hora')
             ->setCellValue('E1', 'Medicion Actual')
-            ->setCellValue('F1', 'Min')
-            ->setCellValue('G1', 'Max')
-            ->setCellValue('H1', 'Unidad Medida');   
+            ->setCellValue('F1', 'Unidad Medida');   
                
                                 
          
@@ -115,9 +110,7 @@ foreach ($arrErrores as $error) {
 				->setCellValue('C'.$nn, $error['Fecha'])
 				->setCellValue('D'.$nn, $error['Hora'])
 				->setCellValue('E'.$nn, $error['Valor'])
-				->setCellValue('F'.$nn, $error['Valor_min'])
-				->setCellValue('G'.$nn, $error['Valor_max'])
-				->setCellValue('G'.$nn, $unimed);
+				->setCellValue('F'.$nn, $unimed);
 	$nn++;           
    
 } 
@@ -132,7 +125,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 
 // Redirect output to a client’s web browser (Excel5)
 header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Informe de Alertas.xls"');
+header('Content-Disposition: attachment;filename="Informe de Alertas 999xx.xls"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

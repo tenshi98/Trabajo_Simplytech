@@ -46,8 +46,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_query = '
 	telemetria_listado.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
 	telemetria_listado.SensoresGrupo_'.$_GET['sensorn'].' AS SensorGrupo,
-	telemetria_listado.SensoresMedMin_'.$_GET['sensorn'].' AS SensorMinMed,
-	telemetria_listado.SensoresMedMax_'.$_GET['sensorn'].' AS SensorMaxMed,
 
 	backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTabla,
 	backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema,
@@ -86,17 +84,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('A3', 'Fecha')
 				->setCellValue('B3', 'Hora');
 				
-	//Si se ven detalles
-	if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){ 
-		$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('C3', 'Medicion')
-					->setCellValue('D3', 'Minimo')
-					->setCellValue('E3', 'Maximo');          
-	//Si no se ven detalles	
-	}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-		$objPHPExcel->setActiveSheetIndex(0)
-					->setCellValue('C3', 'Medicion'); 						
-	}                        
+	$objPHPExcel->setActiveSheetIndex(0)
+				->setCellValue('C3', 'Medicion'); 						
+	                        
 
 
 	$x = 4;
@@ -107,17 +97,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					->setCellValue('A'.$x, $rutas['FechaSistema'])
 					->setCellValue('B'.$x, $rutas['HoraSistema']);
 					
-		//Si se ven detalles
-		if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){ 
-			$objPHPExcel->setActiveSheetIndex(0)
-						->setCellValue('C'.$x, $xdata)
-						->setCellValue('D'.$x, Cantidades_decimales_justos($rutas['SensorMinMed']).' '.$rutas['Unimed'])
-						->setCellValue('E'.$x, Cantidades_decimales_justos($rutas['SensorMaxMed']).' '.$rutas['Unimed']);          
-		//Si no se ven detalles	
-		}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-			$objPHPExcel->setActiveSheetIndex(0)
-						->setCellValue('C'.$x, $xdata); 						
-		} 				
+		$objPHPExcel->setActiveSheetIndex(0)
+					->setCellValue('C'.$x, $xdata); 						
+						
 		//Sumo 1
 		$x++;
 	}

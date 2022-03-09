@@ -23,8 +23,6 @@ $consql = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
     $consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
     $consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
-    $consql .= ',telemetria_listado.SensoresMedMin_'.$i.' AS SensoresMedMin_'.$i;
-    $consql .= ',telemetria_listado.SensoresMedMax_'.$i.' AS SensoresMedMax_'.$i;
     $consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
     $consql .= ',telemetria_listado.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
     $consql .= ',telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.Sensor_'.$i.' AS SensorValue_'.$i;

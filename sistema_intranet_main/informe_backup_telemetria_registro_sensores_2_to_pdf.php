@@ -54,8 +54,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_query = '
 	telemetria_listado.SensoresNombre_'.$sensorn.' AS SensorNombre,
 	telemetria_listado.SensoresGrupo_'.$sensorn.' AS SensorGrupo,
-	telemetria_listado.SensoresMedMin_'.$sensorn.' AS SensorMinMed,
-	telemetria_listado.SensoresMedMax_'.$sensorn.' AS SensorMaxMed,
 
 	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTabla,
 	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema,
@@ -92,15 +90,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			<tr>
 				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Fecha</th>
 				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Hora</th>';
-				//Si se ven detalles
-				if(isset($idDetalle)&&$idDetalle==1){ 
-					$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion</th>';       
-					$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Minimo</th>';       
-					$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Maximo</th>';       
-				//Si no se ven detalles	
-				}elseif(isset($idDetalle)&&$idDetalle==2){
-					$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion</th>';       
-				}
+				$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion</th>';       
 			$html .= '	
 			</tr>
 		</thead>

@@ -54,8 +54,6 @@ $N_Maximo_Sensores = 50;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresMedMin_'.$i;
-	$subquery .= ',SensoresMedMax_'.$i;
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
 	$subquery .= ',SensoresMedActual_'.$i;
@@ -197,8 +195,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$alimentacion_total            = 0;
 				$alimentacion_min              = 9999;
 				$alimentacion_max              = -9999;
-				$alimentacion_min_total        = 0;
-				$alimentacion_max_total        = 0;
 				$alimentacion_cuenta           = 0;
 				$alimentacion_promedio         = 0;
 				$alimentacion_min_promedio     = 0;
@@ -207,8 +203,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$motor_subida_total            = 0;
 				$motor_subida_min              = 9999;
 				$motor_subida_max              = -9999;
-				$motor_subida_min_total        = 0;
-				$motor_subida_max_total        = 0;
 				$motor_subida_cuenta           = 0;
 				$motor_subida_promedio         = 0;
 				$motor_subida_min_promedio     = 0;
@@ -217,8 +211,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$motor_bajada_total            = 0;
 				$motor_bajada_min              = 9999;
 				$motor_bajada_max              = -9999;
-				$motor_bajada_min_total        = 0;
-				$motor_bajada_max_total        = 0;
 				$motor_bajada_cuenta           = 0;
 				$motor_bajada_promedio         = 0;
 				$motor_bajada_min_promedio     = 0;
@@ -241,8 +233,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_amperaje']){
 						//suma totales
 						$alimentacion_total     = $alimentacion_total + $rowResult['Sensor_amperaje_'.$i.'_Prom'];
-						$alimentacion_min_total = $alimentacion_min_total + $rowdata['SensoresMedMin_'.$i];
-						$alimentacion_max_total = $alimentacion_max_total + $rowdata['SensoresMedMax_'.$i];
 						$alimentacion_cuenta++;
 						//busco el valor minimo
 						if($rowResult['Sensor_amperaje_'.$i.'_Prom']<$alimentacion_min){$alimentacion_min = $rowResult['Sensor_amperaje_'.$i.'_Prom'];}
@@ -253,8 +243,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_motor_subida']){
 						//suma totales
 						$motor_subida_total     = $motor_subida_total + $rowResult['Sensor_motor_subida_'.$i.'_Prom'];
-						$motor_subida_min_total = $motor_subida_min_total + $rowdata['SensoresMedMin_'.$i];
-						$motor_subida_max_total = $motor_subida_max_total + $rowdata['SensoresMedMax_'.$i];
 						$motor_subida_cuenta++;
 						//busco el valor minimo
 						if($rowResult['Sensor_motor_subida_'.$i.'_Prom']<$motor_subida_min){$motor_subida_min = $rowResult['Sensor_motor_subida_'.$i.'_Prom'];}
@@ -265,8 +253,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_motor_bajada']){
 						//suma totales
 						$motor_bajada_total     = $motor_bajada_total + $rowResult['Sensor_motor_bajada_'.$i.'_Prom'];
-						$motor_bajada_min_total = $motor_bajada_min_total + $rowdata['SensoresMedMin_'.$i];
-						$motor_bajada_max_total = $motor_bajada_max_total + $rowdata['SensoresMedMax_'.$i];
 						$motor_bajada_cuenta++;
 						//busco el valor minimo
 						if($rowResult['Sensor_motor_bajada_'.$i.'_Prom']<$motor_bajada_min){$motor_bajada_min = $rowResult['Sensor_motor_bajada_'.$i.'_Prom'];}
@@ -282,8 +268,8 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						$voltaje_actual_total = $voltaje_actual_total + $rowdata['SensoresMedActual_'.$i];
 						$voltaje_actual_cuenta++;
 						//promedios minimos y maximos
-						$voltaje_promedio_min = $voltaje_promedio_min + $rowdata['SensoresMedMin_'.$i];
-						$voltaje_promedio_max = $voltaje_promedio_max + $rowdata['SensoresMedMax_'.$i];
+						$voltaje_promedio_min = $voltaje_promedio_min + 0;
+						$voltaje_promedio_max = $voltaje_promedio_max + 0;
 					}
 					
 					//Se verifica si el sensor esta habilitado para la supervision
@@ -319,8 +305,8 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				//alimentacion
 				if($alimentacion_cuenta!=0){
 					$alimentacion_promedio     = cantidades($alimentacion_total/$alimentacion_cuenta, 0);
-					$alimentacion_min_promedio = cantidades($alimentacion_min_total/$alimentacion_cuenta, 0);
-					$alimentacion_max_promedio = cantidades($alimentacion_max_total/$alimentacion_cuenta, 0);
+					$alimentacion_min_promedio  = 0;
+					$alimentacion_max_promedio  = 0;
 				}else{
 					$alimentacion_promedio      = 0;
 					$alimentacion_min_promedio  = 0;
@@ -329,8 +315,8 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				//motor subida
 				if($motor_subida_cuenta!=0){
 					$motor_subida_promedio     = cantidades($motor_subida_total/$motor_subida_cuenta, 0);
-					$motor_subida_min_promedio = cantidades($motor_subida_min_total/$motor_subida_cuenta, 0);
-					$motor_subida_max_promedio = cantidades($motor_subida_max_total/$motor_subida_cuenta, 0);
+					$motor_subida_min_promedio  = 0;
+					$motor_subida_max_promedio  = 0;
 				}else{
 					$motor_subida_promedio      = 0;
 					$motor_subida_min_promedio  = 0;
@@ -339,8 +325,8 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				//motor bajada
 				if($motor_bajada_cuenta!=0){
 					$motor_bajada_promedio     = cantidades($motor_bajada_total/$motor_bajada_cuenta, 0);
-					$motor_bajada_min_promedio = cantidades($motor_bajada_min_total/$motor_bajada_cuenta, 0);
-					$motor_bajada_max_promedio = cantidades($motor_bajada_max_total/$motor_bajada_cuenta, 0);
+					$motor_bajada_min_promedio  = 0;
+					$motor_bajada_max_promedio  = 0;
 				}else{
 					$motor_bajada_promedio      = 0;
 					$motor_bajada_min_promedio  = 0;

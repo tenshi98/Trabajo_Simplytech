@@ -24,7 +24,6 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
 /********************************************************************/
 //Inicia variable
 $SIS_where = "telemetria_listado_errores_999.idErrores>0"; 
-$SIS_where.= " AND telemetria_listado_errores_999.idTipo='999'";
 $SIS_where.= " AND telemetria_listado.id_Geo='1'";
 $SIS_where.= " AND telemetria_listado_errores_999.idSistema=".$_GET['idSistema'];
 //verifico si existen los parametros de fecha
@@ -56,8 +55,6 @@ telemetria_listado_errores_999.Fecha,
 telemetria_listado_errores_999.Hora,
 telemetria_listado_errores_999.Sensor, 
 telemetria_listado_errores_999.Valor,
-telemetria_listado_errores_999.Valor_min,
-telemetria_listado_errores_999.Valor_max,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
 $SIS_order = 'idErrores DESC';
@@ -88,9 +85,7 @@ $html .= '
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Descripcion</th>
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Fecha</th>
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Hora</th>
-            <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion Actual</th>
-            <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Min</th>
-            <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Max</th>          
+            <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion Actual</th>         
 		</tr>
 	</thead>
 	<tbody>';
@@ -106,8 +101,6 @@ $html .= '
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($error['Fecha']).'</td>
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['Hora'].'</td>
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor']).$unimed.'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor_min']).$unimed.'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor_max']).$unimed.'</td>
 				</tr>
 				';						
 		}
@@ -123,7 +116,7 @@ $html .='</tbody>
 //Config
 $pdf_titulo     = 'Informe de Alertas';
 $pdf_subtitulo  = '';
-$pdf_file       = 'Informe de Alertas.pdf';
+$pdf_file       = 'Informe de Alertas 999xx.pdf';
 $OpcDom         = "'A4', 'landscape'";
 $OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 $OpcTcpPg       = "A4"; //Tipo de Hoja

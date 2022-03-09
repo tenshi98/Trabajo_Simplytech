@@ -70,12 +70,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	telemetria_listado.Jornada_termino AS EquipoJornada_termino,
 	telemetria_listado.Colacion_inicio AS EquipoColacion_inicio,
 	telemetria_listado.Colacion_termino AS EquipoColacion_termino,
-	telemetria_listado.Microparada AS EquipoMicroparada,
-
-	telemetria_listado_contratos.Codigo AS ContratoCodigo';
-	$SIS_join  = '
-	LEFT JOIN `telemetria_listado`             ON telemetria_listado.idTelemetria          = telemetria_listado_historial_activaciones.idTelemetria
-	LEFT JOIN `telemetria_listado_contratos`   ON telemetria_listado_contratos.idContrato  = telemetria_listado_historial_activaciones.idContrato';
+	telemetria_listado.Microparada AS EquipoMicroparada';
+	$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_historial_activaciones.idTelemetria';
 
 	$SIS_order = 'telemetria_listado_historial_activaciones.idTelemetria ASC, telemetria_listado_historial_activaciones.Fecha ASC, telemetria_listado_historial_activaciones.Hora ASC';
 	$arrConsulta = array();
@@ -165,7 +161,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								<tr role="row">
 									<th>Equipo</th>
 									<th>Fecha</th>
-									<th>Contrato</th>
 									<th>Hora<br/>Inicio     <a title="Hora de inicio real del equipo (Hora Programada:<?php echo $permisos[0]['EquipoJornada_inicio']; ?> hrs)" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
 									<th>Hora<br/>Termino    <a title="Hora de termino real del equipo (Hora Programada:<?php echo $permisos[0]['EquipoJornada_termino']; ?> hrs)" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
 									<th>Tiempo<br/>Colacion <a title="Detencion para la hora de colacion programada entre las <?php echo $permisos[0]['EquipoColacion_inicio']; ?> y las <?php echo $permisos[0]['EquipoColacion_termino']; ?>" class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
@@ -195,9 +190,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								$FueraHorario       = 0;
 								//Recorrido
 								foreach ($permisos as $con) { 
-									//Contrato Codigo
-									$ContratoCodigo = $con['ContratoCodigo'];
-
 									/*****************************************************************/
 									//Verifico si esta dentro del mismo dia
 									if($fecha!=''&&$fecha==$con['EquipoFecha']){
@@ -283,7 +275,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										<tr class="odd">
 											<td><?php echo $categoria; ?></td>
 											<td><?php echo fecha_estandar($fecha); ?></td>
-											<td><?php echo $ContratoCodigo; ?></td>
 											<td><?php echo $HoraInicio; ?></td>
 											<td><?php echo $HoraTermino; ?></td>
 											<td><?php echo $TiempoColacionTot; ?></td>
@@ -388,7 +379,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								<tr class="odd">
 									<td><?php echo $categoria; ?></td>
 									<td><?php echo fecha_estandar($fecha); ?></td>
-									<td><?php echo $ContratoCodigo; ?></td>
 									<td><?php echo $HoraInicio; ?></td>
 									<td><?php echo $HoraTermino; ?></td>
 									<td><?php echo $TiempoColacionTot; ?></td>

@@ -29,7 +29,6 @@ if ( ! empty($_GET['submit_filter']) ) {
 $SIS_where = '';
 $search    = '?idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search   .= '&sensorn='.$_GET['sensorn'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
-$search   .= '&idDetalle='.$_GET['idDetalle'];
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
 	$SIS_where .= "(TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 	$search    .= "&h_inicio=".$_GET['h_inicio']."&h_termino=".$_GET['h_termino'];
@@ -51,8 +50,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_query = '
 	telemetria_listado.Nombre AS NombreEquipo,
 	telemetria_listado.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
-	telemetria_listado.SensoresMedMin_'.$_GET['sensorn'].' AS SensorMinMed,
-	telemetria_listado.SensoresMedMax_'.$_GET['sensorn'].' AS SensorMaxMed,
 
 	telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTabla,
 	telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema,
@@ -76,54 +73,24 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	/****************************************************************/				
 	//titulo de la tabla
-	//Si se ven detalles	
-	if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-		$m_table_title  .= '<th>Medicion</th>';
-		$m_table_title  .= '<th>Minimo</th>';
-		$m_table_title  .= '<th>Maximo</th>';
-		$arrData[1]['Name'] = "'Medicion'";
-		$arrData[2]['Name'] = "'Minimo'";
-		$arrData[3]['Name'] = "'Maximo'";
-	//Si no se ven detalles	
-	}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-		$m_table_title  .= '<th>Medicion</th>';
-		$arrData[1]['Name'] = "'Medicion'";
-	}	
+	$m_table_title  .= '<th>Medicion</th>';
+	$arrData[1]['Name'] = "'Medicion'";
+		
 
 	//se arman datos
 	foreach ($arrEquipos as $fac) {
 		//que valor sea distinto de error
 		if(isset($fac['SensorValue'])&&$fac['SensorValue']<99900){
-			//Si se ven detalles
-			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-				//Grafico
-				$Temp_1  .= "'".Fecha_estandar($fac['FechaSistema'])." ".$fac['HoraSistema']."',";
-				if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$fac['SensorValue'];  }else{ $arrData[1]['Value'] = $fac['SensorValue']; }
-				if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$fac['SensorMinMed']; }else{ $arrData[2]['Value'] = $fac['SensorMinMed']; }
-				if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){ $arrData[3]['Value'] .= ", ".$fac['SensorMaxMed']; }else{ $arrData[3]['Value'] = $fac['SensorMaxMed']; }
+			//Grafico
+			$Temp_1  .= "'".Fecha_estandar($fac['FechaSistema'])." ".$fac['HoraSistema']."',";
+			if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$fac['SensorValue']; }else{ $arrData[1]['Value'] = $fac['SensorValue']; }
 						
-				//Tabla
-				$m_table .= '<tr class="odd">';
-				$m_table .= '<td>'.Fecha_estandar($fac['FechaSistema']).'</td>';
-				$m_table .= '<td>'.$fac['HoraSistema'].'</td>';
-				$m_table .= '<td>'.Cantidades($fac['SensorValue'], 2).' '.$fac['Unimed'].'</td>';
-				$m_table .= '<td>'.Cantidades($fac['SensorMinMed'], 2).' '.$fac['Unimed'].'</td>';
-				$m_table .= '<td>'.Cantidades($fac['SensorMaxMed'], 2).' '.$fac['Unimed'].'</td>';
-				$m_table .= '</tr>';
-
-			//Si no se ven detalles	
-			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-				//Grafico
-				$Temp_1  .= "'".Fecha_estandar($fac['FechaSistema'])." ".$fac['HoraSistema']."',";
-				if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$fac['SensorValue']; }else{ $arrData[1]['Value'] = $fac['SensorValue']; }
-						
-				//Tabla
-				$m_table .= '<tr class="odd">';
-				$m_table .= '<td>'.Fecha_estandar($fac['FechaSistema']).'</td>';
-				$m_table .= '<td>'.$fac['HoraSistema'].'</td>';
-				$m_table .= '<td>'.Cantidades($fac['SensorValue'], 2).' '.$fac['Unimed'].'</td>';
-				$m_table .= '</tr>';
-			}
+			//Tabla
+			$m_table .= '<tr class="odd">';
+			$m_table .= '<td>'.Fecha_estandar($fac['FechaSistema']).'</td>';
+			$m_table .= '<td>'.$fac['HoraSistema'].'</td>';
+			$m_table .= '<td>'.Cantidades($fac['SensorValue'], 2).' '.$fac['Unimed'].'</td>';
+			$m_table .= '</tr>';
 				
 			//contador									
 			$count++;
@@ -131,13 +98,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	} 
 	
 	/******************************************/  
-	//Si se ven detalles	
-	if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-		$xmax = 3;
-	//Si no se ven detalles	
-	}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-		$xmax = 1;
-	}
+	$xmax = 1;
+	
 	//variables
 	$Graphics_xData       = 'var xData = [';
 	$Graphics_yData       = 'var yData = [';
@@ -283,7 +245,6 @@ alert_post_data(2,1,1, $Alert_Text);
 				if(isset($h_termino)) {     $x4  = $h_termino;    }else{$x4  = '';}
 				if(isset($idTelemetria)) {  $x5  = $idTelemetria; }else{$x5  = '';}
 				if(isset($sensorn)) {       $x6  = $sensorn;      }else{$x6  = '';}
-				if(isset($idDetalle)) {     $x7  = $idDetalle;    }else{$x7  = '';}
 				if(isset($idGrafico)) {     $x8  = $idGrafico;    }else{$x8  = '';}
 				if(isset($desde)) {         $x9  = $desde;        }else{$x9  = '';}
 				if(isset($hasta)) {         $x10 = $hasta;        }else{$x10 = '';}
@@ -304,7 +265,6 @@ alert_post_data(2,1,1, $Alert_Text);
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group_sens('Sensor','sensorn', 'idTelemetria', 'form1', 2, $dbConn);
-				$Form_Inputs->form_select('Ver Otros Datos','idDetalle', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
 				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
 				$Form_Inputs->form_input_number('Valores Desde','desde', $x9, 1);
 				$Form_Inputs->form_input_number('Valores Hasta','hasta', $x10, 1);
