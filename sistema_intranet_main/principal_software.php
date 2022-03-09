@@ -43,31 +43,17 @@ if (!$num_pag){
 }
 //Filtro
 if(isset($_GET['filterCat'])&&$_GET['filterCat']!=''){
-	$z = 'WHERE soporte_software_listado.idCategoria='.$_GET['filterCat'];
+	$SIS_where = 'soporte_software_listado.idCategoria='.$_GET['filterCat'];
 }else{
-	$z = '';
-}
+	$SIS_where = '';
+}				
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT Nombre FROM `soporte_software_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'Nombre', 'soporte_software_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrSoftware = array();
-$query = "SELECT 
+$SIS_query = '
 soporte_software_listado.Nombre, 
 soporte_software_listado.Descripcion,
 soporte_software_listado.Peso,
@@ -76,62 +62,28 @@ soporte_software_listado.SitioDescarga,
 
 soporte_software_listado_licencias.Nombre AS Licencia,
 soporte_software_listado_categorias.Nombre AS Categoria,
-soporte_software_listado_medidas.Nombre AS MedidaPeso
-
-FROM `soporte_software_listado`
+soporte_software_listado_medidas.Nombre AS MedidaPeso';
+$SIS_join  = '
 LEFT JOIN `soporte_software_listado_licencias`   ON soporte_software_listado_licencias.idLicencia     = soporte_software_listado.idLicencia
 LEFT JOIN `soporte_software_listado_categorias`  ON soporte_software_listado_categorias.idCategoria   = soporte_software_listado.idCategoria
-LEFT JOIN `soporte_software_listado_medidas`     ON soporte_software_listado_medidas.idMedidaPeso     = soporte_software_listado.idMedidaPeso
-".$z."
-ORDER BY soporte_software_listado.Nombre ASC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrSoftware,$row );
-}
+LEFT JOIN `soporte_software_listado_medidas`     ON soporte_software_listado_medidas.idMedidaPeso     = soporte_software_listado.idMedidaPeso';
+$SIS_order = 'soporte_software_listado.Nombre ASC LIMIT '.$comienzo.', '.$cant_reg;
+$arrSoftware = array();
+$arrSoftware = db_select_array (false, $SIS_query, 'soporte_software_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSoftware');
 
-//obtengo los usuarios que enviaron la notificacion
-$arrCategorias = array();
-$query = "SELECT
+// Se trae un listado con todos los elementos
+$SIS_query = '
 soporte_software_listado_categorias.idCategoria,
 soporte_software_listado_categorias.Nombre,
-count(soporte_software_listado.idCategoria)AS cuenta
-
-FROM `soporte_software_listado_categorias`
-LEFT JOIN `soporte_software_listado`  ON soporte_software_listado.idCategoria   = soporte_software_listado_categorias.idCategoria
-
-GROUP BY soporte_software_listado_categorias.Nombre
-ORDER BY soporte_software_listado_categorias.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCategorias,$row );
-}
+count(soporte_software_listado.idCategoria)AS cuenta';
+$SIS_join  = 'LEFT JOIN `soporte_software_listado`  ON soporte_software_listado.idCategoria   = soporte_software_listado_categorias.idCategoria';
+$SIS_where = 'soporte_software_listado_categorias.idCategoria!=0 GROUP BY soporte_software_listado_categorias.Nombre';
+$SIS_order = 'soporte_software_listado_categorias.Nombre ASC';
+$arrCategorias = array();
+$arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_categorias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
 
 ?>
+
 <div class="row">
 	
 	<div class="col-sm-8">

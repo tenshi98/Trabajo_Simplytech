@@ -206,63 +206,31 @@ if (!$num_pag){
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
 //Verifico el tipo de usuario que esta ingresando
-$z = "WHERE principal_agenda_telefonica.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where  = "principal_agenda_telefonica.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //filtro si el documento lo creo el usuario o el sistema
-$z .=" AND principal_agenda_telefonica.idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."'";
-$z .=" OR principal_agenda_telefonica.idUsuario = '9999' ";
+$SIS_where .= " AND principal_agenda_telefonica.idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."'";
+$SIS_where .= " OR principal_agenda_telefonica.idUsuario = '9999' ";				
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idAgenda FROM `principal_agenda_telefonica` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idAgenda', 'principal_agenda_telefonica', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrContactos = array();
-$query = "SELECT 
+$SIS_query = '
 principal_agenda_telefonica.idAgenda,
 principal_agenda_telefonica.Nombre,
 principal_agenda_telefonica.Fono,
 principal_agenda_telefonica.idUsuario,
-core_sistemas.Nombre AS Sistema
-FROM `principal_agenda_telefonica`
-LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = principal_agenda_telefonica.idSistema
-".$z."
-ORDER BY Nombre ASC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrContactos,$row );
-}
+core_sistemas.Nombre AS Sistema';
+$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = principal_agenda_telefonica.idSistema';
+$SIS_order = 'Nombre ASC LIMIT '.$comienzo.', '.$cant_reg;
+$arrContactos = array();
+$arrContactos = db_select_array (false, $SIS_query, 'principal_agenda_telefonica', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrContactos');
+
 //paginador
 $search='';
 ?>
-
-                      
-                                 
+                                
 <div class="col-sm-12">
 	<div class="box">
 		<header>
