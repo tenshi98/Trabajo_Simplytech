@@ -17,107 +17,61 @@ if (!$num_pag){
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
 //Variable con la ubicacion
-$z="WHERE principal_notificaciones_ver.idNoti>=0";
-$w="WHERE principal_notificaciones_ver.idNoti>=0";
+$SIS_where  = "principal_notificaciones_ver.idNoti>=0";
+$SIS_where2 = "principal_notificaciones_ver.idNoti>=0";
 if (isset($_GET['filtersender'])){
 	if($_GET['filtersender']=='admin'){
-		$z.=" AND principal_notificaciones_ver.idNotificaciones = 0";
+		$SIS_where.=" AND principal_notificaciones_ver.idNotificaciones = 0";
 	}else{
-		$z.=" AND principal_notificaciones_listado.idUsuario = ".$_GET['filtersender'];
+		$SIS_where.=" AND principal_notificaciones_listado.idUsuario = ".$_GET['filtersender'];
 	}		
 }
 //Filtro
-$z.=" AND principal_notificaciones_ver.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$w.=" AND principal_notificaciones_ver.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where .=" AND principal_notificaciones_ver.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where2.=" AND principal_notificaciones_ver.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z.=" AND principal_notificaciones_ver.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
-	$w.=" AND principal_notificaciones_ver.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$SIS_where .=" AND principal_notificaciones_ver.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_where2.=" AND principal_notificaciones_ver.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];		
 }
+$SIS_where2.=" GROUP BY usuarios_listado.Nombre";
+
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT principal_notificaciones_ver.idNoti FROM `principal_notificaciones_ver` 
-LEFT JOIN `principal_notificaciones_listado`  ON principal_notificaciones_listado.idNotificaciones   = principal_notificaciones_ver.idNotificaciones
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'principal_notificaciones_ver.idNoti', 'principal_notificaciones_ver', 'LEFT JOIN `principal_notificaciones_listado`  ON principal_notificaciones_listado.idNotificaciones   = principal_notificaciones_ver.idNotificaciones', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrNotificaciones = array();
-$query = "SELECT 
+$SIS_query = '
 principal_notificaciones_ver.idNoti,
 principal_notificaciones_ver.Fecha,
 principal_notificaciones_ver.Hora,
 principal_notificaciones_ver.Notificacion,
 principal_notificaciones_ver.idEstado,
 core_estado_notificaciones.Nombre AS Estado,
-principal_notificaciones_listado.NoMolestar
-FROM `principal_notificaciones_ver`
+principal_notificaciones_listado.NoMolestar';
+$SIS_join  = '
 LEFT JOIN `core_estado_notificaciones`        ON core_estado_notificaciones.idEstado                 = principal_notificaciones_ver.idEstado
-LEFT JOIN `principal_notificaciones_listado`  ON principal_notificaciones_listado.idNotificaciones   = principal_notificaciones_ver.idNotificaciones
-".$z."
-ORDER BY principal_notificaciones_ver.idEstado ASC, principal_notificaciones_ver.Fecha DESC, principal_notificaciones_ver.Hora DESC, principal_notificaciones_ver.idNoti ASC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrNotificaciones,$row );
-}
+LEFT JOIN `principal_notificaciones_listado`  ON principal_notificaciones_listado.idNotificaciones   = principal_notificaciones_ver.idNotificaciones';
+$SIS_order = 'principal_notificaciones_ver.idEstado ASC, principal_notificaciones_ver.Fecha DESC, principal_notificaciones_ver.Hora DESC, principal_notificaciones_ver.idNoti ASC LIMIT '.$comienzo.', '.$cant_reg;
+$arrNotificaciones = array();
+$arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificaciones_ver', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrNotificaciones');
 
-//obtengo los usuarios que enviaron la notificacion
-$arrCategorias = array();
-$query = "SELECT
+// Se trae un listado con todos los elementos
+$SIS_query = '
 principal_notificaciones_listado.idUsuario AS idusuario,
 usuarios_listado.Nombre AS usuario,
-count(principal_notificaciones_ver.idNotificaciones)AS cuenta
-FROM `principal_notificaciones_ver`
+count(principal_notificaciones_ver.idNotificaciones)AS cuenta';
+$SIS_join  = '
 LEFT JOIN `principal_notificaciones_listado`  ON principal_notificaciones_listado.idNotificaciones   = principal_notificaciones_ver.idNotificaciones
-LEFT JOIN `usuarios_listado`                  ON usuarios_listado.idUsuario                          = principal_notificaciones_listado.idUsuario
-".$w."
-GROUP BY usuarios_listado.Nombre";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCategorias,$row );
-}
+LEFT JOIN `usuarios_listado`                  ON usuarios_listado.idUsuario                          = principal_notificaciones_listado.idUsuario';
+$SIS_order = '';
+$arrCategorias = array();
+$arrCategorias = db_select_array (false, $SIS_query, 'principal_notificaciones_ver', $SIS_join, $SIS_where2, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
+
 //Variable de busqueda
 $search = "";
-
 
 //verifico si tene la opcion de no molestar
 $NoMolestar = 0;
