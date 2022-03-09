@@ -264,7 +264,7 @@ require_once '0_validate_user_1.php';
 			
 			if($errorn==0){
 				//maximo de registros
-				$nmax = 25;
+				$nmax = 5;
 				
 				//se borran los datos
 				$resultado = db_delete_data (false, 'ubicacion_listado', 'idUbicacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
