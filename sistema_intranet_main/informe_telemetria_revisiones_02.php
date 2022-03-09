@@ -185,8 +185,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Sistema','idSistema', $x1, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
-				$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x2, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
-				
+				//Verifico el tipo de usuario que esta ingresando
+				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x2, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+				}else{
+					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x2, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
+				}
 				
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				?>        
