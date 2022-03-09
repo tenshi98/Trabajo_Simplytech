@@ -415,4 +415,41 @@ function latxlong($Direccion, $Config_IDGoogle,  $idSubasta, $dbConn){
 			
 	}
 }
+/*******************************************************************************************************************/
+//Funcion para saber si esta o no dentro de un area
+function inLocationPoint($arrZonas, $pointLocation, $GeoLatitud, $GeoLongitud){
+	//variable
+	$nx = 0;
+	//recorro las areas
+	foreach ($arrZonas as $todaszonas=>$zonas) {
+		//arreglo para el pligono
+		$polygon = array();
+		//variables para cerrar el poligono
+		$ini     = 0;
+		$f_lat   = 0;
+		$f_long  = 0;
+		//recorro las zonas
+		foreach ($zonas as $puntos) {
+			array_push( $polygon,$puntos['Latitud'].' '.$puntos['Longitud'] );
+			//si es el primer dato
+			if($ini==0){
+				$f_lat  = $puntos['Latitud'];
+				$f_long = $puntos['Longitud'];
+			}
+			$ini++;
+		}
+		//inserto el primer dato como el ultimo para cerrar poligono
+		array_push( $polygon,$f_lat.' '.$f_long );
+		//verifico
+		$c_chek =  $pointLocation->pointInPolygon($GeoLatitud.' '.$GeoLongitud, $polygon);
+		//si esta dentro de la zona
+		if($c_chek=='inside'){
+			if($nx==0){
+				$nx = $todaszonas;
+			}
+		}
+	}
+	//devuelvo
+	return $nx;
+}
 ?>
