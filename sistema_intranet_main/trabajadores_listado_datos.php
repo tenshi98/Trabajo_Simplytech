@@ -46,7 +46,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $query = "SELECT Nombre,ApellidoPat,ApellidoMat,Fono,Rut,idCiudad,idComuna,Direccion,idSistema,
-idSexo,FNacimiento,idEstadoCivil, email
+idSexo,FNacimiento,idEstadoCivil, email, N_Documento
 FROM `trabajadores_listado`
 WHERE idTrabajador = ".$_GET['id'];
 //Consulta
@@ -106,14 +106,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					if(isset($ApellidoPat)) {         $x2  = $ApellidoPat;          }else{$x2  = $rowdata['ApellidoPat'];}
 					if(isset($ApellidoMat)) {         $x3  = $ApellidoMat;          }else{$x3  = $rowdata['ApellidoMat'];}
 					if(isset($Rut)) {                 $x4  = $Rut;                  }else{$x4  = $rowdata['Rut'];}
-					if(isset($idSexo)) {              $x5  = $idSexo;               }else{$x5  = $rowdata['idSexo'];}
-					if(isset($FNacimiento)) {         $x6  = $FNacimiento;          }else{$x6  = $rowdata['FNacimiento'];}
-					if(isset($Fono)) {                $x7  = $Fono;                 }else{$x7  = $rowdata['Fono'];}
-					if(isset($idCiudad)) {            $x8  = $idCiudad;             }else{$x8  = $rowdata['idCiudad'];}
-					if(isset($idComuna)) {            $x9  = $idComuna;             }else{$x9  = $rowdata['idComuna'];}
-					if(isset($Direccion)) {           $x10 = $Direccion;            }else{$x10 = $rowdata['Direccion'];}
-					if(isset($idEstadoCivil)) {       $x11 = $idEstadoCivil;        }else{$x11 = $rowdata['idEstadoCivil'];}
-					if(isset($email)) {               $x12 = $email;                }else{$x12 = $rowdata['email'];}
+					if(isset($N_Documento)) {         $x5  = $N_Documento;          }else{$x5  = $rowdata['N_Documento'];}
+					if(isset($idSexo)) {              $x6  = $idSexo;               }else{$x6  = $rowdata['idSexo'];}
+					if(isset($FNacimiento)) {         $x7  = $FNacimiento;          }else{$x7  = $rowdata['FNacimiento'];}
+					if(isset($Fono)) {                $x8  = $Fono;                 }else{$x8  = $rowdata['Fono'];}
+					if(isset($idCiudad)) {            $x9  = $idCiudad;             }else{$x9  = $rowdata['idCiudad'];}
+					if(isset($idComuna)) {            $x10 = $idComuna;             }else{$x10 = $rowdata['idComuna'];}
+					if(isset($Direccion)) {           $x11 = $Direccion;            }else{$x11 = $rowdata['Direccion'];}
+					if(isset($idEstadoCivil)) {       $x12 = $idEstadoCivil;        }else{$x12 = $rowdata['idEstadoCivil'];}
+					if(isset($email)) {               $x13 = $email;                }else{$x13 = $rowdata['email'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -121,15 +122,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_input_text('Apellido Paterno', 'ApellidoPat', $x2, 2);
 					$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x3, 2);
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 2);
-					$Form_Inputs->form_select('Sexo','idSexo', $x5, 2, 'idSexo', 'Nombre', 'core_sexo', 0, '', $dbConn);
-					$Form_Inputs->form_date('F Nacimiento','FNacimiento', $x6, 1);
-					$Form_Inputs->form_input_phone('Fono', 'Fono', $x7, 1);
-					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x8, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-											'Comuna','idComuna', $x9, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+					$Form_Inputs->form_input_text('N Documento', 'N_Documento', $x5, 1);
+					$Form_Inputs->form_select('Sexo','idSexo', $x6, 2, 'idSexo', 'Nombre', 'core_sexo', 0, '', $dbConn);
+					$Form_Inputs->form_date('F Nacimiento','FNacimiento', $x7, 1);
+					$Form_Inputs->form_input_phone('Fono', 'Fono', $x8, 1);
+					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+											'Comuna','idComuna', $x10, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x10, 1,'fa fa-map');
-					$Form_Inputs->form_select('Estado Civil','idEstadoCivil', $x11, 1, 'idEstadoCivil', 'Nombre', 'core_estado_civil', 0, '', $dbConn);
-					$Form_Inputs->form_input_icon('Email', 'email', $x12, 1,'fa fa-envelope-o');
+					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
+					$Form_Inputs->form_select('Estado Civil','idEstadoCivil', $x12, 1, 'idEstadoCivil', 'Nombre', 'core_estado_civil', 0, '', $dbConn);
+					$Form_Inputs->form_input_icon('Email', 'email', $x13, 1,'fa fa-envelope-o');
 					
 					
 					

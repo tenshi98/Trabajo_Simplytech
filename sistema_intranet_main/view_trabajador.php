@@ -65,12 +65,14 @@ core_tipos_contrato_trabajador.Nombre AS TipoContratoTrab,
 core_tipos_trabajadores.Nombre AS TipoConTrabajador,
 trabajadores_listado.horas_pactadas,
 trabajadores_listado.Gratificacion,
+trabajadores_listado.FechaContrato,
 trabajadores_listado.F_Inicio_Contrato,
 trabajadores_listado.F_Termino_Contrato,
 trabajadores_listado.Observaciones,
 trabajadores_listado.SueldoLiquido,
 trabajadores_listado.SueldoDia,
 trabajadores_listado.SueldoHora,
+trabajadores_listado.UbicacionTrabajo,
 
 core_tipos_licencia_conducir.Nombre AS LicenciaTipo,
 trabajadores_listado.CA_Licencia AS LicenciaCA, 
@@ -94,7 +96,11 @@ centrocosto_listado_level_1.Nombre AS CentroCosto_Level_1,
 centrocosto_listado_level_2.Nombre AS CentroCosto_Level_2,
 centrocosto_listado_level_3.Nombre AS CentroCosto_Level_3,
 centrocosto_listado_level_4.Nombre AS CentroCosto_Level_4,
-centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5';
+centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5,
+
+core_bancos.Nombre AS Pago_Banco,
+core_tipo_cuenta.Nombre AS Pago_TipoCuenta,
+trabajadores_listado.N_Cuenta AS Pago_N_Cuenta';
 $SIS_join  = '
 LEFT JOIN `core_estados`                     ON core_estados.idEstado                               = trabajadores_listado.idEstado
 LEFT JOIN `trabajadores_listado_tipos`       ON trabajadores_listado_tipos.idTipo                   = trabajadores_listado.idTipo
@@ -115,7 +121,9 @@ LEFT JOIN `centrocosto_listado_level_1`      ON centrocosto_listado_level_1.idLe
 LEFT JOIN `centrocosto_listado_level_2`      ON centrocosto_listado_level_2.idLevel_2               = trabajadores_listado.idLevel_2
 LEFT JOIN `centrocosto_listado_level_3`      ON centrocosto_listado_level_3.idLevel_3               = trabajadores_listado.idLevel_3
 LEFT JOIN `centrocosto_listado_level_4`      ON centrocosto_listado_level_4.idLevel_4               = trabajadores_listado.idLevel_4
-LEFT JOIN `centrocosto_listado_level_5`      ON centrocosto_listado_level_5.idLevel_5               = trabajadores_listado.idLevel_5';
+LEFT JOIN `centrocosto_listado_level_5`      ON centrocosto_listado_level_5.idLevel_5               = trabajadores_listado.idLevel_5
+LEFT JOIN `core_bancos`                      ON core_bancos.idBanco                                 = trabajadores_listado.idBanco
+LEFT JOIN `core_tipo_cuenta`                 ON core_tipo_cuenta.idTipoCuenta                       = trabajadores_listado.idTipoCuenta';
 $SIS_where = 'trabajadores_listado.idTrabajador ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
@@ -180,6 +188,18 @@ $arrDescuentos = array();
 $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descuentos_fijos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDescuentos');
 
 ?>
+
+<div class="no-print">
+	<div class="col-xs-12">
+		<a target="new" href="view_trabajador_ficha.php?view=<?php echo $_GET['view'] ?>" class="btn btn-primary pull-right" style="margin-right: 5px;">
+			<i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Ficha
+		</a>
+		<a target="new" href="view_trabajador_contrato.php?view=<?php echo $_GET['view'] ?>" class="btn btn-primary pull-right" style="margin-right: 5px;">
+			<i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato TIPO
+		</a>
+	</div>
+</div>
+<div class="clearfix"></div>
 
 
 <div class="col-sm-12">
@@ -261,8 +281,10 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<strong>Tipo de Contrato : </strong><?php echo $rowdata['TipoContrato']; ?><br/>
 							<strong>Tipo de Sueldo : </strong><?php echo $rowdata['TipoContratoTrab']; ?><br/>
 							<strong>Horas Pactadas : </strong><?php echo $rowdata['horas_pactadas']; ?> Horas<br/>
+							<strong>Fecha de Contrato : </strong><?php if(isset($rowdata['FechaContrato'])&&$rowdata['FechaContrato']!='0000-00-00'){echo Fecha_estandar($rowdata['FechaContrato']);}else{echo 'Sin fecha de Contrato';} ?><br/>
 							<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowdata['F_Inicio_Contrato'])&&$rowdata['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
 							<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowdata['F_Termino_Contrato'])&&$rowdata['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
+							<strong>Ubicacion Trabajo : </strong><?php echo $rowdata['UbicacionTrabajo']; ?><br/>
 							
 							<br/><span class="text-danger"><strong>Remuneraciones</strong></span><br/>
 							<?php if(isset($rowdata['idTipoContratoTrab'])){ 
@@ -281,6 +303,11 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 								}
 							}?>
 							<strong>Gratificacion : </strong><?php echo valores($rowdata['Gratificacion'], 0); ?><br/>
+							
+							<br/><span class="text-danger"><strong>Forma de Pago</strong></span><br/>
+							<strong>Banco : </strong><?php echo $rowdata['Pago_Banco']; ?><br/>
+							<strong>Tipo de cuenta deposito : </strong><?php echo $rowdata['Pago_TipoCuenta']; ?><br/>
+							<strong>Nro. Cta. Deposito : </strong><?php echo $rowdata['Pago_N_Cuenta']; ?><br/>
 							
 							<br/><span class="text-danger"><strong>Descuentos Previsionales</strong></span><br/>
 							<strong>AFP : </strong><?php echo $rowdata['nombre_afp']; ?><br/>

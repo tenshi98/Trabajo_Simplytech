@@ -7,6 +7,8 @@ define('XMBCXRXSKGC', 1);
 /*                                          Se llaman a los archivos necesarios                                                   */
 /**********************************************************************************************************************************/
 require_once 'core/Load.Utils.Web.php';
+/** Include PHPExcel */
+require_once '../LIBS_php/PHPExcel/PHPExcel/IOFactory.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
@@ -24,6 +26,7 @@ if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat'] != ''){   $location .= "&
 if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                   $location .= "&Rut=".$_GET['Rut'];                  $search .= "&Rut=".$_GET['Rut'];}
 if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){             $location .= "&idTipo=".$_GET['idTipo'];            $search .= "&idTipo=".$_GET['idTipo'];}
 if(isset($_GET['Cargo']) && $_GET['Cargo'] != ''){               $location .= "&Cargo=".$_GET['Cargo'];              $search .= "&Cargo=".$_GET['Cargo'];}
+if(isset($_GET['Fono']) && $_GET['Fono'] != ''){                 $location .= "&Fono=".$_GET['Fono'];                $search .= "&Fono=".$_GET['Fono'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -34,6 +37,12 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 if ( !empty($_POST['submit']) )  { 
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
+	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';
+}
+//formulario para crear
+if ( !empty($_POST['submit_plant']) )  { 
+	//Llamamos al formulario
+	$form_trabajo= 'insert_plant';
 	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';
 }
 //se borra un dato
@@ -56,7 +65,54 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Trabajador borrado 
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+if ( ! empty($_GET['new_plantilla']) ) {  
+//valido los permisos
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+//cuadro para descargar	 
+$Alert_Text  = 'Descargar Plantilla';
+$Alert_Text .= '<a href="1download.php?dir='.simpleEncode('templates', fecha_actual()).'&file='.simpleEncode('plantilla_trabajador.xlsx', fecha_actual()).'" title="Descargar Plantilla" class="btn btn-primary btn-sm pull-right" ><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>';
+alert_post_data(2,1,2, $Alert_Text);		
+	
+?>
+ 
+<div class="col-sm-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Trabajador con Plantilla</h5>
+		</header>
+		<div id="div-1" class="body">
+			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
+        	
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idOpciones)) {  $x1 = $idOpciones;   }else{$x1 = '';}
+				
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_multiple_upload('Seleccionar archivo','FileTrabajador', 1, '"xlsx"');
+				$Form_Inputs->form_select('¿Envio de correos?','idOpciones', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					
+				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('idTipoTrabajo', 1, 2); 
+				
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_plant">
+					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form> 
+            <?php widget_validator(); ?>        
+		</div>
+	</div>
+</div> 
+ 
+<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+ } elseif ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -86,10 +142,12 @@ trabajadores_listado.Cargo,
 sistema_afp.Nombre AS nombre_afp,
 sistema_salud.Nombre AS nombre_salud,
 core_tipos_contrato.Nombre AS TipoContrato,
+trabajadores_listado.FechaContrato,
 trabajadores_listado.F_Inicio_Contrato,
 trabajadores_listado.F_Termino_Contrato,
 trabajadores_listado.Observaciones,
 trabajadores_listado.SueldoLiquido,
+trabajadores_listado.UbicacionTrabajo,
 
 core_tipos_licencia_conducir.Nombre AS LicenciaTipo,
 trabajadores_listado.CA_Licencia AS LicenciaCA, 
@@ -111,7 +169,11 @@ centrocosto_listado_level_1.Nombre AS CentroCosto_Level_1,
 centrocosto_listado_level_2.Nombre AS CentroCosto_Level_2,
 centrocosto_listado_level_3.Nombre AS CentroCosto_Level_3,
 centrocosto_listado_level_4.Nombre AS CentroCosto_Level_4,
-centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5
+centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5,
+
+core_bancos.Nombre AS Pago_Banco,
+core_tipo_cuenta.Nombre AS Pago_TipoCuenta,
+trabajadores_listado.N_Cuenta AS Pago_N_Cuenta
 
 FROM `trabajadores_listado`
 LEFT JOIN `core_estados`                     ON core_estados.idEstado                               = trabajadores_listado.idEstado
@@ -132,6 +194,8 @@ LEFT JOIN `centrocosto_listado_level_2`      ON centrocosto_listado_level_2.idLe
 LEFT JOIN `centrocosto_listado_level_3`      ON centrocosto_listado_level_3.idLevel_3               = trabajadores_listado.idLevel_3
 LEFT JOIN `centrocosto_listado_level_4`      ON centrocosto_listado_level_4.idLevel_4               = trabajadores_listado.idLevel_4
 LEFT JOIN `centrocosto_listado_level_5`      ON centrocosto_listado_level_5.idLevel_5               = trabajadores_listado.idLevel_5
+LEFT JOIN `core_bancos`                      ON core_bancos.idBanco                                 = trabajadores_listado.idBanco
+LEFT JOIN `core_tipo_cuenta`                 ON core_tipo_cuenta.idTipoCuenta                       = trabajadores_listado.idTipoCuenta
 
 WHERE trabajadores_listado.idTrabajador = ".$_GET['id'];
 //Consulta
@@ -267,9 +331,11 @@ array_push( $arrCargas,$row );
 							<strong>AFP : </strong><?php echo $rowdata['nombre_afp']; ?><br/>
 							<strong>Salud : </strong><?php echo $rowdata['nombre_salud']; ?><br/>
 							<strong>Tipo de Contrato : </strong><?php echo $rowdata['TipoContrato']; ?><br/>
+							<strong>Fecha de Contrato : </strong><?php if(isset($rowdata['FechaContrato'])&&$rowdata['FechaContrato']!='0000-00-00'){echo Fecha_estandar($rowdata['FechaContrato']);}else{echo 'Sin fecha de Contrato';} ?><br/>
 							<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowdata['F_Inicio_Contrato'])&&$rowdata['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
 							<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowdata['F_Termino_Contrato'])&&$rowdata['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
 							<strong>Sueldo Liquido a Pago : </strong><?php echo valores($rowdata['SueldoLiquido'], 0); ?><br/>
+							<strong>Ubicacion Trabajo : </strong><?php echo $rowdata['UbicacionTrabajo']; ?><br/>
 							<?php
 							if(isset($rowdata['CentroCosto_Nombre'])&&$rowdata['CentroCosto_Nombre']!=''){ 
 								echo '<strong>Centro de Costo : </strong>'.$rowdata['CentroCosto_Nombre'];
@@ -287,6 +353,13 @@ array_push( $arrCargas,$row );
 									<div class="clearfix"></div>
 								</div>
 						</p>
+						
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Forma de Pago</h2>
+						<p class="text-muted">
+							<strong>Banco : </strong><?php echo $rowdata['Pago_Banco']; ?><br/>
+							<strong>Tipo de cuenta deposito : </strong><?php echo $rowdata['Pago_TipoCuenta']; ?><br/>
+							<strong>Nro. Cta. Deposito : </strong><?php echo $rowdata['Pago_N_Cuenta']; ?><br/>
+						</p>	
 							
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Licencia de Conducir</h2>
 						<p class="text-muted">
@@ -425,8 +498,9 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				if(isset($ApellidoPat)) {         $x2  = $ApellidoPat;          }else{$x2  = '';}
 				if(isset($ApellidoMat)) {         $x3  = $ApellidoMat;          }else{$x3  = '';}
 				if(isset($Rut)) {                 $x4  = $Rut;                  }else{$x4  = '';}
-				if(isset($idTipo)) {              $x5  = $idTipo;               }else{$x5  = '';}
-				if(isset($Cargo)) {               $x6  = $Cargo;                }else{$x6  = '';}
+				if(isset($N_Documento)) {         $x5  = $N_Documento;          }else{$x5  = '';}
+				if(isset($idTipo)) {              $x6  = $idTipo;               }else{$x6  = '';}
+				if(isset($Cargo)) {               $x7  = $Cargo;                }else{$x7  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -435,10 +509,11 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_text('Apellido Paterno', 'ApellidoPat', $x2, 2);
 				$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x3, 2);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 2);
+				$Form_Inputs->form_input_text('N Documento', 'N_Documento', $x5, 1);
 				
 				$Form_Inputs->form_tittle(3, 'Datos Laborales');
-				$Form_Inputs->form_select('Tipo Trabajador','idTipo', $x5, 2, 'idTipo', 'Nombre', 'trabajadores_listado_tipos', 0, '', $dbConn);
-				$Form_Inputs->form_input_text('Cargo', 'Cargo', $x6, 1);
+				$Form_Inputs->form_select('Tipo Trabajador','idTipo', $x6, 2, 'idTipo', 'Nombre', 'trabajadores_listado_tipos', 0, '', $dbConn);
+				$Form_Inputs->form_input_text('Cargo', 'Cargo', $x7, 1);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -480,55 +555,42 @@ if (!$num_pag){
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'nombre_asc':   $order_by = 'ORDER BY trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
-		case 'nombre_desc':  $order_by = 'ORDER BY trabajadores_listado.ApellidoPat DESC, trabajadores_listado.ApellidoMat DESC, trabajadores_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		case 'tipo_asc':     $order_by = 'ORDER BY trabajadores_listado_tipos.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente';break;
-		case 'tipo_desc':    $order_by = 'ORDER BY trabajadores_listado_tipos.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
-		case 'estado_asc':   $order_by = 'ORDER BY core_estados.Nombre ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
-		case 'estado_desc':  $order_by = 'ORDER BY core_estados.Nombre DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'rut_asc':      $order_by = 'ORDER BY trabajadores_listado.Rut ASC';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
-		case 'rut_desc':     $order_by = 'ORDER BY trabajadores_listado.Rut DESC';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
+		case 'nombre_asc':   $order_by = 'trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
+		case 'nombre_desc':  $order_by = 'trabajadores_listado.ApellidoPat DESC, trabajadores_listado.ApellidoMat DESC, trabajadores_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'tipo_asc':     $order_by = 'trabajadores_listado_tipos.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Ascendente';break;
+		case 'tipo_desc':    $order_by = 'trabajadores_listado_tipos.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
+		case 'estado_asc':   $order_by = 'core_estados.Nombre ASC ';                   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
+		case 'estado_desc':  $order_by = 'core_estados.Nombre DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
+		case 'rut_asc':      $order_by = 'trabajadores_listado.Rut ASC';               $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
+		case 'rut_desc':     $order_by = 'trabajadores_listado.Rut DESC';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
 		
-		default: $order_by = 'ORDER BY trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'trabajadores_listado.idEstado ASC, trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'ORDER BY trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'trabajadores_listado.idEstado ASC, trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE trabajadores_listado.idTrabajador!=0";
+$SIS_where = "trabajadores_listado.idTrabajador!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND trabajadores_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND trabajadores_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $z .= " AND trabajadores_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat'] != ''){  $z .= " AND trabajadores_listado.ApellidoPat LIKE '%".$_GET['ApellidoPat']."%'";}
-if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat'] != ''){  $z .= " AND trabajadores_listado.ApellidoMat LIKE '%".$_GET['ApellidoMat']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                  $z .= " AND trabajadores_listado.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $z .= " AND trabajadores_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Cargo']) && $_GET['Cargo'] != ''){              $z .= " AND trabajadores_listado.Cargo LIKE '%".$_GET['Cargo']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $SIS_where .= " AND trabajadores_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat'] != ''){  $SIS_where .= " AND trabajadores_listado.ApellidoPat LIKE '%".$_GET['ApellidoPat']."%'";}
+if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat'] != ''){  $SIS_where .= " AND trabajadores_listado.ApellidoMat LIKE '%".$_GET['ApellidoMat']."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                  $SIS_where .= " AND trabajadores_listado.Rut LIKE '%".$_GET['Rut']."%'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $SIS_where .= " AND trabajadores_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Cargo']) && $_GET['Cargo'] != ''){              $SIS_where .= " AND trabajadores_listado.Cargo LIKE '%".$_GET['Cargo']."%'";}
+if(isset($_GET['Fono']) && $_GET['Fono'] != ''){                $SIS_where .= " AND trabajadores_listado.Fono LIKE '%".$_GET['Fono']."%'";}
+				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idTrabajador FROM `trabajadores_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idTrabajador', 'trabajadores_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrTrabajador = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_listado.idTrabajador,
 trabajadores_listado.Rut, 
 trabajadores_listado.Nombre, 
@@ -537,31 +599,17 @@ trabajadores_listado.ApellidoMat,
 trabajadores_listado_tipos.Nombre AS Tipo,
 core_sistemas.Nombre AS RazonSocial,
 core_estados.Nombre AS Estado,
-trabajadores_listado.idEstado
-
-FROM `trabajadores_listado`
+trabajadores_listado.idEstado';
+$SIS_join  = '
 LEFT JOIN `trabajadores_listado_tipos`    ON trabajadores_listado_tipos.idTipo   = trabajadores_listado.idTipo
 LEFT JOIN `core_sistemas`                 ON core_sistemas.idSistema             = trabajadores_listado.idSistema
-LEFT JOIN `core_estados`                  ON core_estados.idEstado               = trabajadores_listado.idEstado
-".$z."
-".$order_by."
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTrabajador,$row );
-}?>
+LEFT JOIN `core_estados`                  ON core_estados.idEstado               = trabajadores_listado.idEstado';
+$SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
+$arrTrabajador = array();
+$arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTrabajador');
+
+?>
+
 <div class="col-sm-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -573,7 +621,8 @@ array_push( $arrTrabajador,$row );
 	</ul>
 	
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Trabajador</a><?php } ?>
-
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new_plantilla=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear con Plantilla</a><?php } ?>
+	
 </div>
 <div class="clearfix"></div> 
 <div class="collapse col-sm-12" id="collapseExample">
@@ -588,7 +637,8 @@ array_push( $arrTrabajador,$row );
 				if(isset($Rut)) {                 $x4  = $Rut;                  }else{$x4  = '';}
 				if(isset($idTipo)) {              $x5  = $idTipo;               }else{$x5  = '';}
 				if(isset($Cargo)) {               $x6  = $Cargo;                }else{$x6  = '';}
-
+				if(isset($Fono)) {                $x7  = $Fono;                 }else{$x7  = '';}
+				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
@@ -597,7 +647,8 @@ array_push( $arrTrabajador,$row );
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);
 				$Form_Inputs->form_select('Tipo Trabajador','idTipo', $x5, 1, 'idTipo', 'Nombre', 'trabajadores_listado_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Cargo', 'Cargo', $x6, 1);
-				
+				$Form_Inputs->form_input_phone('Fono', 'Fono', $x7, 1);
+					
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
 				

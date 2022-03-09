@@ -45,27 +45,15 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Trabajador borrado 
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT Nombre,ApellidoPat,ApellidoMat,idTipo,Cargo,F_Inicio_Contrato,
+$SIS_query = '
+Nombre,ApellidoPat,ApellidoMat,idTipo,Cargo,FechaContrato, F_Inicio_Contrato,
 F_Termino_Contrato,idAFP,idSalud,Observaciones,idTipoContrato, SueldoLiquido,
 SueldoDia,SueldoHora, idContratista,idCentroCosto,idLevel_1,idLevel_2,idLevel_3,
-idLevel_4,idLevel_5
+idLevel_4,idLevel_5,idBanco, idTipoCuenta, N_Cuenta,UbicacionTrabajo';
+$SIS_join  = '';
+$SIS_where = 'idTrabajador ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-FROM `trabajadores_listado`
-WHERE idTrabajador = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
@@ -111,20 +99,25 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					if(isset($Cargo)) {               $x2  = $Cargo;                }else{$x2  = $rowdata['Cargo'];}
 					if(isset($idContratista)) {       $x3  = $idContratista;        }else{$x3  = $rowdata['idContratista'];}
 					if(isset($idTipoContrato)) {      $x4  = $idTipoContrato;       }else{$x4  = $rowdata['idTipoContrato'];}
-					if(isset($F_Inicio_Contrato)) {   $x5  = $F_Inicio_Contrato;    }else{$x5  = $rowdata['F_Inicio_Contrato'];}
-					if(isset($F_Termino_Contrato)) {  $x6  = $F_Termino_Contrato;   }else{$x6  = $rowdata['F_Termino_Contrato'];}
-					if(isset($idAFP)) {               $x7  = $idAFP;                }else{$x7  = $rowdata['idAFP'];}
-					if(isset($idSalud)) {             $x8  = $idSalud;              }else{$x8  = $rowdata['idSalud'];}
-					if(isset($SueldoLiquido)) {       $x9  = $SueldoLiquido;        }else{$x9  = $rowdata['SueldoLiquido'];}
-					if(isset($SueldoDia)) {           $x10 = $SueldoDia;            }else{$x10 = $rowdata['SueldoDia'];}
-					if(isset($SueldoHora)) {          $x11 = $SueldoHora;           }else{$x11 = $rowdata['SueldoHora'];}
-					if(isset($Observaciones)) {       $x12 = $Observaciones;        }else{$x12 = $rowdata['Observaciones'];}
-					if(isset($idCentroCosto)) {       $x13 = $idCentroCosto;        }else{$x13 = $rowdata['idCentroCosto'];}
-					if(isset($idLevel_1)) {           $x14 = $idLevel_1;            }else{$x14 = $rowdata['idLevel_1'];}
-					if(isset($idLevel_2)) {           $x15 = $idLevel_2;            }else{$x15 = $rowdata['idLevel_2'];}
-					if(isset($idLevel_3)) {           $x16 = $idLevel_3;            }else{$x16 = $rowdata['idLevel_3'];}
-					if(isset($idLevel_4)) {           $x17 = $idLevel_4;            }else{$x17 = $rowdata['idLevel_4'];}
-					if(isset($idLevel_5)) {           $x18 = $idLevel_5;            }else{$x18 = $rowdata['idLevel_5'];}
+					if(isset($FechaContrato)) {       $x5  = $FechaContrato;        }else{$x5  = $rowdata['FechaContrato'];}
+					if(isset($F_Inicio_Contrato)) {   $x6  = $F_Inicio_Contrato;    }else{$x6  = $rowdata['F_Inicio_Contrato'];}
+					if(isset($F_Termino_Contrato)) {  $x7  = $F_Termino_Contrato;   }else{$x7  = $rowdata['F_Termino_Contrato'];}
+					if(isset($UbicacionTrabajo)) {    $x8  = $UbicacionTrabajo;     }else{$x8  = $rowdata['UbicacionTrabajo'];}
+					if(isset($idAFP)) {               $x9  = $idAFP;                }else{$x9  = $rowdata['idAFP'];}
+					if(isset($idSalud)) {             $x10 = $idSalud;              }else{$x10 = $rowdata['idSalud'];}
+					if(isset($SueldoLiquido)) {       $x11 = $SueldoLiquido;        }else{$x11 = $rowdata['SueldoLiquido'];}
+					if(isset($SueldoDia)) {           $x12 = $SueldoDia;            }else{$x12 = $rowdata['SueldoDia'];}
+					if(isset($SueldoHora)) {          $x13 = $SueldoHora;           }else{$x13 = $rowdata['SueldoHora'];}
+					if(isset($idBanco)) {             $x14 = $idBanco;              }else{$x14 = $rowdata['idBanco'];}
+					if(isset($idTipoCuenta)) {        $x15 = $idTipoCuenta;         }else{$x15 = $rowdata['idTipoCuenta'];}
+					if(isset($N_Cuenta)) {            $x16 = $N_Cuenta;             }else{$x16 = $rowdata['N_Cuenta'];}
+					if(isset($idCentroCosto)) {       $x17 = $idCentroCosto;        }else{$x17 = $rowdata['idCentroCosto'];}
+					if(isset($idLevel_1)) {           $x18 = $idLevel_1;            }else{$x18 = $rowdata['idLevel_1'];}
+					if(isset($idLevel_2)) {           $x19 = $idLevel_2;            }else{$x19 = $rowdata['idLevel_2'];}
+					if(isset($idLevel_3)) {           $x20 = $idLevel_3;            }else{$x20 = $rowdata['idLevel_3'];}
+					if(isset($idLevel_4)) {           $x21 = $idLevel_4;            }else{$x21 = $rowdata['idLevel_4'];}
+					if(isset($idLevel_5)) {           $x22 = $idLevel_5;            }else{$x22 = $rowdata['idLevel_5'];}
+					if(isset($Observaciones)) {       $x23 = $Observaciones;        }else{$x23 = $rowdata['Observaciones'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -135,26 +128,33 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					$Form_Inputs->form_tittle(3, 'Datos Contrato');
 					$Form_Inputs->form_select_filter('Empresa Contratista','idContratista', $x3, 1, 'idContratista', 'Nombre', 'contratista_listado', $w, '', $dbConn);
 					$Form_Inputs->form_select('Tipo de Contrato','idTipoContrato', $x4, 1, 'idTipoContrato', 'Nombre', 'core_tipos_contrato', 0, '', $dbConn);
-					$Form_Inputs->form_date('F Inicio Contrato','F_Inicio_Contrato', $x5, 1);
-					$Form_Inputs->form_date('F Termino Contrato','F_Termino_Contrato', $x6, 1);
+					$Form_Inputs->form_date('Fecha Contrato','FechaContrato', $x5, 1);
+					$Form_Inputs->form_date('F Inicio Contrato','F_Inicio_Contrato', $x6, 1);
+					$Form_Inputs->form_date('F Termino Contrato','F_Termino_Contrato', $x7, 1);
+					$Form_Inputs->form_input_text('Ubicacion Trabajo', 'UbicacionTrabajo', $x8, 1);
 					
 					$Form_Inputs->form_tittle(3, 'Datos Remuneraciones');
-					$Form_Inputs->form_select('AFP','idAFP', $x7, 1, 'idAFP', 'Nombre', 'sistema_afp', 'idEstado=1', '', $dbConn);
-					$Form_Inputs->form_select('Salud','idSalud', $x8, 1, 'idSalud', 'Nombre', 'sistema_salud', 'idEstado=1', '', $dbConn);
-					$Form_Inputs->form_values('Sueldo Liquido a Pago','SueldoLiquido', $x9, 1);
-					$Form_Inputs->form_values('Sueldo Liquido a Pago por dia','SueldoDia', $x10, 1);
-					$Form_Inputs->form_values('Sueldo Liquido a Pago por hora','SueldoHora', $x11, 1);
+					$Form_Inputs->form_select('AFP','idAFP', $x9, 1, 'idAFP', 'Nombre', 'sistema_afp', 'idEstado=1', '', $dbConn);
+					$Form_Inputs->form_select('Salud','idSalud', $x10, 1, 'idSalud', 'Nombre', 'sistema_salud', 'idEstado=1', '', $dbConn);
+					$Form_Inputs->form_values('Sueldo Liquido a Pago','SueldoLiquido', $x11, 1);
+					$Form_Inputs->form_values('Sueldo Liquido a Pago por dia','SueldoDia', $x12, 1);
+					$Form_Inputs->form_values('Sueldo Liquido a Pago por hora','SueldoHora', $x13, 1);
+					
+					$Form_Inputs->form_tittle(3, 'Forma de Pago');
+					$Form_Inputs->form_select_filter('Banco','idBanco', $x14, 1, 'idBanco', 'Nombre', 'core_bancos', 0, '', $dbConn);
+					$Form_Inputs->form_select('Tipo de cuenta deposito','idTipoCuenta', $x15, 1, 'idTipoCuenta', 'Nombre', 'core_tipo_cuenta', 0, '', $dbConn);
+					$Form_Inputs->form_input_text('Nro. Cta. Deposito', 'N_Cuenta', $x16, 1);
 					
 					$Form_Inputs->form_tittle(3, 'Centro de Costo Asignado');
-					$Form_Inputs->form_select_depend5('Centro de Costo', 'idCentroCosto',  $x13,  2,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  $w,   0,
-													  'Nivel 1', 'idLevel_1',  $x14,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
-													  'Nivel 2', 'idLevel_2',  $x15,  1,  'idLevel_2',  'Nombre',  'centrocosto_listado_level_2',  0,   0,
-													  'Nivel 3', 'idLevel_3',  $x16,  1,  'idLevel_3',  'Nombre',  'centrocosto_listado_level_3',  0,   0,
-													  'Nivel 4', 'idLevel_4',  $x17,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
-													  'Nivel 5', 'idLevel_5',  $x18,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
+					$Form_Inputs->form_select_depend5('Centro de Costo', 'idCentroCosto',  $x17,  2,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  $w,   0,
+													  'Nivel 1', 'idLevel_1',  $x18,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
+													  'Nivel 2', 'idLevel_2',  $x19,  1,  'idLevel_2',  'Nombre',  'centrocosto_listado_level_2',  0,   0,
+													  'Nivel 3', 'idLevel_3',  $x20,  1,  'idLevel_3',  'Nombre',  'centrocosto_listado_level_3',  0,   0,
+													  'Nivel 4', 'idLevel_4',  $x21,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
+													  'Nivel 5', 'idLevel_5',  $x22,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
 													  $dbConn, 'form1');
 					
-					$Form_Inputs->form_ckeditor('Observaciones','Observaciones', $x12, 1, 2);
+					$Form_Inputs->form_ckeditor('Observaciones','Observaciones', $x23, 1, 2);
 					
 					$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
 					?>
