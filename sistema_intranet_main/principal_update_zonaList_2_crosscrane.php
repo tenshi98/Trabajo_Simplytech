@@ -63,6 +63,7 @@ $SIS_query = '
 telemetria_listado.idTelemetria, 
 telemetria_listado.Nombre, 
 telemetria_listado.Identificador, 
+telemetria_listado.NumSerie, 
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
 telemetria_listado.GeoLatitud, 
@@ -70,8 +71,12 @@ telemetria_listado.GeoLongitud,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores,
 telemetria_listado.NAlertas, 
+telemetria_listado.idGenerador, 
+telemetria_listado.idTelGenerador, 
 telemetria_listado.SensorActivacionID, 
-telemetria_listado.SensorActivacionValor'.$subquery;
+telemetria_listado.SensorActivacionValor, 
+telemetria_listado.idUsoFTP, 
+telemetria_listado.FTP_Carpeta'.$subquery;
 $SIS_join  = '';
 $SIS_where = 'telemetria_listado.idEstado = 1';            //solo equipos activos
 $SIS_where.= ' AND telemetria_listado.id_Geo = '.$id_Geo;  //solo los equipos que tengan el seguimiento activado
@@ -79,7 +84,13 @@ $SIS_where.= ' AND telemetria_listado.idTab = 6';          //CrossCrane
 //Filtro el sistema al cual pertenece
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){ $SIS_where.= ' AND telemetria_listado.idSistema = '.$idSistema;}
 //Filtro la zona si existe
-if(isset($idZona)&&$idZona!=''&&$idZona!=9999){       $SIS_where.= ' AND telemetria_listado.idZona = '.$idZona;}
+if(isset($idZona)&&$idZona!=''&&$idZona!=9999){ 
+	//Selecciono el tipo
+	switch ($idZona) {
+		case 1: $SIS_where .= " AND telemetria_listado.NumSerie LIKE 'gr%'"; break;
+		case 2: $SIS_where .= " AND telemetria_listado.NumSerie LIKE 'elv%'"; break;
+	}
+}
 //Filtro por el tipo de usuario
 if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
 	$SIS_join .= 'INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria';	
@@ -289,8 +300,9 @@ foreach ($arrEquipo as $data) {
 	/****************************************************/
 	//busco el tipo de equipo
 	$Nombre_equipo = $data['Identificador'];
-	$buscado       = 'elv-';
-	$s_pos         = strpos($Nombre_equipo, $buscado);
+	$NumSerie      = $data['NumSerie'];
+	$buscado       = 'elv';
+	$s_pos         = strpos($NumSerie, $buscado);
 
 	// Nótese el uso de ===. Puesto que == simple no funcionará como se espera
 	// porque la posición de 'elv-' está en el 1° (primer) caracter.
@@ -302,19 +314,34 @@ foreach ($arrEquipo as $data) {
 			
 	/****************************************************/
 	//el resto de los botones					
-	$arrGruas[$xdanger][$data['idTelemetria']]['informe_activaciones'] = '<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_activaciones_05.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" title="Uso Grua" class="btn btn-primary btn-sm tooltip"><i class="fa fa-clock-o" aria-hidden="true"></i></a>';
-	$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']            = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
+	$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']             = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
+	$arrGruas[$xdanger][$data['idTelemetria']]['informe_activaciones']  = '<li><a href="view_telemetria_uso.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" class="iframe" style="white-space: normal;" ><i class="fa fa-clock-o" aria-hidden="true"></i> Uso Grua</a></li>';
+	$arrGruas[$xdanger][$data['idTelemetria']]['AlarmasPersonalizadas'] = '<li><a href="view_alertas_personalizadas.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas Personalizadas</a></li>';
+	//si tiene un generador
+	if(isset($data['idGenerador'])&&$data['idGenerador']==1){
+		$arrGruas[$xdanger][$data['idTelemetria']]['Generador'] = '<li><a href="view_generador_data.php?view='.simpleEncode($data['idTelGenerador'], fecha_actual()).'"  class="iframe" style="white-space: normal;"><i class="fa fa-battery-full" aria-hidden="true"></i> Datos Generador</a></li>';
+	}else{
+		$arrGruas[$xdanger][$data['idTelemetria']]['Generador'] = '';
+	}
+	//si utiliza carpeta ftp
+	if(isset($data['idUsoFTP'])&&$data['idUsoFTP']==1&&isset($data['FTP_Carpeta'])&&$data['FTP_Carpeta']!=''){
+		$arrGruas[$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '<li><a href="view_telemetria_data_files.php?view='.simpleEncode($data['FTP_Carpeta'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-video-camera" aria-hidden="true"></i> Camara</a></li>';
+	}else{
+		$arrGruas[$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '';
+	}
+	
 	//boton de alertas pendientes de ver
 	if(isset($data['NAlertas'])&&$data['NAlertas']!=''&&$data['NAlertas']!=0){
 		//Alertas
-		$link_Alertas  = 'informe_telemetria_errores_6.php';
-		$link_Alertas .= '?f_inicio='.$Fecha_inicio;
-		$link_Alertas .= '&f_termino='.$Fecha_fin;
+		$link_Alertas  = 'view_telemetria_alertas.php';
+		$link_Alertas .= '?pagina=1';
+		//$link_Alertas .= '&f_inicio='.$Fecha_inicio;
+		//$link_Alertas .= '&f_termino='.$Fecha_fin;
 		$link_Alertas .= '&idTelemetria='.$data['idTelemetria'];
 		$link_Alertas .= '&idLeido=0';		
 		$link_Alertas .= '&submit_filter=+Filtrar';	
 		//boton
-		$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '<a target="_blank" rel="noopener noreferrer" href="'.$link_Alertas.'" title="'.$data['NAlertas'].' Alertas Pendientes de ver" class="btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle faa-horizontal animated" aria-hidden="true"></i></a>';
+		$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '<a href="'.$link_Alertas.'" title="'.$data['NAlertas'].' Alertas Pendientes de ver" class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle faa-horizontal animated" aria-hidden="true"></i></a>';
 	}else{
 		$arrGruas[$xdanger][$data['idTelemetria']]['NAlertas']         = '';
 	}
@@ -394,9 +421,18 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_F
 						echo $grua['in_sens_activ'];
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];
-						echo $grua['informe_activaciones'];	
-						echo $grua['CenterMap'];					
+						echo $grua['CenterMap'];			
 						?>
+						<button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" style="right: 0;float: right;">
+							<?php echo $grua['informe_activaciones']; ?>
+							<?php echo $grua['AlarmasPersonalizadas']; ?>
+							<?php echo $grua['Generador']; ?>
+							<?php echo $grua['CarpetaFTP']; ?>
+						</ul>
 					</div>
 				</td>
 			</tr>
@@ -421,9 +457,18 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_F
 						echo $grua['in_sens_activ'];
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];
-						echo $grua['informe_activaciones'];
-						echo $grua['CenterMap'];							
+						echo $grua['CenterMap'];			
 						?>
+						<button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" style="right: 0;float: right;">
+							<?php echo $grua['informe_activaciones']; ?>
+							<?php echo $grua['AlarmasPersonalizadas']; ?>
+							<?php echo $grua['Generador']; ?>
+							<?php echo $grua['CarpetaFTP']; ?>
+						</ul>
 					</div>
 				</td>
 			</tr>
@@ -448,9 +493,18 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_F
 						echo $grua['in_sens_activ'];
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];
-						echo $grua['informe_activaciones'];	
-						echo $grua['CenterMap'];						
+						echo $grua['CenterMap'];			
 						?>
+						<button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="caret"></span>
+							<span class="sr-only">Toggle Dropdown</span>
+						</button>
+						<ul class="dropdown-menu" style="right: 0;float: right;">
+							<?php echo $grua['informe_activaciones']; ?>
+							<?php echo $grua['AlarmasPersonalizadas']; ?>
+							<?php echo $grua['Generador']; ?>
+							<?php echo $grua['CarpetaFTP']; ?>
+						</ul>
 					</div>
 				</td>
 			</tr>
