@@ -225,7 +225,125 @@ require_once '0_validate_user_1.php';
 			
 			
 		break;							
+	
+/*******************************************************************************************************************/
+		//Cambio el estado de activo a inactivo
+		case 'estado':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//variables
+			$idTelemetria  = simpleDecode($_GET['view'], fecha_actual());
+			$idAlarma      = simpleDecode($_GET['idAlarma'], fecha_actual());
+			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
+			$idUsuario     = $_SESSION['usuario']['basic_data']['idUsuario'];
+			$Fecha         = fecha_actual();
+			$Hora          = hora_actual();
+			$TimeStamp     = fecha_actual().' '.hora_actual();
+					
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				/*******************************************************/
+				//se actualizan los datos
+				$a = "idEstado='".$idEstado."'" ;
+				$resultado = db_update_data (false, $a, 'telemetria_listado_alarmas_perso', 'idAlarma = "'.$idAlarma.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//actualizo historial
+					//filtros
+					if(isset($idTelemetria) && $idTelemetria != ''){    $a = "'".$idTelemetria."'" ;  }else{$a ="''";}
+					if(isset($idAlarma) && $idAlarma != ''){            $a .= ",'".$idAlarma."'" ;    }else{$a .=",''";}
+					if(isset($idEstado) && $idEstado != ''){            $a .= ",'".$idEstado."'" ;    }else{$a .=",''";}
+					if(isset($idUsuario) && $idUsuario != ''){          $a .= ",'".$idUsuario."'" ;   }else{$a .=",''";}
+					if(isset($Fecha) && $Fecha != ''){                  $a .= ",'".$Fecha."'" ;       }else{$a .=",''";}
+					if(isset($Hora) && $Hora != ''){                    $a .= ",'".$Hora."'" ;        }else{$a .=",''";}
+					if(isset($TimeStamp) && $TimeStamp != ''){          $a .= ",'".$TimeStamp."'" ;   }else{$a .=",''";}
+					
+					// inserto los datos de registro en la db
+					$query  = "INSERT INTO `telemetria_listado_alarmas_perso_historial` (idTelemetria, idAlarma, 
+					idEstado, idUsuario, Fecha, Hora, TimeStamp) 
+					VALUES (".$a.")";
+					//Consulta
+					$resultado = mysqli_query ($dbConn, $query);
+					//Si ejecuto correctamente la consulta
+					if($resultado){
+						//redirijo
+						header( 'Location: '.$location.'&edited=true' );
+						die;
+					}
+				}
+			}
+			
+		break;	
+/*******************************************************************************************************************/
+		//Cambio el estado de activo a inactivo
+		case 'estadoAll':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//variables
+			$idTelemetria  = simpleDecode($_GET['view'], fecha_actual());
+			$idAlarma      = simpleDecode($_GET['idAlarma'], fecha_actual());
+			$idEstado      = simpleDecode($_GET['estadoAll'], fecha_actual());
+			$idUsuario     = $_SESSION['usuario']['basic_data']['idUsuario'];
+			$Fecha         = fecha_actual();
+			$Hora          = hora_actual();
+			$TimeStamp     = fecha_actual().' '.hora_actual();
+					
+			// si no hay errores ejecuto el codigo	
+			if ( empty($error) ) {
+				
+				/*******************************************************/
+				//filtro inteligente
+				$SIS_where = 'idTelemetria ='.$idTelemetria;
+				if($idEstado==1){
+					$SIS_where .= ' AND idEstado = 2';
+				}elseif($idEstado==2){
+					$SIS_where .= ' AND idEstado = 1';
+				}
+				
+				/*******************************************************/
+				//traigo un listado con los equipos que estan activos, inactivos
+				$arrAlarmas = array();
+				$arrAlarmas = db_select_array (false, 'idAlarma', 'telemetria_listado_alarmas_perso', '', $SIS_where, 'idAlarma ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlarmas');
+
+				/*******************************************************/
+				//se actualizan los datos
+				$a = "idEstado='".$idEstado."'" ;
+				$resultado = db_update_data (false, $a, 'telemetria_listado_alarmas_perso', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//actualizo historial
+					foreach ($arrAlarmas as $alarm) {
+						//filtros
+						if(isset($idTelemetria) && $idTelemetria != ''){            $a  = "'".$idTelemetria."'" ;          }else{$a  ="''";}
+						if(isset($alarm['idAlarma']) && $alarm['idAlarma'] != ''){  $a .= ",'".$alarm['idAlarma']."'" ;    }else{$a .=",''";}
+						if(isset($idEstado) && $idEstado != ''){                    $a .= ",'".$idEstado."'" ;             }else{$a .=",''";}
+						if(isset($idUsuario) && $idUsuario != ''){                  $a .= ",'".$idUsuario."'" ;            }else{$a .=",''";}
+						if(isset($Fecha) && $Fecha != ''){                          $a .= ",'".$Fecha."'" ;                }else{$a .=",''";}
+						if(isset($Hora) && $Hora != ''){                            $a .= ",'".$Hora."'" ;                 }else{$a .=",''";}
+						if(isset($TimeStamp) && $TimeStamp != ''){                  $a .= ",'".$TimeStamp."'" ;            }else{$a .=",''";}
 						
+						// inserto los datos de registro en la db
+						$query  = "INSERT INTO `telemetria_listado_alarmas_perso_historial` (idTelemetria, idAlarma, 
+						idEstado, idUsuario, Fecha, Hora, TimeStamp) 
+						VALUES (".$a.")";
+						//Consulta
+						$resultado = mysqli_query ($dbConn, $query);
+					}
+					
+					//redirijo
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+				}
+			}
+			
+		break;					
 /*******************************************************************************************************************/
 	}
 ?>
