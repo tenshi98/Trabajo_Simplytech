@@ -42,7 +42,7 @@ if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Sistema borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$SIS_query = 'Nombre, Rut, Direccion,idCiudad, idComuna, Rubro';
+$SIS_query = 'Nombre, Rut, Direccion,idCiudad, idComuna, Rubro, RepresentanteNombre, RepresentanteRut';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
@@ -85,15 +85,18 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Nombre)) {           $x1  = $Nombre;           }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Rut)) {              $x2  = $Rut;              }else{$x2  = $rowdata['Rut'];}
-					if(isset($idCiudad)) {         $x3  = $idCiudad;         }else{$x3  = $rowdata['idCiudad'];}
-					if(isset($idComuna)) {         $x4  = $idComuna;         }else{$x4  = $rowdata['idComuna'];}
-					if(isset($Direccion)) {        $x5  = $Direccion;        }else{$x5  = $rowdata['Direccion'];}
-					if(isset($Rubro)) {            $x6  = $Rubro;            }else{$x6  = $rowdata['Rubro'];}
+					if(isset($Nombre)) {               $x1  = $Nombre;                }else{$x1  = $rowdata['Nombre'];}
+					if(isset($Rut)) {                  $x2  = $Rut;                   }else{$x2  = $rowdata['Rut'];}
+					if(isset($idCiudad)) {             $x3  = $idCiudad;              }else{$x3  = $rowdata['idCiudad'];}
+					if(isset($idComuna)) {             $x4  = $idComuna;              }else{$x4  = $rowdata['idComuna'];}
+					if(isset($Direccion)) {            $x5  = $Direccion;             }else{$x5  = $rowdata['Direccion'];}
+					if(isset($Rubro)) {                $x6  = $Rubro;                 }else{$x6  = $rowdata['Rubro'];}
+					if(isset($RepresentanteNombre)) {  $x7  = $RepresentanteNombre;   }else{$x7  = $rowdata['RepresentanteNombre'];}
+					if(isset($RepresentanteRut)) {     $x8  = $RepresentanteRut;      }else{$x8  = $rowdata['RepresentanteRut'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_tittle(3, 'Datos Basicos');
 					$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 2);
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x2, 2);
 					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
@@ -102,6 +105,11 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');            
 					$Form_Inputs->form_input_icon('Rubro', 'Rubro', $x6, 1,'fa fa-sitemap');
 					
+					$Form_Inputs->form_tittle(3, 'Datos de Representacion');
+					$Form_Inputs->form_input_text('Nombre del Representante', 'RepresentanteNombre', $x7, 1);
+					$Form_Inputs->form_input_rut('Rut del Representante', 'RepresentanteRut', $x8, 1);
+					
+				
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					?>
 
