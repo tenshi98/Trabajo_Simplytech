@@ -62,7 +62,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_join  = 'LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemetria_listado_crossenergy_hora.idTelemetria';
 	$SIS_order = 'telemetria_listado_crossenergy_hora.FechaSistema ASC, telemetria_listado_crossenergy_hora.HoraSistema ASC LIMIT 10000';
 	$arrEquipos = array();
-	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_crossenergy_hora', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'test_logo');
+	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_crossenergy_hora', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
 
 	/****************************************************************/
 	//Se trae el dato del grupo
