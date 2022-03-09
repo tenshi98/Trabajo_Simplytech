@@ -70,7 +70,7 @@ LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab       = telemetri
 $SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_errores_999.Sensor ASC, telemetria_listado_errores_999.Descripcion ASC, telemetria_listado_errores_999.Valor ASC';	
 $SIS_where_1.= ' GROUP BY core_sistemas.Nombre, telemetria_listado.Nombre, core_telemetria_tabs.Nombre, telemetria_listado_errores_999.Sensor, telemetria_listado_errores_999.Descripcion, telemetria_listado_errores_999.Valor';
 $arrEquipos1 = array();
-$arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos1');
+$arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos1');
 
 /*********************************************************/	
 //Consulto
@@ -89,7 +89,7 @@ LEFT JOIN core_sistemas          ON core_sistemas.idSistema          = telemetri
 LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab       = telemetria_listado.idTab';
 $SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_error_fuera_linea.Fecha_inicio ASC';	
 $arrErrores = array();
-$arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where_2, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
+$arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where_2, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
 /*********************************************************/	
 //Consulto
@@ -105,7 +105,7 @@ LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema      = telemetria_li
 LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab   = telemetria_listado.idTab';
 $SIS_order = 'telemetria_listado.idSistema ASC';	
 $arrTelemetria = array();
-$arrTelemetria = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where_3, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
+$arrTelemetria = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where_3, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
 
 /*********************************************************/	

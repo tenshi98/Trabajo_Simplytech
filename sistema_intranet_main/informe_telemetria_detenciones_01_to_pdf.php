@@ -57,7 +57,7 @@ telemetria_listado_error_detenciones.Tiempo,
 telemetria_listado.Nombre AS NombreEquipo';
 $SIS_order = 'idDetencion DESC';
 $arrErrores = array();
-$arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_detenciones',  $SIS_join,  $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
+$arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_detenciones',  $SIS_join,  $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
 
 
