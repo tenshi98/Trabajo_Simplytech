@@ -341,55 +341,26 @@ if (!$num_pag){
 	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
 }
 //Filtro solo a los super usuarios
-$z = "WHERE usuarios_listado.idTipoUsuario=1";
+$SIS_where = "usuarios_listado.idTipoUsuario=1";
+				
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$query = "SELECT idUsuario FROM `usuarios_listado` ".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$cuenta_registros = mysqli_num_rows($resultado);
+$cuenta_registros = db_select_nrows (false, 'idUsuario', 'usuarios_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);	
 // Se trae un listado con todos los elementos
-$arrUsers = array();
-$query = "SELECT 
+$SIS_query = '
 usuarios_listado.idUsuario,
 usuarios_listado.usuario, 
 usuarios_listado.Nombre,
 usuarios_listado.Ultimo_acceso,
 core_estados.Nombre AS estado,
-usuarios_listado.idEstado
-FROM `usuarios_listado`
-LEFT JOIN `core_estados`  ON core_estados.idEstado   = usuarios_listado.idEstado
-".$z."
-ORDER BY usuarios_listado.usuario ASC
-LIMIT $comienzo, $cant_reg ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsers,$row );
-}
+usuarios_listado.idEstado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = usuarios_listado.idEstado';
+$SIS_order = 'usuarios_listado.usuario ASC LIMIT '.$comienzo.', '.$cant_reg;
+$arrUsers = array();
+$arrUsers = db_select_array (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
+
 //paginacion
 $search='';
 ?>
