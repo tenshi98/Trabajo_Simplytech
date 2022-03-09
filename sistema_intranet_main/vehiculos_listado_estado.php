@@ -44,7 +44,7 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Estado cambiado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 vehiculos_listado.idVehiculo,
 vehiculos_listado.Nombre,
 vehiculos_listado.Patente,
@@ -56,25 +56,11 @@ vehiculos_listado.idOpciones_5,
 vehiculos_listado.idOpciones_6, 
 vehiculos_listado.idOpciones_7,
 vehiculos_listado.idOpciones_8,
-core_estados.Nombre AS Estado
-
-FROM `vehiculos_listado`
-LEFT JOIN `core_estados`           ON core_estados.idEstado         = vehiculos_listado.idEstado
-WHERE idVehiculo = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+vehiculos_listado.idEstado,
+core_estados.Nombre AS Estado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = vehiculos_listado.idEstado';
+$SIS_where = 'idVehiculo ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'vehiculos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /************************************************/
 //Accesos a los equipos de telemetria
@@ -104,37 +90,22 @@ $trans_11 = "clientes_listado.php";
 $trans_12 = "colegios_listado.php";
 
 //realizo la consulta
-$query = "SELECT
-
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_1."' AND visualizacion!=9999 LIMIT 1) AS tran_1,
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_2."' AND visualizacion!=9999 LIMIT 1) AS tran_2,
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_3."' AND visualizacion!=9999 LIMIT 1) AS tran_3,
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_4."' AND visualizacion!=9999 LIMIT 1) AS tran_4,
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_5."' AND visualizacion!=9999 LIMIT 1) AS tran_5,
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_6."' AND visualizacion!=9999 LIMIT 1) AS tran_6,
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_7."' AND visualizacion!=9999 LIMIT 1) AS tran_7,
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_8."' AND visualizacion!=9999 LIMIT 1) AS tran_8,
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_9."' AND visualizacion!=9999 LIMIT 1) AS tran_9,
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_10."' AND visualizacion!=9999 LIMIT 1) AS tran_10,
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_11."' AND visualizacion!=9999 LIMIT 1) AS tran_11,
-(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ='".$trans_12."' AND visualizacion!=9999 LIMIT 1) AS tran_12
-
-FROM usuarios_listado
-WHERE usuarios_listado.idUsuario='".$_GET['id']."' "; 
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdatax = mysqli_fetch_assoc ($resultado);
+$SIS_query = '
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_1.'" AND visualizacion!=9999 LIMIT 1) AS tran_1,
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_2.'" AND visualizacion!=9999 LIMIT 1) AS tran_2,
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_3.'" AND visualizacion!=9999 LIMIT 1) AS tran_3,
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_4.'" AND visualizacion!=9999 LIMIT 1) AS tran_4,
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_5.'" AND visualizacion!=9999 LIMIT 1) AS tran_5,
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_6.'" AND visualizacion!=9999 LIMIT 1) AS tran_6,
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_7.'" AND visualizacion!=9999 LIMIT 1) AS tran_7,
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_8.'" AND visualizacion!=9999 LIMIT 1) AS tran_8,
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_9.'" AND visualizacion!=9999 LIMIT 1) AS tran_9,
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_10.'" AND visualizacion!=9999 LIMIT 1) AS tran_10,
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_11.'" AND visualizacion!=9999 LIMIT 1) AS tran_11,
+(SELECT COUNT(visualizacion) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_12.'" AND visualizacion!=9999 LIMIT 1) AS tran_12';
+$SIS_join  = '';
+$SIS_where = 'usuarios_listado.idUsuario='.$_GET['id'];
+$rowdatax = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdatax');
 
 
 $telemetria  = $rowdatax['tran_1'] + $rowdatax['tran_2'];
@@ -230,7 +201,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">		 
 								<?php if ($rowlevel['level']>=2){?>    				
-									<?php if ( $rowdata['Estado']=='Activo' ) {?>   
+									<?php if ( $rowdata['idEstado']==1 ) {?>   
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idVehiculo'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 									<?php } else {?>

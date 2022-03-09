@@ -44,36 +44,21 @@ if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Estado cambiado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);};
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 apoderados_listado.idApoderado,
 apoderados_listado.Nombre,
 apoderados_listado.ApellidoPat,
 apoderados_listado.ApellidoMat, 
+apoderados_listado.idEstado,
 core_estados.Nombre AS Estado, 
 apoderados_listado.idOpciones_1,
-apoderados_listado.idOpciones_2
-
-FROM `apoderados_listado`
-LEFT JOIN `core_estados`           ON core_estados.idEstado         = apoderados_listado.idEstado
-WHERE idApoderado = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-
+apoderados_listado.idOpciones_2';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = apoderados_listado.idEstado';
+$SIS_where = 'idApoderado ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
+
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Estado');?>
 </div>
@@ -124,7 +109,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">		 
 								<?php if ($rowlevel['level']>=2){?>    				
-									<?php if ( $rowdata['Estado']=='Activo' ) {?>   
+									<?php if ( $rowdata['idEstado']==1 ) {?>   
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idApoderado'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 									<?php } else {?>
