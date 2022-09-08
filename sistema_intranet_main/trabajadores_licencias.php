@@ -63,12 +63,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Licencia Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Licencia Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Licencia borrada correctamente';}
-if (isset($_GET['delfile'])) {$error['usuario'] 	  = 'sucess/Archivo borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Licencia Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Licencia Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Licencia borrada correctamente';}
+if (isset($_GET['delfile'])){ $error['delfile'] = 'sucess/Archivo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
@@ -124,7 +124,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
         
 					<div class="col-sm-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs('upload', $rowdata['File_Licencia'], '', '', ''); ?>
+						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Licencia'], ''); ?>
 					</div>
 					<a href="<?php echo $location.'&id='.$_GET['id'].'&del_file='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>

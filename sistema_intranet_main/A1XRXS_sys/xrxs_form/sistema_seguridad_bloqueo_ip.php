@@ -20,7 +20,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['IP_Client']) )   $IP_Client   = $_POST['IP_Client'];
 	if ( !empty($_POST['Motivo']) )      $Motivo      = $_POST['Motivo'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -40,6 +39,11 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Motivo) && $Motivo != ''){ $Motivo = EstandarizarInput($Motivo); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -71,32 +75,20 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Fecha) && $Fecha != ''){          $a  = "'".$Fecha."'" ;       }else{$a  = "''";}
-				if(isset($Hora) && $Hora != ''){            $a .= ",'".$Hora."'" ;       }else{$a .= ",''";}
-				if(isset($IP_Client) && $IP_Client != ''){  $a .= ",'".$IP_Client."'" ;  }else{$a .= ",''";}
-				if(isset($Motivo) && $Motivo != ''){        $a .= ",'".$Motivo."'" ;     }else{$a .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){          $SIS_data  = "'".$Fecha."'" ;       }else{$SIS_data  = "''";}
+				if(isset($Hora) && $Hora != ''){            $SIS_data .= ",'".$Hora."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($IP_Client) && $IP_Client != ''){  $SIS_data .= ",'".$IP_Client."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Motivo) && $Motivo != ''){        $SIS_data .= ",'".$Motivo."'" ;     }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `sistema_seguridad_bloqueo_ip` (Fecha, Hora, IP_Client, Motivo) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Fecha, Hora, IP_Client, Motivo';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'sistema_seguridad_bloqueo_ip', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -121,15 +113,15 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idBloqueo='".$idBloqueo."'" ;
-				if(isset($Fecha) && $Fecha != ''){          $a .= ",Fecha='".$Fecha."'" ;}
-				if(isset($Hora) && $Hora != ''){            $a .= ",Hora='".$Hora."'" ;}
-				if(isset($IP_Client) && $IP_Client != ''){  $a .= ",IP_Client='".$IP_Client."'" ;}
-				if(isset($Motivo) && $Motivo != ''){        $a .= ",Motivo='".$Motivo."'" ;}
+				$SIS_data = "idBloqueo='".$idBloqueo."'" ;
+				if(isset($Fecha) && $Fecha != ''){          $SIS_data .= ",Fecha='".$Fecha."'" ;}
+				if(isset($Hora) && $Hora != ''){            $SIS_data .= ",Hora='".$Hora."'" ;}
+				if(isset($IP_Client) && $IP_Client != ''){  $SIS_data .= ",IP_Client='".$IP_Client."'" ;}
+				if(isset($Motivo) && $Motivo != ''){        $SIS_data .= ",Motivo='".$Motivo."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'sistema_seguridad_bloqueo_ip', 'idBloqueo = "'.$idBloqueo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'sistema_seguridad_bloqueo_ip', 'idBloqueo = "'.$idBloqueo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -212,13 +204,23 @@ require_once '0_validate_user_1.php';
 				
 			//si la ip no existe la guarda
 			if(isset($n_ip)&&$n_ip==0){
-				//se insertan los datos
-				$query  = "INSERT INTO `sistema_seguridad_bloqueo_ip` (Fecha, Hora, IP_Client, Motivo) 
-				VALUES ('".$Fecha."','".$Hora."','".$indice."','".$Motivo."' )";
-				$resultado = mysqli_query($dbConn, $query);
-				//redirijo
-				header( 'Location: '.$location.'&created=true' );
-				die;
+				
+				//filtros
+				if(isset($Fecha) && $Fecha != ''){    $SIS_data  = "'".$Fecha."'" ;      }else{$SIS_data  = "''";}
+				if(isset($Hora) && $Hora != ''){      $SIS_data .= ",'".$Hora."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($indice) && $indice != ''){  $SIS_data .= ",'".$indice."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Motivo) && $Motivo != ''){  $SIS_data .= ",'".$Motivo."'" ;    }else{$SIS_data .= ",''";}
+				
+				// inserto los datos de registro en la db
+				$SIS_columns = 'Fecha, Hora, IP_Client, Motivo';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'sistema_seguridad_bloqueo_ip', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+				//Si ejecuto correctamente la consulta
+				if($ultimo_id!=0){
+					//redirijo
+					header( 'Location: '.$location.'&created=true' );
+					die;
+				}
 			}else{
 				//redirijo
 				header( 'Location: '.$location.'&not_created=true' );

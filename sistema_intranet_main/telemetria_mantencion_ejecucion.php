@@ -60,10 +60,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['create']))  {$error['create'] 	  = 'sucess/Mantencion Creada correctamente';}
-if (isset($_GET['reseted'])) {$error['reset'] 	  = 'sucess/Datos Reseteados correctamente';}
+if (isset($_GET['create'])){  $error['create']  = 'sucess/Mantencion Creada correctamente';}
+if (isset($_GET['reseted'])){ $error['reseted'] = 'sucess/Datos Reseteados correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { ?>
 

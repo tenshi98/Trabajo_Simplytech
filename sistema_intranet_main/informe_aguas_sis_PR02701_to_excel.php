@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -27,37 +26,19 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 //obtengo los datos de la empresa
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
-
-// Se trae un listado con todos los productos
-$arrFacturacion = array();
-$query = "SELECT
+/*******************************************************/
+$SIS_query = '
 core_sistemas.Rut AS SistemaRut,
 aguas_facturacion_listado_detalle.idCliente, 
 aguas_clientes_listado.idTipo AS tipoCliente,
-aguas_facturacion_listado_detalle.DetConsMesTotalCantidad AS Medicion
-
-FROM `aguas_facturacion_listado_detalle`
+aguas_facturacion_listado_detalle.DetConsMesTotalCantidad AS Medicion';
+$SIS_join  = '
 LEFT JOIN `aguas_clientes_listado`      ON aguas_clientes_listado.idCliente     = aguas_facturacion_listado_detalle.idCliente
-LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema              = aguas_facturacion_listado_detalle.idSistema
-WHERE aguas_facturacion_listado_detalle.idMes = ".$_GET['idMes']." 
-AND aguas_facturacion_listado_detalle.Ano = ".$_GET['Ano']." 
-AND aguas_facturacion_listado_detalle.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
-ORDER BY aguas_facturacion_listado_detalle.DetConsMesTotalCantidad ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrFacturacion,$row );
-} 
+LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema              = aguas_facturacion_listado_detalle.idSistema';
+$SIS_where = 'aguas_facturacion_listado_detalle.idMes = '.$_GET['idMes'].' AND aguas_facturacion_listado_detalle.Ano = '.$_GET['Ano'].' AND aguas_facturacion_listado_detalle.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = ''aguas_facturacion_listado_detalle.DetConsMesTotalCantidad ASC;
+$arrFacturacion = array();
+$arrFacturacion = db_select_array (false, $SIS_query, 'aguas_facturacion_listado_detalle', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFacturacion');
 
 //Programacion Cretiva
 $informepr = array();
@@ -127,16 +108,17 @@ foreach ($arrFacturacion as $fact) {
 	}else{
 		$informepr[$fact['tipoCliente']][18]['Cantidad']++;
 		$informepr[$fact['tipoCliente']][18]['Medicion'] = $informepr[$fact['tipoCliente']][18]['Medicion'] + $fact['Medicion'];
-
-	}	
-	
+	}
 }
 
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
 							 ->setLastModifiedBy($rowEmpresa['Nombre'])
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
@@ -146,7 +128,7 @@ $objPHPExcel->getProperties()->setCreator($rowEmpresa['Nombre'])
         
             
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A1', 'codigoProceso')
             ->setCellValue('B1', 'codigoArchivo')
             ->setCellValue('C1', 'rut')
@@ -178,7 +160,7 @@ for ($i = 1; $i <= 5; $i++) {
 			
 			$rut = substr($arrFacturacion[0]['SistemaRut'], 0, -2);
 
-			$objPHPExcel->setActiveSheetIndex(0)
+			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue('A'.$nn, '3')
 						->setCellValue('B'.$nn, '9')
 						->setCellValue('C'.$nn, $rut)
@@ -193,40 +175,40 @@ for ($i = 1; $i <= 5; $i++) {
 						->setCellValue('L'.$nn, $informepr[$i][$x]['Medicion'])
 						->setCellValue('M'.$nn, $informepr[$i][$x]['Cantidad']);
 
-			 $nn++;           
+			$nn++;           
    
 		}
 	}
 }
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('K'.$nn, $total1)
 			->setCellValue('L'.$nn, $total2)
 			->setCellValue('M'.$nn, $clientes);
 
 			 
-
-
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Informe PR02701');
-
+$spreadsheet->getActiveSheet()->setTitle('Informe PR02701');
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Informe PR02701.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Informe PR02701';
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;
+

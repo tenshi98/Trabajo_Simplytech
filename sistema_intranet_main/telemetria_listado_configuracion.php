@@ -37,20 +37,15 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Equipo creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Equipo editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,Identificador,id_Geo,id_Sensores,cantSensores, idDispositivo, idShield, TiempoFueraLinea, idUsoPredio,idTab, idBackup, NregBackup, idGenerador, idAlertaTemprana, idUsoFTP, FTP_Carpeta, idTelGenerador, FechaInsGen', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
-
-//Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
-$w.= " AND telemetria_listado.idTab=9";//CrossEnergy			
+$SIS_query = 'Nombre,Identificador,id_Geo,id_Sensores,cantSensores, idDispositivo, idShield, 
+idFormaEnvio, TiempoFueraLinea, idUsoPredio,idTab, idBackup, NregBackup, idAlertaTemprana, 
+AlertaTemprCritica, AlertaTemprNormal, idUsoFTP, FTP_Carpeta,idGenerador';
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+			
 ?>
 
 <div class="col-sm-12">
@@ -85,6 +80,7 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 						<li class=""><a href="<?php echo 'telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 						
 					</ul>
@@ -97,23 +93,24 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Identificador)) {        $x1  = $Identificador;        }else{$x1  = $rowdata['Identificador'];}
-					if(isset($idDispositivo)) {        $x2  = $idDispositivo;        }else{$x2  = $rowdata['idDispositivo'];}
-					if(isset($idShield)) {             $x3  = $idShield;             }else{$x3  = $rowdata['idShield'];}
-					if(isset($TiempoFueraLinea)) {     $x4  = $TiempoFueraLinea;     }else{$x4  = $rowdata['TiempoFueraLinea'];}
-					if(isset($idTab)) {                $x5  = $idTab;                }else{$x5  = $rowdata['idTab'];}
-					if(isset($id_Geo)) {               $x6  = $id_Geo;               }else{$x6  = $rowdata['id_Geo'];}
-					if(isset($id_Sensores)) {          $x7  = $id_Sensores;          }else{$x7  = $rowdata['id_Sensores'];}
-					if(isset($cantSensores)) {         $x8  = $cantSensores;         }else{$x8  = $rowdata['cantSensores'];}
-					if(isset($idUsoPredio)) {          $x10 = $idUsoPredio;          }else{$x10 = $rowdata['idUsoPredio'];}
-					if(isset($idBackup)) {             $x13 = $idBackup;             }else{$x13 = $rowdata['idBackup'];}
-					if(isset($NregBackup)) {           $x14 = $NregBackup;           }else{$x14 = $rowdata['NregBackup'];}
-					if(isset($idGenerador)) {          $x15 = $idGenerador;          }else{$x15 = $rowdata['idGenerador'];}
-					if(isset($idTelGenerador)) {       $x16 = $idTelGenerador;       }else{$x16 = $rowdata['idTelGenerador'];}
-					if(isset($FechaInsGen)) {          $x17 = $FechaInsGen;          }else{$x17 = $rowdata['FechaInsGen'];}
-					if(isset($idAlertaTemprana)) {     $x18 = $idAlertaTemprana;     }else{$x18 = $rowdata['idAlertaTemprana'];}
-					if(isset($idUsoFTP)) {             $x19 = $idUsoFTP;             }else{$x19 = $rowdata['idUsoFTP'];}
-					if(isset($FTP_Carpeta)) {          $x20 = $FTP_Carpeta;          }else{$x20 = $rowdata['FTP_Carpeta'];}
+					if(isset($Identificador)) {             $x1  = $Identificador;             }else{$x1  = $rowdata['Identificador'];}
+					if(isset($idDispositivo)) {             $x2  = $idDispositivo;             }else{$x2  = $rowdata['idDispositivo'];}
+					if(isset($idShield)) {                  $x3  = $idShield;                  }else{$x3  = $rowdata['idShield'];}
+					if(isset($idFormaEnvio)) {              $x4  = $idFormaEnvio;              }else{$x4  = $rowdata['idFormaEnvio'];}
+					if(isset($TiempoFueraLinea)) {          $x5  = $TiempoFueraLinea;          }else{$x5  = $rowdata['TiempoFueraLinea'];}
+					if(isset($idTab)) {                     $x6  = $idTab;                     }else{$x6  = $rowdata['idTab'];}
+					if(isset($id_Geo)) {                    $x7  = $id_Geo;                    }else{$x7  = $rowdata['id_Geo'];}
+					if(isset($id_Sensores)) {               $x8  = $id_Sensores;               }else{$x8  = $rowdata['id_Sensores'];}
+					if(isset($cantSensores)) {              $x9  = $cantSensores;              }else{$x9  = $rowdata['cantSensores'];}
+					if(isset($idUsoPredio)) {               $x10 = $idUsoPredio;               }else{$x10 = $rowdata['idUsoPredio'];}
+					if(isset($idBackup)) {                  $x11 = $idBackup;                  }else{$x11 = $rowdata['idBackup'];}
+					if(isset($NregBackup)) {                $x12 = $NregBackup;                }else{$x12 = $rowdata['NregBackup'];}
+					if(isset($idGenerador)) {               $x13 = $idGenerador;               }else{$x13 = $rowdata['idGenerador'];}
+					if(isset($idAlertaTemprana)) {          $x14 = $idAlertaTemprana;          }else{$x14 = $rowdata['idAlertaTemprana'];}
+					if(isset($AlertaTemprCritica)) {        $x15 = $AlertaTemprCritica;        }else{$x15 = $rowdata['AlertaTemprCritica'];}
+					if(isset($AlertaTemprNormal)) {         $x16 = $AlertaTemprNormal;         }else{$x16 = $rowdata['AlertaTemprNormal'];}
+					if(isset($idUsoFTP)) {                  $x17 = $idUsoFTP;                  }else{$x17 = $rowdata['idUsoFTP'];}
+					if(isset($FTP_Carpeta)) {               $x18 = $FTP_Carpeta;               }else{$x18 = $rowdata['FTP_Carpeta'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -121,40 +118,42 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 					$Form_Inputs->form_input_icon('Identificador', 'Identificador', $x1, 2,'fa fa-flag');
 					$Form_Inputs->form_select('Hardware','idDispositivo', $x2, 2, 'idDispositivo', 'Nombre', 'telemetria_listado_dispositivos', 0, '', $dbConn);	
 					$Form_Inputs->form_select('SHIELD','idShield', $x3, 1, 'idShield', 'Nombre', 'telemetria_listado_shield', 0, '', $dbConn);	
-					$Form_Inputs->form_time('Tiempo Fuera Linea Maximo','TiempoFueraLinea', $x4, 1, 1);
+					$Form_Inputs->form_select('Forma de Envio','idFormaEnvio', $x4, 1, 'idFormaEnvio', 'Nombre', 'telemetria_listado_forma_envio', 0, '', $dbConn);	
+					$Form_Inputs->form_time('Tiempo Fuera Linea Maximo','TiempoFueraLinea', $x5, 1, 1);
 					
 					//Solo para plataforma CrossTech
 					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-						$Form_Inputs->form_post_data(2, 'Esta opcion indica en que pestaña de la pantalla principal sera mostrado el equipo (Funcion solo disponible con la interfaz de  crosstech.)' );
-						$Form_Inputs->form_select('Tab','idTab', $x5, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, '', $dbConn);	
+						$Form_Inputs->form_post_data(2, '<strong>Tab: </strong>Esta opcion indica en que pestaña de la pantalla principal sera mostrado el equipo (Funcion solo disponible con la interfaz de  crosstech.)' );
+						$Form_Inputs->form_select('Tab','idTab', $x6, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, '', $dbConn);	
 					}
 					
 					$Form_Inputs->form_tittle(3, 'Funciones');
-					$Form_Inputs->form_post_data(2, 'Uso de las funciones de gps y alertas relacionadas a este (geocercas, detenciones, ingreso a lugares prohibidos, etc.)' );
-					$Form_Inputs->form_select('Geolocalizacion','id_Geo', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_post_data(2, '<strong>Geolocalizacion: </strong>Uso de las funciones de gps y alertas relacionadas a este (geocercas, detenciones, ingreso a lugares prohibidos, etc.)' );
+					$Form_Inputs->form_select('Geolocalizacion','id_Geo', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 					
-					$Form_Inputs->form_post_data(2, 'Uso de las funciones de Telemetria (registro de sensores, alertas, etc.)' );
-					$Form_Inputs->form_select('Sensores','id_Sensores', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select_n_auto('Cantidad de Sensores','cantSensores', $x8, 1, 1, 72);
+					$Form_Inputs->form_post_data(2, '<strong>Sensores: </strong>Uso de las funciones de Telemetria (registro de sensores, alertas, etc.)' );
+					$Form_Inputs->form_select('Sensores','id_Sensores', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select_n_auto('Cantidad de Sensores','cantSensores', $x9, 1, 1, 72);
 					
-					$Form_Inputs->form_post_data(2, 'Registra el ingreso y la salida de los predios configurados, para ser utilizado debe tener la opcion de Geolocalizacion activa.' );
+					$Form_Inputs->form_post_data(2, '<strong>Uso de Predios: </strong>Registra el ingreso y la salida de los predios configurados, para ser utilizado debe tener la opcion de Geolocalizacion activa.' );
 					$Form_Inputs->form_select('Uso de Predios (Cross)','idUsoPredio', $x10, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 					
-					$Form_Inputs->form_post_data(2, 'Opcion de respaldo de la tabla donde se guardan los datos del equipo bajo una cierta cantidad de registros.' );
-					$Form_Inputs->form_select('Backup Tabla relacionada','idBackup', $x13, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_input_number('N° Registros para Backup','NregBackup', $x14, 1);
+					$Form_Inputs->form_post_data(2, '<strong>Backup Tabla relacionada: </strong>Opcion de respaldo de la tabla donde se guardan los datos del equipo bajo una cierta cantidad de registros.' );
+					$Form_Inputs->form_select('Backup Tabla relacionada','idBackup', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_input_number('N° Registros para Backup','NregBackup', $x12, 1);
 				
-					$Form_Inputs->form_post_data(2, 'Indica si la alimentacion electrica es directa o por generador, despliega una lista de equipos de telemetria configurados con el tab de <strong>CrossE</strong>, esto genera un boton en el widget principal.' );
-					$Form_Inputs->form_select('Uso Generador','idGenerador', $x15, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select_filter('Generador','idTelGenerador', $x16, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
-					$Form_Inputs->form_date('Fecha Instalacion Generador','FechaInsGen', $x17, 1);
+					$Form_Inputs->form_post_data(2, '<strong>Uso Generador: </strong>Indica si la alimentacion electrica es directa o por generador, despliega una lista de equipos de telemetria configurados con el tab de <strong>CrossE</strong>, esto genera un boton en el widget principal, <strong>el generador se selecciona desde la pestaña Otros Datos</strong>.' );
+					$Form_Inputs->form_select('Uso Generador','idGenerador', $x13, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 					
-					$Form_Inputs->form_post_data(2, 'Indica si el equipo de telemetria notificara de inmediato a los usuarios respecto a un error.' );
-					$Form_Inputs->form_select('Alerta Temprana','idAlertaTemprana', $x18, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_post_data(2, '<strong>Alerta Temprana: </strong>Indica si el equipo de telemetria notificara de inmediato a los usuarios respecto a un error.' );
+					$Form_Inputs->form_select('Alerta Temprana','idAlertaTemprana', $x14, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_time('Tiempo Alertas Criticas','AlertaTemprCritica', $x15, 1, 1);
+					$Form_Inputs->form_time('Tiempo Alertas Normales','AlertaTemprNormal', $x16, 1, 1);
 					
-					$Form_Inputs->form_post_data(2, 'Se utiliza para los raros casos que el equipo de telemetria requiera guardar los datos en una carpeta en especifico, se utiliza para varias opciones.' );
-					$Form_Inputs->form_select('Uso de Carpeta FTP','idUsoFTP', $x19, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_input_icon('Nombre Carpeta FTP', 'FTP_Carpeta', $x20, 1,'fa fa-flag');
+					$Form_Inputs->form_post_data(2, '<strong>Uso de Carpeta FTP: </strong>Se utiliza para los raros casos que el equipo de telemetria requiera guardar los datos en una carpeta en especifico, se utiliza para varias opciones.' );
+					$Form_Inputs->form_select('Uso de Carpeta FTP','idUsoFTP', $x17, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_input_icon('Nombre Carpeta FTP', 'FTP_Carpeta', $x18, 1,'fa fa-flag');
+					
 					
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 					?>
@@ -162,8 +161,6 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 					<script>
 						document.getElementById('div_cantSensores').style.display = 'none';
 						document.getElementById('div_NregBackup').style.display = 'none';
-						document.getElementById('div_idTelGenerador').style.display = 'none';
-						document.getElementById('div_FechaInsGen').style.display = 'none';
 						document.getElementById('div_FTP_Carpeta').style.display = 'none';
 						
 						//se ejecuta al cargar la página (OBLIGATORIO)
@@ -203,19 +200,6 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 								//Reseteo los valores a 0
 								document.getElementById('FTP_Carpeta').value = "";
 							}
-							/*******************************/
-							//si es SI
-							if(idTelGen == 1){ 
-								document.getElementById('div_idTelGenerador').style.display = '';	
-								document.getElementById('div_FechaInsGen').style.display = '';					
-							//si es NO
-							} else if(idTelGen == 2){ 
-								document.getElementById('div_idTelGenerador').style.display = 'none';
-								document.getElementById('div_FechaInsGen').style.display = 'none';	
-								//Reseteo los valores a 0
-								document.getElementById('idTelGenerador').selectedIndex = 0;
-							}
-							
 							
 						}); 
 						
@@ -261,23 +245,6 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 								document.getElementById('div_FTP_Carpeta').style.display = 'none';
 								//Reseteo los valores a 0
 								document.getElementById('FTP_Carpeta').value = "";
-							}
-						});
-						
-						$("#idGenerador").on("change", function(){ //se ejecuta al cambiar valor del select
-							let idGeneradorSelected = $(this).val(); //Asignamos el valor seleccionado
-					
-							//si es SI
-							if(idGeneradorSelected == 1){ 
-								document.getElementById('div_idTelGenerador').style.display = '';
-								document.getElementById('div_FechaInsGen').style.display = '';							
-							//si es NO
-							} else if(idGeneradorSelected == 2){ 
-								document.getElementById('div_idTelGenerador').style.display = 'none';
-								document.getElementById('div_FechaInsGen').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('idTelGenerador').selectedIndex = 0;
-								document.getElementById('FechaInsGen').value = "";
 							}
 						});
 					

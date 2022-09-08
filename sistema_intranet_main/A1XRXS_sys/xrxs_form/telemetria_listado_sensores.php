@@ -38,6 +38,12 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){   $Nombre  = EstandarizarInput($Nombre); }
+	if(isset($Funcion) && $Funcion != ''){ $Funcion = EstandarizarInput($Funcion); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){    $error['Nombre']  = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -69,30 +75,19 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){                    $a  = "'".$Nombre."'" ;             }else{$a  ="''";}
-				if(isset($Funcion) && $Funcion != ''){                  $a .= ",'".$Funcion."'" ;           }else{$a .=",''";}
-				if(isset($idSensorFuncion) && $idSensorFuncion != ''){  $a .= ",'".$idSensorFuncion."'" ;   }else{$a .=",''";}
+				if(isset($Nombre) && $Nombre != ''){                    $SIS_data  = "'".$Nombre."'" ;             }else{$SIS_data  = "''";}
+				if(isset($Funcion) && $Funcion != ''){                  $SIS_data .= ",'".$Funcion."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idSensorFuncion) && $idSensorFuncion != ''){  $SIS_data .= ",'".$idSensorFuncion."'" ;   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_listado_sensores` (Nombre,Funcion, idSensorFuncion) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Nombre,Funcion, idSensorFuncion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_sensores', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -117,14 +112,14 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idSensores='".$idSensores."'" ;
-				if(isset($Nombre) && $Nombre != ''){                      $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Funcion) && $Funcion != ''){                    $a .= ",Funcion='".$Funcion."'" ;}
-				if(isset($idSensorFuncion) && $idSensorFuncion != ''){    $a .= ",idSensorFuncion='".$idSensorFuncion."'" ;}
+				$SIS_data = "idSensores='".$idSensores."'" ;
+				if(isset($Nombre) && $Nombre != ''){                      $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Funcion) && $Funcion != ''){                    $SIS_data .= ",Funcion='".$Funcion."'" ;}
+				if(isset($idSensorFuncion) && $idSensorFuncion != ''){    $SIS_data .= ",idSensorFuncion='".$idSensorFuncion."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_listado_sensores', 'idSensores = "'.$idSensores.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_sensores', 'idSensores = "'.$idSensores.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

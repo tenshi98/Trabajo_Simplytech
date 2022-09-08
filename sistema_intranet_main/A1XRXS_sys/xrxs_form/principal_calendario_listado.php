@@ -24,7 +24,9 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Titulo']) )         $Titulo 	     = $_POST['Titulo'];
 	if ( !empty($_POST['Cuerpo']) )         $Cuerpo 	     = $_POST['Cuerpo'];
 	if ( !empty($_POST['idUsuario']) )      $idUsuario 	     = $_POST['idUsuario'];
-
+	if ( !empty($_POST['idUsuario9999']) )  $idUsuario9999 	 = $_POST['idUsuario9999'];
+	if ( !empty($_POST['idOpciones']) )     $idOpciones 	 = $_POST['idOpciones'];
+	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -46,10 +48,18 @@ require_once '0_validate_user_1.php';
 			case 'Titulo':        if(empty($Titulo)){         $error['Titulo']         = 'error/No ha ingresado el titulo';}break;
 			case 'Cuerpo':        if(empty($Cuerpo)){         $error['Cuerpo']         = 'error/No ha ingresado el cuerpo del evento';}break;
 			case 'idUsuario':     if(empty($idUsuario)){      $error['idUsuario']      = 'error/No ha ingresado el usuario';}break;
+			case 'idUsuario9999': if(empty($idUsuario9999)){  $error['idUsuario9999']  = 'error/No ha ingresado el usuario';}break;
+			case 'idOpciones':    if(empty($idOpciones)){     $error['idOpciones']     = 'error/No ha seleccionado la opcion de publico o privado';}break;
 			
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Titulo) && $Titulo != ''){ $Titulo = EstandarizarInput($Titulo); }
+	if(isset($Cuerpo) && $Cuerpo != ''){ $Cuerpo = EstandarizarInput($Cuerpo); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -82,37 +92,32 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){     $a  = "'".$idSistema."'" ;   }else{$a  = "''";}
-				if(isset($Ano) && $Ano != ''){                 $a .= ",'".$Ano."'" ;        }else{$a .= ",''";}
-				if(isset($Mes) && $Mes != ''){                 $a .= ",'".$Mes."'" ;        }else{$a .= ",''";}
-				if(isset($Dia) && $Dia != ''){                 $a .= ",'".$Dia."'" ;        }else{$a .= ",''";}
-				if(isset($N_Semana) && $N_Semana != ''){       $a .= ",'".$N_Semana."'" ;   }else{$a .= ",''";}
-				if(isset($Fecha) && $Fecha != ''){             $a .= ",'".$Fecha."'" ;      }else{$a .= ",''";}
-				if(isset($Titulo) && $Titulo != ''){           $a .= ",'".$Titulo."'" ;     }else{$a .= ",''";}
-				if(isset($Cuerpo) && $Cuerpo != ''){           $a .= ",'".$Cuerpo."'" ;     }else{$a .= ",''";}
-				if(isset($idUsuario) && $idUsuario != ''){     $a .= ",'".$idUsuario."'" ;  }else{$a .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){     $SIS_data  = "'".$idSistema."'" ;   }else{$SIS_data  = "''";}
+				if(isset($Ano) && $Ano != ''){                 $SIS_data .= ",'".$Ano."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Mes) && $Mes != ''){                 $SIS_data .= ",'".$Mes."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Dia) && $Dia != ''){                 $SIS_data .= ",'".$Dia."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($N_Semana) && $N_Semana != ''){       $SIS_data .= ",'".$N_Semana."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){             $SIS_data .= ",'".$Fecha."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Titulo) && $Titulo != ''){           $SIS_data .= ",'".$Titulo."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Cuerpo) && $Cuerpo != ''){           $SIS_data .= ",'".$Cuerpo."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idOpciones) && $idOpciones != ''){   $SIS_data .= ",'".$idOpciones."'" ; }else{$SIS_data .= ",''";}
+				//si es un evento publico
+				if(isset($idOpciones) && $idOpciones ==1){
+					if(isset($idUsuario9999) && $idUsuario9999 != ''){     $SIS_data .= ",'".$idUsuario9999."'" ;  }else{$SIS_data .= ",''";}
+				//si es un evento privado	
+				}elseif(isset($idOpciones) && $idOpciones ==2){
+					if(isset($idUsuario) && $idUsuario != ''){     $SIS_data .= ",'".$idUsuario."'" ;  }else{$SIS_data .= ",''";}
+				}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `principal_calendario_listado` (idSistema, Ano, Mes, Dia, N_Semana, Fecha, Titulo, Cuerpo, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, Ano, Mes, Dia, N_Semana, Fecha, Titulo, Cuerpo, idOpciones,idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'principal_calendario_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 				
 			}
@@ -137,20 +142,28 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idCalendario='".$idCalendario."'" ;
-				if(isset($idSistema) && $idSistema != ''){   $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Ano) && $Ano != ''){               $a .= ",Ano='".$Ano."'" ;}
-				if(isset($Mes) && $Mes != ''){               $a .= ",Mes='".$Mes."'" ;}
-				if(isset($Dia) && $Dia != ''){               $a .= ",Dia='".$Dia."'" ;}
-				if(isset($N_Semana) && $N_Semana != ''){     $a .= ",N_Semana='".$N_Semana."'" ;}
-				if(isset($Fecha) && $Fecha != ''){           $a .= ",Fecha='".$Fecha."'" ;}
-				if(isset($Titulo) && $Titulo != ''){         $a .= ",Titulo='".$Titulo."'" ;}
-				if(isset($Cuerpo) && $Cuerpo != ''){         $a .= ",Cuerpo='".$Cuerpo."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){   $a .= ",idUsuario='".$idUsuario."'" ;}
+				$SIS_data = "idCalendario='".$idCalendario."'" ;
+				if(isset($idSistema) && $idSistema != ''){     $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($Ano) && $Ano != ''){                 $SIS_data .= ",Ano='".$Ano."'" ;}
+				if(isset($Mes) && $Mes != ''){                 $SIS_data .= ",Mes='".$Mes."'" ;}
+				if(isset($Dia) && $Dia != ''){                 $SIS_data .= ",Dia='".$Dia."'" ;}
+				if(isset($N_Semana) && $N_Semana != ''){       $SIS_data .= ",N_Semana='".$N_Semana."'" ;}
+				if(isset($Fecha) && $Fecha != ''){             $SIS_data .= ",Fecha='".$Fecha."'" ;}
+				if(isset($Titulo) && $Titulo != ''){           $SIS_data .= ",Titulo='".$Titulo."'" ;}
+				if(isset($Cuerpo) && $Cuerpo != ''){           $SIS_data .= ",Cuerpo='".$Cuerpo."'" ;}
+				if(isset($idOpciones) && $idOpciones != ''){   $SIS_data .= ",idOpciones='".$idOpciones."'" ;}
+				
+				//si es un evento publico
+				if(isset($idOpciones) && $idOpciones ==1){
+					if(isset($idUsuario9999) && $idUsuario9999 != ''){   $SIS_data .= ",idUsuario='".$idUsuario9999."'" ;}
+				//si es un evento privado	
+				}elseif(isset($idOpciones) && $idOpciones ==2){
+					if(isset($idUsuario) && $idUsuario != ''){   $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'principal_calendario_listado', 'idCalendario = "'.$idCalendario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'principal_calendario_listado', 'idCalendario = "'.$idCalendario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

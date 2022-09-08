@@ -1,4 +1,7 @@
 <?php
+//Llamamos a la libreria para importar datos en excel
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
@@ -23,7 +26,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idComuna']) )    $idComuna    = $_POST['idComuna'];
 	if ( !empty($_POST['Direccion']) )   $Direccion   = $_POST['Direccion'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -46,6 +48,12 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){       $Nombre    = EstandarizarInput($Nombre); }
+	if(isset($Direccion) && $Direccion != ''){ $Direccion = EstandarizarInput($Direccion); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -96,47 +104,56 @@ require_once '0_validate_user_1.php';
 									  
 						if (in_array($_FILES['FilePredio']['type'], $permitidos) && $_FILES['FilePredio']['size'] <= $limite_kb * 1024){
 							
-							
 							/*******************************************************************/
 							//variables
-							$ndata_2  = 0;
+							$ndata_1  = 0;
 							$nPredios = 0;
-							//Cargo la libreria de lectura de archivos excel
-							$objPHPExcel = PHPExcel_IOFactory::load($_FILES['FilePredio']['tmp_name']);
-							//recorro la hoja excel
-							foreach ($objPHPExcel->getWorksheetIterator() as $worksheet){ 
+							//Cargo el archivo
+							$spreadsheet = IOFactory::load($_FILES['FilePredio']['tmp_name']);
+							//Obtengo los nombres de las hojas
+							$loadedSheetNames = $spreadsheet->getSheetNames();
+							//recorro las hojas
+							foreach ($loadedSheetNames as $sheetIndex => $loadedSheetName) {
+								//seteo la hoja
+								$spreadsheet->setActiveSheetIndex($sheetIndex);
+								//selecciono la hoja
+								$worksheet = $spreadsheet->getActiveSheet();
+								//obtengo el total de datos
 								$highestRow = $worksheet->getHighestRow(); 
-								$sheetname  = $worksheet->getTitle(); 
-								//solo reviso la pestaña predio
-								if ($sheetname == "Predio"){ 
+								//si es una hoja en especifico
+								if ($loadedSheetName == "Predio"){ 
+									//recorro
 									for ($row=2; $row<=$highestRow; $row++){ 
-																	  
-										$Predio_Nombre    = $worksheet->getCellByColumnAndRow(0,  $row)->getValue(); 
-										$Predio_Pais      = $worksheet->getCellByColumnAndRow(1,  $row)->getValue(); 
-										$Predio_Ciudad    = $worksheet->getCellByColumnAndRow(2,  $row)->getValue(); 
-										$Predio_Comuna    = $worksheet->getCellByColumnAndRow(3,  $row)->getValue(); 
-										$Predio_Direccion = $worksheet->getCellByColumnAndRow(4,  $row)->getValue(); 
-											
-										//verifico si el predio ingresado en el excel existe
-										$SIS_query = 'Nombre';
-										$SIS_join  = '';
-										$SIS_where = 'idSistema='.$idSistema.' AND Nombre="'.$Predio_Nombre.'"';
-										$nRows = db_select_nrows (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'nRows');
-
-										//Si existe se marca error
-										if(isset($nRows)&&$nRows!=0){
-											$ndata_2++;	
-										}
 										
-										//conteo de predios
-										$nPredios++;	
+										$Predio_Nombre    = $worksheet->getCellByColumnAndRow(1, $row)->getValue(); 
+										$Predio_Pais      = $worksheet->getCellByColumnAndRow(2, $row)->getValue(); 
+										$Predio_Ciudad    = $worksheet->getCellByColumnAndRow(3, $row)->getValue(); 
+										$Predio_Comuna    = $worksheet->getCellByColumnAndRow(4, $row)->getValue(); 
+										$Predio_Direccion = $worksheet->getCellByColumnAndRow(5, $row)->getValue(); 
+										
+										//si la celda no esta vacia
+										if($Predio_Nombre!=''){
+											//verifico si el predio ingresado en el excel existe
+											$SIS_query = 'Nombre';
+											$SIS_join  = '';
+											$SIS_where = 'idSistema='.$idSistema.' AND Nombre="'.$Predio_Nombre.'"';
+											$nRows = db_select_nrows (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'nRows');
+
+											//Si existe se marca error
+											if(isset($nRows)&&$nRows!=0){
+												$ndata_1++;	
+											}
+											
+											//conteo de predios
+											$nPredios++;
+										}	
 									}
 								}
-								
 							}
+							
 							/*******************************************************************/
 							//generacion de errores
-							if($ndata_2 > 0) {  $error['ndata_2']  = 'error/El predio ingresado ya existe en el sistema';}
+							if($ndata_1 > 0) {  $error['ndata_1']  = 'error/El predio ingresado ya existe en el sistema';}
 							if($nPredios > 1) { $error['nPredios'] = 'error/Esta tratando de ingresar mas de un predio';}
 							
 							/*******************************************************************/
@@ -149,34 +166,25 @@ require_once '0_validate_user_1.php';
 								$rowComuna = db_select_data (false, 'idComuna', 'core_ubicacion_comunas', '', 'Nombre="'.$Predio_Comuna.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 								//Asigno valores
-								$Nombre    = $Predio_Nombre;
 								$idPais    = $rowPais['idPais'];
 								$idCiudad  = $rowCiudad['idCiudad'];
 								$idComuna  = $rowComuna['idComuna'];
-								$Direccion = $Predio_Direccion;
 								
 								//filtros
-								if(isset($idSistema) && $idSistema != ''){  $a  = "'".$idSistema."'" ;   }else{$a  ="''";}
-								if(isset($idEstado) && $idEstado != ''){    $a .= ",'".$idEstado."'" ;   }else{$a .=",''";}
-								if(isset($Nombre) && $Nombre != ''){        $a .= ",'".$Nombre."'" ;     }else{$a .=",''";}
-								if(isset($idPais) && $idPais != ''){        $a .= ",'".$idPais."'" ;     }else{$a .=",''";}
-								if(isset($idCiudad) && $idCiudad != ''){    $a .= ",'".$idCiudad."'" ;   }else{$a .=",''";}
-								if(isset($idComuna) && $idComuna != ''){    $a .= ",'".$idComuna."'" ;   }else{$a .=",''";}
-								if(isset($Direccion) && $Direccion != ''){  $a .= ",'".$Direccion."'" ;  }else{$a .=",''";}
+								if(isset($idSistema) && $idSistema != ''){                $SIS_data  = "'".$idSistema."'" ;          }else{$SIS_data  = "''";}
+								if(isset($idEstado) && $idEstado != ''){                  $SIS_data .= ",'".$idEstado."'" ;          }else{$SIS_data .= ",''";}
+								if(isset($Predio_Nombre) && $Predio_Nombre != ''){        $SIS_data .= ",'".$Predio_Nombre."'" ;     }else{$SIS_data .= ",''";}
+								if(isset($idPais) && $idPais != ''){                      $SIS_data .= ",'".$idPais."'" ;            }else{$SIS_data .= ",''";}
+								if(isset($idCiudad) && $idCiudad != ''){                  $SIS_data .= ",'".$idCiudad."'" ;          }else{$SIS_data .= ",''";}
+								if(isset($idComuna) && $idComuna != ''){                  $SIS_data .= ",'".$idComuna."'" ;          }else{$SIS_data .= ",''";}
+								if(isset($Predio_Direccion) && $Predio_Direccion != ''){  $SIS_data .= ",'".$Predio_Direccion."'" ;  }else{$SIS_data .= ",''";}
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `cross_predios_listado` (idSistema, idEstado, Nombre, idPais,
-								idCiudad, idComuna, Direccion) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
+								$SIS_columns = 'idSistema, idEstado, Nombre, idPais, idCiudad, idComuna, Direccion';
+								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_predios_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 								//Si ejecuto correctamente la consulta
-								if($resultado){
-									
-									//recibo el último id generado por mi sesion
-									$ultimo_id = mysqli_insert_id($dbConn);
-									
+								if($ultimo_id!=0){
 									/*******************************************************************/
 									//Cargo a todos los clientes del sistema
 									$arrEspecies   = array();
@@ -199,29 +207,36 @@ require_once '0_validate_user_1.php';
 									foreach ($arrEstadoProd as $data) { $arrEstadoProdMod[$data['Nombre']]['idEstadoProd'] = $data['idEstadoProd']; }
 									foreach ($arrEstado as $data) {     $arrEstadoMod[$data['Nombre']]['idEstado']         = $data['idEstado']; }
 									
-									//Cargo la libreria de lectura de archivos excel
-									$objPHPExcel = PHPExcel_IOFactory::load($_FILES['FilePredio']['tmp_name']);
-									//recorro la hoja excel
-									foreach ($objPHPExcel->getWorksheetIterator() as $worksheet){ 
-										$highestRow = $worksheet->getHighestRow();
-										$sheetname  = $worksheet->getTitle();  
-										//solo reviso la pestaña cuarteles
-										if ($sheetname == "Cuarteles"){ 
+									//Cargo el archivo
+									$spreadsheet = IOFactory::load($_FILES['FilePredio']['tmp_name']);
+									//Obtengo los nombres de las hojas
+									$loadedSheetNames = $spreadsheet->getSheetNames();
+									//recorro las hojas
+									foreach ($loadedSheetNames as $sheetIndex => $loadedSheetName) {
+										//seteo la hoja
+										$spreadsheet->setActiveSheetIndex($sheetIndex);
+										//selecciono la hoja
+										$worksheet = $spreadsheet->getActiveSheet();
+										//obtengo el total de datos
+										$highestRow = $worksheet->getHighestRow(); 
+										//si es una hoja en especifico
+										if ($loadedSheetName == "Cuarteles"){ 
+											//recorro
 											for ($row=2; $row<=$highestRow; $row++){ 
-																		  
-												$ID                  = $worksheet->getCellByColumnAndRow(0,  $row)->getValue();  
-												$NombreCuartel       = $worksheet->getCellByColumnAndRow(1,  $row)->getValue();  
-												$CodigoCuartel       = $worksheet->getCellByColumnAndRow(2,  $row)->getValue();  
-												$Especie             = $worksheet->getCellByColumnAndRow(3,  $row)->getValue(); 
-												$Variedad            = $worksheet->getCellByColumnAndRow(4,  $row)->getValue(); 
-												$AnoPlantacion       = $worksheet->getCellByColumnAndRow(5,  $row)->getValue();
-												$N_Hectareas         = $worksheet->getCellByColumnAndRow(6,  $row)->getValue(); 
-												$N_Hileras           = $worksheet->getCellByColumnAndRow(7,  $row)->getValue(); 
-												$N_Plantas           = $worksheet->getCellByColumnAndRow(8,  $row)->getValue(); 
-												$EstadoProductivo    = $worksheet->getCellByColumnAndRow(9,  $row)->getValue(); 
-												$DistanciaPlantacion = $worksheet->getCellByColumnAndRow(10, $row)->getValue(); 
-												$DistanciaHileras    = $worksheet->getCellByColumnAndRow(11, $row)->getValue(); 
-												$Estado              = $worksheet->getCellByColumnAndRow(12, $row)->getValue(); 
+												
+												$ID                  = $worksheet->getCellByColumnAndRow(1,  $row)->getValue();  
+												$NombreCuartel       = $worksheet->getCellByColumnAndRow(2,  $row)->getValue();  
+												$CodigoCuartel       = $worksheet->getCellByColumnAndRow(3,  $row)->getValue();  
+												$Especie             = $worksheet->getCellByColumnAndRow(4,  $row)->getValue(); 
+												$Variedad            = $worksheet->getCellByColumnAndRow(5,  $row)->getValue(); 
+												$AnoPlantacion       = $worksheet->getCellByColumnAndRow(6,  $row)->getValue();
+												$N_Hectareas         = $worksheet->getCellByColumnAndRow(7,  $row)->getValue(); 
+												$N_Hileras           = $worksheet->getCellByColumnAndRow(8,  $row)->getValue(); 
+												$N_Plantas           = $worksheet->getCellByColumnAndRow(9,  $row)->getValue(); 
+												$EstadoProductivo    = $worksheet->getCellByColumnAndRow(10, $row)->getValue(); 
+												$DistanciaPlantacion = $worksheet->getCellByColumnAndRow(11, $row)->getValue(); 
+												$DistanciaHileras    = $worksheet->getCellByColumnAndRow(12, $row)->getValue(); 
+												$Estado              = $worksheet->getCellByColumnAndRow(13, $row)->getValue(); 
 												
 												//Mientras exista dato ejecuta
 												if(isset($ID)&&$ID!=''){
@@ -240,44 +255,35 @@ require_once '0_validate_user_1.php';
 													if(isset($Estado)&&isset($arrEstadoMod[$Estado]['idEstado'])){                              $ID_idEstado     = $arrEstadoMod[$Estado]['idEstado'];}         
 													
 													//filtros
-													if(isset($ultimo_id) && $ultimo_id != ''){                            $a  = "'".$ultimo_id."'" ;                }else{$a  ="''";}
-													if(isset($NombreCuartel) && $NombreCuartel != ''){                    $a .= ",'".$NombreCuartel."'" ;           }else{$a .=",''";}
-													if(isset($ID_idEstado) && $ID_idEstado != ''){                        $a .= ",'".$ID_idEstado."'" ;             }else{$a .=",''";}
-													if(isset($CodigoCuartel) && $CodigoCuartel != ''){                    $a .= ",'".$CodigoCuartel."'" ;           }else{$a .=",''";}
-													if(isset($ID_idCategoria) && $ID_idCategoria != ''){                  $a .= ",'".$ID_idCategoria."'" ;          }else{$a .=",''";}
-													if(isset($ID_idProducto) && $ID_idProducto != ''){                    $a .= ",'".$ID_idProducto."'" ;           }else{$a .=",''";}
-													if(isset($ID_AnoPlantacion) && $ID_AnoPlantacion != ''){              $a .= ",'".$ID_AnoPlantacion."'" ;        }else{$a .=",''";}
-													if(isset($ID_N_Hectareas) && $ID_N_Hectareas != ''){                  $a .= ",'".$ID_N_Hectareas."'" ;          }else{$a .=",''";}
-													if(isset($ID_N_Hileras) && $ID_N_Hileras != ''){                      $a .= ",'".$ID_N_Hileras."'" ;            }else{$a .=",''";}
-													if(isset($ID_N_Plantas) && $ID_N_Plantas != ''){                      $a .= ",'".$ID_N_Plantas."'" ;            }else{$a .=",''";}
-													if(isset($ID_idEstadoProd) && $ID_idEstadoProd != ''){                $a .= ",'".$ID_idEstadoProd."'" ;         }else{$a .=",''";}
-													if(isset($ID_DistanciaPlantacion) && $ID_DistanciaPlantacion != ''){  $a .= ",'".$ID_DistanciaPlantacion."'" ;  }else{$a .=",''";}
-													if(isset($ID_DistanciaHileras) && $ID_DistanciaHileras != ''){        $a .= ",'".$ID_DistanciaHileras."'" ;     }else{$a .=",''";}
+													if(isset($ultimo_id) && $ultimo_id != ''){                            $SIS_data  = "'".$ultimo_id."'" ;                }else{$SIS_data  = "''";}
+													if(isset($NombreCuartel) && $NombreCuartel != ''){                    $SIS_data .= ",'".$NombreCuartel."'" ;           }else{$SIS_data .= ",''";}
+													if(isset($ID_idEstado) && $ID_idEstado != ''){                        $SIS_data .= ",'".$ID_idEstado."'" ;             }else{$SIS_data .= ",''";}
+													if(isset($CodigoCuartel) && $CodigoCuartel != ''){                    $SIS_data .= ",'".$CodigoCuartel."'" ;           }else{$SIS_data .= ",''";}
+													if(isset($ID_idCategoria) && $ID_idCategoria != ''){                  $SIS_data .= ",'".$ID_idCategoria."'" ;          }else{$SIS_data .= ",''";}
+													if(isset($ID_idProducto) && $ID_idProducto != ''){                    $SIS_data .= ",'".$ID_idProducto."'" ;           }else{$SIS_data .= ",''";}
+													if(isset($ID_AnoPlantacion) && $ID_AnoPlantacion != ''){              $SIS_data .= ",'".$ID_AnoPlantacion."'" ;        }else{$SIS_data .= ",''";}
+													if(isset($ID_N_Hectareas) && $ID_N_Hectareas != ''){                  $SIS_data .= ",'".$ID_N_Hectareas."'" ;          }else{$SIS_data .= ",''";}
+													if(isset($ID_N_Hileras) && $ID_N_Hileras != ''){                      $SIS_data .= ",'".$ID_N_Hileras."'" ;            }else{$SIS_data .= ",''";}
+													if(isset($ID_N_Plantas) && $ID_N_Plantas != ''){                      $SIS_data .= ",'".$ID_N_Plantas."'" ;            }else{$SIS_data .= ",''";}
+													if(isset($ID_idEstadoProd) && $ID_idEstadoProd != ''){                $SIS_data .= ",'".$ID_idEstadoProd."'" ;         }else{$SIS_data .= ",''";}
+													if(isset($ID_DistanciaPlantacion) && $ID_DistanciaPlantacion != ''){  $SIS_data .= ",'".$ID_DistanciaPlantacion."'" ;  }else{$SIS_data .= ",''";}
+													if(isset($ID_DistanciaHileras) && $ID_DistanciaHileras != ''){        $SIS_data .= ",'".$ID_DistanciaHileras."'" ;     }else{$SIS_data .= ",''";}
 													
 													// inserto los datos de registro en la db
-													$query  = "INSERT INTO `cross_predios_listado_zonas` (idPredio, Nombre, idEstado, Codigo, idCategoria,
-													idProducto, AnoPlantacion, Hectareas, Hileras, Plantas, idEstadoProd, DistanciaPlant, DistanciaHileras) 
-													VALUES (".$a.")";
-													//Consulta
-													$resultado = mysqli_query ($dbConn, $query);
-												}					  
-											}	
-										}	
+													$SIS_columns = 'idPredio, Nombre, idEstado, Codigo, idCategoria,
+													idProducto, AnoPlantacion, Hectareas, Hileras, Plantas, idEstadoProd, 
+													DistanciaPlant, DistanciaHileras';
+													$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_predios_listado_zonas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+													
+												}	
+											}
+										}
 									}
 									
 									//redirijo
 									header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 									die;
 											
-								//si da error, guardar en el log de errores una copia
-								}else{
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-											
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 								}
 							}
 							
@@ -314,18 +320,18 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idPredio='".$idPredio."'" ;
-				if(isset($idSistema) && $idSistema != ''){    $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idEstado) && $idEstado != ''){      $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Nombre) && $Nombre != ''){          $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idPais) && $idPais != ''){          $a .= ",idPais='".$idPais."'" ;}
-				if(isset($idCiudad) && $idCiudad != ''){      $a .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna != ''){      $a .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Direccion) && $Direccion != ''){    $a .= ",Direccion='".$Direccion."'" ;}
+				$SIS_data = "idPredio='".$idPredio."'" ;
+				if(isset($idSistema) && $idSistema != ''){    $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idEstado) && $idEstado != ''){      $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){          $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idPais) && $idPais != ''){          $SIS_data .= ",idPais='".$idPais."'" ;}
+				if(isset($idCiudad) && $idCiudad != ''){      $SIS_data .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna != ''){      $SIS_data .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){    $SIS_data .= ",Direccion='".$Direccion."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_predios_listado', 'idPredio = "'.$idPredio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_predios_listado', 'idPredio = "'.$idPredio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -400,8 +406,8 @@ require_once '0_validate_user_1.php';
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'cross_predios_listado', 'idPredio = "'.$idPredio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'cross_predios_listado', 'idPredio = "'.$idPredio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				

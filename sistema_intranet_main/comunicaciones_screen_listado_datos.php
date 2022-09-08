@@ -37,11 +37,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Screen Sharing creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Screen Sharing editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Screen Sharing borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Screen Sharing creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Screen Sharing editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Screen Sharing borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos del producto
 $query = "SELECT Nombre, idEstado, idTipo, Fecha, HoraInicio, HoraTermino

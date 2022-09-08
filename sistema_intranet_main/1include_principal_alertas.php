@@ -10,51 +10,14 @@ $diaActual = dia_actual();
 $diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
-//arreglo con los meses
-$meses=array(1=>"Enero", 
-				"Febrero", 
-				"Marzo", 
-				"Abril", 
-				"Mayo", 
-				"Junio", 
-				"Julio",
-				"Agosto", 
-				"Septiembre", 
-				"Octubre", 
-				"Noviembre", 
-				"Diciembre"
-			);
-
-	
-//filtros para las consultas
-$z ="WHERE nivel=".$nivel;            //el nivel
-$z.=" AND Creacion_mes=".$Mes;        //el mes actual
-$z.=" AND Creacion_ano=".$Ano;        //el año actual
-
 /******************************/
 // Se trae un listado con todas las facturas no pagadas del mes
+$SIS_query = 'idAnalisis, Nombrepunto, Creacion_dia, valor, medAceptable, medAlerta, medCondenatorio';
+$SIS_join  = '';
+$SIS_where = 'nivel='.$nivel.' AND Creacion_mes='.$Mes.' AND Creacion_ano='.$Ano;
+$SIS_order = 0;
 $arrAlertas = array();
-$query = "SELECT  idAnalisis, Nombrepunto, Creacion_dia, valor, medAceptable, medAlerta, medCondenatorio
-FROM `analisis_listado_alertas`
-".$z."
-ORDER BY Creacion_dia ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrAlertas,$row );
-}
-
+$arrAlertas = db_select_array (false, $SIS_query, 'analisis_listado_alertas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrAlertas');
 
 ?>
 
@@ -87,7 +50,7 @@ array_push( $arrAlertas,$row );
 							if (($Mes+1)==13) {$mes_adelante=1; $Ano_b=$Ano_b+1;}else{$mes_adelante=$Mes+1; }
 							?>
 							<td class="fc-header-left"><a href="<?php echo $original.'?nivel='.$nivel.'&Mes='.$mes_atras.'&Ano='.$Ano_a ?>" class="btn btn-default">‹</a></td>
-							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo $meses[$Mes]." ".$Ano?></h2></span></td>
+							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo numero_a_mes($Mes)." ".$Ano?></h2></span></td>
 							<td class="fc-header-right"><a href="<?php echo $original.'?nivel='.$nivel.'&Mes='.$mes_adelante.'&Ano='.$Ano_b ?>" class="btn btn-default">›</a></td>
 						</tr>
 					</tbody>

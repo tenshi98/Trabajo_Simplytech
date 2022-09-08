@@ -36,11 +36,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Apoderado creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Apoderado editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Apoderado borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Apoderado creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Apoderado editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Apoderado borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $query = "SELECT Nombre, Semanas, F_inicio, F_termino, idSistema

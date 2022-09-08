@@ -370,44 +370,28 @@ echo '
 										if($Cajas!=0) {
 											
 											//Verifico sistemas
-											$z = "WHERE caja_chica_listado.idCajaChica!=0";
-											$z.= " AND caja_chica_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+											$SIS_where = "caja_chica_listado.idCajaChica!=0";
+											$SIS_where.= " AND caja_chica_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 											//Verifico el tipo de usuario que esta ingresando
 											if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-												$z .= " AND usuarios_cajas_chicas.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+												$SIS_where .= " AND usuarios_cajas_chicas.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
 											}
 											
-											$join = " INNER JOIN `usuarios_cajas_chicas` ON usuarios_cajas_chicas.idCajaChica = caja_chica_listado.idCajaChica";
-
 											//Se traen los totales de la caja chica
-											$arrCajas = array();
-											$query = "SELECT 
+											$SIS_query = '
 											caja_chica_listado.idCajaChica AS ID,
 											caja_chica_listado.Nombre,
 											caja_chica_listado.MontoActual,
 											(SELECT SUM(Valor) FROM `caja_chica_facturacion` WHERE idCajaChica=ID AND idEstado=1 LIMIT 1 )AS Egreso,
-											(SELECT SUM(ValorDevolucion) FROM `caja_chica_facturacion` WHERE idCajaChica=ID AND idEstado=1 LIMIT 1 )AS Devolucion
-											FROM `caja_chica_listado`
-											LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = caja_chica_listado.idSistema
-											".$join."
-											".$z;
-											//Consulta
-											$resultado = mysqli_query ($dbConn, $query);
-											//Si ejecuto correctamente la consulta
-											if(!$resultado){
-												//Genero numero aleatorio
-												$vardata = genera_password(8,'alfanumerico');
-																
-												//Guardo el error en una variable temporal
-												$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-												$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-												$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																
-											}
-											while ( $row = mysqli_fetch_assoc ($resultado)) {
-											array_push( $arrCajas,$row );
-											}
-
+											(SELECT SUM(ValorDevolucion) FROM `caja_chica_facturacion` WHERE idCajaChica=ID AND idEstado=1 LIMIT 1 )AS Devolucion';
+											$SIS_join  = '
+											LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema            = caja_chica_listado.idSistema
+											INNER JOIN `usuarios_cajas_chicas`  ON usuarios_cajas_chicas.idCajaChica  = caja_chica_listado.idCajaChica';
+											$SIS_where = '';
+											$SIS_order = 0;
+											$arrCajas = array();
+											$arrCajas = db_select_array (false, $SIS_query, 'caja_chica_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrCajas');
+											
 											echo '<div class="col-sm-6">';
 																
 												echo '

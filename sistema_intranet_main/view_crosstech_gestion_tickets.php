@@ -98,16 +98,16 @@ $rowdata = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_
 	</div>
 	
 
-	<div class="row">
-		<div class="col-xs-12">
+	<div class="col-xs-12">
+		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Problema (<?php echo fecha_estandar($rowdata['FechaCreacion']);?>)</p>
 			<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Descripcion'];?></p>
 		</div>
 	</div>
 	
 	<?php if(isset($rowdata['DescripcionCierre'])&&$rowdata['DescripcionCierre']!=''){ ?>
-		<div class="row">
-			<div class="col-xs-12">
+		<div class="col-xs-12">
+			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Observacion Solucion (<?php echo fecha_estandar($rowdata['FechaCierre']);?>)</p>
 				<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['DescripcionCierre'];?></p>
 			</div>
@@ -115,8 +115,8 @@ $rowdata = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_
 	<?php } ?>
 	
 	<?php if(isset($rowdata['DescripcionCancelacion'])&&$rowdata['DescripcionCancelacion']!=''){ ?>
-		<div class="row">
-			<div class="col-xs-12">
+		<div class="col-xs-12">
+			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Observacion Cancelacion (<?php echo fecha_estandar($rowdata['FechaCancelacion']);?>)</p>
 				<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['DescripcionCancelacion'];?></p>
 			</div>

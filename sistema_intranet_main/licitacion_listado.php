@@ -56,11 +56,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Contrato creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Contrato editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Contrato borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Contrato creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Contrato editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Contrato borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['id']) ) {
 //valido los permisos

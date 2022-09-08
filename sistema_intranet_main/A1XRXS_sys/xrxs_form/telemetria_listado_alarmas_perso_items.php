@@ -22,7 +22,6 @@ require_once '0_validate_user_1.php';
 	if ( isset($_POST['Rango_fin']) )          $Rango_fin           = $_POST['Rango_fin'];
 	if ( isset($_POST['valor_especifico']) )   $valor_especifico    = $_POST['valor_especifico'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -61,35 +60,22 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idTelemetria) && $idTelemetria != ''){           $a  = "'".$idTelemetria."'" ;        }else{$a  ="''";}
-				if(isset($idAlarma) && $idAlarma != ''){                   $a .= ",'".$idAlarma."'" ;           }else{$a .=",''";}
-				if(isset($Sensor_N) && $Sensor_N != ''){                   $a .= ",'".$Sensor_N."'" ;           }else{$a .=",''";}
-				if(isset($Rango_ini) && $Rango_ini != ''){                 $a .= ",'".$Rango_ini."'" ;          }else{$a .=",''";}
-				if(isset($Rango_fin) && $Rango_fin != ''){                 $a .= ",'".$Rango_fin."'" ;          }else{$a .=",''";}
-				if(isset($valor_especifico) && $valor_especifico != ''){   $a .= ",'".$valor_especifico."'" ;   }else{$a .=",''";}
+				if(isset($idTelemetria) && $idTelemetria != ''){           $SIS_data  = "'".$idTelemetria."'" ;        }else{$SIS_data  = "''";}
+				if(isset($idAlarma) && $idAlarma != ''){                   $SIS_data .= ",'".$idAlarma."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Sensor_N) && $Sensor_N != ''){                   $SIS_data .= ",'".$Sensor_N."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Rango_ini) && $Rango_ini != ''){                 $SIS_data .= ",'".$Rango_ini."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Rango_fin) && $Rango_fin != ''){                 $SIS_data .= ",'".$Rango_fin."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($valor_especifico) && $valor_especifico != ''){   $SIS_data .= ",'".$valor_especifico."'" ;   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_listado_alarmas_perso_items` (idTelemetria, idAlarma, 
-				Sensor_N, Rango_ini, Rango_fin, valor_especifico) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idTelemetria, idAlarma, Sensor_N, Rango_ini, Rango_fin, valor_especifico';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_alarmas_perso_items', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -104,17 +90,17 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idItem='".$idItem."'" ;
-				if(isset($idTelemetria) && $idTelemetria != ''){          $a .= ",idTelemetria='".$idTelemetria."'" ;}
-				if(isset($idAlarma) && $idAlarma != ''){                  $a .= ",idAlarma='".$idAlarma."'" ;}
-				if(isset($Sensor_N) && $Sensor_N != ''){                  $a .= ",Sensor_N='".$Sensor_N."'" ;}
-				if(isset($Rango_ini) && $Rango_ini != ''){                $a .= ",Rango_ini='".$Rango_ini."'" ;}
-				if(isset($Rango_fin) && $Rango_fin != ''){                $a .= ",Rango_fin='".$Rango_fin."'" ;}
-				if(isset($valor_especifico) && $valor_especifico != ''){  $a .= ",valor_especifico='".$valor_especifico."'" ;}
+				$SIS_data = "idItem='".$idItem."'" ;
+				if(isset($idTelemetria) && $idTelemetria != ''){          $SIS_data .= ",idTelemetria='".$idTelemetria."'" ;}
+				if(isset($idAlarma) && $idAlarma != ''){                  $SIS_data .= ",idAlarma='".$idAlarma."'" ;}
+				if(isset($Sensor_N) && $Sensor_N != ''){                  $SIS_data .= ",Sensor_N='".$Sensor_N."'" ;}
+				if(isset($Rango_ini) && $Rango_ini != ''){                $SIS_data .= ",Rango_ini='".$Rango_ini."'" ;}
+				if(isset($Rango_fin) && $Rango_fin != ''){                $SIS_data .= ",Rango_fin='".$Rango_fin."'" ;}
+				if(isset($valor_especifico) && $valor_especifico != ''){  $SIS_data .= ",valor_especifico='".$valor_especifico."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_listado_alarmas_perso_items', 'idItem = "'.$idItem.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_alarmas_perso_items', 'idItem = "'.$idItem.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -85,13 +84,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$arrTitulo[$i]['Nombre'] = '';
 	}
 	//se buscan datos
-	$n          = 1;
+	$n = 1;
 	foreach ($arrGrupos as $gru) {
 		$arrTitulo[$n]['Nombre'] = $gru['Nombre'];
 		$n++;
 	}
-	$arrData    = array();
-	$n1         = 1;
+	$arrData = array();
+	$n1      = 1;
 
 	foreach ($arrEquipos as $fac) {
 		//se crean variables vacias
@@ -99,10 +98,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$arrData[$n1][$i]['Dato'] = '';
 		}							
 		//numero sensores equipo
-		$arrDato            = array();
-		$Dato               = 0;
-		$Dato_N             = 0;
-		$n2                 = 1;
+		$arrDato = array();
+		$Dato    = 0;
+		$Dato_N  = 0;
+		$n2      = 1;
 											
 		for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 			//Que el valor medido sea distinto de 999
@@ -144,9 +143,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			foreach ($arrGrupos as $gru) {
 				if(isset($arrDato[$gru['idGrupo']]['Cuenta'])&&$arrDato[$gru['idGrupo']]['Cuenta']!=0){
 					$New_Dato = $arrDato[$gru['idGrupo']]['Valor']/$arrDato[$gru['idGrupo']]['Cuenta'];
-					$arrData[$n1][$n2]['Dato']     = cantidades($New_Dato, 2);
+					$arrData[$n1][$n2]['Dato'] = cantidades($New_Dato, 2);
 				}else{
-					$arrData[$n1][$n2]['Dato']     = 0;
+					$arrData[$n1][$n2]['Dato'] = 0;
 				}
 				$n2++;
 			}
@@ -155,25 +154,22 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		
 	}
 
-	/*************************************************************************/
-
-
-	// Create new PHPExcel object
-	$objPHPExcel = new PHPExcel();
+	/**********************************************************************************************************************************/
+	/*                                                          Ejecucion                                                             */
+	/**********************************************************************************************************************************/
+	// Create new Spreadsheet object
+	$spreadsheet = new Spreadsheet();
 
 	// Set document properties
-	$objPHPExcel->getProperties()->setCreator("Office 2007")
+	$spreadsheet->getProperties()->setCreator("Office 2007")
 								 ->setLastModifiedBy("Office 2007")
 								 ->setTitle("Office 2007")
 								 ->setSubject("Office 2007")
 								 ->setDescription("Document for Office 2007")
 								 ->setKeywords("office 2007")
 								 ->setCategory("office 2007 result file");
-
-				
-
-			 
-	$objPHPExcel->setActiveSheetIndex(0)
+		 
+	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'Fecha')
 				->setCellValue('B1', 'Hora')
 				->setCellValue('C1', $arrTitulo[1]['Nombre'])
@@ -197,36 +193,33 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('U1', $arrTitulo[19]['Nombre'])
 				->setCellValue('V1', $arrTitulo[20]['Nombre']);
 
-	 
-
-	 
 	$nn = 2; 
 	$nw = 1; 
 	foreach ($arrEquipos as $fac) {
 
-		$objPHPExcel->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $arrData[$nw]['FechaSistema'])
-				->setCellValue('B'.$nn, $arrData[$nw]['HoraSistema'])
-				->setCellValue('C'.$nn, $arrData[$nw][1]['Dato'])
-				->setCellValue('D'.$nn, $arrData[$nw][2]['Dato'])
-				->setCellValue('E'.$nn, $arrData[$nw][3]['Dato'])
-				->setCellValue('F'.$nn, $arrData[$nw][4]['Dato'])
-				->setCellValue('G'.$nn, $arrData[$nw][5]['Dato'])
-				->setCellValue('H'.$nn, $arrData[$nw][6]['Dato'])
-				->setCellValue('I'.$nn, $arrData[$nw][7]['Dato'])
-				->setCellValue('J'.$nn, $arrData[$nw][8]['Dato'])
-				->setCellValue('K'.$nn, $arrData[$nw][9]['Dato'])
-				->setCellValue('L'.$nn, $arrData[$nw][10]['Dato'])
-				->setCellValue('M'.$nn, $arrData[$nw][11]['Dato'])
-				->setCellValue('N'.$nn, $arrData[$nw][12]['Dato'])
-				->setCellValue('O'.$nn, $arrData[$nw][13]['Dato'])
-				->setCellValue('P'.$nn, $arrData[$nw][14]['Dato'])
-				->setCellValue('Q'.$nn, $arrData[$nw][15]['Dato'])
-				->setCellValue('R'.$nn, $arrData[$nw][16]['Dato'])
-				->setCellValue('S'.$nn, $arrData[$nw][17]['Dato'])
-				->setCellValue('T'.$nn, $arrData[$nw][18]['Dato'])
-				->setCellValue('U'.$nn, $arrData[$nw][19]['Dato'])
-				->setCellValue('V'.$nn, $arrData[$nw][20]['Dato']); 					
+		$spreadsheet->setActiveSheetIndex(0)
+					->setCellValue('A'.$nn, $arrData[$nw]['FechaSistema'])
+					->setCellValue('B'.$nn, $arrData[$nw]['HoraSistema'])
+					->setCellValue('C'.$nn, $arrData[$nw][1]['Dato'])
+					->setCellValue('D'.$nn, $arrData[$nw][2]['Dato'])
+					->setCellValue('E'.$nn, $arrData[$nw][3]['Dato'])
+					->setCellValue('F'.$nn, $arrData[$nw][4]['Dato'])
+					->setCellValue('G'.$nn, $arrData[$nw][5]['Dato'])
+					->setCellValue('H'.$nn, $arrData[$nw][6]['Dato'])
+					->setCellValue('I'.$nn, $arrData[$nw][7]['Dato'])
+					->setCellValue('J'.$nn, $arrData[$nw][8]['Dato'])
+					->setCellValue('K'.$nn, $arrData[$nw][9]['Dato'])
+					->setCellValue('L'.$nn, $arrData[$nw][10]['Dato'])
+					->setCellValue('M'.$nn, $arrData[$nw][11]['Dato'])
+					->setCellValue('N'.$nn, $arrData[$nw][12]['Dato'])
+					->setCellValue('O'.$nn, $arrData[$nw][13]['Dato'])
+					->setCellValue('P'.$nn, $arrData[$nw][14]['Dato'])
+					->setCellValue('Q'.$nn, $arrData[$nw][15]['Dato'])
+					->setCellValue('R'.$nn, $arrData[$nw][16]['Dato'])
+					->setCellValue('S'.$nn, $arrData[$nw][17]['Dato'])
+					->setCellValue('T'.$nn, $arrData[$nw][18]['Dato'])
+					->setCellValue('U'.$nn, $arrData[$nw][19]['Dato'])
+					->setCellValue('V'.$nn, $arrData[$nw][20]['Dato']); 					
 							
 		$nn++;
 		$nw++;					
@@ -234,27 +227,28 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 
 	// Rename worksheet
-	$objPHPExcel->getActiveSheet()->setTitle('Trazabilidad Planta');
-
+	$spreadsheet->getActiveSheet()->setTitle('Trazabilidad Planta');
 
 	// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-	$objPHPExcel->setActiveSheetIndex(0);
+	$spreadsheet->setActiveSheetIndex(0);
 
-
-	// Redirect output to a client’s web browser (Excel5)
-	header('Content-Type: application/vnd.ms-excel');
-	header('Content-Disposition: attachment;filename="Informe Trazabilidad Planta del equipo '.$rowEquipo['NombreEquipo'].'.xls"');
+	/**************************************************************************/
+	//Nombre del archivo
+	$filename = 'Informe Trazabilidad Planta del equipo '.$rowEquipo['NombreEquipo'];
+	// Redirect output to a client’s web browser (Xlsx)
+	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+	header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');
 
 	// If you're serving to IE over SSL, then the following may be needed
-	header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-	header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-	header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-	header ('Pragma: public'); // HTTP/1.0
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+	header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+	header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+	header('Pragma: public'); // HTTP/1.0
 
-	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-	$objWriter->save('php://output');
+	$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+	$writer->save('php://output');
 	exit;
 }

@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -25,21 +24,19 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Variable de busqueda
-$z = "WHERE proveedor_listado.idProveedor!=0";
+$SIS_where = "proveedor_listado.idProveedor!=0";
 //Filtros
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $z.=" AND proveedor_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Nombre'])&&$_GET['Nombre']!=''){             $z.=" AND proveedor_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Rut'])&&$_GET['Rut']!=''){                   $z.=" AND proveedor_listado.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['fNacimiento'])&&$_GET['fNacimiento']!=''){   $z.=" AND proveedor_listado.fNacimiento='".$_GET['fNacimiento']."'";}
-if(isset($_GET['idCiudad'])&&$_GET['idCiudad']!=''){         $z.=" AND proveedor_listado.idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna'])&&$_GET['idComuna']!=''){         $z.=" AND proveedor_listado.idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion'])&&$_GET['Direccion']!=''){       $z.=" AND proveedor_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
-if(isset($_GET['Giro'])&&$_GET['Giro']!=''){                 $z.=" AND proveedor_listado.Giro LIKE '%".$_GET['Giro']."%'";}
-				
-/**********************************************************************/             
-// Se trae un listado con todos los elementos
-$arrProveedores = array();
-$query = "SELECT 
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $SIS_where.=" AND proveedor_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Nombre'])&&$_GET['Nombre']!=''){             $SIS_where.=" AND proveedor_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Rut'])&&$_GET['Rut']!=''){                   $SIS_where.=" AND proveedor_listado.Rut LIKE '%".$_GET['Rut']."%'";}
+if(isset($_GET['fNacimiento'])&&$_GET['fNacimiento']!=''){   $SIS_where.=" AND proveedor_listado.fNacimiento='".$_GET['fNacimiento']."'";}
+if(isset($_GET['idCiudad'])&&$_GET['idCiudad']!=''){         $SIS_where.=" AND proveedor_listado.idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna'])&&$_GET['idComuna']!=''){         $SIS_where.=" AND proveedor_listado.idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion'])&&$_GET['Direccion']!=''){       $SIS_where.=" AND proveedor_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
+if(isset($_GET['Giro'])&&$_GET['Giro']!=''){                 $SIS_where.=" AND proveedor_listado.Giro LIKE '%".$_GET['Giro']."%'";}
+
+/*******************************************************/
+$SIS_query = '
 proveedor_listado.email, 
 proveedor_listado.Nombre, 
 proveedor_listado.Rut, 
@@ -63,51 +60,36 @@ core_sistemas.Nombre AS sistema,
 proveedor_tipos.Nombre AS tipoProveedor,
 core_rubros.Nombre AS Rubro,
 core_paises.Nombre AS Pais,
-core_paises.Flag AS Flag
-
-FROM `proveedor_listado`
+core_paises.Flag AS Flag';
+$SIS_join  = '
 LEFT JOIN `core_estados`              ON core_estados.idEstado                    = proveedor_listado.idEstado
 LEFT JOIN `core_ubicacion_ciudad`     ON core_ubicacion_ciudad.idCiudad           = proveedor_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna          = proveedor_listado.idComuna
 LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema                  = proveedor_listado.idSistema
 LEFT JOIN `proveedor_tipos`           ON proveedor_tipos.idTipo                   = proveedor_listado.idTipo
 LEFT JOIN `core_rubros`               ON core_rubros.idRubro                      = proveedor_listado.idRubro
-LEFT JOIN `core_paises`               ON core_paises.idPais                       = proveedor_listado.idPais
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `core_paises`               ON core_paises.idPais                       = proveedor_listado.idPais';
+$SIS_order = 0;
+$arrProveedores = array();
+$arrProveedores = db_select_array (false, $SIS_query, 'proveedor_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProveedores');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProveedores,$row );
-}  
-
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator("Office 2007")
+$spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setLastModifiedBy("Office 2007")
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-
-
-
-            
-            
+          
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Tipo de Proveedor')
             ->setCellValue('B1', 'Nombre')
             ->setCellValue('C1', 'Razon Social')
@@ -134,57 +116,57 @@ $objPHPExcel->setActiveSheetIndex(0)
 $nn=2;
 foreach ($arrProveedores as $productos) { 
 
-
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A'.$nn, $productos['tipoProveedor'])
-            ->setCellValue('B'.$nn, $productos['Nombre'])
-            ->setCellValue('C'.$nn, $productos['RazonSocial'])
-            ->setCellValue('D'.$nn, $productos['Rut'])
-            ->setCellValue('E'.$nn, fecha_estandar($cli['fNacimiento']))
-            ->setCellValue('F'.$nn, $productos['Pais'])
-            ->setCellValue('G'.$nn, $productos['nombre_region'])
-            ->setCellValue('H'.$nn, $productos['nombre_comuna'])
-            ->setCellValue('I'.$nn, $productos['Direccion'])
-            ->setCellValue('J'.$nn, $productos['sistema'])
-            ->setCellValue('K'.$nn, $productos['estado'])
-            ->setCellValue('L'.$nn, $productos['Giro'])
-            ->setCellValue('M'.$nn, $productos['Rubro'])
-            ->setCellValue('N'.$nn, $productos['Fono1'])
-            ->setCellValue('O'.$nn, $productos['Fono2'])
-            ->setCellValue('P'.$nn, $productos['Fax'])
-            ->setCellValue('Q'.$nn, $productos['email'])
-            ->setCellValue('R'.$nn, $productos['Web'])
-            ->setCellValue('S'.$nn, $productos['PersonaContacto'])
-            ->setCellValue('T'.$nn, $productos['PersonaContacto_Fono'])
-            ->setCellValue('U'.$nn, $productos['PersonaContacto_email'])
-            ->setCellValue('V'.$nn, $productos['FormaPago']);
- $nn++;           
+	$spreadsheet->setActiveSheetIndex(0)
+				->setCellValue('A'.$nn, $productos['tipoProveedor'])
+				->setCellValue('B'.$nn, $productos['Nombre'])
+				->setCellValue('C'.$nn, $productos['RazonSocial'])
+				->setCellValue('D'.$nn, $productos['Rut'])
+				->setCellValue('E'.$nn, fecha_estandar($cli['fNacimiento']))
+				->setCellValue('F'.$nn, $productos['Pais'])
+				->setCellValue('G'.$nn, $productos['nombre_region'])
+				->setCellValue('H'.$nn, $productos['nombre_comuna'])
+				->setCellValue('I'.$nn, $productos['Direccion'])
+				->setCellValue('J'.$nn, $productos['sistema'])
+				->setCellValue('K'.$nn, $productos['estado'])
+				->setCellValue('L'.$nn, $productos['Giro'])
+				->setCellValue('M'.$nn, $productos['Rubro'])
+				->setCellValue('N'.$nn, $productos['Fono1'])
+				->setCellValue('O'.$nn, $productos['Fono2'])
+				->setCellValue('P'.$nn, $productos['Fax'])
+				->setCellValue('Q'.$nn, $productos['email'])
+				->setCellValue('R'.$nn, $productos['Web'])
+				->setCellValue('S'.$nn, $productos['PersonaContacto'])
+				->setCellValue('T'.$nn, $productos['PersonaContacto_Fono'])
+				->setCellValue('U'.$nn, $productos['PersonaContacto_email'])
+				->setCellValue('V'.$nn, $productos['FormaPago']);
+	$nn++;           
    
 } 
 
 
 
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Datos Proveedores');
-
+$spreadsheet->getActiveSheet()->setTitle('Datos Proveedores');
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Datos Proveedores.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Datos Proveedores';
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

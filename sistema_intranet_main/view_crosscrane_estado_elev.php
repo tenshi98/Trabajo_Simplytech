@@ -67,8 +67,17 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 }
 						
 $SIS_query = '
-Nombre, cantSensores, CrossCrane_tiempo_revision, CrossCrane_grupo_amperaje, 
-CrossCrane_grupo_motor_subida,CrossCrane_grupo_motor_bajada, CrossCrane_grupo_voltaje,
+Nombre, 
+cantSensores, 
+LastUpdateFecha,
+LastUpdateHora,
+GeoLatitud,
+GeoLongitud, 
+CrossCrane_tiempo_revision, 
+CrossCrane_grupo_amperaje, 
+CrossCrane_grupo_motor_subida,
+CrossCrane_grupo_motor_bajada, 
+CrossCrane_grupo_voltaje,
 (SELECT COUNT(idErrores) FROM `telemetria_listado_errores` WHERE idTelemetria='.$X_Puntero.' AND idLeido=0 AND Fecha BETWEEN "'.$Fecha_inicio.'" AND "'.$Fecha_fin.'" AND idTipo!=999 AND Valor<99900 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].') AS Alertas
 '.$subquery;
 $SIS_join  = '';
@@ -112,7 +121,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 
 /**********************************************************/
 //se consulta
-$SIS_query = 'Fecha, Hora'.$subquery;
+$SIS_query = 'idTelemetria'.$subquery;
 $SIS_join  = '';
 $rowResult = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$X_Puntero, $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowResult');
 
@@ -670,6 +679,150 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					
 					
 				</div>
+			
+			
+				<?php
+					//Si no existe una ID se utiliza una por defecto
+					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
+						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
+						alert_post_data(4,2,2, $Alert_Text);
+					}else{
+						if(isset($_GET['ShowMap'])&&$_GET['ShowMap']=='True'){
+							$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
+						
+							<style>
+								.my_marker {color: white;background-color: black;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
+								.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
+							</style>
+				
+							<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+							<div class="row">
+								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
+							</div>
+							<script>
+							
+								/* ************************************************************************** */
+								var map;
+								var marker;
+								/* ************************************************************************** */
+								function initialize() {
+									
+									var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud']; ?>, <?php echo $rowdata['GeoLongitud']; ?>);
+									
+									var myOptions = {
+										zoom: 15,
+										center: myLatlng,
+										mapTypeId: google.maps.MapTypeId.SATELLITE
+									};
+									map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+									map.setTilt(0); 
+									
+									// InfoWindow content
+									var content_1 = '<div id="iw-container">' +
+													'<div class="iw-title">Equipo</div>' +
+													'<div class="iw-content">' +
+													'<p>'+
+													'<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>' +
+													'<strong>Fecha: </strong><?php echo fecha_estandar($rowdata['LastUpdateFecha']); ?><br/>' +
+													'<strong>Hora: </strong><?php echo $rowdata['LastUpdateHora']; ?><br/>' +
+													'</p>' +
+													'</div>' +
+													'<div class="iw-bottom-gradient"></div>' +
+													'</div>';
+		
+
+			
+									// A new Info Window is created and set content
+									var infowindow = new google.maps.InfoWindow({
+										content: content_1,
+										maxWidth: 350
+									});	
+									
+										
+									marker = new google.maps.Marker({
+										position	: myLatlng,
+										map			: map,
+										title		: "Tu Ubicacion",
+										icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
+									});
+									
+									// This event expects a click on a marker
+									// When this event is fired the Info Window is opened.
+									google.maps.event.addListener(marker, 'click', function() {
+										infowindow.open(map,marker);
+									});
+									
+									// Event that closes the Info Window with a click on the map
+									google.maps.event.addListener(map, 'click', function() {
+										infowindow.close();
+									});
+									
+									// *
+									// START INFOWINDOW CUSTOMIZE.
+									// The google.maps.event.addListener() event expects
+									// the creation of the infowindow HTML structure 'domready'
+									// and before the opening of the infowindow, defined styles are applied.
+									// *
+									google.maps.event.addListener(infowindow, 'domready', function() {
+
+										// Reference to the DIV that wraps the bottom of infowindow
+										var iwOuter = $('.gm-style-iw');
+
+										/* Since this div is in a position prior to .gm-div style-iw.
+										* We use jQuery and create a iwBackground variable,
+										* and took advantage of the existing reference .gm-style-iw for the previous div with .prev().
+										*/
+										var iwBackground = iwOuter.prev();
+
+										// Removes background shadow DIV
+										iwBackground.children(':nth-child(2)').css({'display' : 'none'});
+
+										// Removes white background DIV
+										iwBackground.children(':nth-child(4)').css({'display' : 'none'});
+
+										// Moves the infowindow 25px to the right.
+										//iwOuter.parent().parent().css({left: '5px'});
+
+										// Moves the shadow of the arrow 76px to the left margin.
+										iwBackground.children(':nth-child(1)').attr('style', function(i,s){ return s + 'left: 6px !important;'});
+
+										// Moves the arrow 76px to the left margin.
+										iwBackground.children(':nth-child(3)').attr('style', function(i,s){ return s + 'left: 6px !important;'});
+
+										// Changes the desired tail shadow color.
+										iwBackground.children(':nth-child(3)').find('div').children().css({'box-shadow': 'rgba(72, 181, 233, 0.6) 0px 1px 6px', 'z-index' : '1'});
+
+										// Reference to the div that groups the close button elements.
+										var iwCloseBtn = iwOuter.next();
+
+										// Apply the desired effect to the close button
+										iwCloseBtn.css({width: '28px',height: '28px', opacity: '1', right: '38px', top: '3px', border: '7px solid #48b5e9', 'border-radius': '13px', 'box-shadow': '0 0 5px #3990B9'});
+
+										// If the content of infowindow not exceed the set maximum height, then the gradient is removed.
+										if($('.iw-content').height() < 140){
+											$('.iw-bottom-gradient').css({display: 'none'});
+										}
+
+										// The API automatically applies 0.7 opacity to the button after the mouseout event. This function reverses this event to the desired value.
+										iwCloseBtn.mouseout(function(){
+											$(this).css({opacity: '1'});
+										});
+									});
+													
+									//muestro la infowindow al inicio
+									infowindow.open(map,marker);
+									
+
+								}
+								/* ************************************************************************** */
+								google.maps.event.addDomListener(window, "load", initialize());
+
+							</script>
+							<?php 
+						}
+						
+					} ?>
+					
 			</div>
 
 	

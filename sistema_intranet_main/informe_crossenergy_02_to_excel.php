@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -24,6 +23,112 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
+//variables
+$xx = 1;
+$arrData = array();
+$arrData[$xx] = "A";$xx++;
+$arrData[$xx] = "B";$xx++;
+$arrData[$xx] = "C";$xx++;
+$arrData[$xx] = "D";$xx++;
+$arrData[$xx] = "E";$xx++;
+$arrData[$xx] = "F";$xx++;
+$arrData[$xx] = "G";$xx++;
+$arrData[$xx] = "H";$xx++;
+$arrData[$xx] = "I";$xx++;
+$arrData[$xx] = "J";$xx++;
+$arrData[$xx] = "K";$xx++;
+$arrData[$xx] = "L";$xx++;
+$arrData[$xx] = "M";$xx++;
+$arrData[$xx] = "N";$xx++;
+$arrData[$xx] = "O";$xx++;
+$arrData[$xx] = "P";$xx++;
+$arrData[$xx] = "Q";$xx++;
+$arrData[$xx] = "R";$xx++;
+$arrData[$xx] = "S";$xx++;
+$arrData[$xx] = "T";$xx++;
+$arrData[$xx] = "U";$xx++;
+$arrData[$xx] = "V";$xx++;
+$arrData[$xx] = "W";$xx++;
+$arrData[$xx] = "X";$xx++;
+$arrData[$xx] = "Y";$xx++;
+$arrData[$xx] = "Z";$xx++;
+$arrData[$xx] = "AA";$xx++;
+$arrData[$xx] = "AB";$xx++;
+$arrData[$xx] = "AC";$xx++;
+$arrData[$xx] = "AD";$xx++;
+$arrData[$xx] = "AE";$xx++;
+$arrData[$xx] = "AF";$xx++;
+$arrData[$xx] = "AG";$xx++;
+$arrData[$xx] = "AH";$xx++;
+$arrData[$xx] = "AI";$xx++;
+$arrData[$xx] = "AJ";$xx++;
+$arrData[$xx] = "AK";$xx++;
+$arrData[$xx] = "AL";$xx++;
+$arrData[$xx] = "AM";$xx++;
+$arrData[$xx] = "AN";$xx++;
+$arrData[$xx] = "AO";$xx++;
+$arrData[$xx] = "AP";$xx++;
+$arrData[$xx] = "AQ";$xx++;
+$arrData[$xx] = "AR";$xx++;
+$arrData[$xx] = "AS";$xx++;
+$arrData[$xx] = "AT";$xx++;
+$arrData[$xx] = "AU";$xx++;
+$arrData[$xx] = "AV";$xx++;
+$arrData[$xx] = "AW";$xx++;
+$arrData[$xx] = "AX";$xx++;
+$arrData[$xx] = "AY";$xx++;
+$arrData[$xx] = "AZ";$xx++;
+$arrData[$xx] = "BA";$xx++;
+$arrData[$xx] = "BB";$xx++;
+$arrData[$xx] = "BC";$xx++;
+$arrData[$xx] = "BD";$xx++;
+$arrData[$xx] = "BE";$xx++;
+$arrData[$xx] = "BF";$xx++;
+$arrData[$xx] = "BG";$xx++;
+$arrData[$xx] = "BH";$xx++;
+$arrData[$xx] = "BI";$xx++;
+$arrData[$xx] = "BJ";$xx++;
+$arrData[$xx] = "BK";$xx++;
+$arrData[$xx] = "BL";$xx++;
+$arrData[$xx] = "BM";$xx++;
+$arrData[$xx] = "BN";$xx++;
+$arrData[$xx] = "BO";$xx++;
+$arrData[$xx] = "BP";$xx++;
+$arrData[$xx] = "BQ";$xx++;
+$arrData[$xx] = "BR";$xx++;
+$arrData[$xx] = "BS";$xx++;
+$arrData[$xx] = "BT";$xx++;
+$arrData[$xx] = "BU";$xx++;
+$arrData[$xx] = "BV";$xx++;
+$arrData[$xx] = "BW";$xx++;
+$arrData[$xx] = "BX";$xx++;
+$arrData[$xx] = "BY";$xx++;
+$arrData[$xx] = "BZ";$xx++;
+$arrData[$xx] = "CA";$xx++;
+$arrData[$xx] = "CB";$xx++;
+$arrData[$xx] = "CC";$xx++;
+$arrData[$xx] = "CD";$xx++;
+$arrData[$xx] = "CE";$xx++;
+$arrData[$xx] = "CF";$xx++;
+$arrData[$xx] = "CG";$xx++;
+$arrData[$xx] = "CH";$xx++;
+$arrData[$xx] = "CI";$xx++;
+$arrData[$xx] = "CJ";$xx++;
+$arrData[$xx] = "CK";$xx++;
+$arrData[$xx] = "CL";$xx++;
+$arrData[$xx] = "CM";$xx++;
+$arrData[$xx] = "CN";$xx++;
+$arrData[$xx] = "CO";$xx++;
+$arrData[$xx] = "CP";$xx++;
+$arrData[$xx] = "CQ";$xx++;
+$arrData[$xx] = "CR";$xx++;
+$arrData[$xx] = "CS";$xx++;
+$arrData[$xx] = "CT";$xx++;
+$arrData[$xx] = "CU";$xx++;
+$arrData[$xx] = "CV";$xx++;
+$arrData[$xx] = "CW";$xx++;
+$arrData[$xx] = "CX";$xx++;
+	
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = '';
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
@@ -68,127 +173,22 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//Se trae el dato del grupo
 	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$_GET['idGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowGrupo');
 
-	/****************************************************************/
-	// Create new PHPExcel object
-	$objPHPExcel = new PHPExcel();
+	/**********************************************************************************************************************************/
+	/*                                                          Ejecucion                                                             */
+	/**********************************************************************************************************************************/
+	// Create new Spreadsheet object
+	$spreadsheet = new Spreadsheet();
 
 	// Set document properties
-	$objPHPExcel->getProperties()->setCreator("Office 2007")
+	$spreadsheet->getProperties()->setCreator("Office 2007")
 								 ->setLastModifiedBy("Office 2007")
 								 ->setTitle("Office 2007")
 								 ->setSubject("Office 2007")
 								 ->setDescription("Document for Office 2007")
 								 ->setKeywords("office 2007")
 								 ->setCategory("office 2007 result file");
-
-	//variables
-	$xx = 1;
-	$arrData = array();
-	$arrData[$xx] = "A";$xx++;
-	$arrData[$xx] = "B";$xx++;
-	$arrData[$xx] = "C";$xx++;
-	$arrData[$xx] = "D";$xx++;
-	$arrData[$xx] = "E";$xx++;
-	$arrData[$xx] = "F";$xx++;
-	$arrData[$xx] = "G";$xx++;
-	$arrData[$xx] = "H";$xx++;
-	$arrData[$xx] = "I";$xx++;
-	$arrData[$xx] = "J";$xx++;
-	$arrData[$xx] = "K";$xx++;
-	$arrData[$xx] = "L";$xx++;
-	$arrData[$xx] = "M";$xx++;
-	$arrData[$xx] = "N";$xx++;
-	$arrData[$xx] = "O";$xx++;
-	$arrData[$xx] = "P";$xx++;
-	$arrData[$xx] = "Q";$xx++;
-	$arrData[$xx] = "R";$xx++;
-	$arrData[$xx] = "S";$xx++;
-	$arrData[$xx] = "T";$xx++;
-	$arrData[$xx] = "U";$xx++;
-	$arrData[$xx] = "V";$xx++;
-	$arrData[$xx] = "W";$xx++;
-	$arrData[$xx] = "X";$xx++;
-	$arrData[$xx] = "Y";$xx++;
-	$arrData[$xx] = "Z";$xx++;
-	$arrData[$xx] = "AA";$xx++;
-	$arrData[$xx] = "AB";$xx++;
-	$arrData[$xx] = "AC";$xx++;
-	$arrData[$xx] = "AD";$xx++;
-	$arrData[$xx] = "AE";$xx++;
-	$arrData[$xx] = "AF";$xx++;
-	$arrData[$xx] = "AG";$xx++;
-	$arrData[$xx] = "AH";$xx++;
-	$arrData[$xx] = "AI";$xx++;
-	$arrData[$xx] = "AJ";$xx++;
-	$arrData[$xx] = "AK";$xx++;
-	$arrData[$xx] = "AL";$xx++;
-	$arrData[$xx] = "AM";$xx++;
-	$arrData[$xx] = "AN";$xx++;
-	$arrData[$xx] = "AO";$xx++;
-	$arrData[$xx] = "AP";$xx++;
-	$arrData[$xx] = "AQ";$xx++;
-	$arrData[$xx] = "AR";$xx++;
-	$arrData[$xx] = "AS";$xx++;
-	$arrData[$xx] = "AT";$xx++;
-	$arrData[$xx] = "AU";$xx++;
-	$arrData[$xx] = "AV";$xx++;
-	$arrData[$xx] = "AW";$xx++;
-	$arrData[$xx] = "AX";$xx++;
-	$arrData[$xx] = "AY";$xx++;
-	$arrData[$xx] = "AZ";$xx++;
-	$arrData[$xx] = "BA";$xx++;
-	$arrData[$xx] = "BB";$xx++;
-	$arrData[$xx] = "BC";$xx++;
-	$arrData[$xx] = "BD";$xx++;
-	$arrData[$xx] = "BE";$xx++;
-	$arrData[$xx] = "BF";$xx++;
-	$arrData[$xx] = "BG";$xx++;
-	$arrData[$xx] = "BH";$xx++;
-	$arrData[$xx] = "BI";$xx++;
-	$arrData[$xx] = "BJ";$xx++;
-	$arrData[$xx] = "BK";$xx++;
-	$arrData[$xx] = "BL";$xx++;
-	$arrData[$xx] = "BM";$xx++;
-	$arrData[$xx] = "BN";$xx++;
-	$arrData[$xx] = "BO";$xx++;
-	$arrData[$xx] = "BP";$xx++;
-	$arrData[$xx] = "BQ";$xx++;
-	$arrData[$xx] = "BR";$xx++;
-	$arrData[$xx] = "BS";$xx++;
-	$arrData[$xx] = "BT";$xx++;
-	$arrData[$xx] = "BU";$xx++;
-	$arrData[$xx] = "BV";$xx++;
-	$arrData[$xx] = "BW";$xx++;
-	$arrData[$xx] = "BX";$xx++;
-	$arrData[$xx] = "BY";$xx++;
-	$arrData[$xx] = "BZ";$xx++;
-	$arrData[$xx] = "CA";$xx++;
-	$arrData[$xx] = "CB";$xx++;
-	$arrData[$xx] = "CC";$xx++;
-	$arrData[$xx] = "CD";$xx++;
-	$arrData[$xx] = "CE";$xx++;
-	$arrData[$xx] = "CF";$xx++;
-	$arrData[$xx] = "CG";$xx++;
-	$arrData[$xx] = "CH";$xx++;
-	$arrData[$xx] = "CI";$xx++;
-	$arrData[$xx] = "CJ";$xx++;
-	$arrData[$xx] = "CK";$xx++;
-	$arrData[$xx] = "CL";$xx++;
-	$arrData[$xx] = "CM";$xx++;
-	$arrData[$xx] = "CN";$xx++;
-	$arrData[$xx] = "CO";$xx++;
-	$arrData[$xx] = "CP";$xx++;
-	$arrData[$xx] = "CQ";$xx++;
-	$arrData[$xx] = "CR";$xx++;
-	$arrData[$xx] = "CS";$xx++;
-	$arrData[$xx] = "CT";$xx++;
-	$arrData[$xx] = "CU";$xx++;
-	$arrData[$xx] = "CV";$xx++;
-	$arrData[$xx] = "CW";$xx++;
-	$arrData[$xx] = "CX";$xx++;			
-
-			 
-	$objPHPExcel->setActiveSheetIndex(0)
+		 
+	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'Fecha')
 				->setCellValue('B1', 'Hora');
 
@@ -205,7 +205,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
 						//si es el primer recorrido
 						if($count==0){
-							$objPHPExcel->setActiveSheetIndex(0)
+							$spreadsheet->setActiveSheetIndex(0)
 										->setCellValue($arrData[$yy].'1', $fac['SensoresNombre_'.$x]);
 							//avanzo columna
 							$yy++;
@@ -222,7 +222,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		//columna inicial
 		$yy = 3;
 		//la cabecera
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, $fac['FechaSistema'])
 					->setCellValue('B'.$nn, $fac['HoraSistema']);
 												
@@ -233,7 +233,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					//Que el valor medido sea distinto de 999
 					if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
 					
-						$objPHPExcel->setActiveSheetIndex(0)
+						$spreadsheet->setActiveSheetIndex(0)
 									->setCellValue($arrData[$yy].$nn, cantidades($fac['SensorValue_'.$x], 2));
 						//avanzo columna
 						$yy++;
@@ -250,27 +250,28 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 
 	// Rename worksheet
-	$objPHPExcel->getActiveSheet()->setTitle('Resumen Hora');
-
+	$spreadsheet->getActiveSheet()->setTitle('Resumen Hora');
 
 	// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-	$objPHPExcel->setActiveSheetIndex(0);
+	$spreadsheet->setActiveSheetIndex(0);
 
-
-	// Redirect output to a client’s web browser (Excel5)
-	header('Content-Type: application/vnd.ms-excel');
-	header('Content-Disposition: attachment;filename="Informe Resumen Hora grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo'].'.xls"');
+	/**************************************************************************/
+	//Nombre del archivo
+	$filename = 'Informe Resumen Hora grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo'];
+	// Redirect output to a client’s web browser (Xlsx)
+	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+	header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');
 
 	// If you're serving to IE over SSL, then the following may be needed
-	header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-	header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-	header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-	header ('Pragma: public'); // HTTP/1.0
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+	header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+	header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+	header('Pragma: public'); // HTTP/1.0
 
-	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-	$objWriter->save('php://output');
+	$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+	$writer->save('php://output');
 	exit;
 }

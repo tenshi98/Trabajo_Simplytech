@@ -39,11 +39,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['not_closecuartel']))  {$error['not_closecuartel'] = 'sucess/Cuartel cerrado correctamente';}
-if (isset($_GET['not_adddetalle']))  {$error['not_adddetalle']     = 'sucess/Detalle agregado correctamente';}
+if (isset($_GET['not_closecuartel'])){ $error['not_closecuartel'] = 'sucess/Cuartel cerrado correctamente';}
+if (isset($_GET['not_adddetalle'])){   $error['not_adddetalle']   = 'sucess/Detalle agregado correctamente';}
 
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(isset($error1)&&$error1!=''){echo notifications_list($error1);};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 

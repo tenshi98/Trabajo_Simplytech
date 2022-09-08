@@ -23,7 +23,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idAmonestaciones']) )      $idAmonestaciones       = $_POST['idAmonestaciones'];
 	if ( !empty($_POST['Observacion']) )           $Observacion            = $_POST['Observacion'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -46,6 +45,11 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observacion) && $Observacion != ''){ $Observacion = EstandarizarInput($Observacion); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -108,7 +112,7 @@ require_once '0_validate_user_1.php';
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
 						//Sufijo
-						$sufijo = 'amonestacion_'.$idTrabajador.'_'.fecha_actual().'_';
+						$sufijo = 'amonestacion_'.$idTrabajador.'_'.genera_password_unica().'_';
 									  
 						if (in_array($_FILES['File_Amonestacion']['type'], $permitidos) && $_FILES['File_Amonestacion']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
@@ -120,37 +124,24 @@ require_once '0_validate_user_1.php';
 								if ($move_result){
 									
 									//filtros
-									if(isset($idSistema) && $idSistema != ''){                $a  = "'".$idSistema."'" ;         }else{$a  ="''";}
-									if(isset($idTrabajador) && $idTrabajador != ''){          $a .= ",'".$idTrabajador."'" ;     }else{$a .=",''";}
-									if(isset($idUsuario) && $idUsuario != ''){                $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
-									if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){        $a .= ",'".$Fecha_ingreso."'" ;    }else{$a .=",''";}
-									if(isset($Fecha) && $Fecha != ''){                        $a .= ",'".$Fecha."'" ;            }else{$a .=",''";}
-									if(isset($idAmonestaciones) && $idAmonestaciones != ''){  $a .= ",'".$idAmonestaciones."'" ; }else{$a .=",''";}
-									if(isset($Observacion) && $Observacion != ''){            $a .= ",'".$Observacion."'" ;      }else{$a .=",''";}
-									$a .= ",'".$sufijo.$_FILES['File_Amonestacion']['name']."'" ;
+									if(isset($idSistema) && $idSistema != ''){                $SIS_data  = "'".$idSistema."'" ;         }else{$SIS_data  = "''";}
+									if(isset($idTrabajador) && $idTrabajador != ''){          $SIS_data .= ",'".$idTrabajador."'" ;     }else{$SIS_data .= ",''";}
+									if(isset($idUsuario) && $idUsuario != ''){                $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
+									if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){        $SIS_data .= ",'".$Fecha_ingreso."'" ;    }else{$SIS_data .= ",''";}
+									if(isset($Fecha) && $Fecha != ''){                        $SIS_data .= ",'".$Fecha."'" ;            }else{$SIS_data .= ",''";}
+									if(isset($idAmonestaciones) && $idAmonestaciones != ''){  $SIS_data .= ",'".$idAmonestaciones."'" ; }else{$SIS_data .= ",''";}
+									if(isset($Observacion) && $Observacion != ''){            $SIS_data .= ",'".$Observacion."'" ;      }else{$SIS_data .= ",''";}
+									$SIS_data .= ",'".$sufijo.$_FILES['File_Amonestacion']['name']."'" ;
 									
 									// inserto los datos de registro en la db
-									$query  = "INSERT INTO `trabajadores_cartas_amonestacion` (idSistema, idTrabajador, idUsuario,
-									Fecha_ingreso, Fecha, idAmonestaciones, Observacion,File_Amonestacion) 
-									VALUES (".$a.")";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
+									$SIS_columns = 'idSistema, idTrabajador, idUsuario, Fecha_ingreso, Fecha, idAmonestaciones, Observacion,File_Amonestacion';
+									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_cartas_amonestacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 									//Si ejecuto correctamente la consulta
-									if($resultado){
-										
+									if($ultimo_id!=0){
+										//redirijo
 										header( 'Location: '.$location.'&created=true' );
 										die;
-										
-									//si da error, guardar en el log de errores una copia
-									}else{
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
 									}
 													
 								} else {
@@ -166,41 +157,25 @@ require_once '0_validate_user_1.php';
 				}else{
 					
 					//filtros
-					if(isset($idSistema) && $idSistema != ''){               $a  = "'".$idSistema."'" ;          }else{$a  ="''";}
-					if(isset($idTrabajador) && $idTrabajador != ''){         $a .= ",'".$idTrabajador."'" ;      }else{$a .=",''";}
-					if(isset($idUsuario) && $idUsuario != ''){               $a .= ",'".$idUsuario."'" ;         }else{$a .=",''";}
-					if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){       $a .= ",'".$Fecha_ingreso."'" ;     }else{$a .=",''";}
-					if(isset($Fecha) && $Fecha != ''){                       $a .= ",'".$Fecha."'" ;             }else{$a .=",''";}
-					if(isset($idAmonestaciones) && $idAmonestaciones != ''){ $a .= ",'".$idAmonestaciones."'" ;  }else{$a .=",''";}
-					if(isset($Observacion) && $Observacion != ''){           $a .= ",'".$Observacion."'" ;       }else{$a .=",''";}
+					if(isset($idSistema) && $idSistema != ''){               $SIS_data  = "'".$idSistema."'" ;          }else{$SIS_data  = "''";}
+					if(isset($idTrabajador) && $idTrabajador != ''){         $SIS_data .= ",'".$idTrabajador."'" ;      }else{$SIS_data .= ",''";}
+					if(isset($idUsuario) && $idUsuario != ''){               $SIS_data .= ",'".$idUsuario."'" ;         }else{$SIS_data .= ",''";}
+					if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){       $SIS_data .= ",'".$Fecha_ingreso."'" ;     }else{$SIS_data .= ",''";}
+					if(isset($Fecha) && $Fecha != ''){                       $SIS_data .= ",'".$Fecha."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($idAmonestaciones) && $idAmonestaciones != ''){ $SIS_data .= ",'".$idAmonestaciones."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($Observacion) && $Observacion != ''){           $SIS_data .= ",'".$Observacion."'" ;       }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `trabajadores_cartas_amonestacion` (idSistema, idTrabajador, idUsuario,
-					Fecha_ingreso, Fecha, idAmonestaciones, Observacion) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					$SIS_columns = 'idSistema, idTrabajador, idUsuario, Fecha_ingreso, Fecha, idAmonestaciones, Observacion';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_cartas_amonestacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Si ejecuto correctamente la consulta
-					if($resultado){
-						
+					if($ultimo_id!=0){
+						//redirijo
 						header( 'Location: '.$location.'&created=true' );
 						die;
-						
-					//si da error, guardar en el log de errores una copia
-					}else{
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 					}
-					
 				}
-				
-				
 			}
 	
 		break;
@@ -256,7 +231,7 @@ require_once '0_validate_user_1.php';
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
 						//Sufijo
-						$sufijo = 'amonestacion_'.$idTrabajador.'_'.fecha_actual().'_';
+						$sufijo = 'amonestacion_'.$idTrabajador.'_'.genera_password_unica().'_';
 									  
 						if (in_array($_FILES['File_Amonestacion']['type'], $permitidos) && $_FILES['File_Amonestacion']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
@@ -268,19 +243,19 @@ require_once '0_validate_user_1.php';
 								if ($move_result){
 									
 									//Filtros
-									$a = "idCartaAmo='".$idCartaAmo."'" ;
-									if(isset($idSistema) && $idSistema != ''){                $a .= ",idSistema='".$idSistema."'" ;}
-									if(isset($idTrabajador) && $idTrabajador != ''){          $a .= ",idTrabajador='".$idTrabajador."'" ;}
-									if(isset($idUsuario) && $idUsuario != ''){                $a .= ",idUsuario='".$idUsuario."'" ;}
-									if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){        $a .= ",Fecha_ingreso='".$Fecha_ingreso."'" ;}
-									if(isset($Fecha) && $Fecha != ''){                        $a .= ",Fecha='".$Fecha."'" ;}
-									if(isset($idAmonestaciones) && $idAmonestaciones != ''){  $a .= ",idAmonestaciones='".$idAmonestaciones."'" ;}
-									if(isset($Observacion) && $Observacion != ''){            $a .= ",Observacion='".$Observacion."'" ;}
-									$a .= ",File_Amonestacion='".$sufijo.$_FILES['File_Amonestacion']['name']."'" ;
+									$SIS_data = "idCartaAmo='".$idCartaAmo."'" ;
+									if(isset($idSistema) && $idSistema != ''){                $SIS_data .= ",idSistema='".$idSistema."'" ;}
+									if(isset($idTrabajador) && $idTrabajador != ''){          $SIS_data .= ",idTrabajador='".$idTrabajador."'" ;}
+									if(isset($idUsuario) && $idUsuario != ''){                $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+									if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){        $SIS_data .= ",Fecha_ingreso='".$Fecha_ingreso."'" ;}
+									if(isset($Fecha) && $Fecha != ''){                        $SIS_data .= ",Fecha='".$Fecha."'" ;}
+									if(isset($idAmonestaciones) && $idAmonestaciones != ''){  $SIS_data .= ",idAmonestaciones='".$idAmonestaciones."'" ;}
+									if(isset($Observacion) && $Observacion != ''){            $SIS_data .= ",Observacion='".$Observacion."'" ;}
+									$SIS_data .= ",File_Amonestacion='".$sufijo.$_FILES['File_Amonestacion']['name']."'" ;
 									
 									/*******************************************************/
 									//se actualizan los datos
-									$resultado = db_update_data (false, $a, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$idCartaAmo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									$resultado = db_update_data (false, $SIS_data, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$idCartaAmo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
 									if($resultado==true){
 										
@@ -302,18 +277,18 @@ require_once '0_validate_user_1.php';
 				}else{
 					
 					//Filtros
-					$a = "idCartaAmo='".$idCartaAmo."'" ;
-					if(isset($idSistema) && $idSistema != ''){                $a .= ",idSistema='".$idSistema."'" ;}
-					if(isset($idTrabajador) && $idTrabajador != ''){          $a .= ",idTrabajador='".$idTrabajador."'" ;}
-					if(isset($idUsuario) && $idUsuario != ''){                $a .= ",idUsuario='".$idUsuario."'" ;}
-					if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){        $a .= ",Fecha_ingreso='".$Fecha_ingreso."'" ;}
-					if(isset($Fecha) && $Fecha != ''){                        $a .= ",Fecha='".$Fecha."'" ;}
-					if(isset($idAmonestaciones) && $idAmonestaciones != ''){  $a .= ",idAmonestaciones='".$idAmonestaciones."'" ;}
-					if(isset($Observacion) && $Observacion != ''){            $a .= ",Observacion='".$Observacion."'" ;}
+					$SIS_data = "idCartaAmo='".$idCartaAmo."'" ;
+					if(isset($idSistema) && $idSistema != ''){                $SIS_data .= ",idSistema='".$idSistema."'" ;}
+					if(isset($idTrabajador) && $idTrabajador != ''){          $SIS_data .= ",idTrabajador='".$idTrabajador."'" ;}
+					if(isset($idUsuario) && $idUsuario != ''){                $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+					if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){        $SIS_data .= ",Fecha_ingreso='".$Fecha_ingreso."'" ;}
+					if(isset($Fecha) && $Fecha != ''){                        $SIS_data .= ",Fecha='".$Fecha."'" ;}
+					if(isset($idAmonestaciones) && $idAmonestaciones != ''){  $SIS_data .= ",idAmonestaciones='".$idAmonestaciones."'" ;}
+					if(isset($Observacion) && $Observacion != ''){            $SIS_data .= ",Observacion='".$Observacion."'" ;}
 					
 					/*******************************************************/
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$idCartaAmo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$idCartaAmo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
 						
@@ -405,8 +380,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "File_Amonestacion=''" ;
-			$resultado = db_update_data (false, $a, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "File_Amonestacion=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				

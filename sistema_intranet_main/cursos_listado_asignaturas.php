@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'ele_add';
 	require_once 'A1XRXS_sys/xrxs_form/cursos_listado.php';
@@ -35,7 +35,7 @@ if ( !empty($_POST['submit']) )  {
 if ( !empty($_GET['del']) )     {
 	//Nueva ubicacion
 	$location = $new_location;
-	$location.='&id='.$_GET['id'];
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'ele_del';
 	require_once 'A1XRXS_sys/xrxs_form/cursos_listado.php';	
@@ -48,10 +48,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/ 
 //Listado de errores no manejables
-if (isset($_GET['created']))  {$error['created'] 	  = 'sucess/Asignatura agregada correctamente';}
-if (isset($_GET['deleted']))  {$error['deleted'] 	  = 'sucess/Asignatura eliminada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Asignatura agregada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Asignatura eliminada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['new']) ) { 
 //valido los permisos

@@ -44,16 +44,16 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['pay']))  {$error['usuario'] 	  = 'sucess/Pago Realizado correctamente';}
+if (isset($_GET['pay'])){ $error['pay'] = 'sucess/Pago Realizado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>						
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}					
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['next']) ) {  
 
 $location .= '?submit_filter=true';
 if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){ $location .= '&idDocumentos='.$_GET['idDocumentos'];}
 if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){               $location .= '&N_Doc='.$_GET['N_Doc'];}			
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){   $location .= '&idCliente='.$_GET['idCliente'];}
+if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $location .= '&idCliente='.$_GET['idCliente'];}
 
 /******************************************************************/
 //Se verifica el saldo de los pagos anticipados

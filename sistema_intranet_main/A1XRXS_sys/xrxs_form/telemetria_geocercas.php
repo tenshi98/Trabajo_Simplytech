@@ -19,8 +19,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Nombre']) )              $Nombre              = $_POST['Nombre'];
 	if ( !empty($_POST['idEstado']) )            $idEstado            = $_POST['idEstado'];
 	
-	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -39,6 +37,11 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){ $Nombre = EstandarizarInput($Nombre); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -71,32 +74,19 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){    $a  = "'".$idSistema."'" ;   }else{$a  ="''";}
-				if(isset($Nombre) && $Nombre != ''){          $a .= ",'".$Nombre."'" ;     }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){      $a .= ",'".$idEstado."'" ;   }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){    $SIS_data  = "'".$idSistema."'" ;   }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){          $SIS_data .= ",'".$Nombre."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){      $SIS_data .= ",'".$idEstado."'" ;   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_geocercas` (idSistema, Nombre, idEstado) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, Nombre, idEstado';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_geocercas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
 					//redirijo	
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -121,14 +111,14 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idZona='".$idZona."'" ;
-				if(isset($idSistema) && $idSistema != ''){    $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Nombre) && $Nombre != ''){          $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idEstado) && $idEstado != ''){      $a .= ",idEstado='".$idEstado."'" ;}
+				$SIS_data = "idZona='".$idZona."'" ;
+				if(isset($idSistema) && $idSistema != ''){    $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($Nombre) && $Nombre != ''){          $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idEstado) && $idEstado != ''){      $SIS_data .= ",idEstado='".$idEstado."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_geocercas', 'idZona = "'.$idZona.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_geocercas', 'idZona = "'.$idZona.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

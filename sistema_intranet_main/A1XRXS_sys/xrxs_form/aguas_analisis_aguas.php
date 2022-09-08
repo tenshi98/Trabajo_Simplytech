@@ -43,9 +43,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['UTM_norte_fake2']) )           $UTM_norte                  = $_POST['UTM_norte_fake2'];
 	if ( !empty($_POST['UTM_este_fake2']) )            $UTM_este                   = $_POST['UTM_este_fake2'];
 	if ( !empty($_POST['idPuntoMuestreo_fake2']) )     $idPuntoMuestreo            = $_POST['idPuntoMuestreo_fake2'];
-	
-	
-	
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -85,10 +83,26 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($codigoProceso) && $codigoProceso != ''){                       $codigoProceso            = EstandarizarInput($codigoProceso); }
+	if(isset($codigoArchivo) && $codigoArchivo != ''){                       $codigoArchivo            = EstandarizarInput($codigoArchivo); }
+	if(isset($codigoServicio) && $codigoServicio != ''){                     $codigoServicio           = EstandarizarInput($codigoServicio); }
+	if(isset($codigoMuestra) && $codigoMuestra != ''){                       $codigoMuestra            = EstandarizarInput($codigoMuestra); }
+	if(isset($Remuestra_codigo_muestra) && $Remuestra_codigo_muestra != ''){ $Remuestra_codigo_muestra = EstandarizarInput($Remuestra_codigo_muestra); }
+	if(isset($CodigoLaboratorio) && $CodigoLaboratorio != ''){               $CodigoLaboratorio        = EstandarizarInput($CodigoLaboratorio); }
+	if(isset($Observaciones) && $Observaciones != ''){                       $Observaciones            = EstandarizarInput($Observaciones); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
-	if(isset($CodigoLaboratorio)&&contar_palabras_censuradas($CodigoLaboratorio)!=0){  $error['CodigoLaboratorio'] = 'error/Edita Codigo Laboratorio, contiene palabras no permitidas'; }	
-	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){          $error['Observaciones']     = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
+	if(isset($codigoProceso)&&contar_palabras_censuradas($codigoProceso)!=0){                        $error['codigoProceso']            = 'error/Edita codigo Proceso, contiene palabras no permitidas'; }	
+	if(isset($codigoArchivo)&&contar_palabras_censuradas($codigoArchivo)!=0){                        $error['codigoArchivo']            = 'error/Edita codigo Archivo, contiene palabras no permitidas'; }	
+	if(isset($codigoServicio)&&contar_palabras_censuradas($codigoServicio)!=0){                      $error['codigoServicio']           = 'error/Edita codigo Servicio, contiene palabras no permitidas'; }	
+	if(isset($codigoMuestra)&&contar_palabras_censuradas($codigoMuestra)!=0){                        $error['codigoMuestra']            = 'error/Edita codigo Muestra, contiene palabras no permitidas'; }	
+	if(isset($Remuestra_codigo_muestra)&&contar_palabras_censuradas($Remuestra_codigo_muestra)!=0){  $error['Remuestra_codigo_muestra'] = 'error/Edita codigo Remuestra, contiene palabras no permitidas'; }	
+	if(isset($CodigoLaboratorio)&&contar_palabras_censuradas($CodigoLaboratorio)!=0){                $error['CodigoLaboratorio']        = 'error/Edita Codigo Laboratorio, contiene palabras no permitidas'; }	
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){                        $error['Observaciones']            = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -122,55 +136,42 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                                 $a  = "'".$idSistema."'" ;                   }else{$a  ="''";}
-				if(isset($f_muestra) && $f_muestra != ''){                                 $a .= ",'".$f_muestra."'" ;                  }else{$a .=",''";}
-				if(isset($f_recibida) && $f_recibida != ''){                               $a .= ",'".$f_recibida."'" ;                 }else{$a .=",''";}
-				if(isset($codigoProceso) && $codigoProceso != ''){                         $a .= ",'".$codigoProceso."'" ;              }else{$a .=",''";}
-				if(isset($codigoArchivo) && $codigoArchivo != ''){                         $a .= ",'".$codigoArchivo."'" ;              }else{$a .=",''";}
-				if(isset($codigoServicio) && $codigoServicio != ''){                       $a .= ",'".$codigoServicio."'" ;             }else{$a .=",''";}
-				if(isset($idSector) && $idSector != ''){                                   $a .= ",'".$idSector."'" ;                   }else{$a .=",''";}
-				if(isset($UTM_norte) && $UTM_norte != ''){                                 $a .= ",'".$UTM_norte."'" ;                  }else{$a .=",''";}
-				if(isset($UTM_este) && $UTM_este != ''){                                   $a .= ",'".$UTM_este."'" ;                   }else{$a .=",''";}
-				if(isset($codigoMuestra) && $codigoMuestra != ''){                         $a .= ",'".$codigoMuestra."'" ;              }else{$a .=",''";}
-				if(isset($idPuntoMuestreo) && $idPuntoMuestreo != ''){                     $a .= ",'".$idPuntoMuestreo."'" ;            }else{$a .=",''";}
-				if(isset($idTipoMuestra) && $idTipoMuestra != ''){                         $a .= ",'".$idTipoMuestra."'" ;              }else{$a .=",''";}
-				if(isset($RemuestraFecha) && $RemuestraFecha != ''){                       $a .= ",'".$RemuestraFecha."'" ;             }else{$a .=",''";}
-				if(isset($Remuestra_codigo_muestra) && $Remuestra_codigo_muestra != ''){   $a .= ",'".$Remuestra_codigo_muestra."'" ;   }else{$a .=",''";}
-				if(isset($idParametros) && $idParametros != ''){                           $a .= ",'".$idParametros."'" ;               }else{$a .=",''";}
-				if(isset($idSigno) && $idSigno != ''){                                     $a .= ",'".$idSigno."'" ;                    }else{$a .=",''";}
-				if(isset($valorAnalisis) && $valorAnalisis != ''){                         $a .= ",'".$valorAnalisis."'" ;              }else{$a .=",''";}
-				if(isset($idLaboratorio) && $idLaboratorio != ''){                         $a .= ",'".$idLaboratorio."'" ;              }else{$a .=",''";}
-				if(isset($CodigoLaboratorio) && $CodigoLaboratorio != ''){                 $a .= ",'".$CodigoLaboratorio."'" ;          }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){                                   $a .= ",'".$idEstado."'" ;                   }else{$a .=",''";}
-				if(isset($idCliente) && $idCliente != ''){                                 $a .= ",'".$idCliente."'" ;                  }else{$a .=",''";}
-				if(isset($Observaciones) && $Observaciones != ''){                         $a .= ",'".$Observaciones."'" ;              }else{$a .=",''";}
-				if(isset($idOpciones) && $idOpciones != ''){                               $a .= ",'".$idOpciones."'" ;                 }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){                                 $SIS_data  = "'".$idSistema."'" ;                   }else{$SIS_data  ="''";}
+				if(isset($f_muestra) && $f_muestra != ''){                                 $SIS_data .= ",'".$f_muestra."'" ;                  }else{$SIS_data .=",''";}
+				if(isset($f_recibida) && $f_recibida != ''){                               $SIS_data .= ",'".$f_recibida."'" ;                 }else{$SIS_data .=",''";}
+				if(isset($codigoProceso) && $codigoProceso != ''){                         $SIS_data .= ",'".$codigoProceso."'" ;              }else{$SIS_data .=",''";}
+				if(isset($codigoArchivo) && $codigoArchivo != ''){                         $SIS_data .= ",'".$codigoArchivo."'" ;              }else{$SIS_data .=",''";}
+				if(isset($codigoServicio) && $codigoServicio != ''){                       $SIS_data .= ",'".$codigoServicio."'" ;             }else{$SIS_data .=",''";}
+				if(isset($idSector) && $idSector != ''){                                   $SIS_data .= ",'".$idSector."'" ;                   }else{$SIS_data .=",''";}
+				if(isset($UTM_norte) && $UTM_norte != ''){                                 $SIS_data .= ",'".$UTM_norte."'" ;                  }else{$SIS_data .=",''";}
+				if(isset($UTM_este) && $UTM_este != ''){                                   $SIS_data .= ",'".$UTM_este."'" ;                   }else{$SIS_data .=",''";}
+				if(isset($codigoMuestra) && $codigoMuestra != ''){                         $SIS_data .= ",'".$codigoMuestra."'" ;              }else{$SIS_data .=",''";}
+				if(isset($idPuntoMuestreo) && $idPuntoMuestreo != ''){                     $SIS_data .= ",'".$idPuntoMuestreo."'" ;            }else{$SIS_data .=",''";}
+				if(isset($idTipoMuestra) && $idTipoMuestra != ''){                         $SIS_data .= ",'".$idTipoMuestra."'" ;              }else{$SIS_data .=",''";}
+				if(isset($RemuestraFecha) && $RemuestraFecha != ''){                       $SIS_data .= ",'".$RemuestraFecha."'" ;             }else{$SIS_data .=",''";}
+				if(isset($Remuestra_codigo_muestra) && $Remuestra_codigo_muestra != ''){   $SIS_data .= ",'".$Remuestra_codigo_muestra."'" ;   }else{$SIS_data .=",''";}
+				if(isset($idParametros) && $idParametros != ''){                           $SIS_data .= ",'".$idParametros."'" ;               }else{$SIS_data .=",''";}
+				if(isset($idSigno) && $idSigno != ''){                                     $SIS_data .= ",'".$idSigno."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($valorAnalisis) && $valorAnalisis != ''){                         $SIS_data .= ",'".$valorAnalisis."'" ;              }else{$SIS_data .=",''";}
+				if(isset($idLaboratorio) && $idLaboratorio != ''){                         $SIS_data .= ",'".$idLaboratorio."'" ;              }else{$SIS_data .=",''";}
+				if(isset($CodigoLaboratorio) && $CodigoLaboratorio != ''){                 $SIS_data .= ",'".$CodigoLaboratorio."'" ;          }else{$SIS_data .=",''";}
+				if(isset($idEstado) && $idEstado != ''){                                   $SIS_data .= ",'".$idEstado."'" ;                   }else{$SIS_data .=",''";}
+				if(isset($idCliente) && $idCliente != ''){                                 $SIS_data .= ",'".$idCliente."'" ;                  }else{$SIS_data .=",''";}
+				if(isset($Observaciones) && $Observaciones != ''){                         $SIS_data .= ",'".$Observaciones."'" ;              }else{$SIS_data .=",''";}
+				if(isset($idOpciones) && $idOpciones != ''){                               $SIS_data .= ",'".$idOpciones."'" ;                 }else{$SIS_data .=",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `aguas_analisis_aguas` (idSistema, f_muestra, f_recibida, 
-				codigoProceso, codigoArchivo, codigoServicio, idSector, UTM_norte, UTM_este,
-				codigoMuestra, idPuntoMuestreo, idTipoMuestra, RemuestraFecha, Remuestra_codigo_muestra,
-				idParametros, idSigno, valorAnalisis, idLaboratorio, CodigoLaboratorio, idEstado,
-				idCliente, Observaciones, idOpciones) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, f_muestra, f_recibida, codigoProceso, codigoArchivo, 
+				codigoServicio, idSector, UTM_norte, UTM_este, codigoMuestra, idPuntoMuestreo, 
+				idTipoMuestra, RemuestraFecha, Remuestra_codigo_muestra, idParametros, idSigno, 
+				valorAnalisis, idLaboratorio, CodigoLaboratorio, idEstado, idCliente, Observaciones, 
+				idOpciones';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_analisis_aguas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -184,34 +185,34 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idAnalisisAgua='".$idAnalisisAgua."'" ;
-				if(isset($idSistema) && $idSistema != ''){                                 $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($f_muestra) && $f_muestra != ''){                                 $a .= ",f_muestra='".$f_muestra."'" ;}
-				if(isset($f_recibida) && $f_recibida != ''){                               $a .= ",f_recibida='".$f_recibida."'" ;}
-				if(isset($codigoProceso) && $codigoProceso != ''){                         $a .= ",codigoProceso='".$codigoProceso."'" ;}
-				if(isset($codigoArchivo) && $codigoArchivo != ''){                         $a .= ",codigoArchivo='".$codigoArchivo."'" ;}
-				if(isset($codigoServicio) && $codigoServicio != ''){                       $a .= ",codigoServicio='".$codigoServicio."'" ;}
-				if(isset($idSector) && $idSector != ''){                                   $a .= ",idSector='".$idSector."'" ;}
-				if(isset($UTM_norte) && $UTM_norte != ''){                                 $a .= ",UTM_norte='".$UTM_norte."'" ;}
-				if(isset($UTM_este) && $UTM_este != ''){                                   $a .= ",UTM_este='".$UTM_este."'" ;}
-				if(isset($codigoMuestra) && $codigoMuestra != ''){                         $a .= ",codigoMuestra='".$codigoMuestra."'" ;}
-				if(isset($idPuntoMuestreo) && $idPuntoMuestreo != ''){                     $a .= ",idPuntoMuestreo='".$idPuntoMuestreo."'" ;}
-				if(isset($idTipoMuestra) && $idTipoMuestra != ''){                         $a .= ",idTipoMuestra='".$idTipoMuestra."'" ;}
-				if(isset($RemuestraFecha) && $RemuestraFecha != ''){                       $a .= ",RemuestraFecha='".$RemuestraFecha."'" ;}
-				if(isset($Remuestra_codigo_muestra) && $Remuestra_codigo_muestra != ''){   $a .= ",Remuestra_codigo_muestra='".$Remuestra_codigo_muestra."'" ;}
-				if(isset($idParametros) && $idParametros != ''){                           $a .= ",idParametros='".$idParametros."'" ;}
-				if(isset($idSigno) && $idSigno != ''){                                     $a .= ",idSigno='".$idSigno."'" ;}
-				if(isset($valorAnalisis) && $valorAnalisis != ''){                         $a .= ",valorAnalisis='".$valorAnalisis."'" ;}
-				if(isset($idLaboratorio) && $idLaboratorio != ''){                         $a .= ",idLaboratorio='".$idLaboratorio."'" ;}
-				if(isset($CodigoLaboratorio) && $CodigoLaboratorio != ''){                 $a .= ",CodigoLaboratorio='".$CodigoLaboratorio."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                                   $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idCliente) && $idCliente != ''){                                 $a .= ",idCliente='".$idCliente."'" ;}
-				if(isset($Observaciones) && $Observaciones != ''){                         $a .= ",Observaciones='".$Observaciones."'" ;}
-				if(isset($idOpciones) && $idOpciones != ''){                               $a .= ",idOpciones='".$idOpciones."'" ;}
+				$SIS_data = "idAnalisisAgua='".$idAnalisisAgua."'" ;
+				if(isset($idSistema) && $idSistema != ''){                                 $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($f_muestra) && $f_muestra != ''){                                 $SIS_data .= ",f_muestra='".$f_muestra."'" ;}
+				if(isset($f_recibida) && $f_recibida != ''){                               $SIS_data .= ",f_recibida='".$f_recibida."'" ;}
+				if(isset($codigoProceso) && $codigoProceso != ''){                         $SIS_data .= ",codigoProceso='".$codigoProceso."'" ;}
+				if(isset($codigoArchivo) && $codigoArchivo != ''){                         $SIS_data .= ",codigoArchivo='".$codigoArchivo."'" ;}
+				if(isset($codigoServicio) && $codigoServicio != ''){                       $SIS_data .= ",codigoServicio='".$codigoServicio."'" ;}
+				if(isset($idSector) && $idSector != ''){                                   $SIS_data .= ",idSector='".$idSector."'" ;}
+				if(isset($UTM_norte) && $UTM_norte != ''){                                 $SIS_data .= ",UTM_norte='".$UTM_norte."'" ;}
+				if(isset($UTM_este) && $UTM_este != ''){                                   $SIS_data .= ",UTM_este='".$UTM_este."'" ;}
+				if(isset($codigoMuestra) && $codigoMuestra != ''){                         $SIS_data .= ",codigoMuestra='".$codigoMuestra."'" ;}
+				if(isset($idPuntoMuestreo) && $idPuntoMuestreo != ''){                     $SIS_data .= ",idPuntoMuestreo='".$idPuntoMuestreo."'" ;}
+				if(isset($idTipoMuestra) && $idTipoMuestra != ''){                         $SIS_data .= ",idTipoMuestra='".$idTipoMuestra."'" ;}
+				if(isset($RemuestraFecha) && $RemuestraFecha != ''){                       $SIS_data .= ",RemuestraFecha='".$RemuestraFecha."'" ;}
+				if(isset($Remuestra_codigo_muestra) && $Remuestra_codigo_muestra != ''){   $SIS_data .= ",Remuestra_codigo_muestra='".$Remuestra_codigo_muestra."'" ;}
+				if(isset($idParametros) && $idParametros != ''){                           $SIS_data .= ",idParametros='".$idParametros."'" ;}
+				if(isset($idSigno) && $idSigno != ''){                                     $SIS_data .= ",idSigno='".$idSigno."'" ;}
+				if(isset($valorAnalisis) && $valorAnalisis != ''){                         $SIS_data .= ",valorAnalisis='".$valorAnalisis."'" ;}
+				if(isset($idLaboratorio) && $idLaboratorio != ''){                         $SIS_data .= ",idLaboratorio='".$idLaboratorio."'" ;}
+				if(isset($CodigoLaboratorio) && $CodigoLaboratorio != ''){                 $SIS_data .= ",CodigoLaboratorio='".$CodigoLaboratorio."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                                   $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idCliente) && $idCliente != ''){                                 $SIS_data .= ",idCliente='".$idCliente."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){                         $SIS_data .= ",Observaciones='".$Observaciones."'" ;}
+				if(isset($idOpciones) && $idOpciones != ''){                               $SIS_data .= ",idOpciones='".$idOpciones."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'aguas_analisis_aguas', 'idAnalisisAgua = "'.$idAnalisisAgua.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'aguas_analisis_aguas', 'idAnalisisAgua = "'.$idAnalisisAgua.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo

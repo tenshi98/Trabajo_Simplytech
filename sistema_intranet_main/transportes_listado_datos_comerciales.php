@@ -36,12 +36,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//Listado de errores no manejables
-if (isset($_GET['created'])) {$error['Transporte'] 	  = 'sucess/Transporte creado correctamente';}
-if (isset($_GET['edited']))  {$error['Transporte'] 	  = 'sucess/Transporte editado correctamente';}
-if (isset($_GET['deleted'])) {$error['Transporte'] 	  = 'sucess/Transporte borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos de mi Transporte
 $query = "SELECT Nombre, Rut, RazonSocial, Giro, idRubro

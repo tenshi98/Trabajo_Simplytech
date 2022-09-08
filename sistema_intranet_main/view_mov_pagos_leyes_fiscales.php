@@ -648,8 +648,8 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 		</div>
 	</div>
 	
-	<div class="row">
-		<div class="col-xs-12">
+	<div class="col-xs-12">
+		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
 		</div>

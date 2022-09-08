@@ -37,14 +37,14 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Alumno creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Alumno editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Alumno borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Alumno creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Alumno editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Alumno borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT idCurso, Nombre, fNacimiento, idCiudad, idComuna, Direccion, idSistema, Rut, 
+$query = "SELECT idCurso, Nombre, ApellidoPat, fNacimiento, idCiudad, idComuna, Direccion, idSistema, Rut, 
 ApellidoPat, ApellidoMat
 FROM `alumnos_listado`
 WHERE idAlumno = ".$_GET['id'];
@@ -67,7 +67,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 ?>
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
@@ -114,7 +114,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 					$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x4, 1);
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x5, 2);
 					$Form_Inputs->form_date('Fecha Nacimiento','fNacimiento', $x6, 1);
-					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x7, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Region','idCiudad', $x7, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x8, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 											 $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x9, 1,'fa fa-map');	 

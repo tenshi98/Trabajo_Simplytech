@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/cursos_listado_videoconferencia.php';
@@ -34,8 +34,8 @@ if ( !empty($_POST['submit']) )  {
 //formulario para crear
 if ( !empty($_POST['submit_edit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/cursos_listado_videoconferencia.php';
@@ -44,7 +44,7 @@ if ( !empty($_POST['submit_edit']) )  {
 if ( !empty($_GET['del']) )     {
 	//Nueva ubicacion
 	$location = $new_location;
-	$location.='&id='.$_GET['id'];
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
 	require_once 'A1XRXS_sys/xrxs_form/cursos_listado_videoconferencia.php';	
@@ -57,10 +57,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/ 
 //Listado de errores no manejables
-if (isset($_GET['created']))  {$error['created'] 	  = 'sucess/Videoconferencia agregada correctamente';}
-if (isset($_GET['deleted']))  {$error['deleted'] 	  = 'sucess/Videoconferencia eliminada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Videoconferencia agregada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Videoconferencia eliminada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 // consulto los datos

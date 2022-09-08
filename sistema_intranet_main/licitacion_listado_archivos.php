@@ -48,10 +48,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario']  = 'sucess/Archivo subido correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario']  = 'sucess/Archivo borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Archivo subido correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Archivo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['new']) ) { 
 //valido los permisos

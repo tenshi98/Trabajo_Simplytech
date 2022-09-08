@@ -49,11 +49,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Streaming Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Streaming Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Streaming borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Streaming Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Streaming Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Streaming borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos

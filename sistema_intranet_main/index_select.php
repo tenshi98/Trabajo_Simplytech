@@ -53,8 +53,22 @@ if ( !empty($_GET['ini']) )  {
 		<meta name="keywords"              content="">
 		
 		<!-- WEB FONT -->
-		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<?php
+		//verifica la capa de desarrollo
+		$whitelist = array( 'localhost', '127.0.0.1', '::1' );
+		////////////////////////////////////////////////////////////////////////////////
+		//si estoy en ambiente de desarrollo
+		if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
+			echo '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIB_assets/lib/font-awesome/css/font-awesome.min.css">';
+			//echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
+			
+		////////////////////////////////////////////////////////////////////////////////
+		//si estoy en ambiente de produccion	
+		}else{
+			echo '<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">';
+			echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
+		}
+		?>
 		
 		<!-- CSS Base -->
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
@@ -64,6 +78,7 @@ if ( !empty($_GET['ini']) )  {
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/lib/fullcalendar/fullcalendar.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/my_style.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/css/my_colors.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/css/bootstrap_button_arrows.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/my_corrections.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/prism/prism.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/elegant_font/css/style.css">
@@ -217,7 +232,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 										<th>Interfaz</th>
 										<th width="10">Acciones</th>
 									</tr>
-									<?php echo widget_sherlock(1, 3);?>
+									<?php echo widget_sherlock(1, 3, 'TableFiltered');?>
 								</thead>			  
 								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 									<?php foreach ($arrSistemas as $sis) { ?>

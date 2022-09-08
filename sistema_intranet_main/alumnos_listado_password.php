@@ -38,10 +38,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT Nombre
+$query = "SELECT Nombre, ApellidoPat
 FROM `alumnos_listado`
 WHERE idAlumno = ".$_GET['id'];
 //Consulta
@@ -63,7 +63,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'], 'Editar Password');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'], 'Editar Password');?>
 </div>
 <div class="clearfix"></div>   
 

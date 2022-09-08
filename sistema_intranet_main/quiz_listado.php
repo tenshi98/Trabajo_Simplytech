@@ -75,12 +75,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Cuestionario creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Cuestionario editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Cuestionario borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Cuestionario creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Cuestionario editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Cuestionario borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['modBase']) ) { 
 // Se traen todos los datos de la pregunta
 $query = "SELECT Nombre,Header_texto, Header_fecha, Footer_texto, Texto_Inicio, idSistema,

@@ -21,7 +21,6 @@ require_once '0_validate_user_1.php';
 	if ( isset($_POST['Rango_max']) )      $Rango_max      = $_POST['Rango_max'];
 	if ( !empty($_POST['idSistema']) )     $idSistema      = $_POST['idSistema'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -42,6 +41,14 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){         $Nombre    = EstandarizarInput($Nombre); }
+	if(isset($Codigo) && $Codigo != ''){         $Codigo    = EstandarizarInput($Codigo); }
+	if(isset($Rango_min) && $Rango_min != ''){   $Rango_min = EstandarizarInput($Rango_min); }
+	if(isset($Rango_max) && $Rango_max != ''){   $Rango_max = EstandarizarInput($Rango_max); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -79,33 +86,22 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){            $a  = "'".$Nombre."'" ;         }else{$a  ="''";}
-				if(isset($Codigo) && $Codigo != ''){            $a .= ",'".$Codigo."'" ;        }else{$a .=",''";}
-				if(isset($Rango_min) && $Rango_min != ''){      $a .= ",'".$Rango_min."'" ;     }else{$a .=",''";}
-				if(isset($Rango_max) && $Rango_max != ''){      $a .= ",'".$Rango_max."'" ;     }else{$a .=",''";}
-				if(isset($idSistema) && $idSistema != ''){      $a .= ",'".$idSistema."'" ;     }else{$a .=",''";}
+				if(isset($Nombre) && $Nombre != ''){            $SIS_data  = "'".$Nombre."'" ;         }else{$SIS_data  ="''";}
+				if(isset($Codigo) && $Codigo != ''){            $SIS_data .= ",'".$Codigo."'" ;        }else{$SIS_data .=",''";}
+				if(isset($Rango_min) && $Rango_min != ''){      $SIS_data .= ",'".$Rango_min."'" ;     }else{$SIS_data .=",''";}
+				if(isset($Rango_max) && $Rango_max != ''){      $SIS_data .= ",'".$Rango_max."'" ;     }else{$SIS_data .=",''";}
+				if(isset($idSistema) && $idSistema != ''){      $SIS_data .= ",'".$idSistema."'" ;     }else{$SIS_data .=",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `aguas_analisis_parametros` (Nombre, Codigo, Rango_min, Rango_max, 
-				idSistema) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Nombre, Codigo, Rango_min, Rango_max, idSistema';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_analisis_parametros', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($ultimo_id!=0){
 					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -136,16 +132,16 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idParametros='".$idParametros."'" ;
-				if(isset($Nombre) && $Nombre != ''){           $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Codigo) && $Codigo != ''){           $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($Rango_min) && $Rango_min != ''){     $a .= ",Rango_min='".$Rango_min."'" ;}
-				if(isset($Rango_max) && $Rango_max != ''){     $a .= ",Rango_max='".$Rango_max."'" ;}
-				if(isset($idSistema) && $idSistema != ''){     $a .= ",idSistema='".$idSistema."'" ;}
+				$SIS_data = "idParametros='".$idParametros."'" ;
+				if(isset($Nombre) && $Nombre != ''){           $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Codigo) && $Codigo != ''){           $SIS_data .= ",Codigo='".$Codigo."'" ;}
+				if(isset($Rango_min) && $Rango_min != ''){     $SIS_data .= ",Rango_min='".$Rango_min."'" ;}
+				if(isset($Rango_max) && $Rango_max != ''){     $SIS_data .= ",Rango_max='".$Rango_max."'" ;}
+				if(isset($idSistema) && $idSistema != ''){     $SIS_data .= ",idSistema='".$idSistema."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'aguas_analisis_parametros', 'idParametros = "'.$idParametros.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'aguas_analisis_parametros', 'idParametros = "'.$idParametros.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo

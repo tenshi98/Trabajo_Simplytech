@@ -52,11 +52,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Contacto Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Contacto Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Contacto borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Contacto Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Contacto Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Contacto borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
@@ -226,7 +226,7 @@ $arrContactos = db_select_array (false, $SIS_query, 'principal_agenda_telefonica
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>		
 	</ul>
-	
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contacto</a><?php }?>
 </div>
 <div class="clearfix"></div> 
 <div class="collapse col-sm-12" id="collapseExample">

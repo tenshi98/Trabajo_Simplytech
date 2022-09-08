@@ -32,10 +32,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['error'])) {$error['usuario'] 	  = 'error/'.$_GET['error'];}
-if (isset($_GET['send']))  {$error['usuario'] 	  = 'sucess/Email enviado correctamente';}
+if (isset($_GET['error'])){ $error['error'] = 'error/'.$_GET['error'];}
+if (isset($_GET['send'])){  $error['send']  = 'sucess/Email enviado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 
 //verifica la capa de desarrollo
 $whitelist = array( 'localhost', '127.0.0.1', '::1' );
@@ -82,7 +82,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 					$Form_Inputs->form_input_icon('Token', 'Token', $x1, 2,'fa fa-key');
 					$Form_Inputs->form_input_icon('InstanceId', 'InstanceId', $x2, 2,'fa fa-key');
 					$Form_Inputs->form_input_icon('Telefono', 'fono', $x3, 1,'fa fa-phone ');
-					$Form_Inputs->form_input_icon('Grupo', 'grupo', $x4, 1,'fa fa-phone ');
+					//$Form_Inputs->form_input_icon('Grupo', 'grupo', $x4, 1,'fa fa-phone ');
 					$Form_Inputs->form_textarea('Mensaje','mensaje', $x5, 2);
 								
 					$Form_Inputs->form_input_hidden('email_principal', $rowEmpresa['email_principal'], 2);

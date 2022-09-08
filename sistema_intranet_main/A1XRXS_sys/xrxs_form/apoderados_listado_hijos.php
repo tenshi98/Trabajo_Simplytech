@@ -48,6 +48,13 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){           $Nombre      = EstandarizarInput($Nombre); }
+	if(isset($ApellidoPat) && $ApellidoPat != ''){ $ApellidoPat = EstandarizarInput($ApellidoPat); }
+	if(isset($ApellidoMat) && $ApellidoMat != ''){ $ApellidoMat = EstandarizarInput($ApellidoMat); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -166,37 +173,27 @@ require_once '0_validate_user_1.php';
 									imagedestroy($imgBase);
 							
 									//filtros
-									if(isset($idApoderado) && $idApoderado != ''){    $a  = "'".$idApoderado."'" ;    }else{$a  ="''";}
-									if(isset($Nombre) && $Nombre != ''){              $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
-									if(isset($ApellidoPat) && $ApellidoPat != ''){    $a .= ",'".$ApellidoPat."'" ;   }else{$a .=",''";}
-									if(isset($ApellidoMat) && $ApellidoMat != ''){    $a .= ",'".$ApellidoMat."'" ;   }else{$a .=",''";}
-									if(isset($idSexo) && $idSexo != ''){              $a .= ",'".$idSexo."'" ;        }else{$a .=",''";}
-									if(isset($FNacimiento) && $FNacimiento != ''){    $a .= ",'".$FNacimiento."'" ;   }else{$a .=",''";}
-									if(isset($idPlan) && $idPlan != ''){              $a .= ",'".$idPlan."'" ;        }else{$a .=",''";}
-									if(isset($idVehiculo) && $idVehiculo != ''){      $a .= ",'".$idVehiculo."'" ;        }else{$a .=",''";}
-									$a .= ",'".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-											
+									if(isset($idApoderado) && $idApoderado != ''){    $SIS_data  = "'".$idApoderado."'" ;    }else{$SIS_data  = "''";}
+									if(isset($Nombre) && $Nombre != ''){              $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
+									if(isset($ApellidoPat) && $ApellidoPat != ''){    $SIS_data .= ",'".$ApellidoPat."'" ;   }else{$SIS_data .= ",''";}
+									if(isset($ApellidoMat) && $ApellidoMat != ''){    $SIS_data .= ",'".$ApellidoMat."'" ;   }else{$SIS_data .= ",''";}
+									if(isset($idSexo) && $idSexo != ''){              $SIS_data .= ",'".$idSexo."'" ;        }else{$SIS_data .= ",''";}
+									if(isset($FNacimiento) && $FNacimiento != ''){    $SIS_data .= ",'".$FNacimiento."'" ;   }else{$SIS_data .= ",''";}
+									if(isset($idPlan) && $idPlan != ''){              $SIS_data .= ",'".$idPlan."'" ;        }else{$SIS_data .= ",''";}
+									if(isset($idVehiculo) && $idVehiculo != ''){      $SIS_data .= ",'".$idVehiculo."'" ;    }else{$SIS_data .= ",''";}
+									$SIS_data .= ",'".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+									
 									// inserto los datos de registro en la db
-									$query  = "INSERT INTO `apoderados_listado_hijos` (idApoderado, Nombre, ApellidoPat, ApellidoMat,
-									idSexo, FNacimiento, idPlan, idVehiculo, Direccion_img ) 
-									VALUES (".$a.")";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
+									$SIS_columns = 'idApoderado, Nombre, ApellidoPat, ApellidoMat, idSexo, FNacimiento, idPlan, idVehiculo, Direccion_img';
+									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'apoderados_listado_hijos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 									//Si ejecuto correctamente la consulta
-									if($resultado){
+									if($ultimo_id!=0){
 										
+										//redirijo
 										header( 'Location: '.$location.'&created=true' );
 										die;	
 										
-									//si da error, guardar en el log de errores una copia
-									}else{
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									}
 													
 								} else {
@@ -212,41 +209,28 @@ require_once '0_validate_user_1.php';
 				}else{
 					
 					//filtros
-					if(isset($idApoderado) && $idApoderado != ''){    $a  = "'".$idApoderado."'" ;    }else{$a  ="''";}
-					if(isset($Nombre) && $Nombre != ''){              $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
-					if(isset($ApellidoPat) && $ApellidoPat != ''){    $a .= ",'".$ApellidoPat."'" ;   }else{$a .=",''";}
-					if(isset($ApellidoMat) && $ApellidoMat != ''){    $a .= ",'".$ApellidoMat."'" ;   }else{$a .=",''";}
-					if(isset($idSexo) && $idSexo != ''){              $a .= ",'".$idSexo."'" ;        }else{$a .=",''";}
-					if(isset($FNacimiento) && $FNacimiento != ''){    $a .= ",'".$FNacimiento."'" ;   }else{$a .=",''";}
-					if(isset($idPlan) && $idPlan != ''){              $a .= ",'".$idPlan."'" ;        }else{$a .=",''";}
-					if(isset($idVehiculo) && $idVehiculo != ''){      $a .= ",'".$idVehiculo."'" ;        }else{$a .=",''";}
-							
+					if(isset($idApoderado) && $idApoderado != ''){    $SIS_data  = "'".$idApoderado."'" ;    }else{$SIS_data  = "''";}
+					if(isset($Nombre) && $Nombre != ''){              $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($ApellidoPat) && $ApellidoPat != ''){    $SIS_data .= ",'".$ApellidoPat."'" ;   }else{$SIS_data .= ",''";}
+					if(isset($ApellidoMat) && $ApellidoMat != ''){    $SIS_data .= ",'".$ApellidoMat."'" ;   }else{$SIS_data .= ",''";}
+					if(isset($idSexo) && $idSexo != ''){              $SIS_data .= ",'".$idSexo."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($FNacimiento) && $FNacimiento != ''){    $SIS_data .= ",'".$FNacimiento."'" ;   }else{$SIS_data .= ",''";}
+					if(isset($idPlan) && $idPlan != ''){              $SIS_data .= ",'".$idPlan."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($idVehiculo) && $idVehiculo != ''){      $SIS_data .= ",'".$idVehiculo."'" ;    }else{$SIS_data .= ",''";}
+					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `apoderados_listado_hijos` (idApoderado, Nombre, ApellidoPat, ApellidoMat,
-					idSexo, FNacimiento, idPlan, idVehiculo ) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					$SIS_columns = 'idApoderado, Nombre, ApellidoPat, ApellidoMat, idSexo, FNacimiento, idPlan, idVehiculo';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'apoderados_listado_hijos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Si ejecuto correctamente la consulta
-					if($resultado){
+					if($ultimo_id!=0){
 						
+						//redirijo
 						header( 'Location: '.$location.'&created=true' );
 						die;
 						
-					//si da error, guardar en el log de errores una copia
-					}else{
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
 					}
-					
-				}					
-				
+				}
 			}
 	
 		break;
@@ -358,20 +342,20 @@ require_once '0_validate_user_1.php';
 									imagedestroy($imgBase);
 							
 									//Filtros
-									$a = "idHijos='".$idHijos."'" ;
-									if(isset($idApoderado) && $idApoderado != ''){      $a .= ",idApoderado='".$idApoderado."'" ;}
-									if(isset($Nombre) && $Nombre != ''){                $a .= ",Nombre='".$Nombre."'" ;}
-									if(isset($ApellidoPat) && $ApellidoPat != ''){      $a .= ",ApellidoPat='".$ApellidoPat."'" ;}
-									if(isset($ApellidoMat) && $ApellidoMat != ''){      $a .= ",ApellidoMat='".$ApellidoMat."'" ;}
-									if(isset($idSexo) && $idSexo != ''){                $a .= ",idSexo='".$idSexo."'" ;}
-									if(isset($FNacimiento) && $FNacimiento != ''){      $a .= ",FNacimiento='".$FNacimiento."'" ;}	
-									if(isset($idPlan) && $idPlan != ''){                $a .= ",idPlan='".$idPlan."'" ;}						
-									if(isset($idVehiculo) && $idVehiculo != ''){        $a .= ",idVehiculo='".$idVehiculo."'" ;}						
-									$a .= ",Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+									$SIS_data = "idHijos='".$idHijos."'" ;
+									if(isset($idApoderado) && $idApoderado != ''){      $SIS_data .= ",idApoderado='".$idApoderado."'" ;}
+									if(isset($Nombre) && $Nombre != ''){                $SIS_data .= ",Nombre='".$Nombre."'" ;}
+									if(isset($ApellidoPat) && $ApellidoPat != ''){      $SIS_data .= ",ApellidoPat='".$ApellidoPat."'" ;}
+									if(isset($ApellidoMat) && $ApellidoMat != ''){      $SIS_data .= ",ApellidoMat='".$ApellidoMat."'" ;}
+									if(isset($idSexo) && $idSexo != ''){                $SIS_data .= ",idSexo='".$idSexo."'" ;}
+									if(isset($FNacimiento) && $FNacimiento != ''){      $SIS_data .= ",FNacimiento='".$FNacimiento."'" ;}	
+									if(isset($idPlan) && $idPlan != ''){                $SIS_data .= ",idPlan='".$idPlan."'" ;}						
+									if(isset($idVehiculo) && $idVehiculo != ''){        $SIS_data .= ",idVehiculo='".$idVehiculo."'" ;}						
+									$SIS_data .= ",Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 									
 									/*******************************************************/
 									//se actualizan los datos
-									$resultado = db_update_data (false, $a, 'apoderados_listado_hijos', 'idHijos = "'.$idHijos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									$resultado = db_update_data (false, $SIS_data, 'apoderados_listado_hijos', 'idHijos = "'.$idHijos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
 									if($resultado==true){
 										
@@ -393,19 +377,19 @@ require_once '0_validate_user_1.php';
 				}else{
 					
 					//Filtros
-					$a = "idHijos='".$idHijos."'" ;
-					if(isset($idApoderado) && $idApoderado != ''){      $a .= ",idApoderado='".$idApoderado."'" ;}
-					if(isset($Nombre) && $Nombre != ''){                $a .= ",Nombre='".$Nombre."'" ;}
-					if(isset($ApellidoPat) && $ApellidoPat != ''){      $a .= ",ApellidoPat='".$ApellidoPat."'" ;}
-					if(isset($ApellidoMat) && $ApellidoMat != ''){      $a .= ",ApellidoMat='".$ApellidoMat."'" ;}
-					if(isset($idSexo) && $idSexo != ''){                $a .= ",idSexo='".$idSexo."'" ;}
-					if(isset($FNacimiento) && $FNacimiento != ''){      $a .= ",FNacimiento='".$FNacimiento."'" ;}	
-					if(isset($idPlan) && $idPlan != ''){                $a .= ",idPlan='".$idPlan."'" ;}								
-					if(isset($idVehiculo) && $idVehiculo != ''){        $a .= ",idVehiculo='".$idVehiculo."'" ;}						
+					$SIS_data = "idHijos='".$idHijos."'" ;
+					if(isset($idApoderado) && $idApoderado != ''){      $SIS_data .= ",idApoderado='".$idApoderado."'" ;}
+					if(isset($Nombre) && $Nombre != ''){                $SIS_data .= ",Nombre='".$Nombre."'" ;}
+					if(isset($ApellidoPat) && $ApellidoPat != ''){      $SIS_data .= ",ApellidoPat='".$ApellidoPat."'" ;}
+					if(isset($ApellidoMat) && $ApellidoMat != ''){      $SIS_data .= ",ApellidoMat='".$ApellidoMat."'" ;}
+					if(isset($idSexo) && $idSexo != ''){                $SIS_data .= ",idSexo='".$idSexo."'" ;}
+					if(isset($FNacimiento) && $FNacimiento != ''){      $SIS_data .= ",FNacimiento='".$FNacimiento."'" ;}	
+					if(isset($idPlan) && $idPlan != ''){                $SIS_data .= ",idPlan='".$idPlan."'" ;}								
+					if(isset($idVehiculo) && $idVehiculo != ''){        $SIS_data .= ",idVehiculo='".$idVehiculo."'" ;}						
 					
 					/*******************************************************/
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'apoderados_listado_hijos', 'idHijos = "'.$idHijos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'apoderados_listado_hijos', 'idHijos = "'.$idHijos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
 						
@@ -494,8 +478,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Direccion_img=''" ;
-			$resultado = db_update_data (false, $a, 'apoderados_listado_hijos', 'idHijos = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'apoderados_listado_hijos', 'idHijos = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				

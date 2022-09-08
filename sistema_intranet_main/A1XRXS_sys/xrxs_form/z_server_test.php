@@ -25,7 +25,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['grupo']) )            $grupo             = $_POST['grupo'];
 	if ( !empty($_POST['mensaje']) )          $mensaje           = $_POST['mensaje'];
 	
-
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -50,6 +49,15 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($email) && $email != ''){                     $email           = EstandarizarInput($email); }
+	if(isset($texto) && $texto != ''){                     $texto           = EstandarizarInput($texto); }
+	if(isset($email_principal) && $email_principal != ''){ $email_principal = EstandarizarInput($email_principal); }
+	if(isset($GmailUsuario) && $GmailUsuario != ''){       $GmailUsuario    = EstandarizarInput($GmailUsuario); }
+	if(isset($GmailPassword) && $GmailPassword != ''){     $GmailPassword   = EstandarizarInput($GmailPassword); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -184,15 +192,14 @@ require_once '0_validate_user_1.php';
 		case 'send_mail_google':
 		
 			//Envio de correo
-			$rmail = tareas_envio_correo_google($GmailUsuario, 'Exilon360', 
+			$rmail = tareas_envio_correo_google($GmailUsuario, $GmailPassword, 'Exilon360', 
 												$email, 'Receptor', 
 												'', '', 
 												'Notificacion', 
 												$texto,'', 
 												'', 
-												1,
-												$GmailUsuario,
-												$GmailPassword);
+												1);
+																				
             //se guarda el log
 			log_response(1, $rmail, $email.' (Asunto:Notificacion)');
 		         

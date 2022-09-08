@@ -38,10 +38,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['TiempoProgramado']) )    $TiempoProgramado     = $_POST['TiempoProgramado'];
 	if ( !empty($_POST['idTrabajo']) )           $idTrabajo            = $_POST['idTrabajo'];
 	
-	
 	if ( !empty($_POST['lvl']) )                 $lvl                  = $_POST['lvl'];
-	
-	
 	
 	//formulariopara el itemizado
 	//Traspaso de valores input a variables
@@ -71,7 +68,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idLevel_23']) )     $idLevel[23]     = $_POST['idLevel_23'];
 	if ( !empty($_POST['idLevel_24']) )     $idLevel[24]     = $_POST['idLevel_24'];
 	if ( !empty($_POST['idLevel_25']) )     $idLevel[25]     = $_POST['idLevel_25'];
-
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -135,9 +131,14 @@ require_once '0_validate_user_1.php';
 			case 'idLevel_24':          if(empty($idLevel[24])){          $error['idLevel_24']            = 'error/No ha ingresado el idLevel_24';}break;
 			case 'idLevel_25':          if(empty($idLevel[25])){          $error['idLevel_25']            = 'error/No ha ingresado el idLevel_25';}break;
 	
-
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Codigo) && $Codigo != ''){ $Codigo = EstandarizarInput($Codigo); }
+	if(isset($Nombre) && $Nombre != ''){ $Nombre = EstandarizarInput($Nombre); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -170,72 +171,41 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                $a  = "'".$idSistema."'" ;         }else{$a  ="''";}
-				if(isset($Codigo) && $Codigo != ''){                      $a .= ",'".$Codigo."'" ;           }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){                      $a .= ",'".$Nombre."'" ;           }else{$a .=",''";}
-				if(isset($FechaInicio) && $FechaInicio != ''){            $a .= ",'".$FechaInicio."'" ;      }else{$a .=",''";}
-				if(isset($FechaTermino) && $FechaTermino != ''){          $a .= ",'".$FechaTermino."'" ;     }else{$a .=",''";}
-				if(isset($Presupuesto) && $Presupuesto != ''){            $a .= ",'".$Presupuesto."'" ;      }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){                  $a .= ",'".$idEstado."'" ;         }else{$a .=",''";}
-				if(isset($idBodegaProd) && $idBodegaProd != ''){          $a .= ",'".$idBodegaProd."'" ;     }else{$a .=",''";}
-				if(isset($idBodegaIns) && $idBodegaIns != ''){            $a .= ",'".$idBodegaIns."'" ;      }else{$a .=",''";}
-				if(isset($idAprobado) && $idAprobado != ''){              $a .= ",'".$idAprobado."'" ;       }else{$a .=",''";}
-				if(isset($idCliente) && $idCliente != ''){                $a .= ",'".$idCliente."'" ;        }else{$a .=",''";}
-				if(isset($idTipoLicitacion) && $idTipoLicitacion != ''){  $a .= ",'".$idTipoLicitacion."'" ; }else{$a .=",''";}
-				if(isset($ValorMensual) && $ValorMensual != ''){          $a .= ",'".$ValorMensual."'" ;     }else{$a .=",''";}
-				if(isset($idOpcionItem) && $idOpcionItem != ''){          $a .= ",'".$idOpcionItem."'" ;     }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){                $SIS_data  = "'".$idSistema."'" ;         }else{$SIS_data  = "''";}
+				if(isset($Codigo) && $Codigo != ''){                      $SIS_data .= ",'".$Codigo."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                      $SIS_data .= ",'".$Nombre."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($FechaInicio) && $FechaInicio != ''){            $SIS_data .= ",'".$FechaInicio."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($FechaTermino) && $FechaTermino != ''){          $SIS_data .= ",'".$FechaTermino."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Presupuesto) && $Presupuesto != ''){            $SIS_data .= ",'".$Presupuesto."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                  $SIS_data .= ",'".$idEstado."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idBodegaProd) && $idBodegaProd != ''){          $SIS_data .= ",'".$idBodegaProd."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idBodegaIns) && $idBodegaIns != ''){            $SIS_data .= ",'".$idBodegaIns."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idAprobado) && $idAprobado != ''){              $SIS_data .= ",'".$idAprobado."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente != ''){                $SIS_data .= ",'".$idCliente."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($idTipoLicitacion) && $idTipoLicitacion != ''){  $SIS_data .= ",'".$idTipoLicitacion."'" ; }else{$SIS_data .= ",''";}
+				if(isset($ValorMensual) && $ValorMensual != ''){          $SIS_data .= ",'".$ValorMensual."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idOpcionItem) && $idOpcionItem != ''){          $SIS_data .= ",'".$idOpcionItem."'" ;     }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `licitacion_listado` (idSistema, Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto,
-				idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente, idTipoLicitacion, ValorMensual, idOpcionItem) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto, idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente, idTipoLicitacion, ValorMensual, idOpcionItem';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guarda en historial la accion
-					if(isset($ultimo_id) && $ultimo_id != ''){    $a  = "'".$ultimo_id."'" ;  }else{$a  = "''";}
-					$a .= ",'".fecha_actual()."'";
-					$a .= ",'1'";                                                    //Creacion Satisfactoria
-					$a .= ",'Creacion del documento'";                               //Observacion
-					$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
+					$SIS_data .= ",'".fecha_actual()."'";
+					$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
+					$SIS_data .= ",'Creacion del documento'";                               //Observacion
+					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
-					
+					$SIS_columns = 'idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario';
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 		
@@ -267,25 +237,25 @@ require_once '0_validate_user_1.php';
 					
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
-				$a = "idLicitacion='".$idLicitacion."'" ;
-				if(isset($idSistema) && $idSistema != ''){                $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Codigo) && $Codigo != ''){                      $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                      $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($FechaInicio) && $FechaInicio != ''){            $a .= ",FechaInicio='".$FechaInicio."'" ;}
-				if(isset($FechaTermino) && $FechaTermino != ''){          $a .= ",FechaTermino='".$FechaTermino."'" ;}
-				if(isset($Presupuesto) && $Presupuesto != ''){            $a .= ",Presupuesto='".$Presupuesto."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                  $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idBodegaProd) && $idBodegaProd != ''){          $a .= ",idBodegaProd='".$idBodegaProd."'" ;}
-				if(isset($idBodegaIns) && $idBodegaIns != ''){            $a .= ",idBodegaIns='".$idBodegaIns."'" ;}
-				if(isset($idAprobado) && $idAprobado != ''){              $a .= ",idAprobado='".$idAprobado."'" ;}
-				if(isset($idCliente) && $idCliente != ''){                $a .= ",idCliente='".$idCliente."'" ;}
-				if(isset($idTipoLicitacion) && $idTipoLicitacion != ''){  $a .= ",idTipoLicitacion='".$idTipoLicitacion."'" ;}
-				if(isset($ValorMensual) && $ValorMensual != ''){          $a .= ",ValorMensual='".$ValorMensual."'" ;}
-				if(isset($idOpcionItem) && $idOpcionItem != ''){          $a .= ",idOpcionItem='".$idOpcionItem."'" ;}
+				$SIS_data = "idLicitacion='".$idLicitacion."'" ;
+				if(isset($idSistema) && $idSistema != ''){                $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($Codigo) && $Codigo != ''){                      $SIS_data .= ",Codigo='".$Codigo."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                      $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($FechaInicio) && $FechaInicio != ''){            $SIS_data .= ",FechaInicio='".$FechaInicio."'" ;}
+				if(isset($FechaTermino) && $FechaTermino != ''){          $SIS_data .= ",FechaTermino='".$FechaTermino."'" ;}
+				if(isset($Presupuesto) && $Presupuesto != ''){            $SIS_data .= ",Presupuesto='".$Presupuesto."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                  $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idBodegaProd) && $idBodegaProd != ''){          $SIS_data .= ",idBodegaProd='".$idBodegaProd."'" ;}
+				if(isset($idBodegaIns) && $idBodegaIns != ''){            $SIS_data .= ",idBodegaIns='".$idBodegaIns."'" ;}
+				if(isset($idAprobado) && $idAprobado != ''){              $SIS_data .= ",idAprobado='".$idAprobado."'" ;}
+				if(isset($idCliente) && $idCliente != ''){                $SIS_data .= ",idCliente='".$idCliente."'" ;}
+				if(isset($idTipoLicitacion) && $idTipoLicitacion != ''){  $SIS_data .= ",idTipoLicitacion='".$idTipoLicitacion."'" ;}
+				if(isset($ValorMensual) && $ValorMensual != ''){          $SIS_data .= ",ValorMensual='".$ValorMensual."'" ;}
+				if(isset($idOpcionItem) && $idOpcionItem != ''){          $SIS_data .= ",idOpcionItem='".$idOpcionItem."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -313,28 +283,16 @@ require_once '0_validate_user_1.php';
 					//se guarda el registro
 					if(isset($hist_Observacion)&&$hist_Observacion!='<strong>Modificaciones:</strong><br/>'){
 						//Se guarda en historial la accion
-						$a  = "'".$idLicitacion."'";
-						$a .= ",'".fecha_actual()."'";
-						$a .= ",'2'";                                                    //Creacion Satisfactoria
-						$a .= ",'".$hist_Observacion."'";                                //Observacion
-						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+						$SIS_data  = "'".$idLicitacion."'";
+						$SIS_data .= ",'".fecha_actual()."'";
+						$SIS_data .= ",'2'";                                                    //Creacion Satisfactoria
+						$SIS_data .= ",'".$hist_Observacion."'";                                //Observacion
+						$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						$SIS_columns = 'idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 					
 
@@ -421,38 +379,35 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                $a = "'".$idSistema."'" ;           }else{$a ="''";}
-				if(isset($idLicitacion) && $idLicitacion != ''){          $a .= ",'".$idLicitacion."'" ;      }else{$a .=",''";}
-				if(isset($idUtilizable) && $idUtilizable != ''){          $a .= ",'".$idUtilizable."'" ;      }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){                      $a .= ",'".$Nombre."'" ;            }else{$a .=",''";}
-				if(isset($Codigo) && $Codigo != ''){                      $a .= ",'".$Codigo."'" ;            }else{$a .=",''";}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){          $a .= ",'".$idFrecuencia."'" ;      }else{$a .=",''";}
-				if(isset($Cantidad) && $Cantidad != ''){                  $a .= ",'".$Cantidad."'" ;          }else{$a .=",''";}
-				if(isset($Valor) && $Valor != ''){                        $a .= ",'".$Valor."'" ;             }else{$a .=",''";}
-				if(isset($ValorTotal) && $ValorTotal != ''){              $a .= ",'".$ValorTotal."'" ;        }else{$a .=",''";}
-				if(isset($TiempoProgramado) && $TiempoProgramado != ''){  $a .= ",'".$TiempoProgramado."'" ;  }else{$a .=",''";}
-				if(isset($idTrabajo) && $idTrabajo != ''){                $a .= ",'".$idTrabajo."'" ;         }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){                $SIS_data  = "'".$idSistema."'" ;          }else{$SIS_data  = "''";}
+				if(isset($idLicitacion) && $idLicitacion != ''){          $SIS_data .= ",'".$idLicitacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idUtilizable) && $idUtilizable != ''){          $SIS_data .= ",'".$idUtilizable."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                      $SIS_data .= ",'".$Nombre."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Codigo) && $Codigo != ''){                      $SIS_data .= ",'".$Codigo."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($idFrecuencia) && $idFrecuencia != ''){          $SIS_data .= ",'".$idFrecuencia."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Cantidad) && $Cantidad != ''){                  $SIS_data .= ",'".$Cantidad."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Valor) && $Valor != ''){                        $SIS_data .= ",'".$Valor."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($ValorTotal) && $ValorTotal != ''){              $SIS_data .= ",'".$ValorTotal."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($TiempoProgramado) && $TiempoProgramado != ''){  $SIS_data .= ",'".$TiempoProgramado."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idTrabajo) && $idTrabajo != ''){                $SIS_data .= ",'".$idTrabajo."'" ;         }else{$SIS_data .= ",''";}
 				
 				$xbla = '';
 				for ($i = 2; $i <= $lvl; $i++) {
 					//Ubico correctamente el puntero
 					$point = $i - 1;
 					//Valor a insertar
-					if(isset($idLevel[$point]) && $idLevel[$point] != ''){   $a .= ",'".$idLevel[$point]."'" ;   }else{$a .=",''";}
+					if(isset($idLevel[$point]) && $idLevel[$point] != ''){   $SIS_data .= ",'".$idLevel[$point]."'" ;   }else{$SIS_data .=",''";}
 					//donde insertar
 					$xbla .= ',idLevel_'.$point;
 				}
 			
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `licitacion_listado_level_".$lvl."` (idSistema,idLicitacion, idUtilizable,Nombre,Codigo,idFrecuencia,Cantidad,Valor,ValorTotal,
-				TiempoProgramado, idTrabajo
-				".$xbla." ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema,idLicitacion, idUtilizable,Nombre,Codigo,idFrecuencia,Cantidad,Valor,ValorTotal,TiempoProgramado, idTrabajo '.$xbla;
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_level_'.$lvl, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+				
 					/*****************************************************/
 					//se crean el mensaje
 					$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
@@ -463,43 +418,20 @@ require_once '0_validate_user_1.php';
 					//se guarda el registro
 					if(isset($hist_Observacion)&&$hist_Observacion!='<strong>Modificaciones:</strong><br/>'){
 						//Se guarda en historial la accion
-						$a  = "'".$idLicitacion."'";
-						$a .= ",'".fecha_actual()."'";
-						$a .= ",'2'";                                                    //Creacion Satisfactoria
-						$a .= ",'".$hist_Observacion."'";                                //Observacion
-						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-							
+						$SIS_data  = "'".$idLicitacion."'";
+						$SIS_data .= ",'".fecha_actual()."'";
+						$SIS_data .= ",'2'";                                                    //Creacion Satisfactoria
+						$SIS_data .= ",'".$hist_Observacion."'";                                //Observacion
+						$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-								
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-						}
+						$SIS_columns = 'idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -518,22 +450,22 @@ require_once '0_validate_user_1.php';
 					
 				/*****************************************************/
 				//Filtros
-				$a = "idLevel_".$lvl."='".$idLevel[$lvl]."'" ;
-				if(isset($idSistema) && $idSistema != ''){                 $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idLicitacion) && $idLicitacion != ''){           $a .= ",idLicitacion='".$idLicitacion."'" ;}
-				if(isset($idUtilizable) && $idUtilizable != ''){           $a .= ",idUtilizable='".$idUtilizable."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                       $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Codigo) && $Codigo != ''){                       $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){           $a .= ",idFrecuencia='".$idFrecuencia."'" ;}
-				if(isset($Cantidad) && $Cantidad != ''){                   $a .= ",Cantidad='".$Cantidad."'" ;}
-				if(isset($Valor) && $Valor != ''){                         $a .= ",Valor='".$Valor."'" ;}
-				if(isset($ValorTotal) && $ValorTotal != ''){               $a .= ",ValorTotal='".$ValorTotal."'" ;}
-				if(isset($TiempoProgramado) && $TiempoProgramado != ''){   $a .= ",TiempoProgramado='".$TiempoProgramado."'" ;}
-				if(isset($idTrabajo) && $idTrabajo != ''){                 $a .= ",idTrabajo='".$idTrabajo."'" ;}
+				$SIS_data = "idLevel_".$lvl."='".$idLevel[$lvl]."'" ;
+				if(isset($idSistema) && $idSistema != ''){                 $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idLicitacion) && $idLicitacion != ''){           $SIS_data .= ",idLicitacion='".$idLicitacion."'" ;}
+				if(isset($idUtilizable) && $idUtilizable != ''){           $SIS_data .= ",idUtilizable='".$idUtilizable."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                       $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Codigo) && $Codigo != ''){                       $SIS_data .= ",Codigo='".$Codigo."'" ;}
+				if(isset($idFrecuencia) && $idFrecuencia != ''){           $SIS_data .= ",idFrecuencia='".$idFrecuencia."'" ;}
+				if(isset($Cantidad) && $Cantidad != ''){                   $SIS_data .= ",Cantidad='".$Cantidad."'" ;}
+				if(isset($Valor) && $Valor != ''){                         $SIS_data .= ",Valor='".$Valor."'" ;}
+				if(isset($ValorTotal) && $ValorTotal != ''){               $SIS_data .= ",ValorTotal='".$ValorTotal."'" ;}
+				if(isset($TiempoProgramado) && $TiempoProgramado != ''){   $SIS_data .= ",TiempoProgramado='".$TiempoProgramado."'" ;}
+				if(isset($idTrabajo) && $idTrabajo != ''){                 $SIS_data .= ",idTrabajo='".$idTrabajo."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'licitacion_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'licitacion_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 						
@@ -557,28 +489,16 @@ require_once '0_validate_user_1.php';
 					//se guarda el registro
 					if(isset($hist_Observacion)&&$hist_Observacion!='<strong>Modificaciones:</strong><br/>'){
 						//Se guarda en historial la accion
-						$a  = "'".$idLicitacion."'";
-						$a .= ",'".fecha_actual()."'";
-						$a .= ",'2'";                                                    //Creacion Satisfactoria
-						$a .= ",'".$hist_Observacion."'";                                //Observacion
-						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-							
+						$SIS_data  = "'".$idLicitacion."'";
+						$SIS_data .= ",'".fecha_actual()."'";
+						$SIS_data .= ",'2'";                                                    //Creacion Satisfactoria
+						$SIS_data .= ",'".$hist_Observacion."'";                                //Observacion
+						$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-								
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-						}
+						$SIS_columns = 'idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				
 					header( 'Location: '.$location.'&edited=true' );
@@ -642,28 +562,16 @@ require_once '0_validate_user_1.php';
 					//se guarda el registro
 					if(isset($hist_Observacion)&&$hist_Observacion!='<strong>Modificaciones:</strong><br/>'){
 						//Se guarda en historial la accion
-						$a  = "'".$idLicitacion."'";
-						$a .= ",'".fecha_actual()."'";
-						$a .= ",'3'";                                                    //Creacion Satisfactoria
-						$a .= ",'".$hist_Observacion."'";                                //Observacion
-						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-								
+						$SIS_data  = "'".$idLicitacion."'";
+						$SIS_data .= ",'".fecha_actual()."'";
+						$SIS_data .= ",'3'";                                                    //Creacion Satisfactoria
+						$SIS_data .= ",'".$hist_Observacion."'";                                //Observacion
+						$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-									
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-						}
+						$SIS_columns = 'idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}
 					
@@ -692,8 +600,8 @@ require_once '0_validate_user_1.php';
 					
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 					
@@ -707,28 +615,16 @@ require_once '0_validate_user_1.php';
 				//se guarda el registro
 				if(isset($hist_Observacion)&&$hist_Observacion!='<strong>Modificaciones:</strong><br/>'){
 					//Se guarda en historial la accion
-					$a  = "'".$idLicitacion."'";
-					$a .= ",'".fecha_actual()."'";
-					$a .= ",'2'";                                                    //Creacion Satisfactoria
-					$a .= ",'".$hist_Observacion."'";                                //Observacion
-					$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-						
+					$SIS_data  = "'".$idLicitacion."'";
+					$SIS_data .= ",'".fecha_actual()."'";
+					$SIS_data .= ",'2'";                                                    //Creacion Satisfactoria
+					$SIS_data .= ",'".$hist_Observacion."'";                                //Observacion
+					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `licitacion_listado_historial` (idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-							
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-					}
+					$SIS_columns = 'idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario';
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 				}
 					
 				header( 'Location: '.$location.'&edited=true' );
@@ -761,43 +657,27 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){         $a = "'".$idSistema."'" ;       }else{$a ="''";}
-				if(isset($Codigo) && $Codigo != ''){               $a .= ",'".$Codigo."'" ;        }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){               $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
-				if(isset($FechaInicio) && $FechaInicio != ''){     $a .= ",'".$FechaInicio."'" ;   }else{$a .=",''";}
-				if(isset($FechaTermino) && $FechaTermino != ''){   $a .= ",'".$FechaTermino."'" ;  }else{$a .=",''";}
-				if(isset($Presupuesto) && $Presupuesto != ''){     $a .= ",'".$Presupuesto."'" ;   }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){           $a .= ",'".$idEstado."'" ;      }else{$a .=",''";}
-				if(isset($idBodegaProd) && $idBodegaProd != ''){   $a .= ",'".$idBodegaProd."'" ;  }else{$a .=",''";}
-				if(isset($idBodegaIns) && $idBodegaIns != ''){     $a .= ",'".$idBodegaIns."'" ;   }else{$a .=",''";}
-				if(isset($idAprobado) && $idAprobado != ''){       $a .= ",'".$idAprobado."'" ;    }else{$a .=",''";}
-				if(isset($idCliente) && $idCliente != ''){         $a .= ",'".$idCliente."'" ;     }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){         $SIS_data  = "'".$idSistema."'" ;      }else{$SIS_data  = "''";}
+				if(isset($Codigo) && $Codigo != ''){               $SIS_data .= ",'".$Codigo."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){               $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($FechaInicio) && $FechaInicio != ''){     $SIS_data .= ",'".$FechaInicio."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($FechaTermino) && $FechaTermino != ''){   $SIS_data .= ",'".$FechaTermino."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Presupuesto) && $Presupuesto != ''){     $SIS_data .= ",'".$Presupuesto."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){           $SIS_data .= ",'".$idEstado."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idBodegaProd) && $idBodegaProd != ''){   $SIS_data .= ",'".$idBodegaProd."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idBodegaIns) && $idBodegaIns != ''){     $SIS_data .= ",'".$idBodegaIns."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idAprobado) && $idAprobado != ''){       $SIS_data .= ",'".$idAprobado."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente != ''){         $SIS_data .= ",'".$idCliente."'" ;     }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `licitacion_listado` (idSistema, Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto,
-				idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto, idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 				
 			}
@@ -814,8 +694,8 @@ require_once '0_validate_user_1.php';
 			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				

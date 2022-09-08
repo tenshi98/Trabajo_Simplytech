@@ -35,7 +35,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['SEGURIDAD_idLevel_4']) )          $SEGURIDAD_idLevel_4          = $_POST['SEGURIDAD_idLevel_4'];
 	if ( !empty($_POST['SEGURIDAD_idLevel_5']) )          $SEGURIDAD_idLevel_5          = $_POST['SEGURIDAD_idLevel_5'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -70,6 +69,7 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -96,51 +96,38 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                                 $a = "'".$idSistema."'" ;                       }else{$a ="''";}
-				if(isset($AFP_idCentroCosto) && $AFP_idCentroCosto != ''){                 $a .= ",'".$AFP_idCentroCosto."'" ;             }else{$a .=",''";}
-				if(isset($AFP_idLevel_1) && $AFP_idLevel_1 != ''){                         $a .= ",'".$AFP_idLevel_1."'" ;                 }else{$a .=",''";}
-				if(isset($AFP_idLevel_2) && $AFP_idLevel_2 != ''){                         $a .= ",'".$AFP_idLevel_2."'" ;                 }else{$a .=",''";}
-				if(isset($AFP_idLevel_3) && $AFP_idLevel_3 != ''){                         $a .= ",'".$AFP_idLevel_3."'" ;                 }else{$a .=",''";}
-				if(isset($AFP_idLevel_4) && $AFP_idLevel_4 != ''){                         $a .= ",'".$AFP_idLevel_4."'" ;                 }else{$a .=",''";}
-				if(isset($AFP_idLevel_5) && $AFP_idLevel_5 != ''){                         $a .= ",'".$AFP_idLevel_5."'" ;                 }else{$a .=",''";}
-				if(isset($SALUD_idCentroCosto) && $SALUD_idCentroCosto != ''){             $a .= ",'".$SALUD_idCentroCosto."'" ;           }else{$a .=",''";}
-				if(isset($SALUD_idLevel_1) && $SALUD_idLevel_1 != ''){                     $a .= ",'".$SALUD_idLevel_1."'" ;               }else{$a .=",''";}
-				if(isset($SALUD_idLevel_2) && $SALUD_idLevel_2 != ''){                     $a .= ",'".$SALUD_idLevel_2."'" ;               }else{$a .=",''";}
-				if(isset($SALUD_idLevel_3) && $SALUD_idLevel_3 != ''){                     $a .= ",'".$SALUD_idLevel_3."'" ;               }else{$a .=",''";}
-				if(isset($SALUD_idLevel_4) && $SALUD_idLevel_4 != ''){                     $a .= ",'".$SALUD_idLevel_4."'" ;               }else{$a .=",''";}
-				if(isset($SALUD_idLevel_5) && $SALUD_idLevel_5 != ''){                     $a .= ",'".$SALUD_idLevel_5."'" ;               }else{$a .=",''";}
-				if(isset($SEGURIDAD_idCentroCosto) && $SEGURIDAD_idCentroCosto != ''){     $a .= ",'".$SEGURIDAD_idCentroCosto."'" ;       }else{$a .=",''";}
-				if(isset($SEGURIDAD_idLevel_1) && $SEGURIDAD_idLevel_1 != ''){             $a .= ",'".$SEGURIDAD_idLevel_1."'" ;           }else{$a .=",''";}
-				if(isset($SEGURIDAD_idLevel_2) && $SEGURIDAD_idLevel_2 != ''){             $a .= ",'".$SEGURIDAD_idLevel_2."'" ;           }else{$a .=",''";}
-				if(isset($SEGURIDAD_idLevel_3) && $SEGURIDAD_idLevel_3 != ''){             $a .= ",'".$SEGURIDAD_idLevel_3."'" ;           }else{$a .=",''";}
-				if(isset($SEGURIDAD_idLevel_4) && $SEGURIDAD_idLevel_4 != ''){             $a .= ",'".$SEGURIDAD_idLevel_4."'" ;           }else{$a .=",''";}
-				if(isset($SEGURIDAD_idLevel_5) && $SEGURIDAD_idLevel_5 != ''){             $a .= ",'".$SEGURIDAD_idLevel_5."'" ;           }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){                                 $SIS_data  = "'".$idSistema."'" ;                      }else{$SIS_data  = "''";}
+				if(isset($AFP_idCentroCosto) && $AFP_idCentroCosto != ''){                 $SIS_data .= ",'".$AFP_idCentroCosto."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($AFP_idLevel_1) && $AFP_idLevel_1 != ''){                         $SIS_data .= ",'".$AFP_idLevel_1."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($AFP_idLevel_2) && $AFP_idLevel_2 != ''){                         $SIS_data .= ",'".$AFP_idLevel_2."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($AFP_idLevel_3) && $AFP_idLevel_3 != ''){                         $SIS_data .= ",'".$AFP_idLevel_3."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($AFP_idLevel_4) && $AFP_idLevel_4 != ''){                         $SIS_data .= ",'".$AFP_idLevel_4."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($AFP_idLevel_5) && $AFP_idLevel_5 != ''){                         $SIS_data .= ",'".$AFP_idLevel_5."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($SALUD_idCentroCosto) && $SALUD_idCentroCosto != ''){             $SIS_data .= ",'".$SALUD_idCentroCosto."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($SALUD_idLevel_1) && $SALUD_idLevel_1 != ''){                     $SIS_data .= ",'".$SALUD_idLevel_1."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($SALUD_idLevel_2) && $SALUD_idLevel_2 != ''){                     $SIS_data .= ",'".$SALUD_idLevel_2."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($SALUD_idLevel_3) && $SALUD_idLevel_3 != ''){                     $SIS_data .= ",'".$SALUD_idLevel_3."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($SALUD_idLevel_4) && $SALUD_idLevel_4 != ''){                     $SIS_data .= ",'".$SALUD_idLevel_4."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($SALUD_idLevel_5) && $SALUD_idLevel_5 != ''){                     $SIS_data .= ",'".$SALUD_idLevel_5."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($SEGURIDAD_idCentroCosto) && $SEGURIDAD_idCentroCosto != ''){     $SIS_data .= ",'".$SEGURIDAD_idCentroCosto."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($SEGURIDAD_idLevel_1) && $SEGURIDAD_idLevel_1 != ''){             $SIS_data .= ",'".$SEGURIDAD_idLevel_1."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($SEGURIDAD_idLevel_2) && $SEGURIDAD_idLevel_2 != ''){             $SIS_data .= ",'".$SEGURIDAD_idLevel_2."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($SEGURIDAD_idLevel_3) && $SEGURIDAD_idLevel_3 != ''){             $SIS_data .= ",'".$SEGURIDAD_idLevel_3."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($SEGURIDAD_idLevel_4) && $SEGURIDAD_idLevel_4 != ''){             $SIS_data .= ",'".$SEGURIDAD_idLevel_4."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($SEGURIDAD_idLevel_5) && $SEGURIDAD_idLevel_5 != ''){             $SIS_data .= ",'".$SEGURIDAD_idLevel_5."'" ;           }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `sistema_leyes_sociales` (idSistema,
-				AFP_idCentroCosto,AFP_idLevel_1,AFP_idLevel_2,AFP_idLevel_3,AFP_idLevel_4,
+				$SIS_columns = 'idSistema, AFP_idCentroCosto,AFP_idLevel_1,AFP_idLevel_2,AFP_idLevel_3,AFP_idLevel_4,
 				AFP_idLevel_5,SALUD_idCentroCosto,SALUD_idLevel_1,SALUD_idLevel_2,SALUD_idLevel_3,
 				SALUD_idLevel_4,SALUD_idLevel_5,SEGURIDAD_idCentroCosto,SEGURIDAD_idLevel_1,SEGURIDAD_idLevel_2,
-				SEGURIDAD_idLevel_3,SEGURIDAD_idLevel_4,SEGURIDAD_idLevel_5) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				SEGURIDAD_idLevel_3,SEGURIDAD_idLevel_4,SEGURIDAD_idLevel_5';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'sistema_leyes_sociales', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'?created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -165,30 +152,30 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idMantenedor='".$idMantenedor."'" ;
-				if(isset($idSistema) && $idSistema != ''){                                   $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($AFP_idCentroCosto) && $AFP_idCentroCosto != ''){                   $a .= ",AFP_idCentroCosto='".$AFP_idCentroCosto."'" ;}
-				if(isset($AFP_idLevel_1) && $AFP_idLevel_1 != ''){                           $a .= ",AFP_idLevel_1='".$AFP_idLevel_1."'" ;}
-				if(isset($AFP_idLevel_2) && $AFP_idLevel_2 != ''){                           $a .= ",AFP_idLevel_2='".$AFP_idLevel_2."'" ;}
-				if(isset($AFP_idLevel_3) && $AFP_idLevel_3 != ''){                           $a .= ",AFP_idLevel_3='".$AFP_idLevel_3."'" ;}
-				if(isset($AFP_idLevel_4) && $AFP_idLevel_4 != ''){                           $a .= ",AFP_idLevel_4='".$AFP_idLevel_4."'" ;}
-				if(isset($AFP_idLevel_5) && $AFP_idLevel_5 != ''){                           $a .= ",AFP_idLevel_5='".$AFP_idLevel_5."'" ;}
-				if(isset($SALUD_idCentroCosto) && $SALUD_idCentroCosto != ''){               $a .= ",SALUD_idCentroCosto='".$SALUD_idCentroCosto."'" ;}
-				if(isset($SALUD_idLevel_1) && $SALUD_idLevel_1 != ''){                       $a .= ",SALUD_idLevel_1='".$SALUD_idLevel_1."'" ;}
-				if(isset($SALUD_idLevel_2) && $SALUD_idLevel_2 != ''){                       $a .= ",SALUD_idLevel_2='".$SALUD_idLevel_2."'" ;}
-				if(isset($SALUD_idLevel_3) && $SALUD_idLevel_3 != ''){                       $a .= ",SALUD_idLevel_3='".$SALUD_idLevel_3."'" ;}
-				if(isset($SALUD_idLevel_4) && $SALUD_idLevel_4 != ''){                       $a .= ",SALUD_idLevel_4='".$SALUD_idLevel_4."'" ;}
-				if(isset($SALUD_idLevel_5) && $SALUD_idLevel_5 != ''){                       $a .= ",SALUD_idLevel_5='".$SALUD_idLevel_5."'" ;}
-				if(isset($SEGURIDAD_idCentroCosto) && $SEGURIDAD_idCentroCosto != ''){       $a .= ",SEGURIDAD_idCentroCosto='".$SEGURIDAD_idCentroCosto."'" ;}
-				if(isset($SEGURIDAD_idLevel_1) && $SEGURIDAD_idLevel_1 != ''){               $a .= ",SEGURIDAD_idLevel_1='".$SEGURIDAD_idLevel_1."'" ;}
-				if(isset($SEGURIDAD_idLevel_2) && $SEGURIDAD_idLevel_2 != ''){               $a .= ",SEGURIDAD_idLevel_2='".$SEGURIDAD_idLevel_2."'" ;}
-				if(isset($SEGURIDAD_idLevel_3) && $SEGURIDAD_idLevel_3 != ''){               $a .= ",SEGURIDAD_idLevel_3='".$SEGURIDAD_idLevel_3."'" ;}
-				if(isset($SEGURIDAD_idLevel_4) && $SEGURIDAD_idLevel_4 != ''){               $a .= ",SEGURIDAD_idLevel_4='".$SEGURIDAD_idLevel_4."'" ;}
-				if(isset($SEGURIDAD_idLevel_5) && $SEGURIDAD_idLevel_5 != ''){               $a .= ",SEGURIDAD_idLevel_5='".$SEGURIDAD_idLevel_5."'" ;}
+				$SIS_data = "idMantenedor='".$idMantenedor."'" ;
+				if(isset($idSistema) && $idSistema != ''){                                   $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($AFP_idCentroCosto) && $AFP_idCentroCosto != ''){                   $SIS_data .= ",AFP_idCentroCosto='".$AFP_idCentroCosto."'" ;}
+				if(isset($AFP_idLevel_1) && $AFP_idLevel_1 != ''){                           $SIS_data .= ",AFP_idLevel_1='".$AFP_idLevel_1."'" ;}
+				if(isset($AFP_idLevel_2) && $AFP_idLevel_2 != ''){                           $SIS_data .= ",AFP_idLevel_2='".$AFP_idLevel_2."'" ;}
+				if(isset($AFP_idLevel_3) && $AFP_idLevel_3 != ''){                           $SIS_data .= ",AFP_idLevel_3='".$AFP_idLevel_3."'" ;}
+				if(isset($AFP_idLevel_4) && $AFP_idLevel_4 != ''){                           $SIS_data .= ",AFP_idLevel_4='".$AFP_idLevel_4."'" ;}
+				if(isset($AFP_idLevel_5) && $AFP_idLevel_5 != ''){                           $SIS_data .= ",AFP_idLevel_5='".$AFP_idLevel_5."'" ;}
+				if(isset($SALUD_idCentroCosto) && $SALUD_idCentroCosto != ''){               $SIS_data .= ",SALUD_idCentroCosto='".$SALUD_idCentroCosto."'" ;}
+				if(isset($SALUD_idLevel_1) && $SALUD_idLevel_1 != ''){                       $SIS_data .= ",SALUD_idLevel_1='".$SALUD_idLevel_1."'" ;}
+				if(isset($SALUD_idLevel_2) && $SALUD_idLevel_2 != ''){                       $SIS_data .= ",SALUD_idLevel_2='".$SALUD_idLevel_2."'" ;}
+				if(isset($SALUD_idLevel_3) && $SALUD_idLevel_3 != ''){                       $SIS_data .= ",SALUD_idLevel_3='".$SALUD_idLevel_3."'" ;}
+				if(isset($SALUD_idLevel_4) && $SALUD_idLevel_4 != ''){                       $SIS_data .= ",SALUD_idLevel_4='".$SALUD_idLevel_4."'" ;}
+				if(isset($SALUD_idLevel_5) && $SALUD_idLevel_5 != ''){                       $SIS_data .= ",SALUD_idLevel_5='".$SALUD_idLevel_5."'" ;}
+				if(isset($SEGURIDAD_idCentroCosto) && $SEGURIDAD_idCentroCosto != ''){       $SIS_data .= ",SEGURIDAD_idCentroCosto='".$SEGURIDAD_idCentroCosto."'" ;}
+				if(isset($SEGURIDAD_idLevel_1) && $SEGURIDAD_idLevel_1 != ''){               $SIS_data .= ",SEGURIDAD_idLevel_1='".$SEGURIDAD_idLevel_1."'" ;}
+				if(isset($SEGURIDAD_idLevel_2) && $SEGURIDAD_idLevel_2 != ''){               $SIS_data .= ",SEGURIDAD_idLevel_2='".$SEGURIDAD_idLevel_2."'" ;}
+				if(isset($SEGURIDAD_idLevel_3) && $SEGURIDAD_idLevel_3 != ''){               $SIS_data .= ",SEGURIDAD_idLevel_3='".$SEGURIDAD_idLevel_3."'" ;}
+				if(isset($SEGURIDAD_idLevel_4) && $SEGURIDAD_idLevel_4 != ''){               $SIS_data .= ",SEGURIDAD_idLevel_4='".$SEGURIDAD_idLevel_4."'" ;}
+				if(isset($SEGURIDAD_idLevel_5) && $SEGURIDAD_idLevel_5 != ''){               $SIS_data .= ",SEGURIDAD_idLevel_5='".$SEGURIDAD_idLevel_5."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'sistema_leyes_sociales', 'idMantenedor = "'.$idMantenedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'sistema_leyes_sociales', 'idMantenedor = "'.$idMantenedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

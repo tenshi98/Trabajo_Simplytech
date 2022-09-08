@@ -26,7 +26,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idEstado']) )       $idEstado       = $_POST['idEstado'];
 	if ( !empty($_POST['Observacion']) )    $Observacion    = $_POST['Observacion'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -53,6 +52,11 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observacion) && $Observacion != ''){ $Observacion = EstandarizarInput($Observacion); }
+
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita la Observacion, contiene palabras no permitidas'; }	
@@ -72,40 +76,26 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){        $a  = "'".$idSistema."'" ;       }else{$a  ="''";}
-				if(isset($f_inicio) && $f_inicio != ''){          $a .= ",'".$f_inicio."'" ;       }else{$a .=",''";}
-				if(isset($f_termino) && $f_termino != ''){        $a .= ",'".$f_termino."'" ;      }else{$a .=",''";}
-				if(isset($h_inicio) && $h_inicio != ''){          $a .= ",'".$h_inicio."'" ;       }else{$a .=",''";}
-				if(isset($h_termino) && $h_termino != ''){        $a .= ",'".$h_termino."'" ;      }else{$a .=",''";}
-				if(isset($idTelemetria) && $idTelemetria != ''){  $a .= ",'".$idTelemetria."'" ;   }else{$a .=",''";}
-				if(isset($idGrupo) && $idGrupo != ''){            $a .= ",'".$idGrupo."'" ;        }else{$a .=",''";}
-				if(isset($idGrafico) && $idGrafico != ''){        $a .= ",'".$idGrafico."'" ;      }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){          $a .= ",'".$idEstado."'" ;       }else{$a .=",''";}
-				if(isset($Observacion) && $Observacion != ''){    $a .= ",'".$Observacion."'" ;    }else{$a .=",''";}
-				
+				if(isset($idSistema) && $idSistema != ''){        $SIS_data  = "'".$idSistema."'" ;       }else{$SIS_data  = "''";}
+				if(isset($f_inicio) && $f_inicio != ''){          $SIS_data .= ",'".$f_inicio."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($f_termino) && $f_termino != ''){        $SIS_data .= ",'".$f_termino."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($h_inicio) && $h_inicio != ''){          $SIS_data .= ",'".$h_inicio."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($h_termino) && $h_termino != ''){        $SIS_data .= ",'".$h_termino."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idTelemetria) && $idTelemetria != ''){  $SIS_data .= ",'".$idTelemetria."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idGrupo) && $idGrupo != ''){            $SIS_data .= ",'".$idGrupo."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($idGrafico) && $idGrafico != ''){        $SIS_data .= ",'".$idGrafico."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){          $SIS_data .= ",'".$idEstado."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){    $SIS_data .= ",'".$Observacion."'" ;    }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_tracking` (idSistema, f_inicio, f_termino, h_inicio, h_termino,
-				idTelemetria, idGrupo, idGrafico, idEstado, Observacion) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, f_inicio, f_termino, h_inicio, h_termino, idTelemetria, idGrupo, idGrafico, idEstado, Observacion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_tracking', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -119,21 +109,21 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idTracking='".$idTracking."'" ;
-				if(isset($idSistema) && $idSistema != ''){        $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($f_inicio) && $f_inicio != ''){          $a .= ",f_inicio='".$f_inicio."'" ;}
-				if(isset($f_termino) && $f_termino != ''){        $a .= ",f_termino='".$f_termino."'" ;}
-				if(isset($h_inicio) && $h_inicio != ''){          $a .= ",h_inicio='".$h_inicio."'" ;}
-				if(isset($h_termino) && $h_termino != ''){        $a .= ",h_termino='".$h_termino."'" ;}
-				if(isset($idTelemetria) && $idTelemetria != ''){  $a .= ",idTelemetria='".$idTelemetria."'" ;}
-				if(isset($idGrupo) && $idGrupo != ''){            $a .= ",idGrupo='".$idGrupo."'" ;}
-				if(isset($idGrafico) && $idGrafico != ''){        $a .= ",idGrafico='".$idGrafico."'" ;}
-				if(isset($idEstado) && $idEstado != ''){          $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Observacion) && $Observacion != ''){    $a .= ",Observacion='".$Observacion."'" ;}
+				$SIS_data = "idTracking='".$idTracking."'" ;
+				if(isset($idSistema) && $idSistema != ''){        $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($f_inicio) && $f_inicio != ''){          $SIS_data .= ",f_inicio='".$f_inicio."'" ;}
+				if(isset($f_termino) && $f_termino != ''){        $SIS_data .= ",f_termino='".$f_termino."'" ;}
+				if(isset($h_inicio) && $h_inicio != ''){          $SIS_data .= ",h_inicio='".$h_inicio."'" ;}
+				if(isset($h_termino) && $h_termino != ''){        $SIS_data .= ",h_termino='".$h_termino."'" ;}
+				if(isset($idTelemetria) && $idTelemetria != ''){  $SIS_data .= ",idTelemetria='".$idTelemetria."'" ;}
+				if(isset($idGrupo) && $idGrupo != ''){            $SIS_data .= ",idGrupo='".$idGrupo."'" ;}
+				if(isset($idGrafico) && $idGrafico != ''){        $SIS_data .= ",idGrafico='".$idGrafico."'" ;}
+				if(isset($idEstado) && $idEstado != ''){          $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Observacion) && $Observacion != ''){    $SIS_data .= ",Observacion='".$Observacion."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_tracking', 'idTracking = "'.$idTracking.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_tracking', 'idTracking = "'.$idTracking.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

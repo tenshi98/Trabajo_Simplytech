@@ -168,15 +168,15 @@ foreach ($arrTabMenu as $tab) {
 					<div class="col-sm-12">
 						<span class="panel-title" style="color: #1E90FF;font-weight: 700 !important;" id="update_text_HoraRefresco">Hora Refresco: '.hora_actual().'</span>';
 									
-						echo widget_Gestion_Flota_CrossTech('Gestion de Flota',
-															$_SESSION['usuario']['basic_data']['idSistema'], 
-															$_SESSION['usuario']['basic_data']['Config_IDGoogle'],
-															$_SESSION['usuario']['basic_data']['idTipoUsuario'],
-															$_SESSION['usuario']['basic_data']['idUsuario'],
-															$x_seg,
-															3,
-															1,
-															$dbConn);
+						echo widget_Gestion_Flota_CrossTech_Transportes_AB('Gestion de Flota',
+															               $_SESSION['usuario']['basic_data']['idSistema'], 
+															               $_SESSION['usuario']['basic_data']['Config_IDGoogle'],
+															               $_SESSION['usuario']['basic_data']['idTipoUsuario'],
+															               $_SESSION['usuario']['basic_data']['idUsuario'],
+															               $x_seg,
+															               3,
+															               1,
+															               $dbConn);
 										
 				echo '</div>';
 				

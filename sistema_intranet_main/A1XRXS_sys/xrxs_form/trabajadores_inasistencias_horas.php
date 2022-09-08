@@ -24,7 +24,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Observacion']) )           $Observacion            = $_POST['Observacion'];
 	if ( !empty($_POST['idUso']) )                 $idUso                  = $_POST['idUso'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -48,6 +47,11 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observacion) && $Observacion != ''){ $Observacion = EstandarizarInput($Observacion); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -84,48 +88,34 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){            $a  = "'".$idSistema."'" ;       }else{$a  ="''";}
-				if(isset($idTrabajador) && $idTrabajador != ''){      $a .= ",'".$idTrabajador."'" ;   }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){            $a .= ",'".$idUsuario."'" ;      }else{$a .=",''";}
-				if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){    $a .= ",'".$Fecha_ingreso."'" ;  }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){            $SIS_data  = "'".$idSistema."'" ;       }else{$SIS_data  = "''";}
+				if(isset($idTrabajador) && $idTrabajador != ''){      $SIS_data .= ",'".$idTrabajador."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){            $SIS_data .= ",'".$idUsuario."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){    $SIS_data .= ",'".$Fecha_ingreso."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",'".$Creacion_fecha."'" ;  
-					$a .= ",'".fecha2NSemana($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".$Creacion_fecha."'" ;  
+					$SIS_data .= ",'".fecha2NSemana($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($Horas) && $Horas != ''){                $a .= ",'".$Horas."'" ;        }else{$a .=",''";}
-				if(isset($Observacion) && $Observacion != ''){    $a .= ",'".$Observacion."'" ;  }else{$a .=",''";}
-				if(isset($idUso) && $idUso != ''){                $a .= ",'".$idUso."'" ;        }else{$a .=",''";}
+				if(isset($Horas) && $Horas != ''){                $SIS_data .= ",'".$Horas."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){    $SIS_data .= ",'".$Observacion."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idUso) && $idUso != ''){                $SIS_data .= ",'".$idUso."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `trabajadores_inasistencias_horas` (idSistema, idTrabajador, idUsuario,
-				Fecha_ingreso, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,
-				Horas, Observacion, idUso) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idTrabajador, idUsuario, Fecha_ingreso, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Horas, Observacion, idUso';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_inasistencias_horas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
 				
 			}
@@ -156,24 +146,24 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idInasistenciaHora='".$idInasistenciaHora."'" ;
-				if(isset($idSistema) && $idSistema != ''){            $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idTrabajador) && $idTrabajador != ''){      $a .= ",idTrabajador='".$idTrabajador."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){            $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){    $a .= ",Fecha_ingreso='".$Fecha_ingreso."'" ;}
+				$SIS_data = "idInasistenciaHora='".$idInasistenciaHora."'" ;
+				if(isset($idSistema) && $idSistema != ''){            $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idTrabajador) && $idTrabajador != ''){      $SIS_data .= ",idTrabajador='".$idTrabajador."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){            $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){    $SIS_data .= ",Fecha_ingreso='".$Fecha_ingreso."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;  
-					$a .= ",Creacion_Semana='".fecha2NSemana($Creacion_fecha)."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;  
+					$SIS_data .= ",Creacion_Semana='".fecha2NSemana($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				}
-				if(isset($Horas) && $Horas != ''){                $a .= ",Horas='".$Horas."'" ;}
-				if(isset($Observacion) && $Observacion != ''){    $a .= ",Observacion='".$Observacion."'" ;}
-				if(isset($idUso) && $idUso != ''){                $a .= ",idUso='".$idUso."'" ;}
+				if(isset($Horas) && $Horas != ''){                $SIS_data .= ",Horas='".$Horas."'" ;}
+				if(isset($Observacion) && $Observacion != ''){    $SIS_data .= ",Observacion='".$Observacion."'" ;}
+				if(isset($idUso) && $idUso != ''){                $SIS_data .= ",idUso='".$idUso."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'trabajadores_inasistencias_horas', 'idInasistenciaHora = "'.$idInasistenciaHora.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'trabajadores_inasistencias_horas', 'idInasistenciaHora = "'.$idInasistenciaHora.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

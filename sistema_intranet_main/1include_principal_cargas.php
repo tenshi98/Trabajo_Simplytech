@@ -9,50 +9,16 @@ $diaActual = dia_actual();
 $diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
-//arreglo con los meses
-$meses=array(1=>"Enero", 
-				"Febrero", 
-				"Marzo", 
-				"Abril", 
-				"Mayo", 
-				"Junio", 
-				"Julio",
-				"Agosto", 
-				"Septiembre", 
-				"Octubre", 
-				"Noviembre", 
-				"Diciembre"
-			);
-//verifico el tipo de usuario
-$z=" AND telemetria_carga_bam.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-
 //Traigo los eventos guardados en la base de datos
-$arrEventos = array();
-$query = "SELECT 
+$SIS_query = '
 telemetria_carga_bam.idCarga, 
 telemetria_listado.Nombre AS Titulo, 
-telemetria_carga_bam.Dia
-
-FROM `telemetria_carga_bam`
-LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_carga_bam.idTelemetria
-WHERE telemetria_carga_bam.Ano='".$Ano."' AND telemetria_carga_bam.Mes='".$Mes."' ".$z." 
-ORDER BY telemetria_carga_bam.FechaVencimiento ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrEventos,$row );
-}
+telemetria_carga_bam.Dia';
+$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_carga_bam.idTelemetria';
+$SIS_where = 'telemetria_carga_bam.Ano='.$Ano.' AND telemetria_carga_bam.Mes='.$Mes.' AND telemetria_carga_bam.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'telemetria_carga_bam.FechaVencimiento ASC';
+$arrEventos = array();
+$arrEventos = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEventos');
 
 ?>
 
@@ -80,7 +46,7 @@ array_push( $arrEventos,$row );
 							if (($Mes+1)==13) {$mes_adelante=1; $Ano_b=$Ano_b+1;}else{$mes_adelante=$Mes+1; }
 							?>
 							<td class="fc-header-left"><a href="<?php echo $original.'?Mes='.$mes_atras.'&Ano='.$Ano_a ?>" class="btn btn-default">‹</a></td>
-							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo $meses[$Mes]." ".$Ano?></h2></span></td>
+							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo numero_a_mes($Mes)." ".$Ano?></h2></span></td>
 							<td class="fc-header-right"><a href="<?php echo $original.'?Mes='.$mes_adelante.'&Ano='.$Ano_b ?>" class="btn btn-default">›</a></td>
 						</tr>
 					</tbody>

@@ -33,25 +33,10 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 }
 /************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$query = "SELECT idOpcionesTel, idOpcionesGen_4, idOpcionesGen_6
-FROM core_sistemas
-WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."' "; 
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}	
-$n_permisos = mysqli_fetch_assoc($resultado);
-
-
+$SIS_query = 'idOpcionesTel,idOpcionesGen_4, idOpcionesGen_6';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
 /*****************************************************************************************************************/
 /*                                                Modelado                                                       */

@@ -42,6 +42,13 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){       $Nombre    = EstandarizarInput($Nombre); }
+	if(isset($Ubicacion) && $Ubicacion != ''){ $Ubicacion = EstandarizarInput($Ubicacion); }
+	if(isset($Capacidad) && $Capacidad != ''){ $Capacidad = EstandarizarInput($Capacidad); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){        $error['Nombre']    = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -75,33 +82,21 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){    $a  = "'".$idSistema."'" ;     }else{$a  ="''";}
-				if(isset($idEstado) && $idEstado != ''){      $a .= ",'".$idEstado."'" ;     }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){          $a .= ",'".$Nombre."'" ;       }else{$a .= ",''";}
-				if(isset($Ubicacion) && $Ubicacion != ''){    $a .= ",'".$Ubicacion."'" ;    }else{$a .= ",''";}
-				if(isset($Capacidad) && $Capacidad != ''){    $a .= ",'".$Capacidad."'" ;    }else{$a .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){    $SIS_data  = "'".$idSistema."'" ;     }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado != ''){      $SIS_data .= ",'".$idEstado."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){          $SIS_data .= ",'".$Nombre."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Ubicacion) && $Ubicacion != ''){    $SIS_data .= ",'".$Ubicacion."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Capacidad) && $Capacidad != ''){    $SIS_data .= ",'".$Capacidad."'" ;    }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `oficinas_listado` (idSistema, idEstado, Nombre, Ubicacion, Capacidad) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idEstado, Nombre, Ubicacion, Capacidad';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'oficinas_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -126,16 +121,16 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idOficina='".$idOficina."'" ;
-				if(isset($idSistema) && $idSistema != ''){     $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idEstado) && $idEstado != ''){       $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Nombre) && $Nombre != ''){           $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Ubicacion) && $Ubicacion != ''){     $a .= ",Ubicacion='".$Ubicacion."'" ;}
-				if(isset($Capacidad) && $Capacidad != ''){     $a .= ",Capacidad='".$Capacidad."'" ;}
+				$SIS_data = "idOficina='".$idOficina."'" ;
+				if(isset($idSistema) && $idSistema != ''){     $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idEstado) && $idEstado != ''){       $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){           $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Ubicacion) && $Ubicacion != ''){     $SIS_data .= ",Ubicacion='".$Ubicacion."'" ;}
+				if(isset($Capacidad) && $Capacidad != ''){     $SIS_data .= ",Capacidad='".$Capacidad."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'oficinas_listado', 'idOficina = "'.$idOficina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'oficinas_listado', 'idOficina = "'.$idOficina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

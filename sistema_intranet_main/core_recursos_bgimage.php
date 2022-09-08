@@ -22,26 +22,14 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Sistema creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Sistema editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Sistema borrado correctamente';}
-//Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 ?>
 
+<style>
+.bgimage {float: left;width: 150px; height: 150px;margin: 5px;border: 5px solid #ccc;}
+</style>
 
 <h3>Background Image</h3>
-<style>
-              .bgimage {
-                float: left;
-                width: 150px;
-                height: 150px;
-                margin: 5px;
-                border: 5px solid #ccc;
-              }
-            </style>
+
 <div class="inner bg-light lter">
 	<div class="bgimage bg-brillant" alt="brillant"></div>
 	<div class="bgimage bg-always_grey" alt="always_grey"></div>

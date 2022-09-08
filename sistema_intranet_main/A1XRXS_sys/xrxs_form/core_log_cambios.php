@@ -35,11 +35,15 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Descripcion) && $Descripcion != ''){  $Descripcion = EstandarizarInput($Descripcion); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){  $error['Descripcion'] = 'error/Edita la Descripcion, contiene palabras no permitidas'; }	
 
-	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -55,33 +59,21 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Fecha) && $Fecha != ''){              $a  = "'".$Fecha."'" ;                            }else{$a  ="''";}
-				if(isset($Descripcion) && $Descripcion != ''){  $a .= ",'[ACTUALIZACION] ->".$Descripcion."'" ;   }else{$a .=",''";}
-				
+				if(isset($Fecha) && $Fecha != ''){              $SIS_data  = "'".$Fecha."'" ;                            }else{$SIS_data  = "''";}
+				if(isset($Descripcion) && $Descripcion != ''){  $SIS_data .= ",'[ACTUALIZACION] ->".$Descripcion."'" ;   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `core_log_cambios` (Fecha,Descripcion) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Fecha,Descripcion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_log_cambios', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($ultimo_id!=0){
 					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
-				
 			}
 	
 		break;
@@ -94,13 +86,13 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idLog='".$idLog."'" ;
-				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){   $a .= ",Descripcion='".$Descripcion."'" ;}
+				$SIS_data = "idLog='".$idLog."'" ;
+				if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){   $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
 		
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'core_log_cambios', 'idLog = "'.$idLog.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'core_log_cambios', 'idLog = "'.$idLog.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

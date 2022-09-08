@@ -62,6 +62,11 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita la Observacion, contiene palabras no permitidas'; }	
@@ -971,39 +976,24 @@ require_once '0_validate_user_1.php';
 				
 				
 				//Creo el registro en la tabla madre
-				if(isset($idSistema) && $idSistema != ''){                   $a  = "'".$idSistema."'";           }else{$a  ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){                   $a .= ",'".$idUsuario."'";          }else{$a .=",''";}
-				if(isset($Fecha) && $Fecha != ''){                           $a .= ",'".$Fecha."'";              }else{$a .=",''";}
-				if(isset($Dia) && $Dia != ''){                               $a .= ",'".$Dia."'";                }else{$a .=",''";}
-				if(isset($idMes) && $idMes != ''){                           $a .= ",'".$idMes."'";              }else{$a .=",''";}
-				if(isset($Ano) && $Ano != ''){                               $a .= ",'".$Ano."'";                }else{$a .=",''";}
-				if(isset($Observaciones) && $Observaciones != ''){           $a .= ",'".$Observaciones."'";      }else{$a .=",''";}
-				if(isset($fCreacion) && $fCreacion != ''){                   $a .= ",'".$fCreacion."'";          }else{$a .=",''";}
-				if(isset($intAnual) && $intAnual != ''){                     $a .= ",'".$intAnual."'";           }else{$a .=",''";}
-				if(isset($idOpcionesInteres) && $idOpcionesInteres != ''){   $a .= ",'".$idOpcionesInteres."'";  }else{$a .=",''";}
-				
+				if(isset($idSistema) && $idSistema != ''){                   $SIS_data  = "'".$idSistema."'";           }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario != ''){                   $SIS_data .= ",'".$idUsuario."'";          }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){                           $SIS_data .= ",'".$Fecha."'";              }else{$SIS_data .= ",''";}
+				if(isset($Dia) && $Dia != ''){                               $SIS_data .= ",'".$Dia."'";                }else{$SIS_data .= ",''";}
+				if(isset($idMes) && $idMes != ''){                           $SIS_data .= ",'".$idMes."'";              }else{$SIS_data .= ",''";}
+				if(isset($Ano) && $Ano != ''){                               $SIS_data .= ",'".$Ano."'";                }else{$SIS_data .= ",''";}
+				if(isset($Observaciones) && $Observaciones != ''){           $SIS_data .= ",'".$Observaciones."'";      }else{$SIS_data .= ",''";}
+				if(isset($fCreacion) && $fCreacion != ''){                   $SIS_data .= ",'".$fCreacion."'";          }else{$SIS_data .= ",''";}
+				if(isset($intAnual) && $intAnual != ''){                     $SIS_data .= ",'".$intAnual."'";           }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesInteres) && $idOpcionesInteres != ''){   $SIS_data .= ",'".$idOpcionesInteres."'";  }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `aguas_facturacion_listado` (idSistema, idUsuario, Fecha, Dia, idMes, 
-				Ano, Observaciones, fCreacion, intAnual, idOpcionesInteres) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idUsuario, Fecha, Dia, idMes, Ano, Observaciones, fCreacion, intAnual, idOpcionesInteres';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_facturacion_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
-					
+				if($ultimo_id!=0){
+				
 					if (isset($_SESSION['Facturacion_clientes'])){
 						
 						//contador
@@ -1012,137 +1002,135 @@ require_once '0_validate_user_1.php';
 						//Ejecuto el resto del codigo
 						foreach ($_SESSION['Facturacion_clientes'] as $key => $client){	
 						
-							if(isset($idSistema) && $idSistema != ''){                                                           $a  = "'".$idSistema."'";                               }else{$a  ="''";}
-							if(isset($idUsuario) && $idUsuario != ''){                                                           $a .= ",'".$idUsuario."'";                              }else{$a .=",''";}
-							$a .= ",'".$ultimo_id."'";       
-							if(isset($Fecha) && $Fecha != ''){                                                                   $a .= ",'".$Fecha."'";                                  }else{$a .=",''";}
-							if(isset($Dia) && $Dia != ''){                                                                       $a .= ",'".$Dia."'";                                    }else{$a .=",''";}
-							if(isset($idMes) && $idMes != ''){                                                                   $a .= ",'".$idMes."'";                                  }else{$a .=",''";}
-							if(isset($Ano) && $Ano != ''){                                                                       $a .= ",'".$Ano."'";                                    }else{$a .=",''";}
-							if(isset($client['idCliente']) && $client['idCliente'] != ''){                                       $a .= ",'".$client['idCliente']."'";                    }else{$a .=",''";}
-							if(isset($client['ClienteNombre']) && $client['ClienteNombre'] != ''){                               $a .= ",'".$client['ClienteNombre']."'";                }else{$a .=",''";}
-							if(isset($client['ClienteDireccion']) && $client['ClienteDireccion'] != ''){                         $a .= ",'".$client['ClienteDireccion']."'";             }else{$a .=",''";}
-							if(isset($client['ClienteIdentificador']) && $client['ClienteIdentificador'] != ''){                 $a .= ",'".$client['ClienteIdentificador']."'";         }else{$a .=",''";}
-							if(isset($client['ClienteNombreComuna']) && $client['ClienteNombreComuna'] != ''){                   $a .= ",'".$client['ClienteNombreComuna']."'";          }else{$a .=",''";}
-							if(isset($client['ClienteFechaVencimiento']) && $client['ClienteFechaVencimiento'] != ''){           $a .= ",'".$client['ClienteFechaVencimiento']."'";      }else{$a .=",''";}
-							if(isset($client['ClienteEstado']) && $client['ClienteEstado'] != ''){                               $a .= ",'".$client['ClienteEstado']."'";                }else{$a .=",''";}
-							if(isset($client['DetalleCargoFijoValor']) && $client['DetalleCargoFijoValor'] != ''){               $a .= ",'".$client['DetalleCargoFijoValor']."'";        }else{$a .=",''";}
-							if(isset($client['DetalleConsumoCantidad']) && $client['DetalleConsumoCantidad'] != ''){             $a .= ",'".$client['DetalleConsumoCantidad']."'";       }else{$a .=",''";}
-							if(isset($client['DetalleConsumoValor']) && $client['DetalleConsumoValor'] != ''){                   $a .= ",'".$client['DetalleConsumoValor']."'";          }else{$a .=",''";}
-							if(isset($client['DetalleRecoleccionCantidad']) && $client['DetalleRecoleccionCantidad'] != ''){     $a .= ",'".$client['DetalleRecoleccionCantidad']."'";   }else{$a .=",''";}
-							if(isset($client['DetalleRecoleccionValor']) && $client['DetalleRecoleccionValor'] != ''){           $a .= ",'".$client['DetalleRecoleccionValor']."'";      }else{$a .=",''";}
-							if(isset($client['DetalleVisitaCorte']) && $client['DetalleVisitaCorte'] != ''){                     $a .= ",'".$client['DetalleVisitaCorte']."'";           }else{$a .=",''";}
-							if(isset($client['DetalleCorte1Valor']) && $client['DetalleCorte1Valor'] != ''){                     $a .= ",'".$client['DetalleCorte1Valor']."'";           }else{$a .=",''";}
-							if(isset($client['DetalleCorte1Fecha']) && $client['DetalleCorte1Fecha'] != ''){                     $a .= ",'".$client['DetalleCorte1Fecha']."'";           }else{$a .=",''";}
-							if(isset($client['DetalleCorte2Valor']) && $client['DetalleCorte2Valor'] != ''){                     $a .= ",'".$client['DetalleCorte2Valor']."'";           }else{$a .=",''";}
-							if(isset($client['DetalleCorte2Fecha']) && $client['DetalleCorte2Fecha'] != ''){                     $a .= ",'".$client['DetalleCorte2Fecha']."'";           }else{$a .=",''";}
-							if(isset($client['DetalleReposicion1Valor']) && $client['DetalleReposicion1Valor'] != ''){           $a .= ",'".$client['DetalleReposicion1Valor']."'";      }else{$a .=",''";}
-							if(isset($client['DetalleReposicion1Fecha']) && $client['DetalleReposicion1Fecha'] != ''){           $a .= ",'".$client['DetalleReposicion1Fecha']."'";      }else{$a .=",''";}
-							if(isset($client['DetalleReposicion2Valor']) && $client['DetalleReposicion2Valor'] != ''){           $a .= ",'".$client['DetalleReposicion2Valor']."'";      }else{$a .=",''";}
-							if(isset($client['DetalleReposicion2Fecha']) && $client['DetalleReposicion2Fecha'] != ''){           $a .= ",'".$client['DetalleReposicion2Fecha']."'";      }else{$a .=",''";}
-							if(isset($client['DetalleSubtotalServicio']) && $client['DetalleSubtotalServicio'] != ''){           $a .= ",'".$client['DetalleSubtotalServicio']."'";      }else{$a .=",''";}
-							if(isset($client['DetalleInteresDeuda']) && $client['DetalleInteresDeuda'] != ''){                   $a .= ",'".$client['DetalleInteresDeuda']."'";          }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos1Texto']) && $client['DetalleOtrosCargos1Texto'] != ''){         $a .= ",'".$client['DetalleOtrosCargos1Texto']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos2Texto']) && $client['DetalleOtrosCargos2Texto'] != ''){         $a .= ",'".$client['DetalleOtrosCargos2Texto']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos3Texto']) && $client['DetalleOtrosCargos3Texto'] != ''){         $a .= ",'".$client['DetalleOtrosCargos3Texto']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos4Texto']) && $client['DetalleOtrosCargos4Texto'] != ''){         $a .= ",'".$client['DetalleOtrosCargos4Texto']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos5Texto']) && $client['DetalleOtrosCargos5Texto'] != ''){         $a .= ",'".$client['DetalleOtrosCargos5Texto']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos1Valor']) && $client['DetalleOtrosCargos1Valor'] != ''){         $a .= ",'".$client['DetalleOtrosCargos1Valor']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos2Valor']) && $client['DetalleOtrosCargos2Valor'] != ''){         $a .= ",'".$client['DetalleOtrosCargos2Valor']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos3Valor']) && $client['DetalleOtrosCargos3Valor'] != ''){         $a .= ",'".$client['DetalleOtrosCargos3Valor']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos4Valor']) && $client['DetalleOtrosCargos4Valor'] != ''){         $a .= ",'".$client['DetalleOtrosCargos4Valor']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos5Valor']) && $client['DetalleOtrosCargos5Valor'] != ''){         $a .= ",'".$client['DetalleOtrosCargos5Valor']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos1Fecha']) && $client['DetalleOtrosCargos1Fecha'] != ''){         $a .= ",'".$client['DetalleOtrosCargos1Fecha']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos2Fecha']) && $client['DetalleOtrosCargos2Fecha'] != ''){         $a .= ",'".$client['DetalleOtrosCargos2Fecha']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos3Fecha']) && $client['DetalleOtrosCargos3Fecha'] != ''){         $a .= ",'".$client['DetalleOtrosCargos3Fecha']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos4Fecha']) && $client['DetalleOtrosCargos4Fecha'] != ''){         $a .= ",'".$client['DetalleOtrosCargos4Fecha']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleOtrosCargos5Fecha']) && $client['DetalleOtrosCargos5Fecha'] != ''){         $a .= ",'".$client['DetalleOtrosCargos5Fecha']."'";     }else{$a .=",''";}
-							if(isset($client['DetalleTotalVenta']) && $client['DetalleTotalVenta'] != ''){                       $a .= ",'".$client['DetalleTotalVenta']."'";            }else{$a .=",''";}
-							if(isset($client['DetalleSaldoFavor']) && $client['DetalleSaldoFavor'] != ''){                       $a .= ",'".$client['DetalleSaldoFavor']."'";            }else{$a .=",''";}
-							if(isset($client['DetalleSaldoAnterior']) && $client['DetalleSaldoAnterior'] != ''){                 $a .= ",'".$client['DetalleSaldoAnterior']."'";         }else{$a .=",''";}
-							if(isset($client['DetalleTotalAPagar']) && $client['DetalleTotalAPagar'] != ''){                     $a .= ",'".$client['DetalleTotalAPagar']."'";           }else{$a .=",''";}
-							if(isset($client['GraficoMes1Valor']) && $client['GraficoMes1Valor'] != ''){                         $a .= ",'".$client['GraficoMes1Valor']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes2Valor']) && $client['GraficoMes2Valor'] != ''){                         $a .= ",'".$client['GraficoMes2Valor']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes3Valor']) && $client['GraficoMes3Valor'] != ''){                         $a .= ",'".$client['GraficoMes3Valor']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes4Valor']) && $client['GraficoMes4Valor'] != ''){                         $a .= ",'".$client['GraficoMes4Valor']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes5Valor']) && $client['GraficoMes5Valor'] != ''){                         $a .= ",'".$client['GraficoMes5Valor']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes6Valor']) && $client['GraficoMes6Valor'] != ''){                         $a .= ",'".$client['GraficoMes6Valor']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes7Valor']) && $client['GraficoMes7Valor'] != ''){                         $a .= ",'".$client['GraficoMes7Valor']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes8Valor']) && $client['GraficoMes8Valor'] != ''){                         $a .= ",'".$client['GraficoMes8Valor']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes9Valor']) && $client['GraficoMes9Valor'] != ''){                         $a .= ",'".$client['GraficoMes9Valor']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes10Valor']) && $client['GraficoMes10Valor'] != ''){                       $a .= ",'".$client['GraficoMes10Valor']."'";            }else{$a .=",''";}
-							if(isset($client['GraficoMes11Valor']) && $client['GraficoMes11Valor'] != ''){                       $a .= ",'".$client['GraficoMes11Valor']."'";            }else{$a .=",''";}
-							if(isset($client['GraficoMes12Valor']) && $client['GraficoMes12Valor'] != ''){                       $a .= ",'".$client['GraficoMes12Valor']."'";            }else{$a .=",''";}
-							if(isset($client['GraficoMes1Fecha']) && $client['GraficoMes1Fecha'] != ''){                         $a .= ",'".$client['GraficoMes1Fecha']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes2Fecha']) && $client['GraficoMes2Fecha'] != ''){                         $a .= ",'".$client['GraficoMes2Fecha']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes3Fecha']) && $client['GraficoMes3Fecha'] != ''){                         $a .= ",'".$client['GraficoMes3Fecha']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes4Fecha']) && $client['GraficoMes4Fecha'] != ''){                         $a .= ",'".$client['GraficoMes4Fecha']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes5Fecha']) && $client['GraficoMes5Fecha'] != ''){                         $a .= ",'".$client['GraficoMes5Fecha']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes6Fecha']) && $client['GraficoMes6Fecha'] != ''){                         $a .= ",'".$client['GraficoMes6Fecha']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes7Fecha']) && $client['GraficoMes7Fecha'] != ''){                         $a .= ",'".$client['GraficoMes7Fecha']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes8Fecha']) && $client['GraficoMes8Fecha'] != ''){                         $a .= ",'".$client['GraficoMes8Fecha']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes9Fecha']) && $client['GraficoMes9Fecha'] != ''){                         $a .= ",'".$client['GraficoMes9Fecha']."'";             }else{$a .=",''";}
-							if(isset($client['GraficoMes10Fecha']) && $client['GraficoMes10Fecha'] != ''){                       $a .= ",'".$client['GraficoMes10Fecha']."'";            }else{$a .=",''";}
-							if(isset($client['GraficoMes11Fecha']) && $client['GraficoMes11Fecha'] != ''){                       $a .= ",'".$client['GraficoMes11Fecha']."'";            }else{$a .=",''";}
-							if(isset($client['GraficoMes12Fecha']) && $client['GraficoMes12Fecha'] != ''){                       $a .= ",'".$client['GraficoMes12Fecha']."'";            }else{$a .=",''";}
-							if(isset($client['DetConsMesAnteriorCantidad']) && $client['DetConsMesAnteriorCantidad'] != ''){     $a .= ",'".$client['DetConsMesAnteriorCantidad']."'";   }else{$a .=",''";}
-							if(isset($client['DetConsMesAnteriorFecha']) && $client['DetConsMesAnteriorFecha'] != ''){           $a .= ",'".$client['DetConsMesAnteriorFecha']."'";      }else{$a .=",''";}
-							if(isset($client['DetConsMesActualCantidad']) && $client['DetConsMesActualCantidad'] != ''){         $a .= ",'".$client['DetConsMesActualCantidad']."'";     }else{$a .=",''";}
-							if(isset($client['DetConsMesActualFecha']) && $client['DetConsMesActualFecha'] != ''){               $a .= ",'".$client['DetConsMesActualFecha']."'";        }else{$a .=",''";}
-							if(isset($client['DetConsMesDiferencia']) && $client['DetConsMesDiferencia'] != ''){                 $a .= ",'".$client['DetConsMesDiferencia']."'";         }else{$a .=",''";}
-							if(isset($client['DetConsProrateo']) && $client['DetConsProrateo'] != ''){                           $a .= ",'".$client['DetConsProrateo']."'";              }else{$a .=",''";}
-							if(isset($client['DetConsProrateoSigno']) && $client['DetConsProrateoSigno'] != ''){                 $a .= ",'".$client['DetConsProrateoSigno']."'";         }else{$a .=",''";}
-							if(isset($client['DetConsMesTotalCantidad']) && $client['DetConsMesTotalCantidad'] != ''){           $a .= ",'".$client['DetConsMesTotalCantidad']."'";      }else{$a .=",''";}
-							if(isset($client['DetConsFechaProxLectura']) && $client['DetConsFechaProxLectura'] != ''){           $a .= ",'".$client['DetConsFechaProxLectura']."'";      }else{$a .=",''";}
-							if(isset($client['DetConsModalidad']) && $client['DetConsModalidad'] != ''){                         $a .= ",'".$client['DetConsModalidad']."'";             }else{$a .=",''";}
-							if(isset($client['DetConsFonoEmergencias']) && $client['DetConsFonoEmergencias'] != ''){             $a .= ",'".$client['DetConsFonoEmergencias']."'";       }else{$a .=",''";}
-							if(isset($client['DetConsFonoConsultas']) && $client['DetConsFonoConsultas'] != ''){                 $a .= ",'".$client['DetConsFonoConsultas']."'";         }else{$a .=",''";}
-							if(isset($client['AguasInfCargoFijo']) && $client['AguasInfCargoFijo'] != ''){                       $a .= ",'".$client['AguasInfCargoFijo']."'";            }else{$a .=",''";}
-							if(isset($client['AguasInfMetroAgua']) && $client['AguasInfMetroAgua'] != ''){                       $a .= ",'".$client['AguasInfMetroAgua']."'";            }else{$a .=",''";}
-							if(isset($client['AguasInfMetroRecolecion']) && $client['AguasInfMetroRecolecion'] != ''){           $a .= ",'".$client['AguasInfMetroRecolecion']."'";      }else{$a .=",''";}
-							if(isset($client['AguasInfVisitaCorte']) && $client['AguasInfVisitaCorte'] != ''){                   $a .= ",'".$client['AguasInfVisitaCorte']."'";          }else{$a .=",''";}
-							if(isset($client['AguasInfCorte1']) && $client['AguasInfCorte1'] != ''){                             $a .= ",'".$client['AguasInfCorte1']."'";               }else{$a .=",''";}
-							if(isset($client['AguasInfCorte2']) && $client['AguasInfCorte2'] != ''){                             $a .= ",'".$client['AguasInfCorte2']."'";               }else{$a .=",''";}
-							if(isset($client['AguasInfReposicion1']) && $client['AguasInfReposicion1'] != ''){                   $a .= ",'".$client['AguasInfReposicion1']."'";          }else{$a .=",''";}
-							if(isset($client['AguasInfReposicion2']) && $client['AguasInfReposicion2'] != ''){                   $a .= ",'".$client['AguasInfReposicion2']."'";          }else{$a .=",''";}
-							if(isset($client['AguasInfFactorCobro']) && $client['AguasInfFactorCobro'] != ''){                   $a .= ",'".$client['AguasInfFactorCobro']."'";          }else{$a .=",''";}
-							if(isset($client['AguasInfDifMedGeneral']) && $client['AguasInfDifMedGeneral'] != ''){               $a .= ",'".$client['AguasInfDifMedGeneral']."'";        }else{$a .=",''";}
-							if(isset($client['AguasInfProcProrrateo']) && $client['AguasInfProcProrrateo'] != ''){               $a .= ",'".$client['AguasInfProcProrrateo']."'";        }else{$a .=",''";}
-							if(isset($client['AguasInfTipoMedicion']) && $client['AguasInfTipoMedicion'] != ''){                 $a .= ",'".$client['AguasInfTipoMedicion']."'";         }else{$a .=",''";}
-							if(isset($client['AguasInfPuntoDiametro']) && $client['AguasInfPuntoDiametro'] != ''){               $a .= ",'".$client['AguasInfPuntoDiametro']."'";        }else{$a .=",''";}
-							if(isset($client['AguasInfClaveFacturacion']) && $client['AguasInfClaveFacturacion'] != ''){         $a .= ",'".$client['AguasInfClaveFacturacion']."'";     }else{$a .=",''";}
-							if(isset($client['AguasInfClaveLectura']) && $client['AguasInfClaveLectura'] != ''){                 $a .= ",'".$client['AguasInfClaveLectura']."'";         }else{$a .=",''";}
-							if(isset($client['AguasInfNumeroMedidor']) && $client['AguasInfNumeroMedidor'] != ''){               $a .= ",'".$client['AguasInfNumeroMedidor']."'";        }else{$a .=",''";}
-							if(isset($client['AguasInfFechaEmision']) && $client['AguasInfFechaEmision'] != ''){                 $a .= ",'".$client['AguasInfFechaEmision']."'";         }else{$a .=",''";}
-							if(isset($client['AguasInfUltimoPagoFecha']) && $client['AguasInfUltimoPagoFecha'] != ''){           $a .= ",'".$client['AguasInfUltimoPagoFecha']."'";      }else{$a .=",''";}
-							if(isset($client['AguasInfUltimoPagoMonto']) && $client['AguasInfUltimoPagoMonto'] != ''){           $a .= ",'".$client['AguasInfUltimoPagoMonto']."'";      }else{$a .=",''";}
-							if(isset($client['AguasInfMovimientosHasta']) && $client['AguasInfMovimientosHasta'] != ''){         $a .= ",'".$client['AguasInfMovimientosHasta']."'";     }else{$a .=",''";}
-							if(isset($client['idEstado']) && $client['idEstado'] != ''){                                         $a .= ",'".$client['idEstado']."'";                     }else{$a .=",''";}
-							if(isset($client['intAnual']) && $client['intAnual'] != ''){                                         $a .= ",'".$client['intAnual']."'";                     }else{$a .=",''";}
-							if(isset($client['idTipoPago']) && $client['idTipoPago'] != ''){                                     $a .= ",'".$client['idTipoPago']."'";                   }else{$a .=",''";}
-							if(isset($client['nDocPago']) && $client['nDocPago'] != ''){                                         $a .= ",'".$client['nDocPago']."'";                     }else{$a .=",''";}
-							if(isset($client['fechaPago']) && $client['fechaPago'] != ''){                                       $a .= ",'".$client['fechaPago']."'";                    }else{$a .=",''";}
-							if(isset($client['DiaPago']) && $client['DiaPago'] != ''){                                           $a .= ",'".$client['DiaPago']."'";                      }else{$a .=",''";}
-							if(isset($client['idMesPago']) && $client['idMesPago'] != ''){                                       $a .= ",'".$client['idMesPago']."'";                    }else{$a .=",''";}
-							if(isset($client['AnoPago']) && $client['AnoPago'] != ''){                                           $a .= ",'".$client['AnoPago']."'";                      }else{$a .=",''";}
-							if(isset($client['montoPago']) && $client['montoPago'] != ''){                                       $a .= ",'".$client['montoPago']."'";                    }else{$a .=",''";}
-							if(isset($client['idUsuarioPago']) && $client['idUsuarioPago'] != ''){                               $a .= ",'".$client['idUsuarioPago']."'";                }else{$a .=",''";}
-							if(isset($client['idPago']) && $client['idPago'] != ''){                                             $a .= ",'".$client['idPago']."'";                       }else{$a .=",''";}
-							if(isset($client['rem_cantidad']) && $client['rem_cantidad'] != ''){                                 $a .= ",'".$client['rem_cantidad']."'";                 }else{$a .=",''";}
-							if(isset($client['rem_porcentaje']) && $client['rem_porcentaje'] != ''){                             $a .= ",'".$client['rem_porcentaje']."'";               }else{$a .=",''";}
-							if(isset($client['rem_negative']) && $client['rem_negative'] != ''){                                 $a .= ",'".$client['rem_negative']."'";                 }else{$a .=",''";}
-							if(isset($client['rem_modalidad']) && $client['rem_modalidad'] != ''){                               $a .= ",'".$client['rem_modalidad']."'";                }else{$a .=",''";}
-							if(isset($client['rem_diferencia']) && $client['rem_diferencia'] != ''){                             $a .= ",'".$client['rem_diferencia']."'";               }else{$a .=",''";}
-							if(isset($client['SII_idFacturable']) && $client['SII_idFacturable'] != ''){                         $a .= ",'".$client['SII_idFacturable']."'";             }else{$a .=",''";}
-							if(isset($client['SII_NDoc']) && $client['SII_NDoc'] != ''){                                         $a .= ",'".$client['SII_NDoc']."'";                     }else{$a .=",''";}
-							if(isset($client['NombreArchivo']) && $client['NombreArchivo'] != ''){                               $a .= ",'".$client['NombreArchivo']."'";                }else{$a .=",''";}
+							if(isset($idSistema) && $idSistema != ''){                                                           $SIS_data  = "'".$idSistema."'";                               }else{$SIS_data  = "''";}
+							if(isset($idUsuario) && $idUsuario != ''){                                                           $SIS_data .= ",'".$idUsuario."'";                              }else{$SIS_data .= ",''";}
+							$SIS_data .= ",'".$ultimo_id."'";       
+							if(isset($Fecha) && $Fecha != ''){                                                                   $SIS_data .= ",'".$Fecha."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($Dia) && $Dia != ''){                                                                       $SIS_data .= ",'".$Dia."'";                                    }else{$SIS_data .= ",''";}
+							if(isset($idMes) && $idMes != ''){                                                                   $SIS_data .= ",'".$idMes."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($Ano) && $Ano != ''){                                                                       $SIS_data .= ",'".$Ano."'";                                    }else{$SIS_data .= ",''";}
+							if(isset($client['idCliente']) && $client['idCliente'] != ''){                                       $SIS_data .= ",'".$client['idCliente']."'";                    }else{$SIS_data .= ",''";}
+							if(isset($client['ClienteNombre']) && $client['ClienteNombre'] != ''){                               $SIS_data .= ",'".$client['ClienteNombre']."'";                }else{$SIS_data .= ",''";}
+							if(isset($client['ClienteDireccion']) && $client['ClienteDireccion'] != ''){                         $SIS_data .= ",'".$client['ClienteDireccion']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['ClienteIdentificador']) && $client['ClienteIdentificador'] != ''){                 $SIS_data .= ",'".$client['ClienteIdentificador']."'";         }else{$SIS_data .= ",''";}
+							if(isset($client['ClienteNombreComuna']) && $client['ClienteNombreComuna'] != ''){                   $SIS_data .= ",'".$client['ClienteNombreComuna']."'";          }else{$SIS_data .= ",''";}
+							if(isset($client['ClienteFechaVencimiento']) && $client['ClienteFechaVencimiento'] != ''){           $SIS_data .= ",'".$client['ClienteFechaVencimiento']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['ClienteEstado']) && $client['ClienteEstado'] != ''){                               $SIS_data .= ",'".$client['ClienteEstado']."'";                }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleCargoFijoValor']) && $client['DetalleCargoFijoValor'] != ''){               $SIS_data .= ",'".$client['DetalleCargoFijoValor']."'";        }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleConsumoCantidad']) && $client['DetalleConsumoCantidad'] != ''){             $SIS_data .= ",'".$client['DetalleConsumoCantidad']."'";       }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleConsumoValor']) && $client['DetalleConsumoValor'] != ''){                   $SIS_data .= ",'".$client['DetalleConsumoValor']."'";          }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleRecoleccionCantidad']) && $client['DetalleRecoleccionCantidad'] != ''){     $SIS_data .= ",'".$client['DetalleRecoleccionCantidad']."'";   }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleRecoleccionValor']) && $client['DetalleRecoleccionValor'] != ''){           $SIS_data .= ",'".$client['DetalleRecoleccionValor']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleVisitaCorte']) && $client['DetalleVisitaCorte'] != ''){                     $SIS_data .= ",'".$client['DetalleVisitaCorte']."'";           }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleCorte1Valor']) && $client['DetalleCorte1Valor'] != ''){                     $SIS_data .= ",'".$client['DetalleCorte1Valor']."'";           }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleCorte1Fecha']) && $client['DetalleCorte1Fecha'] != ''){                     $SIS_data .= ",'".$client['DetalleCorte1Fecha']."'";           }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleCorte2Valor']) && $client['DetalleCorte2Valor'] != ''){                     $SIS_data .= ",'".$client['DetalleCorte2Valor']."'";           }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleCorte2Fecha']) && $client['DetalleCorte2Fecha'] != ''){                     $SIS_data .= ",'".$client['DetalleCorte2Fecha']."'";           }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleReposicion1Valor']) && $client['DetalleReposicion1Valor'] != ''){           $SIS_data .= ",'".$client['DetalleReposicion1Valor']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleReposicion1Fecha']) && $client['DetalleReposicion1Fecha'] != ''){           $SIS_data .= ",'".$client['DetalleReposicion1Fecha']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleReposicion2Valor']) && $client['DetalleReposicion2Valor'] != ''){           $SIS_data .= ",'".$client['DetalleReposicion2Valor']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleReposicion2Fecha']) && $client['DetalleReposicion2Fecha'] != ''){           $SIS_data .= ",'".$client['DetalleReposicion2Fecha']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleSubtotalServicio']) && $client['DetalleSubtotalServicio'] != ''){           $SIS_data .= ",'".$client['DetalleSubtotalServicio']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleInteresDeuda']) && $client['DetalleInteresDeuda'] != ''){                   $SIS_data .= ",'".$client['DetalleInteresDeuda']."'";          }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos1Texto']) && $client['DetalleOtrosCargos1Texto'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos1Texto']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos2Texto']) && $client['DetalleOtrosCargos2Texto'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos2Texto']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos3Texto']) && $client['DetalleOtrosCargos3Texto'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos3Texto']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos4Texto']) && $client['DetalleOtrosCargos4Texto'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos4Texto']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos5Texto']) && $client['DetalleOtrosCargos5Texto'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos5Texto']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos1Valor']) && $client['DetalleOtrosCargos1Valor'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos1Valor']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos2Valor']) && $client['DetalleOtrosCargos2Valor'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos2Valor']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos3Valor']) && $client['DetalleOtrosCargos3Valor'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos3Valor']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos4Valor']) && $client['DetalleOtrosCargos4Valor'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos4Valor']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos5Valor']) && $client['DetalleOtrosCargos5Valor'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos5Valor']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos1Fecha']) && $client['DetalleOtrosCargos1Fecha'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos1Fecha']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos2Fecha']) && $client['DetalleOtrosCargos2Fecha'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos2Fecha']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos3Fecha']) && $client['DetalleOtrosCargos3Fecha'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos3Fecha']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos4Fecha']) && $client['DetalleOtrosCargos4Fecha'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos4Fecha']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleOtrosCargos5Fecha']) && $client['DetalleOtrosCargos5Fecha'] != ''){         $SIS_data .= ",'".$client['DetalleOtrosCargos5Fecha']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleTotalVenta']) && $client['DetalleTotalVenta'] != ''){                       $SIS_data .= ",'".$client['DetalleTotalVenta']."'";            }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleSaldoFavor']) && $client['DetalleSaldoFavor'] != ''){                       $SIS_data .= ",'".$client['DetalleSaldoFavor']."'";            }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleSaldoAnterior']) && $client['DetalleSaldoAnterior'] != ''){                 $SIS_data .= ",'".$client['DetalleSaldoAnterior']."'";         }else{$SIS_data .= ",''";}
+							if(isset($client['DetalleTotalAPagar']) && $client['DetalleTotalAPagar'] != ''){                     $SIS_data .= ",'".$client['DetalleTotalAPagar']."'";           }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes1Valor']) && $client['GraficoMes1Valor'] != ''){                         $SIS_data .= ",'".$client['GraficoMes1Valor']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes2Valor']) && $client['GraficoMes2Valor'] != ''){                         $SIS_data .= ",'".$client['GraficoMes2Valor']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes3Valor']) && $client['GraficoMes3Valor'] != ''){                         $SIS_data .= ",'".$client['GraficoMes3Valor']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes4Valor']) && $client['GraficoMes4Valor'] != ''){                         $SIS_data .= ",'".$client['GraficoMes4Valor']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes5Valor']) && $client['GraficoMes5Valor'] != ''){                         $SIS_data .= ",'".$client['GraficoMes5Valor']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes6Valor']) && $client['GraficoMes6Valor'] != ''){                         $SIS_data .= ",'".$client['GraficoMes6Valor']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes7Valor']) && $client['GraficoMes7Valor'] != ''){                         $SIS_data .= ",'".$client['GraficoMes7Valor']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes8Valor']) && $client['GraficoMes8Valor'] != ''){                         $SIS_data .= ",'".$client['GraficoMes8Valor']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes9Valor']) && $client['GraficoMes9Valor'] != ''){                         $SIS_data .= ",'".$client['GraficoMes9Valor']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes10Valor']) && $client['GraficoMes10Valor'] != ''){                       $SIS_data .= ",'".$client['GraficoMes10Valor']."'";            }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes11Valor']) && $client['GraficoMes11Valor'] != ''){                       $SIS_data .= ",'".$client['GraficoMes11Valor']."'";            }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes12Valor']) && $client['GraficoMes12Valor'] != ''){                       $SIS_data .= ",'".$client['GraficoMes12Valor']."'";            }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes1Fecha']) && $client['GraficoMes1Fecha'] != ''){                         $SIS_data .= ",'".$client['GraficoMes1Fecha']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes2Fecha']) && $client['GraficoMes2Fecha'] != ''){                         $SIS_data .= ",'".$client['GraficoMes2Fecha']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes3Fecha']) && $client['GraficoMes3Fecha'] != ''){                         $SIS_data .= ",'".$client['GraficoMes3Fecha']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes4Fecha']) && $client['GraficoMes4Fecha'] != ''){                         $SIS_data .= ",'".$client['GraficoMes4Fecha']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes5Fecha']) && $client['GraficoMes5Fecha'] != ''){                         $SIS_data .= ",'".$client['GraficoMes5Fecha']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes6Fecha']) && $client['GraficoMes6Fecha'] != ''){                         $SIS_data .= ",'".$client['GraficoMes6Fecha']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes7Fecha']) && $client['GraficoMes7Fecha'] != ''){                         $SIS_data .= ",'".$client['GraficoMes7Fecha']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes8Fecha']) && $client['GraficoMes8Fecha'] != ''){                         $SIS_data .= ",'".$client['GraficoMes8Fecha']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes9Fecha']) && $client['GraficoMes9Fecha'] != ''){                         $SIS_data .= ",'".$client['GraficoMes9Fecha']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes10Fecha']) && $client['GraficoMes10Fecha'] != ''){                       $SIS_data .= ",'".$client['GraficoMes10Fecha']."'";            }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes11Fecha']) && $client['GraficoMes11Fecha'] != ''){                       $SIS_data .= ",'".$client['GraficoMes11Fecha']."'";            }else{$SIS_data .= ",''";}
+							if(isset($client['GraficoMes12Fecha']) && $client['GraficoMes12Fecha'] != ''){                       $SIS_data .= ",'".$client['GraficoMes12Fecha']."'";            }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsMesAnteriorCantidad']) && $client['DetConsMesAnteriorCantidad'] != ''){     $SIS_data .= ",'".$client['DetConsMesAnteriorCantidad']."'";   }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsMesAnteriorFecha']) && $client['DetConsMesAnteriorFecha'] != ''){           $SIS_data .= ",'".$client['DetConsMesAnteriorFecha']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsMesActualCantidad']) && $client['DetConsMesActualCantidad'] != ''){         $SIS_data .= ",'".$client['DetConsMesActualCantidad']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsMesActualFecha']) && $client['DetConsMesActualFecha'] != ''){               $SIS_data .= ",'".$client['DetConsMesActualFecha']."'";        }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsMesDiferencia']) && $client['DetConsMesDiferencia'] != ''){                 $SIS_data .= ",'".$client['DetConsMesDiferencia']."'";         }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsProrateo']) && $client['DetConsProrateo'] != ''){                           $SIS_data .= ",'".$client['DetConsProrateo']."'";              }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsProrateoSigno']) && $client['DetConsProrateoSigno'] != ''){                 $SIS_data .= ",'".$client['DetConsProrateoSigno']."'";         }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsMesTotalCantidad']) && $client['DetConsMesTotalCantidad'] != ''){           $SIS_data .= ",'".$client['DetConsMesTotalCantidad']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsFechaProxLectura']) && $client['DetConsFechaProxLectura'] != ''){           $SIS_data .= ",'".$client['DetConsFechaProxLectura']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsModalidad']) && $client['DetConsModalidad'] != ''){                         $SIS_data .= ",'".$client['DetConsModalidad']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsFonoEmergencias']) && $client['DetConsFonoEmergencias'] != ''){             $SIS_data .= ",'".$client['DetConsFonoEmergencias']."'";       }else{$SIS_data .= ",''";}
+							if(isset($client['DetConsFonoConsultas']) && $client['DetConsFonoConsultas'] != ''){                 $SIS_data .= ",'".$client['DetConsFonoConsultas']."'";         }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfCargoFijo']) && $client['AguasInfCargoFijo'] != ''){                       $SIS_data .= ",'".$client['AguasInfCargoFijo']."'";            }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfMetroAgua']) && $client['AguasInfMetroAgua'] != ''){                       $SIS_data .= ",'".$client['AguasInfMetroAgua']."'";            }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfMetroRecolecion']) && $client['AguasInfMetroRecolecion'] != ''){           $SIS_data .= ",'".$client['AguasInfMetroRecolecion']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfVisitaCorte']) && $client['AguasInfVisitaCorte'] != ''){                   $SIS_data .= ",'".$client['AguasInfVisitaCorte']."'";          }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfCorte1']) && $client['AguasInfCorte1'] != ''){                             $SIS_data .= ",'".$client['AguasInfCorte1']."'";               }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfCorte2']) && $client['AguasInfCorte2'] != ''){                             $SIS_data .= ",'".$client['AguasInfCorte2']."'";               }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfReposicion1']) && $client['AguasInfReposicion1'] != ''){                   $SIS_data .= ",'".$client['AguasInfReposicion1']."'";          }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfReposicion2']) && $client['AguasInfReposicion2'] != ''){                   $SIS_data .= ",'".$client['AguasInfReposicion2']."'";          }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfFactorCobro']) && $client['AguasInfFactorCobro'] != ''){                   $SIS_data .= ",'".$client['AguasInfFactorCobro']."'";          }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfDifMedGeneral']) && $client['AguasInfDifMedGeneral'] != ''){               $SIS_data .= ",'".$client['AguasInfDifMedGeneral']."'";        }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfProcProrrateo']) && $client['AguasInfProcProrrateo'] != ''){               $SIS_data .= ",'".$client['AguasInfProcProrrateo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfTipoMedicion']) && $client['AguasInfTipoMedicion'] != ''){                 $SIS_data .= ",'".$client['AguasInfTipoMedicion']."'";         }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfPuntoDiametro']) && $client['AguasInfPuntoDiametro'] != ''){               $SIS_data .= ",'".$client['AguasInfPuntoDiametro']."'";        }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfClaveFacturacion']) && $client['AguasInfClaveFacturacion'] != ''){         $SIS_data .= ",'".$client['AguasInfClaveFacturacion']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfClaveLectura']) && $client['AguasInfClaveLectura'] != ''){                 $SIS_data .= ",'".$client['AguasInfClaveLectura']."'";         }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfNumeroMedidor']) && $client['AguasInfNumeroMedidor'] != ''){               $SIS_data .= ",'".$client['AguasInfNumeroMedidor']."'";        }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfFechaEmision']) && $client['AguasInfFechaEmision'] != ''){                 $SIS_data .= ",'".$client['AguasInfFechaEmision']."'";         }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfUltimoPagoFecha']) && $client['AguasInfUltimoPagoFecha'] != ''){           $SIS_data .= ",'".$client['AguasInfUltimoPagoFecha']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfUltimoPagoMonto']) && $client['AguasInfUltimoPagoMonto'] != ''){           $SIS_data .= ",'".$client['AguasInfUltimoPagoMonto']."'";      }else{$SIS_data .= ",''";}
+							if(isset($client['AguasInfMovimientosHasta']) && $client['AguasInfMovimientosHasta'] != ''){         $SIS_data .= ",'".$client['AguasInfMovimientosHasta']."'";     }else{$SIS_data .= ",''";}
+							if(isset($client['idEstado']) && $client['idEstado'] != ''){                                         $SIS_data .= ",'".$client['idEstado']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($client['intAnual']) && $client['intAnual'] != ''){                                         $SIS_data .= ",'".$client['intAnual']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($client['idTipoPago']) && $client['idTipoPago'] != ''){                                     $SIS_data .= ",'".$client['idTipoPago']."'";                   }else{$SIS_data .= ",''";}
+							if(isset($client['nDocPago']) && $client['nDocPago'] != ''){                                         $SIS_data .= ",'".$client['nDocPago']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($client['fechaPago']) && $client['fechaPago'] != ''){                                       $SIS_data .= ",'".$client['fechaPago']."'";                    }else{$SIS_data .= ",''";}
+							if(isset($client['DiaPago']) && $client['DiaPago'] != ''){                                           $SIS_data .= ",'".$client['DiaPago']."'";                      }else{$SIS_data .= ",''";}
+							if(isset($client['idMesPago']) && $client['idMesPago'] != ''){                                       $SIS_data .= ",'".$client['idMesPago']."'";                    }else{$SIS_data .= ",''";}
+							if(isset($client['AnoPago']) && $client['AnoPago'] != ''){                                           $SIS_data .= ",'".$client['AnoPago']."'";                      }else{$SIS_data .= ",''";}
+							if(isset($client['montoPago']) && $client['montoPago'] != ''){                                       $SIS_data .= ",'".$client['montoPago']."'";                    }else{$SIS_data .= ",''";}
+							if(isset($client['idUsuarioPago']) && $client['idUsuarioPago'] != ''){                               $SIS_data .= ",'".$client['idUsuarioPago']."'";                }else{$SIS_data .= ",''";}
+							if(isset($client['idPago']) && $client['idPago'] != ''){                                             $SIS_data .= ",'".$client['idPago']."'";                       }else{$SIS_data .= ",''";}
+							if(isset($client['rem_cantidad']) && $client['rem_cantidad'] != ''){                                 $SIS_data .= ",'".$client['rem_cantidad']."'";                 }else{$SIS_data .= ",''";}
+							if(isset($client['rem_porcentaje']) && $client['rem_porcentaje'] != ''){                             $SIS_data .= ",'".$client['rem_porcentaje']."'";               }else{$SIS_data .= ",''";}
+							if(isset($client['rem_negative']) && $client['rem_negative'] != ''){                                 $SIS_data .= ",'".$client['rem_negative']."'";                 }else{$SIS_data .= ",''";}
+							if(isset($client['rem_modalidad']) && $client['rem_modalidad'] != ''){                               $SIS_data .= ",'".$client['rem_modalidad']."'";                }else{$SIS_data .= ",''";}
+							if(isset($client['rem_diferencia']) && $client['rem_diferencia'] != ''){                             $SIS_data .= ",'".$client['rem_diferencia']."'";               }else{$SIS_data .= ",''";}
+							if(isset($client['SII_idFacturable']) && $client['SII_idFacturable'] != ''){                         $SIS_data .= ",'".$client['SII_idFacturable']."'";             }else{$SIS_data .= ",''";}
+							if(isset($client['SII_NDoc']) && $client['SII_NDoc'] != ''){                                         $SIS_data .= ",'".$client['SII_NDoc']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($client['NombreArchivo']) && $client['NombreArchivo'] != ''){                               $SIS_data .= ",'".$client['NombreArchivo']."'";                }else{$SIS_data .= ",''";}
 							
-										
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `aguas_facturacion_listado_detalle` (idSistema,idUsuario,
-							idFacturacion,Fecha,Dia,idMes,Ano,idCliente,ClienteNombre,ClienteDireccion,
-							ClienteIdentificador,ClienteNombreComuna,ClienteFechaVencimiento,ClienteEstado,
-							DetalleCargoFijoValor,DetalleConsumoCantidad,DetalleConsumoValor,
+							$SIS_columns = 'idSistema,idUsuario, idFacturacion,Fecha,Dia,idMes,Ano,idCliente,
+							ClienteNombre,ClienteDireccion, ClienteIdentificador,ClienteNombreComuna,ClienteFechaVencimiento,
+							ClienteEstado, DetalleCargoFijoValor,DetalleConsumoCantidad,DetalleConsumoValor,
 							DetalleRecoleccionCantidad,DetalleRecoleccionValor,DetalleVisitaCorte,
 							DetalleCorte1Valor,DetalleCorte1Fecha,DetalleCorte2Valor,DetalleCorte2Fecha,
 							DetalleReposicion1Valor,DetalleReposicion1Fecha,DetalleReposicion2Valor,
@@ -1169,33 +1157,24 @@ require_once '0_validate_user_1.php';
 							AguasInfFechaEmision,AguasInfUltimoPagoFecha,AguasInfUltimoPagoMonto,AguasInfMovimientosHasta,
 							idEstado,intAnual,idTipoPago,nDocPago,fechaPago,DiaPago,idMesPago,AnoPago,montoPago,
 							idUsuarioPago,idPago,rem_cantidad,rem_procentaje,rem_negative,rem_modalidad,rem_diferencia,
-							SII_idFacturable,SII_NDoc,NombreArchivo) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							SII_idFacturable,SII_NDoc,NombreArchivo';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_facturacion_listado_detalle', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
-							$Cuenta_correcto++;
+							//Si ejecuto correctamente la consulta
+							if($ultimo_id!=0){
+								$Cuenta_correcto++;
+							}
+				
 						}
 						
 						///////////////////////////////////////////////////////////////////////////////////////
 						//Se actualiza el estado de la facturacion si se ejecuta correctamente
 						if(isset($Cuenta_correcto)&&$Cuenta_correcto!=0){
-							$a = "idFacturado='2'";
-							if(isset($ultimo_id) && $ultimo_id != ''){  $a .= ",idFacturacion='".$ultimo_id."'" ;}
+							$SIS_data = "idFacturado='2'";
+							if(isset($ultimo_id) && $ultimo_id != ''){  $SIS_data .= ",idFacturacion='".$ultimo_id."'" ;}
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'aguas_mediciones_datos_detalle', 'aguas_mediciones_datos_detalle.idSistema = '.$idSistema.' AND aguas_mediciones_datos_detalle.Ano = '.$Ano.' AND aguas_mediciones_datos_detalle.idMes = '.$idMes.' AND aguas_mediciones_datos_detalle.idFacturacion=0', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'aguas_mediciones_datos_detalle', 'aguas_mediciones_datos_detalle.idSistema = '.$idSistema.' AND aguas_mediciones_datos_detalle.Ano = '.$Ano.' AND aguas_mediciones_datos_detalle.idMes = '.$idMes.' AND aguas_mediciones_datos_detalle.idFacturacion=0', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
 							//borro todo		
 							unset($_SESSION['Facturacion_basicos']);
@@ -1244,8 +1223,8 @@ require_once '0_validate_user_1.php';
 			if($errorn==0){
 				
 				//se actualizan los datos
-				$a = "idFacturacion`='0'" ;
-				$resultado = db_update_data (false, $a, 'aguas_mediciones_datos_detalle', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$SIS_data = "idFacturacion`='0'" ;
+				$resultado = db_update_data (false, $SIS_data, 'aguas_mediciones_datos_detalle', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//borro los datos
 				$resultado_1 = db_delete_data (false, 'aguas_facturacion_listado', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1298,13 +1277,13 @@ require_once '0_validate_user_1.php';
 					for ($i = 1; $i <= $NClientes; $i++) {
 						if(isset($arrPostClientes[$i]['SII_NDoc'])&&$arrPostClientes[$i]['SII_NDoc']!=''){
 							//Filtros
-							$a = "idFacturacionDetalle='".$arrPostClientes[$i]['idFacturacionDetalle']."'" ;
+							$SIS_data = "idFacturacionDetalle='".$arrPostClientes[$i]['idFacturacionDetalle']."'" ;
 							if(isset($arrPostClientes[$i]['SII_NDoc']) && $arrPostClientes[$i]['SII_NDoc'] != ''){       
-								$a .= ",SII_NDoc='".$arrPostClientes[$i]['SII_NDoc']."'" ;
+								$SIS_data .= ",SII_NDoc='".$arrPostClientes[$i]['SII_NDoc']."'" ;
 							}
 							
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'aguas_facturacion_listado_detalle', 'idFacturacionDetalle = "'.$arrPostClientes[$i]['idFacturacionDetalle'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'aguas_facturacion_listado_detalle', 'idFacturacionDetalle = "'.$arrPostClientes[$i]['idFacturacionDetalle'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								

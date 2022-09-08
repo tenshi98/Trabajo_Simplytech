@@ -48,11 +48,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Trabajador creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Trabajador editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Trabajador borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Archivo creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Archivo editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Archivo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $query = "SELECT Nombre, ApellidoPat, ApellidoMat, File_Curriculum
@@ -108,7 +108,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         
 					<div class="col-sm-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs('upload', $rowdata['File_Curriculum'], '', '', ''); ?>
+						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Curriculum'], ''); ?>
 						<br/>
 						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_File_Curriculum='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					</div>

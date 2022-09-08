@@ -6,16 +6,8 @@ if($temp!=0) {
 	//Variables
 	$FechaDesde = restarDias(fecha_actual(),330);
 
-	//Variable de busqueda
-	$z = "WHERE cross_shipping_consolidacion.Creacion_fecha>'".$FechaDesde."'";
-	$z.=" AND cross_shipping_consolidacion.idEstado=2";//solo las aprobadas
-	//sistema
-	$z.=" AND cross_shipping_consolidacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-
-
 	// Se trae un listado con todos los elementos
-	$arrCross = array();
-	$query = "SELECT 
+	$SIS_query = '
 	cross_shipping_consolidacion_estibas.idEstibaListado,
 	cross_shipping_consolidacion_estibas.Temperatura,
 	
@@ -25,83 +17,37 @@ if($temp!=0) {
 
 	sistema_variedades_categorias.Temp_optima_min,
 	sistema_variedades_categorias.Temp_optima_max,
-	sistema_variedades_categorias.Temp_optima_margen_critico
-
-	FROM cross_shipping_consolidacion_estibas
-	 
+	sistema_variedades_categorias.Temp_optima_margen_critico';
+	$SIS_join  = '
 	LEFT JOIN cross_shipping_consolidacion    ON cross_shipping_consolidacion.idConsolidacion   = cross_shipping_consolidacion_estibas.idConsolidacion 
-	LEFT JOIN sistema_variedades_categorias   ON sistema_variedades_categorias.idCategoria      = cross_shipping_consolidacion.idCategoria 
-	
-	".$z."
-	
-	ORDER BY cross_shipping_consolidacion.Creacion_ano ASC,
+	LEFT JOIN sistema_variedades_categorias   ON sistema_variedades_categorias.idCategoria      = cross_shipping_consolidacion.idCategoria';
+	$SIS_where = "cross_shipping_consolidacion.Creacion_fecha>'".$FechaDesde."'";
+	$SIS_where.=" AND cross_shipping_consolidacion.idEstado=2";//solo las aprobadas
+	$SIS_where.=" AND cross_shipping_consolidacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+	$SIS_order = 'cross_shipping_consolidacion.Creacion_ano ASC,
 	cross_shipping_consolidacion.Creacion_mes ASC,
-	cross_shipping_consolidacion.idCategoria ASC
+	cross_shipping_consolidacion.idCategoria ASC';
+	$arrCross = array();
+	$arrCross = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion_estibas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrCross');
 
-	";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrCross,$row );
-	}
-	
 	/************************************/
 	// Se trae un listado con todos los meses
+	$SIS_query = 'idMes, Nombre';
+	$SIS_join  = '';
+	$SIS_where = '';
+	$SIS_order = 'idMes ASC';
 	$arrMeses = array();
-	$query = "SELECT idMes, Nombre
-	FROM core_tiempo_meses
-	ORDER BY idMes ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrMeses,$row );
-	}
+	$arrMeses = db_select_array (false, $SIS_query, 'core_tiempo_meses', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMeses');
 	
 	/************************************/
 	// Se trae un listado con todos los meses
+	$SIS_query = 'idMercado, Nombre';
+	$SIS_join  = '';
+	$SIS_where = '';
+	$SIS_order = 'idMercado ASC';
 	$arrMercados = array();
-	$query = "SELECT idMercado, Nombre
-	FROM cross_shipping_mercado
-	ORDER BY idMercado ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrMercados,$row );
-	}
-
+	$arrMercados = db_select_array (false, $SIS_query, 'cross_shipping_mercado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMercados');
+	
 	/******************************************************************/
 	//Variables
 	$arrCrossGeneral    = array();

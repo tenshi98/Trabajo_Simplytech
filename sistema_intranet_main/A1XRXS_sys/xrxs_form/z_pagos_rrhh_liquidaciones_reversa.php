@@ -145,32 +145,32 @@ require_once '0_validate_user_1.php';
 							//si el saldo es 0
 							if($nuevoMonto==0){
 								//se actualiza la liquidacion
-								$a  = "idFactTrab='".$tipo['idFactTrab']."'" ;
-								$a .= ",idUsuarioPago=''";
-								$a .= ",idDocPago=''";
-								$a .= ",N_DocPago=''";
-								$a .= ",F_Pago=''";
-								$a .= ",F_Pago_dia=''";
-								$a .= ",F_Pago_mes=''";
-								$a .= ",F_Pago_ano=''";
-								$a .= ",MontoPagado=''";
-								$a .= ",idEstado='1'" ;//abierto
+								$SIS_data  = "idFactTrab='".$tipo['idFactTrab']."'" ;
+								$SIS_data .= ",idUsuarioPago=''";
+								$SIS_data .= ",idDocPago=''";
+								$SIS_data .= ",N_DocPago=''";
+								$SIS_data .= ",F_Pago=''";
+								$SIS_data .= ",F_Pago_dia=''";
+								$SIS_data .= ",F_Pago_mes=''";
+								$SIS_data .= ",F_Pago_ano=''";
+								$SIS_data .= ",MontoPagado=''";
+								$SIS_data .= ",idEstado='1'" ;//abierto
 								
 								/*******************************************************/
 								//se actualizan los datos
-								$resultado = db_update_data (false, $a, 'rrhh_sueldos_facturacion_trabajadores', 'idFactTrab = "'.$tipo['idFactTrab'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores', 'idFactTrab = "'.$tipo['idFactTrab'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 								
 							//si ya tiene un saldo anterior
 							}else{
 								//se actualiza la liquidacion
-								$a = "idFactTrab='".$tipo['idFactTrab']."'" ;
-								$a .= ",MontoPagado='".$nuevoMonto."'" ;
-								$a .= ",idEstado='1'" ;//abierto
+								$SIS_data = "idFactTrab='".$tipo['idFactTrab']."'" ;
+								$SIS_data .= ",MontoPagado='".$nuevoMonto."'" ;
+								$SIS_data .= ",idEstado='1'" ;//abierto
 								
 								/*******************************************************/
 								//se actualizan los datos
-								$resultado = db_update_data (false, $a, 'rrhh_sueldos_facturacion_trabajadores', 'idFactTrab = "'.$tipo['idFactTrab'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores', 'idFactTrab = "'.$tipo['idFactTrab'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							}
 							
@@ -186,37 +186,24 @@ require_once '0_validate_user_1.php';
 				}
 				
 				//inserto la reversa
-				$a  = "'".$_SESSION['usuario']['basic_data']['idUsuario']."'" ;  //idUsuario
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idSistema']."'";  //idSistema
-				$a .= ",'".fecha_actual()."'" ;                                  //Fecha        
-				$a .= ",'".hora_actual()."'" ;                                   //Hora       
-				$a .= ",'".$indice1."'" ;                                        //idDocPago
-				$a .= ",'".$indice2."'" ;                                        //N_DocPago
-				$a .= ",'".$Valor_Doc."'" ;                                      //Monto
-												
+				$SIS_data  = "'".$_SESSION['usuario']['basic_data']['idUsuario']."'" ;  //idUsuario
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idSistema']."'";  //idSistema
+				$SIS_data .= ",'".fecha_actual()."'" ;                                  //Fecha        
+				$SIS_data .= ",'".hora_actual()."'" ;                                   //Hora       
+				$SIS_data .= ",'".$indice1."'" ;                                        //idDocPago
+				$SIS_data .= ",'".$indice2."'" ;                                        //N_DocPago
+				$SIS_data .= ",'".$Valor_Doc."'" ;                                      //Monto
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `pagos_rrhh_liquidaciones_reversa` (idUsuario, 
-				idSistema, Fecha, Hora, idDocPago, N_DocPago, Monto) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idUsuario, idSistema, Fecha, Hora, idDocPago, N_DocPago, Monto';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_rrhh_liquidaciones_reversa', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-										
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-				}else{
+				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&pagina=1&reversa=true' );
 					die;
 				}
-				
-				
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';

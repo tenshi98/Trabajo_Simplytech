@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -89,12 +88,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
 
-	/********************************************************************/
-	// Create new PHPExcel object
-	$objPHPExcel = new PHPExcel();
+	/**********************************************************************************************************************************/
+	/*                                                          Ejecucion                                                             */
+	/**********************************************************************************************************************************/
+	// Create new Spreadsheet object
+	$spreadsheet = new Spreadsheet();
 
 	// Set document properties
-	$objPHPExcel->getProperties()->setCreator("Office 2007")
+	$spreadsheet->getProperties()->setCreator("Office 2007")
 								 ->setLastModifiedBy("Office 2007")
 								 ->setTitle("Office 2007")
 								 ->setSubject("Office 2007")
@@ -103,7 +104,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								 ->setCategory("office 2007 result file");
 		
 	//Titulo columnas
-	$objPHPExcel->setActiveSheetIndex(0)
+	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'CONTROL Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'])
 				->setCellValue('A2', 'Nombre Equipo')
 				->setCellValue('B2', $rowEquipo['NombreEquipo'])
@@ -111,7 +112,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('B3', $arrEquipos[0]['SensorNombre']);
 	//Si se ven detalles
 	if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A5', 'Fecha')
 					->setCellValue('B5', $arrEquipos[0]['Unimed'].' Promedio')
 					->setCellValue('C5', $arrEquipos[0]['Unimed'].' Minimo')
@@ -119,62 +120,60 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					->setCellValue('E5', 'Dev. Std.');					
 	//Si no se ven detalles	
 	}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('B5', $arrEquipos[0]['Unimed'].' Promedio');								
 	}
-	  
-	  
-			 
+	 		 
 	$nn=6;
 	foreach ($arrEquipos as $rutas) {
 		//Verifico si existen datos
 		if(isset($rutas['MedMin'])&&$rutas['MedMin']!=0&&$rutas['MedMin']!=''&&isset($rutas['MedMax'])&&$rutas['MedMax']!=0&&$rutas['MedMax']!=''){
 												
-			$objPHPExcel->setActiveSheetIndex(0)
+			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue('A'.$nn, fecha_estandar($rutas['FechaSistema']));			
 			//Si se ven detalles
 			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-			$objPHPExcel->setActiveSheetIndex(0)
-						->setCellValue('B'.$nn, Cantidades($rutas['MedProm'], 2))
-						->setCellValue('C'.$nn, Cantidades($rutas['MedMin'], 2))
-						->setCellValue('D'.$nn, Cantidades($rutas['MedMax'], 2))
-						->setCellValue('E'.$nn, Cantidades($rutas['MedDesStan'], 2));		
+				$spreadsheet->setActiveSheetIndex(0)
+							->setCellValue('B'.$nn, Cantidades($rutas['MedProm'], 2))
+							->setCellValue('C'.$nn, Cantidades($rutas['MedMin'], 2))
+							->setCellValue('D'.$nn, Cantidades($rutas['MedMax'], 2))
+							->setCellValue('E'.$nn, Cantidades($rutas['MedDesStan'], 2));		
 			//Si no se ven detalles	
 			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-			$objPHPExcel->setActiveSheetIndex(0)
-						->setCellValue('B'.$nn, Cantidades($rutas['MedProm'], 2));								
+				$spreadsheet->setActiveSheetIndex(0)
+							->setCellValue('B'.$nn, Cantidades($rutas['MedProm'], 2));								
 			} 
 
 			$nn++; 
-		}           
-	   
+		} 
 	} 
 
 
 
 
 	// Rename worksheet
-	$objPHPExcel->getActiveSheet()->setTitle('Max – Min Sensor');
-
+	$spreadsheet->getActiveSheet()->setTitle('Max – Min Sensor');
 
 	// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-	$objPHPExcel->setActiveSheetIndex(0);
+	$spreadsheet->setActiveSheetIndex(0);
 
-
-	// Redirect output to a client’s web browser (Excel5)
-	header('Content-Type: application/vnd.ms-excel');
-	header('Content-Disposition: attachment;filename="Max – Min Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'].' '.$rowEquipo['NombreEquipo'].'.xls"');
+	/**************************************************************************/
+	//Nombre del archivo
+	$filename = 'Max – Min Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'].' '.$rowEquipo['NombreEquipo'];
+	// Redirect output to a client’s web browser (Xlsx)
+	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+	header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');
 
 	// If you're serving to IE over SSL, then the following may be needed
-	header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-	header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-	header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-	header ('Pragma: public'); // HTTP/1.0
+	header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+	header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+	header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+	header('Pragma: public'); // HTTP/1.0
 
-	$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-	$objWriter->save('php://output');
+	$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+	$writer->save('php://output');
 	exit;
 }

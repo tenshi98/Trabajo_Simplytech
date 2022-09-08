@@ -18,9 +18,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_GET['f_usuario']) )    $usuario     = $_GET['f_usuario'];
 	if ( !empty($_GET['f_email']) )      $email       = $_GET['f_email'];
 	if ( !empty($_GET['f_IP_Client']) )  $IP_Client   = $_GET['f_IP_Client'];
-										
 
-	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/

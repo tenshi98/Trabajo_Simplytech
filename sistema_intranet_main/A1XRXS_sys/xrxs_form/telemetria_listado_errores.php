@@ -28,11 +28,11 @@ require_once '0_validate_user_1.php';
 				$idSistema    = $_SESSION['usuario']['basic_data']['idSistema'];
 				
 				//Filtros
-				$a = "idLeido='1'" ;
+				$SIS_data = "idLeido='1'" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_listado_errores', 'idErrores = "'.$idErrores.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_errores', 'idErrores = "'.$idErrores.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/******************************************************************/
 				//Recuento la cantidad de errores existentes
@@ -47,8 +47,8 @@ require_once '0_validate_user_1.php';
 				
 				/******************************************************************/
 				//se actualizan los datos
-				$a = "NAlertas='".$rowCuenta['NAlertas']."'" ;
-				$resultado = db_update_data (false, $a, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$SIS_data = "NAlertas='".$rowCuenta['NAlertas']."'" ;
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -72,16 +72,16 @@ require_once '0_validate_user_1.php';
 				$idSistema    = $_SESSION['usuario']['basic_data']['idSistema'];
 				
 				//Filtros
-				$a = "idLeido='1'" ;
+				$SIS_data = "idLeido='1'" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_listado_errores', 'idLeido = "0" AND idTelemetria="'.$idTelemetria.'" AND idSistema="'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_errores', 'idLeido = "0" AND idTelemetria="'.$idTelemetria.'" AND idSistema="'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$a = "NAlertas='0'" ;
-				$resultado = db_update_data (false, $a, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$SIS_data = "NAlertas='0'" ;
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

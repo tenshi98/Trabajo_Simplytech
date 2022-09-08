@@ -28,7 +28,6 @@ require_once '0_validate_user_1.php';
 	if ( isset($_POST['Habilita']) )            $Habilita           = $_POST['Habilita'];
 	if ( isset($_POST['Principal']) )           $Principal          = $_POST['Principal'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -55,16 +54,27 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Direccionweb) && $Direccionweb != ''){   $Direccionweb  = EstandarizarInput($Direccionweb); }
+	if(isset($Direccionbase) && $Direccionbase != ''){ $Direccionbase = EstandarizarInput($Direccionbase); }
+	if(isset($Nombre) && $Nombre != ''){               $Nombre        = EstandarizarInput($Nombre); }
+	if(isset($visualizacion) && $visualizacion != ''){ $visualizacion = EstandarizarInput($visualizacion); }
+	if(isset($Version) && $Version != ''){             $Version       = EstandarizarInput($Version); }
+	if(isset($Descripcion) && $Descripcion != ''){     $Descripcion   = EstandarizarInput($Descripcion); }
+	if(isset($Habilita) && $Habilita != ''){           $Habilita      = EstandarizarInput($Habilita); }
+	if(isset($Principal) && $Principal != ''){         $Principal     = EstandarizarInput($Principal); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
-if(isset($Direccionweb)&&contar_palabras_censuradas($Direccionweb)!=0){    $error['Direccionweb']  = 'error/Edita la Direccion web, contiene palabras no permitidas'; }	
-if(isset($Direccionbase)&&contar_palabras_censuradas($Direccionbase)!=0){  $error['Direccionbase'] = 'error/Edita la Direccion base, contiene palabras no permitidas'; }	
-if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){      $error['Descripcion']   = 'error/Edita la Descripcion, contiene palabras no permitidas'; }	
-if(isset($Habilita)&&contar_palabras_censuradas($Habilita)!=0){            $error['Habilita']      = 'error/Edita Habilita, contiene palabras no permitidas'; }	
-if(isset($Principal)&&contar_palabras_censuradas($Principal)!=0){          $error['Principal']     = 'error/Edita Principal, contiene palabras no permitidas'; }	
+	if(isset($Direccionweb)&&contar_palabras_censuradas($Direccionweb)!=0){    $error['Direccionweb']  = 'error/Edita la Direccion web, contiene palabras no permitidas'; }	
+	if(isset($Direccionbase)&&contar_palabras_censuradas($Direccionbase)!=0){  $error['Direccionbase'] = 'error/Edita la Direccion base, contiene palabras no permitidas'; }	
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre, contiene palabras no permitidas'; }	
+	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){      $error['Descripcion']   = 'error/Edita la Descripcion, contiene palabras no permitidas'; }	
+	if(isset($Habilita)&&contar_palabras_censuradas($Habilita)!=0){            $error['Habilita']      = 'error/Edita Habilita, contiene palabras no permitidas'; }	
+	if(isset($Principal)&&contar_palabras_censuradas($Principal)!=0){          $error['Principal']     = 'error/Edita Principal, contiene palabras no permitidas'; }	
 
-	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -93,56 +103,47 @@ if(isset($Principal)&&contar_palabras_censuradas($Principal)!=0){          $erro
 				
 				/************************************************************/
 				//filtros
-				if(isset($id_pmcat) && $id_pmcat != ''){             $a = "'".$id_pmcat."'" ;          }else{$a ="''";}
-				if(isset($Direccionweb) && $Direccionweb != ''){     $a .= ",'".$Direccionweb."'" ;    }else{$a .= ",''";}
-				if(isset($Direccionbase) && $Direccionbase != ''){   $a .= ",'".$Direccionbase."'" ;   }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                 $a .= ",'".$Nombre."'" ;          }else{$a .= ",''";}
-				if(isset($visualizacion) && $visualizacion != ''){   $a .= ",'".$visualizacion."'" ;   }else{$a .= ",''";}
-				if(isset($Version) && $Version != ''){               $a .= ",'".$Version."'" ;         }else{$a .= ",''";}
-				if(isset($Descripcion) && $Descripcion != ''){       $a .= ",'".$Descripcion."'" ;     }else{$a .= ",''";}
-				if(isset($Level_Limit) && $Level_Limit != ''){       $a .= ",'".$Level_Limit."'" ;     }else{$a .= ",''";}
-				if(isset($Habilita) && $Habilita != ''){             $a .= ",'".$Habilita."'" ;        }else{$a .= ",''";}
-				if(isset($Principal) && $Principal != ''){           $a .= ",'".$Principal."'" ;       }else{$a .= ",''";}
-				
+				if(isset($id_pmcat) && $id_pmcat != ''){             $SIS_data  = "'".$id_pmcat."'" ;         }else{$SIS_data  = "''";}
+				if(isset($Direccionweb) && $Direccionweb != ''){     $SIS_data .= ",'".$Direccionweb."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Direccionbase) && $Direccionbase != ''){   $SIS_data .= ",'".$Direccionbase."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                 $SIS_data .= ",'".$Nombre."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($visualizacion) && $visualizacion != ''){   $SIS_data .= ",'".$visualizacion."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Version) && $Version != ''){               $SIS_data .= ",'".$Version."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion != ''){       $SIS_data .= ",'".$Descripcion."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Level_Limit) && $Level_Limit != ''){       $SIS_data .= ",'".$Level_Limit."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Habilita) && $Habilita != ''){             $SIS_data .= ",'".$Habilita."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Principal) && $Principal != ''){           $SIS_data .= ",'".$Principal."'" ;       }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `core_permisos_listado` (id_pmcat, Direccionweb, Direccionbase, Nombre, visualizacion, Version,
-				Descripcion, Level_Limit, Habilita, Principal) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'id_pmcat, Direccionweb, Direccionbase, Nombre, visualizacion, Version, Descripcion, Level_Limit, Habilita, Principal';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_permisos_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($ultimo_id!=0){
 					
 					/************************************************************/
 					//Ingreso modificacion al log de cambios
 					$rowCat = db_select_data (false, 'Nombre', 'core_permisos_categorias', '', 'id_pmcat = "'.$id_pmcat.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					/****************************/
-					$a = "'".fecha_actual()."'" ;
+					$SIS_data = "'".fecha_actual()."'" ;
 					if(isset($Nombre) && $Nombre != ''){ 
 						$Descripcion = '[NUEVO] ->Se agrega la transaccion <strong>'.$rowCat['Nombre'].' - '.$Nombre.'</strong> al sistema'; 
-						$a .= ",'".$Descripcion."'" ;  
+						$SIS_data .= ",'".$Descripcion."'" ;  
 					}else{
-						$a .= ",''";
+						$SIS_data .= ",''";
 					}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `core_log_cambios` (Fecha, Descripcion) 
-					VALUES (".$a.")";
-					$result = mysqli_query($dbConn, $query);
+					$SIS_columns = 'Fecha, Descripcion';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_log_cambios', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
-					
-					header( 'Location: '.$location.'&created=true' );
-					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					//Si ejecuto correctamente la consulta
+					if($ultimo_id!=0){
+						//redirijo
+						header( 'Location: '.$location.'&created=true' );
+						die;
+						
+					}
 					
 				}
 				
@@ -169,21 +170,21 @@ if(isset($Principal)&&contar_palabras_censuradas($Principal)!=0){          $erro
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idAdmpm='".$idAdmpm."'" ;
-				if(isset($id_pmcat) && $id_pmcat != ''){            $a .= ",id_pmcat='".$id_pmcat."'" ;}
-				if(isset($Direccionweb) && $Direccionweb != ''){    $a .= ",Direccionweb='".$Direccionweb."'" ;}
-				if(isset($Direccionbase) && $Direccionbase != ''){  $a .= ",Direccionbase='".$Direccionbase."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($visualizacion) && $visualizacion != ''){  $a .= ",visualizacion='".$visualizacion."'" ;}
-				if(isset($Version) && $Version != ''){              $a .= ",Version='".$Version."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){      $a .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($Level_Limit) && $Level_Limit != ''){      $a .= ",Level_Limit='".$Level_Limit."'" ;}
-				if(isset($Habilita) && $Habilita != ''){            $a .= ",Habilita='".$Habilita."'" ;           }else{$a .= ",Habilita=''" ;}
-				if(isset($Principal) && $Principal != ''){          $a .= ",Principal='".$Principal."'" ;         }else{$a .= ",Principal=''" ;}
+				$SIS_data = "idAdmpm='".$idAdmpm."'" ;
+				if(isset($id_pmcat) && $id_pmcat != ''){            $SIS_data .= ",id_pmcat='".$id_pmcat."'" ;}
+				if(isset($Direccionweb) && $Direccionweb != ''){    $SIS_data .= ",Direccionweb='".$Direccionweb."'" ;}
+				if(isset($Direccionbase) && $Direccionbase != ''){  $SIS_data .= ",Direccionbase='".$Direccionbase."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($visualizacion) && $visualizacion != ''){  $SIS_data .= ",visualizacion='".$visualizacion."'" ;}
+				if(isset($Version) && $Version != ''){              $SIS_data .= ",Version='".$Version."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){      $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
+				if(isset($Level_Limit) && $Level_Limit != ''){      $SIS_data .= ",Level_Limit='".$Level_Limit."'" ;}
+				if(isset($Habilita) && $Habilita != ''){            $SIS_data .= ",Habilita='".$Habilita."'" ;           }else{$SIS_data .= ",Habilita=''" ;}
+				if(isset($Principal) && $Principal != ''){          $SIS_data .= ",Principal='".$Principal."'" ;         }else{$SIS_data .= ",Principal=''" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'core_permisos_listado', 'idAdmpm = "'.$idAdmpm.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'core_permisos_listado', 'idAdmpm = "'.$idAdmpm.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -210,13 +211,13 @@ if(isset($Principal)&&contar_palabras_censuradas($Principal)!=0){          $erro
 					}
 					//Verifico que existan cambios
 					if($Descripcion!='[MODIFICACION] ->'){
-						$a  = "'".fecha_actual()."'" ;
-						$a .= ",'".$Descripcion."'" ;  
+						$SIS_data  = "'".fecha_actual()."'" ;
+						$SIS_data .= ",'".$Descripcion."'" ;  
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `core_log_cambios` (Fecha, Descripcion) 
-						VALUES (".$a.")";
-						$result = mysqli_query($dbConn, $query);
+						$SIS_columns = 'Fecha, Descripcion';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_log_cambios', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 					
 					header( 'Location: '.$location.'&edited=true' );

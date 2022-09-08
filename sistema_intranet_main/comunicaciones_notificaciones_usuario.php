@@ -47,12 +47,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Notificacion Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Notificacion Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Notificacion borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Notificacion Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Notificacion Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Notificacion borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['detalle']) ) { 
 // consulto los datos
 $arrNotificaciones = array();

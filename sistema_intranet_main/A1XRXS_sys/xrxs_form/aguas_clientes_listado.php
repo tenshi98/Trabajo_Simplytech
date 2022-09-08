@@ -104,6 +104,19 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($email) && $email != ''){                                 $email                 = EstandarizarInput($email); }
+	if(isset($Nombre) && $Nombre != ''){                               $Nombre                = EstandarizarInput($Nombre); }
+	if(isset($Direccion) && $Direccion != ''){                         $Direccion             = EstandarizarInput($Direccion); }
+	if(isset($PersonaContacto) && $PersonaContacto != ''){             $PersonaContacto       = EstandarizarInput($PersonaContacto); }
+	if(isset($PersonaContacto_email) && $PersonaContacto_email != ''){ $PersonaContacto_email = EstandarizarInput($PersonaContacto_email); }
+	if(isset($Web) && $Web != ''){                                     $Web                   = EstandarizarInput($Web); }
+	if(isset($Giro) && $Giro != ''){                                   $Giro                  = EstandarizarInput($Giro); }
+	if(isset($DireccionFact) && $DireccionFact != ''){                 $DireccionFact         = EstandarizarInput($DireccionFact); }
+	if(isset($RazonSocial) && $RazonSocial != ''){                     $RazonSocial           = EstandarizarInput($RazonSocial); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	//Verifica si el mail corresponde
@@ -167,71 +180,58 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                           $a  = "'".$idSistema."'" ;               }else{$a ="''";}
-				if(isset($idEstado) && $idEstado != ''){                             $a .= ",'".$idEstado."'" ;               }else{$a .= ",''";}
-				if(isset($idTipo) && $idTipo != ''){                                 $a .= ",'".$idTipo."'" ;                 }else{$a .= ",''";}
-				if(isset($idRubro) && $idRubro != ''){                               $a .= ",'".$idRubro."'" ;                }else{$a .= ",''";}
-				if(isset($email) && $email != ''){                                   $a .= ",'".$email."'" ;                  }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                                 $a .= ",'".$Nombre."'" ;                 }else{$a .= ",''";}
-				if(isset($Rut) && $Rut != ''){                                       $a .= ",'".$Rut."'" ;                    }else{$a .= ",''";}
-				if(isset($fNacimiento) && $fNacimiento != ''){                       $a .= ",'".$fNacimiento."'" ;            }else{$a .= ",''";}
-				if(isset($Direccion) && $Direccion != ''){                           $a .= ",'".$Direccion."'" ;              }else{$a .= ",''";}
-				if(isset($Fono1) && $Fono1 != ''){                                   $a .= ",'".$Fono1."'" ;                  }else{$a .= ",''";}
-				if(isset($Fono2) && $Fono2 != ''){                                   $a .= ",'".$Fono2."'" ;                  }else{$a .= ",''";}
-				if(isset($idCiudad) && $idCiudad != ''){                             $a .= ",'".$idCiudad."'" ;               }else{$a .= ",''";}
-				if(isset($idComuna) && $idComuna != ''){                             $a .= ",'".$idComuna."'" ;               }else{$a .= ",''";}
-				if(isset($Fax) && $Fax != ''){                                       $a .= ",'".$Fax."'" ;                    }else{$a .= ",''";}
-				if(isset($PersonaContacto) && $PersonaContacto != ''){               $a .= ",'".$PersonaContacto."'" ;        }else{$a .= ",''";}
-				if(isset($PersonaContacto_Fono) && $PersonaContacto_Fono != ''){     $a .= ",'".$PersonaContacto_Fono."'" ;   }else{$a .= ",''";}
-				if(isset($PersonaContacto_email) && $PersonaContacto_email != ''){   $a .= ",'".$PersonaContacto_email."'" ;  }else{$a .= ",''";}
-				if(isset($Web) && $Web != ''){                                       $a .= ",'".$Web."'" ;                    }else{$a .= ",''";}
-				if(isset($Giro) && $Giro != ''){                                     $a .= ",'".$Giro."'" ;                   }else{$a .= ",''";}
-				if(isset($UnidadHabitacional) && $UnidadHabitacional != ''){         $a .= ",'".$UnidadHabitacional."'" ;     }else{$a .= ",''";}
-				if(isset($idMarcadores) && $idMarcadores != ''){                     $a .= ",'".$idMarcadores."'" ;           }else{$a .= ",''";}
-				if(isset($idRemarcadores) && $idRemarcadores != ''){                 $a .= ",'".$idRemarcadores."'" ;         }else{$a .= ",''";}
-				if(isset($Arranque) && $Arranque != ''){                             $a .= ",'".$Arranque."'" ;               }else{$a .= ",''";}
-				if(isset($Identificador) && $Identificador != ''){                   $a .= ",'".$Identificador."'" ;          }else{$a .= ",''";}
-				if(isset($idEstadoPago) && $idEstadoPago != ''){                     $a .= ",'".$idEstadoPago."'" ;           }else{$a .= ",''";}
-				if(isset($idFacturable) && $idFacturable != ''){                     $a .= ",'".$idFacturable."'" ;           }else{$a .= ",''";}
-				if(isset($latitud) && $latitud != ''){                               $a .= ",'".$latitud."'" ;                }else{$a .= ",''";}
-				if(isset($longitud) && $longitud != ''){                             $a .= ",'".$longitud."'" ;               }else{$a .= ",''";}
-				if(isset($idCiudadFact) && $idCiudadFact != ''){                     $a .= ",'".$idCiudadFact."'" ;           }else{$a .= ",''";}
-				if(isset($idComunaFact) && $idComunaFact != ''){                     $a .= ",'".$idComunaFact."'" ;           }else{$a .= ",''";}
-				if(isset($DireccionFact) && $DireccionFact != ''){                   $a .= ",'".$DireccionFact."'" ;          }else{$a .= ",''";}
-				if(isset($RazonSocial) && $RazonSocial != ''){                       $a .= ",'".$RazonSocial."'" ;            }else{$a .= ",''";}
-				if(isset($idSector) && $idSector != ''){                             $a .= ",'".$idSector."'" ;               }else{$a .= ",''";}
-				if(isset($idPuntoMuestreo) && $idPuntoMuestreo != ''){               $a .= ",'".$idPuntoMuestreo."'" ;        }else{$a .= ",''";}
-				if(isset($UTM_norte) && $UTM_norte != ''){                           $a .= ",'".$UTM_norte."'" ;              }else{$a .= ",''";}
-				if(isset($UTM_este) && $UTM_este != ''){                             $a .= ",'".$UTM_este."'" ;               }else{$a .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){                           $SIS_data  = "'".$idSistema."'" ;               }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado != ''){                             $SIS_data .= ",'".$idEstado."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo != ''){                                 $SIS_data .= ",'".$idTipo."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($idRubro) && $idRubro != ''){                               $SIS_data .= ",'".$idRubro."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($email) && $email != ''){                                   $SIS_data .= ",'".$email."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                                 $SIS_data .= ",'".$Nombre."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($Rut) && $Rut != ''){                                       $SIS_data .= ",'".$Rut."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($fNacimiento) && $fNacimiento != ''){                       $SIS_data .= ",'".$fNacimiento."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion != ''){                           $SIS_data .= ",'".$Direccion."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($Fono1) && $Fono1 != ''){                                   $SIS_data .= ",'".$Fono1."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($Fono2) && $Fono2 != ''){                                   $SIS_data .= ",'".$Fono2."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($idCiudad) && $idCiudad != ''){                             $SIS_data .= ",'".$idCiudad."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($idComuna) && $idComuna != ''){                             $SIS_data .= ",'".$idComuna."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($Fax) && $Fax != ''){                                       $SIS_data .= ",'".$Fax."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($PersonaContacto) && $PersonaContacto != ''){               $SIS_data .= ",'".$PersonaContacto."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($PersonaContacto_Fono) && $PersonaContacto_Fono != ''){     $SIS_data .= ",'".$PersonaContacto_Fono."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($PersonaContacto_email) && $PersonaContacto_email != ''){   $SIS_data .= ",'".$PersonaContacto_email."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Web) && $Web != ''){                                       $SIS_data .= ",'".$Web."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($Giro) && $Giro != ''){                                     $SIS_data .= ",'".$Giro."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($UnidadHabitacional) && $UnidadHabitacional != ''){         $SIS_data .= ",'".$UnidadHabitacional."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idMarcadores) && $idMarcadores != ''){                     $SIS_data .= ",'".$idMarcadores."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idRemarcadores) && $idRemarcadores != ''){                 $SIS_data .= ",'".$idRemarcadores."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Arranque) && $Arranque != ''){                             $SIS_data .= ",'".$Arranque."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($Identificador) && $Identificador != ''){                   $SIS_data .= ",'".$Identificador."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($idEstadoPago) && $idEstadoPago != ''){                     $SIS_data .= ",'".$idEstadoPago."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idFacturable) && $idFacturable != ''){                     $SIS_data .= ",'".$idFacturable."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($latitud) && $latitud != ''){                               $SIS_data .= ",'".$latitud."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($longitud) && $longitud != ''){                             $SIS_data .= ",'".$longitud."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($idCiudadFact) && $idCiudadFact != ''){                     $SIS_data .= ",'".$idCiudadFact."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idComunaFact) && $idComunaFact != ''){                     $SIS_data .= ",'".$idComunaFact."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($DireccionFact) && $DireccionFact != ''){                   $SIS_data .= ",'".$DireccionFact."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($RazonSocial) && $RazonSocial != ''){                       $SIS_data .= ",'".$RazonSocial."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($idSector) && $idSector != ''){                             $SIS_data .= ",'".$idSector."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($idPuntoMuestreo) && $idPuntoMuestreo != ''){               $SIS_data .= ",'".$idPuntoMuestreo."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($UTM_norte) && $UTM_norte != ''){                           $SIS_data .= ",'".$UTM_norte."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($UTM_este) && $UTM_este != ''){                             $SIS_data .= ",'".$UTM_este."'" ;               }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `aguas_clientes_listado` (idSistema, idEstado, idTipo, idRubro, email, Nombre,
+				$SIS_columns = 'idSistema, idEstado, idTipo, idRubro, email, Nombre,
 				Rut, fNacimiento, Direccion, Fono1, Fono2, idCiudad, idComuna, Fax, PersonaContacto,
 				PersonaContacto_Fono, PersonaContacto_email, Web, Giro, UnidadHabitacional, idMarcadores,
 				idRemarcadores, Arranque, Identificador, idEstadoPago, idFacturable, latitud, longitud,
 				idCiudadFact, idComunaFact, DireccionFact, RazonSocial, idSector, idPuntoMuestreo,
-				UTM_norte, UTM_este) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				UTM_norte, UTM_este';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_clientes_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($ultimo_id!=0){
 					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -273,47 +273,47 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idCliente='".$idCliente."'" ;
-				if(isset($idSistema) && $idSistema != ''){                           $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                             $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idTipo) && $idTipo != ''){                                 $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idRubro) && $idRubro != ''){                               $a .= ",idRubro='".$idRubro."'" ;}
-				if(isset($email) && $email != ''){                                   $a .= ",email='".$email."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                                 $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Rut) && $Rut != ''){                                       $a .= ",Rut='".$Rut."'" ;}
-				if(isset($fNacimiento) && $fNacimiento != ''){                       $a .= ",fNacimiento='".$fNacimiento."'" ;}
-				if(isset($Direccion) && $Direccion != ''){                           $a .= ",Direccion='".$Direccion."'" ;}
-				if(isset($Fono1) && $Fono1 != ''){                                   $a .= ",Fono1='".$Fono1."'" ;}
-				if(isset($Fono2) && $Fono2 != ''){                                   $a .= ",Fono2='".$Fono2."'" ;}
-				if(isset($idCiudad) && $idCiudad!= ''){                              $a .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna!= ''){                              $a .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Fax) && $Fax!= ''){                                        $a .= ",Fax='".$Fax."'" ;}
-				if(isset($PersonaContacto) && $PersonaContacto!= ''){                $a .= ",PersonaContacto='".$PersonaContacto."'" ;}
-				if(isset($PersonaContacto_Fono) && $PersonaContacto_Fono!= ''){      $a .= ",PersonaContacto_Fono='".$PersonaContacto_Fono."'" ;}
-				if(isset($PersonaContacto_email) && $PersonaContacto_email!= ''){    $a .= ",PersonaContacto_email='".$PersonaContacto_email."'" ;}
-				if(isset($Web) && $Web!= ''){                                        $a .= ",Web='".$Web."'" ;}
-				if(isset($Giro) && $Giro!= ''){                                      $a .= ",Giro='".$Giro."'" ;}
-				if(isset($UnidadHabitacional) && $UnidadHabitacional!= ''){          $a .= ",UnidadHabitacional='".$UnidadHabitacional."'" ;}
-				if(isset($idMarcadores) && $idMarcadores!= ''){                      $a .= ",idMarcadores='".$idMarcadores."'" ;}
-				if(isset($idRemarcadores) && $idRemarcadores!= ''){                  $a .= ",idRemarcadores='".$idRemarcadores."'" ;}
-				if(isset($Arranque) && $Arranque!= ''){                              $a .= ",Arranque='".$Arranque."'" ;}
-				if(isset($Identificador) && $Identificador!= ''){                    $a .= ",Identificador='".$Identificador."'" ;}
-				if(isset($idEstadoPago) && $idEstadoPago!= ''){                      $a .= ",idEstadoPago='".$idEstadoPago."'" ;}
-				if(isset($idFacturable) && $idFacturable!= ''){                      $a .= ",idFacturable='".$idFacturable."'" ;}
-				if(isset($latitud) && $latitud!= ''){                                $a .= ",latitud='".$latitud."'" ;}
-				if(isset($longitud) && $longitud!= ''){                              $a .= ",longitud='".$longitud."'" ;}
-				if(isset($idCiudadFact) && $idCiudadFact!= ''){                      $a .= ",idCiudadFact='".$idCiudadFact."'" ;}
-				if(isset($idComunaFact) && $idComunaFact!= ''){                      $a .= ",idComunaFact='".$idComunaFact."'" ;}
-				if(isset($DireccionFact) && $DireccionFact!= ''){                    $a .= ",DireccionFact='".$DireccionFact."'" ;}
-				if(isset($RazonSocial) && $RazonSocial!= ''){                        $a .= ",RazonSocial='".$RazonSocial."'" ;}
-				if(isset($idSector) && $idSector!= ''){                              $a .= ",idSector='".$idSector."'" ;}
-				if(isset($idPuntoMuestreo) && $idPuntoMuestreo!= ''){                $a .= ",idPuntoMuestreo='".$idPuntoMuestreo."'" ;}
-				if(isset($UTM_norte) && $UTM_norte!= ''){                            $a .= ",UTM_norte='".$UTM_norte."'" ;}
-				if(isset($UTM_este) && $UTM_este!= ''){                              $a .= ",UTM_este='".$UTM_este."'" ;}
+				$SIS_data = "idCliente='".$idCliente."'" ;
+				if(isset($idSistema) && $idSistema != ''){                           $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                             $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idTipo) && $idTipo != ''){                                 $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($idRubro) && $idRubro != ''){                               $SIS_data .= ",idRubro='".$idRubro."'" ;}
+				if(isset($email) && $email != ''){                                   $SIS_data .= ",email='".$email."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                                 $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Rut) && $Rut != ''){                                       $SIS_data .= ",Rut='".$Rut."'" ;}
+				if(isset($fNacimiento) && $fNacimiento != ''){                       $SIS_data .= ",fNacimiento='".$fNacimiento."'" ;}
+				if(isset($Direccion) && $Direccion != ''){                           $SIS_data .= ",Direccion='".$Direccion."'" ;}
+				if(isset($Fono1) && $Fono1 != ''){                                   $SIS_data .= ",Fono1='".$Fono1."'" ;}
+				if(isset($Fono2) && $Fono2 != ''){                                   $SIS_data .= ",Fono2='".$Fono2."'" ;}
+				if(isset($idCiudad) && $idCiudad!= ''){                              $SIS_data .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna!= ''){                              $SIS_data .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Fax) && $Fax!= ''){                                        $SIS_data .= ",Fax='".$Fax."'" ;}
+				if(isset($PersonaContacto) && $PersonaContacto!= ''){                $SIS_data .= ",PersonaContacto='".$PersonaContacto."'" ;}
+				if(isset($PersonaContacto_Fono) && $PersonaContacto_Fono!= ''){      $SIS_data .= ",PersonaContacto_Fono='".$PersonaContacto_Fono."'" ;}
+				if(isset($PersonaContacto_email) && $PersonaContacto_email!= ''){    $SIS_data .= ",PersonaContacto_email='".$PersonaContacto_email."'" ;}
+				if(isset($Web) && $Web!= ''){                                        $SIS_data .= ",Web='".$Web."'" ;}
+				if(isset($Giro) && $Giro!= ''){                                      $SIS_data .= ",Giro='".$Giro."'" ;}
+				if(isset($UnidadHabitacional) && $UnidadHabitacional!= ''){          $SIS_data .= ",UnidadHabitacional='".$UnidadHabitacional."'" ;}
+				if(isset($idMarcadores) && $idMarcadores!= ''){                      $SIS_data .= ",idMarcadores='".$idMarcadores."'" ;}
+				if(isset($idRemarcadores) && $idRemarcadores!= ''){                  $SIS_data .= ",idRemarcadores='".$idRemarcadores."'" ;}
+				if(isset($Arranque) && $Arranque!= ''){                              $SIS_data .= ",Arranque='".$Arranque."'" ;}
+				if(isset($Identificador) && $Identificador!= ''){                    $SIS_data .= ",Identificador='".$Identificador."'" ;}
+				if(isset($idEstadoPago) && $idEstadoPago!= ''){                      $SIS_data .= ",idEstadoPago='".$idEstadoPago."'" ;}
+				if(isset($idFacturable) && $idFacturable!= ''){                      $SIS_data .= ",idFacturable='".$idFacturable."'" ;}
+				if(isset($latitud) && $latitud!= ''){                                $SIS_data .= ",latitud='".$latitud."'" ;}
+				if(isset($longitud) && $longitud!= ''){                              $SIS_data .= ",longitud='".$longitud."'" ;}
+				if(isset($idCiudadFact) && $idCiudadFact!= ''){                      $SIS_data .= ",idCiudadFact='".$idCiudadFact."'" ;}
+				if(isset($idComunaFact) && $idComunaFact!= ''){                      $SIS_data .= ",idComunaFact='".$idComunaFact."'" ;}
+				if(isset($DireccionFact) && $DireccionFact!= ''){                    $SIS_data .= ",DireccionFact='".$DireccionFact."'" ;}
+				if(isset($RazonSocial) && $RazonSocial!= ''){                        $SIS_data .= ",RazonSocial='".$RazonSocial."'" ;}
+				if(isset($idSector) && $idSector!= ''){                              $SIS_data .= ",idSector='".$idSector."'" ;}
+				if(isset($idPuntoMuestreo) && $idPuntoMuestreo!= ''){                $SIS_data .= ",idPuntoMuestreo='".$idPuntoMuestreo."'" ;}
+				if(isset($UTM_norte) && $UTM_norte!= ''){                            $SIS_data .= ",UTM_norte='".$UTM_norte."'" ;}
+				if(isset($UTM_este) && $UTM_este!= ''){                              $SIS_data .= ",UTM_este='".$UTM_este."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'aguas_clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'aguas_clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo
@@ -384,11 +384,11 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			$a = "idEstado='".simpleDecode($_GET['estado'], fecha_actual())."'" ;
+			$SIS_data = "idEstado='".simpleDecode($_GET['estado'], fecha_actual())."'" ;
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$resultado = db_update_data (false, $a, 'aguas_clientes_listado', 'idCliente = "'.$_GET['id'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$resultado = db_update_data (false, $SIS_data, 'aguas_clientes_listado', 'idCliente = "'.$_GET['id'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				//redirijo

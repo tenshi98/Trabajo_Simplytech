@@ -23,7 +23,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idComuna']) )    $idComuna    = $_POST['idComuna'];
 	if ( !empty($_POST['Direccion']) )   $Direccion   = $_POST['Direccion'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -46,6 +45,12 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){        $Nombre     = EstandarizarInput($Nombre); }
+	if(isset($Direccion) && $Direccion != ''){  $Direccion  = EstandarizarInput($Direccion); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -79,39 +84,23 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){  $a  = "'".$idSistema."'" ;   }else{$a  ="''";}
-				if(isset($idEstado) && $idEstado != ''){    $a .= ",'".$idEstado."'" ;   }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){        $a .= ",'".$Nombre."'" ;     }else{$a .=",''";}
-				if(isset($idPais) && $idPais != ''){        $a .= ",'".$idPais."'" ;     }else{$a .=",''";}
-				if(isset($idCiudad) && $idCiudad != ''){    $a .= ",'".$idCiudad."'" ;   }else{$a .=",''";}
-				if(isset($idComuna) && $idComuna != ''){    $a .= ",'".$idComuna."'" ;   }else{$a .=",''";}
-				if(isset($Direccion) && $Direccion != ''){  $a .= ",'".$Direccion."'" ;  }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){  $SIS_data  = "'".$idSistema."'" ;   }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado != ''){    $SIS_data .= ",'".$idEstado."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){        $SIS_data .= ",'".$Nombre."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idPais) && $idPais != ''){        $SIS_data .= ",'".$idPais."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idCiudad) && $idCiudad != ''){    $SIS_data .= ",'".$idCiudad."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idComuna) && $idComuna != ''){    $SIS_data .= ",'".$idComuna."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion != ''){  $SIS_data .= ",'".$Direccion."'" ;  }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_predios_listado` (idSistema, idEstado, Nombre, idPais,
-				idCiudad, idComuna, Direccion) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idEstado, Nombre, idPais, idCiudad, idComuna, Direccion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_predios_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -136,18 +125,18 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idPredio='".$idPredio."'" ;
-				if(isset($idSistema) && $idSistema != ''){    $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idEstado) && $idEstado != ''){      $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Nombre) && $Nombre != ''){          $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idPais) && $idPais != ''){          $a .= ",idPais='".$idPais."'" ;}
-				if(isset($idCiudad) && $idCiudad != ''){      $a .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna != ''){      $a .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Direccion) && $Direccion != ''){    $a .= ",Direccion='".$Direccion."'" ;}
+				$SIS_data = "idPredio='".$idPredio."'" ;
+				if(isset($idSistema) && $idSistema != ''){    $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idEstado) && $idEstado != ''){      $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){          $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idPais) && $idPais != ''){          $SIS_data .= ",idPais='".$idPais."'" ;}
+				if(isset($idCiudad) && $idCiudad != ''){      $SIS_data .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna != ''){      $SIS_data .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){    $SIS_data .= ",Direccion='".$Direccion."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_predios_listado', 'idPredio = "'.$idPredio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_predios_listado', 'idPredio = "'.$idPredio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -222,8 +211,8 @@ require_once '0_validate_user_1.php';
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'cross_predios_listado', 'idPredio = "'.$idPredio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'cross_predios_listado', 'idPredio = "'.$idPredio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				

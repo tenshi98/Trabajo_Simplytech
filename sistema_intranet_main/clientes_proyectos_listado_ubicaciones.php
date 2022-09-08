@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'createBasicDataClient';
 	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';
@@ -34,8 +34,8 @@ if ( !empty($_POST['submit']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'updateBasicData';
 	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';
@@ -43,8 +43,8 @@ if ( !empty($_POST['submit_edit']) )  {
 //se borra un dato
 if ( !empty($_GET['del']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'delBasicData';
 	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';	
@@ -53,7 +53,7 @@ if ( !empty($_GET['del']) )     {
 if ( !empty($_GET['estado']) ) {
 	//Nueva ubicacion
 	$location = $new_location;
-	$location.='&id='.$_GET['id'].'&status='.$_GET['status'];
+	$location.= '&id='.$_GET['id'].'&status='.$_GET['status'];
 	//Llamamos al formulario
 	$form_trabajo= 'estadoClient';
 	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';
@@ -62,8 +62,8 @@ if ( !empty($_GET['estado']) ) {
 //formulario para crear
 if ( !empty($_POST['submit_idLevel']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';
@@ -71,8 +71,8 @@ if ( !empty($_POST['submit_idLevel']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit_idLevel']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'];
 	//Llamamos al formulario
 	$form_trabajo= 'update_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';
@@ -80,8 +80,8 @@ if ( !empty($_POST['submit_edit_idLevel']) )  {
 //se borra un dato
 if ( !empty($_GET['del_idLevel']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';	
@@ -94,11 +94,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Ubicacion creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Ubicacion editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Ubicacion borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Ubicacion creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ubicacion editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ubicacion borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit_itemizado']) ) { 
 // consulto los datos

@@ -53,11 +53,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/IPBI Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/IPBI Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/IPBI borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/IPBI Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/IPBI Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/IPBI borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos

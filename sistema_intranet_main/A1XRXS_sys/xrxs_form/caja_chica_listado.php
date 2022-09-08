@@ -23,7 +23,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['MontoActual']) )      $MontoActual        = $_POST['MontoActual'];
 	if ( !empty($_POST['MontoProgramado']) )  $MontoProgramado    = $_POST['MontoProgramado'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -46,6 +45,15 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){                    $Nombre          = EstandarizarInput($Nombre); }
+	if(isset($Descripcion) && $Descripcion != ''){          $Descripcion     = EstandarizarInput($Descripcion); }
+	if(isset($FichaTecnica) && $FichaTecnica != ''){        $FichaTecnica    = EstandarizarInput($FichaTecnica); }
+	if(isset($MontoActual) && $MontoActual != ''){          $MontoActual     = EstandarizarInput($MontoActual); }
+	if(isset($MontoProgramado) && $MontoProgramado != ''){  $MontoProgramado = EstandarizarInput($MontoProgramado); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -78,40 +86,24 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){             $a  = "'".$idSistema."'" ;         }else{$a  ="''";}
-				if(isset($Nombre) && $Nombre != ''){                   $a .= ",'".$Nombre."'" ;           }else{$a .= ",''";}
-				if(isset($Descripcion) && $Descripcion != ''){         $a .= ",'".$Descripcion."'" ;      }else{$a .= ",''";}
-				if(isset($MontoActual) && $MontoActual != ''){         $a .= ",'".$MontoActual."'" ;      }else{$a .= ",''";}
-				if(isset($MontoProgramado) && $MontoProgramado != ''){ $a .= ",'".$MontoProgramado."'" ;  }else{$a .= ",''";}
-				
+				if(isset($idSistema) && $idSistema != ''){             $SIS_data  = "'".$idSistema."'" ;         }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){                   $SIS_data .= ",'".$Nombre."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion != ''){         $SIS_data .= ",'".$Descripcion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($MontoActual) && $MontoActual != ''){         $SIS_data .= ",'".$MontoActual."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($MontoProgramado) && $MontoProgramado != ''){ $SIS_data .= ",'".$MontoProgramado."'" ;  }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `caja_chica_listado` (idSistema, Nombre, Descripcion, MontoActual,
-				MontoProgramado) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, Nombre, Descripcion, MontoActual, MontoProgramado';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'caja_chica_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($ultimo_id!=0){
 					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+					//redirijo	
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
 					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
 			}
 	
 		break;
@@ -135,16 +127,16 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idCajaChica='".$idCajaChica."'" ;
-				if(isset($Nombre) && $Nombre != ''){                   $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idSistema) && $idSistema != ''){             $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){         $a .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($MontoActual) && $MontoActual != ''){         $a .= ",MontoActual='".$MontoActual."'" ;}
-				if(isset($MontoProgramado) && $MontoProgramado != ''){ $a .= ",MontoProgramado='".$MontoProgramado."'" ;}
+				$SIS_data = "idCajaChica='".$idCajaChica."'" ;
+				if(isset($Nombre) && $Nombre != ''){                   $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idSistema) && $idSistema != ''){             $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){         $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
+				if(isset($MontoActual) && $MontoActual != ''){         $SIS_data .= ",MontoActual='".$MontoActual."'" ;}
+				if(isset($MontoProgramado) && $MontoProgramado != ''){ $SIS_data .= ",MontoProgramado='".$MontoProgramado."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -247,11 +239,11 @@ require_once '0_validate_user_1.php';
 							imagedestroy($imgBase);
 						
 							//Filtro para idSistema		
-							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -297,11 +289,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 								
 							//Filtro para idSistema		
-							$a = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
+							$SIS_data = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -333,8 +325,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Direccion_img=''" ;
-			$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -370,8 +362,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "FichaTecnica=''" ;
-			$resultado = db_update_data (false, $a, 'caja_chica_listado', 'idCajaChica = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "FichaTecnica=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 					

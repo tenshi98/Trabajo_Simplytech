@@ -57,20 +57,6 @@ $semanaActual  = semana_actual();
 $diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
-//arreglo con los meses
-$meses=array(1=>"Enero", 
-				"Febrero", 
-				"Marzo", 
-				"Abril", 
-				"Mayo", 
-				"Junio", 
-				"Julio",
-				"Agosto", 
-				"Septiembre", 
-				"Octubre", 
-				"Noviembre", 
-				"Diciembre"
-			);
 ?>
 			
 
@@ -130,7 +116,7 @@ $meses=array(1=>"Enero",
 													<tbody>
 														<tr>
 															<td class="fc-header-left"></td>
-															<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo $meses[$Mes]." ".$Ano?></h2></span></td>
+															<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo numero_a_mes($Mes)." ".$Ano?></h2></span></td>
 															<td class="fc-header-right"></td>
 														</tr>
 													</tbody>

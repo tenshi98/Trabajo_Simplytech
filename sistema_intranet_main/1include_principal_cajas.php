@@ -1,19 +1,18 @@
 <?php
 /**********************************************************/
 //Variable con la ubicacion
-$z="WHERE caja_chica_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where="caja_chica_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCajaChica']) && $_GET['idCajaChica'] != ''){                            $z .= " AND caja_chica_facturacion.idCajaChica=".$_GET['idCajaChica'];}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){                          $z .= " AND caja_chica_facturacion.idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){                      $z .= " AND caja_chica_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada'] != ''){  $z .= " AND caja_chica_facturacion.idFacturacionRelacionada='".$_GET['idFacturacionRelacionada']."'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                                      $z .= " AND caja_chica_facturacion.idTipo='".$_GET['idTipo']."'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                                  $z .= " AND caja_chica_facturacion.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['idCajaChica']) && $_GET['idCajaChica'] != ''){                            $SIS_where .= " AND caja_chica_facturacion.idCajaChica=".$_GET['idCajaChica'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){                          $SIS_where .= " AND caja_chica_facturacion.idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){                      $SIS_where .= " AND caja_chica_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada'] != ''){  $SIS_where .= " AND caja_chica_facturacion.idFacturacionRelacionada='".$_GET['idFacturacionRelacionada']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                                      $SIS_where .= " AND caja_chica_facturacion.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                                  $SIS_where .= " AND caja_chica_facturacion.idEstado='".$_GET['idEstado']."'";}
 /**********************************************************/
 // Se trae un listado con todos los elementos
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 caja_chica_facturacion.idFacturacion AS ID,
 caja_chica_facturacion.idFacturacionRelacionada,
 caja_chica_facturacion.Creacion_fecha,
@@ -25,32 +24,15 @@ trabajadores_listado.Nombre AS TrabajadorNombre,
 trabajadores_listado.ApellidoPat AS TrabajadorApellidoPat,
 caja_chica_facturacion_tipo.Nombre AS TipoMov,
 (SELECT SUM(Valor) FROM `caja_chica_facturacion_existencias` WHERE idFacturacion=ID LIMIT 1 )AS MovSum,
-(SELECT SUM(Valor) FROM `caja_chica_facturacion_rendiciones` WHERE idFacturacion=ID LIMIT 1 )AS DevSum
-							
-FROM `caja_chica_facturacion`
+(SELECT SUM(Valor) FROM `caja_chica_facturacion_rendiciones` WHERE idFacturacion=ID LIMIT 1 )AS DevSum';
+$SIS_join  = '
 LEFT JOIN `caja_chica_listado`           ON caja_chica_listado.idCajaChica      = caja_chica_facturacion.idCajaChica
 LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema             = caja_chica_facturacion.idSistema
 LEFT JOIN `trabajadores_listado`         ON trabajadores_listado.idTrabajador   = caja_chica_facturacion.idTrabajador
-LEFT JOIN `caja_chica_facturacion_tipo`  ON caja_chica_facturacion_tipo.idTipo  = caja_chica_facturacion.idTipo
-".$z."
-ORDER BY caja_chica_facturacion.Creacion_fecha DESC
-LIMIT 50";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTipo,$row );
-}
+LEFT JOIN `caja_chica_facturacion_tipo`  ON caja_chica_facturacion_tipo.idTipo  = caja_chica_facturacion.idTipo';
+$SIS_order = 'ORDER BY caja_chica_facturacion.Creacion_fecha DESC LIMIT 50';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTipo');
 
 ?>
 

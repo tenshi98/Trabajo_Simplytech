@@ -32,21 +32,6 @@ require_once 'core/Web.Header.Main.php';
 //Se definen las variables
 if(isset($_GET["Ano"])){   $Ano = $_GET["Ano"];   } else { $Ano  = ano_actual(); }
 
-//arreglo con los meses
-$meses=array(1=>"Enero", 
-				"Febrero", 
-				"Marzo", 
-				"Abril", 
-				"Mayo", 
-				"Junio", 
-				"Julio",
-				"Agosto", 
-				"Septiembre", 
-				"Octubre", 
-				"Noviembre", 
-				"Diciembre"
-			);
-
 //Filtros
 $z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 

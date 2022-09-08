@@ -77,12 +77,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Datos Creados correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Datos Modificados correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Datos borrados correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Datos Creados correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Datos Modificados correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Datos borrados correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['moddatos']) ) { ?>
 
 <div class="col-sm-8 fcenter">
@@ -125,23 +125,24 @@ if ( ! empty($_GET['moddatos']) ) { ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['view']) ) { ?>
  
-<div class="col-sm-12" style="margin-top:15px;margin-bottom:15px;" >
+<div class="col-sm-12" style="margin-bottom:30px">
+	<div class="btn-group pull-right" role="group" aria-label="...">
 
-	<?php 
-	$ubicacion = $location.'&view=true&facturar=true';
-	$dialogo   = '¿Desea ingresar el documento?';?>
-	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width"><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>
-									
-									
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<?php 
+		$ubicacion = $location.'&clear_all=true';
+		$dialogo   = '¿Realmente deseas eliminar todos los datos del documento en curso?';?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
+										
+		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-	<?php 
-	$ubicacion = $location.'&clear_all=true';
-	$dialogo   = '¿Realmente deseas eliminar todos los datos del documento en curso?';?>
-	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
-
+		<?php 
+		$ubicacion = $location.'&view=true&facturar=true';
+		$dialogo   = '¿Desea ingresar el documento?';?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary"><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>
+		
+	</div>
 	<div class="clearfix"></div>
-</div>
+</div> 
 
 
 <div class="col-sm-11 fcenter table-responsive">

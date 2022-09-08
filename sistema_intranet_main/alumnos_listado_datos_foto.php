@@ -48,14 +48,14 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Trabajador creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Trabajador editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Trabajador borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Trabajador creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Trabajador editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Trabajador borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT Nombre, Direccion_img
+$query = "SELECT Nombre, ApellidoPat, Direccion_img
 FROM `alumnos_listado`
 WHERE idAlumno = ".$_GET['id'];
 //Consulta
@@ -76,7 +76,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'], 'Editar Password');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'], 'Editar Password');?>
 </div>
 <div class="clearfix"></div>  
 

@@ -36,7 +36,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idOpciones_8']) )     $idOpciones_8     = $_POST['idOpciones_8'];
 	if ( !empty($_POST['idOpciones_9']) )     $idOpciones_9     = $_POST['idOpciones_9'];
 	
-
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -73,6 +72,13 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){           $Nombre      = EstandarizarInput($Nombre); }
+	if(isset($Descripcion) && $Descripcion != ''){ $Descripcion = EstandarizarInput($Descripcion); }
+	if(isset($Codigo) && $Codigo != ''){           $Codigo      = EstandarizarInput($Codigo); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -105,54 +111,39 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idTipo) && $idTipo != ''){                   $a  = "'".$idTipo."'" ;           }else{$a  ="''";}
-				if(isset($idCategoria) && $idCategoria != ''){         $a .= ",'".$idCategoria."'" ;     }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){                   $a .= ",'".$Nombre."'" ;          }else{$a .=",''";}
-				if(isset($Descripcion) && $Descripcion != ''){         $a .= ",'".$Descripcion."'" ;     }else{$a .=",''";}
-				if(isset($Codigo) && $Codigo != ''){                   $a .= ",'".$Codigo."'" ;          }else{$a .=",''";}
-				if(isset($MaxAplicacion) && $MaxAplicacion != ''){     $a .= ",'".$MaxAplicacion."'" ;   }else{$a .=",''";}
-				if(isset($Direccion_img) && $Direccion_img != ''){     $a .= ",'".$Direccion_img."'" ;   }else{$a .=",''";}
-				if(isset($FichaTecnica) && $FichaTecnica != ''){       $a .= ",'".$FichaTecnica."'" ;    }else{$a .=",''";}
-				if(isset($HDS) && $HDS != ''){                         $a .= ",'".$HDS."'" ;             }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){               $a .= ",'".$idEstado."'" ;        }else{$a .=",''";}
-				if(isset($idTipoImagen) && $idTipoImagen != ''){       $a .= ",'".$idTipoImagen."'" ;    }else{$a .=",''";}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){       $a .= ",'".$idOpciones_1."'" ;    }else{$a .=",''";}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){       $a .= ",'".$idOpciones_2."'" ;    }else{$a .=",''";}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){       $a .= ",'".$idOpciones_3."'" ;    }else{$a .=",''";}
-				if(isset($idOpciones_4) && $idOpciones_4 != ''){       $a .= ",'".$idOpciones_4."'" ;    }else{$a .=",''";}
-				if(isset($idOpciones_5) && $idOpciones_5 != ''){       $a .= ",'".$idOpciones_5."'" ;    }else{$a .=",''";}
-				if(isset($idOpciones_6) && $idOpciones_6 != ''){       $a .= ",'".$idOpciones_6."'" ;    }else{$a .=",''";}
-				if(isset($idOpciones_7) && $idOpciones_7 != ''){       $a .= ",'".$idOpciones_7."'" ;    }else{$a .=",''";}
-				if(isset($idOpciones_8) && $idOpciones_8 != ''){       $a .= ",'".$idOpciones_8."'" ;    }else{$a .=",''";}
-				if(isset($idOpciones_9) && $idOpciones_9 != ''){       $a .= ",'".$idOpciones_9."'" ;    }else{$a .=",''";}
-						
+				if(isset($idTipo) && $idTipo != ''){                   $SIS_data  = "'".$idTipo."'" ;           }else{$SIS_data  = "''";}
+				if(isset($idCategoria) && $idCategoria != ''){         $SIS_data .= ",'".$idCategoria."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                   $SIS_data .= ",'".$Nombre."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion != ''){         $SIS_data .= ",'".$Descripcion."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Codigo) && $Codigo != ''){                   $SIS_data .= ",'".$Codigo."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($MaxAplicacion) && $MaxAplicacion != ''){     $SIS_data .= ",'".$MaxAplicacion."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Direccion_img) && $Direccion_img != ''){     $SIS_data .= ",'".$Direccion_img."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($FichaTecnica) && $FichaTecnica != ''){       $SIS_data .= ",'".$FichaTecnica."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($HDS) && $HDS != ''){                         $SIS_data .= ",'".$HDS."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){               $SIS_data .= ",'".$idEstado."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($idTipoImagen) && $idTipoImagen != ''){       $SIS_data .= ",'".$idTipoImagen."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){       $SIS_data .= ",'".$idOpciones_1."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){       $SIS_data .= ",'".$idOpciones_2."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){       $SIS_data .= ",'".$idOpciones_3."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_4) && $idOpciones_4 != ''){       $SIS_data .= ",'".$idOpciones_4."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_5) && $idOpciones_5 != ''){       $SIS_data .= ",'".$idOpciones_5."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_6) && $idOpciones_6 != ''){       $SIS_data .= ",'".$idOpciones_6."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_7) && $idOpciones_7 != ''){       $SIS_data .= ",'".$idOpciones_7."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_8) && $idOpciones_8 != ''){       $SIS_data .= ",'".$idOpciones_8."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_9) && $idOpciones_9 != ''){       $SIS_data .= ",'".$idOpciones_9."'" ;    }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `variedades_listado` (idTipo,idCategoria,Nombre,
+				$SIS_columns = 'idTipo,idCategoria,Nombre,
 				Descripcion,Codigo,MaxAplicacion,Direccion_img,FichaTecnica,HDS, idEstado, idTipoImagen,
 				idOpciones_1, idOpciones_2, idOpciones_3, idOpciones_4, idOpciones_5, idOpciones_6, 
-				idOpciones_7, idOpciones_8, idOpciones_9 ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				idOpciones_7, idOpciones_8, idOpciones_9';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'variedades_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-								
+				if($ultimo_id!=0){
+					//redirijo			
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 				
 			}
@@ -179,31 +170,31 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idProducto='".$idProducto."'" ;
-				if(isset($idTipo) && $idTipo != ''){                   $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idCategoria) && $idCategoria != ''){         $a .= ",idCategoria='".$idCategoria."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                   $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){         $a .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($Codigo) && $Codigo != ''){                   $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($MaxAplicacion) && $MaxAplicacion != ''){     $a .= ",MaxAplicacion='".$MaxAplicacion."'" ;}
-				if(isset($Direccion_img) && $Direccion_img != ''){     $a .= ",Direccion_img='".$Direccion_img."'" ;}
-				if(isset($FichaTecnica) && $FichaTecnica != ''){       $a .= ",FichaTecnica='".$FichaTecnica."'" ;}
-				if(isset($HDS) && $HDS != ''){                         $a .= ",HDS='".$HDS."'" ;}
-				if(isset($idEstado) && $idEstado != ''){               $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idTipoImagen) && $idTipoImagen != ''){       $a .= ",idTipoImagen='".$idTipoImagen."'" ;}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){       $a .= ",idOpciones_1='".$idOpciones_1."'" ;}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){       $a .= ",idOpciones_2='".$idOpciones_2."'" ;}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){       $a .= ",idOpciones_3='".$idOpciones_3."'" ;}
-				if(isset($idOpciones_4) && $idOpciones_4 != ''){       $a .= ",idOpciones_4='".$idOpciones_4."'" ;}
-				if(isset($idOpciones_5) && $idOpciones_5 != ''){       $a .= ",idOpciones_5='".$idOpciones_5."'" ;}
-				if(isset($idOpciones_6) && $idOpciones_6 != ''){       $a .= ",idOpciones_6='".$idOpciones_6."'" ;}
-				if(isset($idOpciones_7) && $idOpciones_7 != ''){       $a .= ",idOpciones_7='".$idOpciones_7."'" ;}
-				if(isset($idOpciones_8) && $idOpciones_8 != ''){       $a .= ",idOpciones_8='".$idOpciones_8."'" ;}
-				if(isset($idOpciones_9) && $idOpciones_9 != ''){       $a .= ",idOpciones_9='".$idOpciones_9."'" ;}
+				$SIS_data = "idProducto='".$idProducto."'" ;
+				if(isset($idTipo) && $idTipo != ''){                   $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($idCategoria) && $idCategoria != ''){         $SIS_data .= ",idCategoria='".$idCategoria."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                   $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){         $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
+				if(isset($Codigo) && $Codigo != ''){                   $SIS_data .= ",Codigo='".$Codigo."'" ;}
+				if(isset($MaxAplicacion) && $MaxAplicacion != ''){     $SIS_data .= ",MaxAplicacion='".$MaxAplicacion."'" ;}
+				if(isset($Direccion_img) && $Direccion_img != ''){     $SIS_data .= ",Direccion_img='".$Direccion_img."'" ;}
+				if(isset($FichaTecnica) && $FichaTecnica != ''){       $SIS_data .= ",FichaTecnica='".$FichaTecnica."'" ;}
+				if(isset($HDS) && $HDS != ''){                         $SIS_data .= ",HDS='".$HDS."'" ;}
+				if(isset($idEstado) && $idEstado != ''){               $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idTipoImagen) && $idTipoImagen != ''){       $SIS_data .= ",idTipoImagen='".$idTipoImagen."'" ;}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){       $SIS_data .= ",idOpciones_1='".$idOpciones_1."'" ;}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){       $SIS_data .= ",idOpciones_2='".$idOpciones_2."'" ;}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){       $SIS_data .= ",idOpciones_3='".$idOpciones_3."'" ;}
+				if(isset($idOpciones_4) && $idOpciones_4 != ''){       $SIS_data .= ",idOpciones_4='".$idOpciones_4."'" ;}
+				if(isset($idOpciones_5) && $idOpciones_5 != ''){       $SIS_data .= ",idOpciones_5='".$idOpciones_5."'" ;}
+				if(isset($idOpciones_6) && $idOpciones_6 != ''){       $SIS_data .= ",idOpciones_6='".$idOpciones_6."'" ;}
+				if(isset($idOpciones_7) && $idOpciones_7 != ''){       $SIS_data .= ",idOpciones_7='".$idOpciones_7."'" ;}
+				if(isset($idOpciones_8) && $idOpciones_8 != ''){       $SIS_data .= ",idOpciones_8='".$idOpciones_8."'" ;}
+				if(isset($idOpciones_9) && $idOpciones_9 != ''){       $SIS_data .= ",idOpciones_9='".$idOpciones_9."'" ;}
 											
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'variedades_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'variedades_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -305,12 +296,12 @@ require_once '0_validate_user_1.php';
 							imagedestroy($imgBase);
 
 							//Filtro para idSistema		
-							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-							if(isset($idTipoImagen) && $idTipoImagen != ''){       $a .= ",idTipoImagen='".$idTipoImagen."'" ;}
+							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+							if(isset($idTipoImagen) && $idTipoImagen != ''){       $SIS_data .= ",idTipoImagen='".$idTipoImagen."'" ;}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'variedades_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'variedades_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -357,11 +348,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 								
 							//Filtro para idSistema		
-							$a = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
+							$SIS_data = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'variedades_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'variedades_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -407,11 +398,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 								
 							//Filtro para idSistema		
-							$a = "HDS='".$sufijo.$_FILES['HDS']['name']."'" ;
+							$SIS_data = "HDS='".$sufijo.$_FILES['HDS']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'variedades_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'variedades_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -442,8 +433,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Direccion_img='', idTipoImagen=0" ;
-			$resultado = db_update_data (false, $a, 'variedades_listado', 'idProducto = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Direccion_img='', idTipoImagen=0" ;
+			$resultado = db_update_data (false, $SIS_data, 'variedades_listado', 'idProducto = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -478,8 +469,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "FichaTecnica=''" ;
-			$resultado = db_update_data (false, $a, 'variedades_listado', 'idProducto = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "FichaTecnica=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'variedades_listado', 'idProducto = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -515,8 +506,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "HDS=''" ;
-			$resultado = db_update_data (false, $a, 'variedades_listado', 'idProducto = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "HDS=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'variedades_listado', 'idProducto = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -642,8 +633,8 @@ require_once '0_validate_user_1.php';
 			$idEstado    = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'variedades_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'variedades_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				

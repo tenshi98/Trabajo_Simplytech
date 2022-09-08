@@ -138,14 +138,14 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created']))     {$error['created'] 	  = 'sucess/Orden de Trabajo creada correctamente';}
-if (isset($_GET['edited']))      {$error['edited'] 	      = 'sucess/Orden de Trabajo editada correctamente';}
-if (isset($_GET['deleted']))     {$error['deleted'] 	  = 'sucess/Orden de Trabajo borrada correctamente';}
-if (isset($_GET['canceled']))     {$error['canceled'] 	  = 'sucess/Orden de Trabajo cancelada correctamente';}
-if (isset($_GET['notslectjob'])) {$error['notslectjob']   = 'error/No ha seleccionado un trabajo a realizar';}
+if (isset($_GET['created'])){     $error['created']     = 'sucess/Orden de Trabajo creada correctamente';}
+if (isset($_GET['edited'])){      $error['edited']      = 'sucess/Orden de Trabajo editada correctamente';}
+if (isset($_GET['deleted'])){     $error['deleted']     = 'sucess/Orden de Trabajo borrada correctamente';}
+if (isset($_GET['canceled'])){    $error['canceled']    = 'sucess/Orden de Trabajo cancelada correctamente';}
+if (isset($_GET['notslectjob'])){ $error['notslectjob'] = 'error/No ha seleccionado un trabajo a realizar';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['cancel']) ) {  ?>
 
 <div class="col-sm-8 fcenter">
@@ -661,21 +661,22 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['view']) ) {  ?>
  
-<div class="col-sm-12" >
+<div class="col-sm-12" style="margin-bottom:30px">
+	<div class="btn-group pull-right" role="group" aria-label="...">
 
-	<?php 
-	$ubicacion = $location.'&view=true&crear_ot=true';
-	$dialogo   = '¿Desea crear ingresar el documento, tenga en cuenta que no podra realizar mas modificaciones una vez creada?';?>
-	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width"><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>
-									
-									
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<?php 
+		$ubicacion = $location.'&clear_all=true';
+		$dialogo   = '¿Realmente deseas eliminar todos los datos de la OT en curso?';?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
+										
+		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-	<?php 
-	$ubicacion = $location.'&clear_all=true';
-	$dialogo   = '¿Realmente deseas eliminar todos los datos de la OT en curso?';?>
-	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
-
+		<?php 
+		$ubicacion = $location.'&view=true&crear_ot=true';
+		$dialogo   = '¿Desea crear ingresar el documento, tenga en cuenta que no podra realizar mas modificaciones una vez creada?';?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary"><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>
+		
+	</div>
 	<div class="clearfix"></div>
 </div> 
 
@@ -835,8 +836,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</table>	
 	</div>
 	
-	<div class="row">
-		<div class="col-xs-12">
+	<div class="col-xs-12">
+		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
 			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['ot_motivo_basicos']['Observaciones'];?></p>
 		</div>
@@ -958,7 +959,7 @@ $SIS_where .= " AND orden_trabajo_tareas_listado.idSistema=".$_SESSION['usuario'
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idOT']) && $_GET['idOT'] != ''){                            $SIS_where .= " AND orden_trabajo_tareas_listado.idOT=".$_GET['idOT'];}
-if(isset($_GET['f_programacion']) && $_GET['f_programacion'] != ''){        $SIS_where .= " AND orden_trabajo_tareas_listado.f_programacion='".$_GET['Nombre']."'";}
+if(isset($_GET['f_programacion']) && $_GET['f_programacion'] != ''){        $SIS_where .= " AND orden_trabajo_tareas_listado.f_programacion='".$_GET['f_programacion']."'";}
 if(isset($_GET['idUbicacion']) && $_GET['idUbicacion'] != ''){              $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion=".$_GET['idUbicacion'];}
 if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];}
 if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];}
@@ -966,7 +967,7 @@ if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3'] != ''){  $SIS
 if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];}
 if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];}
 if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){              $SIS_where .= " AND orden_trabajo_tareas_listado.idPrioridad=".$_GET['idPrioridad'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                        $SIS_where .= " AND orden_trabajo_tareas_listado.idTipo=".$_GET['Nombre'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                        $SIS_where .= " AND orden_trabajo_tareas_listado.idTipo=".$_GET['idTipo'];}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes

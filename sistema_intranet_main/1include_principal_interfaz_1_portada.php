@@ -2,9 +2,9 @@
 
 echo '<div class="wrapper">';
 	//Variables			
-	$currentTime = strtotime(hora_actual());
-	$startTime = strtotime('21:00:00');
-	$endTime = strtotime('07:00:00');
+	$currentTime  = strtotime(hora_actual());
+	$startTime    = strtotime('21:00:00');
+	$endTime      = strtotime('07:00:00');
 
 	/******************************* Animacion *******************************/
 	//identifico la hora actual y defino si esta dentro del rango deseado

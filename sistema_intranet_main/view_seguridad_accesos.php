@@ -115,7 +115,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $S
 			<div class="col-xs-12">
 				<div class="col-sm-10 fcenter">
 					<h3>Archivo Adjunto</h3>
-					<?php echo preview_docs('upload', $rowdata['Direccion_img'], '', '', ''); ?>
+					<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Direccion_img'], ''); ?>
 				</div>
 			</div>
 		</div>

@@ -83,33 +83,18 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT Nombre
-FROM `usuarios_listado`
-WHERE idUsuario = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idUsuario ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-//Se muestran solo los permisos activados para la plataforma
-$z = " AND core_permisos_listado.visualizacion=".$_SESSION['usuario']['basic_data']['idSistema']." OR core_permisos_listado.visualizacion=9998 ";	
-
-// SE TRAE UN LISTADO DE TODOS LOS PERMISOS ASIGNADOS SOLO A UN USUARIO
-$arrPermisos = array();
-$query = "SELECT 
+/********************************************************************************/
+/********************************************************************************/
+//Se verifican los permisos que tiene el usuario seleccionado
+$SIS_query = '
 core_permisos_listado.idAdmpm, 
 core_permisos_listado.Nombre AS Nombre_permiso,
 core_permisos_listado.Descripcion,
@@ -120,63 +105,33 @@ core_permisos_listado.id_pmcat,
 core_permisos_categorias.Nombre AS Categoria,
 core_permisos_listado.visualizacion,
 core_sistemas.Nombre AS ver,
-(SELECT COUNT(idPermisos) FROM usuarios_permisos WHERE idAdmpm = core_permisos_listado.idAdmpm AND idUsuario = ".$_GET['id']." LIMIT 1) AS contar,
-(SELECT idPermisos FROM usuarios_permisos WHERE idAdmpm = core_permisos_listado.idAdmpm AND idUsuario = ".$_GET['id']." LIMIT 1) AS idpermiso,
-(SELECT level FROM usuarios_permisos WHERE idAdmpm = core_permisos_listado.idAdmpm AND idUsuario = ".$_GET['id']." LIMIT 1) AS level
-FROM `core_permisos_listado`
-INNER JOIN `core_permisos_categorias`     ON core_permisos_categorias.id_pmcat        = core_permisos_listado.id_pmcat
-LEFT JOIN `core_sistemas`                 ON core_sistemas.idSistema                  = core_permisos_listado.visualizacion
-WHERE core_permisos_listado.idAdmpm>=0 ".$z."
-ORDER BY Categoria ASC,  Nombre_permiso ASC  
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
-mysqli_free_result($resultado);
+(SELECT COUNT(idPermisos) FROM usuarios_permisos WHERE idAdmpm = core_permisos_listado.idAdmpm AND idUsuario = '.$_GET['id'].' LIMIT 1) AS contar,
+(SELECT idPermisos FROM usuarios_permisos WHERE idAdmpm = core_permisos_listado.idAdmpm AND idUsuario = '.$_GET['id'].' LIMIT 1) AS idpermiso,
+(SELECT level FROM usuarios_permisos WHERE idAdmpm = core_permisos_listado.idAdmpm AND idUsuario = '.$_GET['id'].' LIMIT 1) AS level';
+$SIS_join  = '
+INNER JOIN `core_permisos_categorias` ON core_permisos_categorias.id_pmcat = core_permisos_listado.id_pmcat
+LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema           = core_permisos_listado.visualizacion';
+$SIS_where = 'core_permisos_listado.idAdmpm>=0';
+$SIS_where.= ' AND (core_permisos_listado.visualizacion='.$_SESSION['usuario']['basic_data']['idSistema'].' OR core_permisos_listado.visualizacion=9998)';
+$SIS_order = 'core_permisos_categorias.Nombre ASC, core_permisos_listado.Nombre ASC';
+$arrPermisos = array();
+$arrPermisos = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermiso');
 
 /********************************************************************************/
 /********************************************************************************/
 //Se verifican los permisos que tiene el usuario seleccionado
+$SIS_query = 'core_permisos_listado.Direccionbase';
+$SIS_join  = 'INNER JOIN  core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm';
+$SIS_where = 'usuarios_permisos.idUsuario='.$_GET['id'];
+$SIS_order = 'core_permisos_listado.Direccionbase ASC';
 $arrPermiso = array();
-$query = "SELECT 
-core_permisos_listado.Direccionbase
-FROM `usuarios_permisos`
-INNER JOIN  core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm
-WHERE usuarios_permisos.idUsuario='".$_GET['id']."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-						
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermiso,$row );
-}
+$arrPermiso = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermiso');
+
 $arrPer = array();
 foreach ($arrPermiso as $ins) {
 	$arrPer[$ins['Direccionbase']] = 1;
 }
-	
+
 /******************************************************/
 //variable de numero de permiso
 $x_nperm = 0;
@@ -265,8 +220,6 @@ $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_ejecutar.php";             
 $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_finalizadas.php";                 //65 - Orden de Trabajo - Finalizadas
 $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_terminar.php";                    //66 - Orden de Trabajo - Forzar Cierre
 
-
-
 /******************************************************/
 //Genero los permisos
 for ($i = 1; $i <= $x_nperm; $i++) {
@@ -277,8 +230,6 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 		$prm_x[$i] = 1;
 	}
 }
-
-
 
 /******************************************************/
 $arriendos    = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4] + $prm_x[5] + $prm_x[6] + $prm_x[7] + $prm_x[8];
@@ -292,10 +243,7 @@ $x_permisos_4 = $prm_x[54] + $prm_x[55] + $prm_x[56] + $prm_x[57] + $prm_x[58];
 $x_permisos_5 = $prm_x[44] + $prm_x[45] + $prm_x[46] + $prm_x[47] + $prm_x[48] + $prm_x[49] + $prm_x[50] + $prm_x[51] + $prm_x[52] + $prm_x[53];
 $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
-
-
 ?>
-
 
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Permisos Asignados');?>
@@ -351,7 +299,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 						<th width="10">Nivel</th>
 					</tr>
 					<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){$colspan=5;}else{$colspan=4;} ?>
-					<?php echo widget_sherlock(1, $colspan);?>
+					<?php echo widget_sherlock(1, $colspan, 'TableFiltered');?>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<?php 

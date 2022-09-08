@@ -45,11 +45,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Caja Chica Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Caja Chica Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Caja Chica borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Caja Chica Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Caja Chica Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Caja Chica borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos

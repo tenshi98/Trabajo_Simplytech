@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_definicion_operacional.php';
@@ -34,8 +34,8 @@ if ( !empty($_POST['submit']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_definicion_operacional.php';
@@ -43,8 +43,8 @@ if ( !empty($_POST['submit_edit']) )  {
 //se borra un dato
 if ( !empty($_GET['del']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_definicion_operacional.php';	
@@ -57,11 +57,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Observacion creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Observacion editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Observacion borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Definicion Operacional creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Definicion Operacional editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Definicion Operacional borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 //valido los permisos
@@ -94,7 +94,7 @@ $rowdata_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMa
 	<div class="box dark">	
 		<header>		
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Observacion</h5>	
+			<h5>Editar Definicion Operacional</h5>	
 		</header>	
 		<div id="div-1" class="body">	
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -384,6 +384,7 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 						<li class=""><a href="<?php echo 'telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 						
 					</ul>

@@ -20,8 +20,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Longitud']) )        $Longitud         = $_POST['Longitud'];
 	if ( !empty($_POST['direccion']) )       $direccion        = $_POST['direccion'];
 	
-	
-
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -42,6 +40,11 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($direccion) && $direccion != ''){ $direccion = EstandarizarInput($direccion); }
+
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($direccion)&&contar_palabras_censuradas($direccion)!=0){  $error['direccion'] = 'error/Edita la direccion, contiene palabras no permitidas'; }	
@@ -61,32 +64,20 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idRutaAlt) && $idRutaAlt != ''){    $a  = "'".$idRutaAlt."'" ;    }else{$a  ="''";}
-				if(isset($Latitud) && $Latitud != ''){        $a .= ",'".$Latitud."'" ;     }else{$a .=",''";}
-				if(isset($Longitud) && $Longitud != ''){      $a .= ",'".$Longitud."'" ;    }else{$a .=",''";}
-				if(isset($direccion) && $direccion != ''){    $a .= ",'".$direccion."'" ;   }else{$a .=",''";}
-				
+				if(isset($idRutaAlt) && $idRutaAlt != ''){    $SIS_data  = "'".$idRutaAlt."'" ;    }else{$SIS_data  = "''";}
+				if(isset($Latitud) && $Latitud != ''){        $SIS_data .= ",'".$Latitud."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Longitud) && $Longitud != ''){      $SIS_data .= ",'".$Longitud."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($direccion) && $direccion != ''){    $SIS_data .= ",'".$direccion."'" ;   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `vehiculos_ruta_alternativa_ubicaciones` (idRutaAlt, Latitud, Longitud, direccion) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idRutaAlt, Latitud, Longitud, direccion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_ruta_alternativa_ubicaciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -100,15 +91,15 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idUbicaciones='".$idUbicaciones."'" ;
-				if(isset($idRutaAlt) && $idRutaAlt != ''){  $a .= ",idRutaAlt='".$idRutaAlt."'" ;}
-				if(isset($Latitud) && $Latitud != ''){      $a .= ",Latitud='".$Latitud."'" ;}
-				if(isset($Longitud) && $Longitud != ''){    $a .= ",Longitud='".$Longitud."'" ;}
-				if(isset($direccion) && $direccion != ''){  $a .= ",direccion='".$direccion."'" ;}
+				$SIS_data = "idUbicaciones='".$idUbicaciones."'" ;
+				if(isset($idRutaAlt) && $idRutaAlt != ''){  $SIS_data .= ",idRutaAlt='".$idRutaAlt."'" ;}
+				if(isset($Latitud) && $Latitud != ''){      $SIS_data .= ",Latitud='".$Latitud."'" ;}
+				if(isset($Longitud) && $Longitud != ''){    $SIS_data .= ",Longitud='".$Longitud."'" ;}
+				if(isset($direccion) && $direccion != ''){  $SIS_data .= ",direccion='".$direccion."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'vehiculos_ruta_alternativa_ubicaciones', 'idUbicaciones = "'.$idUbicaciones.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'vehiculos_ruta_alternativa_ubicaciones', 'idUbicaciones = "'.$idUbicaciones.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

@@ -67,17 +67,32 @@ $_SESSION['form_require'] = 'required';
 		<meta name="keywords"              content="">
 		
 		<!-- WEB FONT -->
-		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<?php
+		//verifica la capa de desarrollo
+		$whitelist = array( 'localhost', '127.0.0.1', '::1' );
+		////////////////////////////////////////////////////////////////////////////////
+		//si estoy en ambiente de desarrollo
+		if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
+			echo '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIB_assets/lib/font-awesome/css/font-awesome.min.css">';
+			//echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
+			
+		////////////////////////////////////////////////////////////////////////////////
+		//si estoy en ambiente de produccion	
+		}else{
+			echo '<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">';
+			echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
+		}
+		?>
 		
 		<!-- CSS Base -->
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/main.min.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/theme_color_74.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/lib/fullcalendar/fullcalendar.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/my_style.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/css/my_colors.min.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/css/bootstrap_button_arrows.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/my_corrections.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/prism/prism.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/elegant_font/css/style.css">
@@ -132,19 +147,8 @@ $_SESSION['form_require'] = 'required';
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/apple-touch-icon-114x114-precomposed.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/apple-touch-icon-144x144-precomposed.png">
 		<?php } ?>
-		
-		<!-- Correcciones CSS -->
-		<style>
-			.login {background-image: none !important;background-color: #1A1A1A !important;}
-			.login .form-signin {max-width: 330px;padding: 20px;margin: 0 auto;background-color: rgba(255, 255, 255, 0.7) !important;border-radius: 15px;-webkit-box-shadow: none !important;-moz-box-shadow: none !important;box-shadow: none !important;position: relative;}
-			.login_logo{width:100%!important;margin-bottom: 20px;}
-			.tab-content .text-muted {margin-left: 0px !important;color: #FFFFFF !important;}
-		</style>
 	</head>
 	<body class="login">
-	  
-		<canvas id="canv" style="width: 100%;height: 100%;position: fixed;top: 0px;left: 0px;"></canvas>
-	  
 	  
 <?php 
 /**********************************************************************************************************************************/
@@ -152,12 +156,18 @@ $_SESSION['form_require'] = 'required';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-
 /**********************************************************************************************************************************/
-/*                                                   Verificacion bloqueos                                                        */
+/*                                                      Configuracion                                                             */
 /**********************************************************************************************************************************/
 //fichero del logo
 $nombre_fichero = 'img/login_logo.png';
+//Interfaz Formulario
+$intForm = 1;
+//Boton Registro (1=si - 2=no)
+$intRegistro = 2;
+/**********************************************************************************************************************************/
+/*                                                   Verificacion bloqueos                                                        */
+/**********************************************************************************************************************************/
 //calculos
 $bloqueo = 0;
 //reviso si se conecta desde chile
@@ -169,38 +179,32 @@ $Mantenciones = db_select_data (false, 'Fecha, Hora_ini, Hora_fin', 'core_manten
 $ip_bloqueada = db_select_nrows (false, 'idBloqueo', 'sistema_seguridad_bloqueo_ip', '', "IP_Client='".$INT_IP."'", $dbConn, 'login', basename($_SERVER["REQUEST_URI"], ".php"), 'ip_bloqueada');
 
 //Se crean los bloqueos
-if(strtotime($Mantenciones['Fecha'])>=strtotime(fecha_actual())&&strtotime($Mantenciones['Hora_ini'])<=strtotime(hora_actual())&&strtotime($Mantenciones['Hora_fin'])>=strtotime(hora_actual())&&$bloqueo==0){ $bloqueo=1;}
+if(isset($Mantenciones['Fecha'])&&strtotime($Mantenciones['Fecha'])>=strtotime(fecha_actual())&&strtotime($Mantenciones['Hora_ini'])<=strtotime(hora_actual())&&strtotime($Mantenciones['Hora_fin'])>=strtotime(hora_actual())&&$bloqueo==0){ $bloqueo=1;}
 if(isset($INT_Pais)&&$INT_Pais!=''&&$INT_Pais!='Chile'&&$INT_IP!='::1'&&$bloqueo==0){  $bloqueo = 2;}
 if(isset($ip_bloqueada)&&$ip_bloqueada!=0&&$bloqueo==0){ $bloqueo = 3;}
 	
 /**********************************************************************************************************************************/
 /*                                                        Despliegue                                                              */
 /**********************************************************************************************************************************/
-//Imagen del logo
-
-if (file_exists($nombre_fichero)) {
-	echo '
-	<style>
-		.btn-primary {color: #fff;background-color: #8b00ff !important;border-color: #8b00ff !important;}
-		.btn-primary:hover {background-color: #670CB3 !important;}
-		.login_text1{color: #111111 !important;text-align: center;margin-top: 0px;margin-bottom: 0px;}
-	</style>
-	';
-}else{
-	echo '
-	<style>
-		.login_text1{color: #DB4F21 !important;text-align: center;margin-top: 0px;margin-bottom: 0px;}
-	</style>
-	';
-}
-
-
 //se selecciona la pantalla a mostrar
 switch ($bloqueo) {
     //pantalla normal
     case 0:
-        require_once '1include_login_form.php';
-        break;
+        switch ($intForm) {
+			//pantalla de mantenimiento
+			case 1:
+				require_once '1include_login_form_1.php';
+				break;
+			//pantalla de bloqueo pais
+			case 2:
+				require_once '1include_login_form_2.php';
+				break;
+			//pantalla de baneo
+			case 3:
+				require_once '1include_login_form_3.php';
+				break;
+		}
+		break;
 	//pantalla de mantenimiento
     case 1:
         require_once '1include_login_ani.php';
@@ -221,97 +225,5 @@ switch ($bloqueo) {
 }
 //validador
 widget_validator(); ?>
-	
-	
-	
-		<script id="rendered-js" >
-			window.requestAnimFrame = function () {
-			  return window.requestAnimationFrame ||
-			  window.webkitRequestAnimationFrame ||
-			  window.mozRequestAnimationFrame ||
-			  window.oRequestAnimationFrame ||
-			  window.msRequestAnimationFrame ||
-			  function (callback) {
-				window.setTimeout(callback, 1000 / 60);
-			  };
-			}();
-
-			var c = document.getElementById('canv'),
-			$ = c.getContext('2d'),
-			w = c.width = window.innerWidth,
-			h = c.height = window.innerHeight,
-			arr = [],
-			u = 0;
-			o = 0,
-
-			$.fillStyle = '#1A1A1A';
-			$.fillRect(0, 0, w, h);
-			$.globalCompositeOperation = "source-over";
-
-			var inv = function () {
-			  $.restore();
-			  $.fillStyle = "#" + (o ? "FEFAE6" : "1A1A1A");
-			  $.fillRect(0, 0, w, h);
-			  $.fillStyle = "#" + (o ? "1A1A1A" : "FEFAE6");
-			  $.save();
-			};
-
-			window.addEventListener('resize', function () {
-			  c.width = window.innerWidth;
-			  c.height = window.innerHeight;
-			}, false);
-
-			var ready = function () {
-			  arr = [];
-			  for (let i = 0; i < 20; i++) {
-				set();
-			  }
-			};
-
-			var set = function () {
-			  arr.push({
-				x1: w,
-				y1: h,
-				_x1: w - Math.random() * w,
-				_y1: h - Math.random() * h,
-				_x2: w - Math.random() * w,
-				_y2: h - Math.random() * h,
-				x2: -w + Math.random() * w,
-				y2: -h + Math.random() * h,
-				rot: Math.random() * 180,
-				a1: Math.random() * 10,
-				a2: Math.random() * 10,
-				a3: Math.random() * 10 });
-
-			};
-
-			var pretty = function () {
-			  //u -= .2;
-			  u = 190;
-			  for (var i in arr) {
-				var b = arr[i];
-				b._x1 *= Math.sin(b.a1 -= 0.001);
-				b._y1 *= Math.sin(b.a1);
-				b._x2 -= Math.sin(b.a2 += 0.001);
-				b._y1 += Math.sin(b.a2);
-				b.x1 -= Math.sin(b.a3 += 0.001);
-				b.y1 += Math.sin(b.a3);
-				b.x2 -= Math.sin(b.a3 -= 0.001);
-				b.y2 += Math.sin(b.a3);
-				$.save();
-				$.globalAlpha = 0.03;
-				$.beginPath();
-				$.strokeStyle = 'hsla(' + u + ', 85%, 60%, .7)';
-				$.moveTo(b.x1, b.y1);
-				$.bezierCurveTo(b._x1, b._y1, b._x2, b._y2, b.x2, b.y2);
-				$.stroke();
-				$.restore();
-			  }
-			  window.requestAnimFrame(pretty);
-			};
-			ready();
-			pretty();
-
-		</script>
 	</body>
 </html>

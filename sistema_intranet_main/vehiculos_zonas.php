@@ -51,11 +51,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Zona Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Zona Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Zona borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Zona Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Zona Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Zona borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos

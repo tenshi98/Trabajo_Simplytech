@@ -110,23 +110,14 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									$diaTermino  = $FechaSistema;
 									$tiempo1     = $data['LastUpdateHora'];
 									$tiempo2     = $HoraSistema;
-									//calculo diferencia de dias
-									$n_dias = dias_transcurridos($diaInicio,$diaTermino);
-									//calculo del tiempo transcurrido
-									$Tiempo = restahoras($tiempo1, $tiempo2);
-									//Calculo del tiempo transcurrido
-									if($n_dias!=0){
-										if($n_dias>=2){
-											$n_dias = $n_dias-1;
-											$horas_trans2 = multHoras('24:00:00',$n_dias);
-											$Tiempo = sumahoras($Tiempo,$horas_trans2);
-										}
-										if($n_dias==1&&$tiempo1<$tiempo2){
-											$horas_trans2 = multHoras('24:00:00',$n_dias);
-											$Tiempo = sumahoras($Tiempo,$horas_trans2);
-										}
-									}	
-									if($Tiempo>$data['TiempoFueraLinea']&&$data['TiempoFueraLinea']!='00:00:00'){	
+									$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
+									
+									//Comparaciones de tiempo
+									$Time_Tiempo     = horas2segundos($Tiempo);
+									$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
+									$Time_Tiempo_Max = horas2segundos('48:00:00');
+									//comparacion
+									if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
 										$in_eq_fueralinea++;
 									}
 									

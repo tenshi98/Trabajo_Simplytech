@@ -37,11 +37,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['Cliente'] 	  = 'sucess/Proyecto creado correctamente';}
-if (isset($_GET['edited']))  {$error['Cliente'] 	  = 'sucess/Proyecto editado correctamente';}
-if (isset($_GET['deleted'])) {$error['Cliente'] 	  = 'sucess/Proyecto borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Proyecto creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Proyecto editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Proyecto borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos de mi Cliente
 $query = "SELECT Nombre, PersonaContacto, PersonaContacto_Fono, PersonaContacto_email ,

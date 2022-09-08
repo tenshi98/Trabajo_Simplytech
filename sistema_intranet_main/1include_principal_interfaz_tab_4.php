@@ -3,27 +3,21 @@
 $temp = $prm_x[6] + $prm_x[10] + $prm_x[11];					
 if($temp!=0) {
 
-//Variable de busqueda
-$z = "WHERE clientes_listado.idCliente!=0";
-//sistema
-$z.=" AND clientes_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 // Se trae un listado con todos los elementos
-$arrClientes = array();
-$query = "SELECT 
+$SIS_query = '
 clientes_listado.idCliente,
 clientes_listado.idSistema,
 clientes_listado.Rut,
 clientes_listado.Nombre,
 core_estados.Nombre AS estado,
 core_sistemas.Nombre AS sistema
-
 ,(SELECT COUNT(orden_trabajo_listado.idOT) 
 FROM orden_trabajo_listado 
 LEFT JOIN maquinas_listado ON maquinas_listado.idMaquina = orden_trabajo_listado.idMaquina 
 WHERE  orden_trabajo_listado.idSistema=clientes_listado.idSistema
 AND maquinas_listado.idCliente=clientes_listado.idCliente 
-AND orden_trabajo_listado.progSemana=".semana_actual()."   
-AND orden_trabajo_listado.progAno=".ano_actual()." 
+AND orden_trabajo_listado.progSemana='.semana_actual().'   
+AND orden_trabajo_listado.progAno='.ano_actual().' 
 LIMIT 1 ) AS CountOTSemanaCliente
 
 ,(SELECT COUNT(orden_trabajo_listado.idOT) 
@@ -31,9 +25,9 @@ FROM orden_trabajo_listado
 LEFT JOIN maquinas_listado ON maquinas_listado.idMaquina = orden_trabajo_listado.idMaquina 
 WHERE  orden_trabajo_listado.idSistema=clientes_listado.idSistema
 AND maquinas_listado.idCliente=clientes_listado.idCliente 
-AND orden_trabajo_listado.progSemana<".semana_actual()."    
-AND orden_trabajo_listado.progMes=".mes_actual()."   
-AND orden_trabajo_listado.progAno=".ano_actual()." 
+AND orden_trabajo_listado.progSemana<'.semana_actual().'    
+AND orden_trabajo_listado.progMes='.mes_actual().'   
+AND orden_trabajo_listado.progAno='.ano_actual().' 
 AND orden_trabajo_listado.idEstado=1  
 LIMIT 1 ) AS CountOTRetrasadaMes
 
@@ -42,9 +36,9 @@ FROM orden_trabajo_listado
 LEFT JOIN maquinas_listado ON maquinas_listado.idMaquina = orden_trabajo_listado.idMaquina 
 WHERE  orden_trabajo_listado.idSistema=clientes_listado.idSistema
 AND maquinas_listado.idCliente=clientes_listado.idCliente 
-AND orden_trabajo_listado.progSemana>".semana_actual()."    
-AND orden_trabajo_listado.progMes=".mes_actual()."   
-AND orden_trabajo_listado.progAno=".ano_actual()." 
+AND orden_trabajo_listado.progSemana>'.semana_actual().'    
+AND orden_trabajo_listado.progMes='.mes_actual().'   
+AND orden_trabajo_listado.progAno='.ano_actual().' 
 AND orden_trabajo_listado.idEstado=1  
 LIMIT 1 ) AS CountOTProgramadaMes
 
@@ -53,8 +47,8 @@ FROM orden_trabajo_listado
 LEFT JOIN maquinas_listado ON maquinas_listado.idMaquina = orden_trabajo_listado.idMaquina 
 WHERE  orden_trabajo_listado.idSistema=clientes_listado.idSistema
 AND maquinas_listado.idCliente=clientes_listado.idCliente   
-AND orden_trabajo_listado.progMes=".mes_actual()."   
-AND orden_trabajo_listado.progAno=".ano_actual()." 
+AND orden_trabajo_listado.progMes='.mes_actual().'   
+AND orden_trabajo_listado.progAno='.ano_actual().' 
 AND orden_trabajo_listado.idEstado=2  
 LIMIT 1 ) AS CountOTFinalizadaMes
 
@@ -63,8 +57,8 @@ FROM orden_trabajo_listado
 LEFT JOIN maquinas_listado ON maquinas_listado.idMaquina = orden_trabajo_listado.idMaquina 
 WHERE  orden_trabajo_listado.idSistema=clientes_listado.idSistema
 AND maquinas_listado.idCliente=clientes_listado.idCliente 
-AND orden_trabajo_listado.progSemana<".semana_actual()."     
-AND orden_trabajo_listado.progAno=".ano_actual()." 
+AND orden_trabajo_listado.progSemana<'.semana_actual().'     
+AND orden_trabajo_listado.progAno='.ano_actual().' 
 AND orden_trabajo_listado.idEstado=1  
 LIMIT 1 ) AS CountOTRetrasadaTotal
 
@@ -73,8 +67,8 @@ FROM orden_trabajo_listado
 LEFT JOIN maquinas_listado ON maquinas_listado.idMaquina = orden_trabajo_listado.idMaquina 
 WHERE  orden_trabajo_listado.idSistema=clientes_listado.idSistema
 AND maquinas_listado.idCliente=clientes_listado.idCliente 
-AND orden_trabajo_listado.progSemana>".semana_actual()."      
-AND orden_trabajo_listado.progAno=".ano_actual()." 
+AND orden_trabajo_listado.progSemana>'.semana_actual().'      
+AND orden_trabajo_listado.progAno='.ano_actual().' 
 AND orden_trabajo_listado.idEstado=1  
 LIMIT 1 ) AS CountOTProgramadaTotal
 
@@ -83,7 +77,7 @@ FROM orden_trabajo_listado
 LEFT JOIN maquinas_listado ON maquinas_listado.idMaquina = orden_trabajo_listado.idMaquina 
 WHERE  orden_trabajo_listado.idSistema=clientes_listado.idSistema
 AND maquinas_listado.idCliente=clientes_listado.idCliente     
-AND orden_trabajo_listado.progAno=".ano_actual()." 
+AND orden_trabajo_listado.progAno='.ano_actual().' 
 AND orden_trabajo_listado.idEstado=2  
 LIMIT 1 ) AS CountOTFinalizadaTotal
 
@@ -94,8 +88,8 @@ LEFT JOIN maquinas_listado     ON maquinas_listado.idMaquina   = analisis_listad
 WHERE analisis_listado.idSistema=clientes_listado.idSistema
 AND analisis_listado_alertas.nivel=1 
 AND maquinas_listado.idCliente=clientes_listado.idCliente 
-AND analisis_listado_alertas.Creacion_mes=".mes_actual()."   
-AND analisis_listado_alertas.Creacion_ano=".ano_actual()."  
+AND analisis_listado_alertas.Creacion_mes='.mes_actual().'   
+AND analisis_listado_alertas.Creacion_ano='.ano_actual().'  
 LIMIT 1 ) AS CountAlertaNivelCliente_1
 
 ,(SELECT COUNT(analisis_listado_alertas.idAnalisisAlertas) 
@@ -105,8 +99,8 @@ LEFT JOIN maquinas_listado     ON maquinas_listado.idMaquina   = analisis_listad
 WHERE analisis_listado.idSistema=clientes_listado.idSistema
 AND analisis_listado_alertas.nivel=2 
 AND maquinas_listado.idCliente=clientes_listado.idCliente 
-AND analisis_listado_alertas.Creacion_mes=".mes_actual()."   
-AND analisis_listado_alertas.Creacion_ano=".ano_actual()."  
+AND analisis_listado_alertas.Creacion_mes='.mes_actual().'   
+AND analisis_listado_alertas.Creacion_ano='.ano_actual().'  
 LIMIT 1 ) AS CountAlertaNivelCliente_2
 
 ,(SELECT COUNT(analisis_listado_alertas.idAnalisisAlertas) 
@@ -116,45 +110,22 @@ LEFT JOIN maquinas_listado     ON maquinas_listado.idMaquina   = analisis_listad
 WHERE analisis_listado.idSistema=clientes_listado.idSistema
 AND analisis_listado_alertas.nivel=3
 AND maquinas_listado.idCliente=clientes_listado.idCliente 
-AND analisis_listado_alertas.Creacion_mes=".mes_actual()."   
-AND analisis_listado_alertas.Creacion_ano=".ano_actual()."  
-LIMIT 1 ) AS CountAlertaNivelCliente_3
-
-FROM `clientes_listado`
+AND analisis_listado_alertas.Creacion_mes='.mes_actual().'   
+AND analisis_listado_alertas.Creacion_ano='.ano_actual().'  
+LIMIT 1 ) AS CountAlertaNivelCliente_3';
+$SIS_join  = '
 LEFT JOIN `core_estados`   ON core_estados.idEstado       = clientes_listado.idEstado
-LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema     = clientes_listado.idSistema
-".$z."
-ORDER BY clientes_listado.idCliente ASC
-
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrClientes,$row );
-}
-
+LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema     = clientes_listado.idSistema';
+$SIS_where = 'clientes_listado.idCliente!=0';//Variable de busqueda
+$SIS_where.= ' AND clientes_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];//sistema
+$SIS_order = 'clientes_listado.idCliente ASC';
+$arrClientes = array();
+$arrClientes = db_select_array (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrClientes');
 
 
 echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load(\'current\', {\'packages\':[\'corechart\']});</script>';		
-	
-	
-	
-	
-	
-	
-	
+
 	echo '<div class="tab-pane fade" id="Menu_tab_4">
 			<div class="col-sm-12">
 

@@ -61,12 +61,10 @@ require_once '0_validate_user_1.php';
 	
 	if ( !empty($_POST['idArchivoTipo']) )         $idArchivoTipo            = $_POST['idArchivoTipo'];
 	
-	
 	if ( !empty($_POST['oldidProducto']) )         $oldidProducto            = $_POST['oldidProducto'];
 	if ( !empty($_POST['Observacion']) )           $Observacion              = $_POST['Observacion'];
 	if ( !empty($_POST['Creacion_hora']) )         $Creacion_hora            = $_POST['Creacion_hora'];
 	if ( !empty($_POST['cloneConsolidacion']) )    $cloneConsolidacion       = $_POST['cloneConsolidacion'];
-	
 						
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -131,6 +129,17 @@ require_once '0_validate_user_1.php';
 		}
 	}	
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($CTNNombreCompañia) && $CTNNombreCompañia != ''){ $CTNNombreCompañia = EstandarizarInput($CTNNombreCompañia); }
+	if(isset($ChoferNombreRut) && $ChoferNombreRut != ''){     $ChoferNombreRut   = EstandarizarInput($ChoferNombreRut); }
+	if(isset($PatenteCamion) && $PatenteCamion != ''){         $PatenteCamion     = EstandarizarInput($PatenteCamion); }
+	if(isset($PatenteCarro) && $PatenteCarro != ''){           $PatenteCarro      = EstandarizarInput($PatenteCarro); }
+	if(isset($Observaciones) && $Observaciones != ''){         $Observaciones     = EstandarizarInput($Observaciones); }
+	if(isset($NPallet) && $NPallet != ''){                     $NPallet           = EstandarizarInput($NPallet); }
+	if(isset($NSerieSensor) && $NSerieSensor != ''){           $NSerieSensor      = EstandarizarInput($NSerieSensor); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($CTNNombreCompañia)&&contar_palabras_censuradas($CTNNombreCompañia)!=0){  $error['CTNNombreCompañia'] = 'error/Edita CTN Nombre Compañia, contiene palabras no permitidas'; }	
@@ -146,8 +155,6 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-
-
 /*******************************************************************************************************************/
 /*                                                                                                                 */
 /*                                                       INGRESOS                                                  */
@@ -954,109 +961,82 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Se guardan los datos basicos
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema'] != ''){             $a  = "'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema']."'" ;    }else{$a  = "''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idUsuario']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idUsuario'] != ''){             $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idUsuario']."'" ;   }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['fecha_auto']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['fecha_auto'] != ''){           $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['fecha_auto']."'" ;  }else{$a .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema'] != ''){             $SIS_data  = "'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema']."'" ;    }else{$SIS_data  = "''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idUsuario']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idUsuario'] != ''){             $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idUsuario']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['fecha_auto']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['fecha_auto'] != ''){           $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['fecha_auto']."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha'] != ''){  
-					$a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']."'" ;  
-					$a .= ",'".fecha2NSemana($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha'])."'" ;
-					$a .= ",'".fecha2NMes($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha'])."'" ;
-					$a .= ",'".fecha2Ano($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']."'" ;  
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".fecha2NMes($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".fecha2Ano($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha'])."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia'] != ''){          $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme'] != ''){                            $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme']."'" ;              }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaInicioEmbarque']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaInicioEmbarque'] != ''){      $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaInicioEmbarque']."'" ;   }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraInicioCarga']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraInicioCarga'] != ''){              $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraInicioCarga']."'" ;       }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaTerminoEmbarque']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaTerminoEmbarque'] != ''){    $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaTerminoEmbarque']."'" ;  }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraTerminoCarga']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraTerminoCarga'] != ''){            $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraTerminoCarga']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho'] != ''){            $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria'] != ''){                      $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria']."'" ;           }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto'] != ''){                        $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto']."'" ;            }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas'] != ''){                  $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo'] != ''){                  $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera'] != ''){                          $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera']."'" ;             }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoEmbarque']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoEmbarque'] != ''){            $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoEmbarque']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoDestino']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoDestino'] != ''){              $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoDestino']."'" ;       }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado'] != ''){                          $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado']."'" ;             }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPais']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPais'] != ''){                                $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPais']."'" ;                }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idRecibidor']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idRecibidor'] != ''){                      $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idRecibidor']."'" ;           }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idEmpresaTransporte']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idEmpresaTransporte'] != ''){      $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idEmpresaTransporte']."'" ;   }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut'] != ''){              $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut']."'" ;       }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion'] != ''){                  $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro'] != ''){                    $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']."'" ;          }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion'] != ''){                      $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']."'" ;           }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado'] != ''){                          $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado']."'" ;             }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint'] != ''){                          $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint']."'" ;             }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TVentilacion']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TVentilacion'] != ''){                    $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TVentilacion']."'" ;          }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente'] != ''){                          $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente']."'" ;             }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NumeroSello']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NumeroSello'] != ''){                      $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NumeroSello']."'" ;           }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInspector']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInspector'] != ''){                      $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInspector']."'" ;           }else{$a .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Observaciones']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Observaciones'] != ''){                  $a .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Observaciones']."'" ;         }else{$a .= ",''";}
-				$a .= ",'1'";
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia'] != ''){          $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme'] != ''){                            $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme']."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaInicioEmbarque']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaInicioEmbarque'] != ''){      $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaInicioEmbarque']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraInicioCarga']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraInicioCarga'] != ''){              $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraInicioCarga']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaTerminoEmbarque']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaTerminoEmbarque'] != ''){    $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaTerminoEmbarque']."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraTerminoCarga']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraTerminoCarga'] != ''){            $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraTerminoCarga']."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho'] != ''){            $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho']."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria'] != ''){                      $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria']."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto'] != ''){                        $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto']."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas'] != ''){                  $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo'] != ''){                  $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera'] != ''){                          $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera']."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoEmbarque']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoEmbarque'] != ''){            $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoEmbarque']."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoDestino']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoDestino'] != ''){              $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoDestino']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado'] != ''){                          $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idMercado']."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPais']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPais'] != ''){                                $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPais']."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idRecibidor']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idRecibidor'] != ''){                      $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idRecibidor']."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idEmpresaTransporte']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idEmpresaTransporte'] != ''){      $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idEmpresaTransporte']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut'] != ''){              $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion'] != ''){                  $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro'] != ''){                    $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion'] != ''){                      $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado'] != ''){                          $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado']."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint'] != ''){                          $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint']."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TVentilacion']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TVentilacion'] != ''){                    $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TVentilacion']."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente'] != ''){                          $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente']."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NumeroSello']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NumeroSello'] != ''){                      $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NumeroSello']."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInspector']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInspector'] != ''){                      $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInspector']."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Observaciones']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Observaciones'] != ''){                  $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Observaciones']."'" ;         }else{$SIS_data .= ",''";}
+				$SIS_data .= ",'1'";
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_shipping_consolidacion` (idSistema, idUsuario, fecha_auto, 
+				$SIS_columns = 'idSistema, idUsuario, fecha_auto, 
 				Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,CTNNombreCompañia, NInforme,
 				FechaInicioEmbarque, HoraInicioCarga, FechaTerminoEmbarque, HoraTerminoCarga, idPlantaDespacho,
 				idCategoria, idProducto, CantidadCajas, idInstructivo, idNaviera, idPuertoEmbarque, idPuertoDestino, 
 				idMercado,idPais, idRecibidor, idEmpresaTransporte, ChoferNombreRut, PatenteCamion, PatenteCarro, idCondicion, 
-				idSellado,TSetPoint, TVentilacion, TAmbiente, NumeroSello, idInspector, Observaciones, idEstado ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				idSellado,TSetPoint, TVentilacion, TAmbiente, NumeroSello, idInspector, Observaciones, idEstado';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_shipping_consolidacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-		
+				if($ultimo_id!=0){
 					/*********************************************************************/		
 					//Se guardan los datos de las estibas	
 					if(isset($_SESSION['cross_shipping_consolidacion_estibas'][$randompass])){		
 						foreach ($_SESSION['cross_shipping_consolidacion_estibas'][$randompass] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                           $a  = "'".$ultimo_id."'" ;                          }else{$a  = "''";}
-							if(isset($producto['idEstiba']) && $producto['idEstiba'] != ''){                     $a .= ",'".$producto['idEstiba']."'" ;              }else{$a .= ",''";}
-							if(isset($producto['idEstibaUbicacion']) && $producto['idEstibaUbicacion'] != ''){   $a .= ",'".$producto['idEstibaUbicacion']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['idPosicion']) && $producto['idPosicion'] != ''){                 $a .= ",'".$producto['idPosicion']."'" ;            }else{$a .= ",''";}
-							if(isset($producto['idEnvase']) && $producto['idEnvase'] != ''){                     $a .= ",'".$producto['idEnvase']."'" ;              }else{$a .= ",''";}
-							if(isset($producto['NPallet']) && $producto['NPallet'] != ''){                       $a .= ",'".$producto['NPallet']."'" ;               }else{$a .= ",''";}
-							if(isset($producto['Temperatura']) && $producto['Temperatura'] != ''){               $a .= ",'".$producto['Temperatura']."'" ;           }else{$a .= ",''";}
-							if(isset($producto['idTermografo']) && $producto['idTermografo'] != ''){             $a .= ",'".$producto['idTermografo']."'" ;          }else{$a .= ",''";}
-							if(isset($producto['NSerieSensor']) && $producto['NSerieSensor'] != ''){             $a .= ",'".$producto['NSerieSensor']."'" ;          }else{$a .= ",''";}
-							
+							if(isset($ultimo_id) && $ultimo_id != ''){                                           $SIS_data  = "'".$ultimo_id."'" ;                          }else{$SIS_data  = "''";}
+							if(isset($producto['idEstiba']) && $producto['idEstiba'] != ''){                     $SIS_data .= ",'".$producto['idEstiba']."'" ;              }else{$SIS_data .= ",''";}
+							if(isset($producto['idEstibaUbicacion']) && $producto['idEstibaUbicacion'] != ''){   $SIS_data .= ",'".$producto['idEstibaUbicacion']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['idPosicion']) && $producto['idPosicion'] != ''){                 $SIS_data .= ",'".$producto['idPosicion']."'" ;            }else{$SIS_data .= ",''";}
+							if(isset($producto['idEnvase']) && $producto['idEnvase'] != ''){                     $SIS_data .= ",'".$producto['idEnvase']."'" ;              }else{$SIS_data .= ",''";}
+							if(isset($producto['NPallet']) && $producto['NPallet'] != ''){                       $SIS_data .= ",'".$producto['NPallet']."'" ;               }else{$SIS_data .= ",''";}
+							if(isset($producto['Temperatura']) && $producto['Temperatura'] != ''){               $SIS_data .= ",'".$producto['Temperatura']."'" ;           }else{$SIS_data .= ",''";}
+							if(isset($producto['idTermografo']) && $producto['idTermografo'] != ''){             $SIS_data .= ",'".$producto['idTermografo']."'" ;          }else{$SIS_data .= ",''";}
+							if(isset($producto['NSerieSensor']) && $producto['NSerieSensor'] != ''){             $SIS_data .= ",'".$producto['NSerieSensor']."'" ;          }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `cross_shipping_consolidacion_estibas` (idConsolidacion,idEstiba,
-							idEstibaUbicacion, idPosicion, idEnvase, NPallet, Temperatura, idTermografo, NSerieSensor) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idConsolidacion,idEstiba, idEstibaUbicacion, idPosicion, idEnvase, NPallet, Temperatura, idTermografo, NSerieSensor';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_shipping_consolidacion_estibas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -1066,26 +1046,14 @@ require_once '0_validate_user_1.php';
 							foreach ($productos as $producto) {
 								if(isset($producto['idFile'])&&$producto['idFile']!=0){
 									//filtros
-									if(isset($ultimo_id) && $ultimo_id != ''){                                  $a  = "'".$ultimo_id."'" ;                   }else{$a  = "''";}
-									if(isset($producto['idArchivoTipo']) && $producto['idArchivoTipo'] != ''){  $a .= ",'".$producto['idArchivoTipo']."'" ;  }else{$a .= ",''";}
-									if(isset($producto['Nombre']) && $producto['Nombre'] != ''){                $a .= ",'".$producto['Nombre']."'" ;         }else{$a .= ",''";}
+									if(isset($ultimo_id) && $ultimo_id != ''){                                  $SIS_data  = "'".$ultimo_id."'" ;                   }else{$SIS_data  = "''";}
+									if(isset($producto['idArchivoTipo']) && $producto['idArchivoTipo'] != ''){  $SIS_data .= ",'".$producto['idArchivoTipo']."'" ;  }else{$SIS_data .= ",''";}
+									if(isset($producto['Nombre']) && $producto['Nombre'] != ''){                $SIS_data .= ",'".$producto['Nombre']."'" ;         }else{$SIS_data .= ",''";}
 									
 									// inserto los datos de registro en la db
-									$query  = "INSERT INTO `cross_shipping_consolidacion_archivo` (idConsolidacion, idArchivoTipo,Nombre) 
-									VALUES (".$a.")";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									$SIS_columns = 'idConsolidacion, idArchivoTipo,Nombre';
+									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_shipping_consolidacion_archivo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 								}
 							}
 						}
@@ -1165,16 +1133,16 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idEstado='3'" ;
-				if(isset($Observacion) && $Observacion != ''){        $a .= ",Observacion='".$Observacion."'" ; }
-				if(isset($idUsuario) && $idUsuario != ''){            $a .= ",idAprobador='".$idUsuario."'" ;   }
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $a .= ",Aprobacion_Fecha='".$Creacion_fecha."'" ;   }
-				if(isset($Creacion_hora) && $Creacion_hora != ''){    $a .= ",Aprobacion_Hora='".$Creacion_hora."'" ;   }
+				$SIS_data = "idEstado='3'" ;
+				if(isset($Observacion) && $Observacion != ''){        $SIS_data .= ",Observacion='".$Observacion."'" ; }
+				if(isset($idUsuario) && $idUsuario != ''){            $SIS_data .= ",idAprobador='".$idUsuario."'" ;   }
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $SIS_data .= ",Aprobacion_Fecha='".$Creacion_fecha."'" ;   }
+				if(isset($Creacion_hora) && $Creacion_hora != ''){    $SIS_data .= ",Aprobacion_Hora='".$Creacion_hora."'" ;   }
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion_archivos', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_shipping_consolidacion_archivos', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				
 				header( 'Location: '.$location.'&edited=true' );
@@ -1189,15 +1157,15 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idEstado='4'" ;
-				if(isset($Observacion) && $Observacion != ''){        $a .= ",Observacion='".$Observacion."'" ; }
-				if(isset($idUsuario) && $idUsuario != ''){            $a .= ",idAprobador='".$idUsuario."'" ;   }
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $a .= ",Aprobacion_Fecha='".$Creacion_fecha."'" ;   }
-				if(isset($Creacion_hora) && $Creacion_hora != ''){    $a .= ",Aprobacion_Hora='".$Creacion_hora."'" ;   }
+				$SIS_data = "idEstado='4'" ;
+				if(isset($Observacion) && $Observacion != ''){        $SIS_data .= ",Observacion='".$Observacion."'" ; }
+				if(isset($idUsuario) && $idUsuario != ''){            $SIS_data .= ",idAprobador='".$idUsuario."'" ;   }
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $SIS_data .= ",Aprobacion_Fecha='".$Creacion_fecha."'" ;   }
+				if(isset($Creacion_hora) && $Creacion_hora != ''){    $SIS_data .= ",Aprobacion_Hora='".$Creacion_hora."'" ;   }
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				
 				
@@ -1236,27 +1204,14 @@ require_once '0_validate_user_1.php';
 				
 				/**********************************************************/
 				//Inserto la aprobacion en la tabla de aprobaciones
-				if(isset($idConsolidacion) && $idConsolidacion != ''){  $a  = "'".$idConsolidacion."'" ;   }else{$a  ="''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $a .= ",'".$Creacion_fecha."'" ;   }else{$a .=",''";}
-				if(isset($Creacion_hora) && $Creacion_hora != ''){      $a .= ",'".$Creacion_hora."'" ;    }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
+				if(isset($idConsolidacion) && $idConsolidacion != ''){  $SIS_data  = "'".$idConsolidacion."'" ;   }else{$SIS_data  = "''";}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $SIS_data .= ",'".$Creacion_fecha."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Creacion_hora) && $Creacion_hora != ''){      $SIS_data .= ",'".$Creacion_hora."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_shipping_consolidacion_aprobaciones` (idConsolidacion, Creacion_fecha, Creacion_hora, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idConsolidacion, Creacion_fecha, Creacion_hora, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_shipping_consolidacion_aprobaciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/**********************************************************/
 				//Reviso si las aprobaciones igualan a los aprobadores
@@ -1276,10 +1231,10 @@ require_once '0_validate_user_1.php';
 				//Si por lo menos hay una aprobacion
 				if($napro_true>=1){
 					//Filtros
-					$a = "idEstado='2'" ;
+					$SIS_data = "idEstado='2'" ;
 					/*******************************************************/
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$_GET['consolidacion_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$_GET['consolidacion_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					
 					/*********************************************************************/
@@ -1373,11 +1328,11 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idEstado='2'" ;
+				$SIS_data = "idEstado='2'" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$_GET['consolidacion_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$_GET['consolidacion_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 					
 				
@@ -1451,55 +1406,55 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idConsolidacion='".$idConsolidacion."'" ;
-				if(isset($idSistema) && $idSistema != ''){     $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){     $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($fecha_auto) && $fecha_auto != ''){   $a .= ",fecha_auto='".$fecha_auto."'" ;}
+				$SIS_data = "idConsolidacion='".$idConsolidacion."'" ;
+				if(isset($idSistema) && $idSistema != ''){     $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){     $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($fecha_auto) && $fecha_auto != ''){   $SIS_data .= ",fecha_auto='".$fecha_auto."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){      
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;  
-					$a .= ",Creacion_Semana='".fecha2NSemana($Creacion_fecha)."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;  
+					$SIS_data .= ",Creacion_Semana='".fecha2NSemana($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				
 				}
-				if(isset($CTNNombreCompañia) && $CTNNombreCompañia != ''){            $a .= ",CTNNombreCompañia='".$CTNNombreCompañia."'" ;}
-				if(isset($NInforme) && $NInforme != ''){                              $a .= ",NInforme='".$NInforme."'" ;}
-				if(isset($FechaInicioEmbarque) && $FechaInicioEmbarque != ''){        $a .= ",FechaInicioEmbarque='".$FechaInicioEmbarque."'" ;}
-				if(isset($HoraInicioCarga) && $HoraInicioCarga != ''){                $a .= ",HoraInicioCarga='".$HoraInicioCarga."'" ;}
-				if(isset($FechaTerminoEmbarque) && $FechaTerminoEmbarque != ''){      $a .= ",FechaTerminoEmbarque='".$FechaTerminoEmbarque."'" ;}
-				if(isset($HoraTerminoCarga) && $HoraTerminoCarga != ''){              $a .= ",HoraTerminoCarga='".$HoraTerminoCarga."'" ;}
-				if(isset($idPlantaDespacho) && $idPlantaDespacho != ''){              $a .= ",idPlantaDespacho='".$idPlantaDespacho."'" ;}
-				if(isset($idCategoria) && $idCategoria != ''){                        $a .= ",idCategoria='".$idCategoria."'" ;}
-				if(isset($idProducto) && $idProducto != ''){                          $a .= ",idProducto='".$idProducto."'" ;}
-				if(isset($CantidadCajas) && $CantidadCajas != ''){                    $a .= ",CantidadCajas='".$CantidadCajas."'" ;}
-				if(isset($idInstructivo) && $idInstructivo != ''){                    $a .= ",idInstructivo='".$idInstructivo."'" ;}
-				if(isset($idNaviera) && $idNaviera != ''){                            $a .= ",idNaviera='".$idNaviera."'" ;}
-				if(isset($idPuertoEmbarque) && $idPuertoEmbarque != ''){              $a .= ",idPuertoEmbarque='".$idPuertoEmbarque."'" ;}
-				if(isset($idPuertoDestino) && $idPuertoDestino != ''){                $a .= ",idPuertoDestino='".$idPuertoDestino."'" ;}
-				if(isset($idMercado) && $idMercado != ''){                            $a .= ",idMercado='".$idMercado."'" ;}
-				if(isset($idPais) && $idPais != ''){                                  $a .= ",idPais='".$idPais."'" ;}
-				if(isset($idRecibidor) && $idRecibidor != ''){                        $a .= ",idRecibidor='".$idRecibidor."'" ;}
-				if(isset($idEmpresaTransporte) && $idEmpresaTransporte != ''){        $a .= ",idEmpresaTransporte='".$idEmpresaTransporte."'" ;}
-				if(isset($ChoferNombreRut) && $ChoferNombreRut != ''){                $a .= ",ChoferNombreRut='".$ChoferNombreRut."'" ;}
-				if(isset($PatenteCamion) && $PatenteCamion != ''){                    $a .= ",PatenteCamion='".$PatenteCamion."'" ;}
-				if(isset($PatenteCarro) && $PatenteCarro != ''){                      $a .= ",PatenteCarro='".$PatenteCarro."'" ;}
-				if(isset($idCondicion) && $idCondicion != ''){                        $a .= ",idCondicion='".$idCondicion."'" ;}
-				if(isset($idSellado) && $idSellado != ''){                            $a .= ",idSellado='".$idSellado."'" ;}
-				if(isset($TSetPoint) && $TSetPoint != ''){                            $a .= ",TSetPoint='".$TSetPoint."'" ;}
-				if(isset($TVentilacion) && $TVentilacion != ''){                      $a .= ",TVentilacion='".$TVentilacion."'" ;}
-				if(isset($TAmbiente) && $TAmbiente != ''){                            $a .= ",TAmbiente='".$TAmbiente."'" ;}
-				if(isset($NumeroSello) && $NumeroSello != ''){                        $a .= ",NumeroSello='".$NumeroSello."'" ;}
-				if(isset($idInspector) && $idInspector != ''){                        $a .= ",idInspector='".$idInspector."'" ;}
-				if(isset($Observaciones) && $Observaciones != ''){                    $a .= ",Observaciones='".$Observaciones."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                              $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Observacion) && $Observacion != ''){                        $a .= ",Observacion='".$Observacion."'" ;}
-				if(isset($idAprobador) && $idAprobador != ''){                        $a .= ",idAprobador='".$idAprobador."'" ;}
-				if(isset($Aprobacion_Fecha) && $Aprobacion_Fecha != ''){              $a .= ",Aprobacion_Fecha='".$Aprobacion_Fecha."'" ;}
-				if(isset($Aprobacion_Hora) && $Aprobacion_Hora != ''){                $a .= ",Aprobacion_Hora='".$Aprobacion_Hora."'" ;}
+				if(isset($CTNNombreCompañia) && $CTNNombreCompañia != ''){            $SIS_data .= ",CTNNombreCompañia='".$CTNNombreCompañia."'" ;}
+				if(isset($NInforme) && $NInforme != ''){                              $SIS_data .= ",NInforme='".$NInforme."'" ;}
+				if(isset($FechaInicioEmbarque) && $FechaInicioEmbarque != ''){        $SIS_data .= ",FechaInicioEmbarque='".$FechaInicioEmbarque."'" ;}
+				if(isset($HoraInicioCarga) && $HoraInicioCarga != ''){                $SIS_data .= ",HoraInicioCarga='".$HoraInicioCarga."'" ;}
+				if(isset($FechaTerminoEmbarque) && $FechaTerminoEmbarque != ''){      $SIS_data .= ",FechaTerminoEmbarque='".$FechaTerminoEmbarque."'" ;}
+				if(isset($HoraTerminoCarga) && $HoraTerminoCarga != ''){              $SIS_data .= ",HoraTerminoCarga='".$HoraTerminoCarga."'" ;}
+				if(isset($idPlantaDespacho) && $idPlantaDespacho != ''){              $SIS_data .= ",idPlantaDespacho='".$idPlantaDespacho."'" ;}
+				if(isset($idCategoria) && $idCategoria != ''){                        $SIS_data .= ",idCategoria='".$idCategoria."'" ;}
+				if(isset($idProducto) && $idProducto != ''){                          $SIS_data .= ",idProducto='".$idProducto."'" ;}
+				if(isset($CantidadCajas) && $CantidadCajas != ''){                    $SIS_data .= ",CantidadCajas='".$CantidadCajas."'" ;}
+				if(isset($idInstructivo) && $idInstructivo != ''){                    $SIS_data .= ",idInstructivo='".$idInstructivo."'" ;}
+				if(isset($idNaviera) && $idNaviera != ''){                            $SIS_data .= ",idNaviera='".$idNaviera."'" ;}
+				if(isset($idPuertoEmbarque) && $idPuertoEmbarque != ''){              $SIS_data .= ",idPuertoEmbarque='".$idPuertoEmbarque."'" ;}
+				if(isset($idPuertoDestino) && $idPuertoDestino != ''){                $SIS_data .= ",idPuertoDestino='".$idPuertoDestino."'" ;}
+				if(isset($idMercado) && $idMercado != ''){                            $SIS_data .= ",idMercado='".$idMercado."'" ;}
+				if(isset($idPais) && $idPais != ''){                                  $SIS_data .= ",idPais='".$idPais."'" ;}
+				if(isset($idRecibidor) && $idRecibidor != ''){                        $SIS_data .= ",idRecibidor='".$idRecibidor."'" ;}
+				if(isset($idEmpresaTransporte) && $idEmpresaTransporte != ''){        $SIS_data .= ",idEmpresaTransporte='".$idEmpresaTransporte."'" ;}
+				if(isset($ChoferNombreRut) && $ChoferNombreRut != ''){                $SIS_data .= ",ChoferNombreRut='".$ChoferNombreRut."'" ;}
+				if(isset($PatenteCamion) && $PatenteCamion != ''){                    $SIS_data .= ",PatenteCamion='".$PatenteCamion."'" ;}
+				if(isset($PatenteCarro) && $PatenteCarro != ''){                      $SIS_data .= ",PatenteCarro='".$PatenteCarro."'" ;}
+				if(isset($idCondicion) && $idCondicion != ''){                        $SIS_data .= ",idCondicion='".$idCondicion."'" ;}
+				if(isset($idSellado) && $idSellado != ''){                            $SIS_data .= ",idSellado='".$idSellado."'" ;}
+				if(isset($TSetPoint) && $TSetPoint != ''){                            $SIS_data .= ",TSetPoint='".$TSetPoint."'" ;}
+				if(isset($TVentilacion) && $TVentilacion != ''){                      $SIS_data .= ",TVentilacion='".$TVentilacion."'" ;}
+				if(isset($TAmbiente) && $TAmbiente != ''){                            $SIS_data .= ",TAmbiente='".$TAmbiente."'" ;}
+				if(isset($NumeroSello) && $NumeroSello != ''){                        $SIS_data .= ",NumeroSello='".$NumeroSello."'" ;}
+				if(isset($idInspector) && $idInspector != ''){                        $SIS_data .= ",idInspector='".$idInspector."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){                    $SIS_data .= ",Observaciones='".$Observaciones."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                              $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Observacion) && $Observacion != ''){                        $SIS_data .= ",Observacion='".$Observacion."'" ;}
+				if(isset($idAprobador) && $idAprobador != ''){                        $SIS_data .= ",idAprobador='".$idAprobador."'" ;}
+				if(isset($Aprobacion_Fecha) && $Aprobacion_Fecha != ''){              $SIS_data .= ",Aprobacion_Fecha='".$Aprobacion_Fecha."'" ;}
+				if(isset($Aprobacion_Hora) && $Aprobacion_Hora != ''){                $SIS_data .= ",Aprobacion_Hora='".$Aprobacion_Hora."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$idConsolidacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -1522,38 +1477,26 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idConsolidacion) && $idConsolidacion != ''){          $a  = "'".$idConsolidacion."'" ;       }else{$a  ="''";}
-				if(isset($idEstiba) && $idEstiba != ''){                        $a .= ",'".$idEstiba."'" ;             }else{$a .=",''";}
-				if(isset($idEstibaUbicacion) && $idEstibaUbicacion != ''){      $a .= ",'".$idEstibaUbicacion."'" ;    }else{$a .=",''";}
-				if(isset($idPosicion) && $idPosicion != ''){                    $a .= ",'".$idPosicion."'" ;           }else{$a .=",''";}
-				if(isset($idEnvase) && $idEnvase != ''){                        $a .= ",'".$idEnvase."'" ;             }else{$a .=",''";}
-				if(isset($NPallet) && $NPallet != ''){                          $a .= ",'".$NPallet."'" ;              }else{$a .=",''";}
-				if(isset($Temperatura) && $Temperatura != ''){                  $a .= ",'".$Temperatura."'" ;          }else{$a .=",''";}
-				if(isset($idTermografo) && $idTermografo != ''){                $a .= ",'".$idTermografo."'" ;         }else{$a .=",''";}
-				if(isset($NSerieSensor) && $NSerieSensor != ''){                $a .= ",'".$NSerieSensor."'" ;         }else{$a .=",''";}
+				if(isset($idConsolidacion) && $idConsolidacion != ''){          $SIS_data  = "'".$idConsolidacion."'" ;       }else{$SIS_data  = "''";}
+				if(isset($idEstiba) && $idEstiba != ''){                        $SIS_data .= ",'".$idEstiba."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($idEstibaUbicacion) && $idEstibaUbicacion != ''){      $SIS_data .= ",'".$idEstibaUbicacion."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idPosicion) && $idPosicion != ''){                    $SIS_data .= ",'".$idPosicion."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idEnvase) && $idEnvase != ''){                        $SIS_data .= ",'".$idEnvase."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($NPallet) && $NPallet != ''){                          $SIS_data .= ",'".$NPallet."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($Temperatura) && $Temperatura != ''){                  $SIS_data .= ",'".$Temperatura."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($idTermografo) && $idTermografo != ''){                $SIS_data .= ",'".$idTermografo."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($NSerieSensor) && $NSerieSensor != ''){                $SIS_data .= ",'".$NSerieSensor."'" ;         }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_shipping_consolidacion_estibas` (idConsolidacion, idEstiba, idEstibaUbicacion,
-				idPosicion, idEnvase, NPallet, Temperatura, idTermografo, NSerieSensor ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idConsolidacion, idEstiba, idEstibaUbicacion,
+				idPosicion, idEnvase, NPallet, Temperatura, idTermografo, NSerieSensor';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_shipping_consolidacion_estibas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 				
 			}
@@ -1568,20 +1511,20 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idEstibaListado='".$idEstibaListado."'" ;
-				if(isset($idConsolidacion) && $idConsolidacion != ''){       $a .= ",idConsolidacion='".$idConsolidacion."'" ;}
-				if(isset($idEstiba) && $idEstiba != ''){                     $a .= ",idEstiba='".$idEstiba."'" ;}
-				if(isset($idEstibaUbicacion) && $idEstibaUbicacion != ''){   $a .= ",idEstibaUbicacion='".$idEstibaUbicacion."'" ;}
-				if(isset($idPosicion) && $idPosicion != ''){                 $a .= ",idPosicion='".$idPosicion."'" ;}
-				if(isset($idEnvase) && $idEnvase != ''){                     $a .= ",idEnvase='".$idEnvase."'" ;}
-				if(isset($NPallet) && $NPallet != ''){                       $a .= ",NPallet='".$NPallet."'" ;}
-				if(isset($Temperatura) && $Temperatura != ''){               $a .= ",Temperatura='".$Temperatura."'" ;}
-				if(isset($idTermografo) && $idTermografo != ''){             $a .= ",idTermografo='".$idTermografo."'" ;}
-				if(isset($NSerieSensor) && $NSerieSensor != ''){             $a .= ",NSerieSensor='".$NSerieSensor."'" ;}
+				$SIS_data = "idEstibaListado='".$idEstibaListado."'" ;
+				if(isset($idConsolidacion) && $idConsolidacion != ''){       $SIS_data .= ",idConsolidacion='".$idConsolidacion."'" ;}
+				if(isset($idEstiba) && $idEstiba != ''){                     $SIS_data .= ",idEstiba='".$idEstiba."'" ;}
+				if(isset($idEstibaUbicacion) && $idEstibaUbicacion != ''){   $SIS_data .= ",idEstibaUbicacion='".$idEstibaUbicacion."'" ;}
+				if(isset($idPosicion) && $idPosicion != ''){                 $SIS_data .= ",idPosicion='".$idPosicion."'" ;}
+				if(isset($idEnvase) && $idEnvase != ''){                     $SIS_data .= ",idEnvase='".$idEnvase."'" ;}
+				if(isset($NPallet) && $NPallet != ''){                       $SIS_data .= ",NPallet='".$NPallet."'" ;}
+				if(isset($Temperatura) && $Temperatura != ''){               $SIS_data .= ",Temperatura='".$Temperatura."'" ;}
+				if(isset($idTermografo) && $idTermografo != ''){             $SIS_data .= ",idTermografo='".$idTermografo."'" ;}
+				if(isset($NSerieSensor) && $NSerieSensor != ''){             $SIS_data .= ",NSerieSensor='".$NSerieSensor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion_estibas', 'idEstibaListado = "'.$idEstibaListado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_shipping_consolidacion_estibas', 'idEstibaListado = "'.$idEstibaListado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -1723,27 +1666,14 @@ require_once '0_validate_user_1.php';
 								//renombro archivo
 								$Nombre = $sufijo.$_FILES['exFile']['name'][$key];					
 								//filtros
-								if(isset($idConsolidacion) && $idConsolidacion != ''){  $a  = "'".$idConsolidacion."'" ;   }else{$a  ="''";}
-								if(isset($idArchivoTipo) && $idArchivoTipo != ''){      $a .= ",'".$idArchivoTipo."'" ;    }else{$a .=",''";}
-								if(isset($Nombre) && $Nombre != ''){                    $a .= ",'".$Nombre."'" ;           }else{$a .=",''";}
+								if(isset($idConsolidacion) && $idConsolidacion != ''){  $SIS_data  = "'".$idConsolidacion."'" ;   }else{$SIS_data  = "''";}
+								if(isset($idArchivoTipo) && $idArchivoTipo != ''){      $SIS_data .= ",'".$idArchivoTipo."'" ;    }else{$SIS_data .= ",''";}
+								if(isset($Nombre) && $Nombre != ''){                    $SIS_data .= ",'".$Nombre."'" ;           }else{$SIS_data .= ",''";}
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `cross_shipping_consolidacion_archivo` (idConsolidacion, idArchivoTipo, Nombre ) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si no ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+								$SIS_columns = 'idConsolidacion, idArchivoTipo, Nombre';
+								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_shipping_consolidacion_archivo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
-								}
-
 							} else {
 								$error['exFile']     = 'error/Ocurrio un error al mover el archivo'; 
 							}
@@ -1836,8 +1766,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado=1" ;
-			$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$_GET['edit'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado=1" ;
+			$resultado = db_update_data (false, $SIS_data, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$_GET['edit'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1881,8 +1811,8 @@ require_once '0_validate_user_1.php';
 			if($errorn==0){
 				/*******************************************************/
 				//se actualizan los datos
-				$a = "idEstado=1" ;
-				$resultado = db_update_data (false, $a, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$SIS_data = "idEstado=1" ;
+				$resultado = db_update_data (false, $SIS_data, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//se borran los datos
 				$resultado = db_delete_data (false, 'cross_shipping_consolidacion_aprobaciones', 'idConsolidacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

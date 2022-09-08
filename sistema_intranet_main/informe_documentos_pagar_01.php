@@ -41,20 +41,6 @@ $diaActual = dia_actual();
 $diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
-//arreglo con los meses
-$meses=array(1=>"Enero", 
-				"Febrero", 
-				"Marzo", 
-				"Abril", 
-				"Mayo", 
-				"Junio", 
-				"Julio",
-				"Agosto", 
-				"Septiembre", 
-				"Octubre", 
-				"Noviembre", 
-				"Diciembre"
-			);
 //todas las empresas
 $z = " AND pagos_facturas_proveedores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //verifico el tipo de usuario

@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -733,8 +732,7 @@ foreach($arrTemporal_4 as $temp) {
 		$arrTemp[4][$inc]['Total_5'] = 0;
 		$arrTemp[4][$inc]['Total_6'] = 0;
 	}
-		
-
+	
 	//se busca el tipo
 	switch ($temp['idTipo']) {
 		case 2:  $valor_1 = $temp['Total'];     break; //Venta
@@ -1078,39 +1076,31 @@ foreach($arrTemporal_9_3 as $temp) {
 $arrCC     = array();
 $arrCC_lv1 = array();
 $arrCC_lv2 = array();
-foreach ($arrCentroCosto as $trab) { 
-	$arrCC[$trab['idCentroCosto']] = $trab['Nombre'];
-}
-foreach ($arrCentroCosto_lv1 as $trab) { 
-	$arrCC_lv1[$trab['idLevel_1']] = $trab['Nombre'];
-}
-foreach ($arrCentroCosto_lv2 as $trab) { 
-	$arrCC_lv2[$trab['idLevel_2']] = $trab['Nombre'];
-}
+foreach ($arrCentroCosto as $trab) {     $arrCC[$trab['idCentroCosto']] = $trab['Nombre']; }
+foreach ($arrCentroCosto_lv1 as $trab) { $arrCC_lv1[$trab['idLevel_1']] = $trab['Nombre']; }
+foreach ($arrCentroCosto_lv2 as $trab) { $arrCC_lv2[$trab['idLevel_2']] = $trab['Nombre']; }
 
-/************************************************/
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator("Office 2007")
+$spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setLastModifiedBy("Office 2007")
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-
-			
-         
-            
+          
 //Titulo columnas
-
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('G1', 'INGRESOS')
             ->setCellValue('J1', 'EGRESOS')
-            ->setCellValue('M1', 'COSTOS');					
-$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('M1', 'COSTOS')
             ->setCellValue('A2', 'Tipo')
             ->setCellValue('B2', 'Año')
             ->setCellValue('C2', 'Mes')
@@ -1132,11 +1122,7 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('S2', '%')
             ->setCellValue('T2', 'Total margen cliente')
             ->setCellValue('U2', '%');
-                 					                              
-
-  
-  
-         
+     
 $nn                         = 3;
 $total_ING_Telemetria       = 0;
 $total_ING_Instalacion      = 0;
@@ -1177,9 +1163,8 @@ if($arrTemp[1]!=false && !empty($arrTemp[1]) && $arrTemp[1]!=''){
 		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){          $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
 		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){  $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';} 
 		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
-												
 							
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Arriendos')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1231,9 +1216,8 @@ if($arrTemp[2]!=false && !empty($arrTemp[2]) && $arrTemp[2]!=''){
 		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){          $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
 		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){  $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';} 
 		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
-												
 							
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Arriendos')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1285,9 +1269,8 @@ if($arrTemp[3]!=false && !empty($arrTemp[3]) && $arrTemp[3]!=''){
 		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){          $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
 		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){  $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';} 
 		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
-												
 							
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Arriendos')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1339,9 +1322,8 @@ if($arrTemp[4]!=false && !empty($arrTemp[4]) && $arrTemp[4]!=''){
 		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){          $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
 		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){  $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';} 
 		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
-												
 							
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Arriendos')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1380,7 +1362,7 @@ if($arrTemp[5]!=false && !empty($arrTemp[5]) && $arrTemp[5]!=''){
 		//divisiones
 		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total); }else{ $prc_4 = '0 %'; } 				
 		
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1419,7 +1401,7 @@ if($arrTemp[6]!=false && !empty($arrTemp[6]) && $arrTemp[6]!=''){
 		//divisiones
 		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total); }else{ $prc_4 = '0 %'; } 				
 		
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1458,7 +1440,7 @@ if($arrTemp[7]!=false && !empty($arrTemp[7]) && $arrTemp[7]!=''){
 		//divisiones
 		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total); }else{ $prc_4 = '0 %'; } 				
 		
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1497,7 +1479,7 @@ if($arrTemp[8]!=false && !empty($arrTemp[8]) && $arrTemp[8]!=''){
 		//divisiones
 		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total); }else{ $prc_4 = '0 %'; } 				
 		
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1536,7 +1518,7 @@ if($arrTemp[9]!=false && !empty($arrTemp[9]) && $arrTemp[9]!=''){
 		//divisiones
 		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total); }else{ $prc_4 = '0 %'; } 				
 		
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1575,7 +1557,7 @@ if($arrTemp[10]!=false && !empty($arrTemp[10]) && $arrTemp[10]!=''){
 		//divisiones
 		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total); }else{ $prc_4 = '0 %'; } 				
 		
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1614,7 +1596,7 @@ if($arrTemp[11]!=false && !empty($arrTemp[11]) && $arrTemp[11]!=''){
 		//divisiones
 		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total); }else{ $prc_4 = '0 %'; } 				
 		
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1653,7 +1635,7 @@ if($arrTemp[12]!=false && !empty($arrTemp[12]) && $arrTemp[12]!=''){
 		//divisiones
 		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total); }else{ $prc_4 = '0 %'; } 				
 		
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1692,7 +1674,7 @@ if($arrTemp[13]!=false && !empty($arrTemp[13]) && $arrTemp[13]!=''){
 		//divisiones
 		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total); }else{ $prc_4 = '0 %'; } 				
 		
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1731,7 +1713,7 @@ if($arrTemp[14]!=false && !empty($arrTemp[14]) && $arrTemp[14]!=''){
 		//divisiones
 		if(isset($ing_total)&&$ing_total!=0){ $prc_4 = porcentaje($margen_total/$ing_total); }else{ $prc_4 = '0 %'; } 				
 		
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, 'Servicios')
 					->setCellValue('B'.$nn, $trab['Creacion_ano'])
 					->setCellValue('C'.$nn, $trab['Creacion_mes'])
@@ -1758,57 +1740,54 @@ if($arrTemp[14]!=false && !empty($arrTemp[14]) && $arrTemp[14]!=''){
 	}
 }
 
-
-
-
 if(isset($total_ING_Telemetria)&&$total_ING_Telemetria!=0){           $prc_1 = porcentaje($total_margen_tel/$total_ING_Telemetria);        }else{$prc_1 = '0 %';} 
 if(isset($total_ING_Instalacion)&&$total_ING_Instalacion!=0){         $prc_2 = porcentaje($total_margen_ins/$total_ING_Instalacion);       }else{$prc_2 = '0 %';}
 if(isset($total_ING_ServicioTecnico)&&$total_ING_ServicioTecnico!=0){ $prc_3 = porcentaje($total_margen_serv/$total_ING_ServicioTecnico);  }else{$prc_3 = '0 %';} 
 if(isset($total_ing_total)&&$total_ing_total!=0){                     $prc_4 = porcentaje($total_margen_total/$total_ing_total);           }else{$prc_4 = '0 %';} 
 		
-		
 //Totales
-$objPHPExcel->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, 'Totales')
-				->setCellValue('G'.$nn, $total_ING_Telemetria)
-				->setCellValue('H'.$nn, $total_ING_Instalacion)
-				->setCellValue('I'.$nn, $total_ING_ServicioTecnico)
-				->setCellValue('J'.$nn, $total_EG_Telemetria)
-				->setCellValue('K'.$nn, $total_EG_Instalacion)
-				->setCellValue('L'.$nn, $total_EG_ServicioTecnico)
-				->setCellValue('M'.$nn, $total_EG_Costos)
-				->setCellValue('N'.$nn, $total_margen_tel)
-				->setCellValue('O'.$nn, $prc_1)
-				->setCellValue('P'.$nn, $total_margen_ins)
-				->setCellValue('Q'.$nn, $prc_2)
-				->setCellValue('R'.$nn, $total_margen_serv)
-				->setCellValue('S'.$nn, $prc_3)
-				->setCellValue('T'.$nn, $total_margen_total)
-				->setCellValue('U'.$nn, $prc_4);
+$spreadsheet->setActiveSheetIndex(0)
+			->setCellValue('A'.$nn, 'Totales')
+			->setCellValue('G'.$nn, $total_ING_Telemetria)
+			->setCellValue('H'.$nn, $total_ING_Instalacion)
+			->setCellValue('I'.$nn, $total_ING_ServicioTecnico)
+			->setCellValue('J'.$nn, $total_EG_Telemetria)
+			->setCellValue('K'.$nn, $total_EG_Instalacion)
+			->setCellValue('L'.$nn, $total_EG_ServicioTecnico)
+			->setCellValue('M'.$nn, $total_EG_Costos)
+			->setCellValue('N'.$nn, $total_margen_tel)
+			->setCellValue('O'.$nn, $prc_1)
+			->setCellValue('P'.$nn, $total_margen_ins)
+			->setCellValue('Q'.$nn, $prc_2)
+			->setCellValue('R'.$nn, $total_margen_serv)
+			->setCellValue('S'.$nn, $prc_3)
+			->setCellValue('T'.$nn, $total_margen_total)
+			->setCellValue('U'.$nn, $prc_4);
 						
 				
 
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Rentabilidad');
-
+$spreadsheet->getActiveSheet()->setTitle('Rentabilidad');
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Informe de rentabilidad de negocio.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Informe de rentabilidad de negocio';
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

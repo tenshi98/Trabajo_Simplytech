@@ -23,7 +23,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['CasaEstudios']) )             $CasaEstudios              = $_POST['CasaEstudios'];
 	if ( !empty($_POST['Descripcion']) )              $Descripcion               = $_POST['Descripcion'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -47,6 +46,13 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){             $Nombre       = EstandarizarInput($Nombre); }
+	if(isset($CasaEstudios) && $CasaEstudios != ''){ $CasaEstudios = EstandarizarInput($CasaEstudios); }
+	if(isset($Descripcion) && $Descripcion != ''){   $Descripcion  = EstandarizarInput($Descripcion); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){              $error['Nombre']       = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -68,39 +74,23 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idPostulante) && $idPostulante != ''){        $a  = "'".$idPostulante."'" ;      }else{$a  = "''";}
-				if(isset($AnoInicio) && $AnoInicio != ''){              $a .= ",'".$AnoInicio."'" ;        }else{$a .= ",''";}
-				if(isset($AnoTermino) && $AnoTermino != ''){            $a .= ",'".$AnoTermino."'" ;       }else{$a .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){                $a .= ",'".$idEstado."'" ;         }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                    $a .= ",'".$Nombre."'" ;           }else{$a .= ",''";}
-				if(isset($CasaEstudios) && $CasaEstudios != ''){        $a .= ",'".$CasaEstudios."'" ;     }else{$a .= ",''";}
-				if(isset($Descripcion) && $Descripcion != ''){          $a .= ",'".$Descripcion."'" ;      }else{$a .= ",''";}
+				if(isset($idPostulante) && $idPostulante != ''){        $SIS_data  = "'".$idPostulante."'" ;      }else{$SIS_data  = "''";}
+				if(isset($AnoInicio) && $AnoInicio != ''){              $SIS_data .= ",'".$AnoInicio."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($AnoTermino) && $AnoTermino != ''){            $SIS_data .= ",'".$AnoTermino."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                $SIS_data .= ",'".$idEstado."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                    $SIS_data .= ",'".$Nombre."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($CasaEstudios) && $CasaEstudios != ''){        $SIS_data .= ",'".$CasaEstudios."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion != ''){          $SIS_data .= ",'".$Descripcion."'" ;      }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `postulantes_listado_cursos` (idPostulante, AnoInicio, AnoTermino, idEstado, 
-				Nombre,CasaEstudios,Descripcion) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idPostulante, AnoInicio, AnoTermino, idEstado, Nombre,CasaEstudios,Descripcion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'postulantes_listado_cursos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -114,18 +104,18 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idEstudioPost='".$idEstudioPost."'" ;
-				if(isset($idPostulante) && $idPostulante != ''){        $a .= ",idPostulante='".$idPostulante."'" ;}
-				if(isset($AnoInicio) && $AnoInicio != ''){              $a .= ",AnoInicio='".$AnoInicio."'" ;}
-				if(isset($AnoTermino) && $AnoTermino != ''){            $a .= ",AnoTermino='".$AnoTermino."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                    $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($CasaEstudios) && $CasaEstudios != ''){        $a .= ",CasaEstudios='".$CasaEstudios."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){          $a .= ",Descripcion='".$Descripcion."'" ;}
+				$SIS_data = "idEstudioPost='".$idEstudioPost."'" ;
+				if(isset($idPostulante) && $idPostulante != ''){        $SIS_data .= ",idPostulante='".$idPostulante."'" ;}
+				if(isset($AnoInicio) && $AnoInicio != ''){              $SIS_data .= ",AnoInicio='".$AnoInicio."'" ;}
+				if(isset($AnoTermino) && $AnoTermino != ''){            $SIS_data .= ",AnoTermino='".$AnoTermino."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                    $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($CasaEstudios) && $CasaEstudios != ''){        $SIS_data .= ",CasaEstudios='".$CasaEstudios."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){          $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'postulantes_listado_cursos', 'idEstudioPost = "'.$idEstudioPost.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'postulantes_listado_cursos', 'idEstudioPost = "'.$idEstudioPost.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

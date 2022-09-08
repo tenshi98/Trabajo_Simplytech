@@ -50,7 +50,28 @@ echo '<ul class="nav navbar-nav '.$classnav.'" id="navbar_nav" >
 				echo '<ul class="dropdown-menu">';
 					//se crea la transaccion
 					foreach($menuCat as $menuList) {
-						echo '<li><a href="'.$menuList['TransaccionURL'].'"><i class="'.$menuList['CategoriaIcono'].'" '.$Bgicolor.'></i> '.TituloMenu($menuList['TransaccionNombre']).'</a></li>';
+						/**************************************************/
+						//variable
+						$view_trans = 0;
+							
+						/**************************************************/
+						//verifico
+						//Todos
+						if($menuList['idSistema']==9998){
+							$view_trans++;
+						//Solo Superadministradores
+						}elseif($menuList['idSistema']==9999&&$_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
+							$view_trans++;
+						//Limitado a un sistema
+						}elseif($menuList['idSistema']==$_SESSION['usuario']['basic_data']['idSistema']){
+							$view_trans++;
+						}
+						/**************************************************/
+						//valido
+						if($view_trans!=0){
+							echo '<li><a href="'.$menuList['TransaccionURL'].'"><i class="'.$menuList['CategoriaIcono'].'" '.$Bgicolor.'></i> '.TituloMenu($menuList['TransaccionNombre']).'</a></li>';
+						}	
+						
 					}
 				echo '</ul>';  
 			echo '</li>';    
@@ -71,6 +92,7 @@ echo '<ul class="nav navbar-nav '.$classnav.'" id="navbar_nav" >
 			<ul class="dropdown-menu">
 				<li><a href="core_email.php">                                <i class="fa fa-cogs" aria-hidden="true"></i> Configuracion Correo Interno</a></li>
 				<li><a href="core_comparacion_base.php">                     <i class="fa fa-cogs" aria-hidden="true"></i> Comparacion Base Datos</a></li>
+				<li><a href="core_informacion_base.php">                     <i class="fa fa-cogs" aria-hidden="true"></i> Informacion Base Datos</a></li>
 				
 			</ul>
 		</li>';
@@ -126,6 +148,8 @@ echo '<ul class="nav navbar-nav '.$classnav.'" id="navbar_nav" >
 				<li><a href="core_recursos_typography.php">   <i class="fa fa-cogs" aria-hidden="true"></i> Typography</a></li>
 				<li><a href="core_recursos_forms.php">        <i class="fa fa-cogs" aria-hidden="true"></i> Formularios</a></li>
 				<li><a href="core_recursos_graphics.php">     <i class="fa fa-cogs" aria-hidden="true"></i> Graficos</a></li>
+				<li><a href="core_recursos_widgets.php">      <i class="fa fa-cogs" aria-hidden="true"></i> Widgets</a></li>
+				<li><a href="core_recursos_alerts.php">       <i class="fa fa-cogs" aria-hidden="true"></i> Alertas</a></li>
 				
 			</ul>
 		</li>';

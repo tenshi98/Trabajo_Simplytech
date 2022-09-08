@@ -23,8 +23,8 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
 if(isset($_GET["pagina"])){
@@ -109,8 +109,8 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 					</div>
 					<div class="pull-right clearfix" style="width: 70px;">
 						<ul class="footer-icons-group">
-							<?php if(isset($soft['SitioWeb'])&&$soft['SitioWeb']!=''){ ?><li><a href="<?php echo $soft['SitioWeb']; ?>" title="Ir al Sitio" class="tooltip" style="position: relative;"><i class="fa fa-firefox" aria-hidden="true"></i></a></li><?php } ?>
-							<li><a href="<?php echo $soft['SitioDescarga']; ?>" title="Descargar" class="tooltip" style="position: relative;"><i class="fa fa-cloud-download" aria-hidden="true"></i></a></li>
+							<?php if(isset($soft['SitioWeb'])&&$soft['SitioWeb']!=''){ ?><li><a href="<?php echo $soft['SitioWeb']; ?>" target="_blank" rel="noopener noreferrer" title="Ir al Sitio" class="tooltip" style="position: relative;"><i class="fa fa-firefox" aria-hidden="true"></i></a></li><?php } ?>
+							<li><a href="<?php echo $soft['SitioDescarga']; ?>" target="_blank" rel="noopener noreferrer" title="Descargar" class="tooltip" style="position: relative;"><i class="fa fa-cloud-download" aria-hidden="true"></i></a></li>
 						</ul>
 					</div>
 					<div class="clearfix"></div>

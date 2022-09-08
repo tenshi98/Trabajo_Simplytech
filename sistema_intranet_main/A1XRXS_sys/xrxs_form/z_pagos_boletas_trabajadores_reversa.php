@@ -114,37 +114,37 @@ require_once '0_validate_user_1.php';
 					if($rowBoleta['MontoPagado']>$rowPago['MontoPagado']){
 						$nuevoMonto = $rowBoleta['MontoPagado'] - $rowPago['MontoPagado'];
 						//se actualiza con los datos del pago anterior
-						$a  = "idUsuarioPago='".$rowBoleta['idUsuarioPago']."'" ;
-						$a .= ",idDocPago='".$rowBoleta['idDocPago']."'" ;
-						$a .= ",N_DocPago='".$rowBoleta['N_DocPago']."'" ;
-						$a .= ",F_Pago='".$rowBoleta['F_Pago']."'" ;
-						$a .= ",F_Pago_dia='".$rowBoleta['F_Pago_dia']."'" ;
-						$a .= ",F_Pago_mes='".$rowBoleta['F_Pago_mes']."'" ;
-						$a .= ",F_Pago_ano='".$rowBoleta['F_Pago_ano']."'" ;
-						$a .= ",MontoPagado='".$nuevoMonto."'" ;
-						$a .= ",idEstado='1'" ;
+						$SIS_data  = "idUsuarioPago='".$rowBoleta['idUsuarioPago']."'" ;
+						$SIS_data .= ",idDocPago='".$rowBoleta['idDocPago']."'" ;
+						$SIS_data .= ",N_DocPago='".$rowBoleta['N_DocPago']."'" ;
+						$SIS_data .= ",F_Pago='".$rowBoleta['F_Pago']."'" ;
+						$SIS_data .= ",F_Pago_dia='".$rowBoleta['F_Pago_dia']."'" ;
+						$SIS_data .= ",F_Pago_mes='".$rowBoleta['F_Pago_mes']."'" ;
+						$SIS_data .= ",F_Pago_ano='".$rowBoleta['F_Pago_ano']."'" ;
+						$SIS_data .= ",MontoPagado='".$nuevoMonto."'" ;
+						$SIS_data .= ",idEstado='1'" ;
 						
 						/*******************************************************/
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						
 					//si es pago completo
 					}elseif($rowBoleta['MontoPagado']==$rowPago['MontoPagado']){
 						//se actualiza con los datos del pago anterior
-						$a  = "idUsuarioPago=''";
-						$a .= ",idDocPago=''";
-						$a .= ",N_DocPago=''";
-						$a .= ",F_Pago=''";
-						$a .= ",F_Pago_dia=''";
-						$a .= ",F_Pago_mes=''";
-						$a .= ",F_Pago_ano=''";
-						$a .= ",MontoPagado=''";
-						$a .= ",idEstado='1'" ;
+						$SIS_data  = "idUsuarioPago=''";
+						$SIS_data .= ",idDocPago=''";
+						$SIS_data .= ",N_DocPago=''";
+						$SIS_data .= ",F_Pago=''";
+						$SIS_data .= ",F_Pago_dia=''";
+						$SIS_data .= ",F_Pago_mes=''";
+						$SIS_data .= ",F_Pago_ano=''";
+						$SIS_data .= ",MontoPagado=''";
+						$SIS_data .= ",idEstado='1'" ;
 						
 						/*******************************************************/
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 					}
 					
@@ -152,28 +152,16 @@ require_once '0_validate_user_1.php';
 					//se guarda dato en el historial, indicando documento eliminado y su numero
 					if(isset($indice2) && $indice2 != ''){    
 						
-						$a  = "'".$indice2."'" ;  
-						$a .= ",'".fecha_actual()."'" ;           
-						$a .= ",'1'";                                                                                                   //Creacion Satisfactoria
-						$a .= ",'Se realiza reversa del pago del documento ".$rowPago['Documento']." N° ".$rowPago['N_DocPago']."'";    //Observacion
-						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                                                 //idUsuario
-												
+						$SIS_data  = "'".$indice2."'" ;  
+						$SIS_data .= ",'".fecha_actual()."'" ;           
+						$SIS_data .= ",'1'";                                                                                                   //Creacion Satisfactoria
+						$SIS_data .= ",'Se realiza reversa del pago del documento ".$rowPago['Documento']." N° ".$rowPago['N_DocPago']."'";    //Observacion
+						$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                                                 //idUsuario
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `boleta_honorarios_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-										
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-						}
+						$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'boleta_honorarios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 					
 					/**********************************************************************/

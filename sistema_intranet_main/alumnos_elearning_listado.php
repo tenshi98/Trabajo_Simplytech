@@ -122,11 +122,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Elearning Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Elearning Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Elearning borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Elearning Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Elearning Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Elearning borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['editCuestionario']) ) {	

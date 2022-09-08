@@ -51,11 +51,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Mutual de Seguridad Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Mutual de Seguridad Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Mutual de Seguridad borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Mutual de Seguridad Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Mutual de Seguridad Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Mutual de Seguridad borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos

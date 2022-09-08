@@ -43,8 +43,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['IMPRENT_idLevel_5']) )        $IMPRENT_idLevel_5        = $_POST['IMPRENT_idLevel_5'];
 	if ( !empty($_POST['Porcentaje_Ret_Boletas']) )   $Porcentaje_Ret_Boletas   = $_POST['Porcentaje_Ret_Boletas'];
 	
-	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -87,6 +85,7 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -113,61 +112,49 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                             $a = "'".$idSistema."'" ;                     }else{$a ="''";}
-				if(isset($Porcentaje_PPM) && $Porcentaje_PPM != ''){                   $a .= ",'".$Porcentaje_PPM."'" ;              }else{$a .=",''";}
-				if(isset($IVA_idCentroCosto) && $IVA_idCentroCosto != ''){             $a .= ",'".$IVA_idCentroCosto."'" ;           }else{$a .=",''";}
-				if(isset($IVA_idLevel_1) && $IVA_idLevel_1 != ''){                     $a .= ",'".$IVA_idLevel_1."'" ;               }else{$a .=",''";}
-				if(isset($IVA_idLevel_2) && $IVA_idLevel_2 != ''){                     $a .= ",'".$IVA_idLevel_2."'" ;               }else{$a .=",''";}
-				if(isset($IVA_idLevel_3) && $IVA_idLevel_3 != ''){                     $a .= ",'".$IVA_idLevel_3."'" ;               }else{$a .=",''";}
-				if(isset($IVA_idLevel_4) && $IVA_idLevel_4 != ''){                     $a .= ",'".$IVA_idLevel_4."'" ;               }else{$a .=",''";}
-				if(isset($IVA_idLevel_5) && $IVA_idLevel_5 != ''){                     $a .= ",'".$IVA_idLevel_5."'" ;               }else{$a .=",''";}
-				if(isset($PPM_idCentroCosto) && $PPM_idCentroCosto != ''){             $a .= ",'".$PPM_idCentroCosto."'" ;           }else{$a .=",''";}
-				if(isset($PPM_idLevel_1) && $PPM_idLevel_1 != ''){                     $a .= ",'".$PPM_idLevel_1."'" ;               }else{$a .=",''";}
-				if(isset($PPM_idLevel_2) && $PPM_idLevel_2 != ''){                     $a .= ",'".$PPM_idLevel_2."'" ;               }else{$a .=",''";}
-				if(isset($PPM_idLevel_3) && $PPM_idLevel_3 != ''){                     $a .= ",'".$PPM_idLevel_3."'" ;               }else{$a .=",''";}
-				if(isset($PPM_idLevel_4) && $PPM_idLevel_4 != ''){                     $a .= ",'".$PPM_idLevel_4."'" ;               }else{$a .=",''";}
-				if(isset($PPM_idLevel_5) && $PPM_idLevel_5 != ''){                     $a .= ",'".$PPM_idLevel_5."'" ;               }else{$a .=",''";}
-				if(isset($RET_idCentroCosto) && $RET_idCentroCosto != ''){             $a .= ",'".$RET_idCentroCosto."'" ;           }else{$a .=",''";}
-				if(isset($RET_idLevel_1) && $RET_idLevel_1 != ''){                     $a .= ",'".$RET_idLevel_1."'" ;               }else{$a .=",''";}
-				if(isset($RET_idLevel_2) && $RET_idLevel_2 != ''){                     $a .= ",'".$RET_idLevel_2."'" ;               }else{$a .=",''";}
-				if(isset($RET_idLevel_3) && $RET_idLevel_3 != ''){                     $a .= ",'".$RET_idLevel_3."'" ;               }else{$a .=",''";}
-				if(isset($RET_idLevel_4) && $RET_idLevel_4 != ''){                     $a .= ",'".$RET_idLevel_4."'" ;               }else{$a .=",''";}
-				if(isset($RET_idLevel_5) && $RET_idLevel_5 != ''){                     $a .= ",'".$RET_idLevel_5."'" ;               }else{$a .=",''";}
-				if(isset($IMPRENT_idCentroCosto) && $IMPRENT_idCentroCosto != ''){     $a .= ",'".$IMPRENT_idCentroCosto."'" ;       }else{$a .=",''";}
-				if(isset($IMPRENT_idLevel_1) && $IMPRENT_idLevel_1 != ''){             $a .= ",'".$IMPRENT_idLevel_1."'" ;           }else{$a .=",''";}
-				if(isset($IMPRENT_idLevel_2) && $IMPRENT_idLevel_2 != ''){             $a .= ",'".$IMPRENT_idLevel_2."'" ;           }else{$a .=",''";}
-				if(isset($IMPRENT_idLevel_3) && $IMPRENT_idLevel_3 != ''){             $a .= ",'".$IMPRENT_idLevel_3."'" ;           }else{$a .=",''";}
-				if(isset($IMPRENT_idLevel_4) && $IMPRENT_idLevel_4 != ''){             $a .= ",'".$IMPRENT_idLevel_4."'" ;           }else{$a .=",''";}
-				if(isset($IMPRENT_idLevel_5) && $IMPRENT_idLevel_5 != ''){             $a .= ",'".$IMPRENT_idLevel_5."'" ;           }else{$a .=",''";}
-				if(isset($Porcentaje_Ret_Boletas) && $Porcentaje_Ret_Boletas != ''){   $a .= ",'".$Porcentaje_Ret_Boletas."'" ;      }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){                             $SIS_data  = "'".$idSistema."'" ;                    }else{$SIS_data  = "''";}
+				if(isset($Porcentaje_PPM) && $Porcentaje_PPM != ''){                   $SIS_data .= ",'".$Porcentaje_PPM."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($IVA_idCentroCosto) && $IVA_idCentroCosto != ''){             $SIS_data .= ",'".$IVA_idCentroCosto."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($IVA_idLevel_1) && $IVA_idLevel_1 != ''){                     $SIS_data .= ",'".$IVA_idLevel_1."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($IVA_idLevel_2) && $IVA_idLevel_2 != ''){                     $SIS_data .= ",'".$IVA_idLevel_2."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($IVA_idLevel_3) && $IVA_idLevel_3 != ''){                     $SIS_data .= ",'".$IVA_idLevel_3."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($IVA_idLevel_4) && $IVA_idLevel_4 != ''){                     $SIS_data .= ",'".$IVA_idLevel_4."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($IVA_idLevel_5) && $IVA_idLevel_5 != ''){                     $SIS_data .= ",'".$IVA_idLevel_5."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($PPM_idCentroCosto) && $PPM_idCentroCosto != ''){             $SIS_data .= ",'".$PPM_idCentroCosto."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($PPM_idLevel_1) && $PPM_idLevel_1 != ''){                     $SIS_data .= ",'".$PPM_idLevel_1."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($PPM_idLevel_2) && $PPM_idLevel_2 != ''){                     $SIS_data .= ",'".$PPM_idLevel_2."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($PPM_idLevel_3) && $PPM_idLevel_3 != ''){                     $SIS_data .= ",'".$PPM_idLevel_3."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($PPM_idLevel_4) && $PPM_idLevel_4 != ''){                     $SIS_data .= ",'".$PPM_idLevel_4."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($PPM_idLevel_5) && $PPM_idLevel_5 != ''){                     $SIS_data .= ",'".$PPM_idLevel_5."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($RET_idCentroCosto) && $RET_idCentroCosto != ''){             $SIS_data .= ",'".$RET_idCentroCosto."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($RET_idLevel_1) && $RET_idLevel_1 != ''){                     $SIS_data .= ",'".$RET_idLevel_1."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($RET_idLevel_2) && $RET_idLevel_2 != ''){                     $SIS_data .= ",'".$RET_idLevel_2."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($RET_idLevel_3) && $RET_idLevel_3 != ''){                     $SIS_data .= ",'".$RET_idLevel_3."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($RET_idLevel_4) && $RET_idLevel_4 != ''){                     $SIS_data .= ",'".$RET_idLevel_4."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($RET_idLevel_5) && $RET_idLevel_5 != ''){                     $SIS_data .= ",'".$RET_idLevel_5."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($IMPRENT_idCentroCosto) && $IMPRENT_idCentroCosto != ''){     $SIS_data .= ",'".$IMPRENT_idCentroCosto."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($IMPRENT_idLevel_1) && $IMPRENT_idLevel_1 != ''){             $SIS_data .= ",'".$IMPRENT_idLevel_1."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($IMPRENT_idLevel_2) && $IMPRENT_idLevel_2 != ''){             $SIS_data .= ",'".$IMPRENT_idLevel_2."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($IMPRENT_idLevel_3) && $IMPRENT_idLevel_3 != ''){             $SIS_data .= ",'".$IMPRENT_idLevel_3."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($IMPRENT_idLevel_4) && $IMPRENT_idLevel_4 != ''){             $SIS_data .= ",'".$IMPRENT_idLevel_4."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($IMPRENT_idLevel_5) && $IMPRENT_idLevel_5 != ''){             $SIS_data .= ",'".$IMPRENT_idLevel_5."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Porcentaje_Ret_Boletas) && $Porcentaje_Ret_Boletas != ''){   $SIS_data .= ",'".$Porcentaje_Ret_Boletas."'" ;      }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `sistema_leyes_fiscales` (idSistema, Porcentaje_PPM
+				$SIS_columns = 'idSistema, Porcentaje_PPM
 				IVA_idCentroCosto,IVA_idLevel_1,IVA_idLevel_2,IVA_idLevel_3,IVA_idLevel_4,
 				IVA_idLevel_5,PPM_idCentroCosto,PPM_idLevel_1,PPM_idLevel_2,PPM_idLevel_3,
 				PPM_idLevel_4,PPM_idLevel_5,RET_idCentroCosto,RET_idLevel_1,RET_idLevel_2,
 				RET_idLevel_3,RET_idLevel_4,RET_idLevel_5,IMPRENT_idCentroCosto,
 				IMPRENT_idLevel_1,IMPRENT_idLevel_2,IMPRENT_idLevel_3,IMPRENT_idLevel_4,
-				IMPRENT_idLevel_5, Porcentaje_Ret_Boletas) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				IMPRENT_idLevel_5, Porcentaje_Ret_Boletas';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'sistema_leyes_fiscales', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'?created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -192,38 +179,38 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idMantenedor='".$idMantenedor."'" ;
-				if(isset($idSistema) && $idSistema != ''){                               $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Porcentaje_PPM) && $Porcentaje_PPM != ''){                     $a .= ",Porcentaje_PPM='".$Porcentaje_PPM."'" ;}
-				if(isset($IVA_idCentroCosto) && $IVA_idCentroCosto != ''){               $a .= ",IVA_idCentroCosto='".$IVA_idCentroCosto."'" ;}
-				if(isset($IVA_idLevel_1) && $IVA_idLevel_1 != ''){                       $a .= ",IVA_idLevel_1='".$IVA_idLevel_1."'" ;}
-				if(isset($IVA_idLevel_2) && $IVA_idLevel_2 != ''){                       $a .= ",IVA_idLevel_2='".$IVA_idLevel_2."'" ;}
-				if(isset($IVA_idLevel_3) && $IVA_idLevel_3 != ''){                       $a .= ",IVA_idLevel_3='".$IVA_idLevel_3."'" ;}
-				if(isset($IVA_idLevel_4) && $IVA_idLevel_4 != ''){                       $a .= ",IVA_idLevel_4='".$IVA_idLevel_4."'" ;}
-				if(isset($IVA_idLevel_5) && $IVA_idLevel_5 != ''){                       $a .= ",IVA_idLevel_5='".$IVA_idLevel_5."'" ;}
-				if(isset($PPM_idCentroCosto) && $PPM_idCentroCosto != ''){               $a .= ",PPM_idCentroCosto='".$PPM_idCentroCosto."'" ;}
-				if(isset($PPM_idLevel_1) && $PPM_idLevel_1 != ''){                       $a .= ",PPM_idLevel_1='".$PPM_idLevel_1."'" ;}
-				if(isset($PPM_idLevel_2) && $PPM_idLevel_2 != ''){                       $a .= ",PPM_idLevel_2='".$PPM_idLevel_2."'" ;}
-				if(isset($PPM_idLevel_3) && $PPM_idLevel_3 != ''){                       $a .= ",PPM_idLevel_3='".$PPM_idLevel_3."'" ;}
-				if(isset($PPM_idLevel_4) && $PPM_idLevel_4 != ''){                       $a .= ",PPM_idLevel_4='".$PPM_idLevel_4."'" ;}
-				if(isset($PPM_idLevel_5) && $PPM_idLevel_5 != ''){                       $a .= ",PPM_idLevel_5='".$PPM_idLevel_5."'" ;}
-				if(isset($RET_idCentroCosto) && $RET_idCentroCosto != ''){               $a .= ",RET_idCentroCosto='".$RET_idCentroCosto."'" ;}
-				if(isset($RET_idLevel_1) && $RET_idLevel_1 != ''){                       $a .= ",RET_idLevel_1='".$RET_idLevel_1."'" ;}
-				if(isset($RET_idLevel_2) && $RET_idLevel_2 != ''){                       $a .= ",RET_idLevel_2='".$RET_idLevel_2."'" ;}
-				if(isset($RET_idLevel_3) && $RET_idLevel_3 != ''){                       $a .= ",RET_idLevel_3='".$RET_idLevel_3."'" ;}
-				if(isset($RET_idLevel_4) && $RET_idLevel_4 != ''){                       $a .= ",RET_idLevel_4='".$RET_idLevel_4."'" ;}
-				if(isset($RET_idLevel_5) && $RET_idLevel_5 != ''){                       $a .= ",RET_idLevel_5='".$RET_idLevel_5."'" ;}
-				if(isset($IMPRENT_idCentroCosto) && $IMPRENT_idCentroCosto != ''){       $a .= ",IMPRENT_idCentroCosto='".$IMPRENT_idCentroCosto."'" ;}
-				if(isset($IMPRENT_idLevel_1) && $IMPRENT_idLevel_1 != ''){               $a .= ",IMPRENT_idLevel_1='".$IMPRENT_idLevel_1."'" ;}
-				if(isset($IMPRENT_idLevel_2) && $IMPRENT_idLevel_2 != ''){               $a .= ",IMPRENT_idLevel_2='".$IMPRENT_idLevel_2."'" ;}
-				if(isset($IMPRENT_idLevel_3) && $IMPRENT_idLevel_3 != ''){               $a .= ",IMPRENT_idLevel_3='".$IMPRENT_idLevel_3."'" ;}
-				if(isset($IMPRENT_idLevel_4) && $IMPRENT_idLevel_4 != ''){               $a .= ",IMPRENT_idLevel_4='".$IMPRENT_idLevel_4."'" ;}
-				if(isset($IMPRENT_idLevel_5) && $IMPRENT_idLevel_5 != ''){               $a .= ",IMPRENT_idLevel_5='".$IMPRENT_idLevel_5."'" ;}
-				if(isset($Porcentaje_Ret_Boletas) && $Porcentaje_Ret_Boletas != ''){     $a .= ",Porcentaje_Ret_Boletas='".$Porcentaje_Ret_Boletas."'" ;}
+				$SIS_data = "idMantenedor='".$idMantenedor."'" ;
+				if(isset($idSistema) && $idSistema != ''){                               $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($Porcentaje_PPM) && $Porcentaje_PPM != ''){                     $SIS_data .= ",Porcentaje_PPM='".$Porcentaje_PPM."'" ;}
+				if(isset($IVA_idCentroCosto) && $IVA_idCentroCosto != ''){               $SIS_data .= ",IVA_idCentroCosto='".$IVA_idCentroCosto."'" ;}
+				if(isset($IVA_idLevel_1) && $IVA_idLevel_1 != ''){                       $SIS_data .= ",IVA_idLevel_1='".$IVA_idLevel_1."'" ;}
+				if(isset($IVA_idLevel_2) && $IVA_idLevel_2 != ''){                       $SIS_data .= ",IVA_idLevel_2='".$IVA_idLevel_2."'" ;}
+				if(isset($IVA_idLevel_3) && $IVA_idLevel_3 != ''){                       $SIS_data .= ",IVA_idLevel_3='".$IVA_idLevel_3."'" ;}
+				if(isset($IVA_idLevel_4) && $IVA_idLevel_4 != ''){                       $SIS_data .= ",IVA_idLevel_4='".$IVA_idLevel_4."'" ;}
+				if(isset($IVA_idLevel_5) && $IVA_idLevel_5 != ''){                       $SIS_data .= ",IVA_idLevel_5='".$IVA_idLevel_5."'" ;}
+				if(isset($PPM_idCentroCosto) && $PPM_idCentroCosto != ''){               $SIS_data .= ",PPM_idCentroCosto='".$PPM_idCentroCosto."'" ;}
+				if(isset($PPM_idLevel_1) && $PPM_idLevel_1 != ''){                       $SIS_data .= ",PPM_idLevel_1='".$PPM_idLevel_1."'" ;}
+				if(isset($PPM_idLevel_2) && $PPM_idLevel_2 != ''){                       $SIS_data .= ",PPM_idLevel_2='".$PPM_idLevel_2."'" ;}
+				if(isset($PPM_idLevel_3) && $PPM_idLevel_3 != ''){                       $SIS_data .= ",PPM_idLevel_3='".$PPM_idLevel_3."'" ;}
+				if(isset($PPM_idLevel_4) && $PPM_idLevel_4 != ''){                       $SIS_data .= ",PPM_idLevel_4='".$PPM_idLevel_4."'" ;}
+				if(isset($PPM_idLevel_5) && $PPM_idLevel_5 != ''){                       $SIS_data .= ",PPM_idLevel_5='".$PPM_idLevel_5."'" ;}
+				if(isset($RET_idCentroCosto) && $RET_idCentroCosto != ''){               $SIS_data .= ",RET_idCentroCosto='".$RET_idCentroCosto."'" ;}
+				if(isset($RET_idLevel_1) && $RET_idLevel_1 != ''){                       $SIS_data .= ",RET_idLevel_1='".$RET_idLevel_1."'" ;}
+				if(isset($RET_idLevel_2) && $RET_idLevel_2 != ''){                       $SIS_data .= ",RET_idLevel_2='".$RET_idLevel_2."'" ;}
+				if(isset($RET_idLevel_3) && $RET_idLevel_3 != ''){                       $SIS_data .= ",RET_idLevel_3='".$RET_idLevel_3."'" ;}
+				if(isset($RET_idLevel_4) && $RET_idLevel_4 != ''){                       $SIS_data .= ",RET_idLevel_4='".$RET_idLevel_4."'" ;}
+				if(isset($RET_idLevel_5) && $RET_idLevel_5 != ''){                       $SIS_data .= ",RET_idLevel_5='".$RET_idLevel_5."'" ;}
+				if(isset($IMPRENT_idCentroCosto) && $IMPRENT_idCentroCosto != ''){       $SIS_data .= ",IMPRENT_idCentroCosto='".$IMPRENT_idCentroCosto."'" ;}
+				if(isset($IMPRENT_idLevel_1) && $IMPRENT_idLevel_1 != ''){               $SIS_data .= ",IMPRENT_idLevel_1='".$IMPRENT_idLevel_1."'" ;}
+				if(isset($IMPRENT_idLevel_2) && $IMPRENT_idLevel_2 != ''){               $SIS_data .= ",IMPRENT_idLevel_2='".$IMPRENT_idLevel_2."'" ;}
+				if(isset($IMPRENT_idLevel_3) && $IMPRENT_idLevel_3 != ''){               $SIS_data .= ",IMPRENT_idLevel_3='".$IMPRENT_idLevel_3."'" ;}
+				if(isset($IMPRENT_idLevel_4) && $IMPRENT_idLevel_4 != ''){               $SIS_data .= ",IMPRENT_idLevel_4='".$IMPRENT_idLevel_4."'" ;}
+				if(isset($IMPRENT_idLevel_5) && $IMPRENT_idLevel_5 != ''){               $SIS_data .= ",IMPRENT_idLevel_5='".$IMPRENT_idLevel_5."'" ;}
+				if(isset($Porcentaje_Ret_Boletas) && $Porcentaje_Ret_Boletas != ''){     $SIS_data .= ",Porcentaje_Ret_Boletas='".$Porcentaje_Ret_Boletas."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'sistema_leyes_fiscales', 'idMantenedor = "'.$idMantenedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'sistema_leyes_fiscales', 'idMantenedor = "'.$idMantenedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

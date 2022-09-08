@@ -32,17 +32,17 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Contrato_Numero']) )                  $Contrato_Numero                   = $_POST['Contrato_Numero'];
 	if ( !empty($_POST['Contrato_Fecha']) )                   $Contrato_Fecha                    = $_POST['Contrato_Fecha'];
 	if ( !empty($_POST['Contrato_Duracion']) )                $Contrato_Duracion                 = $_POST['Contrato_Duracion'];
-	if ( !empty($_POST['Config_IDGoogle']) )                  $Config_IDGoogle                   = $_POST['Config_IDGoogle'];
-	if ( !empty($_POST['Config_Google_apiKey']) )             $Config_Google_apiKey              = $_POST['Config_Google_apiKey'];
-	if ( !empty($_POST['Config_FCM_apiKey']) )                $Config_FCM_apiKey                 = $_POST['Config_FCM_apiKey'];
-	if ( !empty($_POST['Config_FCM_Main_apiKey']) )           $Config_FCM_Main_apiKey            = $_POST['Config_FCM_Main_apiKey'];
+	if ( isset($_POST['Config_IDGoogle']) )                   $Config_IDGoogle                   = $_POST['Config_IDGoogle'];
+	if ( isset($_POST['Config_Google_apiKey']) )              $Config_Google_apiKey              = $_POST['Config_Google_apiKey'];
+	if ( isset($_POST['Config_FCM_apiKey']) )                 $Config_FCM_apiKey                 = $_POST['Config_FCM_apiKey'];
+	if ( isset($_POST['Config_FCM_Main_apiKey']) )            $Config_FCM_Main_apiKey            = $_POST['Config_FCM_Main_apiKey'];
 	if ( !empty($_POST['Config_imgLogo']) )                   $Config_imgLogo                    = $_POST['Config_imgLogo'];
 	if ( !empty($_POST['Config_idTheme']) )                   $Config_idTheme                    = $_POST['Config_idTheme'];
-	if ( !empty($_POST['Config_CorreoRespaldo']) )            $Config_CorreoRespaldo             = $_POST['Config_CorreoRespaldo'];
-	if ( !empty($_POST['Config_Gmail_Usuario']) )             $Config_Gmail_Usuario              = $_POST['Config_Gmail_Usuario'];
-	if ( !empty($_POST['Config_Gmail_Password']) )            $Config_Gmail_Password             = $_POST['Config_Gmail_Password'];
-	if ( !empty($_POST['Config_WhatsappToken']) )             $Config_WhatsappToken              = $_POST['Config_WhatsappToken'];
-	if ( !empty($_POST['Config_WhatsappInstanceId']) )        $Config_WhatsappInstanceId         = $_POST['Config_WhatsappInstanceId'];
+	if ( isset($_POST['Config_CorreoRespaldo']) )             $Config_CorreoRespaldo             = $_POST['Config_CorreoRespaldo'];
+	if ( isset($_POST['Config_Gmail_Usuario']) )              $Config_Gmail_Usuario              = $_POST['Config_Gmail_Usuario'];
+	if ( isset($_POST['Config_Gmail_Password']) )             $Config_Gmail_Password             = $_POST['Config_Gmail_Password'];
+	if ( isset($_POST['Config_WhatsappToken']) )              $Config_WhatsappToken              = $_POST['Config_WhatsappToken'];
+	if ( isset($_POST['Config_WhatsappInstanceId']) )         $Config_WhatsappInstanceId         = $_POST['Config_WhatsappInstanceId'];
 	if ( !empty($_POST['idOpcionesGen_1']) )                  $idOpcionesGen_1                   = $_POST['idOpcionesGen_1'];
 	if ( !empty($_POST['idOpcionesGen_2']) )                  $idOpcionesGen_2                   = $_POST['idOpcionesGen_2'];
 	if ( !empty($_POST['idOpcionesGen_3']) )                  $idOpcionesGen_3                   = $_POST['idOpcionesGen_3'];
@@ -98,7 +98,6 @@ require_once '0_validate_user_1.php';
 	if ( isset($_POST['RepresentanteNombre']) )               $RepresentanteNombre               = $_POST['RepresentanteNombre'];
 	if ( isset($_POST['RepresentanteRut']) )                  $RepresentanteRut                  = $_POST['RepresentanteRut'];
 	
-	
 	if ( !empty($_POST['CrossTech_FechaDiasTempMinOld']) )    $CrossTech_FechaDiasTempMinOld     = $_POST['CrossTech_FechaDiasTempMinOld'];
 	if ( !empty($_POST['CrossTech_FechaTempMinOld']) )        $CrossTech_FechaTempMinOld         = $_POST['CrossTech_FechaTempMinOld'];
 	if ( !empty($_POST['CrossTech_FechaTempMaxOld']) )        $CrossTech_FechaTempMaxOld         = $_POST['CrossTech_FechaTempMaxOld'];
@@ -107,7 +106,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['CrossEnergy_PeriodoTerminoOld']) )    $CrossEnergy_PeriodoTerminoOld     = $_POST['CrossEnergy_PeriodoTerminoOld'];
 	if ( !empty($_POST['CrossEnergy_HorarioInicioOld']) )     $CrossEnergy_HorarioInicioOld      = $_POST['CrossEnergy_HorarioInicioOld'];
 	if ( !empty($_POST['CrossEnergy_HorarioTerminoOld']) )    $CrossEnergy_HorarioTerminoOld     = $_POST['CrossEnergy_HorarioTerminoOld'];
-	
 	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -215,6 +213,36 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){                                        $Nombre                    = EstandarizarInput($Nombre); }
+	if(isset($email_principal) && $email_principal != ''){                      $email_principal           = EstandarizarInput($email_principal); }
+	if(isset($Direccion) && $Direccion != ''){                                  $Direccion                 = EstandarizarInput($Direccion); }
+	if(isset($Contacto_Nombre) && $Contacto_Nombre != ''){                      $Contacto_Nombre           = EstandarizarInput($Contacto_Nombre); }
+	if(isset($Contacto_Email) && $Contacto_Email != ''){                        $Contacto_Email            = EstandarizarInput($Contacto_Email); }
+	if(isset($Contacto_Web) && $Contacto_Web != ''){                            $Contacto_Web              = EstandarizarInput($Contacto_Web); }
+	if(isset($Contrato_Nombre) && $Contrato_Nombre != ''){                      $Contrato_Nombre           = EstandarizarInput($Contrato_Nombre); }
+	if(isset($Contrato_Numero) && $Contrato_Numero != ''){                      $Contrato_Numero           = EstandarizarInput($Contrato_Numero); }
+	if(isset($Contrato_Duracion) && $Contrato_Duracion != ''){                  $Contrato_Duracion         = EstandarizarInput($Contrato_Duracion); }
+	if(isset($Config_IDGoogle) && $Config_IDGoogle != ''){                      $Config_IDGoogle           = EstandarizarInput($Config_IDGoogle); }
+	if(isset($Config_Google_apiKey) && $Config_Google_apiKey != ''){            $Config_Google_apiKey      = EstandarizarInput($Config_Google_apiKey); }
+	if(isset($Config_FCM_apiKey) && $Config_FCM_apiKey != ''){                  $Config_FCM_apiKey         = EstandarizarInput($Config_FCM_apiKey); }
+	if(isset($Config_FCM_Main_apiKey) && $Config_FCM_Main_apiKey != ''){        $Config_FCM_Main_apiKey    = EstandarizarInput($Config_FCM_Main_apiKey); }
+	if(isset($Config_CorreoRespaldo) && $Config_CorreoRespaldo != ''){          $Config_CorreoRespaldo     = EstandarizarInput($Config_CorreoRespaldo); }
+	if(isset($Config_Gmail_Usuario) && $Config_Gmail_Usuario != ''){            $Config_Gmail_Usuario      = EstandarizarInput($Config_Gmail_Usuario); }
+	if(isset($Config_Gmail_Password) && $Config_Gmail_Password != ''){          $Config_Gmail_Password     = EstandarizarInput($Config_Gmail_Password); }
+	if(isset($Config_WhatsappToken) && $Config_WhatsappToken != ''){            $Config_WhatsappToken      = EstandarizarInput($Config_WhatsappToken); }
+	if(isset($Config_WhatsappInstanceId) && $Config_WhatsappInstanceId != ''){  $Config_WhatsappInstanceId = EstandarizarInput($Config_WhatsappInstanceId); }
+	if(isset($Rubro) && $Rubro != ''){                                          $Rubro                     = EstandarizarInput($Rubro); }
+	if(isset($Social_facebook) && $Social_facebook != ''){                      $Social_facebook           = EstandarizarInput($Social_facebook); }
+	if(isset($Social_twitter) && $Social_twitter != ''){                        $Social_twitter            = EstandarizarInput($Social_twitter); }
+	if(isset($Social_instagram) && $Social_instagram != ''){                    $Social_instagram          = EstandarizarInput($Social_instagram); }
+	if(isset($Social_linkedin) && $Social_linkedin != ''){                      $Social_linkedin           = EstandarizarInput($Social_linkedin); }
+	if(isset($Social_rss) && $Social_rss != ''){                                $Social_rss                = EstandarizarInput($Social_rss); }
+	if(isset($Social_youtube) && $Social_youtube != ''){                        $Social_youtube            = EstandarizarInput($Social_youtube); }
+	if(isset($Social_tumblr) && $Social_tumblr != ''){                          $Social_tumblr             = EstandarizarInput($Social_tumblr); }
+	if(isset($RepresentanteNombre) && $RepresentanteNombre != ''){              $RepresentanteNombre       = EstandarizarInput($RepresentanteNombre); }
 	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
@@ -225,8 +253,6 @@ require_once '0_validate_user_1.php';
 	if(isset($Contacto_Fono2)&&$Contacto_Fono2!=''&&!validarNumero($Contacto_Fono2)) {  $error['Fono2']	            = 'error/Ingrese un numero telefonico valido'; }
 	if(isset($Rut)&&$Rut!=''&&!validarRut($Rut)){                                       $error['Rut']               = 'error/El Rut ingresado no es valido'; }
 	if(isset($Contacto_Email)&&$email_principal!=''&&!validarEmail($Contacto_Email)){   $error['Contacto_Email']    = 'error/El Email de contacto ingresado no es valido'; }	
-	
-	
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -260,91 +286,91 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){                                               $a  = "'".$Nombre."'" ;                              }else{$a  ="''";}
-				if(isset($email_principal) && $email_principal != ''){                             $a .= ",'".$email_principal."'" ;                    }else{$a .= ",''";}
-				if(isset($Rut) && $Rut != ''){                                                     $a .= ",'".$Rut."'" ;                                }else{$a .= ",''";}
-				if(isset($idCiudad) && $idCiudad != ''){                                           $a .= ",'".$idCiudad."'" ;                           }else{$a .= ",''";}
-				if(isset($idComuna) && $idComuna != ''){                                           $a .= ",'".$idComuna."'" ;                           }else{$a .= ",''";}
-				if(isset($Direccion) && $Direccion != ''){                                         $a .= ",'".$Direccion."'" ;                          }else{$a .= ",''";}
-				if(isset($CajaChica) && $CajaChica != ''){                                         $a .= ",'".$CajaChica."'" ;                          }else{$a .= ",''";}
-				if(isset($Contacto_Nombre) && $Contacto_Nombre != ''){                             $a .= ",'".$Contacto_Nombre."'" ;                    }else{$a .= ",''";}
-				if(isset($Contacto_Fono1) && $Contacto_Fono1 != ''){                               $a .= ",'".$Contacto_Fono1."'" ;                     }else{$a .= ",''";}
-				if(isset($Contacto_Fono2) && $Contacto_Fono2 != ''){                               $a .= ",'".$Contacto_Fono2."'" ;                     }else{$a .= ",''";}
-				if(isset($Contacto_Fax) && $Contacto_Fax != ''){                                   $a .= ",'".$Contacto_Fax."'" ;                       }else{$a .= ",''";}
-				if(isset($Contacto_Email) && $Contacto_Email != ''){                               $a .= ",'".$Contacto_Email."'" ;                     }else{$a .= ",''";}
-				if(isset($Contacto_Web) && $Contacto_Web != ''){                                   $a .= ",'".$Contacto_Web."'" ;                       }else{$a .= ",''";}
-				if(isset($Contrato_Nombre) && $Contrato_Nombre != ''){                             $a .= ",'".$Contrato_Nombre."'" ;                    }else{$a .= ",''";}
-				if(isset($Contrato_Numero) && $Contrato_Numero != ''){                             $a .= ",'".$Contrato_Numero."'" ;                    }else{$a .= ",''";}
-				if(isset($Contrato_Fecha) && $Contrato_Fecha != ''){                               $a .= ",'".$Contrato_Fecha."'" ;                     }else{$a .= ",''";}
-				if(isset($Contrato_Duracion) && $Contrato_Duracion != ''){                         $a .= ",'".$Contrato_Duracion."'" ;                  }else{$a .= ",''";}
-				if(isset($Config_IDGoogle) && $Config_IDGoogle != ''){                             $a .= ",'".$Config_IDGoogle."'" ;                    }else{$a .= ",''";}
-				if(isset($Config_Google_apiKey) && $Config_Google_apiKey != ''){                   $a .= ",'".$Config_Google_apiKey."'" ;               }else{$a .= ",''";}
-				if(isset($Config_FCM_apiKey) && $Config_FCM_apiKey != ''){                         $a .= ",'".$Config_FCM_apiKey."'" ;                  }else{$a .= ",''";}
-				if(isset($Config_FCM_Main_apiKey) && $Config_FCM_Main_apiKey != ''){               $a .= ",'".$Config_FCM_Main_apiKey."'" ;             }else{$a .= ",''";}
-				if(isset($Config_imgLogo) && $Config_imgLogo != ''){                               $a .= ",'".$Config_imgLogo."'" ;                     }else{$a .= ",''";}
-				if(isset($Config_idTheme) && $Config_idTheme != ''){                               $a .= ",'".$Config_idTheme."'" ;                     }else{$a .= ",''";}
-				if(isset($Config_CorreoRespaldo) && $Config_CorreoRespaldo != ''){                 $a .= ",'".$Config_CorreoRespaldo."'" ;              }else{$a .= ",''";}
-				if(isset($Config_Gmail_Usuario) && $Config_Gmail_Usuario != ''){                   $a .= ",'".$Config_Gmail_Usuario."'" ;               }else{$a .= ",''";}
-				if(isset($Config_Gmail_Password) && $Config_Gmail_Password != ''){                 $a .= ",'".$Config_Gmail_Password."'" ;              }else{$a .= ",''";}
-				if(isset($Config_WhatsappToken) && $Config_WhatsappToken != ''){                   $a .= ",'".$Config_WhatsappToken."'" ;               }else{$a .= ",''";}
-				if(isset($Config_WhatsappInstanceId) && $Config_WhatsappInstanceId != ''){         $a .= ",'".$Config_WhatsappInstanceId."'" ;          }else{$a .= ",''";}
-				if(isset($idOpcionesGen_1) && $idOpcionesGen_1 != ''){                             $a .= ",'".$idOpcionesGen_1."'" ;                    }else{$a .= ",''";}
-				if(isset($idOpcionesGen_2) && $idOpcionesGen_2 != ''){                             $a .= ",'".$idOpcionesGen_2."'" ;                    }else{$a .= ",''";}
-				if(isset($idOpcionesGen_3) && $idOpcionesGen_3 != ''){                             $a .= ",'".$idOpcionesGen_3."'" ;                    }else{$a .= ",''";}
-				if(isset($idOpcionesGen_4) && $idOpcionesGen_4 != ''){                             $a .= ",'".$idOpcionesGen_4."'" ;                    }else{$a .= ",''";}
-				if(isset($idOpcionesGen_5) && $idOpcionesGen_5 != ''){                             $a .= ",'".$idOpcionesGen_5."'" ;                    }else{$a .= ",''";}
-				if(isset($idOpcionesGen_6) && $idOpcionesGen_6 != ''){                             $a .= ",'".$idOpcionesGen_6."'" ;                    }else{$a .= ",''";}
-				if(isset($idOpcionesGen_7) && $idOpcionesGen_7 != ''){                             $a .= ",'".$idOpcionesGen_7."'" ;                    }else{$a .= ",''";}
-				if(isset($idOpcionesGen_8) && $idOpcionesGen_8 != ''){                             $a .= ",'".$idOpcionesGen_8."'" ;                    }else{$a .= ",''";}
-				if(isset($idOpcionesGen_9) && $idOpcionesGen_9 != ''){                             $a .= ",'".$idOpcionesGen_9."'" ;                    }else{$a .= ",''";}
-				if(isset($idOpcionesGen_10) && $idOpcionesGen_10 != ''){                           $a .= ",'".$idOpcionesGen_10."'" ;                   }else{$a .= ",''";}
-				if(isset($idOpcionesGen_11) && $idOpcionesGen_11 != ''){                           $a .= ",'".$idOpcionesGen_11."'" ;                   }else{$a .= ",''";}
-				if(isset($idOpcionesGen_12) && $idOpcionesGen_12 != ''){                           $a .= ",'".$idOpcionesGen_12."'" ;                   }else{$a .= ",''";}
-				if(isset($idOpcionesGen_13) && $idOpcionesGen_13 != ''){                           $a .= ",'".$idOpcionesGen_13."'" ;                   }else{$a .= ",''";}
-				if(isset($idOpcionesGen_14) && $idOpcionesGen_14 != ''){                           $a .= ",'".$idOpcionesGen_14."'" ;                   }else{$a .= ",''";}
-				if(isset($idOpcionesGen_15) && $idOpcionesGen_15 != ''){                           $a .= ",'".$idOpcionesGen_15."'" ;                   }else{$a .= ",''";}
-				if(isset($idOpcionesGen_16) && $idOpcionesGen_16 != ''){                           $a .= ",'".$idOpcionesGen_16."'" ;                   }else{$a .= ",''";}
-				if(isset($idOpcionesGen_17) && $idOpcionesGen_17 != ''){                           $a .= ",'".$idOpcionesGen_17."'" ;                   }else{$a .= ",''";}
-				if(isset($idOpcionesGen_18) && $idOpcionesGen_18 != ''){                           $a .= ",'".$idOpcionesGen_18."'" ;                   }else{$a .= ",''";}
-				if(isset($idOpcionesGen_19) && $idOpcionesGen_19 != ''){                           $a .= ",'".$idOpcionesGen_19."'" ;                   }else{$a .= ",''";}
-				if(isset($idOpcionesGen_20) && $idOpcionesGen_20 != ''){                           $a .= ",'".$idOpcionesGen_20."'" ;                   }else{$a .= ",''";}
-				if(isset($OT_idBodegaProd) && $OT_idBodegaProd != ''){                             $a .= ",'".$OT_idBodegaProd."'" ;                    }else{$a .= ",''";}
-				if(isset($OT_idBodegaIns) && $OT_idBodegaIns != ''){                               $a .= ",'".$OT_idBodegaIns."'" ;                     }else{$a .= ",''";}
-				if(isset($Rubro) && $Rubro != ''){                                                 $a .= ",'".$Rubro."'" ;                              }else{$a .= ",''";}
-				if(isset($idOpcionesTel) && $idOpcionesTel != ''){                                 $a .= ",'".$idOpcionesTel."'" ;                      }else{$a .= ",''";}
-				if(isset($idConfigRam) && $idConfigRam != ''){                                     $a .= ",'".$idConfigRam."'" ;                        }else{$a .= ",''";}
-				if(isset($idConfigTime) && $idConfigTime != ''){                                   $a .= ",'".$idConfigTime."'" ;                       }else{$a .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){                                           $a .= ",'".$idEstado."'" ;                           }else{$a .= ",''";}
-				if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin != ''){                 $a .= ",'".$CrossTech_DiasTempMin."'" ;              }else{$a .= ",''";}
-				if(isset($CrossTech_TempMin) && $CrossTech_TempMin != ''){                         $a .= ",'".$CrossTech_TempMin."'" ;                  }else{$a .= ",''";}
-				if(isset($CrossTech_TempMax) && $CrossTech_TempMax != ''){                         $a .= ",'".$CrossTech_TempMax."'" ;                  }else{$a .= ",''";}
-				if(isset($CrossTech_FechaDiasTempMin) && $CrossTech_FechaDiasTempMin != ''){       $a .= ",'".$CrossTech_FechaDiasTempMin."'" ;         }else{$a .= ",''";}
-				if(isset($CrossTech_FechaTempMin) && $CrossTech_FechaTempMin != ''){               $a .= ",'".$CrossTech_FechaTempMin."'" ;             }else{$a .= ",''";}
-				if(isset($CrossTech_FechaTempMax) && $CrossTech_FechaTempMax != ''){               $a .= ",'".$CrossTech_FechaTempMax."'" ;             }else{$a .= ",''";}
-				if(isset($CrossTech_FechaUnidadFrio) && $CrossTech_FechaUnidadFrio != ''){         $a .= ",'".$CrossTech_FechaUnidadFrio."'" ;          }else{$a .= ",''";}
-				if(isset($CrossTech_HoraPrevRev) && $CrossTech_HoraPrevRev != ''){                 $a .= ",'".$CrossTech_HoraPrevRev."'" ;              }else{$a .= ",''";}
-				if(isset($CrossTech_HoraPrevision) && $CrossTech_HoraPrevision != ''){             $a .= ",'".$CrossTech_HoraPrevision."'" ;            }else{$a .= ",''";}
-				if(isset($CrossTech_HoraPrevCuenta) && $CrossTech_HoraPrevCuenta != ''){           $a .= ",'".$CrossTech_HoraPrevCuenta."'" ;           }else{$a .= ",''";}
-				if(isset($CrossTech_HeladaTemp) && $CrossTech_HeladaTemp != ''){                   $a .= ",'".$CrossTech_HeladaTemp."'" ;               }else{$a .= ",''";}
-				if(isset($CrossTech_HeladaMailHoraIni) && $CrossTech_HeladaMailHoraIni != ''){     $a .= ",'".$CrossTech_HeladaMailHoraIni."'" ;        }else{$a .= ",''";}
-				if(isset($CrossTech_HeladaMailHoraTerm) && $CrossTech_HeladaMailHoraTerm != ''){   $a .= ",'".$CrossTech_HeladaMailHoraTerm."'" ;       }else{$a .= ",''";}
-				if(isset($Social_idUso) && $Social_idUso != ''){                                   $a .= ",'".$Social_idUso."'" ;                       }else{$a .= ",''";}
-				if(isset($Social_facebook) && $Social_facebook != ''){                             $a .= ",'".$Social_facebook."'" ;                    }else{$a .= ",''";}
-				if(isset($Social_twitter) && $Social_twitter != ''){                               $a .= ",'".$Social_twitter."'" ;                     }else{$a .= ",''";}
-				if(isset($Social_instagram) && $Social_instagram != ''){                           $a .= ",'".$Social_instagram."'" ;                   }else{$a .= ",''";}
-				if(isset($Social_linkedin) && $Social_linkedin != ''){                             $a .= ",'".$Social_linkedin."'" ;                    }else{$a .= ",''";}
-				if(isset($Social_rss) && $Social_rss != ''){                                       $a .= ",'".$Social_rss."'" ;                         }else{$a .= ",''";}
-				if(isset($Social_youtube) && $Social_youtube != ''){                               $a .= ",'".$Social_youtube."'" ;                     }else{$a .= ",''";}
-				if(isset($Social_tumblr) && $Social_tumblr != ''){                                 $a .= ",'".$Social_tumblr."'" ;                      }else{$a .= ",''";}
-				if(isset($CrossEnergy_PeriodoInicio) && $CrossEnergy_PeriodoInicio != ''){         $a .= ",'".$CrossEnergy_PeriodoInicio."'" ;          }else{$a .= ",''";}
-				if(isset($CrossEnergy_PeriodoTermino) && $CrossEnergy_PeriodoTermino != ''){       $a .= ",'".$CrossEnergy_PeriodoTermino."'" ;         }else{$a .= ",''";}
-				if(isset($CrossEnergy_HorarioInicio) && $CrossEnergy_HorarioInicio != ''){         $a .= ",'".$CrossEnergy_HorarioInicio."'" ;          }else{$a .= ",''";}
-				if(isset($CrossEnergy_HorarioTermino) && $CrossEnergy_HorarioTermino != ''){       $a .= ",'".$CrossEnergy_HorarioTermino."'" ;         }else{$a .= ",''";}
-				if(isset($RepresentanteNombre) && $RepresentanteNombre != ''){                     $a .= ",'".$RepresentanteNombre."'" ;                }else{$a .= ",''";}
-				if(isset($RepresentanteRut) && $RepresentanteRut != ''){                           $a .= ",'".$RepresentanteRut."'" ;                   }else{$a .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                                               $SIS_data  = "'".$Nombre."'" ;                              }else{$SIS_data  = "''";}
+				if(isset($email_principal) && $email_principal != ''){                             $SIS_data .= ",'".$email_principal."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($Rut) && $Rut != ''){                                                     $SIS_data .= ",'".$Rut."'" ;                                }else{$SIS_data .= ",''";}
+				if(isset($idCiudad) && $idCiudad != ''){                                           $SIS_data .= ",'".$idCiudad."'" ;                           }else{$SIS_data .= ",''";}
+				if(isset($idComuna) && $idComuna != ''){                                           $SIS_data .= ",'".$idComuna."'" ;                           }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion != ''){                                         $SIS_data .= ",'".$Direccion."'" ;                          }else{$SIS_data .= ",''";}
+				if(isset($CajaChica) && $CajaChica != ''){                                         $SIS_data .= ",'".$CajaChica."'" ;                          }else{$SIS_data .= ",''";}
+				if(isset($Contacto_Nombre) && $Contacto_Nombre != ''){                             $SIS_data .= ",'".$Contacto_Nombre."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($Contacto_Fono1) && $Contacto_Fono1 != ''){                               $SIS_data .= ",'".$Contacto_Fono1."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($Contacto_Fono2) && $Contacto_Fono2 != ''){                               $SIS_data .= ",'".$Contacto_Fono2."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($Contacto_Fax) && $Contacto_Fax != ''){                                   $SIS_data .= ",'".$Contacto_Fax."'" ;                       }else{$SIS_data .= ",''";}
+				if(isset($Contacto_Email) && $Contacto_Email != ''){                               $SIS_data .= ",'".$Contacto_Email."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($Contacto_Web) && $Contacto_Web != ''){                                   $SIS_data .= ",'".$Contacto_Web."'" ;                       }else{$SIS_data .= ",''";}
+				if(isset($Contrato_Nombre) && $Contrato_Nombre != ''){                             $SIS_data .= ",'".$Contrato_Nombre."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($Contrato_Numero) && $Contrato_Numero != ''){                             $SIS_data .= ",'".$Contrato_Numero."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($Contrato_Fecha) && $Contrato_Fecha != ''){                               $SIS_data .= ",'".$Contrato_Fecha."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($Contrato_Duracion) && $Contrato_Duracion != ''){                         $SIS_data .= ",'".$Contrato_Duracion."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($Config_IDGoogle) && $Config_IDGoogle != ''){                             $SIS_data .= ",'".$Config_IDGoogle."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($Config_Google_apiKey) && $Config_Google_apiKey != ''){                   $SIS_data .= ",'".$Config_Google_apiKey."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($Config_FCM_apiKey) && $Config_FCM_apiKey != ''){                         $SIS_data .= ",'".$Config_FCM_apiKey."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($Config_FCM_Main_apiKey) && $Config_FCM_Main_apiKey != ''){               $SIS_data .= ",'".$Config_FCM_Main_apiKey."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($Config_imgLogo) && $Config_imgLogo != ''){                               $SIS_data .= ",'".$Config_imgLogo."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($Config_idTheme) && $Config_idTheme != ''){                               $SIS_data .= ",'".$Config_idTheme."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($Config_CorreoRespaldo) && $Config_CorreoRespaldo != ''){                 $SIS_data .= ",'".$Config_CorreoRespaldo."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($Config_Gmail_Usuario) && $Config_Gmail_Usuario != ''){                   $SIS_data .= ",'".$Config_Gmail_Usuario."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($Config_Gmail_Password) && $Config_Gmail_Password != ''){                 $SIS_data .= ",'".$Config_Gmail_Password."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($Config_WhatsappToken) && $Config_WhatsappToken != ''){                   $SIS_data .= ",'".$Config_WhatsappToken."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($Config_WhatsappInstanceId) && $Config_WhatsappInstanceId != ''){         $SIS_data .= ",'".$Config_WhatsappInstanceId."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_1) && $idOpcionesGen_1 != ''){                             $SIS_data .= ",'".$idOpcionesGen_1."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_2) && $idOpcionesGen_2 != ''){                             $SIS_data .= ",'".$idOpcionesGen_2."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_3) && $idOpcionesGen_3 != ''){                             $SIS_data .= ",'".$idOpcionesGen_3."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_4) && $idOpcionesGen_4 != ''){                             $SIS_data .= ",'".$idOpcionesGen_4."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_5) && $idOpcionesGen_5 != ''){                             $SIS_data .= ",'".$idOpcionesGen_5."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_6) && $idOpcionesGen_6 != ''){                             $SIS_data .= ",'".$idOpcionesGen_6."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_7) && $idOpcionesGen_7 != ''){                             $SIS_data .= ",'".$idOpcionesGen_7."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_8) && $idOpcionesGen_8 != ''){                             $SIS_data .= ",'".$idOpcionesGen_8."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_9) && $idOpcionesGen_9 != ''){                             $SIS_data .= ",'".$idOpcionesGen_9."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_10) && $idOpcionesGen_10 != ''){                           $SIS_data .= ",'".$idOpcionesGen_10."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_11) && $idOpcionesGen_11 != ''){                           $SIS_data .= ",'".$idOpcionesGen_11."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_12) && $idOpcionesGen_12 != ''){                           $SIS_data .= ",'".$idOpcionesGen_12."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_13) && $idOpcionesGen_13 != ''){                           $SIS_data .= ",'".$idOpcionesGen_13."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_14) && $idOpcionesGen_14 != ''){                           $SIS_data .= ",'".$idOpcionesGen_14."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_15) && $idOpcionesGen_15 != ''){                           $SIS_data .= ",'".$idOpcionesGen_15."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_16) && $idOpcionesGen_16 != ''){                           $SIS_data .= ",'".$idOpcionesGen_16."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_17) && $idOpcionesGen_17 != ''){                           $SIS_data .= ",'".$idOpcionesGen_17."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_18) && $idOpcionesGen_18 != ''){                           $SIS_data .= ",'".$idOpcionesGen_18."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_19) && $idOpcionesGen_19 != ''){                           $SIS_data .= ",'".$idOpcionesGen_19."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesGen_20) && $idOpcionesGen_20 != ''){                           $SIS_data .= ",'".$idOpcionesGen_20."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($OT_idBodegaProd) && $OT_idBodegaProd != ''){                             $SIS_data .= ",'".$OT_idBodegaProd."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($OT_idBodegaIns) && $OT_idBodegaIns != ''){                               $SIS_data .= ",'".$OT_idBodegaIns."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($Rubro) && $Rubro != ''){                                                 $SIS_data .= ",'".$Rubro."'" ;                              }else{$SIS_data .= ",''";}
+				if(isset($idOpcionesTel) && $idOpcionesTel != ''){                                 $SIS_data .= ",'".$idOpcionesTel."'" ;                      }else{$SIS_data .= ",''";}
+				if(isset($idConfigRam) && $idConfigRam != ''){                                     $SIS_data .= ",'".$idConfigRam."'" ;                        }else{$SIS_data .= ",''";}
+				if(isset($idConfigTime) && $idConfigTime != ''){                                   $SIS_data .= ",'".$idConfigTime."'" ;                       }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                                           $SIS_data .= ",'".$idEstado."'" ;                           }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin != ''){                 $SIS_data .= ",'".$CrossTech_DiasTempMin."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_TempMin) && $CrossTech_TempMin != ''){                         $SIS_data .= ",'".$CrossTech_TempMin."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_TempMax) && $CrossTech_TempMax != ''){                         $SIS_data .= ",'".$CrossTech_TempMax."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_FechaDiasTempMin) && $CrossTech_FechaDiasTempMin != ''){       $SIS_data .= ",'".$CrossTech_FechaDiasTempMin."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_FechaTempMin) && $CrossTech_FechaTempMin != ''){               $SIS_data .= ",'".$CrossTech_FechaTempMin."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_FechaTempMax) && $CrossTech_FechaTempMax != ''){               $SIS_data .= ",'".$CrossTech_FechaTempMax."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_FechaUnidadFrio) && $CrossTech_FechaUnidadFrio != ''){         $SIS_data .= ",'".$CrossTech_FechaUnidadFrio."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_HoraPrevRev) && $CrossTech_HoraPrevRev != ''){                 $SIS_data .= ",'".$CrossTech_HoraPrevRev."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_HoraPrevision) && $CrossTech_HoraPrevision != ''){             $SIS_data .= ",'".$CrossTech_HoraPrevision."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_HoraPrevCuenta) && $CrossTech_HoraPrevCuenta != ''){           $SIS_data .= ",'".$CrossTech_HoraPrevCuenta."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_HeladaTemp) && $CrossTech_HeladaTemp != ''){                   $SIS_data .= ",'".$CrossTech_HeladaTemp."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_HeladaMailHoraIni) && $CrossTech_HeladaMailHoraIni != ''){     $SIS_data .= ",'".$CrossTech_HeladaMailHoraIni."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($CrossTech_HeladaMailHoraTerm) && $CrossTech_HeladaMailHoraTerm != ''){   $SIS_data .= ",'".$CrossTech_HeladaMailHoraTerm."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Social_idUso) && $Social_idUso != ''){                                   $SIS_data .= ",'".$Social_idUso."'" ;                       }else{$SIS_data .= ",''";}
+				if(isset($Social_facebook) && $Social_facebook != ''){                             $SIS_data .= ",'".$Social_facebook."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($Social_twitter) && $Social_twitter != ''){                               $SIS_data .= ",'".$Social_twitter."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($Social_instagram) && $Social_instagram != ''){                           $SIS_data .= ",'".$Social_instagram."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($Social_linkedin) && $Social_linkedin != ''){                             $SIS_data .= ",'".$Social_linkedin."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($Social_rss) && $Social_rss != ''){                                       $SIS_data .= ",'".$Social_rss."'" ;                         }else{$SIS_data .= ",''";}
+				if(isset($Social_youtube) && $Social_youtube != ''){                               $SIS_data .= ",'".$Social_youtube."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($Social_tumblr) && $Social_tumblr != ''){                                 $SIS_data .= ",'".$Social_tumblr."'" ;                      }else{$SIS_data .= ",''";}
+				if(isset($CrossEnergy_PeriodoInicio) && $CrossEnergy_PeriodoInicio != ''){         $SIS_data .= ",'".$CrossEnergy_PeriodoInicio."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($CrossEnergy_PeriodoTermino) && $CrossEnergy_PeriodoTermino != ''){       $SIS_data .= ",'".$CrossEnergy_PeriodoTermino."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($CrossEnergy_HorarioInicio) && $CrossEnergy_HorarioInicio != ''){         $SIS_data .= ",'".$CrossEnergy_HorarioInicio."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($CrossEnergy_HorarioTermino) && $CrossEnergy_HorarioTermino != ''){       $SIS_data .= ",'".$CrossEnergy_HorarioTermino."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($RepresentanteNombre) && $RepresentanteNombre != ''){                     $SIS_data .= ",'".$RepresentanteNombre."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($RepresentanteRut) && $RepresentanteRut != ''){                           $SIS_data .= ",'".$RepresentanteRut."'" ;                   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `core_sistemas` (Nombre, email_principal, Rut, idCiudad,idComuna, Direccion,
+				$SIS_columns = 'Nombre, email_principal, Rut, idCiudad,idComuna, Direccion,
 				CajaChica, Contacto_Nombre, Contacto_Fono1, Contacto_Fono2, Contacto_Fax, Contacto_Email, Contacto_Web, 
 				Contrato_Nombre, Contrato_Numero, Contrato_Fecha, Contrato_Duracion, Config_IDGoogle,Config_Google_apiKey,
 				Config_FCM_apiKey, Config_FCM_Main_apiKey, Config_imgLogo, Config_idTheme, Config_CorreoRespaldo, 
@@ -359,31 +385,15 @@ require_once '0_validate_user_1.php';
 				CrossTech_HeladaMailHoraIni, CrossTech_HeladaMailHoraTerm, Social_idUso, Social_facebook, Social_twitter,
 				Social_instagram, Social_linkedin, Social_rss, Social_youtube, Social_tumblr, CrossEnergy_PeriodoInicio,
 				CrossEnergy_PeriodoTermino, CrossEnergy_HorarioInicio, CrossEnergy_HorarioTermino, RepresentanteNombre,
-				RepresentanteRut) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				RepresentanteRut';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_sistemas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
 				
 			}
 	
@@ -413,93 +423,93 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idSistema='".$idSistema."'" ;
-				if(isset($Nombre) && $Nombre != ''){                                               $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($email_principal) && $email_principal != ''){                             $a .= ",email_principal='".$email_principal."'" ;}
-				if(isset($Rut) && $Rut != ''){                                                     $a .= ",Rut='".$Rut."'" ;}
-				if(isset($idCiudad) && $idCiudad != ''){                                           $a .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna != ''){                                           $a .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Direccion) && $Direccion != ''){                                         $a .= ",Direccion='".$Direccion."'" ;}
-				if(isset($CajaChica) && $CajaChica != ''){                                         $a .= ",CajaChica='".$CajaChica."'" ;}
-				if(isset($Contacto_Nombre) && $Contacto_Nombre != ''){                             $a .= ",Contacto_Nombre='".$Contacto_Nombre."'" ;}
-				if(isset($Contacto_Fono1) && $Contacto_Fono1 != ''){                               $a .= ",Contacto_Fono1='".$Contacto_Fono1."'" ;}
-				if(isset($Contacto_Fono2) && $Contacto_Fono2 != ''){                               $a .= ",Contacto_Fono2='".$Contacto_Fono2."'" ;}
-				if(isset($Contacto_Fax) && $Contacto_Fax != ''){                                   $a .= ",Contacto_Fax='".$Contacto_Fax."'" ;}
-				if(isset($Contacto_Email) && $Contacto_Email != ''){                               $a .= ",Contacto_Email='".$Contacto_Email."'" ;}
-				if(isset($Contacto_Web) && $Contacto_Web != ''){                                   $a .= ",Contacto_Web='".$Contacto_Web."'" ;}
-				if(isset($Contrato_Nombre) && $Contrato_Nombre != ''){                             $a .= ",Contrato_Nombre='".$Contrato_Nombre."'" ;}
-				if(isset($Contrato_Numero) && $Contrato_Numero != ''){                             $a .= ",Contrato_Numero='".$Contrato_Numero."'" ;}
-				if(isset($Contrato_Fecha) && $Contrato_Fecha != ''){                               $a .= ",Contrato_Fecha='".$Contrato_Fecha."'" ;}
-				if(isset($Contrato_Duracion) && $Contrato_Duracion != ''){                         $a .= ",Contrato_Duracion='".$Contrato_Duracion."'" ;}
-				if(isset($Config_IDGoogle) && $Config_IDGoogle != ''){                             $a .= ",Config_IDGoogle='".$Config_IDGoogle."'" ;}
-				if(isset($Config_Google_apiKey) && $Config_Google_apiKey != ''){                   $a .= ",Config_Google_apiKey='".$Config_Google_apiKey."'" ;}
-				if(isset($Config_FCM_apiKey) && $Config_FCM_apiKey != ''){                         $a .= ",Config_FCM_apiKey='".$Config_FCM_apiKey."'" ;}
-				if(isset($Config_FCM_Main_apiKey) && $Config_FCM_Main_apiKey != ''){               $a .= ",Config_FCM_Main_apiKey='".$Config_FCM_Main_apiKey."'" ;}
-				if(isset($Config_imgLogo) && $Config_imgLogo != ''){                               $a .= ",Config_imgLogo='".$Config_imgLogo."'" ;}
-				if(isset($Config_idTheme) && $Config_idTheme != ''){                               $a .= ",Config_idTheme='".$Config_idTheme."'" ;}
-				if(isset($Config_CorreoRespaldo) && $Config_CorreoRespaldo != ''){                 $a .= ",Config_CorreoRespaldo='".$Config_CorreoRespaldo."'" ;}
-				if(isset($Config_Gmail_Usuario) && $Config_Gmail_Usuario != ''){                   $a .= ",Config_Gmail_Usuario='".$Config_Gmail_Usuario."'" ;}
-				if(isset($Config_Gmail_Password) && $Config_Gmail_Password != ''){                 $a .= ",Config_Gmail_Password='".$Config_Gmail_Password."'" ;}
-				if(isset($Config_WhatsappToken) && $Config_WhatsappToken != ''){                   $a .= ",Config_WhatsappToken='".$Config_WhatsappToken."'" ;}
-				if(isset($Config_WhatsappInstanceId) && $Config_WhatsappInstanceId != ''){         $a .= ",Config_WhatsappInstanceId='".$Config_WhatsappInstanceId."'" ;}
-				if(isset($idOpcionesGen_1) && $idOpcionesGen_1 != ''){                             $a .= ",idOpcionesGen_1='".$idOpcionesGen_1."'" ;}
-				if(isset($idOpcionesGen_2) && $idOpcionesGen_2 != ''){                             $a .= ",idOpcionesGen_2='".$idOpcionesGen_2."'" ;}
-				if(isset($idOpcionesGen_3) && $idOpcionesGen_3 != ''){                             $a .= ",idOpcionesGen_3='".$idOpcionesGen_3."'" ;}
-				if(isset($idOpcionesGen_4) && $idOpcionesGen_4 != ''){                             $a .= ",idOpcionesGen_4='".$idOpcionesGen_4."'" ;}
-				if(isset($idOpcionesGen_5) && $idOpcionesGen_5 != ''){                             $a .= ",idOpcionesGen_5='".$idOpcionesGen_5."'" ;}
-				if(isset($idOpcionesGen_6) && $idOpcionesGen_6 != ''){                             $a .= ",idOpcionesGen_6='".$idOpcionesGen_6."'" ;}
-				if(isset($idOpcionesGen_7) && $idOpcionesGen_7 != ''){                             $a .= ",idOpcionesGen_7='".$idOpcionesGen_7."'" ;}
-				if(isset($idOpcionesGen_8) && $idOpcionesGen_8 != ''){                             $a .= ",idOpcionesGen_8='".$idOpcionesGen_8."'" ;}
-				if(isset($idOpcionesGen_9) && $idOpcionesGen_9 != ''){                             $a .= ",idOpcionesGen_9='".$idOpcionesGen_9."'" ;}
-				if(isset($idOpcionesGen_10) && $idOpcionesGen_10 != ''){                           $a .= ",idOpcionesGen_10='".$idOpcionesGen_10."'" ;}
-				if(isset($idOpcionesGen_11) && $idOpcionesGen_11 != ''){                           $a .= ",idOpcionesGen_11='".$idOpcionesGen_11."'" ;}
-				if(isset($idOpcionesGen_12) && $idOpcionesGen_12 != ''){                           $a .= ",idOpcionesGen_12='".$idOpcionesGen_12."'" ;}
-				if(isset($idOpcionesGen_13) && $idOpcionesGen_13 != ''){                           $a .= ",idOpcionesGen_13='".$idOpcionesGen_13."'" ;}
-				if(isset($idOpcionesGen_14) && $idOpcionesGen_14 != ''){                           $a .= ",idOpcionesGen_14='".$idOpcionesGen_14."'" ;}
-				if(isset($idOpcionesGen_15) && $idOpcionesGen_15 != ''){                           $a .= ",idOpcionesGen_15='".$idOpcionesGen_15."'" ;}
-				if(isset($idOpcionesGen_16) && $idOpcionesGen_16 != ''){                           $a .= ",idOpcionesGen_16='".$idOpcionesGen_16."'" ;}
-				if(isset($idOpcionesGen_17) && $idOpcionesGen_17 != ''){                           $a .= ",idOpcionesGen_17='".$idOpcionesGen_17."'" ;}
-				if(isset($idOpcionesGen_18) && $idOpcionesGen_18 != ''){                           $a .= ",idOpcionesGen_18='".$idOpcionesGen_18."'" ;}
-				if(isset($idOpcionesGen_19) && $idOpcionesGen_19 != ''){                           $a .= ",idOpcionesGen_19='".$idOpcionesGen_19."'" ;}
-				if(isset($idOpcionesGen_20) && $idOpcionesGen_20 != ''){                           $a .= ",idOpcionesGen_20='".$idOpcionesGen_20."'" ;}
-				if(isset($OT_idBodegaProd) && $OT_idBodegaProd != ''){                             $a .= ",OT_idBodegaProd='".$OT_idBodegaProd."'" ;}
-				if(isset($OT_idBodegaIns) && $OT_idBodegaIns != ''){                               $a .= ",OT_idBodegaIns='".$OT_idBodegaIns."'" ;}
-				if(isset($Rubro) && $Rubro != ''){                                                 $a .= ",Rubro='".$Rubro."'" ;}
-				if(isset($idOpcionesTel) && $idOpcionesTel != ''){                                 $a .= ",idOpcionesTel='".$idOpcionesTel."'" ;}
-				if(isset($idConfigRam) && $idConfigRam != ''){                                     $a .= ",idConfigRam='".$idConfigRam."'" ;}
-				if(isset($idConfigTime) && $idConfigTime != ''){                                   $a .= ",idConfigTime='".$idConfigTime."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                                           $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin != ''){                 $a .= ",CrossTech_DiasTempMin='".$CrossTech_DiasTempMin."'" ;}
-				if(isset($CrossTech_TempMin) && $CrossTech_TempMin != ''){                         $a .= ",CrossTech_TempMin='".$CrossTech_TempMin."'" ;}
-				if(isset($CrossTech_TempMax) && $CrossTech_TempMax != ''){                         $a .= ",CrossTech_TempMax='".$CrossTech_TempMax."'" ;}
-				if(isset($CrossTech_FechaDiasTempMin) && $CrossTech_FechaDiasTempMin != ''){       $a .= ",CrossTech_FechaDiasTempMin='".$CrossTech_FechaDiasTempMin."'" ;}
-				if(isset($CrossTech_FechaTempMin) && $CrossTech_FechaTempMin != ''){               $a .= ",CrossTech_FechaTempMin='".$CrossTech_FechaTempMin."'" ;}
-				if(isset($CrossTech_FechaTempMax) && $CrossTech_FechaTempMax != ''){               $a .= ",CrossTech_FechaTempMax='".$CrossTech_FechaTempMax."'" ;}
-				if(isset($CrossTech_FechaUnidadFrio) && $CrossTech_FechaUnidadFrio != ''){         $a .= ",CrossTech_FechaUnidadFrio='".$CrossTech_FechaUnidadFrio."'" ;}
-				if(isset($CrossTech_HoraPrevRev) && $CrossTech_HoraPrevRev != ''){                 $a .= ",CrossTech_HoraPrevRev='".$CrossTech_HoraPrevRev."'" ;}
-				if(isset($CrossTech_HoraPrevision) && $CrossTech_HoraPrevision != ''){             $a .= ",CrossTech_HoraPrevision='".$CrossTech_HoraPrevision."'" ;}
-				if(isset($CrossTech_HoraPrevCuenta) && $CrossTech_HoraPrevCuenta != ''){           $a .= ",CrossTech_HoraPrevCuenta='".$CrossTech_HoraPrevCuenta."'" ;}
-				if(isset($CrossTech_HeladaTemp) && $CrossTech_HeladaTemp != ''){                   $a .= ",CrossTech_HeladaTemp='".$CrossTech_HeladaTemp."'" ;}
-				if(isset($CrossTech_HeladaMailHoraIni) && $CrossTech_HeladaMailHoraIni != ''){     $a .= ",CrossTech_HeladaMailHoraIni='".$CrossTech_HeladaMailHoraIni."'" ;}
-				if(isset($CrossTech_HeladaMailHoraTerm) && $CrossTech_HeladaMailHoraTerm != ''){   $a .= ",CrossTech_HeladaMailHoraTerm='".$CrossTech_HeladaMailHoraTerm."'" ;}
-				if(isset($Social_idUso) && $Social_idUso != ''){                                   $a .= ",Social_idUso='".$Social_idUso."'" ;}
-				if(isset($Social_facebook) ){                                                      $a .= ",Social_facebook='".$Social_facebook."'" ;}
-				if(isset($Social_twitter) ){                                                       $a .= ",Social_twitter='".$Social_twitter."'" ;}
-				if(isset($Social_instagram) ){                                                     $a .= ",Social_instagram='".$Social_instagram."'" ;}
-				if(isset($Social_linkedin) ){                                                      $a .= ",Social_linkedin='".$Social_linkedin."'" ;}
-				if(isset($Social_rss) ){                                                           $a .= ",Social_rss='".$Social_rss."'" ;}
-				if(isset($Social_youtube) ){                                                       $a .= ",Social_youtube='".$Social_youtube."'" ;}
-				if(isset($Social_tumblr) ){                                                        $a .= ",Social_tumblr='".$Social_tumblr."'" ;}
-				if(isset($CrossEnergy_PeriodoInicio) && $CrossEnergy_PeriodoInicio != ''){         $a .= ",CrossEnergy_PeriodoInicio='".$CrossEnergy_PeriodoInicio."'" ;}
-				if(isset($CrossEnergy_PeriodoTermino) && $CrossEnergy_PeriodoTermino != ''){       $a .= ",CrossEnergy_PeriodoTermino='".$CrossEnergy_PeriodoTermino."'" ;}
-				if(isset($CrossEnergy_HorarioInicio) && $CrossEnergy_HorarioInicio != ''){         $a .= ",CrossEnergy_HorarioInicio='".$CrossEnergy_HorarioInicio."'" ;}
-				if(isset($CrossEnergy_HorarioTermino) && $CrossEnergy_HorarioTermino != ''){       $a .= ",CrossEnergy_HorarioTermino='".$CrossEnergy_HorarioTermino."'" ;}
-				if(isset($RepresentanteNombre) && $RepresentanteNombre != ''){                     $a .= ",RepresentanteNombre='".$RepresentanteNombre."'" ;}
-				if(isset($RepresentanteRut) && $RepresentanteRut != ''){                           $a .= ",RepresentanteRut='".$RepresentanteRut."'" ;}
+				$SIS_data = "idSistema='".$idSistema."'" ;
+				if(isset($Nombre) && $Nombre != ''){                                               $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($email_principal) && $email_principal != ''){                             $SIS_data .= ",email_principal='".$email_principal."'" ;}
+				if(isset($Rut) && $Rut != ''){                                                     $SIS_data .= ",Rut='".$Rut."'" ;}
+				if(isset($idCiudad) && $idCiudad != ''){                                           $SIS_data .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna != ''){                                           $SIS_data .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){                                         $SIS_data .= ",Direccion='".$Direccion."'" ;}
+				if(isset($CajaChica) && $CajaChica != ''){                                         $SIS_data .= ",CajaChica='".$CajaChica."'" ;}
+				if(isset($Contacto_Nombre) && $Contacto_Nombre != ''){                             $SIS_data .= ",Contacto_Nombre='".$Contacto_Nombre."'" ;}
+				if(isset($Contacto_Fono1) && $Contacto_Fono1 != ''){                               $SIS_data .= ",Contacto_Fono1='".$Contacto_Fono1."'" ;}
+				if(isset($Contacto_Fono2) && $Contacto_Fono2 != ''){                               $SIS_data .= ",Contacto_Fono2='".$Contacto_Fono2."'" ;}
+				if(isset($Contacto_Fax) && $Contacto_Fax != ''){                                   $SIS_data .= ",Contacto_Fax='".$Contacto_Fax."'" ;}
+				if(isset($Contacto_Email) && $Contacto_Email != ''){                               $SIS_data .= ",Contacto_Email='".$Contacto_Email."'" ;}
+				if(isset($Contacto_Web) && $Contacto_Web != ''){                                   $SIS_data .= ",Contacto_Web='".$Contacto_Web."'" ;}
+				if(isset($Contrato_Nombre) && $Contrato_Nombre != ''){                             $SIS_data .= ",Contrato_Nombre='".$Contrato_Nombre."'" ;}
+				if(isset($Contrato_Numero) && $Contrato_Numero != ''){                             $SIS_data .= ",Contrato_Numero='".$Contrato_Numero."'" ;}
+				if(isset($Contrato_Fecha) && $Contrato_Fecha != ''){                               $SIS_data .= ",Contrato_Fecha='".$Contrato_Fecha."'" ;}
+				if(isset($Contrato_Duracion) && $Contrato_Duracion != ''){                         $SIS_data .= ",Contrato_Duracion='".$Contrato_Duracion."'" ;}
+				if(isset($Config_IDGoogle) && $Config_IDGoogle != ''){                             $SIS_data .= ",Config_IDGoogle='".$Config_IDGoogle."'" ;}
+				if(isset($Config_Google_apiKey) && $Config_Google_apiKey != ''){                   $SIS_data .= ",Config_Google_apiKey='".$Config_Google_apiKey."'" ;}
+				if(isset($Config_FCM_apiKey) && $Config_FCM_apiKey != ''){                         $SIS_data .= ",Config_FCM_apiKey='".$Config_FCM_apiKey."'" ;}
+				if(isset($Config_FCM_Main_apiKey) && $Config_FCM_Main_apiKey != ''){               $SIS_data .= ",Config_FCM_Main_apiKey='".$Config_FCM_Main_apiKey."'" ;}
+				if(isset($Config_imgLogo) && $Config_imgLogo != ''){                               $SIS_data .= ",Config_imgLogo='".$Config_imgLogo."'" ;}
+				if(isset($Config_idTheme) && $Config_idTheme != ''){                               $SIS_data .= ",Config_idTheme='".$Config_idTheme."'" ;}
+				if(isset($Config_CorreoRespaldo) && $Config_CorreoRespaldo != ''){                 $SIS_data .= ",Config_CorreoRespaldo='".$Config_CorreoRespaldo."'" ;}
+				if(isset($Config_Gmail_Usuario) && $Config_Gmail_Usuario != ''){                   $SIS_data .= ",Config_Gmail_Usuario='".$Config_Gmail_Usuario."'" ;}
+				if(isset($Config_Gmail_Password) && $Config_Gmail_Password != ''){                 $SIS_data .= ",Config_Gmail_Password='".$Config_Gmail_Password."'" ;}
+				if(isset($Config_WhatsappToken) && $Config_WhatsappToken != ''){                   $SIS_data .= ",Config_WhatsappToken='".$Config_WhatsappToken."'" ;}
+				if(isset($Config_WhatsappInstanceId) && $Config_WhatsappInstanceId != ''){         $SIS_data .= ",Config_WhatsappInstanceId='".$Config_WhatsappInstanceId."'" ;}
+				if(isset($idOpcionesGen_1) && $idOpcionesGen_1 != ''){                             $SIS_data .= ",idOpcionesGen_1='".$idOpcionesGen_1."'" ;}
+				if(isset($idOpcionesGen_2) && $idOpcionesGen_2 != ''){                             $SIS_data .= ",idOpcionesGen_2='".$idOpcionesGen_2."'" ;}
+				if(isset($idOpcionesGen_3) && $idOpcionesGen_3 != ''){                             $SIS_data .= ",idOpcionesGen_3='".$idOpcionesGen_3."'" ;}
+				if(isset($idOpcionesGen_4) && $idOpcionesGen_4 != ''){                             $SIS_data .= ",idOpcionesGen_4='".$idOpcionesGen_4."'" ;}
+				if(isset($idOpcionesGen_5) && $idOpcionesGen_5 != ''){                             $SIS_data .= ",idOpcionesGen_5='".$idOpcionesGen_5."'" ;}
+				if(isset($idOpcionesGen_6) && $idOpcionesGen_6 != ''){                             $SIS_data .= ",idOpcionesGen_6='".$idOpcionesGen_6."'" ;}
+				if(isset($idOpcionesGen_7) && $idOpcionesGen_7 != ''){                             $SIS_data .= ",idOpcionesGen_7='".$idOpcionesGen_7."'" ;}
+				if(isset($idOpcionesGen_8) && $idOpcionesGen_8 != ''){                             $SIS_data .= ",idOpcionesGen_8='".$idOpcionesGen_8."'" ;}
+				if(isset($idOpcionesGen_9) && $idOpcionesGen_9 != ''){                             $SIS_data .= ",idOpcionesGen_9='".$idOpcionesGen_9."'" ;}
+				if(isset($idOpcionesGen_10) && $idOpcionesGen_10 != ''){                           $SIS_data .= ",idOpcionesGen_10='".$idOpcionesGen_10."'" ;}
+				if(isset($idOpcionesGen_11) && $idOpcionesGen_11 != ''){                           $SIS_data .= ",idOpcionesGen_11='".$idOpcionesGen_11."'" ;}
+				if(isset($idOpcionesGen_12) && $idOpcionesGen_12 != ''){                           $SIS_data .= ",idOpcionesGen_12='".$idOpcionesGen_12."'" ;}
+				if(isset($idOpcionesGen_13) && $idOpcionesGen_13 != ''){                           $SIS_data .= ",idOpcionesGen_13='".$idOpcionesGen_13."'" ;}
+				if(isset($idOpcionesGen_14) && $idOpcionesGen_14 != ''){                           $SIS_data .= ",idOpcionesGen_14='".$idOpcionesGen_14."'" ;}
+				if(isset($idOpcionesGen_15) && $idOpcionesGen_15 != ''){                           $SIS_data .= ",idOpcionesGen_15='".$idOpcionesGen_15."'" ;}
+				if(isset($idOpcionesGen_16) && $idOpcionesGen_16 != ''){                           $SIS_data .= ",idOpcionesGen_16='".$idOpcionesGen_16."'" ;}
+				if(isset($idOpcionesGen_17) && $idOpcionesGen_17 != ''){                           $SIS_data .= ",idOpcionesGen_17='".$idOpcionesGen_17."'" ;}
+				if(isset($idOpcionesGen_18) && $idOpcionesGen_18 != ''){                           $SIS_data .= ",idOpcionesGen_18='".$idOpcionesGen_18."'" ;}
+				if(isset($idOpcionesGen_19) && $idOpcionesGen_19 != ''){                           $SIS_data .= ",idOpcionesGen_19='".$idOpcionesGen_19."'" ;}
+				if(isset($idOpcionesGen_20) && $idOpcionesGen_20 != ''){                           $SIS_data .= ",idOpcionesGen_20='".$idOpcionesGen_20."'" ;}
+				if(isset($OT_idBodegaProd) && $OT_idBodegaProd != ''){                             $SIS_data .= ",OT_idBodegaProd='".$OT_idBodegaProd."'" ;}
+				if(isset($OT_idBodegaIns) && $OT_idBodegaIns != ''){                               $SIS_data .= ",OT_idBodegaIns='".$OT_idBodegaIns."'" ;}
+				if(isset($Rubro) && $Rubro != ''){                                                 $SIS_data .= ",Rubro='".$Rubro."'" ;}
+				if(isset($idOpcionesTel) && $idOpcionesTel != ''){                                 $SIS_data .= ",idOpcionesTel='".$idOpcionesTel."'" ;}
+				if(isset($idConfigRam) && $idConfigRam != ''){                                     $SIS_data .= ",idConfigRam='".$idConfigRam."'" ;}
+				if(isset($idConfigTime) && $idConfigTime != ''){                                   $SIS_data .= ",idConfigTime='".$idConfigTime."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                                           $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin != ''){                 $SIS_data .= ",CrossTech_DiasTempMin='".$CrossTech_DiasTempMin."'" ;}
+				if(isset($CrossTech_TempMin) && $CrossTech_TempMin != ''){                         $SIS_data .= ",CrossTech_TempMin='".$CrossTech_TempMin."'" ;}
+				if(isset($CrossTech_TempMax) && $CrossTech_TempMax != ''){                         $SIS_data .= ",CrossTech_TempMax='".$CrossTech_TempMax."'" ;}
+				if(isset($CrossTech_FechaDiasTempMin) && $CrossTech_FechaDiasTempMin != ''){       $SIS_data .= ",CrossTech_FechaDiasTempMin='".$CrossTech_FechaDiasTempMin."'" ;}
+				if(isset($CrossTech_FechaTempMin) && $CrossTech_FechaTempMin != ''){               $SIS_data .= ",CrossTech_FechaTempMin='".$CrossTech_FechaTempMin."'" ;}
+				if(isset($CrossTech_FechaTempMax) && $CrossTech_FechaTempMax != ''){               $SIS_data .= ",CrossTech_FechaTempMax='".$CrossTech_FechaTempMax."'" ;}
+				if(isset($CrossTech_FechaUnidadFrio) && $CrossTech_FechaUnidadFrio != ''){         $SIS_data .= ",CrossTech_FechaUnidadFrio='".$CrossTech_FechaUnidadFrio."'" ;}
+				if(isset($CrossTech_HoraPrevRev) && $CrossTech_HoraPrevRev != ''){                 $SIS_data .= ",CrossTech_HoraPrevRev='".$CrossTech_HoraPrevRev."'" ;}
+				if(isset($CrossTech_HoraPrevision) && $CrossTech_HoraPrevision != ''){             $SIS_data .= ",CrossTech_HoraPrevision='".$CrossTech_HoraPrevision."'" ;}
+				if(isset($CrossTech_HoraPrevCuenta) && $CrossTech_HoraPrevCuenta != ''){           $SIS_data .= ",CrossTech_HoraPrevCuenta='".$CrossTech_HoraPrevCuenta."'" ;}
+				if(isset($CrossTech_HeladaTemp) && $CrossTech_HeladaTemp != ''){                   $SIS_data .= ",CrossTech_HeladaTemp='".$CrossTech_HeladaTemp."'" ;}
+				if(isset($CrossTech_HeladaMailHoraIni) && $CrossTech_HeladaMailHoraIni != ''){     $SIS_data .= ",CrossTech_HeladaMailHoraIni='".$CrossTech_HeladaMailHoraIni."'" ;}
+				if(isset($CrossTech_HeladaMailHoraTerm) && $CrossTech_HeladaMailHoraTerm != ''){   $SIS_data .= ",CrossTech_HeladaMailHoraTerm='".$CrossTech_HeladaMailHoraTerm."'" ;}
+				if(isset($Social_idUso) && $Social_idUso != ''){                                   $SIS_data .= ",Social_idUso='".$Social_idUso."'" ;}
+				if(isset($Social_facebook) ){                                                      $SIS_data .= ",Social_facebook='".$Social_facebook."'" ;}
+				if(isset($Social_twitter) ){                                                       $SIS_data .= ",Social_twitter='".$Social_twitter."'" ;}
+				if(isset($Social_instagram) ){                                                     $SIS_data .= ",Social_instagram='".$Social_instagram."'" ;}
+				if(isset($Social_linkedin) ){                                                      $SIS_data .= ",Social_linkedin='".$Social_linkedin."'" ;}
+				if(isset($Social_rss) ){                                                           $SIS_data .= ",Social_rss='".$Social_rss."'" ;}
+				if(isset($Social_youtube) ){                                                       $SIS_data .= ",Social_youtube='".$Social_youtube."'" ;}
+				if(isset($Social_tumblr) ){                                                        $SIS_data .= ",Social_tumblr='".$Social_tumblr."'" ;}
+				if(isset($CrossEnergy_PeriodoInicio) && $CrossEnergy_PeriodoInicio != ''){         $SIS_data .= ",CrossEnergy_PeriodoInicio='".$CrossEnergy_PeriodoInicio."'" ;}
+				if(isset($CrossEnergy_PeriodoTermino) && $CrossEnergy_PeriodoTermino != ''){       $SIS_data .= ",CrossEnergy_PeriodoTermino='".$CrossEnergy_PeriodoTermino."'" ;}
+				if(isset($CrossEnergy_HorarioInicio) && $CrossEnergy_HorarioInicio != ''){         $SIS_data .= ",CrossEnergy_HorarioInicio='".$CrossEnergy_HorarioInicio."'" ;}
+				if(isset($CrossEnergy_HorarioTermino) && $CrossEnergy_HorarioTermino != ''){       $SIS_data .= ",CrossEnergy_HorarioTermino='".$CrossEnergy_HorarioTermino."'" ;}
+				if(isset($RepresentanteNombre) && $RepresentanteNombre != ''){                     $SIS_data .= ",RepresentanteNombre='".$RepresentanteNombre."'" ;}
+				if(isset($RepresentanteRut) && $RepresentanteRut != ''){                           $SIS_data .= ",RepresentanteRut='".$RepresentanteRut."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//Si se ejecuta correctamente se actualizan los datos
@@ -685,11 +695,11 @@ require_once '0_validate_user_1.php';
 							//Filtro para idSistema
 							if ( !empty($_POST['idSistema']) )    $idSistema       = $_POST['idSistema'];
 									
-							$a = "Config_imgLogo='".$sufijo.$_FILES['Config_imgLogo']['name']."'" ;
+							$SIS_data = "Config_imgLogo='".$sufijo.$_FILES['Config_imgLogo']['name']."'" ;
 
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -721,8 +731,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Config_imgLogo=''" ;
-			$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Config_imgLogo=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'core_sistemas', 'idSistema = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -761,12 +771,12 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idSistema='".$idSistema."'" ;
-				if(isset($Config_idTheme) && $Config_idTheme != ''){    $a .= ",Config_idTheme='".$Config_idTheme."'" ;}
+				$SIS_data = "idSistema='".$idSistema."'" ;
+				if(isset($Config_idTheme) && $Config_idTheme != ''){    $SIS_data .= ",Config_idTheme='".$Config_idTheme."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -792,26 +802,20 @@ require_once '0_validate_user_1.php';
 			
 			$id_sistema   = $_GET['id'];
 			$idProducto   = $_GET['sis_prod_add'];
-			$query  = "INSERT INTO `core_sistemas_productos` (idSistema, idProducto) 
-			VALUES ('$id_sistema','$idProducto')";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
+			
+			//filtros
+			if(isset($id_sistema) && $id_sistema != ''){   $SIS_data  = "'".$id_sistema."'" ;   }else{$SIS_data  = "''";}
+			if(isset($idProducto) && $idProducto != ''){   $SIS_data .= ",'".$idProducto."'" ;  }else{$SIS_data .= ",''";}
 				
+			// inserto los datos de registro en la db
+			$SIS_columns = 'idSistema, idProducto';
+			$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_sistemas_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+			//Si ejecuto correctamente la consulta
+			if($ultimo_id!=0){
+				//redirijo
 				header( 'Location: '.$location.'&edited=true' );
 				die;
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 			}
 			
 		break;	
@@ -874,26 +878,20 @@ require_once '0_validate_user_1.php';
 			
 			$id_sistema   = $_GET['id'];
 			$idProducto   = $_GET['sis_ins_add'];
-			$query  = "INSERT INTO `core_sistemas_insumos` (idSistema, idProducto) 
-			VALUES ('$id_sistema','$idProducto')";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
+			
+			//filtros
+			if(isset($id_sistema) && $id_sistema != ''){   $SIS_data  = "'".$id_sistema."'" ;   }else{$SIS_data  = "''";}
+			if(isset($idProducto) && $idProducto != ''){   $SIS_data .= ",'".$idProducto."'" ;  }else{$SIS_data .= ",''";}
 				
+			// inserto los datos de registro en la db
+			$SIS_columns = 'idSistema, idProducto';
+			$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_sistemas_insumos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+			//Si ejecuto correctamente la consulta
+			if($ultimo_id!=0){
+				//redirijo
 				header( 'Location: '.$location.'&edited=true' );
 				die;
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 			}
 			
 		break;	
@@ -958,26 +956,20 @@ require_once '0_validate_user_1.php';
 			
 			$id_sistema   = $_GET['id'];
 			$idCategoria   = $_GET['sis_especie_add'];
-			$query  = "INSERT INTO `core_sistemas_variedades_categorias` (idSistema, idCategoria) 
-			VALUES ('$id_sistema','$idCategoria')";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
+			
+			//filtros
+			if(isset($id_sistema) && $id_sistema != ''){   $SIS_data  = "'".$id_sistema."'" ;   }else{$SIS_data  = "''";}
+			if(isset($idCategoria) && $idCategoria != ''){ $SIS_data .= ",'".$idCategoria."'" ; }else{$SIS_data .= ",''";}
 				
+			// inserto los datos de registro en la db
+			$SIS_columns = 'idSistema, idCategoria';
+			$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_sistemas_variedades_categorias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+			//Si ejecuto correctamente la consulta
+			if($ultimo_id!=0){
+				//redirijo
 				header( 'Location: '.$location.'&edited=true' );
 				die;
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 			}
 			
 		break;	
@@ -1064,26 +1056,20 @@ require_once '0_validate_user_1.php';
 			
 			$id_sistema   = $_GET['id'];
 			$idProducto   = $_GET['sis_variedad_add'];
-			$query  = "INSERT INTO `core_sistemas_variedades_listado` (idSistema, idProducto) 
-			VALUES ('$id_sistema','$idProducto')";
-			//Consulta
-			$resultado = mysqli_query ($dbConn, $query);
-			//Si ejecuto correctamente la consulta
-			if($resultado){
+			
+			//filtros
+			if(isset($id_sistema) && $id_sistema != ''){   $SIS_data  = "'".$id_sistema."'" ;   }else{$SIS_data  ="''";}
+			if(isset($idProducto) && $idProducto != ''){   $SIS_data .= ",'".$idProducto."'" ;  }else{$SIS_data .=",''";}
 				
+			// inserto los datos de registro en la db
+			$SIS_columns = 'idSistema, idProducto';
+			$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_sistemas_variedades_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+			//Si ejecuto correctamente la consulta
+			if($ultimo_id!=0){
+				//redirijo
 				header( 'Location: '.$location.'&edited=true' );
 				die;
-				
-			//si da error, guardar en el log de errores una copia
-			}else{
-				//Genero numero aleatorio
-				$vardata = genera_password(8,'alfanumerico');
-				
-				//Guardo el error en una variable temporal
-				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 			}
 			
 		break;	
@@ -1149,8 +1135,8 @@ require_once '0_validate_user_1.php';
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1170,33 +1156,33 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idSistema='".$idSistema."'" ;
-				if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin != ''){                 $a .= ",CrossTech_DiasTempMin='".$CrossTech_DiasTempMin."'" ;}
-				if(isset($CrossTech_TempMin) && $CrossTech_TempMin != ''){                         $a .= ",CrossTech_TempMin='".$CrossTech_TempMin."'" ;}
-				if(isset($CrossTech_TempMax) && $CrossTech_TempMax != ''){                         $a .= ",CrossTech_TempMax='".$CrossTech_TempMax."'" ;}
-				if(isset($CrossTech_HoraPrevRev) && $CrossTech_HoraPrevRev != ''){                 $a .= ",CrossTech_HoraPrevRev='".$CrossTech_HoraPrevRev."'" ;}
-				if(isset($CrossTech_HoraPrevision) && $CrossTech_HoraPrevision != ''){             $a .= ",CrossTech_HoraPrevision='".$CrossTech_HoraPrevision."'" ;}
-				if(isset($CrossTech_HoraPrevCuenta) && $CrossTech_HoraPrevCuenta != ''){           $a .= ",CrossTech_HoraPrevCuenta='".$CrossTech_HoraPrevCuenta."'" ;}
-				if(isset($CrossTech_HeladaTemp) && $CrossTech_HeladaTemp != ''){                   $a .= ",CrossTech_HeladaTemp='".$CrossTech_HeladaTemp."'" ;}
-				if(isset($CrossTech_HeladaMailHoraIni) && $CrossTech_HeladaMailHoraIni != ''){     $a .= ",CrossTech_HeladaMailHoraIni='".$CrossTech_HeladaMailHoraIni."'" ;}
-				if(isset($CrossTech_HeladaMailHoraTerm) && $CrossTech_HeladaMailHoraTerm != ''){   $a .= ",CrossTech_HeladaMailHoraTerm='".$CrossTech_HeladaMailHoraTerm."'" ;}
+				$SIS_data = "idSistema='".$idSistema."'" ;
+				if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin != ''){                 $SIS_data .= ",CrossTech_DiasTempMin='".$CrossTech_DiasTempMin."'" ;}
+				if(isset($CrossTech_TempMin) && $CrossTech_TempMin != ''){                         $SIS_data .= ",CrossTech_TempMin='".$CrossTech_TempMin."'" ;}
+				if(isset($CrossTech_TempMax) && $CrossTech_TempMax != ''){                         $SIS_data .= ",CrossTech_TempMax='".$CrossTech_TempMax."'" ;}
+				if(isset($CrossTech_HoraPrevRev) && $CrossTech_HoraPrevRev != ''){                 $SIS_data .= ",CrossTech_HoraPrevRev='".$CrossTech_HoraPrevRev."'" ;}
+				if(isset($CrossTech_HoraPrevision) && $CrossTech_HoraPrevision != ''){             $SIS_data .= ",CrossTech_HoraPrevision='".$CrossTech_HoraPrevision."'" ;}
+				if(isset($CrossTech_HoraPrevCuenta) && $CrossTech_HoraPrevCuenta != ''){           $SIS_data .= ",CrossTech_HoraPrevCuenta='".$CrossTech_HoraPrevCuenta."'" ;}
+				if(isset($CrossTech_HeladaTemp) && $CrossTech_HeladaTemp != ''){                   $SIS_data .= ",CrossTech_HeladaTemp='".$CrossTech_HeladaTemp."'" ;}
+				if(isset($CrossTech_HeladaMailHoraIni) && $CrossTech_HeladaMailHoraIni != ''){     $SIS_data .= ",CrossTech_HeladaMailHoraIni='".$CrossTech_HeladaMailHoraIni."'" ;}
+				if(isset($CrossTech_HeladaMailHoraTerm) && $CrossTech_HeladaMailHoraTerm != ''){   $SIS_data .= ",CrossTech_HeladaMailHoraTerm='".$CrossTech_HeladaMailHoraTerm."'" ;}
 				
 				if(isset($CrossTech_FechaDiasTempMin) && $CrossTech_FechaDiasTempMin != ''&&isset($CrossTech_FechaDiasTempMinOld) && $CrossTech_FechaDiasTempMinOld != ''&&$CrossTech_FechaDiasTempMin != $CrossTech_FechaDiasTempMinOld ){   
-					$a .= ",CrossTech_FechaDiasTempMin='".$CrossTech_FechaDiasTempMin."'" ;
+					$SIS_data .= ",CrossTech_FechaDiasTempMin='".$CrossTech_FechaDiasTempMin."'" ;
 				}
 				if(isset($CrossTech_FechaTempMin) && $CrossTech_FechaTempMin != ''&&isset($CrossTech_FechaTempMinOld) && $CrossTech_FechaTempMinOld != ''&&$CrossTech_FechaTempMin != $CrossTech_FechaTempMinOld ){   
-					$a .= ",CrossTech_FechaTempMin='".$CrossTech_FechaTempMin."'" ;
+					$SIS_data .= ",CrossTech_FechaTempMin='".$CrossTech_FechaTempMin."'" ;
 				}
 				if(isset($CrossTech_FechaTempMax) && $CrossTech_FechaTempMax != ''&&isset($CrossTech_FechaTempMaxOld) && $CrossTech_FechaTempMaxOld != ''&&$CrossTech_FechaTempMax != $CrossTech_FechaTempMaxOld){   
-					$a .= ",CrossTech_FechaTempMax='".$CrossTech_FechaTempMax."'" ;
+					$SIS_data .= ",CrossTech_FechaTempMax='".$CrossTech_FechaTempMax."'" ;
 				}
 				if(isset($CrossTech_FechaUnidadFrio) && $CrossTech_FechaUnidadFrio != ''&&isset($CrossTech_FechaUnidadFrioOld) && $CrossTech_FechaUnidadFrioOld != ''&&$CrossTech_FechaUnidadFrio != $CrossTech_FechaUnidadFrioOld){   
-					$a .= ",CrossTech_FechaUnidadFrio='".$CrossTech_FechaUnidadFrio."'" ;
+					$SIS_data .= ",CrossTech_FechaUnidadFrio='".$CrossTech_FechaUnidadFrio."'" ;
 				}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'core_sistemas', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -1207,30 +1193,30 @@ require_once '0_validate_user_1.php';
 					/*************************************************************/
 					//se actualiza el dato si existe registro
 					if(isset($rowAux['idAuxiliar'])&&$rowAux['idAuxiliar']!=''){
-						$a = "idAuxiliar='".$rowAux['idAuxiliar']."'" ;
-						if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin != ''){     $a .= ",CrossTech_DiasTempMin='".$CrossTech_DiasTempMin."'" ;}
-						if(isset($CrossTech_TempMin) && $CrossTech_TempMin != ''){             $a .= ",CrossTech_TempMin='".$CrossTech_TempMin."'" ;}
-						if(isset($CrossTech_TempMax) && $CrossTech_TempMax != ''){             $a .= ",CrossTech_TempMax='".$CrossTech_TempMax."'" ;}
+						$SIS_data = "idAuxiliar='".$rowAux['idAuxiliar']."'" ;
+						if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin != ''){     $SIS_data .= ",CrossTech_DiasTempMin='".$CrossTech_DiasTempMin."'" ;}
+						if(isset($CrossTech_TempMin) && $CrossTech_TempMin != ''){             $SIS_data .= ",CrossTech_TempMin='".$CrossTech_TempMin."'" ;}
+						if(isset($CrossTech_TempMax) && $CrossTech_TempMax != ''){             $SIS_data .= ",CrossTech_TempMax='".$CrossTech_TempMax."'" ;}
 						if(isset($CrossTech_FechaDiasTempMin) && $CrossTech_FechaDiasTempMin != ''&&isset($CrossTech_FechaDiasTempMinOld) && $CrossTech_FechaDiasTempMinOld != ''&&$CrossTech_FechaDiasTempMin != $CrossTech_FechaDiasTempMinOld ){   
-							$a .= ",CrossTech_FechaDiasTempMin='".$CrossTech_FechaDiasTempMin."'" ;
-							$a .= ",Dias_acumulado='0'" ;
+							$SIS_data .= ",CrossTech_FechaDiasTempMin='".$CrossTech_FechaDiasTempMin."'" ;
+							$SIS_data .= ",Dias_acumulado='0'" ;
 						}
 						if(isset($CrossTech_FechaTempMin) && $CrossTech_FechaTempMin != ''&&isset($CrossTech_FechaTempMinOld) && $CrossTech_FechaTempMinOld != ''&&$CrossTech_FechaTempMin != $CrossTech_FechaTempMinOld ){   
-							$a .= ",CrossTech_FechaTempMin='".$CrossTech_FechaTempMin."'" ;
-							$a .= ",HorasBajoGrados='0'" ;
+							$SIS_data .= ",CrossTech_FechaTempMin='".$CrossTech_FechaTempMin."'" ;
+							$SIS_data .= ",HorasBajoGrados='0'" ;
 						}
 						if(isset($CrossTech_FechaTempMax) && $CrossTech_FechaTempMax != ''&&isset($CrossTech_FechaTempMaxOld) && $CrossTech_FechaTempMaxOld != ''&&$CrossTech_FechaTempMax != $CrossTech_FechaTempMaxOld){   
-							$a .= ",CrossTech_FechaTempMax='".$CrossTech_FechaTempMax."'" ;
-							$a .= ",HorasSobreGrados='0'" ;
+							$SIS_data .= ",CrossTech_FechaTempMax='".$CrossTech_FechaTempMax."'" ;
+							$SIS_data .= ",HorasSobreGrados='0'" ;
 						}
 						if(isset($CrossTech_FechaUnidadFrio) && $CrossTech_FechaUnidadFrio != ''&&isset($CrossTech_FechaUnidadFrioOld) && $CrossTech_FechaUnidadFrioOld != ''&&$CrossTech_FechaUnidadFrio != $CrossTech_FechaUnidadFrioOld){   
-							$a .= ",CrossTech_FechaUnidadFrio='".$CrossTech_FechaUnidadFrio."'" ;
-							$a .= ",UnidadesFrio='0'" ;
+							$SIS_data .= ",CrossTech_FechaUnidadFrio='".$CrossTech_FechaUnidadFrio."'" ;
+							$SIS_data .= ",UnidadesFrio='0'" ;
 						}
 						
 						/*******************************************************/
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'telemetria_listado_aux', 'idAuxiliar = "'.$rowAux['idAuxiliar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_aux', 'idAuxiliar = "'.$rowAux['idAuxiliar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						//redirijo
 						header( 'Location: '.$location.'&edited=true' );
@@ -1244,29 +1230,31 @@ require_once '0_validate_user_1.php';
 						$TimeStamp      = fecha_actual().' '.hora_actual();
 	
 						//filtros
-						$a  = "'".$idSistema."'" ; 
-						$a .= ",'".$FechaSistema."'" ;
-						$a .= ",'".$HoraSistema."'" ;
-						$a .= ",'".$TimeStamp."'" ;   
-						if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin != ''){               $a .= ",'".$CrossTech_DiasTempMin."'" ;       }else{$a .= ",''" ;}
-						if(isset($CrossTech_TempMin) && $CrossTech_TempMin != ''){                       $a .= ",'".$CrossTech_TempMin."'" ;           }else{$a .= ",''" ;}
-						if(isset($CrossTech_TempMax) && $CrossTech_TempMax != ''){                       $a .= ",'".$CrossTech_TempMax."'" ;           }else{$a .= ",''" ;}
-						if(isset($CrossTech_FechaDiasTempMin) && $CrossTech_FechaDiasTempMin != ''){     $a .= ",'".$CrossTech_FechaDiasTempMin."'" ;  }else{$a .= ",''" ;}
-						if(isset($CrossTech_FechaTempMin) && $CrossTech_FechaTempMin != ''){             $a .= ",'".$CrossTech_FechaTempMin."'" ;      }else{$a .= ",''" ;}
-						if(isset($CrossTech_FechaTempMax) && $CrossTech_FechaTempMax != ''){             $a .= ",'".$CrossTech_FechaTempMax."'" ;      }else{$a .= ",''" ;}
-						if(isset($CrossTech_FechaUnidadFrio) && $CrossTech_FechaUnidadFrio != ''){       $a .= ",'".$CrossTech_FechaUnidadFrio."'" ;   }else{$a .= ",''" ;}
+						$SIS_data  = "'".$idSistema."'" ; 
+						$SIS_data .= ",'".$FechaSistema."'" ;
+						$SIS_data .= ",'".$HoraSistema."'" ;
+						$SIS_data .= ",'".$TimeStamp."'" ;   
+						if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin != ''){               $SIS_data .= ",'".$CrossTech_DiasTempMin."'" ;       }else{$SIS_data .= ",''" ;}
+						if(isset($CrossTech_TempMin) && $CrossTech_TempMin != ''){                       $SIS_data .= ",'".$CrossTech_TempMin."'" ;           }else{$SIS_data .= ",''" ;}
+						if(isset($CrossTech_TempMax) && $CrossTech_TempMax != ''){                       $SIS_data .= ",'".$CrossTech_TempMax."'" ;           }else{$SIS_data .= ",''" ;}
+						if(isset($CrossTech_FechaDiasTempMin) && $CrossTech_FechaDiasTempMin != ''){     $SIS_data .= ",'".$CrossTech_FechaDiasTempMin."'" ;  }else{$SIS_data .= ",''" ;}
+						if(isset($CrossTech_FechaTempMin) && $CrossTech_FechaTempMin != ''){             $SIS_data .= ",'".$CrossTech_FechaTempMin."'" ;      }else{$SIS_data .= ",''" ;}
+						if(isset($CrossTech_FechaTempMax) && $CrossTech_FechaTempMax != ''){             $SIS_data .= ",'".$CrossTech_FechaTempMax."'" ;      }else{$SIS_data .= ",''" ;}
+						if(isset($CrossTech_FechaUnidadFrio) && $CrossTech_FechaUnidadFrio != ''){       $SIS_data .= ",'".$CrossTech_FechaUnidadFrio."'" ;   }else{$SIS_data .= ",''" ;}
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `telemetria_listado_aux` (idSistema, Fecha, Hora, TimeStamp, 
+						$SIS_columns = 'idSistema, Fecha, Hora, TimeStamp, 
 						CrossTech_DiasTempMin, CrossTech_TempMin, CrossTech_TempMax, CrossTech_FechaDiasTempMin, 
-						CrossTech_FechaTempMin, CrossTech_FechaTempMax, CrossTech_FechaUnidadFrio) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
+						CrossTech_FechaTempMin, CrossTech_FechaTempMax, CrossTech_FechaUnidadFrio';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_aux', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
-						//redirijo
-						header( 'Location: '.$location.'&edited=true' );
-						die;
+						//Si ejecuto correctamente la consulta
+						if($ultimo_id!=0){
+							//redirijo
+							header( 'Location: '.$location.'&edited=true' );
+							die;
+						}
+						
 					}
 				}
 			}

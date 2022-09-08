@@ -73,6 +73,18 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){           $Nombre      = EstandarizarInput($Nombre); }
+	if(isset($Resumen) && $Resumen != ''){         $Resumen     = EstandarizarInput($Resumen); }
+	if(isset($Unidades) && $Unidades != ''){       $Unidades    = EstandarizarInput($Unidades); }
+	if(isset($Objetivos) && $Objetivos != ''){     $Objetivos   = EstandarizarInput($Objetivos); }
+	if(isset($Requisitos) && $Requisitos != ''){   $Requisitos  = EstandarizarInput($Requisitos); }
+	if(isset($Descripcion) && $Descripcion != ''){ $Descripcion = EstandarizarInput($Descripcion); }
+	if(isset($Duracion) && $Duracion != ''){       $Duracion    = EstandarizarInput($Duracion); }
+	if(isset($Contenido) && $Contenido != ''){     $Contenido   = EstandarizarInput($Contenido); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -112,62 +124,35 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){  $a  = "'".$idSistema."'" ;    }else{$a  ="''";}
-				if(isset($Nombre) && $Nombre != ''){        $a .= ",'".$Nombre."'" ;      }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){    $a .= ",'".$idEstado."'" ;    }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){  $SIS_data  = "'".$idSistema."'" ;    }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){        $SIS_data .= ",'".$Nombre."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){    $SIS_data .= ",'".$idEstado."'" ;    }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `alumnos_elearning_listado` (idSistema, Nombre, idEstado) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, Nombre, idEstado';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_elearning_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
+				
 					//Creo cada unidad dependiente dentro del elearning
 					for ($i = 1; $i <= $Unidades; $i++) {
 						
 						//Se crean las variables a guardar
-						$a  = "'".$ultimo_id."'" ;
-						$a .= ",'".$i."'" ;
-						$a .= ",''" ;
+						$SIS_data  = "'".$ultimo_id."'" ;
+						$SIS_data .= ",'".$i."'" ;
+						$SIS_data .= ",''" ;
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `alumnos_elearning_listado_unidades` (idElearning, N_Unidad, Nombre) VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+						$SIS_columns = 'idElearning, N_Unidad, Nombre';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_elearning_listado_unidades', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
-						}
 					}
-						
+					
+					//redirijo	
 					header( 'Location: '.$location.'&created=true&id_curso='.$ultimo_id );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
-				
-				
 			}
 	
 		break;
@@ -195,20 +180,20 @@ require_once '0_validate_user_1.php';
 				$LastUpdate = fecha_actual();
 				
 				//Filtros
-				$a = "idElearning='".$idElearning."'" ;
-				if(isset($idSistema) && $idSistema != ''){     $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Nombre) && $Nombre != ''){           $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Resumen) && $Resumen != ''){         $a .= ",Resumen='".$Resumen."'" ;}
-				if(isset($Imagen) && $Imagen != ''){           $a .= ",Imagen='".$Imagen."'" ;}
-				if(isset($LastUpdate) && $LastUpdate != ''){   $a .= ",LastUpdate='".$LastUpdate."'" ;}
-				if(isset($Objetivos) && $Objetivos != ''){     $a .= ",Objetivos='".$Objetivos."'" ;}
-				if(isset($Requisitos) && $Requisitos != ''){   $a .= ",Requisitos='".$Requisitos."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){ $a .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($idEstado) && $idEstado != ''){       $a .= ",idEstado='".$idEstado."'" ;}
+				$SIS_data = "idElearning='".$idElearning."'" ;
+				if(isset($idSistema) && $idSistema != ''){     $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($Nombre) && $Nombre != ''){           $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Resumen) && $Resumen != ''){         $SIS_data .= ",Resumen='".$Resumen."'" ;}
+				if(isset($Imagen) && $Imagen != ''){           $SIS_data .= ",Imagen='".$Imagen."'" ;}
+				if(isset($LastUpdate) && $LastUpdate != ''){   $SIS_data .= ",LastUpdate='".$LastUpdate."'" ;}
+				if(isset($Objetivos) && $Objetivos != ''){     $SIS_data .= ",Objetivos='".$Objetivos."'" ;}
+				if(isset($Requisitos) && $Requisitos != ''){   $SIS_data .= ",Requisitos='".$Requisitos."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){ $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
+				if(isset($idEstado) && $idEstado != ''){       $SIS_data .= ",idEstado='".$idEstado."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'alumnos_elearning_listado', 'idElearning = "'.$idElearning.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'alumnos_elearning_listado', 'idElearning = "'.$idElearning.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -318,33 +303,20 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idElearning) && $idElearning != ''){   $a  = "'".$idElearning."'" ;   }else{$a  ="''";}
-				if(isset($N_Unidad) && $N_Unidad != ''){         $a .= ",'".$N_Unidad."'" ;     }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){             $a .= ",'".$Nombre."'" ;       }else{$a .=",''";}
-				if(isset($Duracion) && $Duracion != ''){         $a .= ",'".$Duracion."'" ;     }else{$a .=",''";}
+				if(isset($idElearning) && $idElearning != ''){   $SIS_data  = "'".$idElearning."'" ;   }else{$SIS_data  = "''";}
+				if(isset($N_Unidad) && $N_Unidad != ''){         $SIS_data .= ",'".$N_Unidad."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){             $SIS_data .= ",'".$Nombre."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Duracion) && $Duracion != ''){         $SIS_data .= ",'".$Duracion."'" ;     }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `alumnos_elearning_listado_unidades` (idElearning, N_Unidad, Nombre,
-				Duracion) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idElearning, N_Unidad, Nombre, Duracion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_elearning_listado_unidades', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true&id_curso='.$idElearning );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
 				
 			}
@@ -371,15 +343,15 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idUnidad='".$idUnidad."'" ;
-				if(isset($idElearning) && $idElearning != ''){ $a .= ",idElearning='".$idElearning."'" ;}
-				if(isset($N_Unidad) && $N_Unidad != ''){       $a .= ",N_Unidad='".$N_Unidad."'" ;}
-				if(isset($Nombre) && $Nombre != ''){           $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Duracion) && $Duracion != ''){       $a .= ",Duracion='".$Duracion."'" ;}
+				$SIS_data = "idUnidad='".$idUnidad."'" ;
+				if(isset($idElearning) && $idElearning != ''){ $SIS_data .= ",idElearning='".$idElearning."'" ;}
+				if(isset($N_Unidad) && $N_Unidad != ''){       $SIS_data .= ",N_Unidad='".$N_Unidad."'" ;}
+				if(isset($Nombre) && $Nombre != ''){           $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Duracion) && $Duracion != ''){       $SIS_data .= ",Duracion='".$Duracion."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'alumnos_elearning_listado_unidades', 'idUnidad = "'.$idUnidad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'alumnos_elearning_listado_unidades', 'idUnidad = "'.$idUnidad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -488,33 +460,20 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idUnidad) && $idUnidad != ''){        $a  = "'".$idUnidad."'" ;      }else{$a  ="''";}
-				if(isset($idElearning) && $idElearning != ''){  $a .= ",'".$idElearning."'" ;  }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){            $a .= ",'".$Nombre."'" ;       }else{$a .=",''";}
-				if(isset($Contenido) && $Contenido != ''){      $a .= ",'".$Contenido."'" ;    }else{$a .=",''";}
+				if(isset($idUnidad) && $idUnidad != ''){        $SIS_data  = "'".$idUnidad."'" ;      }else{$SIS_data  = "''";}
+				if(isset($idElearning) && $idElearning != ''){  $SIS_data .= ",'".$idElearning."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){            $SIS_data .= ",'".$Nombre."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Contenido) && $Contenido != ''){      $SIS_data .= ",'".$Contenido."'" ;    }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `alumnos_elearning_listado_unidades_contenido` (idUnidad, idElearning, 
-				Nombre, Contenido) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idUnidad, idElearning, Nombre, Contenido';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_elearning_listado_unidades_contenido', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true&id_curso='.$idElearning );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -540,20 +499,20 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idContenido='".$idContenido."'" ;
-				if(isset($idUnidad) && $idUnidad != ''){        $a .= ",idUnidad='".$idUnidad."'" ;}
-				if(isset($idElearning) && $idElearning != ''){  $a .= ",idElearning='".$idElearning."'" ;}
-				if(isset($Nombre) && $Nombre != ''){            $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Contenido) && $Contenido != ''){      $a .= ",Contenido='".$Contenido."'" ;}
+				$SIS_data = "idContenido='".$idContenido."'" ;
+				if(isset($idUnidad) && $idUnidad != ''){        $SIS_data .= ",idUnidad='".$idUnidad."'" ;}
+				if(isset($idElearning) && $idElearning != ''){  $SIS_data .= ",idElearning='".$idElearning."'" ;}
+				if(isset($Nombre) && $Nombre != ''){            $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Contenido) && $Contenido != ''){      $SIS_data .= ",Contenido='".$Contenido."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'alumnos_elearning_listado_unidades_contenido', 'idContenido = "'.$idContenido.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'alumnos_elearning_listado_unidades_contenido', 'idContenido = "'.$idContenido.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$a = "idUnidad='".$idUnidad."'" ;
-				$resultado = db_update_data (false, $a, 'alumnos_elearning_listado_unidades_documentacion', 'idContenido = "'.$idContenido.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$SIS_data = "idUnidad='".$idUnidad."'" ;
+				$resultado = db_update_data (false, $SIS_data, 'alumnos_elearning_listado_unidades_documentacion', 'idContenido = "'.$idContenido.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -722,34 +681,20 @@ require_once '0_validate_user_1.php';
 								if ($move_result){
 									
 									//filtros
-									if(isset($idUnidad) && $idUnidad != ''){        $a  = "'".$idUnidad."'" ;      }else{$a  ="''";}
-									if(isset($idElearning) && $idElearning != ''){  $a .= ",'".$idElearning."'" ;  }else{$a .=",''";}
-									if(isset($idContenido) && $idContenido != ''){  $a .= ",'".$idContenido."'" ;  }else{$a .=",''";}
-									$a .= ",'".$sufijo.$_FILES['exFile']['name']."'" ; 
+									if(isset($idUnidad) && $idUnidad != ''){        $SIS_data  = "'".$idUnidad."'" ;      }else{$SIS_data  = "''";}
+									if(isset($idElearning) && $idElearning != ''){  $SIS_data .= ",'".$idElearning."'" ;  }else{$SIS_data .= ",''";}
+									if(isset($idContenido) && $idContenido != ''){  $SIS_data .= ",'".$idContenido."'" ;  }else{$SIS_data .= ",''";}
+									$SIS_data .= ",'".$sufijo.$_FILES['exFile']['name']."'" ; 
 									
 									// inserto los datos de registro en la db
-									$query  = "INSERT INTO `alumnos_elearning_listado_unidades_documentacion` (idUnidad, idElearning, 
-									idContenido, File) 
-									VALUES (".$a.")";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
+									$SIS_columns = 'idUnidad, idElearning, idContenido, File';
+									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_elearning_listado_unidades_documentacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 									//Si ejecuto correctamente la consulta
-									if($resultado){
-										
+									if($ultimo_id!=0){
 										//redirijo
 										header( 'Location: '.$location.'&edited=true&id_curso='.$idElearning );
 										die;
-										
-									//si da error, guardar en el log de errores una copia
-									}else{
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
 									}
 			
 								} else {
@@ -859,33 +804,20 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idUnidad) && $idUnidad != ''){        $a  = "'".$idUnidad."'" ;      }else{$a  ="''";}
-				if(isset($idElearning) && $idElearning != ''){  $a .= ",'".$idElearning."'" ;  }else{$a .=",''";}
-				if(isset($idContenido) && $idContenido != ''){  $a .= ",'".$idContenido."'" ;  }else{$a .=",''";}
-				if(isset($idQuiz) && $idQuiz != ''){            $a .= ",'".$idQuiz."'" ;       }else{$a .=",''";}
-									
+				if(isset($idUnidad) && $idUnidad != ''){        $SIS_data  = "'".$idUnidad."'" ;      }else{$SIS_data  = "''";}
+				if(isset($idElearning) && $idElearning != ''){  $SIS_data .= ",'".$idElearning."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idContenido) && $idContenido != ''){  $SIS_data .= ",'".$idContenido."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idQuiz) && $idQuiz != ''){            $SIS_data .= ",'".$idQuiz."'" ;       }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `alumnos_elearning_listado_unidades_cuestionarios` (idUnidad, idElearning, 
-				idContenido, idQuiz) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idUnidad, idElearning, idContenido, idQuiz';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_elearning_listado_unidades_cuestionarios', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true&id_curso='.$idElearning );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -911,15 +843,15 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idCuestionario='".$idCuestionario."'" ;
-				if(isset($idUnidad) && $idUnidad != ''){        $a .= ",idUnidad='".$idUnidad."'" ;}
-				if(isset($idElearning) && $idElearning != ''){  $a .= ",idElearning='".$idElearning."'" ;}
-				if(isset($idContenido) && $idContenido != ''){  $a .= ",idContenido='".$idContenido."'" ;}
-				if(isset($idQuiz) && $idQuiz != ''){            $a .= ",idQuiz='".$idQuiz."'" ;}
+				$SIS_data = "idCuestionario='".$idCuestionario."'" ;
+				if(isset($idUnidad) && $idUnidad != ''){        $SIS_data .= ",idUnidad='".$idUnidad."'" ;}
+				if(isset($idElearning) && $idElearning != ''){  $SIS_data .= ",idElearning='".$idElearning."'" ;}
+				if(isset($idContenido) && $idContenido != ''){  $SIS_data .= ",idContenido='".$idContenido."'" ;}
+				if(isset($idQuiz) && $idQuiz != ''){            $SIS_data .= ",idQuiz='".$idQuiz."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'alumnos_elearning_listado_unidades_cuestionarios', 'idCuestionario = "'.$idCuestionario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'alumnos_elearning_listado_unidades_cuestionarios', 'idCuestionario = "'.$idCuestionario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

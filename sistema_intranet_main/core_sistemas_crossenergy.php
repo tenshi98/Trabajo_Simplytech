@@ -24,7 +24,7 @@ $location .='?pagina='.$_GET['pagina'];
 if ( !empty($_POST['submit_edit']) )  { 
 	//Llamamos al formulario
 	$location.='&id='.$_GET['id'];
-	$form_trabajo= 'updateCrossTech';
+	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';
 }
 /**********************************************************************************************************************************/
@@ -35,11 +35,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Sistema creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Sistema editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Sistema borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Sistema creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sistema editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $SIS_query = 'Nombre, CrossEnergy_PeriodoInicio, CrossEnergy_PeriodoTermino, CrossEnergy_HorarioInicio, CrossEnergy_HorarioTermino';

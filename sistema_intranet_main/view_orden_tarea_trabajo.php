@@ -223,10 +223,6 @@ $arrQuejas = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_quejas', 
 
 if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 
-	<style>
-		.bs-callout-danger {border-left-color:#ce4844;}
-		.bs-callout-danger h4 {color:#ce4844;}
-	</style>
 	<div class="col-sm-12">
 		<div class="bs-callout bs-callout-danger" >
 			<h4>Orden de Trabajo <?php echo n_doc($X_Puntero, 8); ?> cancelada</h4>

@@ -36,26 +36,26 @@ require_once '0_validate_user_1.php';
 				//peligro
 				if(isset($idTipo)&&$idTipo==1){
 					//Filtros
-					$a = "idPeligro='".$idEventoPeligro."'" ;
-					if(isset($idValidado) && $idValidado != ''){  $a .= ",idValidado='".$idValidado."'" ;}
+					$SIS_data = "idPeligro='".$idEventoPeligro."'" ;
+					if(isset($idValidado) && $idValidado != ''){  $SIS_data .= ",idValidado='".$idValidado."'" ;}
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'seg_vecinal_peligros_listado', 'idPeligro = "'.$idEventoPeligro.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_peligros_listado', 'idPeligro = "'.$idEventoPeligro.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//evento	
 				}elseif(isset($idTipo)&&$idTipo==2){
 					//Filtros
-					$a = "idEvento='".$idEventoPeligro."'" ;
-					if(isset($idValidado) && $idValidado != ''){  $a .= ",idValidado='".$idValidado."'" ;}
+					$SIS_data = "idEvento='".$idEventoPeligro."'" ;
+					if(isset($idValidado) && $idValidado != ''){  $SIS_data .= ",idValidado='".$idValidado."'" ;}
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'seg_vecinal_eventos_listado', 'idEvento = "'.$idEventoPeligro.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_eventos_listado', 'idEvento = "'.$idEventoPeligro.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 					
 				/******************************************************************/
 				//descarto los reportes
-				$a = "idRevisado='".$idRevisado."'" ;
+				$SIS_data = "idRevisado='".$idRevisado."'" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seg_vecinal_reportes_post_listado', 'idEventoPeligro = "'.$idEventoPeligro.'" AND idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_reportes_post_listado', 'idEventoPeligro = "'.$idEventoPeligro.'" AND idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -85,19 +85,19 @@ require_once '0_validate_user_1.php';
 				
 				/******************************************************************/
 				//desactivo al usuario creador del post
-				$a = "idEstado='".$idEstado."'" ;
+				$SIS_data = "idEstado='".$idEstado."'" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seg_vecinal_clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 				/******************************************************************/
 				//descarto los reportes
-				$a = "idRevisado='".$idRevisado."'" ;
+				$SIS_data = "idRevisado='".$idRevisado."'" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seg_vecinal_reportes_post_listado', 'idEventoPeligro = "'.$idEventoPeligro.'" AND idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_reportes_post_listado', 'idEventoPeligro = "'.$idEventoPeligro.'" AND idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado){
 					
@@ -129,11 +129,11 @@ require_once '0_validate_user_1.php';
 				
 				/******************************************************************/
 				//desactivo al usuario creador del post
-				$a = "idEstado='".$idEstado."'" ;
+				$SIS_data = "idEstado='".$idEstado."'" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seg_vecinal_clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/****************************************/
 				// Se trae un listado con todas las ip
@@ -157,27 +157,25 @@ require_once '0_validate_user_1.php';
 						$Motivo = 'Baneo del usuario '.$ipc['Vecino'];
 						
 						//filtros
-						if(isset($Fecha) && $Fecha != ''){                        $a  = "'".$Fecha."'" ;              }else{$a  ="''";}
-						if(isset($Hora) && $Hora != ''){                          $a .= ",'".$Hora."'" ;              }else{$a .=",''";}
-						if(isset($ipc['IP_Client']) && $ipc['IP_Client'] != ''){  $a .= ",'".$ipc['IP_Client']."'" ;  }else{$a .=",''";}
-						if(isset($Motivo) && $Motivo != ''){                      $a .= ",'".$Motivo."'" ;            }else{$a .=",''";}
+						if(isset($Fecha) && $Fecha != ''){                        $SIS_data  = "'".$Fecha."'" ;              }else{$SIS_data  ="''";}
+						if(isset($Hora) && $Hora != ''){                          $SIS_data .= ",'".$Hora."'" ;              }else{$SIS_data .=",''";}
+						if(isset($ipc['IP_Client']) && $ipc['IP_Client'] != ''){  $SIS_data .= ",'".$ipc['IP_Client']."'" ;  }else{$SIS_data .=",''";}
+						if(isset($Motivo) && $Motivo != ''){                      $SIS_data .= ",'".$Motivo."'" ;            }else{$SIS_data .=",''";}
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `sistema_seguridad_bloqueo_ip` (Fecha,Hora, IP_Client, Motivo) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-				
+						$SIS_columns = 'Fecha,Hora, IP_Client, Motivo';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'sistema_seguridad_bloqueo_ip', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}	
 					
 				/******************************************************************/
 				//descarto los reportes
-				$a = "idRevisado='".$idRevisado."'" ;
+				$SIS_data = "idRevisado='".$idRevisado."'" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seg_vecinal_reportes_post_listado', 'idEventoPeligro = "'.$idEventoPeligro.'" AND idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_reportes_post_listado', 'idEventoPeligro = "'.$idEventoPeligro.'" AND idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado){
 					

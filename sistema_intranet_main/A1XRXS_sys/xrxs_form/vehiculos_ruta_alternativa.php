@@ -24,8 +24,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['HoraTermino']) )   $HoraTermino   = $_POST['HoraTermino'];
 	if ( !empty($_POST['Nombre']) )        $Nombre        = $_POST['Nombre'];
 
-
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -49,6 +47,11 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){ $Nombre = EstandarizarInput($Nombre); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -80,40 +83,24 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idRuta) && $idRuta != ''){              $a  = "'".$idRuta."'" ;         }else{$a  ="''";}
-				if(isset($idSistema) && $idSistema != ''){        $a .= ",'".$idSistema."'" ;     }else{$a .=",''";}
-				if(isset($idTipo) && $idTipo != ''){              $a .= ",'".$idTipo."'" ;        }else{$a .=",''";}
-				if(isset($Fecha) && $Fecha != ''){                $a .= ",'".$Fecha."'" ;         }else{$a .=",''";}
-				if(isset($idDia) && $idDia != ''){                $a .= ",'".$idDia."'" ;         }else{$a .=",''";}
-				if(isset($HoraInicio) && $HoraInicio != ''){      $a .= ",'".$HoraInicio."'" ;    }else{$a .=",''";}
-				if(isset($HoraTermino) && $HoraTermino != ''){    $a .= ",'".$HoraTermino."'" ;   }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){              $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
-				
+				if(isset($idRuta) && $idRuta != ''){              $SIS_data  = "'".$idRuta."'" ;         }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema != ''){        $SIS_data .= ",'".$idSistema."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo != ''){              $SIS_data .= ",'".$idTipo."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){                $SIS_data .= ",'".$Fecha."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idDia) && $idDia != ''){                $SIS_data .= ",'".$idDia."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($HoraInicio) && $HoraInicio != ''){      $SIS_data .= ",'".$HoraInicio."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($HoraTermino) && $HoraTermino != ''){    $SIS_data .= ",'".$HoraTermino."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){              $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `vehiculos_ruta_alternativa` (idRuta, idSistema, idTipo, Fecha, idDia, HoraInicio,
-				HoraTermino, Nombre) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idRuta, idSistema, idTipo, Fecha, idDia, HoraInicio, HoraTermino, Nombre';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_ruta_alternativa', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -138,19 +125,19 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idRutaAlt='".$idRutaAlt."'" ;
-				if(isset($idRuta) && $idRuta != ''){              $a .= ",idRuta='".$idRuta."'" ;}
-				if(isset($idSistema) && $idSistema != ''){        $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idTipo) && $idTipo != ''){              $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($Fecha) && $Fecha != ''){                $a .= ",Fecha='".$Fecha."'" ;}
-				if(isset($idDia) && $idDia != ''){                $a .= ",idDia='".$idDia."'" ;}
-				if(isset($HoraInicio) && $HoraInicio != ''){      $a .= ",HoraInicio='".$HoraInicio."'" ;}
-				if(isset($HoraTermino) && $HoraTermino != ''){    $a .= ",HoraTermino='".$HoraTermino."'" ;}
-				if(isset($Nombre) && $Nombre != ''){              $a .= ",Nombre='".$Nombre."'" ;}
+				$SIS_data = "idRutaAlt='".$idRutaAlt."'" ;
+				if(isset($idRuta) && $idRuta != ''){              $SIS_data .= ",idRuta='".$idRuta."'" ;}
+				if(isset($idSistema) && $idSistema != ''){        $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idTipo) && $idTipo != ''){              $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($Fecha) && $Fecha != ''){                $SIS_data .= ",Fecha='".$Fecha."'" ;}
+				if(isset($idDia) && $idDia != ''){                $SIS_data .= ",idDia='".$idDia."'" ;}
+				if(isset($HoraInicio) && $HoraInicio != ''){      $SIS_data .= ",HoraInicio='".$HoraInicio."'" ;}
+				if(isset($HoraTermino) && $HoraTermino != ''){    $SIS_data .= ",HoraTermino='".$HoraTermino."'" ;}
+				if(isset($Nombre) && $Nombre != ''){              $SIS_data .= ",Nombre='".$Nombre."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'vehiculos_ruta_alternativa', 'idRutaAlt = "'.$idRutaAlt.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'vehiculos_ruta_alternativa', 'idRutaAlt = "'.$idRutaAlt.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

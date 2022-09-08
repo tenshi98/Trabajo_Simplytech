@@ -94,6 +94,7 @@ opc9.Nombre AS AlertaTemprana,
 opc10.Nombre AS UsoFTP,
 telemetria_listado.idUsoFTP,
 telemetria_listado.FTP_Carpeta,
+core_telemetria_ubicaciones.Nombre AS Ubicacion,
 
 telemetria_listado.CrossCrane_tiempo_revision AS TiempoRevision,
 grupo_1.Nombre AS Grupo_amperaje,
@@ -102,7 +103,12 @@ grupo_3.Nombre AS Grupo_giro,
 grupo_4.Nombre AS Grupo_carro, 
 grupo_5.Nombre AS Grupo_voltaje,
 grupo_6.Nombre AS Grupo_motor_subida,
-grupo_7.Nombre AS Grupo_motor_bajada';
+grupo_7.Nombre AS Grupo_motor_bajada,
+grupo_9.Nombre AS Grupo_Vmonofasico,
+grupo_10.Nombre AS Grupo_VTrifasico,
+grupo_11.Nombre AS Grupo_Potencia,
+grupo_12.Nombre AS Grupo_ConsumoMesHabil,
+grupo_13.Nombre AS Grupo_ConsumoMesCurso';
 $SIS_join  = '
 LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                            = telemetria_listado.idSistema
 LEFT JOIN `core_sistemas_opciones`        opc2   ON opc2.idOpciones                                    = telemetria_listado.id_Geo
@@ -128,7 +134,14 @@ LEFT JOIN `telemetria_listado_grupos`  grupo_3   ON grupo_3.idGrupo             
 LEFT JOIN `telemetria_listado_grupos`  grupo_4   ON grupo_4.idGrupo                                    = telemetria_listado.CrossCrane_grupo_carro
 LEFT JOIN `telemetria_listado_grupos`  grupo_5   ON grupo_5.idGrupo                                    = telemetria_listado.CrossCrane_grupo_voltaje
 LEFT JOIN `telemetria_listado_grupos`  grupo_6   ON grupo_6.idGrupo                                    = telemetria_listado.CrossCrane_grupo_motor_subida
-LEFT JOIN `telemetria_listado_grupos`  grupo_7   ON grupo_7.idGrupo                                    = telemetria_listado.CrossCrane_grupo_motor_bajada';
+LEFT JOIN `telemetria_listado_grupos`  grupo_7   ON grupo_7.idGrupo                                    = telemetria_listado.CrossCrane_grupo_motor_bajada
+LEFT JOIN `telemetria_listado_grupos`  grupo_8   ON grupo_8.idGrupo                                    = telemetria_listado.idGrupoDespliegue
+LEFT JOIN `telemetria_listado_grupos`  grupo_9   ON grupo_9.idGrupo                                    = telemetria_listado.idGrupoVmonofasico
+LEFT JOIN `telemetria_listado_grupos`  grupo_10  ON grupo_10.idGrupo                                   = telemetria_listado.idGrupoVTrifasico
+LEFT JOIN `telemetria_listado_grupos`  grupo_11  ON grupo_11.idGrupo                                   = telemetria_listado.idGrupoPotencia
+LEFT JOIN `telemetria_listado_grupos`  grupo_12  ON grupo_12.idGrupo                                   = telemetria_listado.idGrupoConsumoMesHabil
+LEFT JOIN `telemetria_listado_grupos`  grupo_13  ON grupo_13.idGrupo                                   = telemetria_listado.idGrupoConsumoMesCurso
+LEFT JOIN `core_telemetria_ubicaciones`          ON core_telemetria_ubicaciones.idUbicacion            = telemetria_listado.idUbicacion';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
@@ -388,16 +401,22 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 							
 							<br/>
 							<strong class="color-red-dark">Otros Datos</strong><br/>
-							<?php if(isset($rowdata['Capacidad'])&&$rowdata['Capacidad']!=0){ ?>                   <strong>Capacidad Nebulizador: </strong><?php echo Cantidades_decimales_justos($rowdata['Capacidad']); ?><br/><?php } ?>
-							<?php if(isset($rowdata['TiempoRevision'])&&$rowdata['TiempoRevision']!=0){ ?>         <strong>Hora Revision: </strong><?php echo $rowdata['TiempoRevision']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_amperaje'])&&$rowdata['Grupo_amperaje']!=0){ ?>         <strong>Gruas - Grupo Alimentacion: </strong><?php echo $rowdata['Grupo_amperaje']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_elevacion'])&&$rowdata['Grupo_elevacion']!=0){ ?>       <strong>Gruas - Grupo Elevacion: </strong><?php echo $rowdata['Grupo_elevacion']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_giro'])&&$rowdata['Grupo_giro']!=0){ ?>                 <strong>Gruas - Grupo Giro: </strong><?php echo $rowdata['Grupo_giro']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_carro'])&&$rowdata['Grupo_carro']!=0){ ?>               <strong>Gruas - Grupo Carro: </strong><?php echo $rowdata['Grupo_carro']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_voltaje'])&&$rowdata['Grupo_voltaje']!=0){ ?>           <strong>Gruas - Grupo Voltaje: </strong><?php echo $rowdata['Grupo_voltaje']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_motor_subida'])&&$rowdata['Grupo_motor_subida']!=0){ ?> <strong>Ascensores - Grupo Amperaje Motor Subida: </strong><?php echo $rowdata['Grupo_motor_subida']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Grupo_motor_bajada'])&&$rowdata['Grupo_motor_bajada']!=0){ ?> <strong>Ascensores - Grupo Amperaje Motor Bajada: </strong><?php echo $rowdata['Grupo_motor_bajada']; ?><br/><?php } ?>
-							
+							<?php if(isset($rowdata['Capacidad'])&&$rowdata['Capacidad']!=0){ ?>                             <strong>Capacidad Nebulizador: </strong><?php echo Cantidades_decimales_justos($rowdata['Capacidad']); ?><br/><?php } ?>
+							<?php if(isset($rowdata['TiempoRevision'])&&$rowdata['TiempoRevision']!=0){ ?>                   <strong>Hora Revision: </strong><?php echo $rowdata['TiempoRevision']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_amperaje'])&&$rowdata['Grupo_amperaje']!=0){ ?>                   <strong>Gruas - Grupo Alimentacion: </strong><?php echo $rowdata['Grupo_amperaje']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_elevacion'])&&$rowdata['Grupo_elevacion']!=0){ ?>                 <strong>Gruas - Grupo Elevacion: </strong><?php echo $rowdata['Grupo_elevacion']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_giro'])&&$rowdata['Grupo_giro']!=0){ ?>                           <strong>Gruas - Grupo Giro: </strong><?php echo $rowdata['Grupo_giro']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_carro'])&&$rowdata['Grupo_carro']!=0){ ?>                         <strong>Gruas - Grupo Carro: </strong><?php echo $rowdata['Grupo_carro']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_voltaje'])&&$rowdata['Grupo_voltaje']!=0){ ?>                     <strong>Gruas - Grupo Voltaje: </strong><?php echo $rowdata['Grupo_voltaje']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=0){ ?>                             <strong>Gruas - Ubicacion: </strong><?php echo $rowdata['Ubicacion']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_motor_subida'])&&$rowdata['Grupo_motor_subida']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Subida: </strong><?php echo $rowdata['Grupo_motor_subida']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_motor_bajada'])&&$rowdata['Grupo_motor_bajada']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Bajada: </strong><?php echo $rowdata['Grupo_motor_bajada']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_Despliegue'])&&$rowdata['Grupo_Despliegue']!=0){ ?>               <strong>CrossEnergy - Grupo Despliegue: </strong><?php echo $rowdata['Grupo_Despliegue']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_Vmonofasico'])&&$rowdata['Grupo_Vmonofasico']!=0){ ?>             <strong>CrossEnergy - Grupo V monofasico: </strong><?php echo $rowdata['Grupo_Vmonofasico']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_VTrifasico'])&&$rowdata['Grupo_VTrifasico']!=0){ ?>               <strong>CrossEnergy - Grupo V Trifasico: </strong><?php echo $rowdata['Grupo_VTrifasico']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_Potencia'])&&$rowdata['Grupo_Potencia']!=0){ ?>                   <strong>CrossEnergy - Grupo Potencia: </strong><?php echo $rowdata['Grupo_Potencia']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_ConsumoMesHabil'])&&$rowdata['Grupo_ConsumoMesHabil']!=0){ ?>     <strong>CrossEnergy - Grupo Consumo Mes Habil: </strong><?php echo $rowdata['Grupo_ConsumoMesHabil']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_ConsumoMesCurso'])&&$rowdata['Grupo_ConsumoMesCurso']!=0){ ?>     <strong>CrossEnergy - Grupo Consumo Mes Curso: </strong><?php echo $rowdata['Grupo_ConsumoMesCurso']; ?><br/><?php } ?>
 							
 							<?php if($rowdata['id_Geo']==2){ ?>
 								<br/>

@@ -46,11 +46,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Permiso creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Permiso editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Permiso borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Permiso creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Permiso editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Permiso borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 // consulto los datos
@@ -244,7 +244,7 @@ array_push( $arrPermisos,$row );
 						<th>Visualizacion</th>
 						<th width="10">Acciones</th>
 					</tr>
-					<?php echo widget_sherlock(1, 6);?>
+					<?php echo widget_sherlock(1, 6, 'TableFiltered');?>
 				</thead>				  
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<?php

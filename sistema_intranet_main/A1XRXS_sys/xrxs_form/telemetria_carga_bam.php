@@ -24,7 +24,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['N_DocPago']) )          $N_DocPago           = $_POST['N_DocPago'];
 	if ( !empty($_POST['Monto']) )              $Monto               = $_POST['Monto'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -70,41 +69,28 @@ require_once '0_validate_user_1.php';
 				$Dia     = fecha2NDiaSemana($FechaVencimiento);
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                   $a = "'".$idSistema."'" ;            }else{$a ="''";}
-				if(isset($idTelemetria) && $idTelemetria != ''){             $a .= ",'".$idTelemetria."'" ;       }else{$a .= ",''";}
-				if(isset($idUsuario) && $idUsuario != ''){                   $a .= ",'".$idUsuario."'" ;          }else{$a .= ",''";}
-				if(isset($FechaCarga) && $FechaCarga != ''){                 $a .= ",'".$FechaCarga."'" ;         }else{$a .= ",''";}
-				if(isset($FechaVencimiento) && $FechaVencimiento != ''){     $a .= ",'".$FechaVencimiento."'" ;   }else{$a .= ",''";}
-				if(isset($Ano) && $Ano != ''){                               $a .= ",'".$Ano."'" ;                }else{$a .= ",''";}
-				if(isset($Mes) && $Mes != ''){                               $a .= ",'".$Mes."'" ;                }else{$a .= ",''";}
-				if(isset($Semana) && $Semana != ''){                         $a .= ",'".$Semana."'" ;             }else{$a .= ",''";}
-				if(isset($Dia) && $Dia != ''){                               $a .= ",'".$Dia."'" ;                }else{$a .= ",''";}
-				if(isset($idDocPago) && $idDocPago != ''){                   $a .= ",'".$idDocPago."'" ;          }else{$a .= ",''";}
-				if(isset($N_DocPago) && $N_DocPago != ''){                   $a .= ",'".$N_DocPago."'" ;          }else{$a .= ",''";}
-				if(isset($Monto) && $Monto != ''){                           $a .= ",'".$Monto."'" ;              }else{$a .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){                   $SIS_data  = "'".$idSistema."'" ;           }else{$SIS_data  = "''";}
+				if(isset($idTelemetria) && $idTelemetria != ''){             $SIS_data .= ",'".$idTelemetria."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){                   $SIS_data .= ",'".$idUsuario."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($FechaCarga) && $FechaCarga != ''){                 $SIS_data .= ",'".$FechaCarga."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($FechaVencimiento) && $FechaVencimiento != ''){     $SIS_data .= ",'".$FechaVencimiento."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Ano) && $Ano != ''){                               $SIS_data .= ",'".$Ano."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($Mes) && $Mes != ''){                               $SIS_data .= ",'".$Mes."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($Semana) && $Semana != ''){                         $SIS_data .= ",'".$Semana."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($Dia) && $Dia != ''){                               $SIS_data .= ",'".$Dia."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($idDocPago) && $idDocPago != ''){                   $SIS_data .= ",'".$idDocPago."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($N_DocPago) && $N_DocPago != ''){                   $SIS_data .= ",'".$N_DocPago."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Monto) && $Monto != ''){                           $SIS_data .= ",'".$Monto."'" ;              }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_carga_bam` (idSistema, idTelemetria, idUsuario, FechaCarga, 
-				FechaVencimiento, Ano, Mes, Semana, Dia, idDocPago, N_DocPago, Monto) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idTelemetria, idUsuario, FechaCarga, FechaVencimiento, Ano, Mes, Semana, Dia, idDocPago, N_DocPago, Monto';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_carga_bam', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -125,23 +111,23 @@ require_once '0_validate_user_1.php';
 				$Dia     = fecha2NDiaSemana($FechaVencimiento);
 				
 				//Filtros
-				$a = "idCarga='".$idCarga."'" ;
-				if(isset($idSistema) && $idSistema != ''){                   $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idTelemetria) && $idTelemetria != ''){             $a .= ",idTelemetria='".$idTelemetria."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){                   $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($FechaCarga) && $FechaCarga != ''){                 $a .= ",FechaCarga='".$FechaCarga."'" ;}
-				if(isset($FechaVencimiento) && $FechaVencimiento != ''){     $a .= ",FechaVencimiento='".$FechaVencimiento."'" ;}
-				if(isset($Ano) && $Ano != ''){                               $a .= ",Ano='".$Ano."'" ;}
-				if(isset($Mes) && $Mes != ''){                               $a .= ",Mes='".$Mes."'" ;}
-				if(isset($Semana) && $Semana != ''){                         $a .= ",Semana='".$Semana."'" ;}
-				if(isset($Dia) && $Dia != ''){                               $a .= ",Dia='".$Dia."'" ;}
-				if(isset($idDocPago) && $idDocPago != ''){                   $a .= ",idDocPago='".$idDocPago."'" ;}
-				if(isset($N_DocPago) && $N_DocPago != ''){                   $a .= ",N_DocPago='".$N_DocPago."'" ;}
-				if(isset($Monto) && $Monto != ''){                           $a .= ",Monto='".$Monto."'" ;}
+				$SIS_data = "idCarga='".$idCarga."'" ;
+				if(isset($idSistema) && $idSistema != ''){                   $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idTelemetria) && $idTelemetria != ''){             $SIS_data .= ",idTelemetria='".$idTelemetria."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){                   $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($FechaCarga) && $FechaCarga != ''){                 $SIS_data .= ",FechaCarga='".$FechaCarga."'" ;}
+				if(isset($FechaVencimiento) && $FechaVencimiento != ''){     $SIS_data .= ",FechaVencimiento='".$FechaVencimiento."'" ;}
+				if(isset($Ano) && $Ano != ''){                               $SIS_data .= ",Ano='".$Ano."'" ;}
+				if(isset($Mes) && $Mes != ''){                               $SIS_data .= ",Mes='".$Mes."'" ;}
+				if(isset($Semana) && $Semana != ''){                         $SIS_data .= ",Semana='".$Semana."'" ;}
+				if(isset($Dia) && $Dia != ''){                               $SIS_data .= ",Dia='".$Dia."'" ;}
+				if(isset($idDocPago) && $idDocPago != ''){                   $SIS_data .= ",idDocPago='".$idDocPago."'" ;}
+				if(isset($N_DocPago) && $N_DocPago != ''){                   $SIS_data .= ",N_DocPago='".$N_DocPago."'" ;}
+				if(isset($Monto) && $Monto != ''){                           $SIS_data .= ",Monto='".$Monto."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_carga_bam', 'idCarga = "'.$idCarga.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_carga_bam', 'idCarga = "'.$idCarga.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

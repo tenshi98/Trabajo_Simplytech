@@ -34,7 +34,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['fkinput1']) )       $fkinput1       = $_POST['fkinput1'];
 	if ( !empty($_POST['fkinput2']) )       $fkinput2       = $_POST['fkinput2'];
 	if ( !empty($_POST['idSistema']) )      $idSistema      = $_POST['idSistema'];
-	
 				 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -67,6 +66,17 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($usuario) && $usuario != ''){         $usuario     = EstandarizarInput($usuario); }
+	if(isset($password) && $password != ''){       $password    = EstandarizarInput($password); }
+	if(isset($repassword) && $repassword != ''){   $repassword  = EstandarizarInput($repassword); }
+	if(isset($oldpassword) && $oldpassword != ''){ $oldpassword = EstandarizarInput($oldpassword); }
+	if(isset($email) && $email != ''){             $email       = EstandarizarInput($email); }
+	if(isset($Nombre) && $Nombre != ''){           $Nombre      = EstandarizarInput($Nombre); }
+	if(isset($Direccion) && $Direccion != ''){     $Direccion   = EstandarizarInput($Direccion); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -137,45 +147,40 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($usuario) && $usuario != ''){              $a  = "'".$usuario."'" ;         }else{$a  ="''";}
-				if(isset($password) && $password != ''){            $a .= ",'".md5($password)."'" ;  }else{$a .= ",''";}
-				if(isset($idTipoUsuario) && $idTipoUsuario != ''){  $a .= ",'".$idTipoUsuario."'" ;  }else{$a .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){            $a .= ",'".$idEstado."'" ;       }else{$a .= ",''";}
-				if(isset($email) && $email != ''){                  $a .= ",'".$email."'" ;          }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                $a .= ",'".$Nombre."'" ;         }else{$a .= ",''";}
-				if(isset($Rut) && $Rut != ''){                      $a .= ",'".$Rut."'" ;            }else{$a .= ",''";}
-				if(isset($fNacimiento) && $fNacimiento != ''){      $a .= ",'".$fNacimiento."'" ;    }else{$a .= ",''";}
-				if(isset($Fono) && $Fono != ''){                    $a .= ",'".$Fono."'" ;           }else{$a .= ",''";}
-				if(isset($idCiudad) && $idCiudad != ''){            $a .= ",'".$idCiudad."'" ;       }else{$a .= ",''";}
-				if(isset($idComuna) && $idComuna != ''){            $a .= ",'".$idComuna."'" ;       }else{$a .= ",''";}
-				if(isset($Direccion) && $Direccion != ''){          $a .= ",'".$Direccion."'" ;      }else{$a .= ",''";}
-				if(isset($Direccion_img) && $Direccion_img != ''){  $a .= ",'".$Direccion_img."'" ;  }else{$a .= ",''";}
-				if(isset($Ultimo_acceso) && $Ultimo_acceso != ''){  $a .= ",'".$Ultimo_acceso."'" ;  }else{$a .= ",''";}
+				if(isset($usuario) && $usuario != ''){              $SIS_data  = "'".$usuario."'" ;         }else{$SIS_data  = "''";}
+				if(isset($password) && $password != ''){            $SIS_data .= ",'".md5($password)."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idTipoUsuario) && $idTipoUsuario != ''){  $SIS_data .= ",'".$idTipoUsuario."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){            $SIS_data .= ",'".$idEstado."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($email) && $email != ''){                  $SIS_data .= ",'".$email."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                $SIS_data .= ",'".$Nombre."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Rut) && $Rut != ''){                      $SIS_data .= ",'".$Rut."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($fNacimiento) && $fNacimiento != ''){      $SIS_data .= ",'".$fNacimiento."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Fono) && $Fono != ''){                    $SIS_data .= ",'".$Fono."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idCiudad) && $idCiudad != ''){            $SIS_data .= ",'".$idCiudad."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($idComuna) && $idComuna != ''){            $SIS_data .= ",'".$idComuna."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion != ''){          $SIS_data .= ",'".$Direccion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Direccion_img) && $Direccion_img != ''){  $SIS_data .= ",'".$Direccion_img."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Ultimo_acceso) && $Ultimo_acceso != ''){  $SIS_data .= ",'".$Ultimo_acceso."'" ;  }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `usuarios_listado` (usuario, password, idTipoUsuario, idEstado, email, 
-				Nombre, Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion, Direccion_img, Ultimo_acceso) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'usuario, password, idTipoUsuario, idEstado, email, 
+				Nombre, Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion, Direccion_img, Ultimo_acceso';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
+				
 					//Se genera el permiso relacionado al sistema
-					if(isset($ultimo_id) && $ultimo_id != ''){    $a  = "'".$ultimo_id."'" ;   }else{$a  ="''";}
-					if(isset($idSistema) && $idSistema != ''){    $a .= ",'".$idSistema."'" ;  }else{$a .= ",''";}
-					
+					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;   }else{$SIS_data  = "''";}
+					if(isset($idSistema) && $idSistema != ''){    $SIS_data .= ",'".$idSistema."'" ;  }else{$SIS_data .= ",''";}
+						
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `usuarios_sistemas` (idUsuario, idSistema) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					$SIS_columns = 'idUsuario, idSistema';
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Si ejecuto correctamente la consulta
-					if($resultado){
+					if($ultimo_id2!=0){
+					
 						//Consulto el sistema que esta usando
 						$rowdata = db_select_data (false, 'idOpcionesGen_7', 'core_sistemas', '', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//si tiene la interfaz de crosstech
@@ -233,17 +238,6 @@ require_once '0_validate_user_1.php';
 						die;
 					}
 					
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -288,25 +282,25 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idUsuario='".$idUsuario."'" ;
-				if(isset($usuario) && $usuario != ''){              $a .= ",usuario='".$usuario."'" ;}
-				if(isset($password) && $password != ''){            $a .= ",password='".md5($password)."'" ;}
-				if(isset($idTipoUsuario) && $idTipoUsuario != ''){  $a .= ",idTipoUsuario='".$idTipoUsuario."'" ;}
-				if(isset($idEstado) && $idEstado != ''){            $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($email) && $email != ''){                  $a .= ",email='".$email."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Rut) && $Rut != ''){                      $a .= ",Rut='".$Rut."'" ;}
-				if(isset($fNacimiento) && $fNacimiento != ''){      $a .= ",fNacimiento='".$fNacimiento."'" ;}
-				if(isset($Fono) && $Fono != ''){                    $a .= ",Fono='".$Fono."'" ;}
-				if(isset($idCiudad) && $idCiudad != ''){            $a .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna != ''){            $a .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Direccion) && $Direccion != ''){          $a .= ",Direccion='".$Direccion."'" ;}
-				if(isset($Direccion_img) && $Direccion_img != ''){  $a .= ",Direccion_img='".$Direccion_img."'" ;}
-				if(isset($Ultimo_acceso) && $Ultimo_acceso != ''){  $a .= ",Ultimo_acceso='".$Ultimo_acceso."'" ;}
+				$SIS_data = "idUsuario='".$idUsuario."'" ;
+				if(isset($usuario) && $usuario != ''){              $SIS_data .= ",usuario='".$usuario."'" ;}
+				if(isset($password) && $password != ''){            $SIS_data .= ",password='".md5($password)."'" ;}
+				if(isset($idTipoUsuario) && $idTipoUsuario != ''){  $SIS_data .= ",idTipoUsuario='".$idTipoUsuario."'" ;}
+				if(isset($idEstado) && $idEstado != ''){            $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($email) && $email != ''){                  $SIS_data .= ",email='".$email."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Rut) && $Rut != ''){                      $SIS_data .= ",Rut='".$Rut."'" ;}
+				if(isset($fNacimiento) && $fNacimiento != ''){      $SIS_data .= ",fNacimiento='".$fNacimiento."'" ;}
+				if(isset($Fono) && $Fono != ''){                    $SIS_data .= ",Fono='".$Fono."'" ;}
+				if(isset($idCiudad) && $idCiudad != ''){            $SIS_data .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna != ''){            $SIS_data .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){          $SIS_data .= ",Direccion='".$Direccion."'" ;}
+				if(isset($Direccion_img) && $Direccion_img != ''){  $SIS_data .= ",Direccion_img='".$Direccion_img."'" ;}
+				if(isset($Ultimo_acceso) && $Ultimo_acceso != ''){  $SIS_data .= ",Ultimo_acceso='".$Ultimo_acceso."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -403,8 +397,8 @@ require_once '0_validate_user_1.php';
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -441,26 +435,20 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$query  = "INSERT INTO `usuarios_permisos` (idUsuario, idAdmpm, level) 
-				VALUES ('$id_usuario','$id_permiso','$level')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				//filtros
+				if(isset($id_usuario) && $id_usuario != ''){ $SIS_data  = "'".$id_usuario."'" ;   }else{$SIS_data  = "''";}
+				if(isset($id_permiso) && $id_permiso != ''){ $SIS_data .= ",'".$id_permiso."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($level) && $level != ''){           $SIS_data .= ",'".$level."'" ;       }else{$SIS_data .= ",''";}
+				
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idUsuario, idAdmpm, level';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_permisos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			
 			}
@@ -511,22 +499,19 @@ require_once '0_validate_user_1.php';
 				$Hora_elim        = hora_actual();
 				
 				//filtros
-				if(isset($idUsuario) && $idUsuario != ''){            $a  = "'".$idUsuario."'" ;        }else{$a  = "''";}
-				if(isset($idAdmpm) && $idAdmpm != ''){                $a .= ",'".$idAdmpm."'" ;         }else{$a .= ",''";}
-				if(isset($level) && $level != ''){                    $a .= ",'".$level."'" ;           }else{$a .= ",''";}
-				if(isset($idUsuario_elim) && $idUsuario_elim != ''){  $a .= ",'".$idUsuario_elim."'" ;  }else{$a .= ",''";}
-				if(isset($Fecha_elim) && $Fecha_elim != ''){          $a .= ",'".$Fecha_elim."'" ;      }else{$a .= ",''";}
-				if(isset($Hora_elim) && $Hora_elim != ''){            $a .= ",'".$Hora_elim."'" ;       }else{$a .= ",''";}
-					
+				if(isset($idUsuario) && $idUsuario != ''){            $SIS_data  = "'".$idUsuario."'" ;        }else{$SIS_data  = "''";}
+				if(isset($idAdmpm) && $idAdmpm != ''){                $SIS_data .= ",'".$idAdmpm."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($level) && $level != ''){                    $SIS_data .= ",'".$level."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idUsuario_elim) && $idUsuario_elim != ''){  $SIS_data .= ",'".$idUsuario_elim."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Fecha_elim) && $Fecha_elim != ''){          $SIS_data .= ",'".$Fecha_elim."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Hora_elim) && $Hora_elim != ''){            $SIS_data .= ",'".$Hora_elim."'" ;       }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `usuarios_permisos_log` (idUsuario, idAdmpm, level, idUsuario_elim, 
-				Fecha_elim, Hora_elim) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idUsuario, idAdmpm, level, idUsuario_elim, Fecha_elim, Hora_elim';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_permisos_log', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-						
+				if($ultimo_id!=0){
 					/**********************************************/
 					//Se elimina el permiso
 					//se borran los datos
@@ -539,16 +524,6 @@ require_once '0_validate_user_1.php';
 						die;
 						
 					}	
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
 				}
 			}else{
 				//se valida hackeo
@@ -574,6 +549,9 @@ require_once '0_validate_user_1.php';
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
 			}
+			
+			//Variable
+			$errorn=0;
 			
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){ 
@@ -620,25 +598,14 @@ require_once '0_validate_user_1.php';
 					
 					//creo los permisos solo si no los tiene
 					if(!isset($BasesDatos[$comp['idAdmpm']]) && $BasesDatos[$comp['idAdmpm']]!='true'){
-						$a  = "'".$id_usuario."'" ;  
-						$a .= ",'".$comp['idAdmpm']."'" ;     
-						$a .= ",'".$level."'" ;      
+						$SIS_data  = "'".$id_usuario."'" ;  
+						$SIS_data .= ",'".$comp['idAdmpm']."'" ;     
+						$SIS_data .= ",'".$level."'" ;      
 						
-						$query  = "INSERT INTO `usuarios_permisos` (idUsuario, idAdmpm, level) 
-						VALUES ($a)";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						// inserto los datos de registro en la db
+						$SIS_columns = 'idUsuario, idAdmpm, level';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_permisos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 					
 				}
@@ -743,29 +710,20 @@ require_once '0_validate_user_1.php';
 	
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
+				//filtros
+				if(isset($id_usuario) && $id_usuario != ''){ $SIS_data  = "'".$id_usuario."'" ; }else{$SIS_data  = "''";}
+				if(isset($idBodega) && $idBodega != ''){     $SIS_data .= ",'".$idBodega."'" ;  }else{$SIS_data .= ",''";}
 				
-				$query  = "INSERT INTO `usuarios_bodegas_insumos` (idUsuario, idBodega) 
-				VALUES ('$id_usuario','$idBodega')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idUsuario, idBodega';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_insumos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die; 
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
-			
 			}
 			 
 
@@ -843,27 +801,19 @@ require_once '0_validate_user_1.php';
 	
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
+				//filtros
+				if(isset($id_usuario) && $id_usuario != ''){ $SIS_data  = "'".$id_usuario."'" ; }else{$SIS_data  = "''";}
+				if(isset($idBodega) && $idBodega != ''){     $SIS_data .= ",'".$idBodega."'" ;  }else{$SIS_data .= ",''";}
 				
-				$query  = "INSERT INTO `usuarios_bodegas_productos` (idUsuario, idBodega) 
-				VALUES ('$id_usuario','$idBodega')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idUsuario, idBodega';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			
 			}
@@ -943,27 +893,19 @@ require_once '0_validate_user_1.php';
 	
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
+				//filtros
+				if(isset($id_usuario) && $id_usuario != ''){ $SIS_data  = "'".$id_usuario."'" ; }else{$SIS_data  = "''";}
+				if(isset($idBodega) && $idBodega != ''){     $SIS_data .= ",'".$idBodega."'" ;  }else{$SIS_data .= ",''";}
 				
-				$query  = "INSERT INTO `usuarios_bodegas_arriendos` (idUsuario, idBodega) 
-				VALUES ('$id_usuario','$idBodega')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idUsuario, idBodega';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_arriendos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die; 
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
 			
 			} 
@@ -1030,8 +972,8 @@ require_once '0_validate_user_1.php';
 			$idPermisos = $_GET['perm'];
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "level='".$level."'" ;
-			$resultado = db_update_data (false, $a, 'usuarios_permisos', 'idPermisos = "'.$idPermisos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "level='".$level."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'usuarios_permisos', 'idPermisos = "'.$idPermisos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1072,11 +1014,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 											
 							//Filtro para idSistema
-							$a = "Direccion_img='".$sufijo.$_FILES['imgLogo']['name']."'" ;
+							$SIS_data = "Direccion_img='".$sufijo.$_FILES['imgLogo']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -1113,8 +1055,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Direccion_img=''" ;
-			$resultado = db_update_data (false, $a, 'usuarios_listado', 'idUsuario = "'.$_GET['id_usuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$_GET['id_usuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1175,18 +1117,38 @@ require_once '0_validate_user_1.php';
 				//muestro el error
 				$error['checkbrute']  = 'error/Ingreso de maquina';
 				
-				//Inserto el error
-				$query  = "INSERT INTO `usuarios_checkbrute` (Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time) VALUES ('".$fecha."','".$hora."','".$usuario."','".$email."','".$IP_Client."','".$Agent_Transp."','".$Time."' )";
-				$resultado = mysqli_query($dbConn, $query);
+				//filtros
+				if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
+				if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
+					
+				// inserto los datos de registro en la db
+				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			}
 			//Si es una maquina la que esta tratando de entrar
 			if(isset($fkinput2)&&$fkinput2!=''){
 				//muestro el error
 				$error['checkbrute']  = 'error/Ingreso de maquina';
 				
-				//Inserto el error
-				$query  = "INSERT INTO `usuarios_checkbrute` (Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time) VALUES ('".$fecha."','".$hora."','".$usuario."','".$email."','".$IP_Client."','".$Agent_Transp."','".$Time."' )";
-				$resultado = mysqli_query($dbConn, $query);
+				//filtros
+				if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
+				if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
+					
+				// inserto los datos de registro en la db
+				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			}
 					
 					
@@ -1214,29 +1176,36 @@ require_once '0_validate_user_1.php';
 				$SIS_where = 'usuarios_listado.usuario = "'.$usuario.'" AND usuarios_listado.password = "'.md5($password).'"';
 				$rowUser = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, 'Login-form', $original, $form_trabajo);
 				
-				//Busco el ultimo acceso
-				$rowAcceso = db_select_data (false, 'Fecha, Hora', 'usuarios_accesos', '', 'idUsuario = "'.$rowUser['idUsuario'].'" ORDER BY idAcceso DESC', $dbConn, 'Login-form', $original, $form_trabajo);
-				
-
 				//Se verifca si los datos ingresados son de un usuario
 				if (isset($rowUser['idUsuario'])&&$rowUser['idUsuario']!='') {
 					
+					//Busco el ultimo acceso
+					$rowAcceso = db_select_data (false, 'Fecha, Hora', 'usuarios_accesos', '', 'idUsuario = "'.$rowUser['idUsuario'].'" ORDER BY idAcceso DESC', $dbConn, 'Login-form', $original, $form_trabajo);
+				
 					//Verifico que el usuario identificado este activo
 					if($rowUser['idEstado']==1){
 						
 						/*******************************************************/
 						//se actualizan los datos
-						$a = "Ultimo_acceso='".$fecha."'" ;
-						$a .= ",IP_Client='".$IP_Client."'" ;
-						$a .= ",Agent_Transp='".$Agent_Transp."'" ;
-						$resultado = db_update_data (false, $a, 'usuarios_listado', 'idUsuario = "'.$rowUser['idUsuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$SIS_data = "Ultimo_acceso='".$fecha."'" ;
+						$SIS_data .= ",IP_Client='".$IP_Client."'" ;
+						$SIS_data .= ",Agent_Transp='".$Agent_Transp."'" ;
+						$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$rowUser['idUsuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						//busca si la ip del usuario ya existe
 						$n_ip = db_select_nrows (false, 'idIpUsuario', 'usuarios_listado_ip', '', "IP_Client='".$IP_Client."' AND idUsuario='".$rowUser['idUsuario']."'", $dbConn, 'Login-form', $original, $form_trabajo);
 						//si la ip no existe la guarda
 						if(isset($n_ip)&&$n_ip==0){
-							$query  = "INSERT INTO `usuarios_listado_ip` (idUsuario,IP_Client, Fecha, Hora) VALUES (".$rowUser['idUsuario'].",'".$IP_Client."','".$fecha."','".$hora."' )";
-							$resultado = mysqli_query($dbConn, $query);
+							//filtros
+							if(isset($rowUser['idUsuario']) && $rowUser['idUsuario'] != ''){ $SIS_data  = "'".$rowUser['idUsuario']."'" ; }else{$SIS_data  = "''";}
+							if(isset($IP_Client) && $IP_Client != ''){                       $SIS_data .= ",'".$IP_Client."'" ;           }else{$SIS_data .= ",''";}
+							if(isset($fecha) && $fecha != ''){                               $SIS_data .= ",'".$fecha."'" ;               }else{$SIS_data .= ",''";}
+							if(isset($hora) && $hora != ''){                                 $SIS_data .= ",'".$hora."'" ;                }else{$SIS_data .= ",''";}
+							
+							// inserto los datos de registro en la db
+							$SIS_columns = 'idUsuario,IP_Client, Fecha, Hora';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_listado_ip', $dbConn, 'usuarios_listado_ip', $original, $form_trabajo);
+							
 						}
 			
 						/**************************************************************/
@@ -1248,12 +1217,13 @@ require_once '0_validate_user_1.php';
 						$_SESSION['usuario']['basic_data']['Direccion_img']      = $rowUser['Direccion_img'];
 						$_SESSION['usuario']['basic_data']['idTipoUsuario']      = $rowUser['idTipoUsuario'];
 						$_SESSION['usuario']['basic_data']['Usuario_Tipo']       = $rowUser['Usuario_Tipo'];
-						$_SESSION['usuario']['basic_data']['FechaLogin']         = $rowAcceso['Fecha'];
-						$_SESSION['usuario']['basic_data']['HoraLogin']          = $rowAcceso['Hora'];
 						$_SESSION['usuario']['basic_data']['COunt']              = $rowUser['COunt'];
 						$_SESSION['usuario']['basic_data']['Region']             = $rowUser['nombre_region'];
 						$_SESSION['usuario']['basic_data']['Pronostico']         = $rowUser['nombre_pronostico'];
 						$_SESSION['usuario']['basic_data']['Comuna']             = $rowUser['nombre_comuna'];
+						
+						if(isset($rowAcceso['Fecha'])&&$rowAcceso['Fecha']!=''){ $_SESSION['usuario']['basic_data']['FechaLogin'] = $rowAcceso['Fecha']; }else{$_SESSION['usuario']['basic_data']['FechaLogin'] = fecha_actual();}
+						if(isset($rowAcceso['Hora'])&&$rowAcceso['Hora']!=''){   $_SESSION['usuario']['basic_data']['HoraLogin']  = $rowAcceso['Hora'];  }else{$_SESSION['usuario']['basic_data']['HoraLogin']  = hora_actual();}
 						
 						//Se buscan los datos para crear el menu					
 						$arrMenu = array();
@@ -1266,7 +1236,8 @@ require_once '0_validate_user_1.php';
 							core_permisos_categorias.IconColor AS CategoriaIconoColor,
 							core_permisos_listado.Direccionbase AS TransaccionURLBase,
 							core_permisos_listado.Direccionweb AS TransaccionURL, 
-							core_permisos_listado.Nombre AS TransaccionNombre';
+							core_permisos_listado.Nombre AS TransaccionNombre, 
+							core_permisos_listado.visualizacion AS idSistema';
 							$SIS_join  = '
 							INNER JOIN core_permisos_categorias  ON core_permisos_categorias.id_pmcat  = core_permisos_listado.id_pmcat 
 							LEFT JOIN `core_font_awesome`        ON core_font_awesome.idFont           = core_permisos_categorias.idFont';
@@ -1283,7 +1254,8 @@ require_once '0_validate_user_1.php';
 							core_permisos_listado.Direccionbase AS TransaccionURLBase,
 							core_permisos_listado.Direccionweb AS TransaccionURL, 
 							core_permisos_listado.Nombre AS TransaccionNombre,
-							usuarios_permisos.level';
+							usuarios_permisos.level, 
+							core_permisos_listado.visualizacion AS idSistema';
 							$SIS_join  = '
 							INNER JOIN core_permisos_listado      ON core_permisos_listado.idAdmpm        = usuarios_permisos.idAdmpm
 							INNER JOIN core_permisos_categorias   ON core_permisos_categorias.id_pmcat    = core_permisos_listado.id_pmcat 
@@ -1325,6 +1297,7 @@ require_once '0_validate_user_1.php';
 								$_SESSION['usuario']['menu'][$Categorias][$ntranx]['CategoriaIconoColor']     = $transaccion['CategoriaIconoColor'];
 								$_SESSION['usuario']['menu'][$Categorias][$ntranx]['TransaccionURL']          = $transaccion['TransaccionURL'];
 								$_SESSION['usuario']['menu'][$Categorias][$ntranx]['TransaccionNombre']       = $transaccion['TransaccionNombre'];
+								$_SESSION['usuario']['menu'][$Categorias][$ntranx]['idSistema']               = $transaccion['idSistema'];
 								
 								$ntranx++;
 							}
@@ -1357,9 +1330,17 @@ require_once '0_validate_user_1.php';
 								//Verifico el sistema que tiene acceso
 								$rowAccs = db_select_data (false, 'usuarios_sistemas.idSistema', 'usuarios_sistemas', 'LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema', 'usuarios_sistemas.idUsuario = "'.$rowUser['idUsuario'].'" AND core_sistemas.idEstado=1', $dbConn, 'Login-form', $original, $form_trabajo);
 				
-								//Inserto la fecha con el ingreso
-								$query  = "INSERT INTO `usuarios_accesos` (idUsuario,Fecha, Hora, IP_Client, Agent_Transp, idSistema) VALUES (".$rowUser['idUsuario'].",'".$fecha."','".$hora."','".$IP_Client."','".$Agent_Transp."','".$rowAccs['idSistema']."' )";
-								$resultado = mysqli_query($dbConn, $query);	
+								//filtros
+								if(isset($rowUser['idUsuario']) && $rowUser['idUsuario'] != ''){  $SIS_data  = "'".$rowUser['idUsuario']."'" ;   }else{$SIS_data  = "''";}
+								if(isset($fecha) && $fecha != ''){                                $SIS_data .= ",'".$fecha."'" ;                 }else{$SIS_data .= ",''";}
+								if(isset($hora) && $hora != ''){                                  $SIS_data .= ",'".$hora."'" ;                  }else{$SIS_data .= ",''";}
+								if(isset($IP_Client) && $IP_Client != ''){                        $SIS_data .= ",'".$IP_Client."'" ;             }else{$SIS_data .= ",''";}
+								if(isset($Agent_Transp) && $Agent_Transp != ''){                  $SIS_data .= ",'".$Agent_Transp."'" ;          }else{$SIS_data .= ",''";}
+								if(isset($rowAccs['idSistema']) && $rowAccs['idSistema'] != ''){  $SIS_data .= ",'".$rowAccs['idSistema']."'" ;  }else{$SIS_data .= ",''";}
+								
+								// inserto los datos de registro en la db
+								$SIS_columns = 'idUsuario,Fecha, Hora, IP_Client, Agent_Transp, idSistema';
+								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_accesos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 								/******************************************************************/
 								//Verifico la cantidad de sistemas a la cual tiene permitido el acceso
@@ -1428,9 +1409,18 @@ require_once '0_validate_user_1.php';
 				}else{
 					$error['idUsuario']   = 'error/El nombre de usuario o contraseña no coinciden';
 					
-					//Inserto el error
-					$query  = "INSERT INTO `usuarios_checkbrute` (Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time) VALUES ('".$fecha."','".$hora."','".$usuario."','".$email."','".$IP_Client."','".$Agent_Transp."','".$Time."' )";
-					$resultado = mysqli_query($dbConn, $query);
+					//filtros
+					if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
+					if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
+					if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
+					if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
+					if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
+						
+					// inserto los datos de registro en la db
+					$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
 					
 				}
 						
@@ -1646,14 +1636,25 @@ require_once '0_validate_user_1.php';
 					$Agent_Transp   = obtenerSistOperativo().' - '.obtenerNavegador();
 					$idSistema      = $_GET['ini'];
 					
-					//Inserto la fecha con el ingreso
-					$query  = "INSERT INTO `usuarios_accesos` (idUsuario,Fecha, Hora, IP_Client, Agent_Transp, idSistema) VALUES (".$idUsuario.",'".$Fecha."','".$Hora."','".$IP_Client."','".$Agent_Transp."','".$idSistema."' )";
-					$resultado = mysqli_query($dbConn, $query);	
-												
-					/**************************************************************/
-					//Redirijo a la pagina principal
-					header( 'Location: principal.php' );
-					die;
+					//filtros
+					if(isset($idUsuario) && $idUsuario != ''){       $SIS_data  = "'".$idUsuario."'" ;        }else{$SIS_data  = "''";}
+					if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",'".$Fecha."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($Hora) && $Hora != ''){                 $SIS_data .= ",'".$Hora."'" ;            }else{$SIS_data .= ",''";}
+					if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
+					if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",'".$idSistema."'" ;       }else{$SIS_data .= ",''";}
+					
+					// inserto los datos de registro en la db
+					$SIS_columns = 'idUsuario,Fecha, Hora, IP_Client, Agent_Transp, idSistema';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_accesos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+					//Si ejecuto correctamente la consulta
+					if($ultimo_id!=0){
+						//Redirijo a la pagina principal
+						header( 'Location: principal.php' );
+						die;
+					}
+					
 								
 				}
 			}
@@ -1692,18 +1693,38 @@ require_once '0_validate_user_1.php';
 				//muestro el error
 				$error['checkbrute']  = 'error/Ingreso de maquina';
 				
-				//Inserto el error
-				$query  = "INSERT INTO `usuarios_checkbrute` (Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time) VALUES ('".$fecha."','".$hora."','".$usuario."','".$email."','".$IP_Client."','".$Agent_Transp."','".$Time."' )";
-				$resultado = mysqli_query($dbConn, $query);
+				//filtros
+				if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
+				if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
+					
+				// inserto los datos de registro en la db
+				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			}
 			//Si es una maquina la que esta tratando de entrar
 			if(isset($fkinput2)&&$fkinput2!=''){
 				//muestro el error
 				$error['checkbrute']  = 'error/Ingreso de maquina';
 				
-				//Inserto el error
-				$query  = "INSERT INTO `usuarios_checkbrute` (Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time) VALUES ('".$fecha."','".$hora."','".$usuario."','".$email."','".$IP_Client."','".$Agent_Transp."','".$Time."' )";
-				$resultado = mysqli_query($dbConn, $query);
+				//filtros
+				if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
+				if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
+					
+				// inserto los datos de registro en la db
+				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 			}
 			
 	
@@ -1722,16 +1743,16 @@ require_once '0_validate_user_1.php';
 					
 					//Generacion de nueva clave
 					$num_caracteres = "10"; //cantidad de caracteres de la clave
-					$clave = substr(md5(rand()),0,$num_caracteres); //generador aleatorio de claves 
-					$nueva_clave = md5($clave);//se codifica la clave 
+					$clave          = substr(md5(rand()),0,$num_caracteres); //generador aleatorio de claves 
+					$nueva_clave    = md5($clave);//se codifica la clave 
 					
 					/*******************************************************/
 					//se actualizan los datos
-					$a = "password='".$nueva_clave."'" ;
-					$resultado = db_update_data (false, $a, 'usuarios_listado', 'email = "'.$email.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$SIS_data = "password='".$nueva_clave."'" ;
+					$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'email = "'.$email.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Envio de correo
-					$texto = '<p>Se ha generado una nueva contraseña para el usuario '.$email.', su nueva contraseña es: '.$nueva_clave.'</p>';
+					$texto = '<p>Se ha generado una nueva contraseña para el usuario '.$email.', su nueva contraseña es: '.$clave.'</p>';
 					$rmail = tareas_envio_correo($rowSistema['email_principal'], $rowSistema['Nombre'], 
 												 $email, 'Receptor', 
 												 '', '', 
@@ -1754,10 +1775,19 @@ require_once '0_validate_user_1.php';
 				//Si no se encuentra ningun usuario se envia un error	
 				}else{	
 					$error['email'] 	  = 'error/El email ingresado no existe';
-				
-					//Inserto el error
-					$query  = "INSERT INTO `usuarios_checkbrute` (Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time) VALUES ('".$fecha."','".$hora."','".$usuario."','".$email."','".$IP_Client."','".$Agent_Transp."','".$Time."' )";
-					$resultado = mysqli_query($dbConn, $query);
+					
+					//filtros
+					if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
+					if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
+					if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
+					if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
+					if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
+					
+					// inserto los datos de registro en la db
+					$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 				}
 			
@@ -1790,27 +1820,19 @@ require_once '0_validate_user_1.php';
 	
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
+				//filtros
+				if(isset($id_usuario) && $id_usuario != ''){     $SIS_data  = "'".$id_usuario."'" ;     }else{$SIS_data  = "''";}
+				if(isset($idTelemetria) && $idTelemetria != ''){ $SIS_data .= ",'".$idTelemetria."'" ;  }else{$SIS_data .= ",''";}
 				
-				$query  = "INSERT INTO `usuarios_equipos_telemetria` (idUsuario, idTelemetria) 
-				VALUES ('$id_usuario','$idTelemetria')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idUsuario, idTelemetria';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_equipos_telemetria', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			
 			}
@@ -1892,28 +1914,20 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$query  = "INSERT INTO `usuarios_documentos_pago` (idUsuario, idDocPago) 
-				VALUES ('$id_usuario','$idDocPago')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				//filtros
+				if(isset($id_usuario) && $id_usuario != ''){  $SIS_data  = "'".$id_usuario."'" ;  }else{$SIS_data  = "''";}
+				if(isset($idDocPago) && $idDocPago != ''){    $SIS_data .= ",'".$idDocPago."'" ;  }else{$SIS_data .= ",''";}
+				
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idUsuario, idDocPago';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_documentos_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
-			
 			}
 			
 
@@ -2034,33 +2048,29 @@ require_once '0_validate_user_1.php';
 				/*******************************************************************/
 				/*******************************************************************/
 				//filtros
-				if(isset($usuario) && $usuario != ''){              $a  = "'".$usuario."'" ;         }else{$a  ="''";}
-				if(isset($password) && $password != ''){            $a .= ",'".md5($password)."'" ;  }else{$a .= ",''";}
-				if(isset($idTipoUsuario) && $idTipoUsuario != ''){  $a .= ",'".$idTipoUsuario."'" ;  }else{$a .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){            $a .= ",'".$idEstado."'" ;       }else{$a .= ",''";}
-				if(isset($email) && $email != ''){                  $a .= ",'".$email."'" ;          }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                $a .= ",'".$Nombre."'" ;         }else{$a .= ",''";}
-				if(isset($Rut) && $Rut != ''){                      $a .= ",'".$Rut."'" ;            }else{$a .= ",''";}
-				if(isset($fNacimiento) && $fNacimiento != ''){      $a .= ",'".$fNacimiento."'" ;    }else{$a .= ",''";}
-				if(isset($Fono) && $Fono != ''){                    $a .= ",'".$Fono."'" ;           }else{$a .= ",''";}
-				if(isset($idCiudad) && $idCiudad != ''){            $a .= ",'".$idCiudad."'" ;       }else{$a .= ",''";}
-				if(isset($idComuna) && $idComuna != ''){            $a .= ",'".$idComuna."'" ;       }else{$a .= ",''";}
-				if(isset($Direccion) && $Direccion != ''){          $a .= ",'".$Direccion."'" ;      }else{$a .= ",''";}
-				if(isset($Direccion_img) && $Direccion_img != ''){  $a .= ",'".$Direccion_img."'" ;  }else{$a .= ",''";}
-				if(isset($Ultimo_acceso) && $Ultimo_acceso != ''){  $a .= ",'".$Ultimo_acceso."'" ;  }else{$a .= ",''";}
+				if(isset($usuario) && $usuario != ''){              $SIS_data  = "'".$usuario."'" ;         }else{$SIS_data  = "''";}
+				if(isset($password) && $password != ''){            $SIS_data .= ",'".md5($password)."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idTipoUsuario) && $idTipoUsuario != ''){  $SIS_data .= ",'".$idTipoUsuario."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){            $SIS_data .= ",'".$idEstado."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($email) && $email != ''){                  $SIS_data .= ",'".$email."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                $SIS_data .= ",'".$Nombre."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Rut) && $Rut != ''){                      $SIS_data .= ",'".$Rut."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($fNacimiento) && $fNacimiento != ''){      $SIS_data .= ",'".$fNacimiento."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Fono) && $Fono != ''){                    $SIS_data .= ",'".$Fono."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idCiudad) && $idCiudad != ''){            $SIS_data .= ",'".$idCiudad."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($idComuna) && $idComuna != ''){            $SIS_data .= ",'".$idComuna."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion != ''){          $SIS_data .= ",'".$Direccion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Direccion_img) && $Direccion_img != ''){  $SIS_data .= ",'".$Direccion_img."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Ultimo_acceso) && $Ultimo_acceso != ''){  $SIS_data .= ",'".$Ultimo_acceso."'" ;  }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `usuarios_listado` (usuario, password, idTipoUsuario, idEstado, email, 
-				Nombre, Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion, Direccion_img, Ultimo_acceso) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'usuario, password, idTipoUsuario, idEstado, email, 
+				Nombre, Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion, Direccion_img, Ultimo_acceso';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
+				
 					/*******************************************************************/
 					/*******************************************************************/
 					//Se copian los sistemas
@@ -2070,13 +2080,13 @@ require_once '0_validate_user_1.php';
 						$idSistema  = $sis['idSistema'];
 						
 						//filtros
-						if(isset($idUsuario) && $idUsuario != ''){  $a  = "'".$idUsuario."'" ;  }else{$a  ="''";}
-						if(isset($idSistema) && $idSistema != ''){  $a .= ",'".$idSistema."'" ; }else{$a .= ",''";}
+						if(isset($idUsuario) && $idUsuario != ''){  $SIS_data  = "'".$idUsuario."'" ;  }else{$SIS_data  = "''";}
+						if(isset($idSistema) && $idSistema != ''){  $SIS_data .= ",'".$idSistema."'" ; }else{$SIS_data .= ",''";}
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `usuarios_sistemas` (idUsuario, idSistema) 
-						VALUES (".$a.")";
-						$result = mysqli_query($dbConn, $query);
+						$SIS_columns = 'idUsuario, idSistema';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 					/*******************************************************************/
 					//Se copian los permisos
@@ -2087,30 +2097,18 @@ require_once '0_validate_user_1.php';
 						$level      = $perm['level'];
 					
 						//filtros
-						if(isset($idUsuario) && $idUsuario != ''){  $a  = "'".$idUsuario."'" ;  }else{$a  ="''";}
-						if(isset($idAdmpm) && $idAdmpm != ''){      $a .= ",'".$idAdmpm."'" ;   }else{$a .= ",''";}
-						if(isset($level) && $level != ''){          $a .= ",'".$level."'" ;     }else{$a .= ",''";}
+						if(isset($idUsuario) && $idUsuario != ''){  $SIS_data  = "'".$idUsuario."'" ;  }else{$SIS_data  = "''";}
+						if(isset($idAdmpm) && $idAdmpm != ''){      $SIS_data .= ",'".$idAdmpm."'" ;   }else{$SIS_data .= ",''";}
+						if(isset($level) && $level != ''){          $SIS_data .= ",'".$level."'" ;     }else{$SIS_data .= ",''";}
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `usuarios_permisos` (idUsuario, idAdmpm, level) 
-						VALUES (".$a.")";
-						$result = mysqli_query($dbConn, $query);
+						$SIS_columns = 'idUsuario, idAdmpm, level';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_permisos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
-					
-					
 						
 					header( 'Location: '.$location.'&clone=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 				
@@ -2143,27 +2141,19 @@ require_once '0_validate_user_1.php';
 	
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
+				//filtros
+				if(isset($id_usuario) && $id_usuario != ''){      $SIS_data  = "'".$id_usuario."'" ;      }else{$SIS_data  = "''";}
+				if(isset($idLicitacion) && $idLicitacion != ''){  $SIS_data .= ",'".$idLicitacion."'" ;   }else{$SIS_data .= ",''";}
 				
-				$query  = "INSERT INTO `usuarios_contratos` (idUsuario, idLicitacion) 
-				VALUES ('$id_usuario','$idLicitacion')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idUsuario, idLicitacion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_contratos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			
 			}
@@ -2243,27 +2233,19 @@ require_once '0_validate_user_1.php';
 	
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
+				//filtros
+				if(isset($id_usuario) && $id_usuario != ''){    $SIS_data  = "'".$id_usuario."'" ;     }else{$SIS_data  = "''";}
+				if(isset($idCajaChica) && $idCajaChica != ''){  $SIS_data .= ",'".$idCajaChica."'" ;   }else{$SIS_data .= ",''";}
 				
-				$query  = "INSERT INTO `usuarios_cajas_chicas` (idUsuario, idCajaChica) 
-				VALUES ('$id_usuario','$idCajaChica')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idUsuario, idCajaChica';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_cajas_chicas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die; 
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
 			}
 			
@@ -2410,22 +2392,14 @@ require_once '0_validate_user_1.php';
 					foreach ($arrInsumos as $ins) {
 						//Si no se ha entregado el permiso
 						if ( $ins['contar']!='1' ) {
-							$query  = "INSERT INTO `usuarios_bodegas_insumos` (idUsuario, idBodega) 
-							VALUES ('".$_GET['idUsuario']."','".$ins['idBodega']."')";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							//filtros
+							if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $SIS_data  = "'".$_GET['idUsuario']."'" ;   }else{$SIS_data  = "''";}
+							if(isset($ins['idBodega']) && $ins['idBodega'] != ''){       $SIS_data .= ",'".$ins['idBodega']."'" ;    }else{$SIS_data .= ",''";}
 							
-							}
+							// inserto los datos de registro en la db
+							$SIS_columns = 'idUsuario, idBodega';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_insumos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 				}
@@ -2435,22 +2409,14 @@ require_once '0_validate_user_1.php';
 					foreach ($arrProductos as $prod) {
 						//Si no se ha entregado el permiso
 						if ( $prod['contar']!='1' ) {
-							$query  = "INSERT INTO `usuarios_bodegas_productos` (idUsuario, idBodega) 
-							VALUES ('".$_GET['idUsuario']."','".$prod['idBodega']."')";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							//filtros
+							if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $SIS_data  = "'".$_GET['idUsuario']."'" ;    }else{$SIS_data  = "''";}
+							if(isset($prod['idBodega']) && $prod['idBodega'] != ''){    $SIS_data .= ",'".$prod['idBodega']."'" ;    }else{$SIS_data .= ",''";}
 							
-							}
+							// inserto los datos de registro en la db
+							$SIS_columns = 'idUsuario, idBodega';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 				}
@@ -2460,22 +2426,14 @@ require_once '0_validate_user_1.php';
 					foreach ($arrArriendos as $arri) {
 						//Si no se ha entregado el permiso
 						if ( $arri['contar']!='1' ) {
-							$query  = "INSERT INTO `usuarios_bodegas_arriendos` (idUsuario, idBodega) 
-							VALUES ('".$_GET['idUsuario']."','".$arri['idBodega']."')";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+							//filtros
+							if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){ $SIS_data  = "'".$_GET['idUsuario']."'" ;  }else{$SIS_data  = "''";}
+							if(isset($arri['idBodega']) && $arri['idBodega'] != ''){   $SIS_data .= ",'".$arri['idBodega']."'" ;  }else{$SIS_data .= ",''";}
 							
-							}
+							// inserto los datos de registro en la db
+							$SIS_columns = 'idUsuario, idBodega';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_arriendos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 				}
@@ -2565,22 +2523,14 @@ require_once '0_validate_user_1.php';
 				foreach ($arrCajas as $caja) {
 					//Si no se ha entregado el permiso
 					if ( $caja['contar']!='1' ) {
-						$query  = "INSERT INTO `usuarios_cajas_chicas` (idUsuario, idCajaChica) 
-						VALUES ('".$_GET['idUsuario']."','".$caja['idCajaChica']."')";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-								
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-								
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						//filtros
+						if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){     $SIS_data  = "'".$_GET['idUsuario']."'" ;     }else{$SIS_data  = "''";}
+						if(isset($caja['idCajaChica']) && $caja['idCajaChica'] != ''){ $SIS_data .= ",'".$caja['idCajaChica']."'" ;  }else{$SIS_data .= ",''";}
+						
+						// inserto los datos de registro en la db
+						$SIS_columns = 'idUsuario, idCajaChica';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_cajas_chicas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}
 				
@@ -2667,22 +2617,14 @@ require_once '0_validate_user_1.php';
 				foreach ($arrContratos as $cont) {
 					//Si no se ha entregado el permiso
 					if ( $cont['contar']!='1' ) {
-						$query  = "INSERT INTO `usuarios_contratos` (idUsuario, idLicitacion) 
-						VALUES ('".$_GET['idUsuario']."','".$cont['idLicitacion']."')";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-								
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-								
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						//filtros
+						if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){       $SIS_data  = "'".$_GET['idUsuario']."'" ;       }else{$SIS_data  = "''";}
+						if(isset($cont['idLicitacion']) && $cont['idLicitacion'] != ''){ $SIS_data .= ",'".$cont['idLicitacion']."'" ;   }else{$SIS_data .= ",''";}
+						
+						// inserto los datos de registro en la db
+						$SIS_columns = 'idUsuario, idLicitacion';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_contratos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}
 				
@@ -2770,22 +2712,14 @@ require_once '0_validate_user_1.php';
 				foreach ($arrContratos as $cont) {
 					//Si no se ha entregado el permiso
 					if ( $cont['contar']!='1' ) {
-						$query  = "INSERT INTO `usuarios_equipos_telemetria` (idUsuario, idTelemetria) 
-						VALUES ('".$_GET['idUsuario']."','".$cont['idTelemetria']."')";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-								
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-								
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						//filtros
+						if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){        $SIS_data  = "'".$_GET['idUsuario']."'" ;      }else{$SIS_data  = "''";}
+						if(isset($cont['idTelemetria']) && $cont['idTelemetria'] != ''){  $SIS_data .= ",'".$cont['idTelemetria']."'" ;  }else{$SIS_data .= ",''";}
+						
+						// inserto los datos de registro en la db
+						$SIS_columns = 'idUsuario, idTelemetria';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_equipos_telemetria', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}
 				
@@ -2913,16 +2847,26 @@ require_once '0_validate_user_1.php';
 							$_SESSION['usuario']['basic_data']['Direccion_img']      = $rowUser['Direccion_img'];
 							$_SESSION['usuario']['basic_data']['idTipoUsuario']      = $rowUser['idTipoUsuario'];
 							$_SESSION['usuario']['basic_data']['Usuario_Tipo']       = $rowUser['Usuario_Tipo'];
-							$_SESSION['usuario']['basic_data']['FechaLogin']         = $rowAcceso['Fecha'];
-							$_SESSION['usuario']['basic_data']['HoraLogin']          = $rowAcceso['Hora'];
 							$_SESSION['usuario']['basic_data']['COunt']              = $rowUser['COunt'];
 							$_SESSION['usuario']['basic_data']['Region']             = $rowUser['nombre_region'];
 							$_SESSION['usuario']['basic_data']['Pronostico']         = $rowUser['nombre_pronostico'];
 							$_SESSION['usuario']['basic_data']['Comuna']             = $rowUser['nombre_comuna'];
 							
+							if(isset($rowAcceso['Fecha'])&&$rowAcceso['Fecha']!=''){ $_SESSION['usuario']['basic_data']['FechaLogin'] = $rowAcceso['Fecha']; }else{$_SESSION['usuario']['basic_data']['FechaLogin'] = fecha_actual();}
+							if(isset($rowAcceso['Hora'])&&$rowAcceso['Hora']!=''){   $_SESSION['usuario']['basic_data']['HoraLogin']  = $rowAcceso['Hora'];  }else{$_SESSION['usuario']['basic_data']['HoraLogin']  = hora_actual();}
+						
 							//Se buscan los datos para crear el menu
+							$SIS_query = '
+							core_permisos_categorias.Nombre AS CategoriaNombre, 
+							core_font_awesome.Codigo AS CategoriaIcono, 
+							core_permisos_categorias.IconColor AS CategoriaIconoColor, 
+							core_permisos_listado.Direccionbase AS TransaccionURLBase, 
+							core_permisos_listado.Direccionweb AS TransaccionURL, 
+							core_permisos_listado.Nombre AS TransaccionNombre, 
+							usuarios_permisos.level, 
+							core_permisos_listado.visualizacion AS idSistema';
 							$arrMenu = array();
-							$arrMenu = db_select_array (false, 'core_permisos_categorias.Nombre AS CategoriaNombre, core_font_awesome.Codigo AS CategoriaIcono, core_permisos_categorias.IconColor AS CategoriaIconoColor, core_permisos_listado.Direccionbase AS TransaccionURLBase, core_permisos_listado.Direccionweb AS TransaccionURL, core_permisos_listado.Nombre AS TransaccionNombre, usuarios_permisos.level', 'usuarios_permisos', 'INNER JOIN core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm INNER JOIN core_permisos_categorias ON core_permisos_categorias.id_pmcat = core_permisos_listado.id_pmcat LEFT JOIN `core_font_awesome` ON core_font_awesome.idFont = core_permisos_categorias.idFont', 'usuarios_permisos.idUsuario ='.$idUsuario, 'CategoriaNombre ASC, TransaccionNombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$arrMenu = db_select_array (false, $SIS_query, 'usuarios_permisos', 'INNER JOIN core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm INNER JOIN core_permisos_categorias ON core_permisos_categorias.id_pmcat = core_permisos_listado.id_pmcat LEFT JOIN `core_font_awesome` ON core_font_awesome.idFont = core_permisos_categorias.idFont', 'usuarios_permisos.idUsuario ='.$idUsuario, 'CategoriaNombre ASC, TransaccionNombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
 							//Permisos
 							foreach($arrMenu as $menu) {
@@ -2949,6 +2893,7 @@ require_once '0_validate_user_1.php';
 									$_SESSION['usuario']['menu'][$Categorias][$ntranx]['CategoriaIconoColor']     = $transaccion['CategoriaIconoColor'];
 									$_SESSION['usuario']['menu'][$Categorias][$ntranx]['TransaccionURL']          = $transaccion['TransaccionURL'];
 									$_SESSION['usuario']['menu'][$Categorias][$ntranx]['TransaccionNombre']       = $transaccion['TransaccionNombre'];
+									$_SESSION['usuario']['menu'][$Categorias][$ntranx]['idSistema']               = $transaccion['idSistema'];
 									
 									$ntranx++;
 								}
@@ -3050,27 +2995,19 @@ require_once '0_validate_user_1.php';
 	
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
+				//filtros
+				if(isset($id_usuario) && $id_usuario != ''){  $SIS_data  = "'".$id_usuario."'" ;   }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema != ''){    $SIS_data .= ",'".$idSistema."'" ;   }else{$SIS_data .= ",''";}
 				
-				$query  = "INSERT INTO `usuarios_sistemas` (idUsuario, idSistema) 
-				VALUES ('$id_usuario','$idSistema')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idUsuario, idSistema';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			
 			}
@@ -3152,22 +3089,14 @@ require_once '0_validate_user_1.php';
 				foreach ($arrContratos as $cont) {
 					//Si no se ha entregado el permiso
 					if ( $cont['contar']!='1' ) {
-						$query  = "INSERT INTO `usuarios_sistemas` (idUsuario, idSistema) 
-						VALUES ('".$_GET['idUsuario']."','".$cont['idSistema']."')";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-								
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-								
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						//filtros
+						if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $SIS_data  = "'".$_GET['idUsuario']."'" ;        }else{$SIS_data  = "''";}
+						if(isset($cont['idSistema']) && $cont['idSistema'] != ''){  $SIS_data .= ",'".$cont['idSistema']."'" ;       }else{$SIS_data .= ",''";}
+						
+						// inserto los datos de registro en la db
+						$SIS_columns = 'idUsuario, idSistema';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}
 				
@@ -3256,26 +3185,19 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$query  = "INSERT INTO `usuarios_camaras` (idUsuario, idCamara) 
-				VALUES ('$id_usuario','$idCamara')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				//filtros
+				if(isset($id_usuario) && $id_usuario != ''){  $SIS_data  = "'".$id_usuario."'" ;   }else{$SIS_data  = "''";}
+				if(isset($idCamara) && $idCamara != ''){      $SIS_data .= ",'".$idCamara."'" ;    }else{$SIS_data .= ",''";}
+				
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idUsuario, idCamara';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_camaras', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die; 
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
 			}
 			
@@ -3356,22 +3278,14 @@ require_once '0_validate_user_1.php';
 				foreach ($arrCajas as $caja) {
 					//Si no se ha entregado el permiso
 					if ( $caja['contar']!='1' ) {
-						$query  = "INSERT INTO `usuarios_camaras` (idUsuario, idCamara) 
-						VALUES ('".$_GET['idUsuario']."','".$caja['idCamara']."')";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-								
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-								
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						//filtros
+						if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){ $SIS_data  = "'".$_GET['idUsuario']."'" ;   }else{$SIS_data  = "''";}
+						if(isset($caja['idCamara']) && $caja['idCamara'] != ''){   $SIS_data .= ",'".$caja['idCamara']."'" ;   }else{$SIS_data .= ",''";}
+						
+						// inserto los datos de registro en la db
+						$SIS_columns = 'idUsuario, idCamara';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_camaras', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}
 				

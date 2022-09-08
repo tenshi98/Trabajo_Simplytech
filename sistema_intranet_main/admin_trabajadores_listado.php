@@ -7,8 +7,6 @@ define('XMBCXRXSKGC', 1);
 /*                                          Se llaman a los archivos necesarios                                                   */
 /**********************************************************************************************************************************/
 require_once 'core/Load.Utils.Web.php';
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel/IOFactory.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
@@ -59,11 +57,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Trabajador Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Trabajador Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Trabajador borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Trabajador Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Trabajador Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Trabajador borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['new_plantilla']) ) {  
 //valido los permisos

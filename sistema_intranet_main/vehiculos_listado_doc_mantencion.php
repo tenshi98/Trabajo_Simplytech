@@ -47,10 +47,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Mantencion creada correctamente';}
-if (isset($_GET['del_doc_vehi'])) {$error['usuario']  = 'sucess/Mantencion borrada correctamente';}
+if (isset($_GET['created'])){      $error['created']      = 'sucess/Mantencion creada correctamente';}
+if (isset($_GET['del_doc_vehi'])){ $error['del_doc_vehi'] = 'sucess/Mantencion borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['new_mant']) ) { ?>
  
@@ -280,7 +280,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 					<div class="col-sm-10 fcenter">
 						<h3>Archivo</h3>
 						<p>Fecha de Vencimiento: <?php echo fecha_estandar($rowdata['doc_fecha_mantencion']); ?></p>
-						<?php echo preview_docs('upload', $rowdata['doc_mantencion'], '', '', ''); ?>
+						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['doc_mantencion'], ''); ?>
 					</div>
 					
 				<?php }?> 
@@ -289,51 +289,51 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 			
 			
 			
-<div class="col-sm-12">
-	<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new_mant='.$_GET['id']; ?>" class="btn btn-default fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-file-o" aria-hidden="true"></i> Crear Mantencion</a>
-</div>
-<div class="clearfix"></div>                       
-                                 
-<div class="col-sm-12">
-	<div class="box">
-		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Mantenciones</h5>
-		</header>
-		<div class="table-responsive">
-			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-				<thead>
-					<tr role="row">
-						<th>Nombre Archivo</th>
-						<th>Fecha Vencimiento</th>
-						<th>Fecha Ingreso</th>
-						<th width="10">Acciones</th>
-					</tr>
-				</thead>
-								 
-				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrTipoCliente as $tipo) { ?>
-					<tr class="odd">
-						<td><?php echo $tipo['doc_mantencion']; ?></td>
-						<td><?php echo fecha_estandar($tipo['doc_fecha_mantencion']); ?></td>
-						<td><?php echo fecha_estandar($tipo['Fecha_ingreso']); ?></td>
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['doc_mantencion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-								<?php 
-								$ubicacion = $new_location.'&del_doc_mantencion='.simpleEncode($tipo['idMantenciones'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el documento '.$tipo['doc_mantencion'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
-							</div>			
-						</td>
-					</tr>
-				<?php } ?>                    
-				</tbody>
-			</table>
-		</div>	
-	</div>
-</div>
-	
-<?php widget_modal(80, 95); ?>		
+			<div class="col-sm-12">
+				<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new_mant='.$_GET['id']; ?>" class="btn btn-default fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-file-o" aria-hidden="true"></i> Crear Mantencion</a>
+			</div>
+			<div class="clearfix"></div>                       
+											 
+			<div class="col-sm-12">
+				<div class="box">
+					<header>
+						<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Mantenciones</h5>
+					</header>
+					<div class="table-responsive">
+						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+							<thead>
+								<tr role="row">
+									<th>Nombre Archivo</th>
+									<th>Fecha Vencimiento</th>
+									<th>Fecha Ingreso</th>
+									<th width="10">Acciones</th>
+								</tr>
+							</thead>
+											 
+							<tbody role="alert" aria-live="polite" aria-relevant="all">
+							<?php foreach ($arrTipoCliente as $tipo) { ?>
+								<tr class="odd">
+									<td><?php echo $tipo['doc_mantencion']; ?></td>
+									<td><?php echo fecha_estandar($tipo['doc_fecha_mantencion']); ?></td>
+									<td><?php echo fecha_estandar($tipo['Fecha_ingreso']); ?></td>
+									<td>
+										<div class="btn-group" style="width: 70px;" >
+											<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['doc_mantencion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											<?php 
+											$ubicacion = $new_location.'&del_doc_mantencion='.simpleEncode($tipo['idMantenciones'], fecha_actual());
+											$dialogo   = '¿Realmente deseas eliminar el documento '.$tipo['doc_mantencion'].'?';?>
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
+										</div>			
+									</td>
+								</tr>
+							<?php } ?>                    
+							</tbody>
+						</table>
+					</div>	
+				</div>
+			</div>
+				
+			<?php widget_modal(80, 95); ?>		
 					
 					
 		</div>	

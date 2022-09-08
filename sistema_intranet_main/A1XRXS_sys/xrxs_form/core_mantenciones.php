@@ -41,11 +41,15 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Descripcion) && $Descripcion != ''){ $Descripcion = EstandarizarInput($Descripcion); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){  $error['Descripcion'] = 'error/Edita la Descripcion, contiene palabras no permitidas'; }	
 
-	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -61,35 +65,23 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Fecha) && $Fecha != ''){              $a  = "'".$Fecha."'" ;        }else{$a  ="''";}
-				if(isset($Hora_ini) && $Hora_ini != ''){        $a .= ",'".$Hora_ini."'" ;    }else{$a .=",''";}
-				if(isset($Hora_fin) && $Hora_fin != ''){        $a .= ",'".$Hora_fin."'" ;    }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){      $a .= ",'".$idUsuario."'" ;   }else{$a .=",''";}
-				if(isset($Descripcion) && $Descripcion != ''){  $a .= ",'".$Descripcion."'" ; }else{$a .=",''";}
-				
+				if(isset($Fecha) && $Fecha != ''){              $SIS_data  = "'".$Fecha."'" ;        }else{$SIS_data  = "''";}
+				if(isset($Hora_ini) && $Hora_ini != ''){        $SIS_data .= ",'".$Hora_ini."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Hora_fin) && $Hora_fin != ''){        $SIS_data .= ",'".$Hora_fin."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){      $SIS_data .= ",'".$idUsuario."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion != ''){  $SIS_data .= ",'".$Descripcion."'" ; }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `core_mantenciones` (Fecha,Hora_ini, Hora_fin, idUsuario, Descripcion) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Fecha,Hora_ini, Hora_fin, idUsuario, Descripcion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_mantenciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
 			}
 	
 		break;
@@ -102,16 +94,16 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idMantencion='".$idMantencion."'" ;
-				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
-				if(isset($Hora_ini) && $Hora_ini != ''){         $a .= ",Hora_ini='".$Hora_ini."'" ;}
-				if(isset($Hora_fin) && $Hora_fin != ''){         $a .= ",Hora_fin='".$Hora_fin."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){   $a .= ",Descripcion='".$Descripcion."'" ;}
+				$SIS_data = "idMantencion='".$idMantencion."'" ;
+				if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
+				if(isset($Hora_ini) && $Hora_ini != ''){         $SIS_data .= ",Hora_ini='".$Hora_ini."'" ;}
+				if(isset($Hora_fin) && $Hora_fin != ''){         $SIS_data .= ",Hora_fin='".$Hora_fin."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){   $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
 		
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'core_mantenciones', 'idMantencion = "'.$idMantencion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'core_mantenciones', 'idMantencion = "'.$idMantencion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

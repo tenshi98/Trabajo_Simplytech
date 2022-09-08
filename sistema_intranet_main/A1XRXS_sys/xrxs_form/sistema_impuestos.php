@@ -14,7 +14,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idImpuesto']) )      $idImpuesto      = $_POST['idImpuesto'];
+	if ( !empty($_POST['idImpuesto']) )       $idImpuesto       = $_POST['idImpuesto'];
 	if ( !empty($_POST['Nombre']) )           $Nombre           = $_POST['Nombre'];
 	if ( !empty($_POST['Porcentaje']) )       $Porcentaje       = $_POST['Porcentaje'];
 	
@@ -35,6 +35,11 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){ $Nombre = EstandarizarInput($Nombre); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -66,29 +71,18 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){            $a = "'".$Nombre."'" ;         }else{$a ="''";}
-				if(isset($Porcentaje) && $Porcentaje != ''){    $a .= ",'".$Porcentaje."'" ;   }else{$a .=",''";}
+				if(isset($Nombre) && $Nombre != ''){            $SIS_data  = "'".$Nombre."'" ;        }else{$SIS_data  = "''";}
+				if(isset($Porcentaje) && $Porcentaje != ''){    $SIS_data .= ",'".$Porcentaje."'" ;   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `sistema_impuestos` (Nombre, Porcentaje) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Nombre, Porcentaje';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'sistema_impuestos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -113,13 +107,13 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idImpuesto='".$idImpuesto."'" ;
-				if(isset($Nombre) && $Nombre != ''){             $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Porcentaje) && $Porcentaje != ''){     $a .= ",Porcentaje='".$Porcentaje."'" ;}
+				$SIS_data = "idImpuesto='".$idImpuesto."'" ;
+				if(isset($Nombre) && $Nombre != ''){             $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Porcentaje) && $Porcentaje != ''){     $SIS_data .= ",Porcentaje='".$Porcentaje."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'sistema_impuestos', 'idImpuesto = "'.$idImpuesto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'sistema_impuestos', 'idImpuesto = "'.$idImpuesto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

@@ -55,13 +55,13 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Maquina creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Maquina editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Maquina borrada correctamente';}
-if (isset($_GET['clone']))   {$error['usuario'] 	  = 'sucess/Maquina clonada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Maquina creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Maquina editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Maquina borrada correctamente';}
+if (isset($_GET['clone'])){   $error['clone']   = 'sucess/Maquina clonada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['clone_idMaquina']) ) { 
 	
 ?>

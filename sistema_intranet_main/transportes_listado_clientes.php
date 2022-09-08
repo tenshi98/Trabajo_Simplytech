@@ -66,9 +66,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Permiso asignado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Permiso asignado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $query = "SELECT Nombre
@@ -156,7 +156,7 @@ array_push( $arrEquipos,$row );
 						<th>Nombre</th>
 						<th width="10">Acciones</th>
 					</tr>
-					<?php echo widget_sherlock(1, 2);?>
+					<?php echo widget_sherlock(1, 2, 'TableFiltered');?>
 				</thead>
 								  
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">

@@ -29,7 +29,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['DistanciaPlant']) )      $DistanciaPlant      = $_POST['DistanciaPlant'];
 	if ( !empty($_POST['DistanciaHileras']) )    $DistanciaHileras    = $_POST['DistanciaHileras'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -58,6 +57,12 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){ $Nombre = EstandarizarInput($Nombre); }
+	if(isset($Codigo) && $Codigo != ''){ $Codigo = EstandarizarInput($Codigo); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -91,43 +96,29 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idPredio) && $idPredio != ''){                    $a  = "'".$idPredio."'" ;            }else{$a  ="''";}
-				if(isset($Nombre) && $Nombre != ''){                        $a .= ",'".$Nombre."'" ;             }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){                    $a .= ",'".$idEstado."'" ;           }else{$a .=",''";}
-				if(isset($Codigo) && $Codigo != ''){                        $a .= ",'".$Codigo."'" ;             }else{$a .=",''";}
-				if(isset($idCategoria) && $idCategoria != ''){              $a .= ",'".$idCategoria."'" ;        }else{$a .=",''";}
-				if(isset($idProducto) && $idProducto != ''){                $a .= ",'".$idProducto."'" ;         }else{$a .=",''";}
-				if(isset($AnoPlantacion) && $AnoPlantacion != ''){          $a .= ",'".$AnoPlantacion."'" ;      }else{$a .=",''";}
-				if(isset($Hectareas) && $Hectareas != ''){                  $a .= ",'".$Hectareas."'" ;          }else{$a .=",''";}
-				if(isset($Hileras) && $Hileras != ''){                      $a .= ",'".$Hileras."'" ;            }else{$a .=",''";}
-				if(isset($Plantas) && $Plantas != ''){                      $a .= ",'".$Plantas."'" ;            }else{$a .=",''";}
-				if(isset($idEstadoProd) && $idEstadoProd != ''){            $a .= ",'".$idEstadoProd."'" ;       }else{$a .=",''";}
-				if(isset($DistanciaPlant) && $DistanciaPlant != ''){        $a .= ",'".$DistanciaPlant."'" ;     }else{$a .=",''";}
-				if(isset($DistanciaHileras) && $DistanciaHileras != ''){    $a .= ",'".$DistanciaHileras."'" ;   }else{$a .=",''";}
+				if(isset($idPredio) && $idPredio != ''){                    $SIS_data  = "'".$idPredio."'" ;            }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){                        $SIS_data .= ",'".$Nombre."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                    $SIS_data .= ",'".$idEstado."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Codigo) && $Codigo != ''){                        $SIS_data .= ",'".$Codigo."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($idCategoria) && $idCategoria != ''){              $SIS_data .= ",'".$idCategoria."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($idProducto) && $idProducto != ''){                $SIS_data .= ",'".$idProducto."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($AnoPlantacion) && $AnoPlantacion != ''){          $SIS_data .= ",'".$AnoPlantacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Hectareas) && $Hectareas != ''){                  $SIS_data .= ",'".$Hectareas."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Hileras) && $Hileras != ''){                      $SIS_data .= ",'".$Hileras."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Plantas) && $Plantas != ''){                      $SIS_data .= ",'".$Plantas."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($idEstadoProd) && $idEstadoProd != ''){            $SIS_data .= ",'".$idEstadoProd."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($DistanciaPlant) && $DistanciaPlant != ''){        $SIS_data .= ",'".$DistanciaPlant."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($DistanciaHileras) && $DistanciaHileras != ''){    $SIS_data .= ",'".$DistanciaHileras."'" ;   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_predios_listado_zonas` (idPredio, Nombre, idEstado, Codigo, idCategoria,
-				idProducto, AnoPlantacion, Hectareas, Hileras, Plantas, idEstadoProd, DistanciaPlant, DistanciaHileras) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idPredio, Nombre, idEstado, Codigo, idCategoria, idProducto, AnoPlantacion, Hectareas, Hileras, Plantas, idEstadoProd, DistanciaPlant, DistanciaHileras';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_predios_listado_zonas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
 					//redirijo	
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -152,24 +143,24 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idZona='".$idZona."'" ;
-				if(isset($idPredio) && $idPredio != ''){                   $a .= ",idPredio='".$idPredio."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                       $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                   $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Codigo) && $Codigo != ''){                       $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($idCategoria) && $idCategoria != ''){             $a .= ",idCategoria='".$idCategoria."'" ;}
-				if(isset($idProducto) && $idProducto != ''){               $a .= ",idProducto='".$idProducto."'" ;}
-				if(isset($AnoPlantacion) && $AnoPlantacion != ''){         $a .= ",AnoPlantacion='".$AnoPlantacion."'" ;}
-				if(isset($Hectareas) && $Hectareas != ''){                 $a .= ",Hectareas='".$Hectareas."'" ;}
-				if(isset($Hileras) && $Hileras != ''){                     $a .= ",Hileras='".$Hileras."'" ;}
-				if(isset($Plantas) && $Plantas != ''){                     $a .= ",Plantas='".$Plantas."'" ;}
-				if(isset($idEstadoProd) && $idEstadoProd != ''){           $a .= ",idEstadoProd='".$idEstadoProd."'" ;}
-				if(isset($DistanciaPlant) && $DistanciaPlant != ''){       $a .= ",DistanciaPlant='".$DistanciaPlant."'" ;}
-				if(isset($DistanciaHileras) && $DistanciaHileras != ''){   $a .= ",DistanciaHileras='".$DistanciaHileras."'" ;}
+				$SIS_data = "idZona='".$idZona."'" ;
+				if(isset($idPredio) && $idPredio != ''){                   $SIS_data .= ",idPredio='".$idPredio."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                       $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                   $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Codigo) && $Codigo != ''){                       $SIS_data .= ",Codigo='".$Codigo."'" ;}
+				if(isset($idCategoria) && $idCategoria != ''){             $SIS_data .= ",idCategoria='".$idCategoria."'" ;}
+				if(isset($idProducto) && $idProducto != ''){               $SIS_data .= ",idProducto='".$idProducto."'" ;}
+				if(isset($AnoPlantacion) && $AnoPlantacion != ''){         $SIS_data .= ",AnoPlantacion='".$AnoPlantacion."'" ;}
+				if(isset($Hectareas) && $Hectareas != ''){                 $SIS_data .= ",Hectareas='".$Hectareas."'" ;}
+				if(isset($Hileras) && $Hileras != ''){                     $SIS_data .= ",Hileras='".$Hileras."'" ;}
+				if(isset($Plantas) && $Plantas != ''){                     $SIS_data .= ",Plantas='".$Plantas."'" ;}
+				if(isset($idEstadoProd) && $idEstadoProd != ''){           $SIS_data .= ",idEstadoProd='".$idEstadoProd."'" ;}
+				if(isset($DistanciaPlant) && $DistanciaPlant != ''){       $SIS_data .= ",DistanciaPlant='".$DistanciaPlant."'" ;}
+				if(isset($DistanciaHileras) && $DistanciaHileras != ''){   $SIS_data .= ",DistanciaHileras='".$DistanciaHileras."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_predios_listado_zonas', 'idZona = "'.$idZona.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_predios_listado_zonas', 'idZona = "'.$idZona.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

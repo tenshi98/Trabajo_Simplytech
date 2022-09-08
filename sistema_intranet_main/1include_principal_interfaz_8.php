@@ -56,33 +56,15 @@ $z  = " idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 /************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$query = "SELECT
+$SIS_query = '
 core_ubicacion_ciudad.Nombre AS Ciudad, 
 core_ubicacion_comunas.Nombre AS Comuna, 
-core_ubicacion_comunas.Wheater AS Wheater
-".$subquery."
-
-FROM core_sistemas
+core_ubicacion_comunas.Wheater AS Wheater'.$subquery;
+$SIS_join  = '
 LEFT JOIN core_ubicacion_ciudad    ON core_ubicacion_ciudad.idCiudad    = core_sistemas.idCiudad
-LEFT JOIN core_ubicacion_comunas   ON core_ubicacion_comunas.idComuna   = core_sistemas.idComuna
-
-WHERE core_sistemas.idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."' "; 
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$subconsulta = mysqli_fetch_assoc($resultado);
-
-
+LEFT JOIN core_ubicacion_comunas   ON core_ubicacion_comunas.idComuna   = core_sistemas.idComuna';
+$SIS_where = 'core_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$subconsulta = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'subconsulta');
 									
 ?>
 

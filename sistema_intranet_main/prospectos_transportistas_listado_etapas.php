@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/z_prospectos_transportistas_etapa_fidelizacion.php';
@@ -34,8 +34,8 @@ if ( !empty($_POST['submit']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/z_prospectos_transportistas_etapa_fidelizacion.php';
@@ -43,8 +43,8 @@ if ( !empty($_POST['submit_edit']) )  {
 //se borra un dato
 if ( !empty($_GET['del']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
 	require_once 'A1XRXS_sys/xrxs_form/z_prospectos_transportistas_etapa_fidelizacion.php';	
@@ -57,11 +57,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Etapa creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Etapa editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Etapa borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Etapa creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Etapa editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Etapa borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 // consulto los datos

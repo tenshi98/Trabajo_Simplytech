@@ -37,11 +37,15 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Descripcion) && $Descripcion != ''){ $Descripcion = EstandarizarInput($Descripcion); }
+
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){  $error['Descripcion'] = 'error/Edita la Descripcion, contiene palabras no permitidas'; }	
 
-	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -57,18 +61,17 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Fecha) && $Fecha != ''){              $a  = "'".$Fecha."'" ;          }else{$a  ="''";}
-				if(isset($Descripcion) && $Descripcion != ''){  $a .= ",'".$Descripcion."'" ;   }else{$a .=",''";}
-				if(isset($idCliente) && $idCliente != ''){      $a .= ",'".$idCliente."'" ;     }else{$a .=",''";}
+				if(isset($Fecha) && $Fecha != ''){              $SIS_data  = "'".$Fecha."'" ;          }else{$SIS_data  = "''";}
+				if(isset($Descripcion) && $Descripcion != ''){  $SIS_data .= ",'".$Descripcion."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente != ''){      $SIS_data .= ",'".$idCliente."'" ;     }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `seg_vecinal_clientes_infracciones` (Fecha, Descripcion, idCliente) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Fecha, Descripcion, idCliente';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seg_vecinal_clientes_infracciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+				
 					/*******************************************************************/
 					//Si ha cometido mas de 3 infracciones, se banea
 					$ndata_1 = 0;
@@ -86,11 +89,11 @@ require_once '0_validate_user_1.php';
 						
 						/******************************************************************/
 						//desactivo al usuario creador del post
-						$a = "idEstado='".$idEstado."'" ;
+						$SIS_data = "idEstado='".$idEstado."'" ;
 						
 						/*******************************************************/
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'seg_vecinal_clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						/****************************************/
 						// Se trae un listado con todas las ip
@@ -114,16 +117,15 @@ require_once '0_validate_user_1.php';
 								$Motivo = 'Baneo del usuario '.$ipc['Vecino'];
 								
 								//filtros
-								if(isset($Fecha) && $Fecha != ''){                        $a  = "'".$Fecha."'" ;              }else{$a  ="''";}
-								if(isset($Hora) && $Hora != ''){                          $a .= ",'".$Hora."'" ;              }else{$a .=",''";}
-								if(isset($ipc['IP_Client']) && $ipc['IP_Client'] != ''){  $a .= ",'".$ipc['IP_Client']."'" ;  }else{$a .=",''";}
-								if(isset($Motivo) && $Motivo != ''){                      $a .= ",'".$Motivo."'" ;            }else{$a .=",''";}
+								if(isset($Fecha) && $Fecha != ''){                        $SIS_data  = "'".$Fecha."'" ;              }else{$SIS_data  = "''";}
+								if(isset($Hora) && $Hora != ''){                          $SIS_data .= ",'".$Hora."'" ;              }else{$SIS_data .= ",''";}
+								if(isset($ipc['IP_Client']) && $ipc['IP_Client'] != ''){  $SIS_data .= ",'".$ipc['IP_Client']."'" ;  }else{$SIS_data .= ",''";}
+								if(isset($Motivo) && $Motivo != ''){                      $SIS_data .= ",'".$Motivo."'" ;            }else{$SIS_data .= ",''";}
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `sistema_seguridad_bloqueo_ip` (Fecha,Hora, IP_Client, Motivo) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
+								$SIS_columns = 'Fecha,Hora, IP_Client, Motivo';
+								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'sistema_seguridad_bloqueo_ip', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 						
 							}
 						}
@@ -133,19 +135,7 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location.'&created=true' );
 					die;
 					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
-				
 			}
 	
 		break;
@@ -158,14 +148,14 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idInfraccion='".$idInfraccion."'" ;
-				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){   $a .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($idCliente) && $idCliente != ''){       $a .= ",idCliente='".$idCliente."'" ;}
+				$SIS_data = "idInfraccion='".$idInfraccion."'" ;
+				if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){   $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
+				if(isset($idCliente) && $idCliente != ''){       $SIS_data .= ",idCliente='".$idCliente."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seg_vecinal_clientes_infracciones', 'idInfraccion = "'.$idInfraccion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_clientes_infracciones', 'idInfraccion = "'.$idInfraccion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

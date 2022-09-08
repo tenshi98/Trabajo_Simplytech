@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -101,13 +100,14 @@ $arrTemporal = array();
 //Llamo a la funcion
 $arrTemporal = crear_data($rowEquipo['cantSensores'], $subf, $_GET['idTelemetria'], $_GET['f_inicio'], $_GET['f_termino'], $_GET['desde'], $_GET['hasta'] , $dbConn);
 
-/*******************************************************************/
-/*******************************************************************/
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator("Office 2007")
+$spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setLastModifiedBy("Office 2007")
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
@@ -115,15 +115,13 @@ $objPHPExcel->getProperties()->setCreator("Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
 
-
 /***********************************************************/
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A1', 'Equipo')
 			->setCellValue('B1', 'Fecha')
 			->setCellValue('C1', 'Temperatura')
 			->setCellValue('D1', 'Humedad');
-
 
 $nn=2; 
 foreach ($arrTemporal as $fac) {
@@ -150,40 +148,39 @@ foreach ($arrTemporal as $fac) {
 	
 	//omite la linea mientras alguna de las variables contenga datos
 	if($Temperatura_N!=0 OR $Humedad_N!=0){
-		$objPHPExcel->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $rowEquipo['Nombre'])
-				->setCellValue('B'.$nn, $fac['FechaSistema'])
-				->setCellValue('C'.$nn, $New_Temperatura)
-				->setCellValue('D'.$nn, $New_Humedad); 					
+		$spreadsheet->setActiveSheetIndex(0)
+					->setCellValue('A'.$nn, $rowEquipo['Nombre'])
+					->setCellValue('B'.$nn, $fac['FechaSistema'])
+					->setCellValue('C'.$nn, $New_Temperatura)
+					->setCellValue('D'.$nn, $New_Humedad); 					
 							
 		$nn++;	
 	}				
 }
 	
-	/***********************************************************/
-	// Rename worksheet
-	$super_titulo = cortar($rowEquipo['Nombre'], 25);
-	$objPHPExcel->getActiveSheet(0)->setTitle($super_titulo);
-	
-
+/***********************************************************/
+// Rename worksheet
+$spreadsheet->getActiveSheet(0)->setTitle(cortar($rowEquipo['Nombre'], 25));
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Desviacion estandar.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Desviacion estandar';
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

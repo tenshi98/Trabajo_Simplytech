@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -27,10 +26,8 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 //obtengo los datos de la empresa
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
-
-// Se trae un listado con todos los datos
-$arrProductos = array();
-$query = "SELECT 
+/*******************************************************/
+$SIS_query = '
 bodegas_insumos_facturacion_existencias.idFacturacion,
 bodegas_insumos_facturacion_existencias.Creacion_fecha,
 bodegas_insumos_facturacion_existencias.Cantidad_ing,
@@ -44,62 +41,47 @@ trabajadores_listado.Nombre AS trab_nombre,
 trabajadores_listado.ApellidoPat AS trab_appat,
 trabajadores_listado.ApellidoMat AS trab_apmat,
 proveedor_listado.Nombre AS Proveedor,
-(SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega=".$_GET['idBodega']." LIMIT 1) AS NombreBodega
-
-FROM `bodegas_insumos_facturacion_existencias`
+(SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega='.$_GET['idBodega'].' LIMIT 1) AS NombreBodega';
+$SIS_join  = '
 LEFT JOIN `bodegas_insumos_facturacion_tipo`    ON bodegas_insumos_facturacion_tipo.idTipo       = bodegas_insumos_facturacion_existencias.idTipo
 LEFT JOIN `insumos_listado`                     ON insumos_listado.idProducto                    = bodegas_insumos_facturacion_existencias.idProducto
-LEFT JOIN `sistema_productos_uml`                         ON sistema_productos_uml.idUml                             = insumos_listado.idUml
+LEFT JOIN `sistema_productos_uml`               ON sistema_productos_uml.idUml                   = insumos_listado.idUml
 LEFT JOIN `bodegas_insumos_facturacion`         ON bodegas_insumos_facturacion.idFacturacion     = bodegas_insumos_facturacion_existencias.idFacturacion
-LEFT JOIN `core_documentos_mercantiles`      ON core_documentos_mercantiles.idDocumentos   = bodegas_insumos_facturacion.idDocumentos
+LEFT JOIN `core_documentos_mercantiles`         ON core_documentos_mercantiles.idDocumentos      = bodegas_insumos_facturacion.idDocumentos
 LEFT JOIN `proveedor_listado`                   ON proveedor_listado.idProveedor                 = bodegas_insumos_facturacion.idProveedor
-LEFT JOIN `trabajadores_listado`                ON trabajadores_listado.idTrabajador             = bodegas_insumos_facturacion.idTrabajador
+LEFT JOIN `trabajadores_listado`                ON trabajadores_listado.idTrabajador             = bodegas_insumos_facturacion.idTrabajador';
+$SIS_where = 'bodegas_insumos_facturacion_existencias.idProducto='.$_GET['view'].' AND bodegas_insumos_facturacion_existencias.idBodega='.$_GET['idBodega'];
+$SIS_order = 'bodegas_insumos_facturacion_existencias.Creacion_fecha DESC LIMIT 100';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-WHERE bodegas_insumos_facturacion_existencias.idProducto=".$_GET['view']."  
-AND bodegas_insumos_facturacion_existencias.idBodega=".$_GET['idBodega']."
-ORDER BY bodegas_insumos_facturacion_existencias.Creacion_fecha DESC 
-LIMIT 100";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}    
-
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
 							 ->setLastModifiedBy($rowEmpresa['Nombre'])
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-
 			
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Bodega: '.$arrProductos[0]['NombreBodega']);
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A2', 'Producto: '.$arrProductos[0]['NombreProducto']);
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A3', 'Ultimos 100 Registros');            
             
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A5', 'Movimiento')
             ->setCellValue('B5', 'Proveedor/Cliente')
             ->setCellValue('C5', 'Documento')
@@ -110,49 +92,50 @@ $objPHPExcel->setActiveSheetIndex(0)
             
 $nn=6;
 foreach ($arrProductos as $productos) { 
-if(isset($productos['Proveedor'])&&$productos['Proveedor']){
-	$empresa = 'Proveedor : '.$productos['Proveedor'];
-	$ndoc = $productos['Documento'].' N° '.$productos['N_Doc'];
-}else{
-	$empresa = 'Trabajador : '.$productos['trab_nombre'].' '.$productos['trab_appat'].' '.$productos['trab_apmat'];
-	$ndoc = 'Documento N° '.$productos['idFacturacion'];
-}
-							
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A'.$nn, $productos['TipoMovimiento'])
-            ->setCellValue('B'.$nn, $empresa)
-            ->setCellValue('C'.$nn, $ndoc)
-            ->setCellValue('D'.$nn, Fecha_estandar($productos['Creacion_fecha']))
-            ->setCellValue('E'.$nn, cantidades_excel($productos['Cantidad_ing']))
-            ->setCellValue('F'.$nn, cantidades_excel($productos['Cantidad_eg']))
-            ->setCellValue('G'.$nn, $productos['UnidadMedida']);
- $nn++;           
+	if(isset($productos['Proveedor'])&&$productos['Proveedor']){
+		$empresa = 'Proveedor : '.$productos['Proveedor'];
+		$ndoc = $productos['Documento'].' N° '.$productos['N_Doc'];
+	}else{
+		$empresa = 'Trabajador : '.$productos['trab_nombre'].' '.$productos['trab_appat'].' '.$productos['trab_apmat'];
+		$ndoc = 'Documento N° '.$productos['idFacturacion'];
+	}
+								
+	$spreadsheet->setActiveSheetIndex(0)
+				->setCellValue('A'.$nn, $productos['TipoMovimiento'])
+				->setCellValue('B'.$nn, $empresa)
+				->setCellValue('C'.$nn, $ndoc)
+				->setCellValue('D'.$nn, Fecha_estandar($productos['Creacion_fecha']))
+				->setCellValue('E'.$nn, cantidades_excel($productos['Cantidad_ing']))
+				->setCellValue('F'.$nn, cantidades_excel($productos['Cantidad_eg']))
+				->setCellValue('G'.$nn, $productos['UnidadMedida']);
+	$nn++;           
    
 } 
 
 
 
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle(cortar('Bodega '.$arrProductos[0]['NombreBodega'], 25));
-
+$spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.$arrProductos[0]['NombreBodega'], 25));
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Movimiento Producto '.$arrProductos[0]['NombreProducto'].' Bodega '.$arrProductos[0]['NombreBodega'].' ultimos 100 registros.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Movimiento Producto '.$arrProductos[0]['NombreProducto'].' Bodega '.$arrProductos[0]['NombreBodega'].' ultimos 100 registros';
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

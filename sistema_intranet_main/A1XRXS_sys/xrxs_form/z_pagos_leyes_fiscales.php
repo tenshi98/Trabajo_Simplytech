@@ -63,8 +63,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['RET_Total_deuda']) )            $RET_Total_deuda           = $_POST['RET_Total_deuda'];
 	if ( !empty($_POST['IMPRENT_Total_deuda']) )        $IMPRENT_Total_deuda       = $_POST['IMPRENT_Total_deuda'];
 	if ( !empty($_POST['Creacion_fecha']) )             $Creacion_fecha            = $_POST['Creacion_fecha'];
-	
-		
 									
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -129,7 +127,13 @@ require_once '0_validate_user_1.php';
 			case 'Creacion_fecha':             if(empty($Creacion_fecha)){             $error['Creacion_fecha']               = 'error/No ha ingresado la fecha de creacion';}break;
 	
 		}
-	}	
+	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+	if(isset($Descripcion) && $Descripcion != ''){     $Descripcion   = EstandarizarInput($Descripcion); }
+		
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -1530,7 +1534,7 @@ require_once '0_validate_user_1.php';
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
 						//Sufijo
-						$sufijo = 'pagos_leyes_fiscales_'.fecha_actual().'_';
+						$sufijo = 'pagos_leyes_fiscales_'.genera_password_unica().'_';
 					  
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
@@ -1772,65 +1776,64 @@ require_once '0_validate_user_1.php';
 				}
 				
 				//Se guardan los datos basicos
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idSistema']) && $_SESSION['pagos_leyes_fiscales_basicos']['idSistema'] != ''){                           $a  = "'".$_SESSION['pagos_leyes_fiscales_basicos']['idSistema']."'" ;              }else{$a  = "''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario'] != ''){                           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']."'" ;             }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'] != ''){                         $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;            }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano']) && $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano'] != ''){                       $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano']."'" ;           }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes']) && $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes'] != ''){                       $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes']."'" ;           }else{$a .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idSistema']) && $_SESSION['pagos_leyes_fiscales_basicos']['idSistema'] != ''){                           $SIS_data  = "'".$_SESSION['pagos_leyes_fiscales_basicos']['idSistema']."'" ;              }else{$SIS_data  = "''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario'] != ''){                           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'] != ''){                         $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano']) && $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano'] != ''){                       $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano']."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes']) && $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes'] != ''){                       $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes']."'" ;           }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']) && $_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'] != ''){  
-					$a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']."'" ;  
-					$a .= ",'".fecha2NSemana($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'])."'" ;
-					$a .= ",'".fecha2NMes($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'])."'" ;
-					$a .= ",'".fecha2Ano($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'])."'" ;
+					$SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']."'" ;  
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'])."'" ;
+					$SIS_data .= ",'".fecha2NMes($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'])."'" ;
+					$SIS_data .= ",'".fecha2Ano($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'])."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Observaciones']) && $_SESSION['pagos_leyes_fiscales_basicos']['Observaciones'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Observaciones']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM']) && $_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM'] != ''){                 $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM']."'" ;        }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior']) && $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'] != ''){       $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior']."'" ;   }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Actual']) && $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Actual'] != ''){           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Actual']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_TotalSaldo']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_TotalSaldo'] != ''){                 $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_TotalSaldo']."'" ;        }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_Diferencia']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_Diferencia'] != ''){                 $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_Diferencia']."'" ;        }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Saldo']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_Saldo'] != ''){                           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_Saldo']."'" ;             }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago'] != ''){                             $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago']."'" ;              }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Diferencia']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_Diferencia'] != ''){                 $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_Diferencia']."'" ;        }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Retencion']) && $_SESSION['pagos_leyes_fiscales_basicos']['Retencion'] != ''){                           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Retencion']."'" ;             }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta']) && $_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['TotalGeneral']) && $_SESSION['pagos_leyes_fiscales_basicos']['TotalGeneral'] != ''){                     $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['TotalGeneral']."'" ;          }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['TotalPagoGeneral']) && $_SESSION['pagos_leyes_fiscales_basicos']['TotalPagoGeneral'] != ''){             $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['TotalPagoGeneral']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idCentroCosto']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idCentroCosto'] != ''){           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idCentroCosto']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_1']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_1'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_1']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_2']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_2'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_2']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_3']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_3'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_3']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_4']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_4'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_4']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_5']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_5'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_5']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idCentroCosto']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idCentroCosto'] != ''){           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idCentroCosto']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_1']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_1'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_1']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_2']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_2'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_2']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_3']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_3'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_3']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_4']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_4'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_4']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_5']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_5'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_5']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idCentroCosto']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idCentroCosto'] != ''){           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idCentroCosto']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_1']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_1'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_1']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_2']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_2'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_2']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_3']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_3'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_3']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_4']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_4'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_4']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_5']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_5'] != ''){                   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_5']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idCentroCosto']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idCentroCosto'] != ''){   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idCentroCosto']."'" ; }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_1']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_1'] != ''){           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_1']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_2']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_2'] != ''){           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_2']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_3']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_3'] != ''){           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_3']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_4']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_4'] != ''){           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_4']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_5']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_5'] != ''){           $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_5']."'" ;     }else{$a .= ",''";}
-				$a .= ",'".$idEstadoPago."'" ;
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Observaciones']) && $_SESSION['pagos_leyes_fiscales_basicos']['Observaciones'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Observaciones']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM']) && $_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM'] != ''){                 $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM']."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior']) && $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'] != ''){       $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Actual']) && $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Actual'] != ''){           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Actual']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_TotalSaldo']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_TotalSaldo'] != ''){                 $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_TotalSaldo']."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_Diferencia']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_Diferencia'] != ''){                 $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_Diferencia']."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Saldo']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_Saldo'] != ''){                           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_Saldo']."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago'] != ''){                             $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago']."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Diferencia']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_Diferencia'] != ''){                 $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_Diferencia']."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Retencion']) && $_SESSION['pagos_leyes_fiscales_basicos']['Retencion'] != ''){                           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Retencion']."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta']) && $_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['TotalGeneral']) && $_SESSION['pagos_leyes_fiscales_basicos']['TotalGeneral'] != ''){                     $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['TotalGeneral']."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['TotalPagoGeneral']) && $_SESSION['pagos_leyes_fiscales_basicos']['TotalPagoGeneral'] != ''){             $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['TotalPagoGeneral']."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idCentroCosto']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idCentroCosto'] != ''){           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idCentroCosto']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_1']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_1'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_1']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_2']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_2'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_2']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_3']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_3'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_3']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_4']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_4'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_4']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_5']) && $_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_5'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_5']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idCentroCosto']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idCentroCosto'] != ''){           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idCentroCosto']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_1']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_1'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_1']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_2']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_2'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_2']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_3']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_3'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_3']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_4']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_4'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_4']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_5']) && $_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_5'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['PPM_idLevel_5']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idCentroCosto']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idCentroCosto'] != ''){           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idCentroCosto']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_1']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_1'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_1']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_2']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_2'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_2']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_3']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_3'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_3']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_4']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_4'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_4']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_5']) && $_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_5'] != ''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['RET_idLevel_5']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idCentroCosto']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idCentroCosto'] != ''){   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idCentroCosto']."'" ; }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_1']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_1'] != ''){           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_1']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_2']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_2'] != ''){           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_2']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_3']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_3'] != ''){           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_3']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_4']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_4'] != ''){           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_4']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_5']) && $_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_5'] != ''){           $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_5']."'" ;     }else{$SIS_data .= ",''";}
+				$SIS_data .= ",'".$idEstadoPago."'" ;
 				
-					
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `pagos_leyes_fiscales` (idSistema, idUsuario,fecha_auto,Periodo_Ano,
+				$SIS_columns = 'idSistema, idUsuario,fecha_auto,Periodo_Ano,
 				Periodo_Mes,Pago_fecha, Pago_Semana, Pago_mes, Pago_ano, Observaciones,Porcentaje_PPM,
 				Saldos_IVA_Anterior,Saldos_IVA_Actual, IVA_TotalSaldo,IVA_MontoPago,IVA_Diferencia,
 				PPM_Saldo,PPM_Pago, PPM_Diferencia,Retencion, ImpuestoRenta, TotalGeneral, TotalPagoGeneral, 
@@ -1838,197 +1841,105 @@ require_once '0_validate_user_1.php';
 				PPM_idCentroCosto,PPM_idLevel_1,PPM_idLevel_2, PPM_idLevel_3,PPM_idLevel_4,PPM_idLevel_5,
 				RET_idCentroCosto,RET_idLevel_1,RET_idLevel_2, RET_idLevel_3,RET_idLevel_4,RET_idLevel_5,
 				IMPRENT_idCentroCosto,IMPRENT_idLevel_1, IMPRENT_idLevel_2,IMPRENT_idLevel_3,
-				IMPRENT_idLevel_4,IMPRENT_idLevel_5, idEstadoPago) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				IMPRENT_idLevel_4,IMPRENT_idLevel_5, idEstadoPago';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
 					/*********************************************************************/		
 					//ARRIENDOS
-					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                                            $a  = "'".$ultimo_id."'" ;                                                                }else{$a  = "''";}
+					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                                          $SIS_data  = "'".$ultimo_id."'" ;                                                               }else{$SIS_data  = "''";}
 					//IVA
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][1]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][1]['IVA'] != ''){                        $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][1]['IVA']."'" ;             }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['IVA'] != ''){                        $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['IVA']."'" ;             }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo']."'" ;  }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago'] != ''){    $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago']."'" ;   }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia']."'" ;  }else{$a .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][1]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][1]['IVA'] != ''){                        $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][1]['IVA']."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['IVA'] != ''){                        $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['IVA']."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo']."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago'] != ''){    $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago']."'" ;   }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia']."'" ;  }else{$SIS_data .= ",''";}
 					//PPM
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['ValorNeto']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['ValorNeto'] != ''){            $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['ValorNeto']."'" ;       }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo'] != ''){            $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo']."'" ;       }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago'] != ''){              $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago']."'" ;        }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia']."'" ;  }else{$a .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['ValorNeto']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['ValorNeto'] != ''){            $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['ValorNeto']."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo'] != ''){            $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo']."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago'] != ''){              $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago']."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia']."'" ;  }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `pagos_leyes_fiscales_pagos_arriendos` (idFactFiscal, IVA_Compra,
-					IVA_Venta,IVA_TotalSaldo,IVA_MontoPago,IVA_Diferencia,PPM_ValorNeto,PPM_Saldo,PPM_Pago,
-					PPM_Diferencia) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-								
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					}
+					$SIS_columns = 'idFactFiscal, IVA_Compra, IVA_Venta,IVA_TotalSaldo,IVA_MontoPago,IVA_Diferencia,PPM_ValorNeto,PPM_Saldo,PPM_Pago, PPM_Diferencia';
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_pagos_arriendos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					/*********************************************************************/		
 					//INSUMOS
-					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                                        $a  = "'".$ultimo_id."'" ;                                                              }else{$a  = "''";}
+					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                                      $SIS_data  = "'".$ultimo_id."'" ;                                                             }else{$SIS_data  = "''";}
 					//IVA
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][1]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][1]['IVA'] != ''){                        $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][1]['IVA']."'" ;             }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['IVA'] != ''){                        $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['IVA']."'" ;             }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo']."'" ;  }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago'] != ''){    $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago']."'" ;   }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia']."'" ;  }else{$a .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][1]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][1]['IVA'] != ''){                        $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][1]['IVA']."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['IVA'] != ''){                        $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['IVA']."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo']."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago'] != ''){    $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago']."'" ;   }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia']."'" ;  }else{$SIS_data .= ",''";}
 					//PPM
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['ValorNeto']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['ValorNeto'] != ''){            $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['ValorNeto']."'" ;       }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo'] != ''){            $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo']."'" ;       }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago'] != ''){              $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago']."'" ;        }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia']."'" ;  }else{$a .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['ValorNeto']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['ValorNeto'] != ''){            $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['ValorNeto']."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo'] != ''){            $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo']."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago'] != ''){              $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago']."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia']."'" ;  }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `pagos_leyes_fiscales_pagos_insumos` (idFactFiscal, IVA_Compra,
-					IVA_Venta,IVA_TotalSaldo,IVA_MontoPago,IVA_Diferencia,PPM_ValorNeto,PPM_Saldo,PPM_Pago,
-					PPM_Diferencia) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-								
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					}
+					$SIS_columns = 'idFactFiscal, IVA_Compra, IVA_Venta,IVA_TotalSaldo,IVA_MontoPago,IVA_Diferencia,PPM_ValorNeto,PPM_Saldo,PPM_Pago, PPM_Diferencia';
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_pagos_insumos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					/*********************************************************************/		
 					//PRODUCTOS
-					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                                            $a  = "'".$ultimo_id."'" ;                                                                }else{$a  = "''";}
+					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                                          $SIS_data  = "'".$ultimo_id."'" ;                                                               }else{$SIS_data  = "''";}
 					//IVA
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['IVA'] != ''){                        $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['IVA']."'" ;             }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['IVA'] != ''){                        $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['IVA']."'" ;             }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo']."'" ;  }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago'] != ''){    $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago']."'" ;   }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_Diferencia'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_Diferencia']."'" ;  }else{$a .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['IVA'] != ''){                        $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['IVA']."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['IVA'] != ''){                        $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['IVA']."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo']."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago'] != ''){    $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago']."'" ;   }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_Diferencia'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_Diferencia']."'" ;  }else{$SIS_data .= ",''";}
 					//PPM
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['ValorNeto']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['ValorNeto'] != ''){            $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['ValorNeto']."'" ;       }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo'] != ''){            $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo']."'" ;       }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago'] != ''){              $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago']."'" ;        }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia']."'" ;  }else{$a .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['ValorNeto']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['ValorNeto'] != ''){            $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['ValorNeto']."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo'] != ''){            $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo']."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago'] != ''){              $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago']."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia']."'" ;  }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `pagos_leyes_fiscales_pagos_productos` (idFactFiscal, IVA_Compra,
-					IVA_Venta,IVA_TotalSaldo,IVA_MontoPago,IVA_Diferencia,PPM_ValorNeto,PPM_Saldo,PPM_Pago,
-					PPM_Diferencia) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-								
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					}
+					$SIS_columns = 'idFactFiscal, IVA_Compra, IVA_Venta,IVA_TotalSaldo,IVA_MontoPago,IVA_Diferencia,PPM_ValorNeto,PPM_Saldo,PPM_Pago, PPM_Diferencia';
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_pagos_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					/*********************************************************************/		
 					//SERVICIOS
-					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                                            $a  = "'".$ultimo_id."'" ;                                                                }else{$a  = "''";}
+					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                                          $SIS_data  = "'".$ultimo_id."'" ;                                                               }else{$SIS_data  = "''";}
 					//IVA
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['IVA'] != ''){                        $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['IVA']."'" ;             }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['IVA'] != ''){                        $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['IVA']."'" ;             }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo']."'" ;  }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago'] != ''){    $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago']."'" ;   }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_Diferencia'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_Diferencia']."'" ;  }else{$a .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['IVA'] != ''){                        $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['IVA']."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['IVA']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['IVA'] != ''){                        $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['IVA']."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo']."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago'] != ''){    $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago']."'" ;   }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_Diferencia'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_Diferencia']."'" ;  }else{$SIS_data .= ",''";}
 					//PPM
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['ValorNeto']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['ValorNeto'] != ''){            $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['ValorNeto']."'" ;       }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo'] != ''){            $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo']."'" ;       }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago'] != ''){              $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago']."'" ;        }else{$a .= ",''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia']."'" ;  }else{$a .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['ValorNeto']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['ValorNeto'] != ''){            $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['ValorNeto']."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo'] != ''){            $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo']."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago'] != ''){              $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago']."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia']) && $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia']."'" ;  }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `pagos_leyes_fiscales_pagos_servicios` (idFactFiscal, IVA_Compra,
-					IVA_Venta,IVA_TotalSaldo,IVA_MontoPago,IVA_Diferencia,PPM_ValorNeto,PPM_Saldo,PPM_Pago,
-					PPM_Diferencia) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-								
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					}
+					$SIS_columns = 'idFactFiscal, IVA_Compra, IVA_Venta,IVA_TotalSaldo,IVA_MontoPago,IVA_Diferencia,PPM_ValorNeto,PPM_Saldo,PPM_Pago, PPM_Diferencia';
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_pagos_servicios', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					/*********************************************************************/		
 					//RETENCIONES
-					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                              $a  = "'".$ultimo_id."'" ;                                                          }else{$a  = "''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion']) && $_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion']."'" ;   }else{$a .= ",''";}
+					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                              $SIS_data  = "'".$ultimo_id."'" ;                                                          }else{$SIS_data  = "''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion']) && $_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion']."'" ;   }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `pagos_leyes_fiscales_pagos_retenciones` (idFactFiscal, Retencion) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-								
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					}
+					$SIS_columns = 'idFactFiscal, Retencion';
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_pagos_retenciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					/*********************************************************************/		
 					//IMPUESTO A LA RENTA
-					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                                        $a  = "'".$ultimo_id."'" ;                                                               }else{$a  = "''";}
-					if(isset($_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta']) && $_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta'] != ''){  $a .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta']."'" ;   }else{$a .= ",''";}
+					if(isset($ultimo_id) && $ultimo_id != ''){                                                                                                                        $SIS_data  = "'".$ultimo_id."'" ;                                                               }else{$SIS_data  = "''";}
+					if(isset($_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta']) && $_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta'] != ''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta']."'" ;   }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `pagos_leyes_fiscales_pagos_impuesto_renta` (idFactFiscal, ImpuestoRenta) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-								
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					}
+					$SIS_columns = 'idFactFiscal, ImpuestoRenta';
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_pagos_impuesto_renta', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					/*********************************************************************/		
 					//PAGOS
 					if($_SESSION['pagos_leyes_fiscales_formas_pago']){
@@ -2037,124 +1948,76 @@ require_once '0_validate_user_1.php';
 						//IVA
 						if(isset($_SESSION['pagos_leyes_fiscales_formas_pago'][1])){
 							foreach ($_SESSION['pagos_leyes_fiscales_formas_pago'][1] as $key => $pago){
-								if(isset($ultimo_id) && $ultimo_id != ''){                                                                                             $a  = "'".$ultimo_id."'" ;                                                 }else{$a  = "''";}
-								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'] != ''){   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;   }else{$a .= ",''";}
-								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario'] != ''){     $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                                 $a .= ",'".$pago['idDocPago']."'" ;                                        }else{$a .= ",''";}
-								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                                 $a .= ",'".$pago['N_DocPago']."'" ;                                        }else{$a .= ",''";}
-								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                                       $a .= ",'".$pago['F_Pago']."'" ;                                           }else{$a .= ",''";}
-								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                         $a .= ",'".$pago['Monto']."'" ;                                            }else{$a .= ",''";}
-								$a .= ",'1'" ;
+								if(isset($ultimo_id) && $ultimo_id != ''){                                                                                             $SIS_data  = "'".$ultimo_id."'" ;                                                 }else{$SIS_data  = "''";}
+								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'] != ''){   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;   }else{$SIS_data .= ",''";}
+								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario'] != ''){     $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                                 $SIS_data .= ",'".$pago['idDocPago']."'" ;                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                                 $SIS_data .= ",'".$pago['N_DocPago']."'" ;                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                                       $SIS_data .= ",'".$pago['F_Pago']."'" ;                                           }else{$SIS_data .= ",''";}
+								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                         $SIS_data .= ",'".$pago['Monto']."'" ;                                            }else{$SIS_data .= ",''";}
+								$SIS_data .= ",'1'" ;
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `pagos_leyes_fiscales_formas_pago` (idFactFiscal, Creacion_fecha,
-								idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-											
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								}
+								$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
+								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 							}
 						}
 						/************************************/
 						//PPM
 						if(isset($_SESSION['pagos_leyes_fiscales_formas_pago'][2])){
 							foreach ($_SESSION['pagos_leyes_fiscales_formas_pago'][2] as $key => $pago){
-								if(isset($ultimo_id) && $ultimo_id != ''){                                                                                             $a  = "'".$ultimo_id."'" ;                                                 }else{$a  = "''";}
-								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'] != ''){   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;   }else{$a .= ",''";}
-								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario'] != ''){     $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                                 $a .= ",'".$pago['idDocPago']."'" ;                                        }else{$a .= ",''";}
-								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                                 $a .= ",'".$pago['N_DocPago']."'" ;                                        }else{$a .= ",''";}
-								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                                       $a .= ",'".$pago['F_Pago']."'" ;                                           }else{$a .= ",''";}
-								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                         $a .= ",'".$pago['Monto']."'" ;                                            }else{$a .= ",''";}
-								$a .= ",'2'" ;
+								if(isset($ultimo_id) && $ultimo_id != ''){                                                                                             $SIS_data  = "'".$ultimo_id."'" ;                                                 }else{$SIS_data  = "''";}
+								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'] != ''){   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;   }else{$SIS_data .= ",''";}
+								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario'] != ''){     $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                                 $SIS_data .= ",'".$pago['idDocPago']."'" ;                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                                 $SIS_data .= ",'".$pago['N_DocPago']."'" ;                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                                       $SIS_data .= ",'".$pago['F_Pago']."'" ;                                           }else{$SIS_data .= ",''";}
+								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                         $SIS_data .= ",'".$pago['Monto']."'" ;                                            }else{$SIS_data .= ",''";}
+								$SIS_data .= ",'2'" ;
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `pagos_leyes_fiscales_formas_pago` (idFactFiscal, Creacion_fecha,
-								idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-											
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								}	
+								$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
+								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 							}
 						}
 						/************************************/
 						//Retenciones
 						if(isset($_SESSION['pagos_leyes_fiscales_formas_pago'][3])){
 							foreach ($_SESSION['pagos_leyes_fiscales_formas_pago'][3] as $key => $pago){
-								if(isset($ultimo_id) && $ultimo_id != ''){                                                                                             $a  = "'".$ultimo_id."'" ;                                                 }else{$a  = "''";}
-								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'] != ''){   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;   }else{$a .= ",''";}
-								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario'] != ''){     $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                                 $a .= ",'".$pago['idDocPago']."'" ;                                        }else{$a .= ",''";}
-								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                                 $a .= ",'".$pago['N_DocPago']."'" ;                                        }else{$a .= ",''";}
-								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                                       $a .= ",'".$pago['F_Pago']."'" ;                                           }else{$a .= ",''";}
-								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                         $a .= ",'".$pago['Monto']."'" ;                                            }else{$a .= ",''";}
-								$a .= ",'3'" ;
+								if(isset($ultimo_id) && $ultimo_id != ''){                                                                                             $SIS_data  = "'".$ultimo_id."'" ;                                                 }else{$SIS_data  = "''";}
+								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'] != ''){   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;   }else{$SIS_data .= ",''";}
+								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario'] != ''){     $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                                 $SIS_data .= ",'".$pago['idDocPago']."'" ;                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                                 $SIS_data .= ",'".$pago['N_DocPago']."'" ;                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                                       $SIS_data .= ",'".$pago['F_Pago']."'" ;                                           }else{$SIS_data .= ",''";}
+								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                         $SIS_data .= ",'".$pago['Monto']."'" ;                                            }else{$SIS_data .= ",''";}
+								$SIS_data .= ",'3'" ;
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `pagos_leyes_fiscales_formas_pago` (idFactFiscal, Creacion_fecha,
-								idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-											
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								}	
+								$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
+								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 							}
 						}
 						/************************************/
 						//Impuesto a la renta
 						if(isset($_SESSION['pagos_leyes_fiscales_formas_pago'][4])){
 							foreach ($_SESSION['pagos_leyes_fiscales_formas_pago'][4] as $key => $pago){
-								if(isset($ultimo_id) && $ultimo_id != ''){                                                                                             $a  = "'".$ultimo_id."'" ;                                                 }else{$a  = "''";}
-								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'] != ''){   $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;   }else{$a .= ",''";}
-								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario'] != ''){     $a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                                 $a .= ",'".$pago['idDocPago']."'" ;                                        }else{$a .= ",''";}
-								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                                 $a .= ",'".$pago['N_DocPago']."'" ;                                        }else{$a .= ",''";}
-								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                                       $a .= ",'".$pago['F_Pago']."'" ;                                           }else{$a .= ",''";}
-								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                         $a .= ",'".$pago['Monto']."'" ;                                            }else{$a .= ",''";}
-								$a .= ",'4'" ;
+								if(isset($ultimo_id) && $ultimo_id != ''){                                                                                             $SIS_data  = "'".$ultimo_id."'" ;                                                 }else{$SIS_data  = "''";}
+								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'] != ''){   $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;   }else{$SIS_data .= ",''";}
+								if(isset($_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario'] != ''){     $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                                 $SIS_data .= ",'".$pago['idDocPago']."'" ;                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                                 $SIS_data .= ",'".$pago['N_DocPago']."'" ;                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                                       $SIS_data .= ",'".$pago['F_Pago']."'" ;                                           }else{$SIS_data .= ",''";}
+								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                         $SIS_data .= ",'".$pago['Monto']."'" ;                                            }else{$SIS_data .= ",''";}
+								$SIS_data .= ",'4'" ;
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `pagos_leyes_fiscales_formas_pago` (idFactFiscal, Creacion_fecha,
-								idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-											
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								}	
+								$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
+								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 							}
 						}
 					}
@@ -2167,55 +2030,31 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['pagos_leyes_fiscales_archivos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                      $a  = "'".$ultimo_id."'" ;               }else{$a  = "''";}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $a .= ",'".$producto['Nombre']."'" ;     }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                      $SIS_data  = "'".$ultimo_id."'" ;               }else{$SIS_data  = "''";}
+							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `pagos_leyes_fiscales_archivos` (idFactFiscal, Nombre) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idFactFiscal, Nombre';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
 					//Se guarda en historial la accion
-					if(isset($ultimo_id) && $ultimo_id != ''){    $a  = "'".$ultimo_id."'" ;  }else{$a  = "''";}
+					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
 					if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'] != ''){  
-						$a .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;  
+						$SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'" ;  
 					}else{
-						$a .= ",''";
+						$SIS_data .= ",''";
 					}
-					$a .= ",'1'";                                                    //Creacion Satisfactoria
-					$a .= ",'Creacion del documento'";                               //Observacion
-					$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
+					$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
+					$SIS_data .= ",'Creacion del documento'";                               //Observacion
+					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `pagos_leyes_fiscales_historial` (idFactFiscal, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
+					$SIS_columns = 'idFactFiscal, Creacion_fecha, idTipo, Observacion, idUsuario';
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					/*********************************************************************/		
 					//Se actualizan los registros usados para no volver a utilizarlos
 					
@@ -2248,14 +2087,14 @@ require_once '0_validate_user_1.php';
 						$z6.=" AND Creacion_mes='".$Periodo_Mes."'";
 									
 						//Actualizacion masiva de registros
-						$a = 'idFactFiscal='.$ultimo_id;
+						$SIS_data = 'idFactFiscal='.$ultimo_id;
 						
-						$resultado = db_update_data (false, $a, 'bodegas_arriendos_facturacion', $z1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						$resultado = db_update_data (false, $a, 'bodegas_insumos_facturacion', $z2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						$resultado = db_update_data (false, $a, 'bodegas_productos_facturacion', $z3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						$resultado = db_update_data (false, $a, 'bodegas_servicios_facturacion', $z4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						$resultado = db_update_data (false, $a, 'boleta_honorarios_facturacion', $z5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						$resultado = db_update_data (false, $a, 'rrhh_sueldos_facturacion_trabajadores', $z6, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'bodegas_arriendos_facturacion', $z1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'bodegas_insumos_facturacion', $z2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'bodegas_productos_facturacion', $z3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'bodegas_servicios_facturacion', $z4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'boleta_honorarios_facturacion', $z5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores', $z6, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 					}*/
 					
@@ -2356,59 +2195,33 @@ require_once '0_validate_user_1.php';
 						//si no hay numero de pago se genera uno aleatorio
 						if(isset($IVA_N_DocPago[$x])&&$IVA_N_DocPago[$x]!=''){$N_doc_p = $IVA_N_DocPago[$x];}else{$N_doc_p = genera_password(16,'numerico');}
 						//guardo los datos
-						if(isset($idFactFiscal) && $idFactFiscal != ''){         $a  = "'".$idFactFiscal."'" ;         }else{$a  = "''";}
-						if(isset($Creacion_fecha) && $Creacion_fecha != ''){     $a .= ",'".$Creacion_fecha."'" ;      }else{$a .= ",''";}
-						if(isset($idUsuario) && $idUsuario != ''){               $a .= ",'".$idUsuario."'" ;           }else{$a .= ",''";}
-						if(isset($IVA_idDocPago[$x])&&$IVA_idDocPago[$x]!=''){   $a .= ",'".$IVA_idDocPago[$x]."'" ;   }else{$a .= ",''";}
-						if(isset($N_doc_p)&&$N_doc_p!=''){                       $a .= ",'".$N_doc_p."'" ;             }else{$a .= ",''";}
-						if(isset($IVA_F_Pago[$x])&&$IVA_F_Pago[$x]!=''){         $a .= ",'".$IVA_F_Pago[$x]."'" ;      }else{$a .= ",''";}
-						if(isset($IVA_Monto[$x])&&$IVA_Monto[$x]!=''){           $a .= ",'".$IVA_Monto[$x]."'" ;       }else{$a .= ",''";}
-						$a .= ",'1'" ;
-								
+						if(isset($idFactFiscal) && $idFactFiscal != ''){         $SIS_data  = "'".$idFactFiscal."'" ;         }else{$SIS_data  = "''";}
+						if(isset($Creacion_fecha) && $Creacion_fecha != ''){     $SIS_data .= ",'".$Creacion_fecha."'" ;      }else{$SIS_data .= ",''";}
+						if(isset($idUsuario) && $idUsuario != ''){               $SIS_data .= ",'".$idUsuario."'" ;           }else{$SIS_data .= ",''";}
+						if(isset($IVA_idDocPago[$x])&&$IVA_idDocPago[$x]!=''){   $SIS_data .= ",'".$IVA_idDocPago[$x]."'" ;   }else{$SIS_data .= ",''";}
+						if(isset($N_doc_p)&&$N_doc_p!=''){                       $SIS_data .= ",'".$N_doc_p."'" ;             }else{$SIS_data .= ",''";}
+						if(isset($IVA_F_Pago[$x])&&$IVA_F_Pago[$x]!=''){         $SIS_data .= ",'".$IVA_F_Pago[$x]."'" ;      }else{$SIS_data .= ",''";}
+						if(isset($IVA_Monto[$x])&&$IVA_Monto[$x]!=''){           $SIS_data .= ",'".$IVA_Monto[$x]."'" ;       }else{$SIS_data .= ",''";}
+						$SIS_data .= ",'1'" ;
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `pagos_leyes_fiscales_formas_pago` (idFactFiscal, Creacion_fecha,
-						idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-											
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						}
+						$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						/*********************************************************************/		
 						//Mensaje
 						$s_men = 'Se ha hecho un pago de '.valores($IVA_Monto[$x], 0).' con '.$arrDoc[$IVA_idDocPago[$x]]['Nombre'].' N°'.$N_doc_p.' con fecha '.fecha_estandar($IVA_F_Pago[$x]);
 						//Se guarda en historial la accion
-						if(isset($idFactFiscal) && $idFactFiscal != ''){      $a  = "'".$idFactFiscal."'" ;     }else{ $a  = "''";}
-						if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $a .= ",'".$Creacion_fecha."'" ;  }else{ $a .= ",''"; }
-						$a .= ",'1'";               //Creacion Satisfactoria
-						$a .= ",'".$s_men."'";      //Observacion
-						$a .= ",'".$idUsuario."'";  //idUsuario
+						if(isset($idFactFiscal) && $idFactFiscal != ''){      $SIS_data  = "'".$idFactFiscal."'" ;     }else{ $SIS_data  = "''";}
+						if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $SIS_data .= ",'".$Creacion_fecha."'" ;  }else{ $SIS_data .= ",''"; }
+						$SIS_data .= ",'1'";               //Creacion Satisfactoria
+						$SIS_data .= ",'".$s_men."'";      //Observacion
+						$SIS_data .= ",'".$idUsuario."'";  //idUsuario
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `pagos_leyes_fiscales_historial` (idFactFiscal, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
-					
+						$SIS_columns = 'idFactFiscal, Creacion_fecha, idTipo, Observacion, idUsuario';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}
 				if($ndata_2!=0){
@@ -2416,58 +2229,33 @@ require_once '0_validate_user_1.php';
 						//si no hay numero de pago se genera uno aleatorio
 						if(isset($PPM_N_DocPago[$x])&&$PPM_N_DocPago[$x]!=''){$N_doc_p = $PPM_N_DocPago[$x];}else{$N_doc_p = genera_password(16,'numerico');}
 						//guardo los datos
-						if(isset($idFactFiscal) && $idFactFiscal != ''){         $a  = "'".$idFactFiscal."'" ;         }else{$a  = "''";}
-						if(isset($Creacion_fecha) && $Creacion_fecha != ''){     $a .= ",'".$Creacion_fecha."'" ;      }else{$a .= ",''";}
-						if(isset($idUsuario) && $idUsuario != ''){               $a .= ",'".$idUsuario."'" ;           }else{$a .= ",''";}
-						if(isset($PPM_idDocPago[$x])&&$PPM_idDocPago[$x]!=''){   $a .= ",'".$PPM_idDocPago[$x]."'" ;   }else{$a .= ",''";}
-						if(isset($N_doc_p)&&$N_doc_p!=''){                       $a .= ",'".$N_doc_p."'" ;             }else{$a .= ",''";}
-						if(isset($PPM_F_Pago[$x])&&$PPM_F_Pago[$x]!=''){         $a .= ",'".$PPM_F_Pago[$x]."'" ;      }else{$a .= ",''";}
-						if(isset($PPM_Monto[$x])&&$PPM_Monto[$x]!=''){           $a .= ",'".$PPM_Monto[$x]."'" ;       }else{$a .= ",''";}
-						$a .= ",'2'" ;
-								
+						if(isset($idFactFiscal) && $idFactFiscal != ''){         $SIS_data  = "'".$idFactFiscal."'" ;         }else{$SIS_data  = "''";}
+						if(isset($Creacion_fecha) && $Creacion_fecha != ''){     $SIS_data .= ",'".$Creacion_fecha."'" ;      }else{$SIS_data .= ",''";}
+						if(isset($idUsuario) && $idUsuario != ''){               $SIS_data .= ",'".$idUsuario."'" ;           }else{$SIS_data .= ",''";}
+						if(isset($PPM_idDocPago[$x])&&$PPM_idDocPago[$x]!=''){   $SIS_data .= ",'".$PPM_idDocPago[$x]."'" ;   }else{$SIS_data .= ",''";}
+						if(isset($N_doc_p)&&$N_doc_p!=''){                       $SIS_data .= ",'".$N_doc_p."'" ;             }else{$SIS_data .= ",''";}
+						if(isset($PPM_F_Pago[$x])&&$PPM_F_Pago[$x]!=''){         $SIS_data .= ",'".$PPM_F_Pago[$x]."'" ;      }else{$SIS_data .= ",''";}
+						if(isset($PPM_Monto[$x])&&$PPM_Monto[$x]!=''){           $SIS_data .= ",'".$PPM_Monto[$x]."'" ;       }else{$SIS_data .= ",''";}
+						$SIS_data .= ",'2'" ;
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `pagos_leyes_fiscales_formas_pago` (idFactFiscal, Creacion_fecha,
-						idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-											
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						}
+						$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						/*********************************************************************/		
 						//Mensaje
 						$s_men = 'Se ha hecho un pago de '.valores($PPM_Monto[$x], 0).' con '.$arrDoc[$PPM_idDocPago[$x]]['Nombre'].' N°'.$N_doc_p.' con fecha '.fecha_estandar($PPM_F_Pago[$x]);
 						//Se guarda en historial la accion
-						if(isset($idFactFiscal) && $idFactFiscal != ''){      $a  = "'".$idFactFiscal."'" ;     }else{ $a  = "''";}
-						if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $a .= ",'".$Creacion_fecha."'" ;  }else{ $a .= ",''"; }
-						$a .= ",'1'";               //Creacion Satisfactoria
-						$a .= ",'".$s_men."'";      //Observacion
-						$a .= ",'".$idUsuario."'";  //idUsuario
+						if(isset($idFactFiscal) && $idFactFiscal != ''){      $SIS_data  = "'".$idFactFiscal."'" ;     }else{ $SIS_data  = "''";}
+						if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $SIS_data .= ",'".$Creacion_fecha."'" ;  }else{ $SIS_data .= ",''"; }
+						$SIS_data .= ",'1'";               //Creacion Satisfactoria
+						$SIS_data .= ",'".$s_men."'";      //Observacion
+						$SIS_data .= ",'".$idUsuario."'";  //idUsuario
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `pagos_leyes_fiscales_historial` (idFactFiscal, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						$SIS_columns = 'idFactFiscal, Creacion_fecha, idTipo, Observacion, idUsuario';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}
 				if($ndata_3!=0){
@@ -2475,58 +2263,33 @@ require_once '0_validate_user_1.php';
 						//si no hay numero de pago se genera uno aleatorio
 						if(isset($RET_N_DocPago[$x])&&$RET_N_DocPago[$x]!=''){$N_doc_p = $RET_N_DocPago[$x];}else{$N_doc_p = genera_password(16,'numerico');}
 						//guardo los datos
-						if(isset($idFactFiscal) && $idFactFiscal != ''){         $a  = "'".$idFactFiscal."'" ;         }else{$a  = "''";}
-						if(isset($Creacion_fecha) && $Creacion_fecha != ''){     $a .= ",'".$Creacion_fecha."'" ;      }else{$a .= ",''";}
-						if(isset($idUsuario) && $idUsuario != ''){               $a .= ",'".$idUsuario."'" ;           }else{$a .= ",''";}
-						if(isset($RET_idDocPago[$x])&&$RET_idDocPago[$x]!=''){   $a .= ",'".$RET_idDocPago[$x]."'" ;   }else{$a .= ",''";}
-						if(isset($N_doc_p)&&$N_doc_p!=''){                       $a .= ",'".$N_doc_p."'" ;             }else{$a .= ",''";}
-						if(isset($RET_F_Pago[$x])&&$RET_F_Pago[$x]!=''){         $a .= ",'".$RET_F_Pago[$x]."'" ;      }else{$a .= ",''";}
-						if(isset($RET_Monto[$x])&&$RET_Monto[$x]!=''){           $a .= ",'".$RET_Monto[$x]."'" ;       }else{$a .= ",''";}
-						$a .= ",'3'" ;
-								
+						if(isset($idFactFiscal) && $idFactFiscal != ''){         $SIS_data  = "'".$idFactFiscal."'" ;         }else{$SIS_data  = "''";}
+						if(isset($Creacion_fecha) && $Creacion_fecha != ''){     $SIS_data .= ",'".$Creacion_fecha."'" ;      }else{$SIS_data .= ",''";}
+						if(isset($idUsuario) && $idUsuario != ''){               $SIS_data .= ",'".$idUsuario."'" ;           }else{$SIS_data .= ",''";}
+						if(isset($RET_idDocPago[$x])&&$RET_idDocPago[$x]!=''){   $SIS_data .= ",'".$RET_idDocPago[$x]."'" ;   }else{$SIS_data .= ",''";}
+						if(isset($N_doc_p)&&$N_doc_p!=''){                       $SIS_data .= ",'".$N_doc_p."'" ;             }else{$SIS_data .= ",''";}
+						if(isset($RET_F_Pago[$x])&&$RET_F_Pago[$x]!=''){         $SIS_data .= ",'".$RET_F_Pago[$x]."'" ;      }else{$SIS_data .= ",''";}
+						if(isset($RET_Monto[$x])&&$RET_Monto[$x]!=''){           $SIS_data .= ",'".$RET_Monto[$x]."'" ;       }else{$SIS_data .= ",''";}
+						$SIS_data .= ",'3'" ;
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `pagos_leyes_fiscales_formas_pago` (idFactFiscal, Creacion_fecha,
-						idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-											
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						}
+						$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						/*********************************************************************/		
 						//Mensaje
 						$s_men = 'Se ha hecho un pago de '.valores($RET_Monto[$x], 0).' con '.$arrDoc[$RET_idDocPago[$x]]['Nombre'].' N°'.$N_doc_p.' con fecha '.fecha_estandar($RET_F_Pago[$x]);
 						//Se guarda en historial la accion
-						if(isset($idFactFiscal) && $idFactFiscal != ''){      $a  = "'".$idFactFiscal."'" ;     }else{ $a  = "''";}
-						if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $a .= ",'".$Creacion_fecha."'" ;  }else{ $a .= ",''"; }
-						$a .= ",'1'";               //Creacion Satisfactoria
-						$a .= ",'".$s_men."'";      //Observacion
-						$a .= ",'".$idUsuario."'";  //idUsuario
+						if(isset($idFactFiscal) && $idFactFiscal != ''){      $SIS_data  = "'".$idFactFiscal."'" ;     }else{ $SIS_data  = "''";}
+						if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $SIS_data .= ",'".$Creacion_fecha."'" ;  }else{ $SIS_data .= ",''"; }
+						$SIS_data .= ",'1'";               //Creacion Satisfactoria
+						$SIS_data .= ",'".$s_men."'";      //Observacion
+						$SIS_data .= ",'".$idUsuario."'";  //idUsuario
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `pagos_leyes_fiscales_historial` (idFactFiscal, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						$SIS_columns = 'idFactFiscal, Creacion_fecha, idTipo, Observacion, idUsuario';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}
 				if($ndata_4!=0){
@@ -2534,58 +2297,33 @@ require_once '0_validate_user_1.php';
 						//si no hay numero de pago se genera uno aleatorio
 						if(isset($IMPRENT_N_DocPago[$x])&&$IMPRENT_N_DocPago[$x]!=''){$N_doc_p = $IMPRENT_N_DocPago[$x];}else{$N_doc_p = genera_password(16,'numerico');}
 						//guardo los datos
-						if(isset($idFactFiscal) && $idFactFiscal != ''){                 $a  = "'".$idFactFiscal."'" ;             }else{$a  = "''";}
-						if(isset($Creacion_fecha) && $Creacion_fecha != ''){             $a .= ",'".$Creacion_fecha."'" ;          }else{$a .= ",''";}
-						if(isset($idUsuario) && $idUsuario != ''){                       $a .= ",'".$idUsuario."'" ;               }else{$a .= ",''";}
-						if(isset($IMPRENT_idDocPago[$x])&&$IMPRENT_idDocPago[$x]!=''){   $a .= ",'".$IMPRENT_idDocPago[$x]."'" ;   }else{$a .= ",''";}
-						if(isset($N_doc_p)&&$N_doc_p!=''){                               $a .= ",'".$N_doc_p."'" ;                 }else{$a .= ",''";}
-						if(isset($IMPRENT_F_Pago[$x])&&$IMPRENT_F_Pago[$x]!=''){         $a .= ",'".$IMPRENT_F_Pago[$x]."'" ;      }else{$a .= ",''";}
-						if(isset($IMPRENT_Monto[$x])&&$IMPRENT_Monto[$x]!=''){           $a .= ",'".$IMPRENT_Monto[$x]."'" ;       }else{$a .= ",''";}
-						$a .= ",'4'" ;
-								
+						if(isset($idFactFiscal) && $idFactFiscal != ''){                 $SIS_data  = "'".$idFactFiscal."'" ;             }else{$SIS_data  = "''";}
+						if(isset($Creacion_fecha) && $Creacion_fecha != ''){             $SIS_data .= ",'".$Creacion_fecha."'" ;          }else{$SIS_data .= ",''";}
+						if(isset($idUsuario) && $idUsuario != ''){                       $SIS_data .= ",'".$idUsuario."'" ;               }else{$SIS_data .= ",''";}
+						if(isset($IMPRENT_idDocPago[$x])&&$IMPRENT_idDocPago[$x]!=''){   $SIS_data .= ",'".$IMPRENT_idDocPago[$x]."'" ;   }else{$SIS_data .= ",''";}
+						if(isset($N_doc_p)&&$N_doc_p!=''){                               $SIS_data .= ",'".$N_doc_p."'" ;                 }else{$SIS_data .= ",''";}
+						if(isset($IMPRENT_F_Pago[$x])&&$IMPRENT_F_Pago[$x]!=''){         $SIS_data .= ",'".$IMPRENT_F_Pago[$x]."'" ;      }else{$SIS_data .= ",''";}
+						if(isset($IMPRENT_Monto[$x])&&$IMPRENT_Monto[$x]!=''){           $SIS_data .= ",'".$IMPRENT_Monto[$x]."'" ;       }else{$SIS_data .= ",''";}
+						$SIS_data .= ",'4'" ;
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `pagos_leyes_fiscales_formas_pago` (idFactFiscal, Creacion_fecha,
-						idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-											
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						}
+						$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						/*********************************************************************/		
 						//Mensaje
 						$s_men = 'Se ha hecho un pago de '.valores($IMPRENT_Monto[$x], 0).' con '.$arrDoc[$IMPRENT_idDocPago[$x]]['Nombre'].' N°'.$N_doc_p.' con fecha '.fecha_estandar($IMPRENT_F_Pago[$x]);
 						//Se guarda en historial la accion
-						if(isset($idFactFiscal) && $idFactFiscal != ''){      $a  = "'".$idFactFiscal."'" ;     }else{ $a  = "''";}
-						if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $a .= ",'".$Creacion_fecha."'" ;  }else{ $a .= ",''"; }
-						$a .= ",'1'";               //Creacion Satisfactoria
-						$a .= ",'".$s_men."'";      //Observacion
-						$a .= ",'".$idUsuario."'";  //idUsuario
+						if(isset($idFactFiscal) && $idFactFiscal != ''){      $SIS_data  = "'".$idFactFiscal."'" ;     }else{ $SIS_data  = "''";}
+						if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $SIS_data .= ",'".$Creacion_fecha."'" ;  }else{ $SIS_data .= ",''"; }
+						$SIS_data .= ",'1'";               //Creacion Satisfactoria
+						$SIS_data .= ",'".$s_men."'";      //Observacion
+						$SIS_data .= ",'".$idUsuario."'";  //idUsuario
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `pagos_leyes_fiscales_historial` (idFactFiscal, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						$SIS_columns = 'idFactFiscal, Creacion_fecha, idTipo, Observacion, idUsuario';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}
 				
@@ -2593,16 +2331,16 @@ require_once '0_validate_user_1.php';
 				$rowMonto = db_select_data (false, 'SUM(Monto) AS Pagado', 'pagos_leyes_fiscales_formas_pago', '', 'idFactFiscal = "'.$idFactFiscal.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$rowData  = db_select_data (false, 'TotalGeneral', 'pagos_leyes_fiscales', '', 'idFactFiscal ='.$idFactFiscal, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
-				$a = "TotalPagoGeneral='".$rowMonto['Pagado']."'";
+				$SIS_data = "TotalPagoGeneral='".$rowMonto['Pagado']."'";
 				//Verifico si queda pagado
 				if(valores_comparables($rowData['TotalGeneral'])==valores_comparables($rowMonto['Pagado'])){
-					$a .= ",idEstadoPago='2'" ;//Pagado
+					$SIS_data .= ",idEstadoPago='2'" ;//Pagado
 				}else{
-					$a .= ",idEstadoPago='1'" ;//No Pagado
+					$SIS_data .= ",idEstadoPago='1'" ;//No Pagado
 				}
 				
 				
-				$resultado = db_update_data (false, $a, 'pagos_leyes_fiscales', 'idFactFiscal = "'.$idFactFiscal.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'pagos_leyes_fiscales', 'idFactFiscal = "'.$idFactFiscal.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo

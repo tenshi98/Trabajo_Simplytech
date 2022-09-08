@@ -15,13 +15,11 @@ require_once '0_validate_user_1.php';
 
 	//Traspaso de valores input a variables
 	if ( !empty($_POST['idObservacion']) )  $idObservacion   = $_POST['idObservacion'];
-	if ( !empty($_POST['idProductor']) )      $idProductor       = $_POST['idProductor'];
+	if ( !empty($_POST['idProductor']) )    $idProductor     = $_POST['idProductor'];
 	if ( !empty($_POST['idUsuario']) )      $idUsuario       = $_POST['idUsuario'];
 	if ( !empty($_POST['Fecha']) )          $Fecha           = $_POST['Fecha'];
 	if ( !empty($_POST['Observacion']) )    $Observacion     = $_POST['Observacion'];
 
-	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -34,13 +32,18 @@ require_once '0_validate_user_1.php';
 		//veo si existe el dato solicitado y genero el error
 		switch ($INT_valor) {
 			case 'idObservacion':  if(empty($idObservacion)){   $error['idObservacion']  = 'error/No ha ingresado el id';}break;
-			case 'idProductor':      if(empty($idProductor)){       $error['idProductor']      = 'error/No ha seleccionado el cliente';}break;
+			case 'idProductor':    if(empty($idProductor)){     $error['idProductor']    = 'error/No ha seleccionado el cliente';}break;
 			case 'idUsuario':      if(empty($idUsuario)){       $error['idUsuario']      = 'error/No ha seleccionado un usuario';}break;
 			case 'Fecha':          if(empty($Fecha)){           $error['Fecha']          = 'error/No ha ingresado la fecha';}break;
 			case 'Observacion':    if(empty($Observacion)){     $error['Observacion']    = 'error/No ha ingresado la observacion';}break;
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observacion) && $Observacion != ''){ $Observacion = EstandarizarInput($Observacion); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -61,32 +64,20 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idProductor) && $idProductor != ''){     $a = "'".$idProductor."'" ;       }else{$a ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){         $a .= ",'".$idUsuario."'" ;       }else{$a .= ",''";}
-				if(isset($Fecha) && $Fecha != ''){                 $a .= ",'".$Fecha."'" ;           }else{$a .= ",''";}
-				if(isset($Observacion) && $Observacion != ''){     $a .= ",'".$Observacion."'" ;     }else{$a .= ",''";}
-				
+				if(isset($idProductor) && $idProductor != ''){     $SIS_data  = "'".$idProductor."'" ;      }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario != ''){         $SIS_data .= ",'".$idUsuario."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){                 $SIS_data .= ",'".$Fecha."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){     $SIS_data .= ",'".$Observacion."'" ;     }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `productores_observaciones` (idProductor, idUsuario, Fecha, Observacion) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idProductor, idUsuario, Fecha, Observacion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'productores_observaciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 				
 				
@@ -102,15 +93,15 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idObservacion='".$idObservacion."'" ;
-				if(isset($idProductor) && $idProductor != ''){   $a .= ",idProductor='".$idProductor."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
-				if(isset($Observacion) && $Observacion != ''){   $a .= ",Observacion='".$Observacion."'" ;}
+				$SIS_data = "idObservacion='".$idObservacion."'" ;
+				if(isset($idProductor) && $idProductor != ''){   $SIS_data .= ",idProductor='".$idProductor."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
+				if(isset($Observacion) && $Observacion != ''){   $SIS_data .= ",Observacion='".$Observacion."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'productores_observaciones', 'idObservacion = "'.$idObservacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'productores_observaciones', 'idObservacion = "'.$idObservacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

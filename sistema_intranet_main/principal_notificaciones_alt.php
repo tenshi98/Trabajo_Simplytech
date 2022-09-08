@@ -50,10 +50,10 @@ require_once 'core/Web.Header.Views.php';
 <div class="col-sm-12">
 	<?php
 	//Listado de errores no manejables
-	if (isset($_GET['aprobar_uno']))    {$error['aprobar_uno'] 	  = 'sucess/Se ha marcado como visto un elemento';}
-	if (isset($_GET['aprobar_todos']))  {$error['aprobar_todos']  = 'sucess/Se han marcado como visto todos los elementos';}
+	if (isset($_GET['aprobar_uno'])){   $error['aprobar_uno']   = 'sucess/Se ha marcado como visto un elemento';}
+	if (isset($_GET['aprobar_todos'])){ $error['aprobar_todos'] = 'sucess/Se han marcado como visto todos los elementos';}
 	//Manejador de errores
-	if(isset($error)&&$error!=''){echo notifications_list($error);};
+	if(isset($error)&&$error!=''){echo notifications_list($error);}
 	//Si esta activo el nomolestar
 	if(isset($_GET['noMol'])&&$_GET['noMol']!=''){
 		//mostrar la alerta

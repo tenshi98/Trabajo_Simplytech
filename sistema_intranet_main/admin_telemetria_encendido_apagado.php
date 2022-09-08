@@ -40,12 +40,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/ 
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Equipo creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Equipo editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado correctamente';}
+if (isset($_GET['created'])){ $error['created']  = 'sucess/Equipo creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']   = 'sucess/Equipo editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted']  = 'sucess/Equipo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 /**********************************************************/
 //paginador de resultados
 if(isset($_GET["pagina"])){

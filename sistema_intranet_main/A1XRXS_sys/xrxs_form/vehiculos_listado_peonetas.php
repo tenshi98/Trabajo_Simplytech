@@ -22,7 +22,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Rut']) )           $Rut           = $_POST['Rut'];
 	if ( !empty($_POST['Fecha']) )         $Fecha         = $_POST['Fecha'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -44,6 +43,13 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){           $Nombre      = EstandarizarInput($Nombre); }
+	if(isset($ApellidoPat) && $ApellidoPat != ''){ $ApellidoPat = EstandarizarInput($ApellidoPat); }
+	if(isset($ApellidoMat) && $ApellidoMat != ''){ $ApellidoMat = EstandarizarInput($ApellidoMat); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -84,35 +90,22 @@ require_once '0_validate_user_1.php';
 				
 				
 				//filtros
-				if(isset($idVehiculo) && $idVehiculo != ''){    $a  = "'".$idVehiculo."'" ;    }else{$a  ="''";}
-				if(isset($Nombre) && $Nombre != ''){            $a .= ",'".$Nombre."'" ;       }else{$a .=",''";}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){  $a .= ",'".$ApellidoPat."'" ;  }else{$a .=",''";}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){  $a .= ",'".$ApellidoMat."'" ;  }else{$a .=",''";}
-				if(isset($Rut) && $Rut != ''){                  $a .= ",'".$Rut."'" ;          }else{$a .=",''";}
-				if(isset($Fecha) && $Fecha != ''){              $a .= ",'".$Fecha."'" ;        }else{$a .=",''";}
+				if(isset($idVehiculo) && $idVehiculo != ''){    $SIS_data  = "'".$idVehiculo."'" ;    }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){            $SIS_data .= ",'".$Nombre."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($ApellidoPat) && $ApellidoPat != ''){  $SIS_data .= ",'".$ApellidoPat."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($ApellidoMat) && $ApellidoMat != ''){  $SIS_data .= ",'".$ApellidoMat."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Rut) && $Rut != ''){                  $SIS_data .= ",'".$Rut."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){              $SIS_data .= ",'".$Fecha."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `vehiculos_listado_peonetas` (idVehiculo, Nombre, ApellidoPat, ApellidoMat, 
-				Rut, Fecha) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idVehiculo, Nombre, ApellidoPat, ApellidoMat, Rut, Fecha';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_listado_peonetas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
 			}
 	
@@ -144,17 +137,17 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idPeoneta='".$idPeoneta."'" ;
-				if(isset($idVehiculo) && $idVehiculo != ''){     $a .= ",idVehiculo='".$idVehiculo."'" ;}
-				if(isset($Nombre) && $Nombre != ''){             $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){   $a .= ",ApellidoPat='".$ApellidoPat."'" ;}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){   $a .= ",ApellidoMat='".$ApellidoMat."'" ;}
-				if(isset($Rut) && $Rut != ''){                   $a .= ",Rut='".$Rut."'" ;}
-				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
+				$SIS_data = "idPeoneta='".$idPeoneta."'" ;
+				if(isset($idVehiculo) && $idVehiculo != ''){     $SIS_data .= ",idVehiculo='".$idVehiculo."'" ;}
+				if(isset($Nombre) && $Nombre != ''){             $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($ApellidoPat) && $ApellidoPat != ''){   $SIS_data .= ",ApellidoPat='".$ApellidoPat."'" ;}
+				if(isset($ApellidoMat) && $ApellidoMat != ''){   $SIS_data .= ",ApellidoMat='".$ApellidoMat."'" ;}
+				if(isset($Rut) && $Rut != ''){                   $SIS_data .= ",Rut='".$Rut."'" ;}
+				if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'vehiculos_listado_peonetas', 'idPeoneta = "'.$idPeoneta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado_peonetas', 'idPeoneta = "'.$idPeoneta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

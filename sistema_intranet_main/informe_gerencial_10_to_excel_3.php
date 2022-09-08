@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -25,158 +24,90 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Solo compras pagadas totalmente
-$z1 = "WHERE bodegas_arriendos_facturacion.idTipo=2"; //solo ventas
-$z2 = "WHERE bodegas_insumos_facturacion.idTipo=2";   //solo ventas
-$z3 = "WHERE bodegas_productos_facturacion.idTipo=2"; //solo ventas
-$z4 = "WHERE bodegas_servicios_facturacion.idTipo=2"; //solo ventas
+$SIS_where_1 = "bodegas_arriendos_facturacion.idTipo=2"; //solo ventas
+$SIS_where_2 = "bodegas_insumos_facturacion.idTipo=2";   //solo ventas
+$SIS_where_3 = "bodegas_productos_facturacion.idTipo=2"; //solo ventas
+$SIS_where_4 = "bodegas_servicios_facturacion.idTipo=2"; //solo ventas
 //sololas del mismo sistema
-$z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where_1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where_2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where_3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where_4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.idTrabajador=".$_GET['idTrabajador'];
-	$z2.=" AND bodegas_insumos_facturacion.idTrabajador=".$_GET['idTrabajador'];
-	$z3.=" AND bodegas_productos_facturacion.idTrabajador=".$_GET['idTrabajador'];
-	$z4.=" AND bodegas_servicios_facturacion.idTrabajador=".$_GET['idTrabajador'];
+	$SIS_where_1.=" AND bodegas_arriendos_facturacion.idTrabajador=".$_GET['idTrabajador'];
+	$SIS_where_2.=" AND bodegas_insumos_facturacion.idTrabajador=".$_GET['idTrabajador'];
+	$SIS_where_3.=" AND bodegas_productos_facturacion.idTrabajador=".$_GET['idTrabajador'];
+	$SIS_where_4.=" AND bodegas_servicios_facturacion.idTrabajador=".$_GET['idTrabajador'];
 }
 if(isset($_GET['Creacion_ano'])&&$_GET['Creacion_ano']!=''){ 
-	$z1.=" AND bodegas_arriendos_facturacion.Creacion_ano=".$_GET['Creacion_ano'];
-	$z2.=" AND bodegas_insumos_facturacion.Creacion_ano=".$_GET['Creacion_ano'];
-	$z3.=" AND bodegas_productos_facturacion.Creacion_ano=".$_GET['Creacion_ano'];
-	$z4.=" AND bodegas_servicios_facturacion.Creacion_ano=".$_GET['Creacion_ano'];
-}			
-		
-				
-/*************************************************************************************************/
-//Bodega de Arriendos
-$arrTemporal_1 = array();
-$query = "SELECT 
+	$SIS_where_1.=" AND bodegas_arriendos_facturacion.Creacion_ano=".$_GET['Creacion_ano'];
+	$SIS_where_2.=" AND bodegas_insumos_facturacion.Creacion_ano=".$_GET['Creacion_ano'];
+	$SIS_where_3.=" AND bodegas_productos_facturacion.Creacion_ano=".$_GET['Creacion_ano'];
+	$SIS_where_4.=" AND bodegas_servicios_facturacion.Creacion_ano=".$_GET['Creacion_ano'];
+}	
+//sololas del mismo sistema
+$SIS_where_1.=" GROUP BY bodegas_arriendos_facturacion.idTrabajador, bodegas_arriendos_facturacion.Creacion_fecha";
+$SIS_where_2.=" GROUP BY bodegas_insumos_facturacion.idTrabajador, bodegas_insumos_facturacion.Creacion_fecha";
+$SIS_where_3.=" GROUP BY bodegas_productos_facturacion.idTrabajador, bodegas_productos_facturacion.Creacion_fecha";
+$SIS_where_4.=" GROUP BY bodegas_servicios_facturacion.idTrabajador, bodegas_servicios_facturacion.Creacion_fecha";		
+					
+/*******************************************************/
+$SIS_query = '
 bodegas_arriendos_facturacion.idTrabajador,
 bodegas_arriendos_facturacion.Creacion_fecha,
 trabajadores_listado.Nombre AS TrabNombre,
 trabajadores_listado.ApellidoPat AS TrabApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabApellidoMat,
 SUM(bodegas_arriendos_facturacion.ValorNetoImp) AS ValorNeto,
-SUM(bodegas_arriendos_facturacion.ValorTotal) AS ValorTotal
+SUM(bodegas_arriendos_facturacion.ValorTotal) AS ValorTotal';
+$SIS_join  = 'LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador   = bodegas_arriendos_facturacion.idTrabajador';
+$SIS_order = 'bodegas_arriendos_facturacion.Creacion_fecha DESC';
+$arrTemporal_1 = array();
+$arrTemporal_1 = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_1');
 
-FROM `bodegas_arriendos_facturacion`
-LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador   = bodegas_arriendos_facturacion.idTrabajador
-".$z1."
-GROUP BY bodegas_arriendos_facturacion.idTrabajador, bodegas_arriendos_facturacion.Creacion_fecha
-ORDER BY bodegas_arriendos_facturacion.Creacion_fecha DESC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTemporal_1,$row );
-}
-/*************************************************************************************************/
-//Bodega de Insumos
-$arrTemporal_2 = array();
-$query = "SELECT 
+/*******************************************************/
+$SIS_query = '
 bodegas_insumos_facturacion.idTrabajador,
 bodegas_insumos_facturacion.Creacion_fecha,
 trabajadores_listado.Nombre AS TrabNombre,
 trabajadores_listado.ApellidoPat AS TrabApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabApellidoMat,
 SUM(bodegas_insumos_facturacion.ValorNetoImp) AS ValorNeto,
-SUM(bodegas_insumos_facturacion.ValorTotal) AS ValorTotal
+SUM(bodegas_insumos_facturacion.ValorTotal) AS ValorTotal';
+$SIS_join  = 'LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador   = bodegas_insumos_facturacion.idTrabajador';
+$SIS_order = 'bodegas_insumos_facturacion.Creacion_fecha DESC';
+$arrTemporal_2 = array();
+$arrTemporal_2 = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $SIS_join, $SIS_where_2, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_2');
 
-FROM `bodegas_insumos_facturacion`
-LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador   = bodegas_insumos_facturacion.idTrabajador
-".$z2."
-GROUP BY bodegas_insumos_facturacion.idTrabajador, bodegas_insumos_facturacion.Creacion_fecha
-ORDER BY bodegas_insumos_facturacion.Creacion_fecha DESC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTemporal_2,$row );
-}
-/*************************************************************************************************/
-//Bodega de Productos
-$arrTemporal_3 = array();
-$query = "SELECT 
+/*******************************************************/
+$SIS_query = '
 bodegas_productos_facturacion.idTrabajador,
 bodegas_productos_facturacion.Creacion_fecha,
 trabajadores_listado.Nombre AS TrabNombre,
 trabajadores_listado.ApellidoPat AS TrabApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabApellidoMat,
 SUM(bodegas_productos_facturacion.ValorNetoImp) AS ValorNeto,
-SUM(bodegas_productos_facturacion.ValorTotal) AS ValorTotal
+SUM(bodegas_productos_facturacion.ValorTotal) AS ValorTotal';
+$SIS_join  = 'LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador   = bodegas_productos_facturacion.idTrabajador';
+$SIS_order = 'bodegas_productos_facturacion.Creacion_fecha DESC';
+$arrTemporal_3 = array();
+$arrTemporal_3 = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', $SIS_join, $SIS_where_3, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_3');
 
-FROM `bodegas_productos_facturacion`
-LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador   = bodegas_productos_facturacion.idTrabajador
-".$z3."
-GROUP BY bodegas_productos_facturacion.idTrabajador, bodegas_productos_facturacion.Creacion_fecha
-ORDER BY bodegas_productos_facturacion.Creacion_fecha DESC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTemporal_3,$row );
-}
-/*************************************************************************************************/
-//Bodega de Servicios
-$arrTemporal_4 = array();
-$query = "SELECT 
+/*******************************************************/
+$SIS_query = '
 bodegas_servicios_facturacion.idTrabajador,
 bodegas_servicios_facturacion.Creacion_fecha,
 trabajadores_listado.Nombre AS TrabNombre,
 trabajadores_listado.ApellidoPat AS TrabApellidoPat,
 trabajadores_listado.ApellidoMat AS TrabApellidoMat,
 SUM(bodegas_servicios_facturacion.ValorNetoImp) AS ValorNeto,
-SUM(bodegas_servicios_facturacion.ValorTotal) AS ValorTotal
+SUM(bodegas_servicios_facturacion.ValorTotal) AS ValorTotal';
+$SIS_join  = 'LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador   = bodegas_servicios_facturacion.idTrabajador';
+$SIS_order = 'bodegas_servicios_facturacion.Creacion_fecha DESC';
+$arrTemporal_4 = array();
+$arrTemporal_4 = db_select_array (false, $SIS_query, 'bodegas_servicios_facturacion', $SIS_join, $SIS_where_4, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_4');
 
-FROM `bodegas_servicios_facturacion`
-LEFT JOIN `trabajadores_listado`    ON trabajadores_listado.idTrabajador   = bodegas_servicios_facturacion.idTrabajador
-".$z4."
-GROUP BY bodegas_servicios_facturacion.idTrabajador, bodegas_servicios_facturacion.Creacion_fecha
-ORDER BY bodegas_servicios_facturacion.Creacion_fecha DESC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrTemporal_4,$row );
-}
 /*************************************************************************************************/
 //Se crea arreglo
 $arrCreativo = array();
@@ -221,29 +152,27 @@ $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
 
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator("Office 2007")
+$spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setLastModifiedBy("Office 2007")
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-
-
-
-            
-            
+      
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', '')
             ->setCellValue('B1', '')
             ->setCellValue('C1', 'Netos')
-            ->setCellValue('H1', 'Totales');
-$objPHPExcel->setActiveSheetIndex(0)
+            ->setCellValue('H1', 'Totales')
             ->setCellValue('A2', 'Trabajador')
             ->setCellValue('B2', 'Fecha')
             ->setCellValue('C2', 'Arriendos')
@@ -256,12 +185,10 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('J2', 'Productos')
             ->setCellValue('K2', 'Servicios')
             ->setCellValue('L2', 'Subtotal');
-
-						
-            
+           
 $nn=3;
 foreach ($arrCreativo as $datais) {
-	$objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$nn, $datais[0]['Trabajador']);
+	$spreadsheet->setActiveSheetIndex(0)->setCellValue('A'.$nn, $datais[0]['Trabajador']);
 	$nn++;
 	
 	foreach ($datais as $prod) {
@@ -281,7 +208,7 @@ foreach ($arrCreativo as $datais) {
 		if(isset($prod['Total_4'])){$sub_2 = $sub_2 + $prod['Total_4'];}
 		
 		if(isset($prod['Creacion_fecha'])&&$prod['Creacion_fecha']!='0000-00-00'){
-			$objPHPExcel->setActiveSheetIndex(0)
+			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue('A'.$nn, '')
 						->setCellValue('B'.$nn, Fecha_estandar($prod['Creacion_fecha']))
 						->setCellValue('C'.$nn, cantidades_excel($prod['Neto_1']))
@@ -307,7 +234,7 @@ foreach ($arrCreativo as $datais) {
 		}          
 	}  
 }  
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A'.$nn, '')
 			->setCellValue('B'.$nn, 'Totales')
 			->setCellValue('C'.$nn, cantidades_excel($Neto_1))
@@ -323,26 +250,27 @@ $objPHPExcel->setActiveSheetIndex(0)
 
 
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Ventas Vendedores Por dia');
-
+$spreadsheet->getActiveSheet()->setTitle('Ventas Vendedores Por dia');
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Ventas Vendedores Por dia Resumen.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Ventas Vendedores Por dia Resumen';
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

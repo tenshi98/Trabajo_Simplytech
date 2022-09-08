@@ -53,7 +53,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Numero']) )               $Numero                = $_POST['Numero'];
 	if ( !empty($_POST['lvl']) )                  $lvl                   = $_POST['lvl'];
 	if ( !empty($_POST['idLicitacion']) )         $idLicitacion          = $_POST['idLicitacion'];
-	if ( !empty($_POST['addTrabajo']) )           $addTrabajo            = $_POST['addTrabajo'];
+	if ( !empty($_POST['addTrabajo']) )           $SIS_dataddTrabajo            = $_POST['addTrabajo'];
 	
 	//formulario para matriz analisis
 	if ( !empty($_POST['cantPuntos']) )           $cantPuntos            = $_POST['cantPuntos'];
@@ -96,11 +96,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idLevel_24']) )     $idLevel[24]     = $_POST['idLevel_24'];
 	if ( !empty($_POST['idLevel_25']) )     $idLevel[25]     = $_POST['idLevel_25'];
 
-	
-	
-	
-
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -149,7 +144,7 @@ require_once '0_validate_user_1.php';
 			case 'Numero':              if(empty($Numero)){               $error['Numero']                = 'error/No ha ingresado el numero';}break;
 			case 'lvl':                 if(empty($lvl)){                  $error['lvl']                   = 'error/No ha ingresado el nivel';}break;
 			case 'idLicitacion':        if(empty($idLicitacion)){         $error['idLicitacion']          = 'error/No ha seleccionado la licitacion';}break;
-			case 'addTrabajo':          if(empty($addTrabajo)){           $error['addTrabajo']            = 'error/No ha seleccionado el trabajo';}break;
+			case 'addTrabajo':          if(empty($SIS_dataddTrabajo)){           $error['addTrabajo']            = 'error/No ha seleccionado el trabajo';}break;
 			
 			case 'cantPuntos':          if(empty($cantPuntos)){           $error['cantPuntos']            = 'error/No ha ingresado la cantidad de puntos';}break;
 			case 'mod':                 if(empty($mod)){                  $error['mod']                   = 'error/No ha ingresado el mod';}break;
@@ -161,7 +156,6 @@ require_once '0_validate_user_1.php';
 			case 'PuntoMedCondenatorio':if(empty($PuntoMedCondenatorio)){ $error['PuntoMedCondenatorio']  = 'error/No ha ingresado el valor condenatorio';}break;
 			case 'PuntoUniMed':         if(empty($PuntoUniMed)){          $error['PuntoUniMed']           = 'error/No ha seleccionado la unidad de medida';}break;
 		
-	
 			case 'idLevel_1':           if(empty($idLevel[1])){           $error['idLevel_1']             = 'error/No ha ingresado el idLevel_1';}break;
 			case 'idLevel_2':           if(empty($idLevel[2])){           $error['idLevel_2']             = 'error/No ha ingresado el idLevel_2';}break;
 			case 'idLevel_3':           if(empty($idLevel[3])){           $error['idLevel_3']             = 'error/No ha ingresado el idLevel_3';}break;
@@ -188,9 +182,22 @@ require_once '0_validate_user_1.php';
 			case 'idLevel_24':          if(empty($idLevel[24])){          $error['idLevel_24']            = 'error/No ha ingresado el idLevel_24';}break;
 			case 'idLevel_25':          if(empty($idLevel[25])){          $error['idLevel_25']            = 'error/No ha ingresado el idLevel_25';}break;
 	
-
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Codigo) && $Codigo != ''){            $Codigo      = EstandarizarInput($Codigo); }
+	if(isset($Nombre) && $Nombre != ''){            $Nombre      = EstandarizarInput($Nombre); }
+	if(isset($Modelo) && $Modelo != ''){            $Modelo      = EstandarizarInput($Modelo); }
+	if(isset($Serie) && $Serie != ''){              $Serie       = EstandarizarInput($Serie); }
+	if(isset($Fabricante) && $Fabricante != ''){    $Fabricante  = EstandarizarInput($Fabricante); }
+	if(isset($Descripcion) && $Descripcion != ''){  $Descripcion = EstandarizarInput($Descripcion); }
+	if(isset($Marca) && $Marca != ''){              $Marca       = EstandarizarInput($Marca); }
+	if(isset($Frecuencia) && $Frecuencia != ''){    $Frecuencia  = EstandarizarInput($Frecuencia); }
+	if(isset($Saf) && $Saf != ''){                  $Saf         = EstandarizarInput($Saf); }
+	if(isset($Numero) && $Numero != ''){            $Numero      = EstandarizarInput($Numero); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -231,54 +238,38 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                   $a  = "'".$idSistema."'" ;               }else{$a ="''";}
-				if(isset($idEstado) && $idEstado != ''){                     $a .= ",'".$idEstado."'" ;               }else{$a .=",''";}
-				if(isset($Codigo) && $Codigo != ''){                         $a .= ",'".$Codigo."'" ;                 }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){                         $a .= ",'".$Nombre."'" ;                 }else{$a .=",''";}
-				if(isset($Modelo) && $Modelo != ''){                         $a .= ",'".$Modelo."'" ;                 }else{$a .=",''";}
-				if(isset($Serie) && $Serie != ''){                           $a .= ",'".$Serie."'" ;                  }else{$a .=",''";}
-				if(isset($Fabricante) && $Fabricante != ''){                 $a .= ",'".$Fabricante."'" ;             }else{$a .=",''";}
-				if(isset($fincorporacion) && $fincorporacion != ''){         $a .= ",'".$fincorporacion."'" ;         }else{$a .=",''";}
-				if(isset($Descripcion) && $Descripcion != ''){               $a .= ",'".$Descripcion."'" ;            }else{$a .=",''";}
-				if(isset($idConfig_1) && $idConfig_1 != ''){                 $a .= ",'".$idConfig_1."'" ;             }else{$a .=",''";}
-				if(isset($idConfig_2) && $idConfig_2 != ''){                 $a .= ",'".$idConfig_2."'" ;             }else{$a .=",''";}
-				if(isset($idConfig_3) && $idConfig_3 != ''){                 $a .= ",'".$idConfig_3."'" ;             }else{$a .=",''";}
-				if(isset($idUbicacion) && $idUbicacion != ''){               $a .= ",'".$idUbicacion."'" ;            }else{$a .=",''";}
-				if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){   $a .= ",'".$idUbicacion_lvl_1."'" ;      }else{$a .=",''";}
-				if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){   $a .= ",'".$idUbicacion_lvl_2."'" ;      }else{$a .=",''";}
-				if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){   $a .= ",'".$idUbicacion_lvl_3."'" ;      }else{$a .=",''";}
-				if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){   $a .= ",'".$idUbicacion_lvl_4."'" ;      }else{$a .=",''";}
-				if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){   $a .= ",'".$idUbicacion_lvl_5."'" ;      }else{$a .=",''";}
-				if(isset($idCliente) && $idCliente != ''){                   $a .= ",'".$idCliente."'" ;              }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){                   $SIS_data  = "'".$idSistema."'" ;               }else{$SIS_data ="''";}
+				if(isset($idEstado) && $idEstado != ''){                     $SIS_data .= ",'".$idEstado."'" ;               }else{$SIS_data .=",''";}
+				if(isset($Codigo) && $Codigo != ''){                         $SIS_data .= ",'".$Codigo."'" ;                 }else{$SIS_data .=",''";}
+				if(isset($Nombre) && $Nombre != ''){                         $SIS_data .= ",'".$Nombre."'" ;                 }else{$SIS_data .=",''";}
+				if(isset($Modelo) && $Modelo != ''){                         $SIS_data .= ",'".$Modelo."'" ;                 }else{$SIS_data .=",''";}
+				if(isset($Serie) && $Serie != ''){                           $SIS_data .= ",'".$Serie."'" ;                  }else{$SIS_data .=",''";}
+				if(isset($Fabricante) && $Fabricante != ''){                 $SIS_data .= ",'".$Fabricante."'" ;             }else{$SIS_data .=",''";}
+				if(isset($fincorporacion) && $fincorporacion != ''){         $SIS_data .= ",'".$fincorporacion."'" ;         }else{$SIS_data .=",''";}
+				if(isset($Descripcion) && $Descripcion != ''){               $SIS_data .= ",'".$Descripcion."'" ;            }else{$SIS_data .=",''";}
+				if(isset($idConfig_1) && $idConfig_1 != ''){                 $SIS_data .= ",'".$idConfig_1."'" ;             }else{$SIS_data .=",''";}
+				if(isset($idConfig_2) && $idConfig_2 != ''){                 $SIS_data .= ",'".$idConfig_2."'" ;             }else{$SIS_data .=",''";}
+				if(isset($idConfig_3) && $idConfig_3 != ''){                 $SIS_data .= ",'".$idConfig_3."'" ;             }else{$SIS_data .=",''";}
+				if(isset($idUbicacion) && $idUbicacion != ''){               $SIS_data .= ",'".$idUbicacion."'" ;            }else{$SIS_data .=",''";}
+				if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){   $SIS_data .= ",'".$idUbicacion_lvl_1."'" ;      }else{$SIS_data .=",''";}
+				if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){   $SIS_data .= ",'".$idUbicacion_lvl_2."'" ;      }else{$SIS_data .=",''";}
+				if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){   $SIS_data .= ",'".$idUbicacion_lvl_3."'" ;      }else{$SIS_data .=",''";}
+				if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){   $SIS_data .= ",'".$idUbicacion_lvl_4."'" ;      }else{$SIS_data .=",''";}
+				if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){   $SIS_data .= ",'".$idUbicacion_lvl_5."'" ;      }else{$SIS_data .=",''";}
+				if(isset($idCliente) && $idCliente != ''){                   $SIS_data .= ",'".$idCliente."'" ;              }else{$SIS_data .=",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `maquinas_listado` (idSistema, idEstado, Codigo, Nombre, Modelo, Serie, Fabricante,
+				$SIS_columns = 'idSistema, idEstado, Codigo, Nombre, Modelo, Serie, Fabricante,
 				fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
-				idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idCliente) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idCliente';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
 			}
 		
 	
@@ -307,40 +298,40 @@ require_once '0_validate_user_1.php';
 				
 				/***********************************************************************/
 				//Filtros
-				$a = "idMaquina='".$idMaquina."'" ;
-				if(isset($idSistema) && $idSistema != ''){                  $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Codigo) && $Codigo != ''){                        $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                        $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Modelo) && $Modelo != ''){                        $a .= ",Modelo='".$Modelo."'" ;}
-				if(isset($Serie) && $Serie != ''){                          $a .= ",Serie='".$Serie."'" ;}
-				if(isset($Fabricante) && $Fabricante != ''){                $a .= ",Fabricante='".$Fabricante."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                    $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($fincorporacion) && $fincorporacion != ''){        $a .= ",fincorporacion='".$fincorporacion."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){              $a .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($idConfig_1) && $idConfig_1 != ''){                $a .= ",idConfig_1='".$idConfig_1."'" ;}
-				if(isset($idConfig_2) && $idConfig_2 != ''){                $a .= ",idConfig_2='".$idConfig_2."'" ;}
-				if(isset($idConfig_3) && $idConfig_3 != ''){                $a .= ",idConfig_3='".$idConfig_3."'" ;}
-				if(isset($idUbicacion) && $idUbicacion != ''){              $a .= ",idUbicacion='".$idUbicacion."'" ;}
-				if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){  $a .= ",idUbicacion_lvl_1='".$idUbicacion_lvl_1."'" ;}
-				if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){  $a .= ",idUbicacion_lvl_2='".$idUbicacion_lvl_2."'" ;}
-				if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){  $a .= ",idUbicacion_lvl_3='".$idUbicacion_lvl_3."'" ;}
-				if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){  $a .= ",idUbicacion_lvl_4='".$idUbicacion_lvl_4."'" ;}
-				if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){  $a .= ",idUbicacion_lvl_5='".$idUbicacion_lvl_5."'" ;}
-				if(isset($idCliente) && $idCliente != ''){                  $a .= ",idCliente='".$idCliente."'" ;}
+				$SIS_data = "idMaquina='".$idMaquina."'" ;
+				if(isset($idSistema) && $idSistema != ''){                  $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($Codigo) && $Codigo != ''){                        $SIS_data .= ",Codigo='".$Codigo."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                        $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Modelo) && $Modelo != ''){                        $SIS_data .= ",Modelo='".$Modelo."'" ;}
+				if(isset($Serie) && $Serie != ''){                          $SIS_data .= ",Serie='".$Serie."'" ;}
+				if(isset($Fabricante) && $Fabricante != ''){                $SIS_data .= ",Fabricante='".$Fabricante."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                    $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($fincorporacion) && $fincorporacion != ''){        $SIS_data .= ",fincorporacion='".$fincorporacion."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){              $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
+				if(isset($idConfig_1) && $idConfig_1 != ''){                $SIS_data .= ",idConfig_1='".$idConfig_1."'" ;}
+				if(isset($idConfig_2) && $idConfig_2 != ''){                $SIS_data .= ",idConfig_2='".$idConfig_2."'" ;}
+				if(isset($idConfig_3) && $idConfig_3 != ''){                $SIS_data .= ",idConfig_3='".$idConfig_3."'" ;}
+				if(isset($idUbicacion) && $idUbicacion != ''){              $SIS_data .= ",idUbicacion='".$idUbicacion."'" ;}
+				if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){  $SIS_data .= ",idUbicacion_lvl_1='".$idUbicacion_lvl_1."'" ;}
+				if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){  $SIS_data .= ",idUbicacion_lvl_2='".$idUbicacion_lvl_2."'" ;}
+				if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){  $SIS_data .= ",idUbicacion_lvl_3='".$idUbicacion_lvl_3."'" ;}
+				if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){  $SIS_data .= ",idUbicacion_lvl_4='".$idUbicacion_lvl_4."'" ;}
+				if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){  $SIS_data .= ",idUbicacion_lvl_5='".$idUbicacion_lvl_5."'" ;}
+				if(isset($idCliente) && $idCliente != ''){                  $SIS_data .= ",idCliente='".$idCliente."'" ;}
 				
 				//Verifico si el cliente no es el mismo que el anterior
 				if(isset($FakeidCliente)&&isset($idCliente)&&$FakeidCliente!=0&&$idCliente!=0&&$FakeidCliente!=$idCliente){
 					//reseteo la ubicacion
-					$a .= ",idUbicacion_lvl_1=''" ;
-					$a .= ",idUbicacion_lvl_2=''" ;
-					$a .= ",idUbicacion_lvl_3=''" ;
-					$a .= ",idUbicacion_lvl_4=''" ;
-					$a .= ",idUbicacion_lvl_5=''" ;
+					$SIS_data .= ",idUbicacion_lvl_1=''" ;
+					$SIS_data .= ",idUbicacion_lvl_2=''" ;
+					$SIS_data .= ",idUbicacion_lvl_3=''" ;
+					$SIS_data .= ",idUbicacion_lvl_4=''" ;
+					$SIS_data .= ",idUbicacion_lvl_5=''" ;
 				}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -537,11 +528,11 @@ require_once '0_validate_user_1.php';
 
 								
 							//Filtro para idSistema		
-							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -587,11 +578,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 								
 							//Filtro para idSistema		
-							$a = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
+							$SIS_data = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -638,11 +629,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 								
 							//Filtro para idSistema		
-							$a = "HDS='".$sufijo.$_FILES['HDS']['name']."'" ;
+							$SIS_data = "HDS='".$sufijo.$_FILES['HDS']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -673,8 +664,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Direccion_img=''" ;
-			$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -713,8 +704,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "FichaTecnica=''" ;
-			$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "FichaTecnica=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -751,8 +742,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "HDS=''" ;
-			$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "HDS=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -800,27 +791,27 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                       $a = "'".$idSistema."'" ;               }else{$a ="''";}
-				if(isset($idMaquina) && $idMaquina != ''){                       $a .= ",'".$idMaquina."'" ;             }else{$a .=",''";}
-				if(isset($idUtilizable) && $idUtilizable != ''){                 $a .= ",'".$idUtilizable."'" ;          }else{$a .=",''";}
-				if(isset($Codigo) && $Codigo != ''){                             $a .= ",'".$Codigo."'" ;                }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){                             $a .= ",'".$Nombre."'" ;                }else{$a .=",''";}
-				if(isset($Marca) && $Marca != ''){                               $a .= ",'".$Marca."'" ;                 }else{$a .=",''";}
-				if(isset($Modelo) && $Modelo != ''){                             $a .= ",'".$Modelo."'" ;                }else{$a .=",''";}
-				if(isset($AnoFab) && $AnoFab != ''){                             $a .= ",'".$AnoFab."'" ;                }else{$a .=",''";}
-				if(isset($Serie) && $Serie != ''){                               $a .= ",'".$Serie."'" ;                 }else{$a .=",''";}
-				if(isset($Direccion_img) && $Direccion_img != ''){               $a .= ",'".$Direccion_img."'" ;         }else{$a .=",''";}
-				if(isset($idSubTipo) && $idSubTipo != ''){                       $a .= ",'".$idSubTipo."'" ;             }else{$a .=",''";}
-				if(isset($Grasa_inicial) && $Grasa_inicial != ''){               $a .= ",'".$Grasa_inicial."'" ;         }else{$a .=",''";}
-				if(isset($Grasa_relubricacion) && $Grasa_relubricacion != ''){   $a .= ",'".$Grasa_relubricacion."'" ;   }else{$a .=",''";}
-				if(isset($Aceite) && $Aceite != ''){                             $a .= ",'".$Aceite."'" ;                }else{$a .=",''";}
-				if(isset($Cantidad) && $Cantidad != ''){                         $a .= ",'".$Cantidad."'" ;              }else{$a .=",''";}
-				if(isset($idUml) && $idUml != ''){                               $a .= ",'".$idUml."'" ;                 }else{$a .=",''";}
-				if(isset($Frecuencia) && $Frecuencia != ''){                     $a .= ",'".$Frecuencia."'" ;            }else{$a .=",''";}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){                 $a .= ",'".$idFrecuencia."'" ;          }else{$a .=",''";}
-				if(isset($idProducto) && $idProducto != ''){                     $a .= ",'".$idProducto."'" ;            }else{$a .=",''";}
-				if(isset($Saf) && $Saf != ''){                                   $a .= ",'".$Saf."'" ;                   }else{$a .=",''";}
-				if(isset($Numero) && $Numero != ''){                             $a .= ",'".$Numero."'" ;                }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){                       $SIS_data = "'".$idSistema."'" ;               }else{$SIS_data ="''";}
+				if(isset($idMaquina) && $idMaquina != ''){                       $SIS_data .= ",'".$idMaquina."'" ;             }else{$SIS_data .=",''";}
+				if(isset($idUtilizable) && $idUtilizable != ''){                 $SIS_data .= ",'".$idUtilizable."'" ;          }else{$SIS_data .=",''";}
+				if(isset($Codigo) && $Codigo != ''){                             $SIS_data .= ",'".$Codigo."'" ;                }else{$SIS_data .=",''";}
+				if(isset($Nombre) && $Nombre != ''){                             $SIS_data .= ",'".$Nombre."'" ;                }else{$SIS_data .=",''";}
+				if(isset($Marca) && $Marca != ''){                               $SIS_data .= ",'".$Marca."'" ;                 }else{$SIS_data .=",''";}
+				if(isset($Modelo) && $Modelo != ''){                             $SIS_data .= ",'".$Modelo."'" ;                }else{$SIS_data .=",''";}
+				if(isset($AnoFab) && $AnoFab != ''){                             $SIS_data .= ",'".$AnoFab."'" ;                }else{$SIS_data .=",''";}
+				if(isset($Serie) && $Serie != ''){                               $SIS_data .= ",'".$Serie."'" ;                 }else{$SIS_data .=",''";}
+				if(isset($Direccion_img) && $Direccion_img != ''){               $SIS_data .= ",'".$Direccion_img."'" ;         }else{$SIS_data .=",''";}
+				if(isset($idSubTipo) && $idSubTipo != ''){                       $SIS_data .= ",'".$idSubTipo."'" ;             }else{$SIS_data .=",''";}
+				if(isset($Grasa_inicial) && $Grasa_inicial != ''){               $SIS_data .= ",'".$Grasa_inicial."'" ;         }else{$SIS_data .=",''";}
+				if(isset($Grasa_relubricacion) && $Grasa_relubricacion != ''){   $SIS_data .= ",'".$Grasa_relubricacion."'" ;   }else{$SIS_data .=",''";}
+				if(isset($Aceite) && $Aceite != ''){                             $SIS_data .= ",'".$Aceite."'" ;                }else{$SIS_data .=",''";}
+				if(isset($Cantidad) && $Cantidad != ''){                         $SIS_data .= ",'".$Cantidad."'" ;              }else{$SIS_data .=",''";}
+				if(isset($idUml) && $idUml != ''){                               $SIS_data .= ",'".$idUml."'" ;                 }else{$SIS_data .=",''";}
+				if(isset($Frecuencia) && $Frecuencia != ''){                     $SIS_data .= ",'".$Frecuencia."'" ;            }else{$SIS_data .=",''";}
+				if(isset($idFrecuencia) && $idFrecuencia != ''){                 $SIS_data .= ",'".$idFrecuencia."'" ;          }else{$SIS_data .=",''";}
+				if(isset($idProducto) && $idProducto != ''){                     $SIS_data .= ",'".$idProducto."'" ;            }else{$SIS_data .=",''";}
+				if(isset($Saf) && $Saf != ''){                                   $SIS_data .= ",'".$Saf."'" ;                   }else{$SIS_data .=",''";}
+				if(isset($Numero) && $Numero != ''){                             $SIS_data .= ",'".$Numero."'" ;                }else{$SIS_data .=",''";}
 				
 				
 				
@@ -829,37 +820,23 @@ require_once '0_validate_user_1.php';
 					//Ubico correctamente el puntero
 					$point = $i - 1;
 					//Valor a insertar
-					if(isset($idLevel[$point]) && $idLevel[$point] != ''){   $a .= ",'".$idLevel[$point]."'" ;   }else{$a .=",''";}
+					if(isset($idLevel[$point]) && $idLevel[$point] != ''){   $SIS_data .= ",'".$idLevel[$point]."'" ;   }else{$SIS_data .=",''";}
 					//donde insertar
 					$xbla .= ',idLevel_'.$point;
 				}
 			
-				
-				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `maquinas_listado_level_".$lvl."` (idSistema,idMaquina, idUtilizable,
-				Codigo, Nombre, Marca, Modelo, AnoFab, Serie, Direccion_img, idSubTipo, Grasa_inicial,
-				Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia,idProducto,Saf , Numero 
-				".$xbla." ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema,idMaquina, idUtilizable, Codigo, Nombre, Marca, 
+				Modelo, AnoFab, Serie, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
+				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia,idProducto,Saf , Numero 
+				'.$xbla;
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$lvl, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 				
 			}
@@ -874,33 +851,33 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el Nombre	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idLevel_".$lvl."='".$idLevel[$lvl]."'" ;
-				if(isset($idSistema) && $idSistema != ''){                      $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idMaquina) && $idMaquina != ''){                      $a .= ",idMaquina='".$idMaquina."'" ;}
-				if(isset($idUtilizable) && $idUtilizable != ''){                $a .= ",idUtilizable='".$idUtilizable."'" ;}
-				if(isset($Codigo) && $Codigo != ''){                            $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                            $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Marca) && $Marca != ''){                              $a .= ",Marca='".$Marca."'" ;}
-				if(isset($Modelo) && $Modelo != ''){                            $a .= ",Modelo='".$Modelo."'" ;}
-				if(isset($AnoFab) && $AnoFab != ''){                            $a .= ",AnoFab='".$AnoFab."'" ;}
-				if(isset($Serie) && $Serie != ''){                              $a .= ",Serie='".$Serie."'" ;}
-				if(isset($Direccion_img) && $Direccion_img != ''){              $a .= ",Direccion_img='".$Direccion_img."'" ;}
-				if(isset($idSubTipo) && $idSubTipo != ''){                      $a .= ",idSubTipo='".$idSubTipo."'" ;}
-				if(isset($Grasa_inicial) && $Grasa_inicial != ''){              $a .= ",Grasa_inicial='".$Grasa_inicial."'" ;}
-				if(isset($Grasa_relubricacion) && $Grasa_relubricacion != ''){  $a .= ",Grasa_relubricacion='".$Grasa_relubricacion."'" ;}
-				if(isset($Aceite) && $Aceite != ''){                            $a .= ",Aceite='".$Aceite."'" ;}
-				if(isset($Cantidad) && $Cantidad != ''){                        $a .= ",Cantidad='".$Cantidad."'" ;}
-				if(isset($idUml) && $idUml != ''){                              $a .= ",idUml='".$idUml."'" ;}
-				if(isset($Frecuencia) && $Frecuencia != ''){                    $a .= ",Frecuencia='".$Frecuencia."'" ;}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){                $a .= ",idFrecuencia='".$idFrecuencia."'" ;}
-				if(isset($idProducto) && $idProducto != ''){                    $a .= ",idProducto='".$idProducto."'" ;}
-				if(isset($Saf) && $Saf != ''){                                  $a .= ",Saf='".$Saf."'" ;}
-				if(isset($Numero) && $Numero != ''){                            $a .= ",Numero='".$Numero."'" ;}
-				if(isset($idUml) && $idUml != ''){                              $a .= ",idUml='".$idUml."'" ;}
+				$SIS_data = "idLevel_".$lvl."='".$idLevel[$lvl]."'" ;
+				if(isset($idSistema) && $idSistema != ''){                      $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idMaquina) && $idMaquina != ''){                      $SIS_data .= ",idMaquina='".$idMaquina."'" ;}
+				if(isset($idUtilizable) && $idUtilizable != ''){                $SIS_data .= ",idUtilizable='".$idUtilizable."'" ;}
+				if(isset($Codigo) && $Codigo != ''){                            $SIS_data .= ",Codigo='".$Codigo."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                            $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Marca) && $Marca != ''){                              $SIS_data .= ",Marca='".$Marca."'" ;}
+				if(isset($Modelo) && $Modelo != ''){                            $SIS_data .= ",Modelo='".$Modelo."'" ;}
+				if(isset($AnoFab) && $AnoFab != ''){                            $SIS_data .= ",AnoFab='".$AnoFab."'" ;}
+				if(isset($Serie) && $Serie != ''){                              $SIS_data .= ",Serie='".$Serie."'" ;}
+				if(isset($Direccion_img) && $Direccion_img != ''){              $SIS_data .= ",Direccion_img='".$Direccion_img."'" ;}
+				if(isset($idSubTipo) && $idSubTipo != ''){                      $SIS_data .= ",idSubTipo='".$idSubTipo."'" ;}
+				if(isset($Grasa_inicial) && $Grasa_inicial != ''){              $SIS_data .= ",Grasa_inicial='".$Grasa_inicial."'" ;}
+				if(isset($Grasa_relubricacion) && $Grasa_relubricacion != ''){  $SIS_data .= ",Grasa_relubricacion='".$Grasa_relubricacion."'" ;}
+				if(isset($Aceite) && $Aceite != ''){                            $SIS_data .= ",Aceite='".$Aceite."'" ;}
+				if(isset($Cantidad) && $Cantidad != ''){                        $SIS_data .= ",Cantidad='".$Cantidad."'" ;}
+				if(isset($idUml) && $idUml != ''){                              $SIS_data .= ",idUml='".$idUml."'" ;}
+				if(isset($Frecuencia) && $Frecuencia != ''){                    $SIS_data .= ",Frecuencia='".$Frecuencia."'" ;}
+				if(isset($idFrecuencia) && $idFrecuencia != ''){                $SIS_data .= ",idFrecuencia='".$idFrecuencia."'" ;}
+				if(isset($idProducto) && $idProducto != ''){                    $SIS_data .= ",idProducto='".$idProducto."'" ;}
+				if(isset($Saf) && $Saf != ''){                                  $SIS_data .= ",Saf='".$Saf."'" ;}
+				if(isset($Numero) && $Numero != ''){                            $SIS_data .= ",Numero='".$Numero."'" ;}
+				if(isset($idUml) && $idUml != ''){                              $SIS_data .= ",idUml='".$idUml."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'maquinas_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'maquinas_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -988,8 +965,8 @@ require_once '0_validate_user_1.php';
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1038,14 +1015,14 @@ require_once '0_validate_user_1.php';
 				
 				
 				//Filtros
-				$a = "idLevel_".$lvl."='".$addTrabajo."'" ;
-				if(isset($idLicitacion) && $idLicitacion != ''){   $a .= ",idLicitacion='".$idLicitacion."'" ;}
-				if(isset($level) && $level != ''){                 $a .= ",tabla='".$level."'" ;}
-				if(isset($xx) && $xx != ''){                       $a .= ",table_value='".$xx."'" ;}
+				$SIS_data = "idLevel_".$lvl."='".$SIS_dataddTrabajo."'" ;
+				if(isset($idLicitacion) && $idLicitacion != ''){   $SIS_data .= ",idLicitacion='".$idLicitacion."'" ;}
+				if(isset($level) && $level != ''){                 $SIS_data .= ",tabla='".$level."'" ;}
+				if(isset($xx) && $xx != ''){                       $SIS_data .= ",table_value='".$xx."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'maquinas_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$addTrabajo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'maquinas_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$SIS_dataddTrabajo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -1077,35 +1054,20 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idMaquina) && $idMaquina != ''){       $a  = "'".$idMaquina."'" ;      }else{$a ="''";}
-				if(isset($Nombre) && $Nombre != ''){             $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
-				if(isset($cantPuntos) && $cantPuntos != ''){     $a .= ",'".$cantPuntos."'" ;    }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){         $a .= ",'".$idEstado."'" ;      }else{$a .=",''";}
+				if(isset($idMaquina) && $idMaquina != ''){       $SIS_data  = "'".$idMaquina."'" ;      }else{$SIS_data ="''";}
+				if(isset($Nombre) && $Nombre != ''){             $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .=",''";}
+				if(isset($cantPuntos) && $cantPuntos != ''){     $SIS_data .= ",'".$cantPuntos."'" ;    }else{$SIS_data .=",''";}
+				if(isset($idEstado) && $idEstado != ''){         $SIS_data .= ",'".$idEstado."'" ;      }else{$SIS_data .=",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `maquinas_listado_matriz` (idMaquina, Nombre, cantPuntos, idEstado) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idMaquina, Nombre, cantPuntos, idEstado';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_matriz', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&idMatriz='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 		
@@ -1120,21 +1082,21 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 		
 				//Filtros
-				$a = "idMatriz='".$idMatriz."'" ;
-				if(isset($Nombre) && $Nombre != ''){                              $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($cantPuntos) && $cantPuntos != ''){                      $a .= ",cantPuntos='".$cantPuntos."'" ;}
-				if(isset($PuntoNombre) && $PuntoNombre != ''){                    $a .= ",PuntoNombre_".$mod."='".$PuntoNombre."'" ;}
-				if(isset($PuntoidTipo) && $PuntoidTipo != ''){                    $a .= ",PuntoidTipo_".$mod."='".$PuntoidTipo."'" ;}
-				if(isset($PuntoMedAceptable) && $PuntoMedAceptable != ''){        $a .= ",PuntoMedAceptable_".$mod."='".$PuntoMedAceptable."'" ;}
-				if(isset($PuntoMedAlerta) && $PuntoMedAlerta != ''){              $a .= ",PuntoMedAlerta_".$mod."='".$PuntoMedAlerta."'" ;}
-				if(isset($PuntoMedCondenatorio) && $PuntoMedCondenatorio != ''){  $a .= ",PuntoMedCondenatorio_".$mod."='".$PuntoMedCondenatorio."'" ;}
-				if(isset($PuntoUniMed) && $PuntoUniMed != ''){                    $a .= ",PuntoUniMed_".$mod."='".$PuntoUniMed."'" ;}
-				if(isset($PuntoidGrupo) && $PuntoidGrupo != ''){                  $a .= ",PuntoidGrupo_".$mod."='".$PuntoidGrupo."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                          $a .= ",idEstado".$mod."='".$idEstado."'" ;}
+				$SIS_data = "idMatriz='".$idMatriz."'" ;
+				if(isset($Nombre) && $Nombre != ''){                              $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($cantPuntos) && $cantPuntos != ''){                      $SIS_data .= ",cantPuntos='".$cantPuntos."'" ;}
+				if(isset($PuntoNombre) && $PuntoNombre != ''){                    $SIS_data .= ",PuntoNombre_".$mod."='".$PuntoNombre."'" ;}
+				if(isset($PuntoidTipo) && $PuntoidTipo != ''){                    $SIS_data .= ",PuntoidTipo_".$mod."='".$PuntoidTipo."'" ;}
+				if(isset($PuntoMedAceptable) && $PuntoMedAceptable != ''){        $SIS_data .= ",PuntoMedAceptable_".$mod."='".$PuntoMedAceptable."'" ;}
+				if(isset($PuntoMedAlerta) && $PuntoMedAlerta != ''){              $SIS_data .= ",PuntoMedAlerta_".$mod."='".$PuntoMedAlerta."'" ;}
+				if(isset($PuntoMedCondenatorio) && $PuntoMedCondenatorio != ''){  $SIS_data .= ",PuntoMedCondenatorio_".$mod."='".$PuntoMedCondenatorio."'" ;}
+				if(isset($PuntoUniMed) && $PuntoUniMed != ''){                    $SIS_data .= ",PuntoUniMed_".$mod."='".$PuntoUniMed."'" ;}
+				if(isset($PuntoidGrupo) && $PuntoidGrupo != ''){                  $SIS_data .= ",PuntoidGrupo_".$mod."='".$PuntoidGrupo."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                          $SIS_data .= ",idEstado".$mod."='".$idEstado."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'maquinas_listado_matriz', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'maquinas_listado_matriz', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -1223,39 +1185,26 @@ require_once '0_validate_user_1.php';
 				$rowdata = db_select_data (false, 'idSistema, Codigo, Modelo, Serie, Fabricante, fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idCliente', 'maquinas_listado', '', 'idMaquina ='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Se crea la maquina
-				$a  = "'".$rowdata['idSistema']."'" ; 
-				$a .= ",'2'" ;                        //inactivo hasta editar       
-				$a .= ",'".$rowdata['Codigo']."'" ; 
-				$a .= ",'".$Nombre."'" ;          
-				$a .= ",'".$rowdata['Modelo']."'" ;          
-				$a .= ",'".$rowdata['Serie']."'" ;          
-				$a .= ",'".$rowdata['Fabricante']."'" ;           
-				$a .= ",'".$rowdata['fincorporacion']."'" ; 
-				$a .= ",'".$rowdata['Descripcion']."'" ;
-				$a .= ",'".$rowdata['idConfig_1']."'" ;
-				$a .= ",'".$rowdata['idConfig_2']."'" ;
-				$a .= ",'".$rowdata['idConfig_3']."'" ;
-				$a .= ",'".$rowdata['idCliente']."'" ;
+				$SIS_data  = "'".$rowdata['idSistema']."'" ; 
+				$SIS_data .= ",'2'" ;                        //inactivo hasta editar       
+				$SIS_data .= ",'".$rowdata['Codigo']."'" ; 
+				$SIS_data .= ",'".$Nombre."'" ;          
+				$SIS_data .= ",'".$rowdata['Modelo']."'" ;          
+				$SIS_data .= ",'".$rowdata['Serie']."'" ;          
+				$SIS_data .= ",'".$rowdata['Fabricante']."'" ;           
+				$SIS_data .= ",'".$rowdata['fincorporacion']."'" ; 
+				$SIS_data .= ",'".$rowdata['Descripcion']."'" ;
+				$SIS_data .= ",'".$rowdata['idConfig_1']."'" ;
+				$SIS_data .= ",'".$rowdata['idConfig_2']."'" ;
+				$SIS_data .= ",'".$rowdata['idConfig_3']."'" ;
+				$SIS_data .= ",'".$rowdata['idCliente']."'" ;
         
-					
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `maquinas_listado` (idSistema, idEstado, Codigo, Nombre, Modelo, 
-				Serie, Fabricante, fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idCliente) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-				$maquina_id = mysqli_insert_id($dbConn);
+				$SIS_columns = 'idSistema, idEstado, Codigo, Nombre, Modelo, 
+				Serie, Fabricante, fincorporacion, Descripcion, idConfig_1, 
+				idConfig_2, idConfig_3, idCliente';
+				$maquina_id = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*******************************************************************/
 				$arrLVL_1 = array();
 				$arrLVL_1 = db_select_array (false, 'idLevel_1, idSistema, idUtilizable, Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_1', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1314,1544 +1263,685 @@ require_once '0_validate_user_1.php';
 				foreach ($arrLVL_1 as $lvl_1) {
 					
 					//Se crea la maquina
-					$a  = "'".$lvl_1['idSistema']."'" ;          
-					$a .= ",'".$maquina_id."'" ; 
-					$a .= ",'".$lvl_1['idUtilizable']."'" ;
-					$a .= ",'".$lvl_1['Codigo']."'" ;
-					$a .= ",'".$lvl_1['Nombre']."'" ;
-					$a .= ",'".$lvl_1['Marca']."'" ;
-					$a .= ",'".$lvl_1['Modelo']."'" ;
-					$a .= ",'".$lvl_1['AnoFab']."'" ;
-					$a .= ",'".$lvl_1['Serie']."'" ; 
-					$a .= ",'".$lvl_1['idLicitacion']."'" ; 
-					$a .= ",'".$lvl_1['tabla']."'" ; 
-					$a .= ",'".$lvl_1['table_value']."'" ; 
-					$a .= ",'".$lvl_1['Direccion_img']."'" ; 
-					$a .= ",'".$lvl_1['idSubTipo']."'" ; 
-					$a .= ",'".$lvl_1['Grasa_inicial']."'" ; 
-					$a .= ",'".$lvl_1['Grasa_relubricacion']."'" ; 
-					$a .= ",'".$lvl_1['Aceite']."'" ; 
-					$a .= ",'".$lvl_1['Cantidad']."'" ; 
-					$a .= ",'".$lvl_1['idUml']."'" ; 
-					$a .= ",'".$lvl_1['Frecuencia']."'" ; 
-					$a .= ",'".$lvl_1['idFrecuencia']."'" ; 
-					$a .= ",'".$lvl_1['idProducto']."'" ; 
-					$a .= ",'".$lvl_1['Saf']."'" ; 
-					$a .= ",'".$lvl_1['Numero']."'" ; 
-     
+					$SIS_data  = "'".$lvl_1['idSistema']."'" ;          
+					$SIS_data .= ",'".$maquina_id."'" ; 
+					$SIS_data .= ",'".$lvl_1['idUtilizable']."'" ;
+					$SIS_data .= ",'".$lvl_1['Codigo']."'" ;
+					$SIS_data .= ",'".$lvl_1['Nombre']."'" ;
+					$SIS_data .= ",'".$lvl_1['Marca']."'" ;
+					$SIS_data .= ",'".$lvl_1['Modelo']."'" ;
+					$SIS_data .= ",'".$lvl_1['AnoFab']."'" ;
+					$SIS_data .= ",'".$lvl_1['Serie']."'" ; 
+					$SIS_data .= ",'".$lvl_1['idLicitacion']."'" ; 
+					$SIS_data .= ",'".$lvl_1['tabla']."'" ; 
+					$SIS_data .= ",'".$lvl_1['table_value']."'" ; 
+					$SIS_data .= ",'".$lvl_1['Direccion_img']."'" ; 
+					$SIS_data .= ",'".$lvl_1['idSubTipo']."'" ; 
+					$SIS_data .= ",'".$lvl_1['Grasa_inicial']."'" ; 
+					$SIS_data .= ",'".$lvl_1['Grasa_relubricacion']."'" ; 
+					$SIS_data .= ",'".$lvl_1['Aceite']."'" ; 
+					$SIS_data .= ",'".$lvl_1['Cantidad']."'" ; 
+					$SIS_data .= ",'".$lvl_1['idUml']."'" ; 
+					$SIS_data .= ",'".$lvl_1['Frecuencia']."'" ; 
+					$SIS_data .= ",'".$lvl_1['idFrecuencia']."'" ; 
+					$SIS_data .= ",'".$lvl_1['idProducto']."'" ; 
+					$SIS_data .= ",'".$lvl_1['Saf']."'" ; 
+					$SIS_data .= ",'".$lvl_1['Numero']."'" ;      
+																															
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `maquinas_listado_level_1` (idSistema, idMaquina, idUtilizable, 
+					$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 					Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
-					$id_lvl_1 = mysqli_insert_id($dbConn);
-					
+					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+					$id_lvl_1 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 					//Nivel 2
 					foreach ($arrLVL_2 as $lvl_2) {
 						//Se verifica que sea el mismo sensor
 						if($lvl_1['idLevel_1']==$lvl_2['idLevel_1']){
 							
 							//Se crea la maquina
-							$a  = "'".$id_lvl_1."'" ;          
-							$a .= ",'".$lvl_2['idSistema']."'" ; 
-							$a .= ",'".$maquina_id."'" ; 
-							$a .= ",'".$lvl_2['idUtilizable']."'" ;
-							$a .= ",'".$lvl_2['Codigo']."'" ;
-							$a .= ",'".$lvl_2['Nombre']."'" ;
-							$a .= ",'".$lvl_2['Marca']."'" ;
-							$a .= ",'".$lvl_2['Modelo']."'" ;
-							$a .= ",'".$lvl_2['AnoFab']."'" ;
-							$a .= ",'".$lvl_2['Serie']."'" ; 
-							$a .= ",'".$lvl_2['idLicitacion']."'" ; 
-							$a .= ",'".$lvl_2['tabla']."'" ; 
-							$a .= ",'".$lvl_2['table_value']."'" ; 
-							$a .= ",'".$lvl_2['Direccion_img']."'" ; 
-							$a .= ",'".$lvl_2['idSubTipo']."'" ; 
-							$a .= ",'".$lvl_2['Grasa_inicial']."'" ; 
-							$a .= ",'".$lvl_2['Grasa_relubricacion']."'" ; 
-							$a .= ",'".$lvl_2['Aceite']."'" ; 
-							$a .= ",'".$lvl_2['Cantidad']."'" ; 
-							$a .= ",'".$lvl_2['idUml']."'" ; 
-							$a .= ",'".$lvl_2['Frecuencia']."'" ; 
-							$a .= ",'".$lvl_2['idFrecuencia']."'" ; 
-							$a .= ",'".$lvl_2['idProducto']."'" ; 
-							$a .= ",'".$lvl_2['Saf']."'" ; 
-							$a .= ",'".$lvl_2['Numero']."'" ; 
-			 
+							$SIS_data  = "'".$id_lvl_1."'" ;          
+							$SIS_data .= ",'".$lvl_2['idSistema']."'" ; 
+							$SIS_data .= ",'".$maquina_id."'" ; 
+							$SIS_data .= ",'".$lvl_2['idUtilizable']."'" ;
+							$SIS_data .= ",'".$lvl_2['Codigo']."'" ;
+							$SIS_data .= ",'".$lvl_2['Nombre']."'" ;
+							$SIS_data .= ",'".$lvl_2['Marca']."'" ;
+							$SIS_data .= ",'".$lvl_2['Modelo']."'" ;
+							$SIS_data .= ",'".$lvl_2['AnoFab']."'" ;
+							$SIS_data .= ",'".$lvl_2['Serie']."'" ; 
+							$SIS_data .= ",'".$lvl_2['idLicitacion']."'" ; 
+							$SIS_data .= ",'".$lvl_2['tabla']."'" ; 
+							$SIS_data .= ",'".$lvl_2['table_value']."'" ; 
+							$SIS_data .= ",'".$lvl_2['Direccion_img']."'" ; 
+							$SIS_data .= ",'".$lvl_2['idSubTipo']."'" ; 
+							$SIS_data .= ",'".$lvl_2['Grasa_inicial']."'" ; 
+							$SIS_data .= ",'".$lvl_2['Grasa_relubricacion']."'" ; 
+							$SIS_data .= ",'".$lvl_2['Aceite']."'" ; 
+							$SIS_data .= ",'".$lvl_2['Cantidad']."'" ; 
+							$SIS_data .= ",'".$lvl_2['idUml']."'" ; 
+							$SIS_data .= ",'".$lvl_2['Frecuencia']."'" ; 
+							$SIS_data .= ",'".$lvl_2['idFrecuencia']."'" ; 
+							$SIS_data .= ",'".$lvl_2['idProducto']."'" ; 
+							$SIS_data .= ",'".$lvl_2['Saf']."'" ; 
+							$SIS_data .= ",'".$lvl_2['Numero']."'" ;     
+																															
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `maquinas_listado_level_2` (idLevel_1, idSistema, idMaquina, idUtilizable, 
+							$SIS_columns = 'idLevel_1, idSistema, idMaquina, idUtilizable, 
 							Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							$id_lvl_2 = mysqli_insert_id($dbConn);
-					
+							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+							$id_lvl_2 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_2', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 							//Nivel 3
 							foreach ($arrLVL_3 as $lvl_3) {
 								//Se verifica que sea el mismo sensor
 								if($lvl_2['idLevel_2']==$lvl_3['idLevel_2']){
 									
 									//Se crea la maquina
-									$a  = "'".$id_lvl_2."'" ;          
-									$a .= ",'".$id_lvl_1."'" ; 
-									$a .= ",'".$lvl_3['idSistema']."'" ; 
-									$a .= ",'".$maquina_id."'" ; 
-									$a .= ",'".$lvl_3['idUtilizable']."'" ;
-									$a .= ",'".$lvl_3['Codigo']."'" ;
-									$a .= ",'".$lvl_3['Nombre']."'" ;
-									$a .= ",'".$lvl_3['Marca']."'" ;
-									$a .= ",'".$lvl_3['Modelo']."'" ;
-									$a .= ",'".$lvl_3['AnoFab']."'" ;
-									$a .= ",'".$lvl_3['Serie']."'" ; 
-									$a .= ",'".$lvl_3['idLicitacion']."'" ; 
-									$a .= ",'".$lvl_3['tabla']."'" ; 
-									$a .= ",'".$lvl_3['table_value']."'" ; 
-									$a .= ",'".$lvl_3['Direccion_img']."'" ; 
-									$a .= ",'".$lvl_3['idSubTipo']."'" ; 
-									$a .= ",'".$lvl_3['Grasa_inicial']."'" ; 
-									$a .= ",'".$lvl_3['Grasa_relubricacion']."'" ; 
-									$a .= ",'".$lvl_3['Aceite']."'" ; 
-									$a .= ",'".$lvl_3['Cantidad']."'" ; 
-									$a .= ",'".$lvl_3['idUml']."'" ; 
-									$a .= ",'".$lvl_3['Frecuencia']."'" ; 
-									$a .= ",'".$lvl_3['idFrecuencia']."'" ; 
-									$a .= ",'".$lvl_3['idProducto']."'" ; 
-									$a .= ",'".$lvl_3['Saf']."'" ; 
-									$a .= ",'".$lvl_3['Numero']."'" ; 
-					 
+									$SIS_data  = "'".$id_lvl_2."'" ;          
+									$SIS_data .= ",'".$id_lvl_1."'" ; 
+									$SIS_data .= ",'".$lvl_3['idSistema']."'" ; 
+									$SIS_data .= ",'".$maquina_id."'" ; 
+									$SIS_data .= ",'".$lvl_3['idUtilizable']."'" ;
+									$SIS_data .= ",'".$lvl_3['Codigo']."'" ;
+									$SIS_data .= ",'".$lvl_3['Nombre']."'" ;
+									$SIS_data .= ",'".$lvl_3['Marca']."'" ;
+									$SIS_data .= ",'".$lvl_3['Modelo']."'" ;
+									$SIS_data .= ",'".$lvl_3['AnoFab']."'" ;
+									$SIS_data .= ",'".$lvl_3['Serie']."'" ; 
+									$SIS_data .= ",'".$lvl_3['idLicitacion']."'" ; 
+									$SIS_data .= ",'".$lvl_3['tabla']."'" ; 
+									$SIS_data .= ",'".$lvl_3['table_value']."'" ; 
+									$SIS_data .= ",'".$lvl_3['Direccion_img']."'" ; 
+									$SIS_data .= ",'".$lvl_3['idSubTipo']."'" ; 
+									$SIS_data .= ",'".$lvl_3['Grasa_inicial']."'" ; 
+									$SIS_data .= ",'".$lvl_3['Grasa_relubricacion']."'" ; 
+									$SIS_data .= ",'".$lvl_3['Aceite']."'" ; 
+									$SIS_data .= ",'".$lvl_3['Cantidad']."'" ; 
+									$SIS_data .= ",'".$lvl_3['idUml']."'" ; 
+									$SIS_data .= ",'".$lvl_3['Frecuencia']."'" ; 
+									$SIS_data .= ",'".$lvl_3['idFrecuencia']."'" ; 
+									$SIS_data .= ",'".$lvl_3['idProducto']."'" ; 
+									$SIS_data .= ",'".$lvl_3['Saf']."'" ; 
+									$SIS_data .= ",'".$lvl_3['Numero']."'" ;     
+																															
 									// inserto los datos de registro en la db
-									$query  = "INSERT INTO `maquinas_listado_level_3` (idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
+									$SIS_columns = 'idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 									Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-									VALUES (".$a.")";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
-									$id_lvl_3 = mysqli_insert_id($dbConn);
-							
+									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+									$id_lvl_3 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_3', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 									//Nivel 4
 									foreach ($arrLVL_4 as $lvl_4) {
 										//Se verifica que sea el mismo sensor
 										if($lvl_3['idLevel_3']==$lvl_4['idLevel_3']){
 											
 											//Se crea la maquina
-											$a  = "'".$id_lvl_3."'" ;          
-											$a .= ",'".$id_lvl_2."'" ; 
-											$a .= ",'".$id_lvl_1."'" ; 
-											$a .= ",'".$lvl_4['idSistema']."'" ; 
-											$a .= ",'".$maquina_id."'" ; 
-											$a .= ",'".$lvl_4['idUtilizable']."'" ;
-											$a .= ",'".$lvl_4['Codigo']."'" ;
-											$a .= ",'".$lvl_4['Nombre']."'" ;
-											$a .= ",'".$lvl_4['Marca']."'" ;
-											$a .= ",'".$lvl_4['Modelo']."'" ;
-											$a .= ",'".$lvl_4['AnoFab']."'" ;
-											$a .= ",'".$lvl_4['Serie']."'" ; 
-											$a .= ",'".$lvl_4['idLicitacion']."'" ; 
-											$a .= ",'".$lvl_4['tabla']."'" ; 
-											$a .= ",'".$lvl_4['table_value']."'" ; 
-											$a .= ",'".$lvl_4['Direccion_img']."'" ; 
-											$a .= ",'".$lvl_4['idSubTipo']."'" ; 
-											$a .= ",'".$lvl_4['Grasa_inicial']."'" ; 
-											$a .= ",'".$lvl_4['Grasa_relubricacion']."'" ; 
-											$a .= ",'".$lvl_4['Aceite']."'" ; 
-											$a .= ",'".$lvl_4['Cantidad']."'" ; 
-											$a .= ",'".$lvl_4['idUml']."'" ; 
-											$a .= ",'".$lvl_4['Frecuencia']."'" ; 
-											$a .= ",'".$lvl_4['idFrecuencia']."'" ; 
-											$a .= ",'".$lvl_4['idProducto']."'" ; 
-											$a .= ",'".$lvl_4['Saf']."'" ; 
-											$a .= ",'".$lvl_4['Numero']."'" ; 
-							 
+											$SIS_data  = "'".$id_lvl_3."'" ;          
+											$SIS_data .= ",'".$id_lvl_2."'" ; 
+											$SIS_data .= ",'".$id_lvl_1."'" ; 
+											$SIS_data .= ",'".$lvl_4['idSistema']."'" ; 
+											$SIS_data .= ",'".$maquina_id."'" ; 
+											$SIS_data .= ",'".$lvl_4['idUtilizable']."'" ;
+											$SIS_data .= ",'".$lvl_4['Codigo']."'" ;
+											$SIS_data .= ",'".$lvl_4['Nombre']."'" ;
+											$SIS_data .= ",'".$lvl_4['Marca']."'" ;
+											$SIS_data .= ",'".$lvl_4['Modelo']."'" ;
+											$SIS_data .= ",'".$lvl_4['AnoFab']."'" ;
+											$SIS_data .= ",'".$lvl_4['Serie']."'" ; 
+											$SIS_data .= ",'".$lvl_4['idLicitacion']."'" ; 
+											$SIS_data .= ",'".$lvl_4['tabla']."'" ; 
+											$SIS_data .= ",'".$lvl_4['table_value']."'" ; 
+											$SIS_data .= ",'".$lvl_4['Direccion_img']."'" ; 
+											$SIS_data .= ",'".$lvl_4['idSubTipo']."'" ; 
+											$SIS_data .= ",'".$lvl_4['Grasa_inicial']."'" ; 
+											$SIS_data .= ",'".$lvl_4['Grasa_relubricacion']."'" ; 
+											$SIS_data .= ",'".$lvl_4['Aceite']."'" ; 
+											$SIS_data .= ",'".$lvl_4['Cantidad']."'" ; 
+											$SIS_data .= ",'".$lvl_4['idUml']."'" ; 
+											$SIS_data .= ",'".$lvl_4['Frecuencia']."'" ; 
+											$SIS_data .= ",'".$lvl_4['idFrecuencia']."'" ; 
+											$SIS_data .= ",'".$lvl_4['idProducto']."'" ; 
+											$SIS_data .= ",'".$lvl_4['Saf']."'" ; 
+											$SIS_data .= ",'".$lvl_4['Numero']."'" ;     
+																															
 											// inserto los datos de registro en la db
-											$query  = "INSERT INTO `maquinas_listado_level_4` (idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
+											$SIS_columns = 'idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 											Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-											VALUES (".$a.")";
-											//Consulta
-											$resultado = mysqli_query ($dbConn, $query);
-											//Si ejecuto correctamente la consulta
-											if(!$resultado){
-												//Genero numero aleatorio
-												$vardata = genera_password(8,'alfanumerico');
-												
-												//Guardo el error en una variable temporal
-												$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-												$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-												$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-												
-											}
-											$id_lvl_4 = mysqli_insert_id($dbConn);
-											
+											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+											$id_lvl_4 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_4', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 											//Nivel 5
 											foreach ($arrLVL_5 as $lvl_5) {
 												//Se verifica que sea el mismo sensor
 												if($lvl_4['idLevel_4']==$lvl_5['idLevel_4']){
 													
 													//Se crea la maquina
-													$a  = "'".$id_lvl_4."'" ;          
-													$a .= ",'".$id_lvl_3."'" ; 
-													$a .= ",'".$id_lvl_2."'" ; 
-													$a .= ",'".$id_lvl_1."'" ;  
-													$a .= ",'".$lvl_5['idSistema']."'" ; 
-													$a .= ",'".$maquina_id."'" ; 
-													$a .= ",'".$lvl_5['idUtilizable']."'" ;
-													$a .= ",'".$lvl_5['Codigo']."'" ;
-													$a .= ",'".$lvl_5['Nombre']."'" ;
-													$a .= ",'".$lvl_5['Marca']."'" ;
-													$a .= ",'".$lvl_5['Modelo']."'" ;
-													$a .= ",'".$lvl_5['AnoFab']."'" ;
-													$a .= ",'".$lvl_5['Serie']."'" ; 
-													$a .= ",'".$lvl_5['idLicitacion']."'" ; 
-													$a .= ",'".$lvl_5['tabla']."'" ; 
-													$a .= ",'".$lvl_5['table_value']."'" ; 
-													$a .= ",'".$lvl_5['Direccion_img']."'" ; 
-													$a .= ",'".$lvl_5['idSubTipo']."'" ; 
-													$a .= ",'".$lvl_5['Grasa_inicial']."'" ; 
-													$a .= ",'".$lvl_5['Grasa_relubricacion']."'" ; 
-													$a .= ",'".$lvl_5['Aceite']."'" ; 
-													$a .= ",'".$lvl_5['Cantidad']."'" ; 
-													$a .= ",'".$lvl_5['idUml']."'" ; 
-													$a .= ",'".$lvl_5['Frecuencia']."'" ; 
-													$a .= ",'".$lvl_5['idFrecuencia']."'" ; 
-													$a .= ",'".$lvl_5['idProducto']."'" ; 
-													$a .= ",'".$lvl_5['Saf']."'" ; 
-													$a .= ",'".$lvl_5['Numero']."'" ; 
-									 
+													$SIS_data  = "'".$id_lvl_4."'" ;          
+													$SIS_data .= ",'".$id_lvl_3."'" ; 
+													$SIS_data .= ",'".$id_lvl_2."'" ; 
+													$SIS_data .= ",'".$id_lvl_1."'" ;  
+													$SIS_data .= ",'".$lvl_5['idSistema']."'" ; 
+													$SIS_data .= ",'".$maquina_id."'" ; 
+													$SIS_data .= ",'".$lvl_5['idUtilizable']."'" ;
+													$SIS_data .= ",'".$lvl_5['Codigo']."'" ;
+													$SIS_data .= ",'".$lvl_5['Nombre']."'" ;
+													$SIS_data .= ",'".$lvl_5['Marca']."'" ;
+													$SIS_data .= ",'".$lvl_5['Modelo']."'" ;
+													$SIS_data .= ",'".$lvl_5['AnoFab']."'" ;
+													$SIS_data .= ",'".$lvl_5['Serie']."'" ; 
+													$SIS_data .= ",'".$lvl_5['idLicitacion']."'" ; 
+													$SIS_data .= ",'".$lvl_5['tabla']."'" ; 
+													$SIS_data .= ",'".$lvl_5['table_value']."'" ; 
+													$SIS_data .= ",'".$lvl_5['Direccion_img']."'" ; 
+													$SIS_data .= ",'".$lvl_5['idSubTipo']."'" ; 
+													$SIS_data .= ",'".$lvl_5['Grasa_inicial']."'" ; 
+													$SIS_data .= ",'".$lvl_5['Grasa_relubricacion']."'" ; 
+													$SIS_data .= ",'".$lvl_5['Aceite']."'" ; 
+													$SIS_data .= ",'".$lvl_5['Cantidad']."'" ; 
+													$SIS_data .= ",'".$lvl_5['idUml']."'" ; 
+													$SIS_data .= ",'".$lvl_5['Frecuencia']."'" ; 
+													$SIS_data .= ",'".$lvl_5['idFrecuencia']."'" ; 
+													$SIS_data .= ",'".$lvl_5['idProducto']."'" ; 
+													$SIS_data .= ",'".$lvl_5['Saf']."'" ; 
+													$SIS_data .= ",'".$lvl_5['Numero']."'" ;     
+																															
 													// inserto los datos de registro en la db
-													$query  = "INSERT INTO `maquinas_listado_level_5` (idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
+													$SIS_columns = 'idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 													Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-													VALUES (".$a.")";
-													//Consulta
-													$resultado = mysqli_query ($dbConn, $query);
-													//Si ejecuto correctamente la consulta
-													if(!$resultado){
-														//Genero numero aleatorio
-														$vardata = genera_password(8,'alfanumerico');
-														
-														//Guardo el error en una variable temporal
-														$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-														$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-														$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-														
-													}
-													$id_lvl_5 = mysqli_insert_id($dbConn);
-													
+													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+													$id_lvl_5 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_5', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 													//Nivel 6
 													foreach ($arrLVL_6 as $lvl_6) {
 														//Se verifica que sea el mismo sensor
 														if($lvl_5['idLevel_5']==$lvl_6['idLevel_5']){
 															
 															//Se crea la maquina
-															$a  = "'".$id_lvl_5."'" ;          
-															$a .= ",'".$id_lvl_4."'" ; 
-															$a .= ",'".$id_lvl_3."'" ; 
-															$a .= ",'".$id_lvl_2."'" ; 
-															$a .= ",'".$id_lvl_1."'" ;  
-															$a .= ",'".$lvl_6['idSistema']."'" ; 
-															$a .= ",'".$maquina_id."'" ; 
-															$a .= ",'".$lvl_6['idUtilizable']."'" ;
-															$a .= ",'".$lvl_6['Codigo']."'" ;
-															$a .= ",'".$lvl_6['Nombre']."'" ;
-															$a .= ",'".$lvl_6['Marca']."'" ;
-															$a .= ",'".$lvl_6['Modelo']."'" ;
-															$a .= ",'".$lvl_6['AnoFab']."'" ;
-															$a .= ",'".$lvl_6['Serie']."'" ; 
-															$a .= ",'".$lvl_6['idLicitacion']."'" ; 
-															$a .= ",'".$lvl_6['tabla']."'" ; 
-															$a .= ",'".$lvl_6['table_value']."'" ; 
-															$a .= ",'".$lvl_6['Direccion_img']."'" ; 
-															$a .= ",'".$lvl_6['idSubTipo']."'" ; 
-															$a .= ",'".$lvl_6['Grasa_inicial']."'" ; 
-															$a .= ",'".$lvl_6['Grasa_relubricacion']."'" ; 
-															$a .= ",'".$lvl_6['Aceite']."'" ; 
-															$a .= ",'".$lvl_6['Cantidad']."'" ; 
-															$a .= ",'".$lvl_6['idUml']."'" ; 
-															$a .= ",'".$lvl_6['Frecuencia']."'" ; 
-															$a .= ",'".$lvl_6['idFrecuencia']."'" ; 
-															$a .= ",'".$lvl_6['idProducto']."'" ; 
-															$a .= ",'".$lvl_6['Saf']."'" ; 
-															$a .= ",'".$lvl_6['Numero']."'" ; 
-											 
+															$SIS_data  = "'".$id_lvl_5."'" ;          
+															$SIS_data .= ",'".$id_lvl_4."'" ; 
+															$SIS_data .= ",'".$id_lvl_3."'" ; 
+															$SIS_data .= ",'".$id_lvl_2."'" ; 
+															$SIS_data .= ",'".$id_lvl_1."'" ;  
+															$SIS_data .= ",'".$lvl_6['idSistema']."'" ; 
+															$SIS_data .= ",'".$maquina_id."'" ; 
+															$SIS_data .= ",'".$lvl_6['idUtilizable']."'" ;
+															$SIS_data .= ",'".$lvl_6['Codigo']."'" ;
+															$SIS_data .= ",'".$lvl_6['Nombre']."'" ;
+															$SIS_data .= ",'".$lvl_6['Marca']."'" ;
+															$SIS_data .= ",'".$lvl_6['Modelo']."'" ;
+															$SIS_data .= ",'".$lvl_6['AnoFab']."'" ;
+															$SIS_data .= ",'".$lvl_6['Serie']."'" ; 
+															$SIS_data .= ",'".$lvl_6['idLicitacion']."'" ; 
+															$SIS_data .= ",'".$lvl_6['tabla']."'" ; 
+															$SIS_data .= ",'".$lvl_6['table_value']."'" ; 
+															$SIS_data .= ",'".$lvl_6['Direccion_img']."'" ; 
+															$SIS_data .= ",'".$lvl_6['idSubTipo']."'" ; 
+															$SIS_data .= ",'".$lvl_6['Grasa_inicial']."'" ; 
+															$SIS_data .= ",'".$lvl_6['Grasa_relubricacion']."'" ; 
+															$SIS_data .= ",'".$lvl_6['Aceite']."'" ; 
+															$SIS_data .= ",'".$lvl_6['Cantidad']."'" ; 
+															$SIS_data .= ",'".$lvl_6['idUml']."'" ; 
+															$SIS_data .= ",'".$lvl_6['Frecuencia']."'" ; 
+															$SIS_data .= ",'".$lvl_6['idFrecuencia']."'" ; 
+															$SIS_data .= ",'".$lvl_6['idProducto']."'" ; 
+															$SIS_data .= ",'".$lvl_6['Saf']."'" ; 
+															$SIS_data .= ",'".$lvl_6['Numero']."'" ;    
+																															
 															// inserto los datos de registro en la db
-															$query  = "INSERT INTO `maquinas_listado_level_6` (idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
+															$SIS_columns = 'idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 															Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-															VALUES (".$a.")";
-															//Consulta
-															$resultado = mysqli_query ($dbConn, $query);
-															//Si ejecuto correctamente la consulta
-															if(!$resultado){
-																//Genero numero aleatorio
-																$vardata = genera_password(8,'alfanumerico');
-																
-																//Guardo el error en una variable temporal
-																$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																
-															}
-															$id_lvl_6 = mysqli_insert_id($dbConn);
-															
+															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+															$id_lvl_6 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_6', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 															//Nivel 7
 															foreach ($arrLVL_7 as $lvl_7) {
 																//Se verifica que sea el mismo sensor
 																if($lvl_6['idLevel_6']==$lvl_7['idLevel_6']){
 																	
 																	//Se crea la maquina
-																	$a  = "'".$id_lvl_6."'" ;          
-																	$a .= ",'".$id_lvl_5."'" ; 
-																	$a .= ",'".$id_lvl_4."'" ; 
-																	$a .= ",'".$id_lvl_3."'" ; 
-																	$a .= ",'".$id_lvl_2."'" ; 
-																	$a .= ",'".$id_lvl_1."'" ; 
-																	$a .= ",'".$lvl_7['idSistema']."'" ; 
-																	$a .= ",'".$maquina_id."'" ; 
-																	$a .= ",'".$lvl_7['idUtilizable']."'" ;
-																	$a .= ",'".$lvl_7['Codigo']."'" ;
-																	$a .= ",'".$lvl_7['Nombre']."'" ;
-																	$a .= ",'".$lvl_7['Marca']."'" ;
-																	$a .= ",'".$lvl_7['Modelo']."'" ;
-																	$a .= ",'".$lvl_7['AnoFab']."'" ;
-																	$a .= ",'".$lvl_7['Serie']."'" ; 
-																	$a .= ",'".$lvl_7['idLicitacion']."'" ; 
-																	$a .= ",'".$lvl_7['tabla']."'" ; 
-																	$a .= ",'".$lvl_7['table_value']."'" ; 
-																	$a .= ",'".$lvl_7['Direccion_img']."'" ; 
-																	$a .= ",'".$lvl_7['idSubTipo']."'" ; 
-																	$a .= ",'".$lvl_7['Grasa_inicial']."'" ; 
-																	$a .= ",'".$lvl_7['Grasa_relubricacion']."'" ; 
-																	$a .= ",'".$lvl_7['Aceite']."'" ; 
-																	$a .= ",'".$lvl_7['Cantidad']."'" ; 
-																	$a .= ",'".$lvl_7['idUml']."'" ; 
-																	$a .= ",'".$lvl_7['Frecuencia']."'" ; 
-																	$a .= ",'".$lvl_7['idFrecuencia']."'" ; 
-																	$a .= ",'".$lvl_7['idProducto']."'" ; 
-																	$a .= ",'".$lvl_7['Saf']."'" ; 
-																	$a .= ",'".$lvl_7['Numero']."'" ; 
-													 
+																	$SIS_data  = "'".$id_lvl_6."'" ;          
+																	$SIS_data .= ",'".$id_lvl_5."'" ; 
+																	$SIS_data .= ",'".$id_lvl_4."'" ; 
+																	$SIS_data .= ",'".$id_lvl_3."'" ; 
+																	$SIS_data .= ",'".$id_lvl_2."'" ; 
+																	$SIS_data .= ",'".$id_lvl_1."'" ; 
+																	$SIS_data .= ",'".$lvl_7['idSistema']."'" ; 
+																	$SIS_data .= ",'".$maquina_id."'" ; 
+																	$SIS_data .= ",'".$lvl_7['idUtilizable']."'" ;
+																	$SIS_data .= ",'".$lvl_7['Codigo']."'" ;
+																	$SIS_data .= ",'".$lvl_7['Nombre']."'" ;
+																	$SIS_data .= ",'".$lvl_7['Marca']."'" ;
+																	$SIS_data .= ",'".$lvl_7['Modelo']."'" ;
+																	$SIS_data .= ",'".$lvl_7['AnoFab']."'" ;
+																	$SIS_data .= ",'".$lvl_7['Serie']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['idLicitacion']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['tabla']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['table_value']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['Direccion_img']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['idSubTipo']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['Grasa_inicial']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['Grasa_relubricacion']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['Aceite']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['Cantidad']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['idUml']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['Frecuencia']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['idFrecuencia']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['idProducto']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['Saf']."'" ; 
+																	$SIS_data .= ",'".$lvl_7['Numero']."'" ;    
+																															
 																	// inserto los datos de registro en la db
-																	$query  = "INSERT INTO `maquinas_listado_level_7` (idLevel_6,
+																	$SIS_columns = 'idLevel_6,
 																	idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 																	Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																	VALUES (".$a.")";
-																	//Consulta
-																	$resultado = mysqli_query ($dbConn, $query);
-																	//Si ejecuto correctamente la consulta
-																	if(!$resultado){
-																		//Genero numero aleatorio
-																		$vardata = genera_password(8,'alfanumerico');
-																		
-																		//Guardo el error en una variable temporal
-																		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																		
-																	}
-																	$id_lvl_7 = mysqli_insert_id($dbConn);
-																	
+																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+																	$id_lvl_7 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_7', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 																	//Nivel 8
 																	foreach ($arrLVL_8 as $lvl_8) {
 																		//Se verifica que sea el mismo sensor
 																		if($lvl_7['idLevel_7']==$lvl_8['idLevel_7']){
 																			
 																			//Se crea la maquina
-																			$a  = "'".$id_lvl_7."'" ;          
-																			$a .= ",'".$id_lvl_6."'" ; 
-																			$a .= ",'".$id_lvl_5."'" ; 
-																			$a .= ",'".$id_lvl_4."'" ; 
-																			$a .= ",'".$id_lvl_3."'" ; 
-																			$a .= ",'".$id_lvl_2."'" ; 
-																			$a .= ",'".$id_lvl_1."'" ; 
-																			$a .= ",'".$lvl_8['idSistema']."'" ; 
-																			$a .= ",'".$maquina_id."'" ; 
-																			$a .= ",'".$lvl_8['idUtilizable']."'" ;
-																			$a .= ",'".$lvl_8['Codigo']."'" ;
-																			$a .= ",'".$lvl_8['Nombre']."'" ;
-																			$a .= ",'".$lvl_8['Marca']."'" ;
-																			$a .= ",'".$lvl_8['Modelo']."'" ;
-																			$a .= ",'".$lvl_8['AnoFab']."'" ;
-																			$a .= ",'".$lvl_8['Serie']."'" ; 
-																			$a .= ",'".$lvl_8['idLicitacion']."'" ; 
-																			$a .= ",'".$lvl_8['tabla']."'" ; 
-																			$a .= ",'".$lvl_8['table_value']."'" ; 
-																			$a .= ",'".$lvl_8['Direccion_img']."'" ; 
-																			$a .= ",'".$lvl_8['idSubTipo']."'" ; 
-																			$a .= ",'".$lvl_8['Grasa_inicial']."'" ; 
-																			$a .= ",'".$lvl_8['Grasa_relubricacion']."'" ; 
-																			$a .= ",'".$lvl_8['Aceite']."'" ; 
-																			$a .= ",'".$lvl_8['Cantidad']."'" ; 
-																			$a .= ",'".$lvl_8['idUml']."'" ; 
-																			$a .= ",'".$lvl_8['Frecuencia']."'" ; 
-																			$a .= ",'".$lvl_8['idFrecuencia']."'" ; 
-																			$a .= ",'".$lvl_8['idProducto']."'" ; 
-																			$a .= ",'".$lvl_8['Saf']."'" ; 
-																			$a .= ",'".$lvl_8['Numero']."'" ; 
-															 
+																			$SIS_data  = "'".$id_lvl_7."'" ;          
+																			$SIS_data .= ",'".$id_lvl_6."'" ; 
+																			$SIS_data .= ",'".$id_lvl_5."'" ; 
+																			$SIS_data .= ",'".$id_lvl_4."'" ; 
+																			$SIS_data .= ",'".$id_lvl_3."'" ; 
+																			$SIS_data .= ",'".$id_lvl_2."'" ; 
+																			$SIS_data .= ",'".$id_lvl_1."'" ; 
+																			$SIS_data .= ",'".$lvl_8['idSistema']."'" ; 
+																			$SIS_data .= ",'".$maquina_id."'" ; 
+																			$SIS_data .= ",'".$lvl_8['idUtilizable']."'" ;
+																			$SIS_data .= ",'".$lvl_8['Codigo']."'" ;
+																			$SIS_data .= ",'".$lvl_8['Nombre']."'" ;
+																			$SIS_data .= ",'".$lvl_8['Marca']."'" ;
+																			$SIS_data .= ",'".$lvl_8['Modelo']."'" ;
+																			$SIS_data .= ",'".$lvl_8['AnoFab']."'" ;
+																			$SIS_data .= ",'".$lvl_8['Serie']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['idLicitacion']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['tabla']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['table_value']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['Direccion_img']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['idSubTipo']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['Grasa_inicial']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['Grasa_relubricacion']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['Aceite']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['Cantidad']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['idUml']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['Frecuencia']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['idFrecuencia']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['idProducto']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['Saf']."'" ; 
+																			$SIS_data .= ",'".$lvl_8['Numero']."'" ;   
+																															
 																			// inserto los datos de registro en la db
-																			$query  = "INSERT INTO `maquinas_listado_level_8` (idLevel_7,idLevel_6,
+																			$SIS_columns = 'idLevel_7,idLevel_6,
 																			idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 																			Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																			VALUES (".$a.")";
-																			//Consulta
-																			$resultado = mysqli_query ($dbConn, $query);
-																			//Si ejecuto correctamente la consulta
-																			if(!$resultado){
-																				//Genero numero aleatorio
-																				$vardata = genera_password(8,'alfanumerico');
-																				
-																				//Guardo el error en una variable temporal
-																				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																				
-																			}
-																			$id_lvl_8 = mysqli_insert_id($dbConn);
-																			
+																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+																			$id_lvl_8 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_8', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 																			//Nivel 9
 																			foreach ($arrLVL_9 as $lvl_9) {
 																				//Se verifica que sea el mismo sensor
 																				if($lvl_8['idLevel_8']==$lvl_9['idLevel_8']){
 																					
 																					//Se crea la maquina
-																					$a  = "'".$id_lvl_8."'" ;          
-																					$a .= ",'".$id_lvl_7."'" ; 
-																					$a .= ",'".$id_lvl_6."'" ; 
-																					$a .= ",'".$id_lvl_5."'" ; 
-																					$a .= ",'".$id_lvl_4."'" ; 
-																					$a .= ",'".$id_lvl_3."'" ; 
-																					$a .= ",'".$id_lvl_2."'" ; 
-																					$a .= ",'".$id_lvl_1."'" ;
-																					$a .= ",'".$lvl_9['idSistema']."'" ; 
-																					$a .= ",'".$maquina_id."'" ; 
-																					$a .= ",'".$lvl_9['idUtilizable']."'" ;
-																					$a .= ",'".$lvl_9['Codigo']."'" ;
-																					$a .= ",'".$lvl_9['Nombre']."'" ;
-																					$a .= ",'".$lvl_9['Marca']."'" ;
-																					$a .= ",'".$lvl_9['Modelo']."'" ;
-																					$a .= ",'".$lvl_9['AnoFab']."'" ;
-																					$a .= ",'".$lvl_9['Serie']."'" ; 
-																					$a .= ",'".$lvl_9['idLicitacion']."'" ; 
-																					$a .= ",'".$lvl_9['tabla']."'" ; 
-																					$a .= ",'".$lvl_9['table_value']."'" ; 
-																					$a .= ",'".$lvl_9['Direccion_img']."'" ; 
-																					$a .= ",'".$lvl_9['idSubTipo']."'" ; 
-																					$a .= ",'".$lvl_9['Grasa_inicial']."'" ; 
-																					$a .= ",'".$lvl_9['Grasa_relubricacion']."'" ; 
-																					$a .= ",'".$lvl_9['Aceite']."'" ; 
-																					$a .= ",'".$lvl_9['Cantidad']."'" ; 
-																					$a .= ",'".$lvl_9['idUml']."'" ; 
-																					$a .= ",'".$lvl_9['Frecuencia']."'" ; 
-																					$a .= ",'".$lvl_9['idFrecuencia']."'" ; 
-																					$a .= ",'".$lvl_9['idProducto']."'" ; 
-																					$a .= ",'".$lvl_9['Saf']."'" ; 
-																					$a .= ",'".$lvl_9['Numero']."'" ; 
-																	 
+																					$SIS_data  = "'".$id_lvl_8."'" ;          
+																					$SIS_data .= ",'".$id_lvl_7."'" ; 
+																					$SIS_data .= ",'".$id_lvl_6."'" ; 
+																					$SIS_data .= ",'".$id_lvl_5."'" ; 
+																					$SIS_data .= ",'".$id_lvl_4."'" ; 
+																					$SIS_data .= ",'".$id_lvl_3."'" ; 
+																					$SIS_data .= ",'".$id_lvl_2."'" ; 
+																					$SIS_data .= ",'".$id_lvl_1."'" ;
+																					$SIS_data .= ",'".$lvl_9['idSistema']."'" ; 
+																					$SIS_data .= ",'".$maquina_id."'" ; 
+																					$SIS_data .= ",'".$lvl_9['idUtilizable']."'" ;
+																					$SIS_data .= ",'".$lvl_9['Codigo']."'" ;
+																					$SIS_data .= ",'".$lvl_9['Nombre']."'" ;
+																					$SIS_data .= ",'".$lvl_9['Marca']."'" ;
+																					$SIS_data .= ",'".$lvl_9['Modelo']."'" ;
+																					$SIS_data .= ",'".$lvl_9['AnoFab']."'" ;
+																					$SIS_data .= ",'".$lvl_9['Serie']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['idLicitacion']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['tabla']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['table_value']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['Direccion_img']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['idSubTipo']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['Grasa_inicial']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['Grasa_relubricacion']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['Aceite']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['Cantidad']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['idUml']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['Frecuencia']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['idFrecuencia']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['idProducto']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['Saf']."'" ; 
+																					$SIS_data .= ",'".$lvl_9['Numero']."'" ;   
+																															
 																					// inserto los datos de registro en la db
-																					$query  = "INSERT INTO `maquinas_listado_level_9` (idLevel_8,idLevel_7,idLevel_6,
+																					$SIS_columns = 'idLevel_8,idLevel_7,idLevel_6,
 																					idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 																					Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																					VALUES (".$a.")";
-																					//Consulta
-																					$resultado = mysqli_query ($dbConn, $query);
-																					//Si ejecuto correctamente la consulta
-																					if(!$resultado){
-																						//Genero numero aleatorio
-																						$vardata = genera_password(8,'alfanumerico');
-																						
-																						//Guardo el error en una variable temporal
-																						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																						
-																					}
-																					$id_lvl_9 = mysqli_insert_id($dbConn);
-																					
+																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+																					$id_lvl_9 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_9', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 																					//Nivel 10
 																					foreach ($arrLVL_10 as $lvl_10) {
 																						//Se verifica que sea el mismo sensor
 																						if($lvl_9['idLevel_9']==$lvl_10['idLevel_9']){
 																							
 																							//Se crea la maquina
-																							$a  = "'".$id_lvl_9."'" ;          
-																							$a .= ",'".$id_lvl_8."'" ; 
-																							$a .= ",'".$id_lvl_7."'" ; 
-																							$a .= ",'".$id_lvl_6."'" ; 
-																							$a .= ",'".$id_lvl_5."'" ; 
-																							$a .= ",'".$id_lvl_4."'" ; 
-																							$a .= ",'".$id_lvl_3."'" ; 
-																							$a .= ",'".$id_lvl_2."'" ; 
-																							$a .= ",'".$id_lvl_1."'" ;
-																							$a .= ",'".$lvl_10['idSistema']."'" ; 
-																							$a .= ",'".$maquina_id."'" ; 
-																							$a .= ",'".$lvl_10['idUtilizable']."'" ;
-																							$a .= ",'".$lvl_10['Codigo']."'" ;
-																							$a .= ",'".$lvl_10['Nombre']."'" ;
-																							$a .= ",'".$lvl_10['Marca']."'" ;
-																							$a .= ",'".$lvl_10['Modelo']."'" ;
-																							$a .= ",'".$lvl_10['AnoFab']."'" ;
-																							$a .= ",'".$lvl_10['Serie']."'" ; 
-																							$a .= ",'".$lvl_10['idLicitacion']."'" ; 
-																							$a .= ",'".$lvl_10['tabla']."'" ; 
-																							$a .= ",'".$lvl_10['table_value']."'" ; 
-																							$a .= ",'".$lvl_10['Direccion_img']."'" ; 
-																							$a .= ",'".$lvl_10['idSubTipo']."'" ; 
-																							$a .= ",'".$lvl_10['Grasa_inicial']."'" ; 
-																							$a .= ",'".$lvl_10['Grasa_relubricacion']."'" ; 
-																							$a .= ",'".$lvl_10['Aceite']."'" ; 
-																							$a .= ",'".$lvl_10['Cantidad']."'" ; 
-																							$a .= ",'".$lvl_10['idUml']."'" ; 
-																							$a .= ",'".$lvl_10['Frecuencia']."'" ; 
-																							$a .= ",'".$lvl_10['idFrecuencia']."'" ; 
-																							$a .= ",'".$lvl_10['idProducto']."'" ; 
-																							$a .= ",'".$lvl_10['Saf']."'" ; 
-																							$a .= ",'".$lvl_10['Numero']."'" ; 
-																			 
+																							$SIS_data  = "'".$id_lvl_9."'" ;          
+																							$SIS_data .= ",'".$id_lvl_8."'" ; 
+																							$SIS_data .= ",'".$id_lvl_7."'" ; 
+																							$SIS_data .= ",'".$id_lvl_6."'" ; 
+																							$SIS_data .= ",'".$id_lvl_5."'" ; 
+																							$SIS_data .= ",'".$id_lvl_4."'" ; 
+																							$SIS_data .= ",'".$id_lvl_3."'" ; 
+																							$SIS_data .= ",'".$id_lvl_2."'" ; 
+																							$SIS_data .= ",'".$id_lvl_1."'" ;
+																							$SIS_data .= ",'".$lvl_10['idSistema']."'" ; 
+																							$SIS_data .= ",'".$maquina_id."'" ; 
+																							$SIS_data .= ",'".$lvl_10['idUtilizable']."'" ;
+																							$SIS_data .= ",'".$lvl_10['Codigo']."'" ;
+																							$SIS_data .= ",'".$lvl_10['Nombre']."'" ;
+																							$SIS_data .= ",'".$lvl_10['Marca']."'" ;
+																							$SIS_data .= ",'".$lvl_10['Modelo']."'" ;
+																							$SIS_data .= ",'".$lvl_10['AnoFab']."'" ;
+																							$SIS_data .= ",'".$lvl_10['Serie']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['idLicitacion']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['tabla']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['table_value']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['Direccion_img']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['idSubTipo']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['Grasa_inicial']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['Grasa_relubricacion']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['Aceite']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['Cantidad']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['idUml']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['Frecuencia']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['idFrecuencia']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['idProducto']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['Saf']."'" ; 
+																							$SIS_data .= ",'".$lvl_10['Numero']."'" ;    
+																															
 																							// inserto los datos de registro en la db
-																							$query  = "INSERT INTO `maquinas_listado_level_10` (idLevel_9,idLevel_8,idLevel_7,idLevel_6,
+																							$SIS_columns = 'idLevel_9,idLevel_8,idLevel_7,idLevel_6,
 																							idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 																							Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																							VALUES (".$a.")";
-																							//Consulta
-																							$resultado = mysqli_query ($dbConn, $query);
-																							//Si ejecuto correctamente la consulta
-																							if(!$resultado){
-																								//Genero numero aleatorio
-																								$vardata = genera_password(8,'alfanumerico');
-																								
-																								//Guardo el error en una variable temporal
-																								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																								
-																							}
-																							$id_lvl_10 = mysqli_insert_id($dbConn);
-																							
+																							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+																							$id_lvl_10 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_10', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 																							//Nivel 11
 																							foreach ($arrLVL_11 as $lvl_11) {
 																								//Se verifica que sea el mismo sensor
 																								if($lvl_10['idLevel_10']==$lvl_11['idLevel_10']){
 																									
 																									//Se crea la maquina
-																									$a  = "'".$id_lvl_10."'" ;          
-																									$a .= ",'".$id_lvl_9."'" ; 
-																									$a .= ",'".$id_lvl_8."'" ; 
-																									$a .= ",'".$id_lvl_7."'" ; 
-																									$a .= ",'".$id_lvl_6."'" ; 
-																									$a .= ",'".$id_lvl_5."'" ; 
-																									$a .= ",'".$id_lvl_4."'" ; 
-																									$a .= ",'".$id_lvl_3."'" ; 
-																									$a .= ",'".$id_lvl_2."'" ; 
-																									$a .= ",'".$id_lvl_1."'" ; 
-																									$a .= ",'".$lvl_11['idSistema']."'" ; 
-																									$a .= ",'".$maquina_id."'" ; 
-																									$a .= ",'".$lvl_11['idUtilizable']."'" ;
-																									$a .= ",'".$lvl_11['Codigo']."'" ;
-																									$a .= ",'".$lvl_11['Nombre']."'" ;
-																									$a .= ",'".$lvl_11['Marca']."'" ;
-																									$a .= ",'".$lvl_11['Modelo']."'" ;
-																									$a .= ",'".$lvl_11['AnoFab']."'" ;
-																									$a .= ",'".$lvl_11['Serie']."'" ; 
-																									$a .= ",'".$lvl_11['idLicitacion']."'" ; 
-																									$a .= ",'".$lvl_11['tabla']."'" ; 
-																									$a .= ",'".$lvl_11['table_value']."'" ; 
-																									$a .= ",'".$lvl_11['Direccion_img']."'" ; 
-																									$a .= ",'".$lvl_11['idSubTipo']."'" ; 
-																									$a .= ",'".$lvl_11['Grasa_inicial']."'" ; 
-																									$a .= ",'".$lvl_11['Grasa_relubricacion']."'" ; 
-																									$a .= ",'".$lvl_11['Aceite']."'" ; 
-																									$a .= ",'".$lvl_11['Cantidad']."'" ; 
-																									$a .= ",'".$lvl_11['idUml']."'" ; 
-																									$a .= ",'".$lvl_11['Frecuencia']."'" ; 
-																									$a .= ",'".$lvl_11['idFrecuencia']."'" ; 
-																									$a .= ",'".$lvl_11['idProducto']."'" ; 
-																									$a .= ",'".$lvl_11['Saf']."'" ; 
-																									$a .= ",'".$lvl_11['Numero']."'" ; 
-																					 
+																									$SIS_data  = "'".$id_lvl_10."'" ;          
+																									$SIS_data .= ",'".$id_lvl_9."'" ; 
+																									$SIS_data .= ",'".$id_lvl_8."'" ; 
+																									$SIS_data .= ",'".$id_lvl_7."'" ; 
+																									$SIS_data .= ",'".$id_lvl_6."'" ; 
+																									$SIS_data .= ",'".$id_lvl_5."'" ; 
+																									$SIS_data .= ",'".$id_lvl_4."'" ; 
+																									$SIS_data .= ",'".$id_lvl_3."'" ; 
+																									$SIS_data .= ",'".$id_lvl_2."'" ; 
+																									$SIS_data .= ",'".$id_lvl_1."'" ; 
+																									$SIS_data .= ",'".$lvl_11['idSistema']."'" ; 
+																									$SIS_data .= ",'".$maquina_id."'" ; 
+																									$SIS_data .= ",'".$lvl_11['idUtilizable']."'" ;
+																									$SIS_data .= ",'".$lvl_11['Codigo']."'" ;
+																									$SIS_data .= ",'".$lvl_11['Nombre']."'" ;
+																									$SIS_data .= ",'".$lvl_11['Marca']."'" ;
+																									$SIS_data .= ",'".$lvl_11['Modelo']."'" ;
+																									$SIS_data .= ",'".$lvl_11['AnoFab']."'" ;
+																									$SIS_data .= ",'".$lvl_11['Serie']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['idLicitacion']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['tabla']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['table_value']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['Direccion_img']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['idSubTipo']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['Grasa_inicial']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['Grasa_relubricacion']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['Aceite']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['Cantidad']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['idUml']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['Frecuencia']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['idFrecuencia']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['idProducto']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['Saf']."'" ; 
+																									$SIS_data .= ",'".$lvl_11['Numero']."'" ;   
+																															
 																									// inserto los datos de registro en la db
-																									$query  = "INSERT INTO `maquinas_listado_level_11` (idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
+																									$SIS_columns = 'idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
 																									idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 																									Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																									VALUES (".$a.")";
-																									//Consulta
-																									$resultado = mysqli_query ($dbConn, $query);
-																									//Si ejecuto correctamente la consulta
-																									if(!$resultado){
-																										//Genero numero aleatorio
-																										$vardata = genera_password(8,'alfanumerico');
-																										
-																										//Guardo el error en una variable temporal
-																										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																										
-																									}
-																									$id_lvl_11 = mysqli_insert_id($dbConn);
-																									
+																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+																									$id_lvl_11 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_11', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 																									//Nivel 12
 																									foreach ($arrLVL_12 as $lvl_12) {
 																										//Se verifica que sea el mismo sensor
 																										if($lvl_11['idLevel_11']==$lvl_12['idLevel_11']){
 																											
 																											//Se crea la maquina
-																											$a  = "'".$id_lvl_11."'" ;          
-																											$a .= ",'".$id_lvl_10."'" ; 
-																											$a .= ",'".$id_lvl_9."'" ; 
-																											$a .= ",'".$id_lvl_8."'" ; 
-																											$a .= ",'".$id_lvl_7."'" ; 
-																											$a .= ",'".$id_lvl_6."'" ; 
-																											$a .= ",'".$id_lvl_5."'" ; 
-																											$a .= ",'".$id_lvl_4."'" ; 
-																											$a .= ",'".$id_lvl_3."'" ; 
-																											$a .= ",'".$id_lvl_2."'" ; 
-																											$a .= ",'".$id_lvl_1."'" ; 
-																											$a .= ",'".$lvl_12['idSistema']."'" ; 
-																											$a .= ",'".$maquina_id."'" ; 
-																											$a .= ",'".$lvl_12['idUtilizable']."'" ;
-																											$a .= ",'".$lvl_12['Codigo']."'" ;
-																											$a .= ",'".$lvl_12['Nombre']."'" ;
-																											$a .= ",'".$lvl_12['Marca']."'" ;
-																											$a .= ",'".$lvl_12['Modelo']."'" ;
-																											$a .= ",'".$lvl_12['AnoFab']."'" ;
-																											$a .= ",'".$lvl_12['Serie']."'" ; 
-																											$a .= ",'".$lvl_12['idLicitacion']."'" ; 
-																											$a .= ",'".$lvl_12['tabla']."'" ; 
-																											$a .= ",'".$lvl_12['table_value']."'" ; 
-																											$a .= ",'".$lvl_12['Direccion_img']."'" ; 
-																											$a .= ",'".$lvl_12['idSubTipo']."'" ; 
-																											$a .= ",'".$lvl_12['Grasa_inicial']."'" ; 
-																											$a .= ",'".$lvl_12['Grasa_relubricacion']."'" ; 
-																											$a .= ",'".$lvl_12['Aceite']."'" ; 
-																											$a .= ",'".$lvl_12['Cantidad']."'" ; 
-																											$a .= ",'".$lvl_12['idUml']."'" ; 
-																											$a .= ",'".$lvl_12['Frecuencia']."'" ; 
-																											$a .= ",'".$lvl_12['idFrecuencia']."'" ; 
-																											$a .= ",'".$lvl_12['idProducto']."'" ; 
-																											$a .= ",'".$lvl_12['Saf']."'" ; 
-																											$a .= ",'".$lvl_12['Numero']."'" ; 
-																							 
+																											$SIS_data  = "'".$id_lvl_11."'" ;          
+																											$SIS_data .= ",'".$id_lvl_10."'" ; 
+																											$SIS_data .= ",'".$id_lvl_9."'" ; 
+																											$SIS_data .= ",'".$id_lvl_8."'" ; 
+																											$SIS_data .= ",'".$id_lvl_7."'" ; 
+																											$SIS_data .= ",'".$id_lvl_6."'" ; 
+																											$SIS_data .= ",'".$id_lvl_5."'" ; 
+																											$SIS_data .= ",'".$id_lvl_4."'" ; 
+																											$SIS_data .= ",'".$id_lvl_3."'" ; 
+																											$SIS_data .= ",'".$id_lvl_2."'" ; 
+																											$SIS_data .= ",'".$id_lvl_1."'" ; 
+																											$SIS_data .= ",'".$lvl_12['idSistema']."'" ; 
+																											$SIS_data .= ",'".$maquina_id."'" ; 
+																											$SIS_data .= ",'".$lvl_12['idUtilizable']."'" ;
+																											$SIS_data .= ",'".$lvl_12['Codigo']."'" ;
+																											$SIS_data .= ",'".$lvl_12['Nombre']."'" ;
+																											$SIS_data .= ",'".$lvl_12['Marca']."'" ;
+																											$SIS_data .= ",'".$lvl_12['Modelo']."'" ;
+																											$SIS_data .= ",'".$lvl_12['AnoFab']."'" ;
+																											$SIS_data .= ",'".$lvl_12['Serie']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['idLicitacion']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['tabla']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['table_value']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['Direccion_img']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['idSubTipo']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['Grasa_inicial']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['Grasa_relubricacion']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['Aceite']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['Cantidad']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['idUml']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['Frecuencia']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['idFrecuencia']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['idProducto']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['Saf']."'" ; 
+																											$SIS_data .= ",'".$lvl_12['Numero']."'" ;  
+																															
 																											// inserto los datos de registro en la db
-																											$query  = "INSERT INTO `maquinas_listado_level_12` (idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
+																											$SIS_columns = 'idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
 																											idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 																											Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																											VALUES (".$a.")";
-																											//Consulta
-																											$resultado = mysqli_query ($dbConn, $query);
-																											//Si ejecuto correctamente la consulta
-																											if(!$resultado){
-																												//Genero numero aleatorio
-																												$vardata = genera_password(8,'alfanumerico');
-																												
-																												//Guardo el error en una variable temporal
-																												$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																												$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																												$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																												
-																											}
-																											$id_lvl_12 = mysqli_insert_id($dbConn);
-																											
+																											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+																											$id_lvl_12 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_12', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 																											//Nivel 13
 																											foreach ($arrLVL_13 as $lvl_13) {
 																												//Se verifica que sea el mismo sensor
 																												if($lvl_12['idLevel_12']==$lvl_13['idLevel_12']){
 																													
 																													//Se crea la maquina
-																													$a  = "'".$id_lvl_12."'" ;          
-																													$a .= ",'".$id_lvl_11."'" ; 
-																													$a .= ",'".$id_lvl_10."'" ; 
-																													$a .= ",'".$id_lvl_9."'" ; 
-																													$a .= ",'".$id_lvl_8."'" ; 
-																													$a .= ",'".$id_lvl_7."'" ; 
-																													$a .= ",'".$id_lvl_6."'" ; 
-																													$a .= ",'".$id_lvl_5."'" ; 
-																													$a .= ",'".$id_lvl_4."'" ; 
-																													$a .= ",'".$id_lvl_3."'" ; 
-																													$a .= ",'".$id_lvl_2."'" ; 
-																													$a .= ",'".$id_lvl_1."'" ; 
-																													$a .= ",'".$lvl_13['idSistema']."'" ; 
-																													$a .= ",'".$maquina_id."'" ; 
-																													$a .= ",'".$lvl_13['idUtilizable']."'" ;
-																													$a .= ",'".$lvl_13['Codigo']."'" ;
-																													$a .= ",'".$lvl_13['Nombre']."'" ;
-																													$a .= ",'".$lvl_13['Marca']."'" ;
-																													$a .= ",'".$lvl_13['Modelo']."'" ;
-																													$a .= ",'".$lvl_13['AnoFab']."'" ;
-																													$a .= ",'".$lvl_13['Serie']."'" ; 
-																													$a .= ",'".$lvl_13['idLicitacion']."'" ; 
-																													$a .= ",'".$lvl_13['tabla']."'" ; 
-																													$a .= ",'".$lvl_13['table_value']."'" ; 
-																													$a .= ",'".$lvl_13['Direccion_img']."'" ; 
-																													$a .= ",'".$lvl_13['idSubTipo']."'" ; 
-																													$a .= ",'".$lvl_13['Grasa_inicial']."'" ; 
-																													$a .= ",'".$lvl_13['Grasa_relubricacion']."'" ; 
-																													$a .= ",'".$lvl_13['Aceite']."'" ; 
-																													$a .= ",'".$lvl_13['Cantidad']."'" ; 
-																													$a .= ",'".$lvl_13['idUml']."'" ; 
-																													$a .= ",'".$lvl_13['Frecuencia']."'" ; 
-																													$a .= ",'".$lvl_13['idFrecuencia']."'" ; 
-																													$a .= ",'".$lvl_13['idProducto']."'" ; 
-																													$a .= ",'".$lvl_13['Saf']."'" ; 
-																													$a .= ",'".$lvl_13['Numero']."'" ; 
-																									 
+																													$SIS_data  = "'".$id_lvl_12."'" ;          
+																													$SIS_data .= ",'".$id_lvl_11."'" ; 
+																													$SIS_data .= ",'".$id_lvl_10."'" ; 
+																													$SIS_data .= ",'".$id_lvl_9."'" ; 
+																													$SIS_data .= ",'".$id_lvl_8."'" ; 
+																													$SIS_data .= ",'".$id_lvl_7."'" ; 
+																													$SIS_data .= ",'".$id_lvl_6."'" ; 
+																													$SIS_data .= ",'".$id_lvl_5."'" ; 
+																													$SIS_data .= ",'".$id_lvl_4."'" ; 
+																													$SIS_data .= ",'".$id_lvl_3."'" ; 
+																													$SIS_data .= ",'".$id_lvl_2."'" ; 
+																													$SIS_data .= ",'".$id_lvl_1."'" ; 
+																													$SIS_data .= ",'".$lvl_13['idSistema']."'" ; 
+																													$SIS_data .= ",'".$maquina_id."'" ; 
+																													$SIS_data .= ",'".$lvl_13['idUtilizable']."'" ;
+																													$SIS_data .= ",'".$lvl_13['Codigo']."'" ;
+																													$SIS_data .= ",'".$lvl_13['Nombre']."'" ;
+																													$SIS_data .= ",'".$lvl_13['Marca']."'" ;
+																													$SIS_data .= ",'".$lvl_13['Modelo']."'" ;
+																													$SIS_data .= ",'".$lvl_13['AnoFab']."'" ;
+																													$SIS_data .= ",'".$lvl_13['Serie']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['idLicitacion']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['tabla']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['table_value']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['Direccion_img']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['idSubTipo']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['Grasa_inicial']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['Grasa_relubricacion']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['Aceite']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['Cantidad']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['idUml']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['Frecuencia']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['idFrecuencia']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['idProducto']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['Saf']."'" ; 
+																													$SIS_data .= ",'".$lvl_13['Numero']."'" ; 
+																															
 																													// inserto los datos de registro en la db
-																													$query  = "INSERT INTO `maquinas_listado_level_13` (idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
+																													$SIS_columns = 'idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
 																													idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 																													Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																													VALUES (".$a.")";
-																													//Consulta
-																													$resultado = mysqli_query ($dbConn, $query);
-																													//Si ejecuto correctamente la consulta
-																													if(!$resultado){
-																														//Genero numero aleatorio
-																														$vardata = genera_password(8,'alfanumerico');
-																														
-																														//Guardo el error en una variable temporal
-																														$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																														$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																														$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																														
-																													}
-																													$id_lvl_13 = mysqli_insert_id($dbConn);
-																													
+																													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+																													$id_lvl_13 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_13', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															 
 																													//Nivel 14
 																													foreach ($arrLVL_14 as $lvl_14) {
 																														//Se verifica que sea el mismo sensor
 																														if($lvl_13['idLevel_13']==$lvl_14['idLevel_13']){
 																															
 																															//Se crea la maquina
-																															$a  = "'".$id_lvl_13."'" ;          
-																															$a .= ",'".$id_lvl_12."'" ; 
-																															$a .= ",'".$id_lvl_11."'" ; 
-																															$a .= ",'".$id_lvl_10."'" ; 
-																															$a .= ",'".$id_lvl_9."'" ; 
-																															$a .= ",'".$id_lvl_8."'" ; 
-																															$a .= ",'".$id_lvl_7."'" ; 
-																															$a .= ",'".$id_lvl_6."'" ; 
-																															$a .= ",'".$id_lvl_5."'" ; 
-																															$a .= ",'".$id_lvl_4."'" ; 
-																															$a .= ",'".$id_lvl_3."'" ; 
-																															$a .= ",'".$id_lvl_2."'" ; 
-																															$a .= ",'".$id_lvl_1."'" ; 
-																															$a .= ",'".$lvl_14['idSistema']."'" ; 
-																															$a .= ",'".$maquina_id."'" ; 
-																															$a .= ",'".$lvl_14['idUtilizable']."'" ;
-																															$a .= ",'".$lvl_14['Codigo']."'" ;
-																															$a .= ",'".$lvl_14['Nombre']."'" ;
-																															$a .= ",'".$lvl_14['Marca']."'" ;
-																															$a .= ",'".$lvl_14['Modelo']."'" ;
-																															$a .= ",'".$lvl_14['AnoFab']."'" ;
-																															$a .= ",'".$lvl_14['Serie']."'" ; 
-																															$a .= ",'".$lvl_14['idLicitacion']."'" ; 
-																															$a .= ",'".$lvl_14['tabla']."'" ; 
-																															$a .= ",'".$lvl_14['table_value']."'" ; 
-																															$a .= ",'".$lvl_14['Direccion_img']."'" ; 
-																															$a .= ",'".$lvl_14['idSubTipo']."'" ; 
-																															$a .= ",'".$lvl_14['Grasa_inicial']."'" ; 
-																															$a .= ",'".$lvl_14['Grasa_relubricacion']."'" ; 
-																															$a .= ",'".$lvl_14['Aceite']."'" ; 
-																															$a .= ",'".$lvl_14['Cantidad']."'" ; 
-																															$a .= ",'".$lvl_14['idUml']."'" ; 
-																															$a .= ",'".$lvl_14['Frecuencia']."'" ; 
-																															$a .= ",'".$lvl_14['idFrecuencia']."'" ; 
-																															$a .= ",'".$lvl_14['idProducto']."'" ; 
-																															$a .= ",'".$lvl_14['Saf']."'" ; 
-																															$a .= ",'".$lvl_14['Numero']."'" ; 
-																											 
+																															$SIS_data  = "'".$id_lvl_13."'" ;          
+																															$SIS_data .= ",'".$id_lvl_12."'" ; 
+																															$SIS_data .= ",'".$id_lvl_11."'" ; 
+																															$SIS_data .= ",'".$id_lvl_10."'" ; 
+																															$SIS_data .= ",'".$id_lvl_9."'" ; 
+																															$SIS_data .= ",'".$id_lvl_8."'" ; 
+																															$SIS_data .= ",'".$id_lvl_7."'" ; 
+																															$SIS_data .= ",'".$id_lvl_6."'" ; 
+																															$SIS_data .= ",'".$id_lvl_5."'" ; 
+																															$SIS_data .= ",'".$id_lvl_4."'" ; 
+																															$SIS_data .= ",'".$id_lvl_3."'" ; 
+																															$SIS_data .= ",'".$id_lvl_2."'" ; 
+																															$SIS_data .= ",'".$id_lvl_1."'" ; 
+																															$SIS_data .= ",'".$lvl_14['idSistema']."'" ; 
+																															$SIS_data .= ",'".$maquina_id."'" ; 
+																															$SIS_data .= ",'".$lvl_14['idUtilizable']."'" ;
+																															$SIS_data .= ",'".$lvl_14['Codigo']."'" ;
+																															$SIS_data .= ",'".$lvl_14['Nombre']."'" ;
+																															$SIS_data .= ",'".$lvl_14['Marca']."'" ;
+																															$SIS_data .= ",'".$lvl_14['Modelo']."'" ;
+																															$SIS_data .= ",'".$lvl_14['AnoFab']."'" ;
+																															$SIS_data .= ",'".$lvl_14['Serie']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['idLicitacion']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['tabla']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['table_value']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['Direccion_img']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['idSubTipo']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['Grasa_inicial']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['Grasa_relubricacion']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['Aceite']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['Cantidad']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['idUml']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['Frecuencia']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['idFrecuencia']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['idProducto']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['Saf']."'" ; 
+																															$SIS_data .= ",'".$lvl_14['Numero']."'" ; 
+																															
 																															// inserto los datos de registro en la db
-																															$query  = "INSERT INTO `maquinas_listado_level_14` (idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
+																															$SIS_columns = 'idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
 																															idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 																															Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																															VALUES (".$a.")";
-																															//Consulta
-																															$resultado = mysqli_query ($dbConn, $query);
-																															//Si ejecuto correctamente la consulta
-																															if(!$resultado){
-																																//Genero numero aleatorio
-																																$vardata = genera_password(8,'alfanumerico');
-																																
-																																//Guardo el error en una variable temporal
-																																$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																																$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																																$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																																
-																															}
-																															$id_lvl_14 = mysqli_insert_id($dbConn);
-																															
+																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+																															$id_lvl_14 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_14', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																																	
 																															//Nivel 15
 																															foreach ($arrLVL_15 as $lvl_15) {
 																																//Se verifica que sea el mismo sensor
 																																if($lvl_14['idLevel_14']==$lvl_15['idLevel_14']){
 																																	
 																																	//Se crea la maquina
-																																	$a  = "'".$id_lvl_14."'" ;          
-																																	$a .= ",'".$id_lvl_13."'" ; 
-																																	$a .= ",'".$id_lvl_12."'" ; 
-																																	$a .= ",'".$id_lvl_11."'" ; 
-																																	$a .= ",'".$id_lvl_10."'" ; 
-																																	$a .= ",'".$id_lvl_9."'" ; 
-																																	$a .= ",'".$id_lvl_8."'" ; 
-																																	$a .= ",'".$id_lvl_7."'" ; 
-																																	$a .= ",'".$id_lvl_6."'" ; 
-																																	$a .= ",'".$id_lvl_5."'" ; 
-																																	$a .= ",'".$id_lvl_4."'" ; 
-																																	$a .= ",'".$id_lvl_3."'" ; 
-																																	$a .= ",'".$id_lvl_2."'" ; 
-																																	$a .= ",'".$id_lvl_1."'" ;
-																																	$a .= ",'".$lvl_15['idSistema']."'" ; 
-																																	$a .= ",'".$maquina_id."'" ; 
-																																	$a .= ",'".$lvl_15['idUtilizable']."'" ;
-																																	$a .= ",'".$lvl_15['Codigo']."'" ;
-																																	$a .= ",'".$lvl_15['Nombre']."'" ;
-																																	$a .= ",'".$lvl_15['Marca']."'" ;
-																																	$a .= ",'".$lvl_15['Modelo']."'" ;
-																																	$a .= ",'".$lvl_15['AnoFab']."'" ;
-																																	$a .= ",'".$lvl_15['Serie']."'" ; 
-																																	$a .= ",'".$lvl_15['idLicitacion']."'" ; 
-																																	$a .= ",'".$lvl_15['tabla']."'" ; 
-																																	$a .= ",'".$lvl_15['table_value']."'" ; 
-																																	$a .= ",'".$lvl_15['Direccion_img']."'" ; 
-																																	$a .= ",'".$lvl_15['idSubTipo']."'" ; 
-																																	$a .= ",'".$lvl_15['Grasa_inicial']."'" ; 
-																																	$a .= ",'".$lvl_15['Grasa_relubricacion']."'" ; 
-																																	$a .= ",'".$lvl_15['Aceite']."'" ; 
-																																	$a .= ",'".$lvl_15['Cantidad']."'" ; 
-																																	$a .= ",'".$lvl_15['idUml']."'" ; 
-																																	$a .= ",'".$lvl_15['Frecuencia']."'" ; 
-																																	$a .= ",'".$lvl_15['idFrecuencia']."'" ; 
-																																	$a .= ",'".$lvl_15['idProducto']."'" ; 
-																																	$a .= ",'".$lvl_15['Saf']."'" ; 
-																																	$a .= ",'".$lvl_15['Numero']."'" ; 
-																													 
+																																	$SIS_data  = "'".$id_lvl_14."'" ;          
+																																	$SIS_data .= ",'".$id_lvl_13."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_12."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_11."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_10."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_9."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_8."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_7."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_6."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_5."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_4."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_3."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_2."'" ; 
+																																	$SIS_data .= ",'".$id_lvl_1."'" ;
+																																	$SIS_data .= ",'".$lvl_15['idSistema']."'" ; 
+																																	$SIS_data .= ",'".$maquina_id."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['idUtilizable']."'" ;
+																																	$SIS_data .= ",'".$lvl_15['Codigo']."'" ;
+																																	$SIS_data .= ",'".$lvl_15['Nombre']."'" ;
+																																	$SIS_data .= ",'".$lvl_15['Marca']."'" ;
+																																	$SIS_data .= ",'".$lvl_15['Modelo']."'" ;
+																																	$SIS_data .= ",'".$lvl_15['AnoFab']."'" ;
+																																	$SIS_data .= ",'".$lvl_15['Serie']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['idLicitacion']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['tabla']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['table_value']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['Direccion_img']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['idSubTipo']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['Grasa_inicial']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['Grasa_relubricacion']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['Aceite']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['Cantidad']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['idUml']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['Frecuencia']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['idFrecuencia']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['idProducto']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['Saf']."'" ; 
+																																	$SIS_data .= ",'".$lvl_15['Numero']."'" ; 
+																																	
 																																	// inserto los datos de registro en la db
-																																	$query  = "INSERT INTO `maquinas_listado_level_15` (idLevel_14,
+																																	$SIS_columns = 'idLevel_14,
 																																	idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
 																																	idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
 																																	Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																	VALUES (".$a.")";
-																																	//Consulta
-																																	$resultado = mysqli_query ($dbConn, $query);
-																																	//Si ejecuto correctamente la consulta
-																																	if(!$resultado){
-																																		//Genero numero aleatorio
-																																		$vardata = genera_password(8,'alfanumerico');
-																																		
-																																		//Guardo el error en una variable temporal
-																																		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																																		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																																		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																																		
-																																	}
-																																	$id_lvl_15 = mysqli_insert_id($dbConn);
+																																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
+																																	$id_lvl_15 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_15', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 																																	
-																																	//Nivel 16
-																																	/*foreach ($arrLVL_16 as $lvl_16) {
-																																		//Se verifica que sea el mismo sensor
-																																		if($lvl_15['idLevel_15']==$lvl_16['idLevel_15']){
-																																			
-																																			//Se crea la maquina
-																																			$a  = "'".$id_lvl_15."'" ;          
-																																			$a .= ",'".$id_lvl_14."'" ; 
-																																			$a .= ",'".$id_lvl_13."'" ; 
-																																			$a .= ",'".$id_lvl_12."'" ; 
-																																			$a .= ",'".$id_lvl_11."'" ; 
-																																			$a .= ",'".$id_lvl_10."'" ; 
-																																			$a .= ",'".$id_lvl_9."'" ; 
-																																			$a .= ",'".$id_lvl_8."'" ; 
-																																			$a .= ",'".$id_lvl_7."'" ; 
-																																			$a .= ",'".$id_lvl_6."'" ; 
-																																			$a .= ",'".$id_lvl_5."'" ; 
-																																			$a .= ",'".$id_lvl_4."'" ; 
-																																			$a .= ",'".$id_lvl_3."'" ; 
-																																			$a .= ",'".$id_lvl_2."'" ; 
-																																			$a .= ",'".$id_lvl_1."'" ;
-																																			$a .= ",'".$lvl_16['idSistema']."'" ; 
-																																			$a .= ",'".$maquina_id."'" ; 
-																																			$a .= ",'".$lvl_16['idUtilizable']."'" ;
-																																			$a .= ",'".$lvl_16['Codigo']."'" ;
-																																			$a .= ",'".$lvl_16['Nombre']."'" ;
-																																			$a .= ",'".$lvl_16['Marca']."'" ;
-																																			$a .= ",'".$lvl_16['Modelo']."'" ;
-																																			$a .= ",'".$lvl_16['AnoFab']."'" ;
-																																			$a .= ",'".$lvl_16['Serie']."'" ; 
-																																			$a .= ",'".$lvl_16['idLicitacion']."'" ; 
-																																			$a .= ",'".$lvl_16['tabla']."'" ; 
-																																			$a .= ",'".$lvl_16['table_value']."'" ; 
-																																			$a .= ",'".$lvl_16['Direccion_img']."'" ; 
-																																			$a .= ",'".$lvl_16['idSubTipo']."'" ; 
-																																			$a .= ",'".$lvl_16['Grasa_inicial']."'" ; 
-																																			$a .= ",'".$lvl_16['Grasa_relubricacion']."'" ; 
-																																			$a .= ",'".$lvl_16['Aceite']."'" ; 
-																																			$a .= ",'".$lvl_16['Cantidad']."'" ; 
-																																			$a .= ",'".$lvl_16['idUml']."'" ; 
-																																			$a .= ",'".$lvl_16['Frecuencia']."'" ; 
-																																			$a .= ",'".$lvl_16['idFrecuencia']."'" ; 
-																																			$a .= ",'".$lvl_16['idProducto']."'" ; 
-																																			$a .= ",'".$lvl_16['Saf']."'" ; 
-																																			$a .= ",'".$lvl_16['Numero']."'" ; 
-																															 
-																																			// inserto los datos de registro en la db
-																																			$query  = "INSERT INTO `maquinas_listado_level_16` (idLevel_15,idLevel_14,
-																																			idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																																			idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																																			Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																			VALUES (".$a.")";
-																																			$result = mysqli_query($dbConn, $query);
-																																			$id_lvl_16 = mysqli_insert_id($dbConn);
-																																			
-																																			//Nivel 17
-																																			foreach ($arrLVL_17 as $lvl_17) {
-																																				//Se verifica que sea el mismo sensor
-																																				if($lvl_16['idLevel_16']==$lvl_17['idLevel_16']){
-																																					
-																																					//Se crea la maquina
-																																					$a  = "'".$id_lvl_16."'" ;          
-																																					$a .= ",'".$id_lvl_15."'" ; 
-																																					$a .= ",'".$id_lvl_14."'" ; 
-																																					$a .= ",'".$id_lvl_13."'" ; 
-																																					$a .= ",'".$id_lvl_12."'" ; 
-																																					$a .= ",'".$id_lvl_11."'" ; 
-																																					$a .= ",'".$id_lvl_10."'" ; 
-																																					$a .= ",'".$id_lvl_9."'" ; 
-																																					$a .= ",'".$id_lvl_8."'" ; 
-																																					$a .= ",'".$id_lvl_7."'" ; 
-																																					$a .= ",'".$id_lvl_6."'" ; 
-																																					$a .= ",'".$id_lvl_5."'" ; 
-																																					$a .= ",'".$id_lvl_4."'" ; 
-																																					$a .= ",'".$id_lvl_3."'" ; 
-																																					$a .= ",'".$id_lvl_2."'" ; 
-																																					$a .= ",'".$id_lvl_1."'" ; 
-																																					$a .= ",'".$lvl_17['idSistema']."'" ; 
-																																					$a .= ",'".$maquina_id."'" ; 
-																																					$a .= ",'".$lvl_17['idUtilizable']."'" ;
-																																					$a .= ",'".$lvl_17['Codigo']."'" ;
-																																					$a .= ",'".$lvl_17['Nombre']."'" ;
-																																					$a .= ",'".$lvl_17['Marca']."'" ;
-																																					$a .= ",'".$lvl_17['Modelo']."'" ;
-																																					$a .= ",'".$lvl_17['AnoFab']."'" ;
-																																					$a .= ",'".$lvl_17['Serie']."'" ; 
-																																					$a .= ",'".$lvl_17['idLicitacion']."'" ; 
-																																					$a .= ",'".$lvl_17['tabla']."'" ; 
-																																					$a .= ",'".$lvl_17['table_value']."'" ; 
-																																					$a .= ",'".$lvl_17['Direccion_img']."'" ; 
-																																					$a .= ",'".$lvl_17['idSubTipo']."'" ; 
-																																					$a .= ",'".$lvl_17['Grasa_inicial']."'" ; 
-																																					$a .= ",'".$lvl_17['Grasa_relubricacion']."'" ; 
-																																					$a .= ",'".$lvl_17['Aceite']."'" ; 
-																																					$a .= ",'".$lvl_17['Cantidad']."'" ; 
-																																					$a .= ",'".$lvl_17['idUml']."'" ; 
-																																					$a .= ",'".$lvl_17['Frecuencia']."'" ; 
-																																					$a .= ",'".$lvl_17['idFrecuencia']."'" ; 
-																																					$a .= ",'".$lvl_17['idProducto']."'" ; 
-																																					$a .= ",'".$lvl_17['Saf']."'" ; 
-																																					$a .= ",'".$lvl_17['Numero']."'" ; 
-																																	 
-																																					// inserto los datos de registro en la db
-																																					$query  = "INSERT INTO `maquinas_listado_level_17` (idLevel_16,idLevel_15,idLevel_14,
-																																					idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																																					idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																																					Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																					VALUES (".$a.")";
-																																					$result = mysqli_query($dbConn, $query);
-																																					$id_lvl_17 = mysqli_insert_id($dbConn);
-																																					
-																																					//Nivel 18
-																																					foreach ($arrLVL_18 as $lvl_18) {
-																																						//Se verifica que sea el mismo sensor
-																																						if($lvl_17['idLevel_17']==$lvl_18['idLevel_17']){
-																																							
-																																							//Se crea la maquina
-																																							$a  = "'".$id_lvl_17."'" ;          
-																																							$a .= ",'".$id_lvl_16."'" ; 
-																																							$a .= ",'".$id_lvl_15."'" ; 
-																																							$a .= ",'".$id_lvl_14."'" ; 
-																																							$a .= ",'".$id_lvl_13."'" ; 
-																																							$a .= ",'".$id_lvl_12."'" ; 
-																																							$a .= ",'".$id_lvl_11."'" ; 
-																																							$a .= ",'".$id_lvl_10."'" ; 
-																																							$a .= ",'".$id_lvl_9."'" ; 
-																																							$a .= ",'".$id_lvl_8."'" ; 
-																																							$a .= ",'".$id_lvl_7."'" ; 
-																																							$a .= ",'".$id_lvl_6."'" ; 
-																																							$a .= ",'".$id_lvl_5."'" ; 
-																																							$a .= ",'".$id_lvl_4."'" ; 
-																																							$a .= ",'".$id_lvl_3."'" ; 
-																																							$a .= ",'".$id_lvl_2."'" ; 
-																																							$a .= ",'".$id_lvl_1."'" ;
-																																							$a .= ",'".$lvl_18['idSistema']."'" ; 
-																																							$a .= ",'".$maquina_id."'" ; 
-																																							$a .= ",'".$lvl_18['idUtilizable']."'" ;
-																																							$a .= ",'".$lvl_18['Codigo']."'" ;
-																																							$a .= ",'".$lvl_18['Nombre']."'" ;
-																																							$a .= ",'".$lvl_18['Marca']."'" ;
-																																							$a .= ",'".$lvl_18['Modelo']."'" ;
-																																							$a .= ",'".$lvl_18['AnoFab']."'" ;
-																																							$a .= ",'".$lvl_18['Serie']."'" ; 
-																																							$a .= ",'".$lvl_18['idLicitacion']."'" ; 
-																																							$a .= ",'".$lvl_18['tabla']."'" ; 
-																																							$a .= ",'".$lvl_18['table_value']."'" ; 
-																																							$a .= ",'".$lvl_18['Direccion_img']."'" ; 
-																																							$a .= ",'".$lvl_18['idSubTipo']."'" ; 
-																																							$a .= ",'".$lvl_18['Grasa_inicial']."'" ; 
-																																							$a .= ",'".$lvl_18['Grasa_relubricacion']."'" ; 
-																																							$a .= ",'".$lvl_18['Aceite']."'" ; 
-																																							$a .= ",'".$lvl_18['Cantidad']."'" ; 
-																																							$a .= ",'".$lvl_18['idUml']."'" ; 
-																																							$a .= ",'".$lvl_18['Frecuencia']."'" ; 
-																																							$a .= ",'".$lvl_18['idFrecuencia']."'" ; 
-																																							$a .= ",'".$lvl_18['idProducto']."'" ; 
-																																							$a .= ",'".$lvl_18['Saf']."'" ; 
-																																							$a .= ",'".$lvl_18['Numero']."'" ; 
-																																			 
-																																							// inserto los datos de registro en la db
-																																							$query  = "INSERT INTO `maquinas_listado_level_18` (idLevel_17,idLevel_16,idLevel_15,idLevel_14,
-																																							idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																																							idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																																							Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																							VALUES (".$a.")";
-																																							$result = mysqli_query($dbConn, $query);
-																																							$id_lvl_18 = mysqli_insert_id($dbConn);
-																																							
-																																							//Nivel 19
-																																							foreach ($arrLVL_19 as $lvl_19) {
-																																								//Se verifica que sea el mismo sensor
-																																								if($lvl_18['idLevel_18']==$lvl_19['idLevel_18']){
-																																									
-																																									//Se crea la maquina
-																																									$a  = "'".$id_lvl_18."'" ;          
-																																									$a .= ",'".$id_lvl_17."'" ; 
-																																									$a .= ",'".$id_lvl_16."'" ; 
-																																									$a .= ",'".$id_lvl_15."'" ; 
-																																									$a .= ",'".$id_lvl_14."'" ; 
-																																									$a .= ",'".$id_lvl_13."'" ; 
-																																									$a .= ",'".$id_lvl_12."'" ; 
-																																									$a .= ",'".$id_lvl_11."'" ; 
-																																									$a .= ",'".$id_lvl_10."'" ; 
-																																									$a .= ",'".$id_lvl_9."'" ; 
-																																									$a .= ",'".$id_lvl_8."'" ; 
-																																									$a .= ",'".$id_lvl_7."'" ; 
-																																									$a .= ",'".$id_lvl_6."'" ; 
-																																									$a .= ",'".$id_lvl_5."'" ; 
-																																									$a .= ",'".$id_lvl_4."'" ; 
-																																									$a .= ",'".$id_lvl_3."'" ; 
-																																									$a .= ",'".$id_lvl_2."'" ; 
-																																									$a .= ",'".$id_lvl_1."'" ;
-																																									$a .= ",'".$lvl_19['idSistema']."'" ; 
-																																									$a .= ",'".$maquina_id."'" ; 
-																																									$a .= ",'".$lvl_19['idUtilizable']."'" ;
-																																									$a .= ",'".$lvl_19['Codigo']."'" ;
-																																									$a .= ",'".$lvl_19['Nombre']."'" ;
-																																									$a .= ",'".$lvl_19['Marca']."'" ;
-																																									$a .= ",'".$lvl_19['Modelo']."'" ;
-																																									$a .= ",'".$lvl_19['AnoFab']."'" ;
-																																									$a .= ",'".$lvl_19['Serie']."'" ; 
-																																									$a .= ",'".$lvl_19['idLicitacion']."'" ; 
-																																									$a .= ",'".$lvl_19['tabla']."'" ; 
-																																									$a .= ",'".$lvl_19['table_value']."'" ; 
-																																									$a .= ",'".$lvl_19['Direccion_img']."'" ; 
-																																									$a .= ",'".$lvl_19['idSubTipo']."'" ; 
-																																									$a .= ",'".$lvl_19['Grasa_inicial']."'" ; 
-																																									$a .= ",'".$lvl_19['Grasa_relubricacion']."'" ; 
-																																									$a .= ",'".$lvl_19['Aceite']."'" ; 
-																																									$a .= ",'".$lvl_19['Cantidad']."'" ; 
-																																									$a .= ",'".$lvl_19['idUml']."'" ; 
-																																									$a .= ",'".$lvl_19['Frecuencia']."'" ; 
-																																									$a .= ",'".$lvl_19['idFrecuencia']."'" ; 
-																																									$a .= ",'".$lvl_19['idProducto']."'" ; 
-																																									$a .= ",'".$lvl_19['Saf']."'" ; 
-																																									$a .= ",'".$lvl_19['Numero']."'" ; 
-																																					 
-																																									// inserto los datos de registro en la db
-																																									$query  = "INSERT INTO `maquinas_listado_level_19` (idLevel_18,idLevel_17,idLevel_16,idLevel_15,idLevel_14,
-																																									idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																																									idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																																									Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																									VALUES (".$a.")";
-																																									$result = mysqli_query($dbConn, $query);
-																																									$id_lvl_19 = mysqli_insert_id($dbConn);
-																																									
-																																									//Nivel 20
-																																									foreach ($arrLVL_20 as $lvl_20) {
-																																										//Se verifica que sea el mismo sensor
-																																										if($lvl_19['idLevel_19']==$lvl_20['idLevel_19']){
-																																											
-																																											//Se crea la maquina
-																																											$a  = "'".$id_lvl_19."'" ;          
-																																											$a .= ",'".$id_lvl_18."'" ; 
-																																											$a .= ",'".$id_lvl_17."'" ; 
-																																											$a .= ",'".$id_lvl_16."'" ; 
-																																											$a .= ",'".$id_lvl_15."'" ; 
-																																											$a .= ",'".$id_lvl_14."'" ; 
-																																											$a .= ",'".$id_lvl_13."'" ; 
-																																											$a .= ",'".$id_lvl_12."'" ; 
-																																											$a .= ",'".$id_lvl_11."'" ; 
-																																											$a .= ",'".$id_lvl_10."'" ; 
-																																											$a .= ",'".$id_lvl_9."'" ; 
-																																											$a .= ",'".$id_lvl_8."'" ; 
-																																											$a .= ",'".$id_lvl_7."'" ; 
-																																											$a .= ",'".$id_lvl_6."'" ; 
-																																											$a .= ",'".$id_lvl_5."'" ; 
-																																											$a .= ",'".$id_lvl_4."'" ; 
-																																											$a .= ",'".$id_lvl_3."'" ; 
-																																											$a .= ",'".$id_lvl_2."'" ; 
-																																											$a .= ",'".$id_lvl_1."'" ;
-																																											$a .= ",'".$lvl_20['idSistema']."'" ; 
-																																											$a .= ",'".$maquina_id."'" ; 
-																																											$a .= ",'".$lvl_20['idUtilizable']."'" ;
-																																											$a .= ",'".$lvl_20['Codigo']."'" ;
-																																											$a .= ",'".$lvl_20['Nombre']."'" ;
-																																											$a .= ",'".$lvl_20['Marca']."'" ;
-																																											$a .= ",'".$lvl_20['Modelo']."'" ;
-																																											$a .= ",'".$lvl_20['AnoFab']."'" ;
-																																											$a .= ",'".$lvl_20['Serie']."'" ; 
-																																											$a .= ",'".$lvl_20['idLicitacion']."'" ; 
-																																											$a .= ",'".$lvl_20['tabla']."'" ; 
-																																											$a .= ",'".$lvl_20['table_value']."'" ; 
-																																											$a .= ",'".$lvl_20['Direccion_img']."'" ; 
-																																											$a .= ",'".$lvl_20['idSubTipo']."'" ; 
-																																											$a .= ",'".$lvl_20['Grasa_inicial']."'" ; 
-																																											$a .= ",'".$lvl_20['Grasa_relubricacion']."'" ; 
-																																											$a .= ",'".$lvl_20['Aceite']."'" ; 
-																																											$a .= ",'".$lvl_20['Cantidad']."'" ; 
-																																											$a .= ",'".$lvl_20['idUml']."'" ; 
-																																											$a .= ",'".$lvl_20['Frecuencia']."'" ; 
-																																											$a .= ",'".$lvl_20['idFrecuencia']."'" ; 
-																																											$a .= ",'".$lvl_20['idProducto']."'" ; 
-																																											$a .= ",'".$lvl_20['Saf']."'" ; 
-																																											$a .= ",'".$lvl_20['Numero']."'" ; 
-																																							 
-																																											// inserto los datos de registro en la db
-																																											$query  = "INSERT INTO `maquinas_listado_level_20` (idLevel_19,idLevel_18,idLevel_17,idLevel_16,idLevel_15,idLevel_14,
-																																											idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																																											idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																																											Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																											VALUES (".$a.")";
-																																											$result = mysqli_query($dbConn, $query);
-																																											$id_lvl_20 = mysqli_insert_id($dbConn);
-																																											
-																																											//Nivel 21
-																																											foreach ($arrLVL_21 as $lvl_21) {
-																																												//Se verifica que sea el mismo sensor
-																																												if($lvl_20['idLevel_20']==$lvl_21['idLevel_20']){
-																																													
-																																													//Se crea la maquina
-																																													$a  = "'".$id_lvl_20."'" ;          
-																																													$a .= ",'".$id_lvl_19."'" ; 
-																																													$a .= ",'".$id_lvl_18."'" ; 
-																																													$a .= ",'".$id_lvl_17."'" ; 
-																																													$a .= ",'".$id_lvl_16."'" ; 
-																																													$a .= ",'".$id_lvl_15."'" ; 
-																																													$a .= ",'".$id_lvl_14."'" ; 
-																																													$a .= ",'".$id_lvl_13."'" ; 
-																																													$a .= ",'".$id_lvl_12."'" ; 
-																																													$a .= ",'".$id_lvl_11."'" ; 
-																																													$a .= ",'".$id_lvl_10."'" ; 
-																																													$a .= ",'".$id_lvl_9."'" ; 
-																																													$a .= ",'".$id_lvl_8."'" ; 
-																																													$a .= ",'".$id_lvl_7."'" ; 
-																																													$a .= ",'".$id_lvl_6."'" ; 
-																																													$a .= ",'".$id_lvl_5."'" ; 
-																																													$a .= ",'".$id_lvl_4."'" ; 
-																																													$a .= ",'".$id_lvl_3."'" ; 
-																																													$a .= ",'".$id_lvl_2."'" ; 
-																																													$a .= ",'".$id_lvl_1."'" ;
-																																													$a .= ",'".$lvl_21['idSistema']."'" ; 
-																																													$a .= ",'".$maquina_id."'" ; 
-																																													$a .= ",'".$lvl_21['idUtilizable']."'" ;
-																																													$a .= ",'".$lvl_21['Codigo']."'" ;
-																																													$a .= ",'".$lvl_21['Nombre']."'" ;
-																																													$a .= ",'".$lvl_21['Marca']."'" ;
-																																													$a .= ",'".$lvl_21['Modelo']."'" ;
-																																													$a .= ",'".$lvl_21['AnoFab']."'" ;
-																																													$a .= ",'".$lvl_21['Serie']."'" ; 
-																																													$a .= ",'".$lvl_21['idLicitacion']."'" ; 
-																																													$a .= ",'".$lvl_21['tabla']."'" ; 
-																																													$a .= ",'".$lvl_21['table_value']."'" ; 
-																																													$a .= ",'".$lvl_21['Direccion_img']."'" ; 
-																																													$a .= ",'".$lvl_21['idSubTipo']."'" ; 
-																																													$a .= ",'".$lvl_21['Grasa_inicial']."'" ; 
-																																													$a .= ",'".$lvl_21['Grasa_relubricacion']."'" ; 
-																																													$a .= ",'".$lvl_21['Aceite']."'" ; 
-																																													$a .= ",'".$lvl_21['Cantidad']."'" ; 
-																																													$a .= ",'".$lvl_21['idUml']."'" ; 
-																																													$a .= ",'".$lvl_21['Frecuencia']."'" ; 
-																																													$a .= ",'".$lvl_21['idFrecuencia']."'" ; 
-																																													$a .= ",'".$lvl_21['idProducto']."'" ; 
-																																													$a .= ",'".$lvl_21['Saf']."'" ; 
-																																													$a .= ",'".$lvl_21['Numero']."'" ; 
-																																									 
-																																													// inserto los datos de registro en la db
-																																													$query  = "INSERT INTO `maquinas_listado_level_21` (idLevel_20,idLevel_19,idLevel_18,idLevel_17,idLevel_16,idLevel_15,idLevel_14,
-																																													idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																																													idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																																													Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																													VALUES (".$a.")";
-																																													$result = mysqli_query($dbConn, $query);
-																																													$id_lvl_21 = mysqli_insert_id($dbConn);
-																																													
-																																													//Nivel 22
-																																													foreach ($arrLVL_22 as $lvl_22) {
-																																														//Se verifica que sea el mismo sensor
-																																														if($lvl_21['idLevel_21']==$lvl_22['idLevel_21']){
-																																															
-																																															//Se crea la maquina
-																																															$a  = "'".$id_lvl_21."'" ;          
-																																															$a .= ",'".$id_lvl_20."'" ; 
-																																															$a .= ",'".$id_lvl_19."'" ; 
-																																															$a .= ",'".$id_lvl_18."'" ; 
-																																															$a .= ",'".$id_lvl_17."'" ; 
-																																															$a .= ",'".$id_lvl_16."'" ; 
-																																															$a .= ",'".$id_lvl_15."'" ; 
-																																															$a .= ",'".$id_lvl_14."'" ; 
-																																															$a .= ",'".$id_lvl_13."'" ; 
-																																															$a .= ",'".$id_lvl_12."'" ; 
-																																															$a .= ",'".$id_lvl_11."'" ; 
-																																															$a .= ",'".$id_lvl_10."'" ; 
-																																															$a .= ",'".$id_lvl_9."'" ; 
-																																															$a .= ",'".$id_lvl_8."'" ; 
-																																															$a .= ",'".$id_lvl_7."'" ; 
-																																															$a .= ",'".$id_lvl_6."'" ; 
-																																															$a .= ",'".$id_lvl_5."'" ; 
-																																															$a .= ",'".$id_lvl_4."'" ; 
-																																															$a .= ",'".$id_lvl_3."'" ; 
-																																															$a .= ",'".$id_lvl_2."'" ; 
-																																															$a .= ",'".$id_lvl_1."'" ; 
-																																															$a .= ",'".$lvl_22['idSistema']."'" ; 
-																																															$a .= ",'".$maquina_id."'" ; 
-																																															$a .= ",'".$lvl_22['idUtilizable']."'" ;
-																																															$a .= ",'".$lvl_22['Codigo']."'" ;
-																																															$a .= ",'".$lvl_22['Nombre']."'" ;
-																																															$a .= ",'".$lvl_22['Marca']."'" ;
-																																															$a .= ",'".$lvl_22['Modelo']."'" ;
-																																															$a .= ",'".$lvl_22['AnoFab']."'" ;
-																																															$a .= ",'".$lvl_22['Serie']."'" ; 
-																																															$a .= ",'".$lvl_22['idLicitacion']."'" ; 
-																																															$a .= ",'".$lvl_22['tabla']."'" ; 
-																																															$a .= ",'".$lvl_22['table_value']."'" ; 
-																																															$a .= ",'".$lvl_22['Direccion_img']."'" ; 
-																																															$a .= ",'".$lvl_22['idSubTipo']."'" ; 
-																																															$a .= ",'".$lvl_22['Grasa_inicial']."'" ; 
-																																															$a .= ",'".$lvl_22['Grasa_relubricacion']."'" ; 
-																																															$a .= ",'".$lvl_22['Aceite']."'" ; 
-																																															$a .= ",'".$lvl_22['Cantidad']."'" ; 
-																																															$a .= ",'".$lvl_22['idUml']."'" ; 
-																																															$a .= ",'".$lvl_22['Frecuencia']."'" ; 
-																																															$a .= ",'".$lvl_22['idFrecuencia']."'" ; 
-																																															$a .= ",'".$lvl_22['idProducto']."'" ; 
-																																															$a .= ",'".$lvl_22['Saf']."'" ; 
-																																															$a .= ",'".$lvl_22['Numero']."'" ; 
-																																											 
-																																															// inserto los datos de registro en la db
-																																															$query  = "INSERT INTO `maquinas_listado_level_22` (idLevel_21,idLevel_20,idLevel_19,idLevel_18,idLevel_17,idLevel_16,idLevel_15,idLevel_14,
-																																															idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																																															idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																																															Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																															VALUES (".$a.")";
-																																															$result = mysqli_query($dbConn, $query);
-																																															$id_lvl_22 = mysqli_insert_id($dbConn);
-																																															
-																																															//Nivel 23
-																																															foreach ($arrLVL_23 as $lvl_23) {
-																																																//Se verifica que sea el mismo sensor
-																																																if($lvl_22['idLevel_22']==$lvl_23['idLevel_22']){
-																																																	
-																																																	//Se crea la maquina
-																																																	$a  = "'".$id_lvl_22."'" ;          
-																																																	$a .= ",'".$id_lvl_21."'" ; 
-																																																	$a .= ",'".$id_lvl_20."'" ; 
-																																																	$a .= ",'".$id_lvl_19."'" ; 
-																																																	$a .= ",'".$id_lvl_18."'" ; 
-																																																	$a .= ",'".$id_lvl_17."'" ; 
-																																																	$a .= ",'".$id_lvl_16."'" ; 
-																																																	$a .= ",'".$id_lvl_15."'" ; 
-																																																	$a .= ",'".$id_lvl_14."'" ; 
-																																																	$a .= ",'".$id_lvl_13."'" ; 
-																																																	$a .= ",'".$id_lvl_12."'" ; 
-																																																	$a .= ",'".$id_lvl_11."'" ; 
-																																																	$a .= ",'".$id_lvl_10."'" ; 
-																																																	$a .= ",'".$id_lvl_9."'" ; 
-																																																	$a .= ",'".$id_lvl_8."'" ; 
-																																																	$a .= ",'".$id_lvl_7."'" ; 
-																																																	$a .= ",'".$id_lvl_6."'" ; 
-																																																	$a .= ",'".$id_lvl_5."'" ; 
-																																																	$a .= ",'".$id_lvl_4."'" ; 
-																																																	$a .= ",'".$id_lvl_3."'" ; 
-																																																	$a .= ",'".$id_lvl_2."'" ; 
-																																																	$a .= ",'".$id_lvl_1."'" ; 
-																																																	$a .= ",'".$lvl_23['idSistema']."'" ; 
-																																																	$a .= ",'".$maquina_id."'" ; 
-																																																	$a .= ",'".$lvl_23['idUtilizable']."'" ;
-																																																	$a .= ",'".$lvl_23['Codigo']."'" ;
-																																																	$a .= ",'".$lvl_23['Nombre']."'" ;
-																																																	$a .= ",'".$lvl_23['Marca']."'" ;
-																																																	$a .= ",'".$lvl_23['Modelo']."'" ;
-																																																	$a .= ",'".$lvl_23['AnoFab']."'" ;
-																																																	$a .= ",'".$lvl_23['Serie']."'" ; 
-																																																	$a .= ",'".$lvl_23['idLicitacion']."'" ; 
-																																																	$a .= ",'".$lvl_23['tabla']."'" ; 
-																																																	$a .= ",'".$lvl_23['table_value']."'" ; 
-																																																	$a .= ",'".$lvl_23['Direccion_img']."'" ; 
-																																																	$a .= ",'".$lvl_23['idSubTipo']."'" ; 
-																																																	$a .= ",'".$lvl_23['Grasa_inicial']."'" ; 
-																																																	$a .= ",'".$lvl_23['Grasa_relubricacion']."'" ; 
-																																																	$a .= ",'".$lvl_23['Aceite']."'" ; 
-																																																	$a .= ",'".$lvl_23['Cantidad']."'" ; 
-																																																	$a .= ",'".$lvl_23['idUml']."'" ; 
-																																																	$a .= ",'".$lvl_23['Frecuencia']."'" ; 
-																																																	$a .= ",'".$lvl_23['idFrecuencia']."'" ; 
-																																																	$a .= ",'".$lvl_23['idProducto']."'" ; 
-																																																	$a .= ",'".$lvl_23['Saf']."'" ; 
-																																																	$a .= ",'".$lvl_23['Numero']."'" ; 
-																																													 
-																																																	// inserto los datos de registro en la db
-																																																	$query  = "INSERT INTO `maquinas_listado_level_23` (idLevel_22,
-																																																	idLevel_21,idLevel_20,idLevel_19,idLevel_18,idLevel_17,idLevel_16,idLevel_15,idLevel_14,
-																																																	idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																																																	idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																																																	Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																																	VALUES (".$a.")";
-																																																	$result = mysqli_query($dbConn, $query);
-																																																	$id_lvl_23 = mysqli_insert_id($dbConn);
-																																																	
-																																																	//Nivel 24
-																																																	foreach ($arrLVL_24 as $lvl_24) {
-																																																		//Se verifica que sea el mismo sensor
-																																																		if($lvl_23['idLevel_23']==$lvl_24['idLevel_23']){
-																																																			
-																																																			//Se crea la maquina
-																																																			$a  = "'".$id_lvl_23."'" ;          
-																																																			$a .= ",'".$id_lvl_22."'" ; 
-																																																			$a .= ",'".$id_lvl_21."'" ; 
-																																																			$a .= ",'".$id_lvl_20."'" ; 
-																																																			$a .= ",'".$id_lvl_19."'" ; 
-																																																			$a .= ",'".$id_lvl_18."'" ; 
-																																																			$a .= ",'".$id_lvl_17."'" ; 
-																																																			$a .= ",'".$id_lvl_16."'" ; 
-																																																			$a .= ",'".$id_lvl_15."'" ; 
-																																																			$a .= ",'".$id_lvl_14."'" ; 
-																																																			$a .= ",'".$id_lvl_13."'" ; 
-																																																			$a .= ",'".$id_lvl_12."'" ; 
-																																																			$a .= ",'".$id_lvl_11."'" ; 
-																																																			$a .= ",'".$id_lvl_10."'" ; 
-																																																			$a .= ",'".$id_lvl_9."'" ; 
-																																																			$a .= ",'".$id_lvl_8."'" ; 
-																																																			$a .= ",'".$id_lvl_7."'" ; 
-																																																			$a .= ",'".$id_lvl_6."'" ; 
-																																																			$a .= ",'".$id_lvl_5."'" ; 
-																																																			$a .= ",'".$id_lvl_4."'" ; 
-																																																			$a .= ",'".$id_lvl_3."'" ; 
-																																																			$a .= ",'".$id_lvl_2."'" ; 
-																																																			$a .= ",'".$id_lvl_1."'" ; 
-																																																			$a .= ",'".$lvl_24['idSistema']."'" ; 
-																																																			$a .= ",'".$maquina_id."'" ; 
-																																																			$a .= ",'".$lvl_24['idUtilizable']."'" ;
-																																																			$a .= ",'".$lvl_24['Codigo']."'" ;
-																																																			$a .= ",'".$lvl_24['Nombre']."'" ;
-																																																			$a .= ",'".$lvl_24['Marca']."'" ;
-																																																			$a .= ",'".$lvl_24['Modelo']."'" ;
-																																																			$a .= ",'".$lvl_24['AnoFab']."'" ;
-																																																			$a .= ",'".$lvl_24['Serie']."'" ; 
-																																																			$a .= ",'".$lvl_24['idLicitacion']."'" ; 
-																																																			$a .= ",'".$lvl_24['tabla']."'" ; 
-																																																			$a .= ",'".$lvl_24['table_value']."'" ; 
-																																																			$a .= ",'".$lvl_24['Direccion_img']."'" ; 
-																																																			$a .= ",'".$lvl_24['idSubTipo']."'" ; 
-																																																			$a .= ",'".$lvl_24['Grasa_inicial']."'" ; 
-																																																			$a .= ",'".$lvl_24['Grasa_relubricacion']."'" ; 
-																																																			$a .= ",'".$lvl_24['Aceite']."'" ; 
-																																																			$a .= ",'".$lvl_24['Cantidad']."'" ; 
-																																																			$a .= ",'".$lvl_24['idUml']."'" ; 
-																																																			$a .= ",'".$lvl_24['Frecuencia']."'" ; 
-																																																			$a .= ",'".$lvl_24['idFrecuencia']."'" ; 
-																																																			$a .= ",'".$lvl_24['idProducto']."'" ; 
-																																																			$a .= ",'".$lvl_24['Saf']."'" ; 
-																																																			$a .= ",'".$lvl_24['Numero']."'" ; 
-																																															 
-																																																			// inserto los datos de registro en la db
-																																																			$query  = "INSERT INTO `maquinas_listado_level_24` (idLevel_23,idLevel_22,
-																																																			idLevel_21,idLevel_20,idLevel_19,idLevel_18,idLevel_17,idLevel_16,idLevel_15,idLevel_14,
-																																																			idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																																																			idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																																																			Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																																			VALUES (".$a.")";
-																																																			$result = mysqli_query($dbConn, $query);
-																																																			$id_lvl_24 = mysqli_insert_id($dbConn);
-																																																			
-																																																			//Nivel 25
-																																																			foreach ($arrLVL_25 as $lvl_25) {
-																																																				//Se verifica que sea el mismo sensor
-																																																				if($lvl_24['idLevel_24']==$lvl_25['idLevel_24']){
-																																																					
-																																																					//Se crea la maquina
-																																																					$a  = "'".$id_lvl_24."'" ;          
-																																																					$a .= ",'".$id_lvl_23."'" ; 
-																																																					$a .= ",'".$id_lvl_22."'" ; 
-																																																					$a .= ",'".$id_lvl_21."'" ; 
-																																																					$a .= ",'".$id_lvl_20."'" ; 
-																																																					$a .= ",'".$id_lvl_19."'" ; 
-																																																					$a .= ",'".$id_lvl_18."'" ; 
-																																																					$a .= ",'".$id_lvl_17."'" ; 
-																																																					$a .= ",'".$id_lvl_16."'" ; 
-																																																					$a .= ",'".$id_lvl_15."'" ; 
-																																																					$a .= ",'".$id_lvl_14."'" ; 
-																																																					$a .= ",'".$id_lvl_13."'" ; 
-																																																					$a .= ",'".$id_lvl_12."'" ; 
-																																																					$a .= ",'".$id_lvl_11."'" ; 
-																																																					$a .= ",'".$id_lvl_10."'" ; 
-																																																					$a .= ",'".$id_lvl_9."'" ; 
-																																																					$a .= ",'".$id_lvl_8."'" ; 
-																																																					$a .= ",'".$id_lvl_7."'" ; 
-																																																					$a .= ",'".$id_lvl_6."'" ; 
-																																																					$a .= ",'".$id_lvl_5."'" ; 
-																																																					$a .= ",'".$id_lvl_4."'" ; 
-																																																					$a .= ",'".$id_lvl_3."'" ; 
-																																																					$a .= ",'".$id_lvl_2."'" ; 
-																																																					$a .= ",'".$id_lvl_1."'" ; 
-																																																					$a .= ",'".$lvl_25['idSistema']."'" ; 
-																																																					$a .= ",'".$maquina_id."'" ; 
-																																																					$a .= ",'".$lvl_25['idUtilizable']."'" ;
-																																																					$a .= ",'".$lvl_25['Codigo']."'" ;
-																																																					$a .= ",'".$lvl_25['Nombre']."'" ;
-																																																					$a .= ",'".$lvl_25['Marca']."'" ;
-																																																					$a .= ",'".$lvl_25['Modelo']."'" ;
-																																																					$a .= ",'".$lvl_25['AnoFab']."'" ;
-																																																					$a .= ",'".$lvl_25['Serie']."'" ; 
-																																																					$a .= ",'".$lvl_25['idLicitacion']."'" ; 
-																																																					$a .= ",'".$lvl_25['tabla']."'" ; 
-																																																					$a .= ",'".$lvl_25['table_value']."'" ; 
-																																																					$a .= ",'".$lvl_25['Direccion_img']."'" ; 
-																																																					$a .= ",'".$lvl_25['idSubTipo']."'" ; 
-																																																					$a .= ",'".$lvl_25['Grasa_inicial']."'" ; 
-																																																					$a .= ",'".$lvl_25['Grasa_relubricacion']."'" ; 
-																																																					$a .= ",'".$lvl_25['Aceite']."'" ; 
-																																																					$a .= ",'".$lvl_25['Cantidad']."'" ; 
-																																																					$a .= ",'".$lvl_25['idUml']."'" ; 
-																																																					$a .= ",'".$lvl_25['Frecuencia']."'" ; 
-																																																					$a .= ",'".$lvl_25['idFrecuencia']."'" ; 
-																																																					$a .= ",'".$lvl_25['idProducto']."'" ; 
-																																																					$a .= ",'".$lvl_25['Saf']."'" ; 
-																																																					$a .= ",'".$lvl_25['Numero']."'" ; 
-																																																	 
-																																																					// inserto los datos de registro en la db
-																																																					$query  = "INSERT INTO `maquinas_listado_level_25` (idLevel_24,idLevel_23,idLevel_22,
-																																																					idLevel_21,idLevel_20,idLevel_19,idLevel_18,idLevel_17,idLevel_16,idLevel_15,idLevel_14,
-																																																					idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																																																					idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																																																					Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero) 
-																																																					VALUES (".$a.")";
-																																																					$result = mysqli_query($dbConn, $query);
-																																																					
-																																																					
-																																																					
-																																																				}
-																																																			}
-																																																			
-																																																		}
-																																																	}
-																																																	
-																																																}
-																																															}
-																																															
-																																														}
-																																													}
-																																													
-																																												}
-																																											}
-																																											
-																																										}
-																																									}
-																																									
-																																								}
-																																							}
-																																							
-																																						}
-																																					}
-																																					
-																																				}
-																																			}
-																																			
-																																		}
-																																	}
-																																	*/
 																																}
 																															}
 																														}
@@ -2972,88 +2062,68 @@ require_once '0_validate_user_1.php';
 			foreach ($arrLVL[$dis_1] as $arreglo_1) {
 				
 				//Se crea la maquina
-				$a  = "'".$arreglo_1['idSistema']."'" ;          
-				$a .= ",'".$arreglo_1['idMaquina']."'" ;        
-				$a .= ",'".$arreglo_1['idUtilizable']."'" ;
-				$a .= ",'".$arreglo_1['Codigo']."'" ;
-				$a .= ",'".$arreglo_1['Nombre']." (Nuevo)'" ;
-				$a .= ",'".$arreglo_1['Marca']."'" ;
-				$a .= ",'".$arreglo_1['Modelo']."'" ;
-				$a .= ",'".$arreglo_1['AnoFab']."'" ;
-				$a .= ",'".$arreglo_1['Serie']."'" ; 
-				$a .= ",'".$arreglo_1['idLicitacion']."'" ; 
-				$a .= ",'".$arreglo_1['tabla']."'" ; 
-				$a .= ",'".$arreglo_1['table_value']."'" ; 
-				$a .= ",'".$arreglo_1['Direccion_img']."'" ; 
-				$a .= ",'".$arreglo_1['idSubTipo']."'" ; 
-				$a .= ",'".$arreglo_1['Grasa_inicial']."'" ; 
-				$a .= ",'".$arreglo_1['Grasa_relubricacion']."'" ; 
-				$a .= ",'".$arreglo_1['Aceite']."'" ; 
-				$a .= ",'".$arreglo_1['Cantidad']."'" ; 
-				$a .= ",'".$arreglo_1['idUml']."'" ; 
-				$a .= ",'".$arreglo_1['Frecuencia']."'" ; 
-				$a .= ",'".$arreglo_1['idFrecuencia']."'" ; 
-				$a .= ",'".$arreglo_1['idProducto']."'" ; 
-				$a .= ",'".$arreglo_1['Saf']."'" ; 
-				$a .= ",'".$arreglo_1['Numero']."'" ; 
+				$SIS_data  = "'".$arreglo_1['idSistema']."'" ;          
+				$SIS_data .= ",'".$arreglo_1['idMaquina']."'" ;        
+				$SIS_data .= ",'".$arreglo_1['idUtilizable']."'" ;
+				$SIS_data .= ",'".$arreglo_1['Codigo']."'" ;
+				$SIS_data .= ",'".$arreglo_1['Nombre']." (Nuevo)'" ;
+				$SIS_data .= ",'".$arreglo_1['Marca']."'" ;
+				$SIS_data .= ",'".$arreglo_1['Modelo']."'" ;
+				$SIS_data .= ",'".$arreglo_1['AnoFab']."'" ;
+				$SIS_data .= ",'".$arreglo_1['Serie']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['idLicitacion']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['tabla']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['table_value']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['Direccion_img']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['idSubTipo']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['Grasa_inicial']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['Grasa_relubricacion']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['Aceite']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['Cantidad']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['idUml']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['Frecuencia']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['idFrecuencia']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['idProducto']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['Saf']."'" ; 
+				$SIS_data .= ",'".$arreglo_1['Numero']."'" ; 
 				
 				
 			
 				$cadena = '';
 				$x = 1;
-				if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
-				
-				
+				if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
+				if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'" ;$x++;}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `maquinas_listado_level_".$dis_1."` (idSistema, idMaquina, idUtilizable, 
+				$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 				Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 				Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-				idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-				$id_lvl[$dis_1] = mysqli_insert_id($dbConn);
-				
-				//echo $query.'<br/><br/>';
-		
-	
-				
+				idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+				$id_lvl[$dis_1] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 				/////////////////////////////////////////////////
 				if(isset($arrLVL[$dis_2])){
 					foreach ($arrLVL[$dis_2] as $arreglo_2) {
@@ -3061,111 +2131,93 @@ require_once '0_validate_user_1.php';
 						if($arreglo_1['idLevel_'.$dis_1]==$arreglo_2['idLevel_'.$dis_1]){
 						
 							//Se crea la maquina
-							$a  = "'".$arreglo_2['idSistema']."'" ;          
-							$a .= ",'".$arreglo_2['idMaquina']."'" ;        
-							$a .= ",'".$arreglo_2['idUtilizable']."'" ;
-							$a .= ",'".$arreglo_2['Codigo']."'" ;
-							$a .= ",'".$arreglo_2['Nombre']."'" ;
-							$a .= ",'".$arreglo_2['Marca']."'" ;
-							$a .= ",'".$arreglo_2['Modelo']."'" ;
-							$a .= ",'".$arreglo_2['AnoFab']."'" ;
-							$a .= ",'".$arreglo_2['Serie']."'" ; 
-							$a .= ",'".$arreglo_2['idLicitacion']."'" ; 
-							$a .= ",'".$arreglo_2['tabla']."'" ; 
-							$a .= ",'".$arreglo_2['table_value']."'" ; 
-							$a .= ",'".$arreglo_2['Direccion_img']."'" ; 
-							$a .= ",'".$arreglo_2['idSubTipo']."'" ; 
-							$a .= ",'".$arreglo_2['Grasa_inicial']."'" ; 
-							$a .= ",'".$arreglo_2['Grasa_relubricacion']."'" ; 
-							$a .= ",'".$arreglo_2['Aceite']."'" ; 
-							$a .= ",'".$arreglo_2['Cantidad']."'" ; 
-							$a .= ",'".$arreglo_2['idUml']."'" ; 
-							$a .= ",'".$arreglo_2['Frecuencia']."'" ; 
-							$a .= ",'".$arreglo_2['idFrecuencia']."'" ; 
-							$a .= ",'".$arreglo_2['idProducto']."'" ; 
-							$a .= ",'".$arreglo_2['Saf']."'" ; 
-							$a .= ",'".$arreglo_2['Numero']."'" ; 
+							$SIS_data  = "'".$arreglo_2['idSistema']."'" ;          
+							$SIS_data .= ",'".$arreglo_2['idMaquina']."'" ;        
+							$SIS_data .= ",'".$arreglo_2['idUtilizable']."'" ;
+							$SIS_data .= ",'".$arreglo_2['Codigo']."'" ;
+							$SIS_data .= ",'".$arreglo_2['Nombre']."'" ;
+							$SIS_data .= ",'".$arreglo_2['Marca']."'" ;
+							$SIS_data .= ",'".$arreglo_2['Modelo']."'" ;
+							$SIS_data .= ",'".$arreglo_2['AnoFab']."'" ;
+							$SIS_data .= ",'".$arreglo_2['Serie']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['idLicitacion']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['tabla']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['table_value']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['Direccion_img']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['idSubTipo']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['Grasa_inicial']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['Grasa_relubricacion']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['Aceite']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['Cantidad']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['idUml']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['Frecuencia']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['idFrecuencia']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['idProducto']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['Saf']."'" ; 
+							$SIS_data .= ",'".$arreglo_2['Numero']."'" ; 
 							
 							$cadena = '';
 							$x = 1;
-							if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
-							if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
+							if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'" ;$x++;}
 							
 							$x = 1;
-							if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-							if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-							if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-							if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-							if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-							if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-							if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-							if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-							if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-							if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-							if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-							if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-							if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-							if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-							if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-							if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-							if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-							if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-							if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-							if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-							if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-							if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-							if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-							if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-							if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-							
+							if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+							if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+							if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+							if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+							if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+							if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+							if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+							if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+							if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+							if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+							if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+							if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+							if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+							if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+							if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+							if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+							if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+							if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+							if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+							if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+							if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+							if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+							if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+							if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+							if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `maquinas_listado_level_".$dis_2."` (idSistema, idMaquina, idUtilizable, 
+							$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 							Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							$id_lvl[$dis_2] = mysqli_insert_id($dbConn);
-							
-							//echo $query.'<br/><br/>';
-					
-							
+							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+							$id_lvl[$dis_2] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+										
 							/////////////////////////////////////////////////
 							if(isset($arrLVL[$dis_3])){
 								foreach ($arrLVL[$dis_3] as $arreglo_3) {
@@ -3173,112 +2225,93 @@ require_once '0_validate_user_1.php';
 									if($arreglo_2['idLevel_'.$dis_2]==$arreglo_3['idLevel_'.$dis_2]){
 									
 										//Se crea la maquina
-										$a  = "'".$arreglo_3['idSistema']."'" ;          
-										$a .= ",'".$arreglo_3['idMaquina']."'" ;        
-										$a .= ",'".$arreglo_3['idUtilizable']."'" ;
-										$a .= ",'".$arreglo_3['Codigo']."'" ;
-										$a .= ",'".$arreglo_3['Nombre']."'" ;
-										$a .= ",'".$arreglo_3['Marca']."'" ;
-										$a .= ",'".$arreglo_3['Modelo']."'" ;
-										$a .= ",'".$arreglo_3['AnoFab']."'" ;
-										$a .= ",'".$arreglo_3['Serie']."'" ; 
-										$a .= ",'".$arreglo_3['idLicitacion']."'" ; 
-										$a .= ",'".$arreglo_3['tabla']."'" ; 
-										$a .= ",'".$arreglo_3['table_value']."'" ; 
-										$a .= ",'".$arreglo_3['Direccion_img']."'" ; 
-										$a .= ",'".$arreglo_3['idSubTipo']."'" ; 
-										$a .= ",'".$arreglo_3['Grasa_inicial']."'" ; 
-										$a .= ",'".$arreglo_3['Grasa_relubricacion']."'" ; 
-										$a .= ",'".$arreglo_3['Aceite']."'" ; 
-										$a .= ",'".$arreglo_3['Cantidad']."'" ; 
-										$a .= ",'".$arreglo_3['idUml']."'" ; 
-										$a .= ",'".$arreglo_3['Frecuencia']."'" ; 
-										$a .= ",'".$arreglo_3['idFrecuencia']."'" ; 
-										$a .= ",'".$arreglo_3['idProducto']."'" ; 
-										$a .= ",'".$arreglo_3['Saf']."'" ; 
-										$a .= ",'".$arreglo_3['Numero']."'" ; 
+										$SIS_data  = "'".$arreglo_3['idSistema']."'" ;          
+										$SIS_data .= ",'".$arreglo_3['idMaquina']."'" ;        
+										$SIS_data .= ",'".$arreglo_3['idUtilizable']."'" ;
+										$SIS_data .= ",'".$arreglo_3['Codigo']."'" ;
+										$SIS_data .= ",'".$arreglo_3['Nombre']."'" ;
+										$SIS_data .= ",'".$arreglo_3['Marca']."'" ;
+										$SIS_data .= ",'".$arreglo_3['Modelo']."'" ;
+										$SIS_data .= ",'".$arreglo_3['AnoFab']."'" ;
+										$SIS_data .= ",'".$arreglo_3['Serie']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['idLicitacion']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['tabla']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['table_value']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['Direccion_img']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['idSubTipo']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['Grasa_inicial']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['Grasa_relubricacion']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['Aceite']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['Cantidad']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['idUml']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['Frecuencia']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['idFrecuencia']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['idProducto']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['Saf']."'" ; 
+										$SIS_data .= ",'".$arreglo_3['Numero']."'" ; 
 										
 										$cadena = '';
 										$x = 1;
-										if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
-										if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
+										if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'" ;$x++;}
 										
 										$x = 1;
-										if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-										if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-										if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-										if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-										if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-										if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-										if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-										if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-										if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-										if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-										if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-										if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-										if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-										if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-										if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-										if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-										if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-										if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-										if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-										if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-										if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-										if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-										if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-										if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-										if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-										
-										
+										if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+										if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+										if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+										if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+										if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+										if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+										if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+										if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+										if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+										if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+										if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+										if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+										if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+										if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+										if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+										if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+										if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+										if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+										if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+										if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+										if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+										if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+										if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+										if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+										if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 										
 										// inserto los datos de registro en la db
-										$query  = "INSERT INTO `maquinas_listado_level_".$dis_3."` (idSistema, idMaquina, idUtilizable, 
+										$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 										Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 										Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-										idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-										VALUES (".$a.")";
-										//Consulta
-										$resultado = mysqli_query ($dbConn, $query);
-										//Si ejecuto correctamente la consulta
-										if(!$resultado){
-											//Genero numero aleatorio
-											$vardata = genera_password(8,'alfanumerico');
-											
-											//Guardo el error en una variable temporal
-											$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-											$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-											$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-										}
-										$id_lvl[$dis_3] = mysqli_insert_id($dbConn);
-										
-										//echo $query.'<br/><br/>';
-		
-										
+										idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+										$id_lvl[$dis_3] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+													
 										/////////////////////////////////////////////////
 										if(isset($arrLVL[$dis_4])){
 											foreach ($arrLVL[$dis_4] as $arreglo_4) {
@@ -3286,107 +2319,93 @@ require_once '0_validate_user_1.php';
 												if($arreglo_3['idLevel_'.$dis_3]==$arreglo_4['idLevel_'.$dis_3]){
 												
 													//Se crea la maquina
-													$a  = "'".$arreglo_4['idSistema']."'" ;          
-													$a .= ",'".$arreglo_4['idMaquina']."'" ;        
-													$a .= ",'".$arreglo_4['idUtilizable']."'" ;
-													$a .= ",'".$arreglo_4['Codigo']."'" ;
-													$a .= ",'".$arreglo_4['Nombre']."'" ;
-													$a .= ",'".$arreglo_4['Marca']."'" ;
-													$a .= ",'".$arreglo_4['Modelo']."'" ;
-													$a .= ",'".$arreglo_4['AnoFab']."'" ;
-													$a .= ",'".$arreglo_4['Serie']."'" ; 
-													$a .= ",'".$arreglo_4['idLicitacion']."'" ; 
-													$a .= ",'".$arreglo_4['tabla']."'" ; 
-													$a .= ",'".$arreglo_4['table_value']."'" ; 
-													$a .= ",'".$arreglo_4['Direccion_img']."'" ; 
-													$a .= ",'".$arreglo_4['idSubTipo']."'" ; 
-													$a .= ",'".$arreglo_4['Grasa_inicial']."'" ; 
-													$a .= ",'".$arreglo_4['Grasa_relubricacion']."'" ; 
-													$a .= ",'".$arreglo_4['Aceite']."'" ; 
-													$a .= ",'".$arreglo_4['Cantidad']."'" ; 
-													$a .= ",'".$arreglo_4['idUml']."'" ; 
-													$a .= ",'".$arreglo_4['Frecuencia']."'" ; 
-													$a .= ",'".$arreglo_4['idFrecuencia']."'" ; 
-													$a .= ",'".$arreglo_4['idProducto']."'" ; 
-													$a .= ",'".$arreglo_4['Saf']."'" ; 
-													$a .= ",'".$arreglo_4['Numero']."'" ; 
+													$SIS_data  = "'".$arreglo_4['idSistema']."'" ;          
+													$SIS_data .= ",'".$arreglo_4['idMaquina']."'" ;        
+													$SIS_data .= ",'".$arreglo_4['idUtilizable']."'" ;
+													$SIS_data .= ",'".$arreglo_4['Codigo']."'" ;
+													$SIS_data .= ",'".$arreglo_4['Nombre']."'" ;
+													$SIS_data .= ",'".$arreglo_4['Marca']."'" ;
+													$SIS_data .= ",'".$arreglo_4['Modelo']."'" ;
+													$SIS_data .= ",'".$arreglo_4['AnoFab']."'" ;
+													$SIS_data .= ",'".$arreglo_4['Serie']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['idLicitacion']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['tabla']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['table_value']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['Direccion_img']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['idSubTipo']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['Grasa_inicial']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['Grasa_relubricacion']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['Aceite']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['Cantidad']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['idUml']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['Frecuencia']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['idFrecuencia']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['idProducto']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['Saf']."'" ; 
+													$SIS_data .= ",'".$arreglo_4['Numero']."'" ; 
 													
 													$cadena = '';
 													$x = 1;
-													if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
-													if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
+													if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'" ;$x++;}
 													
 													$x = 1;
-													if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-													if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-													if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-													if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-													if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-													if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-													if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-													if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-													if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-													if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-													if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-													if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-													if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-													if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-													if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-													if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-													if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-													if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-													if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-													if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-													if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-													if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-													if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-													if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-													if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-													
+													if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+													if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+													if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+													if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+													if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+													if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+													if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+													if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+													if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+													if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+													if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+													if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+													if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+													if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+													if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+													if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+													if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+													if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+													if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+													if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+													if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+													if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+													if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+													if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+													if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 													
 													// inserto los datos de registro en la db
-													$query  = "INSERT INTO `maquinas_listado_level_".$dis_4."` (idSistema, idMaquina, idUtilizable, 
+													$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 													Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-													VALUES (".$a.")";
-													//Consulta
-													$resultado = mysqli_query ($dbConn, $query);
-													//Si ejecuto correctamente la consulta
-													if(!$resultado){
-														//Genero numero aleatorio
-														$vardata = genera_password(8,'alfanumerico');
-														
-														//Guardo el error en una variable temporal
-														$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-														$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-														$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-													}
-													$id_lvl[$dis_4] = mysqli_insert_id($dbConn);
-													
+													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+													$id_lvl[$dis_4] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																
 													/////////////////////////////////////////////////
 													if(isset($arrLVL[$dis_5])){
 														foreach ($arrLVL[$dis_5] as $arreglo_5) {
@@ -3394,107 +2413,93 @@ require_once '0_validate_user_1.php';
 															if($arreglo_4['idLevel_'.$dis_4]==$arreglo_5['idLevel_'.$dis_4]){
 															
 																//Se crea la maquina
-																$a  = "'".$arreglo_5['idSistema']."'" ;          
-																$a .= ",'".$arreglo_5['idMaquina']."'" ;        
-																$a .= ",'".$arreglo_5['idUtilizable']."'" ;
-																$a .= ",'".$arreglo_5['Codigo']."'" ;
-																$a .= ",'".$arreglo_5['Nombre']."'" ;
-																$a .= ",'".$arreglo_5['Marca']."'" ;
-																$a .= ",'".$arreglo_5['Modelo']."'" ;
-																$a .= ",'".$arreglo_5['AnoFab']."'" ;
-																$a .= ",'".$arreglo_5['Serie']."'" ; 
-																$a .= ",'".$arreglo_5['idLicitacion']."'" ; 
-																$a .= ",'".$arreglo_5['tabla']."'" ; 
-																$a .= ",'".$arreglo_5['table_value']."'" ; 
-																$a .= ",'".$arreglo_5['Direccion_img']."'" ; 
-																$a .= ",'".$arreglo_5['idSubTipo']."'" ; 
-																$a .= ",'".$arreglo_5['Grasa_inicial']."'" ; 
-																$a .= ",'".$arreglo_5['Grasa_relubricacion']."'" ; 
-																$a .= ",'".$arreglo_5['Aceite']."'" ; 
-																$a .= ",'".$arreglo_5['Cantidad']."'" ; 
-																$a .= ",'".$arreglo_5['idUml']."'" ; 
-																$a .= ",'".$arreglo_5['Frecuencia']."'" ; 
-																$a .= ",'".$arreglo_5['idFrecuencia']."'" ; 
-																$a .= ",'".$arreglo_5['idProducto']."'" ; 
-																$a .= ",'".$arreglo_5['Saf']."'" ; 
-																$a .= ",'".$arreglo_5['Numero']."'" ; 
+																$SIS_data  = "'".$arreglo_5['idSistema']."'" ;          
+																$SIS_data .= ",'".$arreglo_5['idMaquina']."'" ;        
+																$SIS_data .= ",'".$arreglo_5['idUtilizable']."'" ;
+																$SIS_data .= ",'".$arreglo_5['Codigo']."'" ;
+																$SIS_data .= ",'".$arreglo_5['Nombre']."'" ;
+																$SIS_data .= ",'".$arreglo_5['Marca']."'" ;
+																$SIS_data .= ",'".$arreglo_5['Modelo']."'" ;
+																$SIS_data .= ",'".$arreglo_5['AnoFab']."'" ;
+																$SIS_data .= ",'".$arreglo_5['Serie']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['idLicitacion']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['tabla']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['table_value']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['Direccion_img']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['idSubTipo']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['Grasa_inicial']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['Grasa_relubricacion']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['Aceite']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['Cantidad']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['idUml']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['Frecuencia']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['idFrecuencia']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['idProducto']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['Saf']."'" ; 
+																$SIS_data .= ",'".$arreglo_5['Numero']."'" ; 
 																
 																$cadena = '';
 																$x = 1;
-																if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
-																if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
+																if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'" ;$x++;}
 																
 																$x = 1;
-																if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-																if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-																if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-																if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-																if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-																if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-																if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-																if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-																if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-																if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-																if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-																if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-																if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-																if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-																if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-																if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-																if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-																if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-																if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-																if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-																if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-																if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-																if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-																if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-																if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-																
+																if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+																if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+																if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+																if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+																if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+																if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+																if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+																if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+																if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+																if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+																if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+																if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+																if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+																if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+																if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+																if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+																if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+																if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+																if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+																if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+																if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+																if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+																if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+																if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+																if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 																
 																// inserto los datos de registro en la db
-																$query  = "INSERT INTO `maquinas_listado_level_".$dis_5."` (idSistema, idMaquina, idUtilizable, 
+																$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 																Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																VALUES (".$a.")";
-																//Consulta
-																$resultado = mysqli_query ($dbConn, $query);
-																//Si ejecuto correctamente la consulta
-																if(!$resultado){
-																	//Genero numero aleatorio
-																	$vardata = genera_password(8,'alfanumerico');
-																	
-																	//Guardo el error en una variable temporal
-																	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																}
-																$id_lvl[$dis_5] = mysqli_insert_id($dbConn);
-																
+																idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																$id_lvl[$dis_5] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																			
 																/////////////////////////////////////////////////
 																if(isset($arrLVL[$dis_6])){
 																	foreach ($arrLVL[$dis_6] as $arreglo_6) {
@@ -3502,107 +2507,93 @@ require_once '0_validate_user_1.php';
 																		if($arreglo_5['idLevel_'.$dis_5]==$arreglo_6['idLevel_'.$dis_5]){
 																		
 																			//Se crea la maquina
-																			$a  = "'".$arreglo_6['idSistema']."'" ;          
-																			$a .= ",'".$arreglo_6['idMaquina']."'" ;        
-																			$a .= ",'".$arreglo_6['idUtilizable']."'" ;
-																			$a .= ",'".$arreglo_6['Codigo']."'" ;
-																			$a .= ",'".$arreglo_6['Nombre']."'" ;
-																			$a .= ",'".$arreglo_6['Marca']."'" ;
-																			$a .= ",'".$arreglo_6['Modelo']."'" ;
-																			$a .= ",'".$arreglo_6['AnoFab']."'" ;
-																			$a .= ",'".$arreglo_6['Serie']."'" ; 
-																			$a .= ",'".$arreglo_6['idLicitacion']."'" ; 
-																			$a .= ",'".$arreglo_6['tabla']."'" ; 
-																			$a .= ",'".$arreglo_6['table_value']."'" ; 
-																			$a .= ",'".$arreglo_6['Direccion_img']."'" ; 
-																			$a .= ",'".$arreglo_6['idSubTipo']."'" ; 
-																			$a .= ",'".$arreglo_6['Grasa_inicial']."'" ; 
-																			$a .= ",'".$arreglo_6['Grasa_relubricacion']."'" ; 
-																			$a .= ",'".$arreglo_6['Aceite']."'" ; 
-																			$a .= ",'".$arreglo_6['Cantidad']."'" ; 
-																			$a .= ",'".$arreglo_6['idUml']."'" ; 
-																			$a .= ",'".$arreglo_6['Frecuencia']."'" ; 
-																			$a .= ",'".$arreglo_6['idFrecuencia']."'" ; 
-																			$a .= ",'".$arreglo_6['idProducto']."'" ; 
-																			$a .= ",'".$arreglo_6['Saf']."'" ; 
-																			$a .= ",'".$arreglo_6['Numero']."'" ; 
+																			$SIS_data  = "'".$arreglo_6['idSistema']."'" ;          
+																			$SIS_data .= ",'".$arreglo_6['idMaquina']."'" ;        
+																			$SIS_data .= ",'".$arreglo_6['idUtilizable']."'" ;
+																			$SIS_data .= ",'".$arreglo_6['Codigo']."'" ;
+																			$SIS_data .= ",'".$arreglo_6['Nombre']."'" ;
+																			$SIS_data .= ",'".$arreglo_6['Marca']."'" ;
+																			$SIS_data .= ",'".$arreglo_6['Modelo']."'" ;
+																			$SIS_data .= ",'".$arreglo_6['AnoFab']."'" ;
+																			$SIS_data .= ",'".$arreglo_6['Serie']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['idLicitacion']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['tabla']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['table_value']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['Direccion_img']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['idSubTipo']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['Grasa_inicial']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['Grasa_relubricacion']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['Aceite']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['Cantidad']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['idUml']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['Frecuencia']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['idFrecuencia']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['idProducto']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['Saf']."'" ; 
+																			$SIS_data .= ",'".$arreglo_6['Numero']."'" ; 
 																			
 																			$cadena = '';
 																			$x = 1;
-																			if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
-																			if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
+																			if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'" ;$x++;}
 																			
 																			$x = 1;
-																			if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-																			if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-																			
+																			if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+																			if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 																			
 																			// inserto los datos de registro en la db
-																			$query  = "INSERT INTO `maquinas_listado_level_".$dis_6."` (idSistema, idMaquina, idUtilizable, 
+																			$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 																			Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																			VALUES (".$a.")";
-																			//Consulta
-																			$resultado = mysqli_query ($dbConn, $query);
-																			//Si ejecuto correctamente la consulta
-																			if(!$resultado){
-																				//Genero numero aleatorio
-																				$vardata = genera_password(8,'alfanumerico');
-																				
-																				//Guardo el error en una variable temporal
-																				$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																				$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																				$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																			}
-																			$id_lvl[$dis_6] = mysqli_insert_id($dbConn);
-																			
+																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																			$id_lvl[$dis_6] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_6, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																						
 																			/////////////////////////////////////////////////
 																			if(isset($arrLVL[$dis_7])){
 																				foreach ($arrLVL[$dis_7] as $arreglo_7) {
@@ -3610,108 +2601,93 @@ require_once '0_validate_user_1.php';
 																					if($arreglo_6['idLevel_'.$dis_6]==$arreglo_7['idLevel_'.$dis_6]){
 																					
 																						//Se crea la maquina
-																						$a  = "'".$arreglo_7['idSistema']."'" ;          
-																						$a .= ",'".$arreglo_7['idMaquina']."'" ;        
-																						$a .= ",'".$arreglo_7['idUtilizable']."'" ;
-																						$a .= ",'".$arreglo_7['Codigo']."'" ;
-																						$a .= ",'".$arreglo_7['Nombre']."'" ;
-																						$a .= ",'".$arreglo_7['Marca']."'" ;
-																						$a .= ",'".$arreglo_7['Modelo']."'" ;
-																						$a .= ",'".$arreglo_7['AnoFab']."'" ;
-																						$a .= ",'".$arreglo_7['Serie']."'" ; 
-																						$a .= ",'".$arreglo_7['idLicitacion']."'" ; 
-																						$a .= ",'".$arreglo_7['tabla']."'" ; 
-																						$a .= ",'".$arreglo_7['table_value']."'" ; 
-																						$a .= ",'".$arreglo_7['Direccion_img']."'" ; 
-																						$a .= ",'".$arreglo_7['idSubTipo']."'" ; 
-																						$a .= ",'".$arreglo_7['Grasa_inicial']."'" ; 
-																						$a .= ",'".$arreglo_7['Grasa_relubricacion']."'" ; 
-																						$a .= ",'".$arreglo_7['Aceite']."'" ; 
-																						$a .= ",'".$arreglo_7['Cantidad']."'" ; 
-																						$a .= ",'".$arreglo_7['idUml']."'" ; 
-																						$a .= ",'".$arreglo_7['Frecuencia']."'" ; 
-																						$a .= ",'".$arreglo_7['idFrecuencia']."'" ; 
-																						$a .= ",'".$arreglo_7['idProducto']."'" ; 
-																						$a .= ",'".$arreglo_7['Saf']."'" ; 
-																						$a .= ",'".$arreglo_7['Numero']."'" ; 
+																						$SIS_data  = "'".$arreglo_7['idSistema']."'" ;          
+																						$SIS_data .= ",'".$arreglo_7['idMaquina']."'" ;        
+																						$SIS_data .= ",'".$arreglo_7['idUtilizable']."'" ;
+																						$SIS_data .= ",'".$arreglo_7['Codigo']."'" ;
+																						$SIS_data .= ",'".$arreglo_7['Nombre']."'" ;
+																						$SIS_data .= ",'".$arreglo_7['Marca']."'" ;
+																						$SIS_data .= ",'".$arreglo_7['Modelo']."'" ;
+																						$SIS_data .= ",'".$arreglo_7['AnoFab']."'" ;
+																						$SIS_data .= ",'".$arreglo_7['Serie']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['idLicitacion']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['tabla']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['table_value']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['Direccion_img']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['idSubTipo']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['Grasa_inicial']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['Grasa_relubricacion']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['Aceite']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['Cantidad']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['idUml']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['Frecuencia']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['idFrecuencia']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['idProducto']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['Saf']."'" ; 
+																						$SIS_data .= ",'".$arreglo_7['Numero']."'" ; 
 																						
 																						$cadena = '';
 																						$x = 1;
-																						if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
-																						if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
+																						if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'" ;$x++;}
 																						
 																						$x = 1;
-																						if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-																						if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-																						
+																						if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+																						if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 																						
 																						// inserto los datos de registro en la db
-																						$query  = "INSERT INTO `maquinas_listado_level_".$dis_7."` (idSistema, idMaquina, idUtilizable, 
+																						$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 																						Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																						Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																						idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																						VALUES (".$a.")";
-																						//Consulta
-																						$resultado = mysqli_query ($dbConn, $query);
-																						//Si ejecuto correctamente la consulta
-																						if(!$resultado){
-																							//Genero numero aleatorio
-																							$vardata = genera_password(8,'alfanumerico');
-																							
-																							//Guardo el error en una variable temporal
-																							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																							
-																						}
-																						$id_lvl[$dis_7] = mysqli_insert_id($dbConn);
-																						
+																						idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																						$id_lvl[$dis_7] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_7, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																									
 																						/////////////////////////////////////////////////
 																						if(isset($arrLVL[$dis_8])){
 																							foreach ($arrLVL[$dis_8] as $arreglo_8) {
@@ -3719,108 +2695,93 @@ require_once '0_validate_user_1.php';
 																								if($arreglo_7['idLevel_'.$dis_7]==$arreglo_8['idLevel_'.$dis_7]){
 																								
 																									//Se crea la maquina
-																									$a  = "'".$arreglo_8['idSistema']."'" ;          
-																									$a .= ",'".$arreglo_8['idMaquina']."'" ;        
-																									$a .= ",'".$arreglo_8['idUtilizable']."'" ;
-																									$a .= ",'".$arreglo_8['Codigo']."'" ;
-																									$a .= ",'".$arreglo_8['Nombre']."'" ;
-																									$a .= ",'".$arreglo_8['Marca']."'" ;
-																									$a .= ",'".$arreglo_8['Modelo']."'" ;
-																									$a .= ",'".$arreglo_8['AnoFab']."'" ;
-																									$a .= ",'".$arreglo_8['Serie']."'" ; 
-																									$a .= ",'".$arreglo_8['idLicitacion']."'" ; 
-																									$a .= ",'".$arreglo_8['tabla']."'" ; 
-																									$a .= ",'".$arreglo_8['table_value']."'" ; 
-																									$a .= ",'".$arreglo_8['Direccion_img']."'" ; 
-																									$a .= ",'".$arreglo_8['idSubTipo']."'" ; 
-																									$a .= ",'".$arreglo_8['Grasa_inicial']."'" ; 
-																									$a .= ",'".$arreglo_8['Grasa_relubricacion']."'" ; 
-																									$a .= ",'".$arreglo_8['Aceite']."'" ; 
-																									$a .= ",'".$arreglo_8['Cantidad']."'" ; 
-																									$a .= ",'".$arreglo_8['idUml']."'" ; 
-																									$a .= ",'".$arreglo_8['Frecuencia']."'" ; 
-																									$a .= ",'".$arreglo_8['idFrecuencia']."'" ; 
-																									$a .= ",'".$arreglo_8['idProducto']."'" ; 
-																									$a .= ",'".$arreglo_8['Saf']."'" ; 
-																									$a .= ",'".$arreglo_8['Numero']."'" ; 
+																									$SIS_data  = "'".$arreglo_8['idSistema']."'" ;          
+																									$SIS_data .= ",'".$arreglo_8['idMaquina']."'" ;        
+																									$SIS_data .= ",'".$arreglo_8['idUtilizable']."'" ;
+																									$SIS_data .= ",'".$arreglo_8['Codigo']."'" ;
+																									$SIS_data .= ",'".$arreglo_8['Nombre']."'" ;
+																									$SIS_data .= ",'".$arreglo_8['Marca']."'" ;
+																									$SIS_data .= ",'".$arreglo_8['Modelo']."'" ;
+																									$SIS_data .= ",'".$arreglo_8['AnoFab']."'" ;
+																									$SIS_data .= ",'".$arreglo_8['Serie']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['idLicitacion']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['tabla']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['table_value']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['Direccion_img']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['idSubTipo']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['Grasa_inicial']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['Grasa_relubricacion']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['Aceite']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['Cantidad']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['idUml']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['Frecuencia']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['idFrecuencia']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['idProducto']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['Saf']."'" ; 
+																									$SIS_data .= ",'".$arreglo_8['Numero']."'" ; 
 																									
 																									$cadena = '';
 																									$x = 1;
-																									if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
-																									if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
+																									if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'" ;$x++;}
 																									
 																									$x = 1;
-																									if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-																									if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-																									
+																									if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+																									if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 																									
 																									// inserto los datos de registro en la db
-																									$query  = "INSERT INTO `maquinas_listado_level_".$dis_8."` (idSistema, idMaquina, idUtilizable, 
+																									$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 																									Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																									VALUES (".$a.")";
-																									//Consulta
-																									$resultado = mysqli_query ($dbConn, $query);
-																									//Si ejecuto correctamente la consulta
-																									if(!$resultado){
-																										//Genero numero aleatorio
-																										$vardata = genera_password(8,'alfanumerico');
-																										
-																										//Guardo el error en una variable temporal
-																										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																										
-																									}
-																									$id_lvl[$dis_8] = mysqli_insert_id($dbConn);
-																									
+																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																									$id_lvl[$dis_8] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_8, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																												
 																									/////////////////////////////////////////////////
 																									if(isset($arrLVL[$dis_9])){
 																										foreach ($arrLVL[$dis_9] as $arreglo_9) {
@@ -3828,108 +2789,93 @@ require_once '0_validate_user_1.php';
 																											if($arreglo_8['idLevel_'.$dis_8]==$arreglo_9['idLevel_'.$dis_8]){
 																											
 																												//Se crea la maquina
-																												$a  = "'".$arreglo_9['idSistema']."'" ;          
-																												$a .= ",'".$arreglo_9['idMaquina']."'" ;        
-																												$a .= ",'".$arreglo_9['idUtilizable']."'" ;
-																												$a .= ",'".$arreglo_9['Codigo']."'" ;
-																												$a .= ",'".$arreglo_9['Nombre']."'" ;
-																												$a .= ",'".$arreglo_9['Marca']."'" ;
-																												$a .= ",'".$arreglo_9['Modelo']."'" ;
-																												$a .= ",'".$arreglo_9['AnoFab']."'" ;
-																												$a .= ",'".$arreglo_9['Serie']."'" ; 
-																												$a .= ",'".$arreglo_9['idLicitacion']."'" ; 
-																												$a .= ",'".$arreglo_9['tabla']."'" ; 
-																												$a .= ",'".$arreglo_9['table_value']."'" ; 
-																												$a .= ",'".$arreglo_9['Direccion_img']."'" ; 
-																												$a .= ",'".$arreglo_9['idSubTipo']."'" ; 
-																												$a .= ",'".$arreglo_9['Grasa_inicial']."'" ; 
-																												$a .= ",'".$arreglo_9['Grasa_relubricacion']."'" ; 
-																												$a .= ",'".$arreglo_9['Aceite']."'" ; 
-																												$a .= ",'".$arreglo_9['Cantidad']."'" ; 
-																												$a .= ",'".$arreglo_9['idUml']."'" ; 
-																												$a .= ",'".$arreglo_9['Frecuencia']."'" ; 
-																												$a .= ",'".$arreglo_9['idFrecuencia']."'" ; 
-																												$a .= ",'".$arreglo_9['idProducto']."'" ; 
-																												$a .= ",'".$arreglo_9['Saf']."'" ; 
-																												$a .= ",'".$arreglo_9['Numero']."'" ; 
+																												$SIS_data  = "'".$arreglo_9['idSistema']."'" ;          
+																												$SIS_data .= ",'".$arreglo_9['idMaquina']."'" ;        
+																												$SIS_data .= ",'".$arreglo_9['idUtilizable']."'" ;
+																												$SIS_data .= ",'".$arreglo_9['Codigo']."'" ;
+																												$SIS_data .= ",'".$arreglo_9['Nombre']."'" ;
+																												$SIS_data .= ",'".$arreglo_9['Marca']."'" ;
+																												$SIS_data .= ",'".$arreglo_9['Modelo']."'" ;
+																												$SIS_data .= ",'".$arreglo_9['AnoFab']."'" ;
+																												$SIS_data .= ",'".$arreglo_9['Serie']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['idLicitacion']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['tabla']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['table_value']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['Direccion_img']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['idSubTipo']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['Grasa_inicial']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['Grasa_relubricacion']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['Aceite']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['Cantidad']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['idUml']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['Frecuencia']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['idFrecuencia']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['idProducto']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['Saf']."'" ; 
+																												$SIS_data .= ",'".$arreglo_9['Numero']."'" ; 
 																												
 																												$cadena = '';
 																												$x = 1;
-																												if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
-																												if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
+																												if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'" ;$x++;}
 																												
 																												$x = 1;
-																												if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-																												if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-																												
+																												if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+																												if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 																												
 																												// inserto los datos de registro en la db
-																												$query  = "INSERT INTO `maquinas_listado_level_".$dis_9."` (idSistema, idMaquina, idUtilizable, 
+																												$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 																												Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																												Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																												idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																												VALUES (".$a.")";
-																												//Consulta
-																												$resultado = mysqli_query ($dbConn, $query);
-																												//Si ejecuto correctamente la consulta
-																												if(!$resultado){
-																													//Genero numero aleatorio
-																													$vardata = genera_password(8,'alfanumerico');
-																													
-																													//Guardo el error en una variable temporal
-																													$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																													$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																													$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																													
-																												}
-																												$id_lvl[$dis_9] = mysqli_insert_id($dbConn);
-																												
+																												idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																												$id_lvl[$dis_9] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_9, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																															
 																												/////////////////////////////////////////////////
 																												if(isset($arrLVL[$dis_10])){
 																													foreach ($arrLVL[$dis_10] as $arreglo_10) {
@@ -3937,108 +2883,93 @@ require_once '0_validate_user_1.php';
 																														if($arreglo_9['idLevel_'.$dis_9]==$arreglo_10['idLevel_'.$dis_9]){
 																														
 																															//Se crea la maquina
-																															$a  = "'".$arreglo_10['idSistema']."'" ;          
-																															$a .= ",'".$arreglo_10['idMaquina']."'" ;        
-																															$a .= ",'".$arreglo_10['idUtilizable']."'" ;
-																															$a .= ",'".$arreglo_10['Codigo']."'" ;
-																															$a .= ",'".$arreglo_10['Nombre']."'" ;
-																															$a .= ",'".$arreglo_10['Marca']."'" ;
-																															$a .= ",'".$arreglo_10['Modelo']."'" ;
-																															$a .= ",'".$arreglo_10['AnoFab']."'" ;
-																															$a .= ",'".$arreglo_10['Serie']."'" ; 
-																															$a .= ",'".$arreglo_10['idLicitacion']."'" ; 
-																															$a .= ",'".$arreglo_10['tabla']."'" ; 
-																															$a .= ",'".$arreglo_10['table_value']."'" ; 
-																															$a .= ",'".$arreglo_10['Direccion_img']."'" ; 
-																															$a .= ",'".$arreglo_10['idSubTipo']."'" ; 
-																															$a .= ",'".$arreglo_10['Grasa_inicial']."'" ; 
-																															$a .= ",'".$arreglo_10['Grasa_relubricacion']."'" ; 
-																															$a .= ",'".$arreglo_10['Aceite']."'" ; 
-																															$a .= ",'".$arreglo_10['Cantidad']."'" ; 
-																															$a .= ",'".$arreglo_10['idUml']."'" ; 
-																															$a .= ",'".$arreglo_10['Frecuencia']."'" ; 
-																															$a .= ",'".$arreglo_10['idFrecuencia']."'" ; 
-																															$a .= ",'".$arreglo_10['idProducto']."'" ; 
-																															$a .= ",'".$arreglo_10['Saf']."'" ; 
-																															$a .= ",'".$arreglo_10['Numero']."'" ; 
+																															$SIS_data  = "'".$arreglo_10['idSistema']."'" ;          
+																															$SIS_data .= ",'".$arreglo_10['idMaquina']."'" ;        
+																															$SIS_data .= ",'".$arreglo_10['idUtilizable']."'" ;
+																															$SIS_data .= ",'".$arreglo_10['Codigo']."'" ;
+																															$SIS_data .= ",'".$arreglo_10['Nombre']."'" ;
+																															$SIS_data .= ",'".$arreglo_10['Marca']."'" ;
+																															$SIS_data .= ",'".$arreglo_10['Modelo']."'" ;
+																															$SIS_data .= ",'".$arreglo_10['AnoFab']."'" ;
+																															$SIS_data .= ",'".$arreglo_10['Serie']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['idLicitacion']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['tabla']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['table_value']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['Direccion_img']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['idSubTipo']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['Grasa_inicial']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['Grasa_relubricacion']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['Aceite']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['Cantidad']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['idUml']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['Frecuencia']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['idFrecuencia']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['idProducto']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['Saf']."'" ; 
+																															$SIS_data .= ",'".$arreglo_10['Numero']."'" ; 
 																															
 																															$cadena = '';
 																															$x = 1;
-																															if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
-																															if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
+																															if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'" ;$x++;}
 																															
 																															$x = 1;
-																															if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-																															if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-																															
+																															if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+																															if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 																															
 																															// inserto los datos de registro en la db
-																															$query  = "INSERT INTO `maquinas_listado_level_".$dis_10."` (idSistema, idMaquina, idUtilizable, 
+																															$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 																															Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																															VALUES (".$a.")";
-																															//Consulta
-																															$resultado = mysqli_query ($dbConn, $query);
-																															//Si ejecuto correctamente la consulta
-																															if(!$resultado){
-																																//Genero numero aleatorio
-																																$vardata = genera_password(8,'alfanumerico');
-																																
-																																//Guardo el error en una variable temporal
-																																$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																																$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																																$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																																
-																															}
-																															$id_lvl[$dis_10] = mysqli_insert_id($dbConn);
-																															
+																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																															$id_lvl[$dis_10] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_10, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																																		
 																															/////////////////////////////////////////////////
 																															if(isset($arrLVL[$dis_11])){
 																																foreach ($arrLVL[$dis_11] as $arreglo_11) {
@@ -4046,108 +2977,93 @@ require_once '0_validate_user_1.php';
 																																	if($arreglo_10['idLevel_'.$dis_10]==$arreglo_11['idLevel_'.$dis_10]){
 																																	
 																																		//Se crea la maquina
-																																		$a  = "'".$arreglo_11['idSistema']."'" ;          
-																																		$a .= ",'".$arreglo_11['idMaquina']."'" ;        
-																																		$a .= ",'".$arreglo_11['idUtilizable']."'" ;
-																																		$a .= ",'".$arreglo_11['Codigo']."'" ;
-																																		$a .= ",'".$arreglo_11['Nombre']."'" ;
-																																		$a .= ",'".$arreglo_11['Marca']."'" ;
-																																		$a .= ",'".$arreglo_11['Modelo']."'" ;
-																																		$a .= ",'".$arreglo_11['AnoFab']."'" ;
-																																		$a .= ",'".$arreglo_11['Serie']."'" ; 
-																																		$a .= ",'".$arreglo_11['idLicitacion']."'" ; 
-																																		$a .= ",'".$arreglo_11['tabla']."'" ; 
-																																		$a .= ",'".$arreglo_11['table_value']."'" ; 
-																																		$a .= ",'".$arreglo_11['Direccion_img']."'" ; 
-																																		$a .= ",'".$arreglo_11['idSubTipo']."'" ; 
-																																		$a .= ",'".$arreglo_11['Grasa_inicial']."'" ; 
-																																		$a .= ",'".$arreglo_11['Grasa_relubricacion']."'" ; 
-																																		$a .= ",'".$arreglo_11['Aceite']."'" ; 
-																																		$a .= ",'".$arreglo_11['Cantidad']."'" ; 
-																																		$a .= ",'".$arreglo_11['idUml']."'" ; 
-																																		$a .= ",'".$arreglo_11['Frecuencia']."'" ; 
-																																		$a .= ",'".$arreglo_11['idFrecuencia']."'" ; 
-																																		$a .= ",'".$arreglo_11['idProducto']."'" ; 
-																																		$a .= ",'".$arreglo_11['Saf']."'" ; 
-																																		$a .= ",'".$arreglo_11['Numero']."'" ; 
+																																		$SIS_data  = "'".$arreglo_11['idSistema']."'" ;          
+																																		$SIS_data .= ",'".$arreglo_11['idMaquina']."'" ;        
+																																		$SIS_data .= ",'".$arreglo_11['idUtilizable']."'" ;
+																																		$SIS_data .= ",'".$arreglo_11['Codigo']."'" ;
+																																		$SIS_data .= ",'".$arreglo_11['Nombre']."'" ;
+																																		$SIS_data .= ",'".$arreglo_11['Marca']."'" ;
+																																		$SIS_data .= ",'".$arreglo_11['Modelo']."'" ;
+																																		$SIS_data .= ",'".$arreglo_11['AnoFab']."'" ;
+																																		$SIS_data .= ",'".$arreglo_11['Serie']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['idLicitacion']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['tabla']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['table_value']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['Direccion_img']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['idSubTipo']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['Grasa_inicial']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['Grasa_relubricacion']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['Aceite']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['Cantidad']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['idUml']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['Frecuencia']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['idFrecuencia']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['idProducto']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['Saf']."'" ; 
+																																		$SIS_data .= ",'".$arreglo_11['Numero']."'" ; 
 																																		
 																																		$cadena = '';
 																																		$x = 1;
-																																		if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
-																																		if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
+																																		if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'" ;$x++;}
 																																		
 																																		$x = 1;
-																																		if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-																																		if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-																																		
+																																		if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+																																		if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 																																		
 																																		// inserto los datos de registro en la db
-																																		$query  = "INSERT INTO `maquinas_listado_level_".$dis_11."` (idSistema, idMaquina, idUtilizable, 
+																																		$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 																																		Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																		Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																		idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																		VALUES (".$a.")";
-																																		//Consulta
-																																		$resultado = mysqli_query ($dbConn, $query);
-																																		//Si ejecuto correctamente la consulta
-																																		if(!$resultado){
-																																			//Genero numero aleatorio
-																																			$vardata = genera_password(8,'alfanumerico');
-																																			
-																																			//Guardo el error en una variable temporal
-																																			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																																			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																																			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																																			
-																																		}
-																																		$id_lvl[$dis_11] = mysqli_insert_id($dbConn);
-																																		
+																																		idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																																		$id_lvl[$dis_11] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_11, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																																					
 																																		/////////////////////////////////////////////////
 																																		if(isset($arrLVL[$dis_12])){
 																																			foreach ($arrLVL[$dis_12] as $arreglo_12) {
@@ -4155,108 +3071,93 @@ require_once '0_validate_user_1.php';
 																																				if($arreglo_11['idLevel_'.$dis_11]==$arreglo_12['idLevel_'.$dis_11]){
 																																				
 																																					//Se crea la maquina
-																																					$a  = "'".$arreglo_12['idSistema']."'" ;          
-																																					$a .= ",'".$arreglo_12['idMaquina']."'" ;        
-																																					$a .= ",'".$arreglo_12['idUtilizable']."'" ;
-																																					$a .= ",'".$arreglo_12['Codigo']."'" ;
-																																					$a .= ",'".$arreglo_12['Nombre']."'" ;
-																																					$a .= ",'".$arreglo_12['Marca']."'" ;
-																																					$a .= ",'".$arreglo_12['Modelo']."'" ;
-																																					$a .= ",'".$arreglo_12['AnoFab']."'" ;
-																																					$a .= ",'".$arreglo_12['Serie']."'" ; 
-																																					$a .= ",'".$arreglo_12['idLicitacion']."'" ; 
-																																					$a .= ",'".$arreglo_12['tabla']."'" ; 
-																																					$a .= ",'".$arreglo_12['table_value']."'" ; 
-																																					$a .= ",'".$arreglo_12['Direccion_img']."'" ; 
-																																					$a .= ",'".$arreglo_12['idSubTipo']."'" ; 
-																																					$a .= ",'".$arreglo_12['Grasa_inicial']."'" ; 
-																																					$a .= ",'".$arreglo_12['Grasa_relubricacion']."'" ; 
-																																					$a .= ",'".$arreglo_12['Aceite']."'" ; 
-																																					$a .= ",'".$arreglo_12['Cantidad']."'" ; 
-																																					$a .= ",'".$arreglo_12['idUml']."'" ; 
-																																					$a .= ",'".$arreglo_12['Frecuencia']."'" ; 
-																																					$a .= ",'".$arreglo_12['idFrecuencia']."'" ; 
-																																					$a .= ",'".$arreglo_12['idProducto']."'" ; 
-																																					$a .= ",'".$arreglo_12['Saf']."'" ; 
-																																					$a .= ",'".$arreglo_12['Numero']."'" ; 
+																																					$SIS_data  = "'".$arreglo_12['idSistema']."'" ;          
+																																					$SIS_data .= ",'".$arreglo_12['idMaquina']."'" ;        
+																																					$SIS_data .= ",'".$arreglo_12['idUtilizable']."'" ;
+																																					$SIS_data .= ",'".$arreglo_12['Codigo']."'" ;
+																																					$SIS_data .= ",'".$arreglo_12['Nombre']."'" ;
+																																					$SIS_data .= ",'".$arreglo_12['Marca']."'" ;
+																																					$SIS_data .= ",'".$arreglo_12['Modelo']."'" ;
+																																					$SIS_data .= ",'".$arreglo_12['AnoFab']."'" ;
+																																					$SIS_data .= ",'".$arreglo_12['Serie']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['idLicitacion']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['tabla']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['table_value']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['Direccion_img']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['idSubTipo']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['Grasa_inicial']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['Grasa_relubricacion']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['Aceite']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['Cantidad']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['idUml']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['Frecuencia']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['idFrecuencia']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['idProducto']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['Saf']."'" ; 
+																																					$SIS_data .= ",'".$arreglo_12['Numero']."'" ; 
 																																					
 																																					$cadena = '';
 																																					$x = 1;
-																																					if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
-																																					if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
+																																					if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'" ;$x++;}
 																																					
 																																					$x = 1;
-																																					if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-																																					if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-																																					
+																																					if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+																																					if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 																																					
 																																					// inserto los datos de registro en la db
-																																					$query  = "INSERT INTO `maquinas_listado_level_".$dis_12."` (idSistema, idMaquina, idUtilizable, 
+																																					$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 																																					Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																					VALUES (".$a.")";
-																																					//Consulta
-																																					$resultado = mysqli_query ($dbConn, $query);
-																																					//Si ejecuto correctamente la consulta
-																																					if(!$resultado){
-																																						//Genero numero aleatorio
-																																						$vardata = genera_password(8,'alfanumerico');
-																																						
-																																						//Guardo el error en una variable temporal
-																																						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																																						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																																						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																																						
-																																					}
-																																					$id_lvl[$dis_12] = mysqli_insert_id($dbConn);
-																																					
+																																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																																					$id_lvl[$dis_12] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_12, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																																											
 																																					/////////////////////////////////////////////////
 																																					if(isset($arrLVL[$dis_13])){
 																																						foreach ($arrLVL[$dis_13] as $arreglo_13) {
@@ -4264,108 +3165,93 @@ require_once '0_validate_user_1.php';
 																																							if($arreglo_12['idLevel_'.$dis_12]==$arreglo_13['idLevel_'.$dis_12]){
 																																							
 																																								//Se crea la maquina
-																																								$a  = "'".$arreglo_13['idSistema']."'" ;          
-																																								$a .= ",'".$arreglo_13['idMaquina']."'" ;        
-																																								$a .= ",'".$arreglo_13['idUtilizable']."'" ;
-																																								$a .= ",'".$arreglo_13['Codigo']."'" ;
-																																								$a .= ",'".$arreglo_13['Nombre']."'" ;
-																																								$a .= ",'".$arreglo_13['Marca']."'" ;
-																																								$a .= ",'".$arreglo_13['Modelo']."'" ;
-																																								$a .= ",'".$arreglo_13['AnoFab']."'" ;
-																																								$a .= ",'".$arreglo_13['Serie']."'" ; 
-																																								$a .= ",'".$arreglo_13['idLicitacion']."'" ; 
-																																								$a .= ",'".$arreglo_13['tabla']."'" ; 
-																																								$a .= ",'".$arreglo_13['table_value']."'" ; 
-																																								$a .= ",'".$arreglo_13['Direccion_img']."'" ; 
-																																								$a .= ",'".$arreglo_13['idSubTipo']."'" ; 
-																																								$a .= ",'".$arreglo_13['Grasa_inicial']."'" ; 
-																																								$a .= ",'".$arreglo_13['Grasa_relubricacion']."'" ; 
-																																								$a .= ",'".$arreglo_13['Aceite']."'" ; 
-																																								$a .= ",'".$arreglo_13['Cantidad']."'" ; 
-																																								$a .= ",'".$arreglo_13['idUml']."'" ; 
-																																								$a .= ",'".$arreglo_13['Frecuencia']."'" ; 
-																																								$a .= ",'".$arreglo_13['idFrecuencia']."'" ; 
-																																								$a .= ",'".$arreglo_13['idProducto']."'" ; 
-																																								$a .= ",'".$arreglo_13['Saf']."'" ; 
-																																								$a .= ",'".$arreglo_13['Numero']."'" ;
+																																								$SIS_data  = "'".$arreglo_13['idSistema']."'" ;          
+																																								$SIS_data .= ",'".$arreglo_13['idMaquina']."'" ;        
+																																								$SIS_data .= ",'".$arreglo_13['idUtilizable']."'" ;
+																																								$SIS_data .= ",'".$arreglo_13['Codigo']."'" ;
+																																								$SIS_data .= ",'".$arreglo_13['Nombre']."'" ;
+																																								$SIS_data .= ",'".$arreglo_13['Marca']."'" ;
+																																								$SIS_data .= ",'".$arreglo_13['Modelo']."'" ;
+																																								$SIS_data .= ",'".$arreglo_13['AnoFab']."'" ;
+																																								$SIS_data .= ",'".$arreglo_13['Serie']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['idLicitacion']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['tabla']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['table_value']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['Direccion_img']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['idSubTipo']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['Grasa_inicial']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['Grasa_relubricacion']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['Aceite']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['Cantidad']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['idUml']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['Frecuencia']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['idFrecuencia']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['idProducto']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['Saf']."'" ; 
+																																								$SIS_data .= ",'".$arreglo_13['Numero']."'" ;
 																																								
 																																								$cadena = '';
 																																								$x = 1;
-																																								if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
-																																								if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
+																																								if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'" ;$x++;}
 																																								
 																																								$x = 1;
-																																								if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-																																								if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-																																								
+																																								if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+																																								if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 																																								
 																																								// inserto los datos de registro en la db
-																																								$query  = "INSERT INTO `maquinas_listado_level_".$dis_13."` (idSistema, idMaquina, idUtilizable, 
+																																								$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 																																								Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																								Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																								idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																								VALUES (".$a.")";
-																																								//Consulta
-																																								$resultado = mysqli_query ($dbConn, $query);
-																																								//Si ejecuto correctamente la consulta
-																																								if(!$resultado){
-																																									//Genero numero aleatorio
-																																									$vardata = genera_password(8,'alfanumerico');
-																																									
-																																									//Guardo el error en una variable temporal
-																																									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																																									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																																									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																																									
-																																								}
-																																								$id_lvl[$dis_13] = mysqli_insert_id($dbConn);
-																																								
+																																								idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																																								$id_lvl[$dis_13] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_13, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																																											
 																																								/////////////////////////////////////////////////
 																																								if(isset($arrLVL[$dis_14])){
 																																									foreach ($arrLVL[$dis_14] as $arreglo_14) {
@@ -4373,107 +3259,92 @@ require_once '0_validate_user_1.php';
 																																										if($arreglo_13['idLevel_'.$dis_13]==$arreglo_14['idLevel_'.$dis_13]){
 																																										
 																																											//Se crea la maquina
-																																											$a  = "'".$arreglo_14['idSistema']."'" ;          
-																																											$a .= ",'".$arreglo_14['idMaquina']."'" ;        
-																																											$a .= ",'".$arreglo_14['idUtilizable']."'" ;
-																																											$a .= ",'".$arreglo_14['Codigo']."'" ;
-																																											$a .= ",'".$arreglo_14['Nombre']."'" ;
-																																											$a .= ",'".$arreglo_14['Marca']."'" ;
-																																											$a .= ",'".$arreglo_14['Modelo']."'" ;
-																																											$a .= ",'".$arreglo_14['AnoFab']."'" ;
-																																											$a .= ",'".$arreglo_14['Serie']."'" ; 
-																																											$a .= ",'".$arreglo_14['idLicitacion']."'" ; 
-																																											$a .= ",'".$arreglo_14['tabla']."'" ; 
-																																											$a .= ",'".$arreglo_14['table_value']."'" ; 
-																																											$a .= ",'".$arreglo_14['Direccion_img']."'" ; 
-																																											$a .= ",'".$arreglo_14['idSubTipo']."'" ; 
-																																											$a .= ",'".$arreglo_14['Grasa_inicial']."'" ; 
-																																											$a .= ",'".$arreglo_14['Grasa_relubricacion']."'" ; 
-																																											$a .= ",'".$arreglo_14['Aceite']."'" ; 
-																																											$a .= ",'".$arreglo_14['Cantidad']."'" ; 
-																																											$a .= ",'".$arreglo_14['idUml']."'" ; 
-																																											$a .= ",'".$arreglo_14['Frecuencia']."'" ; 
-																																											$a .= ",'".$arreglo_14['idFrecuencia']."'" ; 
-																																											$a .= ",'".$arreglo_14['idProducto']."'" ; 
-																																											$a .= ",'".$arreglo_14['Saf']."'" ; 
-																																											$a .= ",'".$arreglo_14['Numero']."'" ; 
+																																											$SIS_data  = "'".$arreglo_14['idSistema']."'" ;          
+																																											$SIS_data .= ",'".$arreglo_14['idMaquina']."'" ;        
+																																											$SIS_data .= ",'".$arreglo_14['idUtilizable']."'" ;
+																																											$SIS_data .= ",'".$arreglo_14['Codigo']."'" ;
+																																											$SIS_data .= ",'".$arreglo_14['Nombre']."'" ;
+																																											$SIS_data .= ",'".$arreglo_14['Marca']."'" ;
+																																											$SIS_data .= ",'".$arreglo_14['Modelo']."'" ;
+																																											$SIS_data .= ",'".$arreglo_14['AnoFab']."'" ;
+																																											$SIS_data .= ",'".$arreglo_14['Serie']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['idLicitacion']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['tabla']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['table_value']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['Direccion_img']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['idSubTipo']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['Grasa_inicial']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['Grasa_relubricacion']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['Aceite']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['Cantidad']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['idUml']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['Frecuencia']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['idFrecuencia']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['idProducto']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['Saf']."'" ; 
+																																											$SIS_data .= ",'".$arreglo_14['Numero']."'" ; 
 																																											
 																																											$cadena = '';
 																																											$x = 1;
-																																											if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
-																																											if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
+																																											if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'" ;$x++;}
 																																											
 																																											$x = 1;
-																																											if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-																																											if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-																																											
+																																											if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+																																											if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 																																											
 																																											// inserto los datos de registro en la db
-																																											$query  = "INSERT INTO `maquinas_listado_level_".$dis_14."` (idSistema, idMaquina, idUtilizable, 
+																																											$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 																																											Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																											VALUES (".$a.")";
-																																											//Consulta
-																																											$resultado = mysqli_query ($dbConn, $query);
-																																											//Si ejecuto correctamente la consulta
-																																											if(!$resultado){
-																																												//Genero numero aleatorio
-																																												$vardata = genera_password(8,'alfanumerico');
-																																												
-																																												//Guardo el error en una variable temporal
-																																												$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																																												$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																																												$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																																												
-																																											}
-																																											$id_lvl[$dis_14] = mysqli_insert_id($dbConn);
+																																											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																																											$id_lvl[$dis_14] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_14, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 																																											
 																																											/////////////////////////////////////////////////
 																																											if(isset($arrLVL[$dis_15])){
@@ -4482,621 +3353,93 @@ require_once '0_validate_user_1.php';
 																																													if($arreglo_14['idLevel_'.$dis_14]==$arreglo_15['idLevel_'.$dis_14]){
 																																													
 																																														//Se crea la maquina
-																																														$a  = "'".$arreglo_15['idSistema']."'" ;          
-																																														$a .= ",'".$arreglo_15['idMaquina']."'" ;        
-																																														$a .= ",'".$arreglo_15['idUtilizable']."'" ;
-																																														$a .= ",'".$arreglo_15['Codigo']."'" ;
-																																														$a .= ",'".$arreglo_15['Nombre']."'" ;
-																																														$a .= ",'".$arreglo_15['Marca']."'" ;
-																																														$a .= ",'".$arreglo_15['Modelo']."'" ;
-																																														$a .= ",'".$arreglo_15['AnoFab']."'" ;
-																																														$a .= ",'".$arreglo_15['Serie']."'" ; 
-																																														$a .= ",'".$arreglo_15['idLicitacion']."'" ; 
-																																														$a .= ",'".$arreglo_15['tabla']."'" ; 
-																																														$a .= ",'".$arreglo_15['table_value']."'" ; 
-																																														$a .= ",'".$arreglo_15['Direccion_img']."'" ; 
-																																														$a .= ",'".$arreglo_15['idSubTipo']."'" ; 
-																																														$a .= ",'".$arreglo_15['Grasa_inicial']."'" ; 
-																																														$a .= ",'".$arreglo_15['Grasa_relubricacion']."'" ; 
-																																														$a .= ",'".$arreglo_15['Aceite']."'" ; 
-																																														$a .= ",'".$arreglo_15['Cantidad']."'" ; 
-																																														$a .= ",'".$arreglo_15['idUml']."'" ; 
-																																														$a .= ",'".$arreglo_15['Frecuencia']."'" ; 
-																																														$a .= ",'".$arreglo_15['idFrecuencia']."'" ; 
-																																														$a .= ",'".$arreglo_15['idProducto']."'" ; 
-																																														$a .= ",'".$arreglo_15['Saf']."'" ; 
-																																														$a .= ",'".$arreglo_15['Numero']."'" ; 
+																																														$SIS_data  = "'".$arreglo_15['idSistema']."'" ;          
+																																														$SIS_data .= ",'".$arreglo_15['idMaquina']."'" ;        
+																																														$SIS_data .= ",'".$arreglo_15['idUtilizable']."'" ;
+																																														$SIS_data .= ",'".$arreglo_15['Codigo']."'" ;
+																																														$SIS_data .= ",'".$arreglo_15['Nombre']."'" ;
+																																														$SIS_data .= ",'".$arreglo_15['Marca']."'" ;
+																																														$SIS_data .= ",'".$arreglo_15['Modelo']."'" ;
+																																														$SIS_data .= ",'".$arreglo_15['AnoFab']."'" ;
+																																														$SIS_data .= ",'".$arreglo_15['Serie']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['idLicitacion']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['tabla']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['table_value']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['Direccion_img']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['idSubTipo']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['Grasa_inicial']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['Grasa_relubricacion']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['Aceite']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['Cantidad']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['idUml']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['Frecuencia']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['idFrecuencia']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['idProducto']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['Saf']."'" ; 
+																																														$SIS_data .= ",'".$arreglo_15['Numero']."'" ; 
 																																														
 																																														$cadena = '';
 																																														$x = 1;
-																																														if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
-																																														if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$a .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
+																																														if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'" ;$x++;}
 																																														
 																																														$x = 1;
-																																														if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
-																																														if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$a .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
-																																														
+																																														if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'" ;$x++;}
+																																														if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'" ;$x++;}
 																																														
 																																														// inserto los datos de registro en la db
-																																														$query  = "INSERT INTO `maquinas_listado_level_".$dis_15."` (idSistema, idMaquina, idUtilizable, 
+																																														$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
 																																														Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
 																																														Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																														idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																														VALUES (".$a.")";
-																																														//Consulta
-																																														$resultado = mysqli_query ($dbConn, $query);
-																																														//Si ejecuto correctamente la consulta
-																																														if(!$resultado){
-																																															//Genero numero aleatorio
-																																															$vardata = genera_password(8,'alfanumerico');
-																																															
-																																															//Guardo el error en una variable temporal
-																																															$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-																																															$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-																																															$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																																															
-																																														}
-																																														$id_lvl[$dis_15] = mysqli_insert_id($dbConn);
+																																														idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																																														$id_lvl[$dis_15] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_15, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 																																														
-																																														/////////////////////////////////////////////////
-																																														/*if(isset($arrLVL[$dis_16])){
-																																															foreach ($arrLVL[$dis_16] as $arreglo_16) {
-																																																//Se verifica que sea el mismo sensor
-																																																if($arreglo_15['idLevel_'.$dis_15]==$arreglo_16['idLevel_'.$dis_15]){
-																																																
-																																																	//Se crea la maquina
-																																																	$a  = "'".$arreglo_16['idSistema']."'" ;          
-																																																	$a .= ",'".$arreglo_16['idMaquina']."'" ;        
-																																																	$a .= ",'".$arreglo_16['idUtilizable']."'" ;
-																																																	$a .= ",'".$arreglo_16['Codigo']."'" ;
-																																																	$a .= ",'".$arreglo_16['Nombre']."'" ;
-																																																	$a .= ",'".$arreglo_16['Marca']."'" ;
-																																																	$a .= ",'".$arreglo_16['Modelo']."'" ;
-																																																	$a .= ",'".$arreglo_16['AnoFab']."'" ;
-																																																	$a .= ",'".$arreglo_16['Serie']."'" ; 
-																																																	$a .= ",'".$arreglo_16['idLicitacion']."'" ; 
-																																																	$a .= ",'".$arreglo_16['tabla']."'" ; 
-																																																	$a .= ",'".$arreglo_16['table_value']."'" ; 
-																																																	$a .= ",'".$arreglo_16['Direccion_img']."'" ; 
-																																																	$a .= ",'".$arreglo_16['idSubTipo']."'" ; 
-																																																	$a .= ",'".$arreglo_16['Grasa_inicial']."'" ; 
-																																																	$a .= ",'".$arreglo_16['Grasa_relubricacion']."'" ; 
-																																																	$a .= ",'".$arreglo_16['Aceite']."'" ; 
-																																																	$a .= ",'".$arreglo_16['Cantidad']."'" ; 
-																																																	$a .= ",'".$arreglo_16['idUml']."'" ; 
-																																																	$a .= ",'".$arreglo_16['Frecuencia']."'" ; 
-																																																	$a .= ",'".$arreglo_16['idFrecuencia']."'" ; 
-																																																	$a .= ",'".$arreglo_16['idProducto']."'" ; 
-																																																	$a .= ",'".$arreglo_16['Saf']."'" ; 
-																																																	$a .= ",'".$arreglo_16['Numero']."'" ; 
-																																																	
-																																																	//creo cadena con los idLevel
-																																																	$cadena = '';
-																																																	for ($x = $dis_1; $x > 1; $x--) {
-																																																		$cadena .= ',idLevel_'.$x;
-																																																		$a .= ",'".$arreglo_16['idLevel_'.$x]."'" ;
-																																																	}
-																																																	//creo cadena con los idLevel
-																																																	for ($x = $dis_15; $x > $lvl; $x--) {
-																																																		$cadena .= ',idLevel_'.$x;
-																																																		$a .= ",'".$id_lvl[$x]."'" ;
-																																																	}
-																																																	
-																																																	// inserto los datos de registro en la db
-																																																	$query  = "INSERT INTO `maquinas_listado_level_".$dis_16."` (idSistema, idMaquina, idUtilizable, 
-																																																	Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																	VALUES (".$a.")";
-																																																	$result = mysqli_query($dbConn, $query);
-																																																	$id_lvl[$dis_16] = mysqli_insert_id($dbConn);
-																																																	
-																																																	/////////////////////////////////////////////////
-																																																	/*if(isset($arrLVL[$dis_17])){
-																																																		foreach ($arrLVL[$dis_17] as $arreglo_17) {
-																																																			//Se verifica que sea el mismo sensor
-																																																			if($arreglo_16['idLevel_'.$dis_16]==$arreglo_17['idLevel_'.$dis_16]){
-																																																			
-																																																				//Se crea la maquina
-																																																				$a  = "'".$arreglo_17['idSistema']."'" ;          
-																																																				$a .= ",'".$arreglo_17['idMaquina']."'" ;        
-																																																				$a .= ",'".$arreglo_17['idUtilizable']."'" ;
-																																																				$a .= ",'".$arreglo_17['Codigo']."'" ;
-																																																				$a .= ",'".$arreglo_17['Nombre']."'" ;
-																																																				$a .= ",'".$arreglo_17['Marca']."'" ;
-																																																				$a .= ",'".$arreglo_17['Modelo']."'" ;
-																																																				$a .= ",'".$arreglo_17['AnoFab']."'" ;
-																																																				$a .= ",'".$arreglo_17['Serie']."'" ; 
-																																																				$a .= ",'".$arreglo_17['idLicitacion']."'" ; 
-																																																				$a .= ",'".$arreglo_17['tabla']."'" ; 
-																																																				$a .= ",'".$arreglo_17['table_value']."'" ; 
-																																																				$a .= ",'".$arreglo_17['Direccion_img']."'" ; 
-																																																				$a .= ",'".$arreglo_17['idSubTipo']."'" ; 
-																																																				$a .= ",'".$arreglo_17['Grasa_inicial']."'" ; 
-																																																				$a .= ",'".$arreglo_17['Grasa_relubricacion']."'" ; 
-																																																				$a .= ",'".$arreglo_17['Aceite']."'" ; 
-																																																				$a .= ",'".$arreglo_17['Cantidad']."'" ; 
-																																																				$a .= ",'".$arreglo_17['idUml']."'" ; 
-																																																				$a .= ",'".$arreglo_17['Frecuencia']."'" ; 
-																																																				$a .= ",'".$arreglo_17['idFrecuencia']."'" ; 
-																																																				$a .= ",'".$arreglo_17['idProducto']."'" ; 
-																																																				$a .= ",'".$arreglo_17['Saf']."'" ; 
-																																																				$a .= ",'".$arreglo_17['Numero']."'" ; 
-																																																				
-																																																				//creo cadena con los idLevel
-																																																				$cadena = '';
-																																																				for ($x = $dis_1; $x > 1; $x--) {
-																																																					$cadena .= ',idLevel_'.$x;
-																																																					$a .= ",'".$arreglo_17['idLevel_'.$x]."'" ;
-																																																				}
-																																																				//creo cadena con los idLevel
-																																																				for ($x = $dis_16; $x > $lvl; $x--) {
-																																																					$cadena .= ',idLevel_'.$x;
-																																																					$a .= ",'".$id_lvl[$x]."'" ;
-																																																				}
-																																																				
-																																																				// inserto los datos de registro en la db
-																																																				$query  = "INSERT INTO `maquinas_listado_level_".$dis_17."` (idSistema, idMaquina, idUtilizable, 
-																																																				Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																				Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																				idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																				VALUES (".$a.")";
-																																																				$result = mysqli_query($dbConn, $query);
-																																																				$id_lvl[$dis_17] = mysqli_insert_id($dbConn);
-																																																				
-																																																				/////////////////////////////////////////////////
-																																																				/*if(isset($arrLVL[$dis_18])){
-																																																					foreach ($arrLVL[$dis_18] as $arreglo_18) {
-																																																						//Se verifica que sea el mismo sensor
-																																																						if($arreglo_17['idLevel_'.$dis_17]==$arreglo_18['idLevel_'.$dis_17]){
-																																																						
-																																																							//Se crea la maquina
-																																																							$a  = "'".$arreglo_18['idSistema']."'" ;          
-																																																							$a .= ",'".$arreglo_18['idMaquina']."'" ;        
-																																																							$a .= ",'".$arreglo_18['idUtilizable']."'" ;
-																																																							$a .= ",'".$arreglo_18['Codigo']."'" ;
-																																																							$a .= ",'".$arreglo_18['Nombre']."'" ;
-																																																							$a .= ",'".$arreglo_18['Marca']."'" ;
-																																																							$a .= ",'".$arreglo_18['Modelo']."'" ;
-																																																							$a .= ",'".$arreglo_18['AnoFab']."'" ;
-																																																							$a .= ",'".$arreglo_18['Serie']."'" ; 
-																																																							$a .= ",'".$arreglo_18['idLicitacion']."'" ; 
-																																																							$a .= ",'".$arreglo_18['tabla']."'" ; 
-																																																							$a .= ",'".$arreglo_18['table_value']."'" ; 
-																																																							$a .= ",'".$arreglo_18['Direccion_img']."'" ; 
-																																																							$a .= ",'".$arreglo_18['idSubTipo']."'" ; 
-																																																							$a .= ",'".$arreglo_18['Grasa_inicial']."'" ; 
-																																																							$a .= ",'".$arreglo_18['Grasa_relubricacion']."'" ; 
-																																																							$a .= ",'".$arreglo_18['Aceite']."'" ; 
-																																																							$a .= ",'".$arreglo_18['Cantidad']."'" ; 
-																																																							$a .= ",'".$arreglo_18['idUml']."'" ; 
-																																																							$a .= ",'".$arreglo_18['Frecuencia']."'" ; 
-																																																							$a .= ",'".$arreglo_18['idFrecuencia']."'" ; 
-																																																							$a .= ",'".$arreglo_18['idProducto']."'" ; 
-																																																							$a .= ",'".$arreglo_18['Saf']."'" ; 
-																																																							$a .= ",'".$arreglo_18['Numero']."'" ; 
-																																																							
-																																																							//creo cadena con los idLevel
-																																																							$cadena = '';
-																																																							for ($x = $dis_1; $x > 1; $x--) {
-																																																								$cadena .= ',idLevel_'.$x;
-																																																								$a .= ",'".$arreglo_18['idLevel_'.$x]."'" ;
-																																																							}
-																																																							//creo cadena con los idLevel
-																																																							for ($x = $dis_17; $x > $lvl; $x--) {
-																																																								$cadena .= ',idLevel_'.$x;
-																																																								$a .= ",'".$id_lvl[$x]."'" ;
-																																																							}
-																																																							
-																																																							// inserto los datos de registro en la db
-																																																							$query  = "INSERT INTO `maquinas_listado_level_".$dis_18."` (idSistema, idMaquina, idUtilizable, 
-																																																							Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																							VALUES (".$a.")";
-																																																							$result = mysqli_query($dbConn, $query);
-																																																							$id_lvl[$dis_18] = mysqli_insert_id($dbConn);
-																																																							
-																																																							/////////////////////////////////////////////////
-																																																							/*if(isset($arrLVL[$dis_19])){
-																																																								foreach ($arrLVL[$dis_19] as $arreglo_19) {
-																																																									//Se verifica que sea el mismo sensor
-																																																									if($arreglo_18['idLevel_'.$dis_18]==$arreglo_19['idLevel_'.$dis_18]){
-																																																									
-																																																										//Se crea la maquina
-																																																										$a  = "'".$arreglo_19['idSistema']."'" ;          
-																																																										$a .= ",'".$arreglo_19['idMaquina']."'" ;        
-																																																										$a .= ",'".$arreglo_19['idUtilizable']."'" ;
-																																																										$a .= ",'".$arreglo_19['Codigo']."'" ;
-																																																										$a .= ",'".$arreglo_19['Nombre']."'" ;
-																																																										$a .= ",'".$arreglo_19['Marca']."'" ;
-																																																										$a .= ",'".$arreglo_19['Modelo']."'" ;
-																																																										$a .= ",'".$arreglo_19['AnoFab']."'" ;
-																																																										$a .= ",'".$arreglo_19['Serie']."'" ; 
-																																																										$a .= ",'".$arreglo_19['idLicitacion']."'" ; 
-																																																										$a .= ",'".$arreglo_19['tabla']."'" ; 
-																																																										$a .= ",'".$arreglo_19['table_value']."'" ; 
-																																																										$a .= ",'".$arreglo_19['Direccion_img']."'" ; 
-																																																										$a .= ",'".$arreglo_19['idSubTipo']."'" ; 
-																																																										$a .= ",'".$arreglo_19['Grasa_inicial']."'" ; 
-																																																										$a .= ",'".$arreglo_19['Grasa_relubricacion']."'" ; 
-																																																										$a .= ",'".$arreglo_19['Aceite']."'" ; 
-																																																										$a .= ",'".$arreglo_19['Cantidad']."'" ; 
-																																																										$a .= ",'".$arreglo_19['idUml']."'" ; 
-																																																										$a .= ",'".$arreglo_19['Frecuencia']."'" ; 
-																																																										$a .= ",'".$arreglo_19['idFrecuencia']."'" ; 
-																																																										$a .= ",'".$arreglo_19['idProducto']."'" ; 
-																																																										$a .= ",'".$arreglo_19['Saf']."'" ; 
-																																																										$a .= ",'".$arreglo_19['Numero']."'" ; 
-																																																										
-																																																										//creo cadena con los idLevel
-																																																										$cadena = '';
-																																																										for ($x = $dis_1; $x > 1; $x--) {
-																																																											$cadena .= ',idLevel_'.$x;
-																																																											$a .= ",'".$arreglo_19['idLevel_'.$x]."'" ;
-																																																										}
-																																																										//creo cadena con los idLevel
-																																																										for ($x = $dis_18; $x > $lvl; $x--) {
-																																																											$cadena .= ',idLevel_'.$x;
-																																																											$a .= ",'".$id_lvl[$x]."'" ;
-																																																										}
-																																																										
-																																																										// inserto los datos de registro en la db
-																																																										$query  = "INSERT INTO `maquinas_listado_level_".$dis_19."` (idSistema, idMaquina, idUtilizable, 
-																																																										Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																										Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																										idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																										VALUES (".$a.")";
-																																																										$result = mysqli_query($dbConn, $query);
-																																																										$id_lvl[$dis_19] = mysqli_insert_id($dbConn);
-																																																										
-																																																										/////////////////////////////////////////////////
-																																																										/*if(isset($arrLVL[$dis_20])){
-																																																											foreach ($arrLVL[$dis_20] as $arreglo_20) {
-																																																												//Se verifica que sea el mismo sensor
-																																																												if($arreglo_19['idLevel_'.$dis_19]==$arreglo_20['idLevel_'.$dis_19]){
-																																																												
-																																																													//Se crea la maquina
-																																																													$a  = "'".$arreglo_20['idSistema']."'" ;          
-																																																													$a .= ",'".$arreglo_20['idMaquina']."'" ;        
-																																																													$a .= ",'".$arreglo_20['idUtilizable']."'" ;
-																																																													$a .= ",'".$arreglo_20['Codigo']."'" ;
-																																																													$a .= ",'".$arreglo_20['Nombre']."'" ;
-																																																													$a .= ",'".$arreglo_20['Marca']."'" ;
-																																																													$a .= ",'".$arreglo_20['Modelo']."'" ;
-																																																													$a .= ",'".$arreglo_20['AnoFab']."'" ;
-																																																													$a .= ",'".$arreglo_20['Serie']."'" ; 
-																																																													$a .= ",'".$arreglo_20['idLicitacion']."'" ; 
-																																																													$a .= ",'".$arreglo_20['tabla']."'" ; 
-																																																													$a .= ",'".$arreglo_20['table_value']."'" ; 
-																																																													$a .= ",'".$arreglo_20['Direccion_img']."'" ; 
-																																																													$a .= ",'".$arreglo_20['idSubTipo']."'" ; 
-																																																													$a .= ",'".$arreglo_20['Grasa_inicial']."'" ; 
-																																																													$a .= ",'".$arreglo_20['Grasa_relubricacion']."'" ; 
-																																																													$a .= ",'".$arreglo_20['Aceite']."'" ; 
-																																																													$a .= ",'".$arreglo_20['Cantidad']."'" ; 
-																																																													$a .= ",'".$arreglo_20['idUml']."'" ; 
-																																																													$a .= ",'".$arreglo_20['Frecuencia']."'" ; 
-																																																													$a .= ",'".$arreglo_20['idFrecuencia']."'" ; 
-																																																													$a .= ",'".$arreglo_20['idProducto']."'" ; 
-																																																													$a .= ",'".$arreglo_20['Saf']."'" ; 
-																																																													$a .= ",'".$arreglo_20['Numero']."'" ; 
-																																																													
-																																																													//creo cadena con los idLevel
-																																																													$cadena = '';
-																																																													for ($x = $dis_1; $x > 1; $x--) {
-																																																														$cadena .= ',idLevel_'.$x;
-																																																														$a .= ",'".$arreglo_20['idLevel_'.$x]."'" ;
-																																																													}
-																																																													//creo cadena con los idLevel
-																																																													for ($x = $dis_19; $x > $lvl; $x--) {
-																																																														$cadena .= ',idLevel_'.$x;
-																																																														$a .= ",'".$id_lvl[$x]."'" ;
-																																																													}
-																																																													
-																																																													// inserto los datos de registro en la db
-																																																													$query  = "INSERT INTO `maquinas_listado_level_".$dis_20."` (idSistema, idMaquina, idUtilizable, 
-																																																													Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																													VALUES (".$a.")";
-																																																													$result = mysqli_query($dbConn, $query);
-																																																													$id_lvl[$dis_20] = mysqli_insert_id($dbConn);
-																																																													
-																																																													/////////////////////////////////////////////////
-																																																													/*if(isset($arrLVL[$dis_21])){
-																																																														foreach ($arrLVL[$dis_21] as $arreglo_21) {
-																																																															//Se verifica que sea el mismo sensor
-																																																															if($arreglo_20['idLevel_'.$dis_20]==$arreglo_21['idLevel_'.$dis_20]){
-																																																															
-																																																																//Se crea la maquina
-																																																																$a  = "'".$arreglo_21['idSistema']."'" ;          
-																																																																$a .= ",'".$arreglo_21['idMaquina']."'" ;        
-																																																																$a .= ",'".$arreglo_21['idUtilizable']."'" ;
-																																																																$a .= ",'".$arreglo_21['Codigo']."'" ;
-																																																																$a .= ",'".$arreglo_21['Nombre']."'" ;
-																																																																$a .= ",'".$arreglo_21['Marca']."'" ;
-																																																																$a .= ",'".$arreglo_21['Modelo']."'" ;
-																																																																$a .= ",'".$arreglo_21['AnoFab']."'" ;
-																																																																$a .= ",'".$arreglo_21['Serie']."'" ; 
-																																																																$a .= ",'".$arreglo_21['idLicitacion']."'" ; 
-																																																																$a .= ",'".$arreglo_21['tabla']."'" ; 
-																																																																$a .= ",'".$arreglo_21['table_value']."'" ; 
-																																																																$a .= ",'".$arreglo_21['Direccion_img']."'" ; 
-																																																																$a .= ",'".$arreglo_21['idSubTipo']."'" ; 
-																																																																$a .= ",'".$arreglo_21['Grasa_inicial']."'" ; 
-																																																																$a .= ",'".$arreglo_21['Grasa_relubricacion']."'" ; 
-																																																																$a .= ",'".$arreglo_21['Aceite']."'" ; 
-																																																																$a .= ",'".$arreglo_21['Cantidad']."'" ; 
-																																																																$a .= ",'".$arreglo_21['idUml']."'" ; 
-																																																																$a .= ",'".$arreglo_21['Frecuencia']."'" ; 
-																																																																$a .= ",'".$arreglo_21['idFrecuencia']."'" ; 
-																																																																$a .= ",'".$arreglo_21['idProducto']."'" ; 
-																																																																$a .= ",'".$arreglo_21['Saf']."'" ; 
-																																																																$a .= ",'".$arreglo_21['Numero']."'" ; 
-																																																																
-																																																																//creo cadena con los idLevel
-																																																																$cadena = '';
-																																																																for ($x = $dis_1; $x > 1; $x--) {
-																																																																	$cadena .= ',idLevel_'.$x;
-																																																																	$a .= ",'".$arreglo_21['idLevel_'.$x]."'" ;
-																																																																}
-																																																																//creo cadena con los idLevel
-																																																																for ($x = $dis_20; $x > $lvl; $x--) {
-																																																																	$cadena .= ',idLevel_'.$x;
-																																																																	$a .= ",'".$id_lvl[$x]."'" ;
-																																																																}
-																																																																
-																																																																// inserto los datos de registro en la db
-																																																																$query  = "INSERT INTO `maquinas_listado_level_".$dis_21."` (idSistema, idMaquina, idUtilizable, 
-																																																																Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																																Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																																idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																																VALUES (".$a.")";
-																																																																$result = mysqli_query($dbConn, $query);
-																																																																$id_lvl[$dis_21] = mysqli_insert_id($dbConn);
-																																																																
-																																																																/////////////////////////////////////////////////
-																																																																/*if(isset($arrLVL[$dis_22])){
-																																																																	foreach ($arrLVL[$dis_22] as $arreglo_22) {
-																																																																		//Se verifica que sea el mismo sensor
-																																																																		if($arreglo_21['idLevel_'.$dis_20]==$arreglo_22['idLevel_'.$dis_21]){
-																																																																		
-																																																																			//Se crea la maquina
-																																																																			$a  = "'".$arreglo_22['idSistema']."'" ;          
-																																																																			$a .= ",'".$arreglo_22['idMaquina']."'" ;        
-																																																																			$a .= ",'".$arreglo_22['idUtilizable']."'" ;
-																																																																			$a .= ",'".$arreglo_22['Codigo']."'" ;
-																																																																			$a .= ",'".$arreglo_22['Nombre']."'" ;
-																																																																			$a .= ",'".$arreglo_22['Marca']."'" ;
-																																																																			$a .= ",'".$arreglo_22['Modelo']."'" ;
-																																																																			$a .= ",'".$arreglo_22['AnoFab']."'" ;
-																																																																			$a .= ",'".$arreglo_22['Serie']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['idLicitacion']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['tabla']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['table_value']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['Direccion_img']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['idSubTipo']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['Grasa_inicial']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['Grasa_relubricacion']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['Aceite']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['Cantidad']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['idUml']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['Frecuencia']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['idFrecuencia']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['idProducto']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['Saf']."'" ; 
-																																																																			$a .= ",'".$arreglo_22['Numero']."'" ; 
-																																																																			
-																																																																			//creo cadena con los idLevel
-																																																																			$cadena = '';
-																																																																			for ($x = $dis_1; $x > 1; $x--) {
-																																																																				$cadena .= ',idLevel_'.$x;
-																																																																				$a .= ",'".$arreglo_22['idLevel_'.$x]."'" ;
-																																																																			}
-																																																																			//creo cadena con los idLevel
-																																																																			for ($x = $dis_21; $x > $lvl; $x--) {
-																																																																				$cadena .= ',idLevel_'.$x;
-																																																																				$a .= ",'".$id_lvl[$x]."'" ;
-																																																																			}
-																																																																			
-																																																																			// inserto los datos de registro en la db
-																																																																			$query  = "INSERT INTO `maquinas_listado_level_".$dis_22."` (idSistema, idMaquina, idUtilizable, 
-																																																																			Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																																			VALUES (".$a.")";
-																																																																			$result = mysqli_query($dbConn, $query);
-																																																																			$id_lvl[$dis_22] = mysqli_insert_id($dbConn);
-																																																																			
-																																																																			/////////////////////////////////////////////////
-																																																																			/*if(isset($arrLVL[$dis_23])){
-																																																																				foreach ($arrLVL[$dis_23] as $arreglo_23) {
-																																																																					//Se verifica que sea el mismo sensor
-																																																																					if($arreglo_22['idLevel_'.$dis_22]==$arreglo_23['idLevel_'.$dis_22]){
-																																																																					
-																																																																						//Se crea la maquina
-																																																																						$a  = "'".$arreglo_23['idSistema']."'" ;          
-																																																																						$a .= ",'".$arreglo_23['idMaquina']."'" ;        
-																																																																						$a .= ",'".$arreglo_23['idUtilizable']."'" ;
-																																																																						$a .= ",'".$arreglo_23['Codigo']."'" ;
-																																																																						$a .= ",'".$arreglo_23['Nombre']."'" ;
-																																																																						$a .= ",'".$arreglo_23['Marca']."'" ;
-																																																																						$a .= ",'".$arreglo_23['Modelo']."'" ;
-																																																																						$a .= ",'".$arreglo_23['AnoFab']."'" ;
-																																																																						$a .= ",'".$arreglo_23['Serie']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['idLicitacion']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['tabla']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['table_value']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['Direccion_img']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['idSubTipo']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['Grasa_inicial']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['Grasa_relubricacion']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['Aceite']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['Cantidad']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['idUml']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['Frecuencia']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['idFrecuencia']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['idProducto']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['Saf']."'" ; 
-																																																																						$a .= ",'".$arreglo_23['Numero']."'" ; 
-																																																																						
-																																																																						//creo cadena con los idLevel
-																																																																						$cadena = '';
-																																																																						for ($x = $dis_1; $x > 1; $x--) {
-																																																																							$cadena .= ',idLevel_'.$x;
-																																																																							$a .= ",'".$arreglo_23['idLevel_'.$x]."'" ;
-																																																																						}
-																																																																						//creo cadena con los idLevel
-																																																																						for ($x = $dis_22; $x > $lvl; $x--) {
-																																																																							$cadena .= ',idLevel_'.$x;
-																																																																							$a .= ",'".$id_lvl[$x]."'" ;
-																																																																						}
-																																																																						
-																																																																						// inserto los datos de registro en la db
-																																																																						$query  = "INSERT INTO `maquinas_listado_level_".$dis_23."` (idSistema, idMaquina, idUtilizable, 
-																																																																						Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																																						Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																																						idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																																						VALUES (".$a.")";
-																																																																						$result = mysqli_query($dbConn, $query);
-																																																																						$id_lvl[$dis_23] = mysqli_insert_id($dbConn);
-																																																																						
-																																																																						/////////////////////////////////////////////////
-																																																																						/*if(isset($arrLVL[$dis_24])){
-																																																																							foreach ($arrLVL[$dis_24] as $arreglo_24) {
-																																																																								//Se verifica que sea el mismo sensor
-																																																																								if($arreglo_23['idLevel_'.$dis_23]==$arreglo_24['idLevel_'.$dis_23]){
-																																																																								
-																																																																									//Se crea la maquina
-																																																																									$a  = "'".$arreglo_24['idSistema']."'" ;          
-																																																																									$a .= ",'".$arreglo_24['idMaquina']."'" ;        
-																																																																									$a .= ",'".$arreglo_24['idUtilizable']."'" ;
-																																																																									$a .= ",'".$arreglo_24['Codigo']."'" ;
-																																																																									$a .= ",'".$arreglo_24['Nombre']."'" ;
-																																																																									$a .= ",'".$arreglo_24['Marca']."'" ;
-																																																																									$a .= ",'".$arreglo_24['Modelo']."'" ;
-																																																																									$a .= ",'".$arreglo_24['AnoFab']."'" ;
-																																																																									$a .= ",'".$arreglo_24['Serie']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['idLicitacion']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['tabla']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['table_value']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['Direccion_img']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['idSubTipo']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['Grasa_inicial']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['Grasa_relubricacion']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['Aceite']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['Cantidad']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['idUml']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['Frecuencia']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['idFrecuencia']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['idProducto']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['Saf']."'" ; 
-																																																																									$a .= ",'".$arreglo_24['Numero']."'" ; 
-																																																																									
-																																																																									//creo cadena con los idLevel
-																																																																									$cadena = '';
-																																																																									for ($x = $dis_1; $x > 1; $x--) {
-																																																																										$cadena .= ',idLevel_'.$x;
-																																																																										$a .= ",'".$arreglo_24['idLevel_'.$x]."'" ;
-																																																																									}
-																																																																									//creo cadena con los idLevel
-																																																																									for ($x = $dis_23; $x > $lvl; $x--) {
-																																																																										$cadena .= ',idLevel_'.$x;
-																																																																										$a .= ",'".$id_lvl[$x]."'" ;
-																																																																									}
-																																																																									
-																																																																									// inserto los datos de registro en la db
-																																																																									$query  = "INSERT INTO `maquinas_listado_level_".$dis_24."` (idSistema, idMaquina, idUtilizable, 
-																																																																									Codigo, Nombre, Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																																																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
-																																																																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero ".$cadena.") 
-																																																																									VALUES (".$a.")";
-																																																																									$result = mysqli_query($dbConn, $query);
-																																																																									$id_lvl[$dis_24] = mysqli_insert_id($dbConn);
-																																																																									
-																																																																									
-																																																																								}		
-																																																																							}
-																																																																						}
-																																																																						
-																																																																					}		
-																																																																				}
-																																																																			}
-																																																																			
-																																																																		}		
-																																																																	}
-																																																																}
-																																																																
-																																																															}		
-																																																														}
-																																																													}
-																																																													
-																																																												}		
-																																																											}
-																																																										}
-																																																										
-																																																									}		
-																																																								}
-																																																							}
-																																																							
-																																																						}		
-																																																					}
-																																																				}
-																																																				
-																																																			}		
-																																																		}
-																																																	}
-																																																	
-																																																}		
-																																															}
-																																														}*/
 																																														
 																																													}		
 																																												}
@@ -5203,46 +3546,33 @@ require_once '0_validate_user_1.php';
 				
 				/*******************************************************************/
 				//filtros
-				if(isset($rowdata['idMaquina']) && $rowdata['idMaquina'] != ''){     $a  = "'".$rowdata['idMaquina']."'" ;     }else{$a  ="''";}
-				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos'] != ''){   $a .= ",'".$rowdata['cantPuntos']."'" ;   }else{$a .= ",''";}
-				if(isset($rowdata['idEstado']) && $rowdata['idEstado'] != ''){       $a .= ",'".$rowdata['idEstado']."'" ;     }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                                 $a .= ",'".$Nombre."'" ;                  }else{$a .= ",''";}
+				if(isset($rowdata['idMaquina']) && $rowdata['idMaquina'] != ''){     $SIS_data  = "'".$rowdata['idMaquina']."'" ;     }else{$SIS_data  = "''";}
+				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos'] != ''){   $SIS_data .= ",'".$rowdata['cantPuntos']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idEstado']) && $rowdata['idEstado'] != ''){       $SIS_data .= ",'".$rowdata['idEstado']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                                 $SIS_data .= ",'".$Nombre."'" ;                  }else{$SIS_data .= ",''";}
 				
 
 				for ($i = 1; $i <= 50; $i++) {
-					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i] != ''){                    $a .= ",'".$rowdata['PuntoNombre_'.$i]."'" ;           }else{$a .= ",''";}
-					if(isset($rowdata['PuntoMedAceptable_'.$i]) && $rowdata['PuntoMedAceptable_'.$i] != ''){        $a .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'" ;     }else{$a .= ",''";}
-					if(isset($rowdata['PuntoMedAlerta_'.$i]) && $rowdata['PuntoMedAlerta_'.$i] != ''){              $a .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'" ;        }else{$a .= ",''";}
-					if(isset($rowdata['PuntoMedCondenatorio_'.$i]) && $rowdata['PuntoMedCondenatorio_'.$i] != ''){  $a .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'" ;  }else{$a .= ",''";}
-					if(isset($rowdata['PuntoUltimaMed_'.$i]) && $rowdata['PuntoUltimaMed_'.$i] != ''){              $a .= ",'".$rowdata['PuntoUltimaMed_'.$i]."'" ;        }else{$a .= ",''";}
-					if(isset($rowdata['PuntoUniMed_'.$i]) && $rowdata['PuntoUniMed_'.$i] != ''){                    $a .= ",'".$rowdata['PuntoUniMed_'.$i]."'" ;           }else{$a .= ",''";}
-					if(isset($rowdata['PuntoidTipo_'.$i]) && $rowdata['PuntoidTipo_'.$i] != ''){                    $a .= ",'".$rowdata['PuntoidTipo_'.$i]."'" ;           }else{$a .= ",''";}
-					if(isset($rowdata['PuntoidGrupo_'.$i]) && $rowdata['PuntoidGrupo_'.$i] != ''){                  $a .= ",'".$rowdata['PuntoidGrupo_'.$i]."'" ;          }else{$a .= ",''";}
+					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i] != ''){                    $SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoMedAceptable_'.$i]) && $rowdata['PuntoMedAceptable_'.$i] != ''){        $SIS_data .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'" ;     }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoMedAlerta_'.$i]) && $rowdata['PuntoMedAlerta_'.$i] != ''){              $SIS_data .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoMedCondenatorio_'.$i]) && $rowdata['PuntoMedCondenatorio_'.$i] != ''){  $SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoUltimaMed_'.$i]) && $rowdata['PuntoUltimaMed_'.$i] != ''){              $SIS_data .= ",'".$rowdata['PuntoUltimaMed_'.$i]."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoUniMed_'.$i]) && $rowdata['PuntoUniMed_'.$i] != ''){                    $SIS_data .= ",'".$rowdata['PuntoUniMed_'.$i]."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoidTipo_'.$i]) && $rowdata['PuntoidTipo_'.$i] != ''){                    $SIS_data .= ",'".$rowdata['PuntoidTipo_'.$i]."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoidGrupo_'.$i]) && $rowdata['PuntoidGrupo_'.$i] != ''){                  $SIS_data .= ",'".$rowdata['PuntoidGrupo_'.$i]."'" ;          }else{$SIS_data .= ",''";}
 					
 				}
-					
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `maquinas_listado_matriz` (idMaquina,cantPuntos,idEstado, Nombre
-				".$qry.") 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idMaquina,cantPuntos,idEstado, Nombre'.$qry;
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_matriz', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&clone=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 			
@@ -5268,52 +3598,37 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                   $a  = "'".$idSistema."'" ;               }else{$a ="''";}
-				if(isset($idEstado) && $idEstado != ''){                     $a .= ",'".$idEstado."'" ;               }else{$a .=",''";}
-				if(isset($Codigo) && $Codigo != ''){                         $a .= ",'".$Codigo."'" ;                 }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){                         $a .= ",'".$Nombre."'" ;                 }else{$a .=",''";}
-				if(isset($Modelo) && $Modelo != ''){                         $a .= ",'".$Modelo."'" ;                 }else{$a .=",''";}
-				if(isset($Serie) && $Serie != ''){                           $a .= ",'".$Serie."'" ;                  }else{$a .=",''";}
-				if(isset($Fabricante) && $Fabricante != ''){                 $a .= ",'".$Fabricante."'" ;             }else{$a .=",''";}
-				if(isset($fincorporacion) && $fincorporacion != ''){         $a .= ",'".$fincorporacion."'" ;         }else{$a .=",''";}
-				if(isset($Descripcion) && $Descripcion != ''){               $a .= ",'".$Descripcion."'" ;            }else{$a .=",''";}
-				if(isset($idConfig_1) && $idConfig_1 != ''){                 $a .= ",'".$idConfig_1."'" ;             }else{$a .=",''";}
-				if(isset($idConfig_2) && $idConfig_2 != ''){                 $a .= ",'".$idConfig_2."'" ;             }else{$a .=",''";}
-				if(isset($idConfig_3) && $idConfig_3 != ''){                 $a .= ",'".$idConfig_3."'" ;             }else{$a .=",''";}
-				if(isset($idUbicacion) && $idUbicacion != ''){               $a .= ",'".$idUbicacion."'" ;            }else{$a .=",''";}
-				if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){   $a .= ",'".$idUbicacion_lvl_1."'" ;      }else{$a .=",''";}
-				if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){   $a .= ",'".$idUbicacion_lvl_2."'" ;      }else{$a .=",''";}
-				if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){   $a .= ",'".$idUbicacion_lvl_3."'" ;      }else{$a .=",''";}
-				if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){   $a .= ",'".$idUbicacion_lvl_4."'" ;      }else{$a .=",''";}
-				if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){   $a .= ",'".$idUbicacion_lvl_5."'" ;      }else{$a .=",''";}
-				if(isset($idCliente) && $idCliente != ''){                   $a .= ",'".$idCliente."'" ;              }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){                   $SIS_data  = "'".$idSistema."'" ;               }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado != ''){                     $SIS_data .= ",'".$idEstado."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($Codigo) && $Codigo != ''){                         $SIS_data .= ",'".$Codigo."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                         $SIS_data .= ",'".$Nombre."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($Modelo) && $Modelo != ''){                         $SIS_data .= ",'".$Modelo."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($Serie) && $Serie != ''){                           $SIS_data .= ",'".$Serie."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($Fabricante) && $Fabricante != ''){                 $SIS_data .= ",'".$Fabricante."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($fincorporacion) && $fincorporacion != ''){         $SIS_data .= ",'".$fincorporacion."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion != ''){               $SIS_data .= ",'".$Descripcion."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($idConfig_1) && $idConfig_1 != ''){                 $SIS_data .= ",'".$idConfig_1."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($idConfig_2) && $idConfig_2 != ''){                 $SIS_data .= ",'".$idConfig_2."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($idConfig_3) && $idConfig_3 != ''){                 $SIS_data .= ",'".$idConfig_3."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($idUbicacion) && $idUbicacion != ''){               $SIS_data .= ",'".$idUbicacion."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){   $SIS_data .= ",'".$idUbicacion_lvl_1."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){   $SIS_data .= ",'".$idUbicacion_lvl_2."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){   $SIS_data .= ",'".$idUbicacion_lvl_3."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){   $SIS_data .= ",'".$idUbicacion_lvl_4."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){   $SIS_data .= ",'".$idUbicacion_lvl_5."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente != ''){                   $SIS_data .= ",'".$idCliente."'" ;              }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `maquinas_listado` (idSistema, idEstado, Codigo, Nombre, Modelo, Serie, Fabricante,
+				$SIS_columns = 'idSistema, idEstado, Codigo, Nombre, Modelo, Serie, Fabricante,
 				fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
-				idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idCliente) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idCliente';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 		
@@ -5329,8 +3644,8 @@ require_once '0_validate_user_1.php';
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -5366,11 +3681,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 								
 							//Filtros
-							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'maquinas_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'maquinas_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -5403,8 +3718,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Direccion_img=''" ;
-			$resultado = db_update_data (false, $a, 'maquinas_listado_level_'.$_GET['lvl'], 'idLevel_'.$_GET['lvl'].' = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado_level_'.$_GET['lvl'], 'idLevel_'.$_GET['lvl'].' = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 			

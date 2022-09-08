@@ -1,11 +1,10 @@
 <?php
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -118,12 +117,14 @@ foreach ($arrGrupos as $sen) {
 	$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
 }
 
-/*********************************************************/	
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
 							 ->setLastModifiedBy($rowEmpresa['Nombre'])
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
@@ -131,15 +132,13 @@ $objPHPExcel->getProperties()->setCreator($rowEmpresa['Nombre'])
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
 
-  
- 
 /**********************************************************************************/
 /*                                    Pagina 1                                    */ 
 /**********************************************************************************/           
 //variables
 $nn = 1;
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Sistema')
             ->setCellValue('B'.$nn, 'Equipo')
             ->setCellValue('C'.$nn, 'Id Telemetria')
@@ -156,7 +155,7 @@ $nn = 2;
 foreach ($arrEquipos1 as $equip) {
 	if(isset($equip['Valor'])&&$equip['Valor']==99900){
 	
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, $equip['Sistema'])
 					->setCellValue('B'.$nn, $equip['EquipoNombre'])
 					->setCellValue('C'.$nn, $equip['EquipoId'])
@@ -173,27 +172,27 @@ foreach ($arrEquipos1 as $equip) {
 }
 						
 //seteo el nombre de la hoja
-$objPHPExcel->getActiveSheet(0)->setTitle('99900');
+$spreadsheet->getActiveSheet(0)->setTitle('99900');
 //ancho de columnas
-/*$objPHPExcel->getActiveSheet(0)->getColumnDimension('A')->setWidth(50);
-$objPHPExcel->getActiveSheet(0)->getColumnDimension('B')->setWidth(80);
-$objPHPExcel->getActiveSheet(0)->getColumnDimension('C')->setWidth(12);
-$objPHPExcel->getActiveSheet(0)->getColumnDimension('D')->setWidth(12);
-$objPHPExcel->getActiveSheet(0)->getColumnDimension('E')->setWidth(20);
-$objPHPExcel->getActiveSheet(0)->getColumnDimension('F')->setWidth(20);
-$objPHPExcel->getActiveSheet(0)->getColumnDimension('G')->setWidth(20);*/
+/*$spreadsheet->getActiveSheet(0)->getColumnDimension('A')->setWidth(50);
+$spreadsheet->getActiveSheet(0)->getColumnDimension('B')->setWidth(80);
+$spreadsheet->getActiveSheet(0)->getColumnDimension('C')->setWidth(12);
+$spreadsheet->getActiveSheet(0)->getColumnDimension('D')->setWidth(12);
+$spreadsheet->getActiveSheet(0)->getColumnDimension('E')->setWidth(20);
+$spreadsheet->getActiveSheet(0)->getColumnDimension('F')->setWidth(20);
+$spreadsheet->getActiveSheet(0)->getColumnDimension('G')->setWidth(20);*/  
 //negrita
-$objPHPExcel->getActiveSheet(0)->getStyle('A1:I1')->getFont()->setBold(true);
+$spreadsheet->getActiveSheet(0)->getStyle('A1:I1')->getFont()->setBold(true);
 //Coloreo celdas
-$objPHPExcel->getActiveSheet(0)->getStyle('A1:I1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
+$spreadsheet->getActiveSheet(0)->getStyle('A1:I1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
 //coloreo fuentes
-$objPHPExcel->getActiveSheet(0)->getStyle('A1:I1')->getFont()->getColor()->setRGB('FFFFFF');
+$spreadsheet->getActiveSheet(0)->getStyle('A1:I1')->getFont()->getColor()->setRGB('FFFFFF');
 //Pongo los bordes
-$objPHPExcel->getActiveSheet(0)->getStyle('A1:I'.$nn)->applyFromArray(
+$spreadsheet->getActiveSheet(0)->getStyle('A1:I'.$nn)->applyFromArray(
     array(
         'borders' => array(
             'allborders' => array(
-                'style' => PHPExcel_Style_Border::BORDER_THIN,
+                'style' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
                 'color' => array('rgb' => '333333')
             )
         )
@@ -205,12 +204,12 @@ $objPHPExcel->getActiveSheet(0)->getStyle('A1:I'.$nn)->applyFromArray(
 /*                                    Pagina 2                                    */ 
 /**********************************************************************************/   			
 //Se crea nueva hoja
-$objPHPExcel->createSheet();
+$spreadsheet->createSheet();
 
 //variables
 $nn = 1;
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(1)
+$spreadsheet->setActiveSheetIndex(1)
             ->setCellValue('A'.$nn, 'Sistema')
             ->setCellValue('B'.$nn, 'Equipo')
             ->setCellValue('C'.$nn, 'Id Telemetria')
@@ -227,7 +226,7 @@ $nn = 2;
 foreach ($arrEquipos1 as $equip) {
 	if(isset($equip['Valor'])&&$equip['Valor']==99901){
 	
-		$objPHPExcel->setActiveSheetIndex(1)
+		$spreadsheet->setActiveSheetIndex(1)
 					->setCellValue('A'.$nn, $equip['Sistema'])
 					->setCellValue('B'.$nn, $equip['EquipoNombre'])
 					->setCellValue('C'.$nn, $equip['EquipoId'])
@@ -244,27 +243,27 @@ foreach ($arrEquipos1 as $equip) {
 }
 						
 //seteo el nombre de la hoja
-$objPHPExcel->getActiveSheet(1)->setTitle('99901');
+$spreadsheet->getActiveSheet(1)->setTitle('99901');
 //ancho de columnas
-/*$objPHPExcel->getActiveSheet(1)->getColumnDimension('A')->setWidth(50);
-$objPHPExcel->getActiveSheet(1)->getColumnDimension('B')->setWidth(80);
-$objPHPExcel->getActiveSheet(1)->getColumnDimension('C')->setWidth(12);
-$objPHPExcel->getActiveSheet(1)->getColumnDimension('D')->setWidth(12);
-$objPHPExcel->getActiveSheet(1)->getColumnDimension('E')->setWidth(20);
-$objPHPExcel->getActiveSheet(1)->getColumnDimension('F')->setWidth(20);
-$objPHPExcel->getActiveSheet(1)->getColumnDimension('G')->setWidth(20);*/
+/*$spreadsheet->getActiveSheet(1)->getColumnDimension('A')->setWidth(50);
+$spreadsheet->getActiveSheet(1)->getColumnDimension('B')->setWidth(80);
+$spreadsheet->getActiveSheet(1)->getColumnDimension('C')->setWidth(12);
+$spreadsheet->getActiveSheet(1)->getColumnDimension('D')->setWidth(12);
+$spreadsheet->getActiveSheet(1)->getColumnDimension('E')->setWidth(20);
+$spreadsheet->getActiveSheet(1)->getColumnDimension('F')->setWidth(20);
+$spreadsheet->getActiveSheet(1)->getColumnDimension('G')->setWidth(20);*/
 //negrita
-$objPHPExcel->getActiveSheet(1)->getStyle('A1:I1')->getFont()->setBold(true);
+$spreadsheet->getActiveSheet(1)->getStyle('A1:I1')->getFont()->setBold(true);
 //Coloreo celdas
-$objPHPExcel->getActiveSheet(1)->getStyle('A1:I1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
+$spreadsheet->getActiveSheet(1)->getStyle('A1:I1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
 //coloreo fuentes
-$objPHPExcel->getActiveSheet(1)->getStyle('A1:I1')->getFont()->getColor()->setRGB('FFFFFF');
+$spreadsheet->getActiveSheet(1)->getStyle('A1:I1')->getFont()->getColor()->setRGB('FFFFFF');
 //Pongo los bordes
-$objPHPExcel->getActiveSheet(1)->getStyle('A1:I'.$nn)->applyFromArray(
+$spreadsheet->getActiveSheet(1)->getStyle('A1:I'.$nn)->applyFromArray(
     array(
         'borders' => array(
             'allborders' => array(
-                'style' => PHPExcel_Style_Border::BORDER_THIN,
+                'style' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
                 'color' => array('rgb' => '333333')
             )
         )
@@ -275,12 +274,12 @@ $objPHPExcel->getActiveSheet(1)->getStyle('A1:I'.$nn)->applyFromArray(
 /*                                    Pagina 3                                    */ 
 /**********************************************************************************/   			
 //Se crea nueva hoja
-$objPHPExcel->createSheet();
+$spreadsheet->createSheet();
 
 //variables
 $nn = 1;
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(2)
+$spreadsheet->setActiveSheetIndex(2)
             ->setCellValue('A'.$nn, 'Sistema')
             ->setCellValue('B'.$nn, 'Equipo')
             ->setCellValue('C'.$nn, 'Tab')
@@ -296,7 +295,7 @@ $nn = 2;
 foreach ($arrErrores as $error) {
 
 	
-	$objPHPExcel->setActiveSheetIndex(2)
+	$spreadsheet->setActiveSheetIndex(2)
 				->setCellValue('A'.$nn, $error['Sistema'])
 				->setCellValue('B'.$nn, $error['EquipoNombre'])
 				->setCellValue('C'.$nn, $error['EquipoTab'])
@@ -312,27 +311,27 @@ foreach ($arrErrores as $error) {
 }
 						
 //seteo el nombre de la hoja
-$objPHPExcel->getActiveSheet(2)->setTitle('Fuera de Linea');
+$spreadsheet->getActiveSheet(2)->setTitle('Fuera de Linea');
 //ancho de columnas
-/*$objPHPExcel->getActiveSheet(2)->getColumnDimension('A')->setWidth(50);
-$objPHPExcel->getActiveSheet(2)->getColumnDimension('B')->setWidth(80);
-$objPHPExcel->getActiveSheet(2)->getColumnDimension('C')->setWidth(12);
-$objPHPExcel->getActiveSheet(2)->getColumnDimension('D')->setWidth(12);
-$objPHPExcel->getActiveSheet(2)->getColumnDimension('E')->setWidth(20);
-$objPHPExcel->getActiveSheet(2)->getColumnDimension('F')->setWidth(20);
-$objPHPExcel->getActiveSheet(2)->getColumnDimension('G')->setWidth(20);*/
+/*$spreadsheet->getActiveSheet(2)->getColumnDimension('A')->setWidth(50);
+$spreadsheet->getActiveSheet(2)->getColumnDimension('B')->setWidth(80);
+$spreadsheet->getActiveSheet(2)->getColumnDimension('C')->setWidth(12);
+$spreadsheet->getActiveSheet(2)->getColumnDimension('D')->setWidth(12);
+$spreadsheet->getActiveSheet(2)->getColumnDimension('E')->setWidth(20);
+$spreadsheet->getActiveSheet(2)->getColumnDimension('F')->setWidth(20);
+$spreadsheet->getActiveSheet(2)->getColumnDimension('G')->setWidth(20);*/
 //negrita
-$objPHPExcel->getActiveSheet(2)->getStyle('A1:H1')->getFont()->setBold(true);
+$spreadsheet->getActiveSheet(2)->getStyle('A1:H1')->getFont()->setBold(true);
 //Coloreo celdas
-$objPHPExcel->getActiveSheet(2)->getStyle('A1:H1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
+$spreadsheet->getActiveSheet(2)->getStyle('A1:H1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
 //coloreo fuentes
-$objPHPExcel->getActiveSheet(2)->getStyle('A1:H1')->getFont()->getColor()->setRGB('FFFFFF');
+$spreadsheet->getActiveSheet(2)->getStyle('A1:H1')->getFont()->getColor()->setRGB('FFFFFF');
 //Pongo los bordes
-$objPHPExcel->getActiveSheet(2)->getStyle('A1:H'.$nn)->applyFromArray(
+$spreadsheet->getActiveSheet(2)->getStyle('A1:H'.$nn)->applyFromArray(
     array(
         'borders' => array(
             'allborders' => array(
-                'style' => PHPExcel_Style_Border::BORDER_THIN,
+                'style' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
                 'color' => array('rgb' => '333333')
             )
         )
@@ -343,12 +342,12 @@ $objPHPExcel->getActiveSheet(2)->getStyle('A1:H'.$nn)->applyFromArray(
 /*                                    Pagina 4                                    */ 
 /**********************************************************************************/   			
 //Se crea nueva hoja
-$objPHPExcel->createSheet();
+$spreadsheet->createSheet();
 
 //variables
 $nn = 1;
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(3)
+$spreadsheet->setActiveSheetIndex(3)
             ->setCellValue('A'.$nn, 'Sistema')
             ->setCellValue('B'.$nn, 'Equipo')
             ->setCellValue('C'.$nn, 'Tab')
@@ -362,22 +361,20 @@ $nn = 2;
 /*************************************************************/
 //Listado de fuera de linea actuales							
 foreach ($arrTelemetria as $tel) {
-	//calculo diferencia de dias
-	$n_dias = dias_transcurridos($tel['LastUpdateFecha'],fecha_actual());
-	//calculo del tiempo transcurrido
-	$Tiempo = restahoras($tel['LastUpdateHora'], hora_actual());
-	//Calculo del tiempo transcurrido
-	if($n_dias!=0){
-		if($n_dias>=2){
-			$n_dias       = $n_dias-1;
-			$horas_trans2 = multHoras('24:00:00',$n_dias);
-			$Tiempo       = sumahoras($Tiempo,$horas_trans2);
-		}
-	}
-	//imprimo
-	if($Tiempo>$tel['TiempoFueraLinea']&&$tel['TiempoFueraLinea']!='00:00:00'){
-
-		$objPHPExcel->setActiveSheetIndex(3)
+	
+	$diaInicio   = $tel['LastUpdateFecha'];
+	$diaTermino  = fecha_actual();
+	$tiempo1     = $tel['LastUpdateHora'];
+	$tiempo2     = hora_actual();
+	$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
+	
+	//Comparaciones de tiempo
+	$Time_Tiempo     = horas2segundos($Tiempo);
+	$Time_Tiempo_FL  = horas2segundos($tel['TiempoFueraLinea']);
+	$Time_Tiempo_Max = horas2segundos('48:00:00');
+	//comparacion
+	if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+		$spreadsheet->setActiveSheetIndex(3)
 					->setCellValue('A'.$nn, $tel['Sistema'])
 					->setCellValue('B'.$nn, $tel['EquipoNombre'])
 					->setCellValue('C'.$nn, $tel['EquipoTab'])
@@ -392,27 +389,27 @@ foreach ($arrTelemetria as $tel) {
 }
 						
 //seteo el nombre de la hoja
-$objPHPExcel->getActiveSheet(3)->setTitle('Fuera de Linea Actual');
+$spreadsheet->getActiveSheet(3)->setTitle('Fuera de Linea Actual');
 //ancho de columnas
-/*$objPHPExcel->getActiveSheet(3)->getColumnDimension('A')->setWidth(50);
-$objPHPExcel->getActiveSheet(3)->getColumnDimension('B')->setWidth(80);
-$objPHPExcel->getActiveSheet(3)->getColumnDimension('C')->setWidth(12);
-$objPHPExcel->getActiveSheet(3)->getColumnDimension('D')->setWidth(12);
-$objPHPExcel->getActiveSheet(3)->getColumnDimension('E')->setWidth(20);
-$objPHPExcel->getActiveSheet(3)->getColumnDimension('F')->setWidth(20);
-$objPHPExcel->getActiveSheet(3)->getColumnDimension('G')->setWidth(20);*/
+/*$spreadsheet->getActiveSheet(3)->getColumnDimension('A')->setWidth(50);
+$spreadsheet->getActiveSheet(3)->getColumnDimension('B')->setWidth(80);
+$spreadsheet->getActiveSheet(3)->getColumnDimension('C')->setWidth(12);
+$spreadsheet->getActiveSheet(3)->getColumnDimension('D')->setWidth(12);
+$spreadsheet->getActiveSheet(3)->getColumnDimension('E')->setWidth(20);
+$spreadsheet->getActiveSheet(3)->getColumnDimension('F')->setWidth(20);
+$spreadsheet->getActiveSheet(3)->getColumnDimension('G')->setWidth(20);*/
 //negrita
-$objPHPExcel->getActiveSheet(3)->getStyle('A1:F1')->getFont()->setBold(true);
+$spreadsheet->getActiveSheet(3)->getStyle('A1:F1')->getFont()->setBold(true);
 //Coloreo celdas
-$objPHPExcel->getActiveSheet(3)->getStyle('A1:F1')->getFill()->setFillType(PHPExcel_Style_Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
+$spreadsheet->getActiveSheet(3)->getStyle('A1:F1')->getFill()->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)->getStartColor()->setRGB('000000');
 //coloreo fuentes
-$objPHPExcel->getActiveSheet(3)->getStyle('A1:F1')->getFont()->getColor()->setRGB('FFFFFF');
+$spreadsheet->getActiveSheet(3)->getStyle('A1:F1')->getFont()->getColor()->setRGB('FFFFFF');
 //Pongo los bordes
-$objPHPExcel->getActiveSheet(3)->getStyle('A1:F'.$nn)->applyFromArray(
+$spreadsheet->getActiveSheet(3)->getStyle('A1:F'.$nn)->applyFromArray(
     array(
         'borders' => array(
             'allborders' => array(
-                'style' => PHPExcel_Style_Border::BORDER_THIN,
+                'style' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
                 'color' => array('rgb' => '333333')
             )
         )
@@ -420,23 +417,24 @@ $objPHPExcel->getActiveSheet(3)->getStyle('A1:F'.$nn)->applyFromArray(
 );
 /**********************************************************************************/  
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Administrador - Alertas 999.xlsx"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Administrador - Alertas 999';
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-$objWriter->setIncludeCharts(TRUE);
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

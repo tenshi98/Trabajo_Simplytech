@@ -2,25 +2,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 2, $dbConn);
-// consulto los datos
-$query = "SELECT Fecha, Titulo, Cuerpo, idSistema
-FROM `principal_calendario_listado`
-WHERE idCalendario = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
+	validaPermisoUser($rowlevel['level'], 2, $dbConn);
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+// consulto los datos
+$SIS_query = 'Fecha, Titulo, Cuerpo, idSistema,idOpciones';
+$SIS_join  = '';
+$SIS_where = 'idCalendario = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+
+?>
  
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -33,20 +24,23 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {      $x1  = $Fecha;      }else{$x1  = $rowdata['Fecha'];}
-				if(isset($Titulo)) {     $x2  = $Titulo;     }else{$x2  = $rowdata['Titulo'];}
-				if(isset($Cuerpo)) {     $x3  = $Cuerpo;     }else{$x3  = $rowdata['Cuerpo'];}
+				if(isset($Fecha)) {      $x1 = $Fecha;       }else{$x1 = $rowdata['Fecha'];}
+				if(isset($Titulo)) {     $x2 = $Titulo;      }else{$x2 = $rowdata['Titulo'];}
+				if(isset($Cuerpo)) {     $x3 = $Cuerpo;      }else{$x3 = $rowdata['Cuerpo'];}
+				if(isset($idOpciones)) { $x4 = $idOpciones;  }else{$x4 = $rowdata['idOpciones'];}
 				
-
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha del Evento','Fecha', $x1, 2);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 2);
 				$Form_Inputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
+				$Form_Inputs->form_post_data(2, '<strong>Tipo de evento: </strong>En el caso de que sea un evento publico, todos pueden verlo, en caso de que no sea un evento publico, solo podra verlo quien lo creo.' );
+				$Form_Inputs->form_select('Es un evento Publico','idOpciones', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario9999', 9999, 2);
 				$Form_Inputs->form_input_hidden('idCalendario', $_GET['id'], 2);
 				
 				?>
@@ -63,30 +57,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['view']) ) { 
-$query = "SELECT 
+//consulto
+$SIS_query = '
 principal_calendario_listado.Fecha, 
 principal_calendario_listado.Titulo, 
 principal_calendario_listado.Cuerpo,
 usuarios_listado.Nombre AS Autor,
-principal_calendario_listado.idUsuario
+principal_calendario_listado.idUsuario';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = principal_calendario_listado.idUsuario';
+$SIS_where = 'principal_calendario_listado.idCalendario = '.$_GET['view'];
+$row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-FROM `principal_calendario_listado`
-LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = principal_calendario_listado.idUsuario
-WHERE principal_calendario_listado.idCalendario = '".$_GET['view']."'  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-sm-12">
@@ -101,7 +82,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				<div class="wmd-panel">
 					
 					<div class="col-sm-4" style="margin-bottom:5px;">
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/calendario.jpg">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/calendario.jpg">
 					</div>
 					<div class="col-sm-8">
 						<h2 class="text-primary">Datos de la Agenda</h2>
@@ -112,7 +93,9 @@ $row_data = mysqli_fetch_assoc ($resultado);
 						</p>
 						
 						<h2 class="text-primary">Mensaje</h2>
-						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Cuerpo'];?></p>
+						<div class="text-muted" style="white-space: normal;">
+							<?php echo $row_data['Cuerpo'];?>
+						</div>
 					
 					
 						<?php if ($row_data['idUsuario']!=9999){?>	
@@ -146,7 +129,10 @@ $row_data = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['new']) ) {
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
+	validaPermisoUser($rowlevel['level'], 3, $dbConn); 
+}
+?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">
@@ -159,20 +145,23 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {      $x1  = $Fecha;      }else{$x1  = '';}
-				if(isset($Titulo)) {     $x2  = $Titulo;     }else{$x2  = '';}
-				if(isset($Cuerpo)) {     $x3  = $Cuerpo;     }else{$x3  = '';}
+				if(isset($Fecha)) {       $x1 = $Fecha;       }else{$x1 = '';}
+				if(isset($Titulo)) {      $x2 = $Titulo;      }else{$x2 = '';}
+				if(isset($Cuerpo)) {      $x3 = $Cuerpo;      }else{$x3 = '';}
+				if(isset($idOpciones)) {  $x4 = $idOpciones;  }else{$x4 = '';}
 				
-
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha del Evento','Fecha', $x1, 2);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 2);
 				$Form_Inputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
-				
+				$Form_Inputs->form_post_data(2, '<strong>Tipo de evento: </strong>En el caso de que sea un evento publico, todos pueden verlo, en caso de que no sea un evento publico, solo podra verlo quien lo creo.' );
+				$Form_Inputs->form_select('Es un evento Publico','idOpciones', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
+				$Form_Inputs->form_input_hidden('idUsuario9999', 9999, 2);
 				?>
 				
 				<div class="form-group">
@@ -198,45 +187,13 @@ $diaActual = dia_actual();
 $diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
-//arreglo con los meses
-$meses=array(1=>"Enero", 
-				"Febrero", 
-				"Marzo", 
-				"Abril", 
-				"Mayo", 
-				"Junio", 
-				"Julio",
-				"Agosto", 
-				"Septiembre", 
-				"Octubre", 
-				"Noviembre", 
-				"Diciembre"
-			);
-//verifico el tipo de usuario
-$z=" AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-
 //Traigo los eventos guardados en la base de datos
+$SIS_query = 'idCalendario, Titulo, Dia, idUsuario';
+$SIS_join  = '';
+$SIS_where = '(idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'].' OR idUsuario=9999) AND Ano='.$Ano.' AND Mes='.$Mes.' AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'Fecha ASC';
 $arrEventos = array();
-$query = "SELECT idCalendario, Titulo, Dia, idUsuario
-FROM `principal_calendario_listado`
-WHERE (idUsuario='".$_SESSION['usuario']['basic_data']['idUsuario']."' OR idUsuario=9999) AND Ano='".$Ano."' AND Mes='".$Mes."' ".$z." 
-ORDER BY Fecha ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrEventos,$row );
-}
+$arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEventos');
 
 ?>
 
@@ -271,7 +228,7 @@ array_push( $arrEventos,$row );
 							if (($Mes+1)==13) {$mes_adelante=1; $Ano_b=$Ano_b+1;}else{$mes_adelante=$Mes+1; }
 							?>
 							<td class="fc-header-left"><a href="<?php echo $original.'?Mes='.$mes_atras.'&Ano='.$Ano_a ?>" class="btn btn-default">‹</a></td>
-							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo $meses[$Mes]." ".$Ano?></h2></span></td>
+							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo numero_a_mes($Mes)." ".$Ano?></h2></span></td>
 							<td class="fc-header-right"><a href="<?php echo $original.'?Mes='.$mes_adelante.'&Ano='.$Ano_b ?>" class="btn btn-default">›</a></td>
 						</tr>
 					</tbody>

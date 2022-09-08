@@ -427,15 +427,15 @@ foreach ($arrFlashpoint as $datos) {
 	</div>
 	
 	
-	<div class="row">
-		<div class="col-xs-12">
+	<div class="col-xs-12">
+		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Diagnostico:</p>
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Analisis_obs_Diagnostico'];?></p>
 		</div>
 	</div>
 	
-	<div class="row">
-		<div class="col-xs-12">
+	<div class="col-xs-12">
+		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Recomendaciones:</p>
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Analisis_obs_Accion'];?></p>
 		</div>

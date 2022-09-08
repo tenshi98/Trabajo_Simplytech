@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php'; 
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -39,24 +38,17 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 	$SIS_where.= " AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 //verifico si se selecciono un equipo
-if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$SIS_where.= " AND telemetria_listado_errores.idTelemetria='".$_GET['idTelemetria']."'";
-}
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ $SIS_where.= " AND telemetria_listado_errores.idTelemetria='".$_GET['idTelemetria']."'"; }
 //verifico el tipo de error
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
-	$SIS_where.= " AND telemetria_listado_errores.idTipo='".$_GET['idTipo']."'";
-}
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){ $SIS_where.= " AND telemetria_listado_errores.idTipo='".$_GET['idTipo']."'"; }
 //verifico si esta leido
-if(isset($_GET['idLeido'])&&$_GET['idLeido']!=''){
-	$SIS_where.= " AND telemetria_listado_errores.idLeido='".$_GET['idLeido']."'";
-}
+if(isset($_GET['idLeido'])&&$_GET['idLeido']!=''){ $SIS_where.= " AND telemetria_listado_errores.idLeido='".$_GET['idLeido']."'"; }
 //Verifico el tipo de usuario que esta ingresando
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores.idTelemetria ";
 	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
-
 
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
@@ -90,23 +82,23 @@ foreach ($arrUnimed as $sen) {
 	$arrUnimedX[$sen['idUniMed']] = $sen['Nombre'];
 }
 
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator("Office 2007")
+$spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setLastModifiedBy("Office 2007")
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-
-			
-         
-            
+     
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Nombre Equipo')
             ->setCellValue('B1', 'Descripcion')
             ->setCellValue('C1', 'Fecha')
@@ -115,13 +107,11 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('F1', 'Min')
             ->setCellValue('G1', 'Max')
             ->setCellValue('H1', 'Unidad Medida');   
-               
-                                
-         
+      
 $nn=2;
 foreach ($arrErrores as $error) { 
 				
-	$objPHPExcel->setActiveSheetIndex(0)
+	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, $error['NombreEquipo'])
 				->setCellValue('B'.$nn, $error['Descripcion'])
 				->setCellValue('C'.$nn, $error['Fecha'])
@@ -130,31 +120,32 @@ foreach ($arrErrores as $error) {
 				->setCellValue('F'.$nn, $error['Valor_min'])
 				->setCellValue('G'.$nn, $error['Valor_max'])
 				->setCellValue('H'.$nn, $arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]]);
-	 $nn++;           
+	$nn++;           
    
 } 
 
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Resumen de Alertas');
-
+$spreadsheet->getActiveSheet()->setTitle('Resumen de Alertas');
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Informe de Alertas.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Informe de Alertas';
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

@@ -58,13 +58,13 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Usuario creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Usuario editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Usuario borrado correctamente';}
-if (isset($_GET['clone']))   {$error['usuario'] 	  = 'sucess/Usuario clonado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Usuario creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Usuario editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Usuario borrado correctamente';}
+if (isset($_GET['clone'])){   $error['clone']   = 'sucess/Usuario clonado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['clone_idUsuario']) ) { 
 	
 ?>
@@ -105,7 +105,7 @@ if ( ! empty($_GET['clone_idUsuario']) ) {
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 2,'fa fa-envelope-o');
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
 				$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x8, 1);
-				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Region','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');	
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
@@ -227,7 +227,6 @@ $SIS_order = 'sistema_documentos_pago.Nombre ASC';
 $arrDocumento = array();
 $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrDocumento');
 
-
 /********************************************************************************/
 /********************************************************************************/
 //Se verifican los permisos que tiene el usuario seleccionado
@@ -331,7 +330,6 @@ $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_ejecutar.php";             
 $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_finalizadas.php";                 //65 - Orden de Trabajo - Finalizadas
 $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_terminar.php";                    //66 - Orden de Trabajo - Forzar Cierre
 
-
 /******************************************************/
 //Genero los permisos
 for ($i = 1; $i <= $x_nperm; $i++) {
@@ -342,8 +340,6 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 		$prm_x[$i] = 1;
 	}
 }
-
-
 
 /******************************************************/
 $arriendos    = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4] + $prm_x[5] + $prm_x[6] + $prm_x[7] + $prm_x[8];
@@ -357,11 +353,8 @@ $x_permisos_4 = $prm_x[54] + $prm_x[55] + $prm_x[56] + $prm_x[57] + $prm_x[58];
 $x_permisos_5 = $prm_x[44] + $prm_x[45] + $prm_x[46] + $prm_x[47] + $prm_x[48] + $prm_x[49] + $prm_x[50] + $prm_x[51] + $prm_x[52] + $prm_x[53];
 $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
-
-
-
-
 ?>
+
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Resumen');?>
 </div>
@@ -654,7 +647,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 2,'fa fa-envelope-o');
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
 				$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x8, 1);
-				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Region','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');	
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');

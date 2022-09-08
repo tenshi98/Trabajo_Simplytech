@@ -122,12 +122,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Ingreso Realizado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Ingreso Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Ingreso borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Ingreso Realizado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ingreso Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ingreso borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['addFile']) ) { 
 // Se traen todos los datos del analisis
 $SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';

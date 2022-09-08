@@ -40,6 +40,11 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Codigo) && $Codigo != ''){ $Codigo = EstandarizarInput($Codigo); }
+
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Codigo)&&contar_palabras_censuradas($Codigo)!=0){  $error['Codigo'] = 'error/Edita Codigo, contiene palabras no permitidas'; }	
@@ -71,43 +76,31 @@ require_once '0_validate_user_1.php';
 				
 				/***********************************************************/
 				//Inserto el nuevo contrato
-				if(isset($idTelemetria) && $idTelemetria != ''){  $a  = "'".$idTelemetria."'" ;   }else{$a  ="''";}
-				if(isset($Codigo) && $Codigo != ''){              $a .= ",'".$Codigo."'" ;        }else{$a .=",''";}
-				if(isset($F_Inicio) && $F_Inicio != ''){          $a .= ",'".$F_Inicio."'" ;      }else{$a .=",''";}
-				if(isset($F_Termino) && $F_Termino != ''){        $a .= ",'".$F_Termino."'" ;     }else{$a .=",''";}
-						
+				if(isset($idTelemetria) && $idTelemetria != ''){  $SIS_data  = "'".$idTelemetria."'" ;   }else{$SIS_data  = "''";}
+				if(isset($Codigo) && $Codigo != ''){              $SIS_data .= ",'".$Codigo."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($F_Inicio) && $F_Inicio != ''){          $SIS_data .= ",'".$F_Inicio."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($F_Termino) && $F_Termino != ''){        $SIS_data .= ",'".$F_Termino."'" ;     }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_listado_contratos` (idTelemetria, Codigo, F_Inicio, F_Termino) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idTelemetria, Codigo, F_Inicio, F_Termino';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_contratos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
 					/***********************************************************/
 					//Actualizo la tabla de telemetria relacionado
-					$a = "idTelemetria='".$idTelemetria."'" ;
-					if(isset($ultimo_id) && $ultimo_id != ''){    $a .= ",idContrato='".$ultimo_id."'" ;}
-					if(isset($Codigo) && $Codigo != ''){          $a .= ",Codigo='".$Codigo."'" ;}
-					if(isset($F_Inicio) && $F_Inicio != ''){      $a .= ",F_Inicio='".$F_Inicio."'" ;}
-					if(isset($F_Termino) && $F_Termino != ''){    $a .= ",F_Termino='".$F_Termino."'" ;}
+					$SIS_data = "idTelemetria='".$idTelemetria."'" ;
+					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data .= ",idContrato='".$ultimo_id."'" ;}
+					if(isset($Codigo) && $Codigo != ''){          $SIS_data .= ",Codigo='".$Codigo."'" ;}
+					if(isset($F_Inicio) && $F_Inicio != ''){      $SIS_data .= ",F_Inicio='".$F_Inicio."'" ;}
+					if(isset($F_Termino) && $F_Termino != ''){    $SIS_data .= ",F_Termino='".$F_Termino."'" ;}
 					
 					/*******************************************************/
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
+						//redirijo
 						header( 'Location: '.$location.'&created=true' );
 						die;
 					}
@@ -137,26 +130,26 @@ require_once '0_validate_user_1.php';
 				
 				/***********************************************************/
 				//Actualizo el contrato
-				$a = "idContrato='".$idContrato."'" ;
-				if(isset($idTelemetria) && $idTelemetria != ''){    $a .= ",idTelemetria='".$idTelemetria."'" ;}
-				if(isset($Codigo) && $Codigo != ''){                $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($F_Inicio) && $F_Inicio != ''){            $a .= ",F_Inicio='".$F_Inicio."'" ;}
-				if(isset($F_Termino) && $F_Termino != ''){          $a .= ",F_Termino='".$F_Termino."'" ;}
+				$SIS_data = "idContrato='".$idContrato."'" ;
+				if(isset($idTelemetria) && $idTelemetria != ''){    $SIS_data .= ",idTelemetria='".$idTelemetria."'" ;}
+				if(isset($Codigo) && $Codigo != ''){                $SIS_data .= ",Codigo='".$Codigo."'" ;}
+				if(isset($F_Inicio) && $F_Inicio != ''){            $SIS_data .= ",F_Inicio='".$F_Inicio."'" ;}
+				if(isset($F_Termino) && $F_Termino != ''){          $SIS_data .= ",F_Termino='".$F_Termino."'" ;}
 				
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_listado_contratos', 'idContrato = "'.$idContrato.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_contratos', 'idContrato = "'.$idContrato.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/***********************************************************/
 				//Actualizo la tabla de telemetria relacionado
-				$a = "idTelemetria='".$idTelemetria."'" ;
-				if(isset($idContrato) && $idContrato != ''){  $a .= ",idContrato='".$idContrato."'" ;}
-				if(isset($Codigo) && $Codigo != ''){          $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($F_Inicio) && $F_Inicio != ''){      $a .= ",F_Inicio='".$F_Inicio."'" ;}
-				if(isset($F_Termino) && $F_Termino != ''){    $a .= ",F_Termino='".$F_Termino."'" ;}
+				$SIS_data = "idTelemetria='".$idTelemetria."'" ;
+				if(isset($idContrato) && $idContrato != ''){  $SIS_data .= ",idContrato='".$idContrato."'" ;}
+				if(isset($Codigo) && $Codigo != ''){          $SIS_data .= ",Codigo='".$Codigo."'" ;}
+				if(isset($F_Inicio) && $F_Inicio != ''){      $SIS_data .= ",F_Inicio='".$F_Inicio."'" ;}
+				if(isset($F_Termino) && $F_Termino != ''){    $SIS_data .= ",F_Termino='".$F_Termino."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -205,15 +198,15 @@ require_once '0_validate_user_1.php';
 				
 				/***********************************************************/
 				//Actualizo la tabla de telemetria relacionado
-				$a = "idTelemetria='".$idTelemetria."'" ;
-				$a .= ",idContrato=''" ;
-				$a .= ",Codigo=''" ;
-				$a .= ",F_Inicio=''" ;
-				$a .= ",F_Termino=''" ;
+				$SIS_data = "idTelemetria='".$idTelemetria."'" ;
+				$SIS_data .= ",idContrato=''" ;
+				$SIS_data .= ",Codigo=''" ;
+				$SIS_data .= ",F_Inicio=''" ;
+				$SIS_data .= ",F_Termino=''" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_listado', 'idContrato = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado', 'idContrato = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					header( 'Location: '.$location.'&deleted=true' );

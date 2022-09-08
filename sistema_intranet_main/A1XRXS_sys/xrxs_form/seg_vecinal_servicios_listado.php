@@ -60,6 +60,14 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){       $Nombre    = EstandarizarInput($Nombre); }
+	if(isset($Direccion) && $Direccion != ''){ $Direccion = EstandarizarInput($Direccion); }
+	if(isset($email) && $email != ''){         $email     = EstandarizarInput($email); }
+	if(isset($Web) && $Web != ''){             $Web       = EstandarizarInput($Web); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	//Verifica si el mail corresponde
@@ -132,47 +140,30 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idTipo) && $idTipo != ''){              $a  = "'".$idTipo."'" ;             }else{$a  = "''";}
-				if(isset($Nombre) && $Nombre != ''){              $a .= ",'".$Nombre."'" ;            }else{$a .= ",''";}
-				if(isset($Fono1) && $Fono1 != ''){                $a .= ",'".$Fono1."'" ;             }else{$a .= ",''";}
-				if(isset($Fono2) && $Fono2 != ''){                $a .= ",'".$Fono2."'" ;             }else{$a .= ",''";}
-				if(isset($idCiudad) && $idCiudad != ''){          $a .= ",'".$idCiudad."'" ;          }else{$a .= ",''";}
-				if(isset($idComuna) && $idComuna != ''){          $a .= ",'".$idComuna."'" ;          }else{$a .= ",''";}
-				if(isset($Direccion) && $Direccion != ''){        $a .= ",'".$Direccion."'" ;         }else{$a .= ",''";}
-				if(isset($email) && $email != ''){                $a .= ",'".$email."'" ;             }else{$a .= ",''";}
-				if(isset($Fax) && $Fax != ''){                    $a .= ",'".$Fax."'" ;               }else{$a .= ",''";}
-				if(isset($Web) && $Web != ''){                    $a .= ",'".$Web."'" ;               }else{$a .= ",''";}
-				if(isset($GeoLatitud) && $GeoLatitud != ''){      $a .= ",'".$GeoLatitud."'" ;        }else{$a .= ",''";}
-				if(isset($GeoLongitud) && $GeoLongitud != ''){    $a .= ",'".$GeoLongitud."'" ;       }else{$a .= ",''";}
-				if(isset($HoraInicio) && $HoraInicio != ''){      $a .= ",'".$HoraInicio."'" ;        }else{$a .= ",''";}
-				if(isset($HoraTermino) && $HoraTermino != ''){    $a .= ",'".$HoraTermino."'" ;       }else{$a .= ",''";}
+				if(isset($idTipo) && $idTipo != ''){              $SIS_data  = "'".$idTipo."'" ;             }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){              $SIS_data .= ",'".$Nombre."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Fono1) && $Fono1 != ''){                $SIS_data .= ",'".$Fono1."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($Fono2) && $Fono2 != ''){                $SIS_data .= ",'".$Fono2."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($idCiudad) && $idCiudad != ''){          $SIS_data .= ",'".$idCiudad."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($idComuna) && $idComuna != ''){          $SIS_data .= ",'".$idComuna."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion != ''){        $SIS_data .= ",'".$Direccion."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($email) && $email != ''){                $SIS_data .= ",'".$email."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($Fax) && $Fax != ''){                    $SIS_data .= ",'".$Fax."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($Web) && $Web != ''){                    $SIS_data .= ",'".$Web."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($GeoLatitud) && $GeoLatitud != ''){      $SIS_data .= ",'".$GeoLatitud."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($GeoLongitud) && $GeoLongitud != ''){    $SIS_data .= ",'".$GeoLongitud."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($HoraInicio) && $HoraInicio != ''){      $SIS_data .= ",'".$HoraInicio."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($HoraTermino) && $HoraTermino != ''){    $SIS_data .= ",'".$HoraTermino."'" ;       }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `seg_vecinal_servicios_listado` (idTipo, Nombre,
-				Fono1, Fono2, idCiudad, idComuna, Direccion, email, Fax,  Web, 
-				GeoLatitud, GeoLongitud, HoraInicio, HoraTermino) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idTipo, Nombre, Fono1, Fono2, idCiudad, idComuna, Direccion, email, Fax,  Web, GeoLatitud, GeoLongitud, HoraInicio, HoraTermino';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seg_vecinal_servicios_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 				
 			}
@@ -233,25 +224,25 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idServicio='".$idServicio."'" ;
-				if(isset($idTipo) && $idTipo != ''){             $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($Nombre) && $Nombre != ''){             $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Fono1) && $Fono1 != ''){               $a .= ",Fono1='".$Fono1."'" ;}
-				if(isset($Fono2) && $Fono2 != ''){               $a .= ",Fono2='".$Fono2."'" ;}
-				if(isset($idCiudad) && $idCiudad!= ''){          $a .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna!= ''){          $a .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Direccion) && $Direccion != ''){       $a .= ",Direccion='".$Direccion."'" ;}
-				if(isset($email) && $email != ''){               $a .= ",email='".$email."'" ;}
-				if(isset($Fax) && $Fax!= ''){                    $a .= ",Fax='".$Fax."'" ;}
-				if(isset($Web) && $Web!= ''){                    $a .= ",Web='".$Web."'" ;}
-				if(isset($GeoLatitud) && $GeoLatitud!= ''){      $a .= ",GeoLatitud='".$GeoLatitud."'" ;}
-				if(isset($GeoLongitud) && $GeoLongitud!= ''){    $a .= ",GeoLongitud='".$GeoLongitud."'" ;}
-				if(isset($HoraInicio) && $HoraInicio!= ''){      $a .= ",HoraInicio='".$HoraInicio."'" ;}
-				if(isset($HoraTermino) && $HoraTermino!= ''){    $a .= ",HoraTermino='".$HoraTermino."'" ;}
+				$SIS_data = "idServicio='".$idServicio."'" ;
+				if(isset($idTipo) && $idTipo != ''){             $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($Nombre) && $Nombre != ''){             $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Fono1) && $Fono1 != ''){               $SIS_data .= ",Fono1='".$Fono1."'" ;}
+				if(isset($Fono2) && $Fono2 != ''){               $SIS_data .= ",Fono2='".$Fono2."'" ;}
+				if(isset($idCiudad) && $idCiudad!= ''){          $SIS_data .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna!= ''){          $SIS_data .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){       $SIS_data .= ",Direccion='".$Direccion."'" ;}
+				if(isset($email) && $email != ''){               $SIS_data .= ",email='".$email."'" ;}
+				if(isset($Fax) && $Fax!= ''){                    $SIS_data .= ",Fax='".$Fax."'" ;}
+				if(isset($Web) && $Web!= ''){                    $SIS_data .= ",Web='".$Web."'" ;}
+				if(isset($GeoLatitud) && $GeoLatitud!= ''){      $SIS_data .= ",GeoLatitud='".$GeoLatitud."'" ;}
+				if(isset($GeoLongitud) && $GeoLongitud!= ''){    $SIS_data .= ",GeoLongitud='".$GeoLongitud."'" ;}
+				if(isset($HoraInicio) && $HoraInicio!= ''){      $SIS_data .= ",HoraInicio='".$HoraInicio."'" ;}
+				if(isset($HoraTermino) && $HoraTermino!= ''){    $SIS_data .= ",HoraTermino='".$HoraTermino."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seg_vecinal_servicios_listado', 'idServicio = "'.$idServicio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_servicios_listado', 'idServicio = "'.$idServicio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

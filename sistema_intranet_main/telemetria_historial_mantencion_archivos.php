@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit_archivo']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'new_archivo';
 	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_historial_mantencion.php';
@@ -34,8 +34,8 @@ if ( !empty($_POST['submit_archivo']) )  {
 //se borra un dato
 if ( !empty($_GET['del_archivo']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_archivo';
 	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_historial_mantencion.php';	
@@ -48,10 +48,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Archivo agregado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Archivo borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Archivo agregado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Archivo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['new']) ) { 
 //valido los permisos

@@ -92,11 +92,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Equipo creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Equipo editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Alerta creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Alerta editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Alerta borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['editItem']) ) { 
 // consulto los datos
@@ -370,6 +370,9 @@ foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombr
 									<?php if ($rowlevel['level']>=4){
 										//se verifica que el usuario no sea uno mismo
 										$ubicacion = $new_location.'&delAlarma_item='.simpleEncode($alarmas['idItem'], fecha_actual());
+										$ubicacion.='&nombre_equipo='.$_GET['nombre_equipo'];
+										$ubicacion.='&listItems='.$_GET['listItems'];
+										$ubicacion.='&idTipo='.$_GET['idTipo'];
 										$dialogo   = '¿Realmente deseas eliminar el item '.$grupo.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']].'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>								
@@ -437,7 +440,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x9, 1);
 				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x10, 1);
 				
-				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
+				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 60 minutos.<br/>- <strong>Catastrofica</strong> = cada 15 minutos.');
 				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
 				
 				$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
@@ -592,7 +595,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x9, 1);
 				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x10, 1);
 				
-				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
+				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 60 minutos.<br/>- <strong>Catastrofica</strong> = cada 15 minutos.');
 				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
 				
 				$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
@@ -741,7 +744,7 @@ LEFT JOIN `core_telemetria_tipo_alertas`           ON core_telemetria_tipo_alert
 LEFT JOIN `telemetria_listado_unidad_medida`       ON telemetria_listado_unidad_medida.idUniMed        = telemetria_listado_alarmas_perso.idUniMed
 LEFT JOIN `core_estados`                           ON core_estados.idEstado                            = telemetria_listado_alarmas_perso.idEstado';
 $SIS_where = 'telemetria_listado_alarmas_perso.idTelemetria ='.$_GET['id'];
-$SIS_order = 'telemetria_listado_alarmas_perso.idEstado ASC';
+$SIS_order = 'telemetria_listado_alarmas_perso.idEstado ASC, telemetria_listado_alarmas_perso.Nombre ASC';
 $arrAlarmas = array();
 $arrAlarmas = db_select_array (false, $SIS_query, 'telemetria_listado_alarmas_perso', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlarmas');
 
@@ -789,6 +792,7 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 						<li class=""><a href="<?php echo 'telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 						
 					</ul>

@@ -18,7 +18,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idCurso']) )         $idCurso          = $_POST['idCurso'];
 	if ( !empty($_POST['Semana']) )          $Semana           = $_POST['Semana'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -36,7 +35,7 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
-	
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -137,32 +136,20 @@ require_once '0_validate_user_1.php';
 								$File = $sufijo.$_FILES['File_Curso']['name'];
 								
 								//filtros
-								if(isset($idCurso) && $idCurso != ''){  $a  = "'".$idCurso."'" ;   }else{$a  ="''";}
-								if(isset($File) && $File != ''){        $a .= ",'".$File."'" ;     }else{$a .=",''";}
-								if(isset($Semana) && $Semana != ''){    $a .= ",'".$Semana."'" ;   }else{$a .=",''";}
+								if(isset($idCurso) && $idCurso != ''){  $SIS_data  = "'".$idCurso."'" ;   }else{$SIS_data  = "''";}
+								if(isset($File) && $File != ''){        $SIS_data .= ",'".$File."'" ;     }else{$SIS_data .= ",''";}
+								if(isset($Semana) && $Semana != ''){    $SIS_data .= ",'".$Semana."'" ;   }else{$SIS_data .= ",''";}
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `cursos_listado_documentacion` (idCurso, File, Semana) VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
+								$SIS_columns = 'idCurso, File, Semana';
+								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cursos_listado_documentacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 								//Si ejecuto correctamente la consulta
-								if($resultado){
-									
+								if($ultimo_id!=0){
+									//redirijo
 									header( 'Location: '.$location );
 									die;
-									
-								//si da error, guardar en el log de errores una copia
-								}else{
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								}
-								
-												
+								}				
 							} else {
 								$error['File_Curso']     = 'error/Ocurrio un error al mover el archivo'; 
 							}

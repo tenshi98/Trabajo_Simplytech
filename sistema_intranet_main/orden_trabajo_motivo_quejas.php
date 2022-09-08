@@ -56,11 +56,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Queja creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Queja editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Queja borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Queja creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Queja editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Queja borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos

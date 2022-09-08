@@ -51,18 +51,18 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Categoria Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Categoria Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Categoria borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Categoria Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Categoria Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Categoria borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 /********************************************/
 //se consulta
-$SIS_query = 'Nombre';
+$SIS_query = 'Nombre, idEstado';
 $SIS_join  = '';
 $SIS_where = 'idCorreosCat = '.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_cat', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
@@ -79,11 +79,14 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_cat', $SIS
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = $rowdata['Nombre'];}
-
+				if(isset($Nombre)) {      $x1 = $Nombre;     }else{$x1 = $rowdata['Nombre'];}
+				if(isset($idEstado)) {    $x2 = $idEstado;   }else{$x2 = $rowdata['idEstado'];}
+				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_select('Estado','idEstado', $x2, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
+				
 				$Form_Inputs->form_input_hidden('idCorreosCat', $_GET['id'], 2);
 				?>
 
@@ -119,6 +122,9 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+				$Form_Inputs->form_select('Estado','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
+				
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				?>
 				
 				<div class="form-group">
@@ -157,11 +163,13 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
 		case 'nombre_asc':    $order_by = 'telemetria_mnt_correos_cat.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
 		case 'nombre_desc':   $order_by = 'telemetria_mnt_correos_cat.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
+		case 'estado_asc':    $order_by = 'telemetria_mnt_correos_cat.idEstado ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
+		case 'estado_desc':   $order_by = 'telemetria_mnt_correos_cat.idEstado DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		
-		default: $order_by = 'telemetria_mnt_correos_cat.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+		default: $order_by = 'telemetria_mnt_correos_cat.idEstado ASC, telemetria_mnt_correos_cat.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
-	$order_by = 'telemetria_mnt_correos_cat.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
+	$order_by = 'telemetria_mnt_correos_cat.idEstado ASC, telemetria_mnt_correos_cat.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 }
 /**********************************************************/
 //Variable de busqueda
@@ -175,8 +183,12 @@ $cuenta_registros = db_select_nrows (false, 'idCorreosCat', 'telemetria_mnt_corr
 //Realizo la operacion para saber la cantidad de paginas que hay
 $total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
-$SIS_query = 'idCorreosCat,Nombre';
-$SIS_join  = '';
+$SIS_query = '
+telemetria_mnt_correos_cat.idCorreosCat,
+telemetria_mnt_correos_cat.Nombre,
+core_estados.Nombre AS Estado,
+telemetria_mnt_correos_cat.idEstado';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = telemetria_mnt_correos_cat.idEstado';
 $SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrCategorias = array();
 $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_cat', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
@@ -203,11 +215,13 @@ $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_cat
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = '';}
-
+				if(isset($Nombre)) {      $x1 = $Nombre;     }else{$x1 = '';}
+				if(isset($idEstado)) {    $x2 = $idEstado;   }else{$x2 = '';}
+				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
+				$Form_Inputs->form_select('Estado','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
 				?>
@@ -246,6 +260,13 @@ $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_cat
 								<a href="<?php echo $location.'&order_by=nombre_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
+						<th>
+							<div class="pull-left">Estado</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=estado_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=estado_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>				  
@@ -253,6 +274,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_cat
 				<?php foreach ($arrCategorias as $ciudad) { ?>
 					<tr class="odd">
 						<td><?php echo $ciudad['Nombre']; ?></td>
+						<td><label class="label <?php if(isset($ciudad['idEstado'])&&$ciudad['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $ciudad['Estado']; ?></label></td>	
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$ciudad['idCorreosCat']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>

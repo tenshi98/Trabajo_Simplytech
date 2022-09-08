@@ -20,10 +20,9 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Fecha']) )          $Fecha           = $_POST['Fecha'];
 	if ( !empty($_POST['Observacion']) )    $Observacion     = $_POST['Observacion'];
 
-	if ( !empty($_POST['FModificacion']) )           $FModificacion             = $_POST['FModificacion'];
-	if ( !empty($_POST['HModificacion']) )           $HModificacion             = $_POST['HModificacion'];
-	if ( !empty($_POST['idUsuarioMod']) )            $idUsuarioMod              = $_POST['idUsuarioMod'];
-	
+	if ( !empty($_POST['FModificacion']) )  $FModificacion   = $_POST['FModificacion'];
+	if ( !empty($_POST['HModificacion']) )  $HModificacion   = $_POST['HModificacion'];
+	if ( !empty($_POST['idUsuarioMod']) )   $idUsuarioMod    = $_POST['idUsuarioMod'];
 	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -42,12 +41,17 @@ require_once '0_validate_user_1.php';
 			case 'Fecha':          if(empty($Fecha)){           $error['Fecha']          = 'error/No ha ingresado la fecha';}break;
 			case 'Observacion':    if(empty($Observacion)){     $error['Observacion']    = 'error/No ha ingresado la observacion';}break;
 			
-			case 'FModificacion':            if(empty($FModificacion)){            $error['FModificacion']             = 'error/No ha ingresado la fecha de modificacion';}break;
-			case 'HModificacion':            if(empty($HModificacion)){            $error['HModificacion']             = 'error/No ha ingresado la hora de modificacion';}break;
-			case 'idUsuarioMod':             if(empty($idUsuarioMod)){             $error['idUsuarioMod']              = 'error/No ha ingresado el usuario de la modificacion';}break;
+			case 'FModificacion':  if(empty($FModificacion)){   $error['FModificacion']  = 'error/No ha ingresado la fecha de modificacion';}break;
+			case 'HModificacion':  if(empty($HModificacion)){   $error['HModificacion']  = 'error/No ha ingresado la hora de modificacion';}break;
+			case 'idUsuarioMod':   if(empty($idUsuarioMod)){    $error['idUsuarioMod']   = 'error/No ha ingresado el usuario de la modificacion';}break;
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observacion) && $Observacion != ''){ $Observacion = EstandarizarInput($Observacion); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -68,44 +72,32 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idProspecto) && $idProspecto != ''){ $a = "'".$idProspecto."'" ;     }else{$a ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){     $a .= ",'".$idUsuario."'" ;     }else{$a .= ",''";}
-				if(isset($Fecha) && $Fecha != ''){             $a .= ",'".$Fecha."'" ;         }else{$a .= ",''";}
-				if(isset($Observacion) && $Observacion != ''){ $a .= ",'".$Observacion."'" ;   }else{$a .= ",''";}
-				
+				if(isset($idProspecto) && $idProspecto != ''){ $SIS_data  = "'".$idProspecto."'" ;    }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario != ''){     $SIS_data .= ",'".$idUsuario."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){             $SIS_data .= ",'".$Fecha."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){ $SIS_data .= ",'".$Observacion."'" ;   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `prospectos_observaciones` (idProspecto, idUsuario, Fecha, Observacion) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idProspecto, idUsuario, Fecha, Observacion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'prospectos_observaciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
 					//Actualizo los datos
-					$a = "idProspecto='".$idProspecto."'" ;
-					if(isset($FModificacion) && $FModificacion!= ''){  $a .= ",FModificacion='".$FModificacion."'" ;}
-					if(isset($HModificacion) && $HModificacion!= ''){  $a .= ",HModificacion='".$HModificacion."'" ;}
-					if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $a .= ",idUsuarioMod='".$idUsuarioMod."'" ;}
+					$SIS_data = "idProspecto='".$idProspecto."'" ;
+					if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'" ;}
+					if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'" ;}
+					if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'" ;}
 					
 					/*******************************************************/
 					//se actualizan los datos
-					$resultado2 = db_update_data (false, $a, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado2 = db_update_data (false, $SIS_data, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado2==true){
 						
 						header( 'Location: '.$location.'&created=true' );
 						die;	
 					}	
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -119,42 +111,32 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idObservacion='".$idObservacion."'" ;
-				if(isset($idProspecto) && $idProspecto != ''){   $a .= ",idProspecto='".$idProspecto."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
-				if(isset($Observacion) && $Observacion != ''){   $a .= ",Observacion='".$Observacion."'" ;}
+				$SIS_data = "idObservacion='".$idObservacion."'" ;
+				if(isset($idProspecto) && $idProspecto != ''){   $SIS_data .= ",idProspecto='".$idProspecto."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
+				if(isset($Observacion) && $Observacion != ''){   $SIS_data .= ",Observacion='".$Observacion."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'prospectos_observaciones', 'idObservacion = "'.$idObservacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'prospectos_observaciones', 'idObservacion = "'.$idObservacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
 					//Actualizo los datos
-					$a = "idProspecto='".$idProspecto."'" ;
-					if(isset($FModificacion) && $FModificacion!= ''){  $a .= ",FModificacion='".$FModificacion."'" ;}
-					if(isset($HModificacion) && $HModificacion!= ''){  $a .= ",HModificacion='".$HModificacion."'" ;}
-					if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $a .= ",idUsuarioMod='".$idUsuarioMod."'" ;}
+					$SIS_data = "idProspecto='".$idProspecto."'" ;
+					if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'" ;}
+					if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'" ;}
+					if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'" ;}
 					
 					/*******************************************************/
 					//se actualizan los datos
-					$resultado2 = db_update_data (false, $a, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado2 = db_update_data (false, $SIS_data, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado2==true){
-						
+						//redirijo
 						header( 'Location: '.$location.'&edited=true' );
 						die;	
-					//si da error, guardar en el log de errores una copia
-					}else{
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-							
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
 					}	
 					
 				}

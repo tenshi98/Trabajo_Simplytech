@@ -46,10 +46,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['fecha_dia_5']) )       $fecha_dia_5        = $_POST['fecha_dia_5'];
 	if ( !empty($_POST['fecha_dia_6']) )       $fecha_dia_6        = $_POST['fecha_dia_6'];
 	if ( !empty($_POST['fecha_dia_7']) )       $fecha_dia_7        = $_POST['fecha_dia_7'];
-	
-	
 				
-					
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -73,9 +70,13 @@ require_once '0_validate_user_1.php';
 			case 'idTrabajador':    if(empty($idTrabajador)){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}break;
 			case 'idTurnos':        if(empty($idTurnos)){         $error['idTurnos']         = 'error/No ha seleccionado el turno';}break;
 			
-			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -91,7 +92,6 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-
 /*******************************************************************************************************************/
 /*                                                                                                                 */
 /*                                                        INGRESOS                                                 */
@@ -545,7 +545,7 @@ require_once '0_validate_user_1.php';
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
 						//Sufijo
-						$sufijo = 'hhee_ingreso_'.fecha_actual().'_';
+						$sufijo = 'hhee_ingreso_'.genera_password_unica().'_';
 					  
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
@@ -650,44 +650,30 @@ require_once '0_validate_user_1.php';
 				/******************************************************************************************/
 				/******************************************************************************************/
 				//Se guardan los datos basicos
-				if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){            $a  = "'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ;   }else{$a  = "''";}
-				if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ;  }else{$a .= ",''";}
-				if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){          $a .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$a .= ",''";}
+				if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){            $SIS_data  = "'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ;   }else{$SIS_data  = "''";}
+				if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['horas_extras_ing_basicos']['Creacion_fecha']) && $_SESSION['horas_extras_ing_basicos']['Creacion_fecha'] != ''){  
-					$a .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
-					$a .= ",'".fecha2NSemana($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-					$a .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-					$a .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['horas_extras_ing_basicos']['Fecha_desde']) && $_SESSION['horas_extras_ing_basicos']['Fecha_desde'] != ''){        $a .= ",'".$_SESSION['horas_extras_ing_basicos']['Fecha_desde']."'" ;    }else{$a .= ",''";}
-				if(isset($_SESSION['horas_extras_ing_basicos']['Fecha_hasta']) && $_SESSION['horas_extras_ing_basicos']['Fecha_hasta'] != ''){        $a .= ",'".$_SESSION['horas_extras_ing_basicos']['Fecha_hasta']."'" ;    }else{$a .= ",''";}
-				if(isset($_SESSION['horas_extras_ing_basicos']['Observaciones']) && $_SESSION['horas_extras_ing_basicos']['Observaciones'] != ''){    $a .= ",'".$_SESSION['horas_extras_ing_basicos']['Observaciones']."'" ;  }else{$a .= ",''";}
+				if(isset($_SESSION['horas_extras_ing_basicos']['Fecha_desde']) && $_SESSION['horas_extras_ing_basicos']['Fecha_desde'] != ''){        $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Fecha_desde']."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['horas_extras_ing_basicos']['Fecha_hasta']) && $_SESSION['horas_extras_ing_basicos']['Fecha_hasta'] != ''){        $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Fecha_hasta']."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['horas_extras_ing_basicos']['Observaciones']) && $_SESSION['horas_extras_ing_basicos']['Observaciones'] != ''){    $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Observaciones']."'" ;  }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `trabajadores_horas_extras_facturacion` (idSistema, idUsuario, fecha_auto,
-				Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Fecha_desde, Fecha_hasta, Observaciones) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Fecha_desde, Fecha_hasta, Observaciones';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_horas_extras_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
 					/*********************************************************************/
 					if (isset($_SESSION['horas_extras_ing_horas'])){
 						
@@ -720,47 +706,32 @@ require_once '0_validate_user_1.php';
 											//verifica si existe el dia
 											if(isset($producto[$nSem][$DiaActual_ex]['horas_dia'])){
 												
-												if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $a  = "'".$ultimo_id."'" ;                                           }else{$a  = "''";}
-												if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){            $a .= ",'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ;  }else{$a .= ",''";}
-												if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ;  }else{$a .= ",''";}
-												if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){          $a .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$a .= ",''";}
+												if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                           }else{$SIS_data  = "''";}
+												if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ;  }else{$SIS_data .= ",''";}
+												if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ;  }else{$SIS_data .= ",''";}
+												if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$SIS_data .= ",''";}
 												if(isset($_SESSION['horas_extras_ing_basicos']['Creacion_fecha']) && $_SESSION['horas_extras_ing_basicos']['Creacion_fecha'] != ''){  
-													$a .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
-													$a .= ",'".fecha2NSemana($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-													$a .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-													$a .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+													$SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
+													$SIS_data .= ",'".fecha2NSemana($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+													$SIS_data .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+													$SIS_data .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
 												}else{
-													$a .= ",''";
-													$a .= ",''";
-													$a .= ",''";
-													$a .= ",''";
+													$SIS_data .= ",''";
+													$SIS_data .= ",''";
+													$SIS_data .= ",''";
+													$SIS_data .= ",''";
 												}
-												$a .= ",'".$producto[$nSem]['idTrabajador']."'";
-												$a .= ",'".$nSem."'";
-												$a .= ",'".$DiaActual_ex."'";
-												$a .= ",'".$producto[$nSem][$DiaActual_ex]['horas_dia']."'";
-												$a .= ",'".$producto[$nSem][$DiaActual_ex]['porcentaje_dia']."'";
-												$a .= ",'1'";
-													
+												$SIS_data .= ",'".$producto[$nSem]['idTrabajador']."'";
+												$SIS_data .= ",'".$nSem."'";
+												$SIS_data .= ",'".$DiaActual_ex."'";
+												$SIS_data .= ",'".$producto[$nSem][$DiaActual_ex]['horas_dia']."'";
+												$SIS_data .= ",'".$producto[$nSem][$DiaActual_ex]['porcentaje_dia']."'";
+												$SIS_data .= ",'1'";
 												
 												// inserto los datos de registro en la db
-												$query  = "INSERT INTO `trabajadores_horas_extras_facturacion_horas` (idFacturacion, idSistema,
-												idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTrabajador,
-												nSem, Fecha, N_Horas, idPorcentaje, idUso) 
-												VALUES (".$a.")";
-												//Consulta
-												$resultado = mysqli_query ($dbConn, $query);
-												//Si ejecuto correctamente la consulta
-												if(!$resultado){
-													//Genero numero aleatorio
-													$vardata = genera_password(8,'alfanumerico');
-													
-													//Guardo el error en una variable temporal
-													$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-													$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-													$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-													
-												}
+												$SIS_columns = 'idFacturacion, idSistema, idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTrabajador,
+												nSem, Fecha, N_Horas, idPorcentaje, idUso';
+												$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_horas_extras_facturacion_horas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 												
 											}
 											
@@ -770,52 +741,35 @@ require_once '0_validate_user_1.php';
 									}
 									
 									//Inserto los turnos en la tabla de turnos
-									if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $a  = "'".$ultimo_id."'" ;                                           }else{$a  = "''";}
-									if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){            $a .= ",'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ;  }else{$a .= ",''";}
-									if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ;  }else{$a .= ",''";}
-									if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){          $a .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$a .= ",''";}
+									if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                           }else{$SIS_data  = "''";}
+									if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ;  }else{$SIS_data .= ",''";}
+									if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ;  }else{$SIS_data .= ",''";}
+									if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$SIS_data .= ",''";}
 									if(isset($_SESSION['horas_extras_ing_basicos']['Creacion_fecha']) && $_SESSION['horas_extras_ing_basicos']['Creacion_fecha'] != ''){  
-										$a .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
-										$a .= ",'".fecha2NSemana($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-										$a .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-										$a .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+										$SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
+										$SIS_data .= ",'".fecha2NSemana($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+										$SIS_data .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+										$SIS_data .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
 									}else{
-										$a .= ",''";
-										$a .= ",''";
-										$a .= ",''";
-										$a .= ",''";
+										$SIS_data .= ",''";
+										$SIS_data .= ",''";
+										$SIS_data .= ",''";
+										$SIS_data .= ",''";
 									}
-									$a .= ",'".$producto[$nSem]['idTrabajador']."'";
-									$a .= ",'".$nSem."'";
-									$a .= ",'".$producto[$nSem]['idTurnos']."'";
-									$a .= ",'1'";
-															
+									$SIS_data .= ",'".$producto[$nSem]['idTrabajador']."'";
+									$SIS_data .= ",'".$nSem."'";
+									$SIS_data .= ",'".$producto[$nSem]['idTurnos']."'";
+									$SIS_data .= ",'1'";
+									
 									// inserto los datos de registro en la db
-									$query  = "INSERT INTO `trabajadores_horas_extras_facturacion_turnos` (idFacturacion, idSistema,
-									idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTrabajador,
-									nSem, idTurnos, idUso) 
-									VALUES (".$a.")";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-													
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-													
-									}
+									$SIS_columns = 'idFacturacion, idSistema, idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTrabajador,
+									nSem, idTurnos, idUso';
+									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_horas_extras_facturacion_turnos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									
 								}
-								
 							}
 						}
 					}
-					
-					
 					
 					/*********************************************************************/		
 					//Archivos
@@ -823,84 +777,57 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['horas_extras_ing_archivos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                     $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){ $a .= ",'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ; }else{$a .= ",''";}
-							if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){ $a .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ; }else{$a .= ",''";}
-							if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){          $a .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                    $SIS_data  = "'".$ultimo_id."'" ;                                           }else{$SIS_data  = "''";}
+							if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){    $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){    $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){  $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['horas_extras_ing_basicos']['Creacion_fecha']) && $_SESSION['horas_extras_ing_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $a .= ",'".$producto['Nombre']."'" ;     }else{$a .= ",''";}
+							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `trabajadores_horas_extras_facturacion_archivos` (idFacturacion, idSistema, idUsuario, fecha_auto, Creacion_fecha,
-							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idFacturacion, idSistema, idUsuario, fecha_auto, Creacion_fecha, Creacion_mes, Creacion_ano, Nombre';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_horas_extras_facturacion_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					
 					/******************************************************************************************/
 					/******************************************************************************************/
 					//Se hace ingreso en las horas extras por mes
-					if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){            $a  = "'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ;   }else{$a  = "''";}
-					if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ;  }else{$a .= ",''";}
-					if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){          $a .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$a .= ",''";}
+					if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){            $SIS_data  = "'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ;   }else{$SIS_data  = "''";}
+					if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$SIS_data .= ",''";}
 					if(isset($_SESSION['horas_extras_ing_basicos']['Creacion_fecha']) && $_SESSION['horas_extras_ing_basicos']['Creacion_fecha'] != ''){  
-						$a .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
-						$a .= ",'".fecha2NSemana($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-						$a .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-						$a .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-						$a .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-						$a .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+						$SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
+						$SIS_data .= ",'".fecha2NSemana($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+						$SIS_data .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+						$SIS_data .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+						$SIS_data .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+						$SIS_data .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
 					}else{
-						$a .= ",''";
-						$a .= ",''";
-						$a .= ",''";
-						$a .= ",''";
-						$a .= ",''";
-						$a .= ",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
 					}
-					if(isset($_SESSION['horas_extras_ing_basicos']['Observaciones']) && $_SESSION['horas_extras_ing_basicos']['Observaciones'] != ''){    $a .= ",'".$_SESSION['horas_extras_ing_basicos']['Observaciones']."'" ;  }else{$a .= ",''";}
+					if(isset($_SESSION['horas_extras_ing_basicos']['Observaciones']) && $_SESSION['horas_extras_ing_basicos']['Observaciones'] != ''){    $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Observaciones']."'" ;  }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `trabajadores_horas_extras_mensuales_facturacion` (idSistema, idUsuario, fecha_auto,
-					Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Ano, idMes, Observaciones) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					$SIS_columns = 'idSistema, idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Ano, idMes, Observaciones';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_horas_extras_mensuales_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}else{
-						//recibo el último id generado por mi sesion
-						$ultimo_id = mysqli_insert_id($dbConn);
-						
+					if($ultimo_id!=0){
 						/*********************************************************************/
 						if (isset($_SESSION['horas_extras_mens_ing_horas'])){
 							
@@ -910,48 +837,35 @@ require_once '0_validate_user_1.php';
 									//verifico la existencia de datos
 									if(isset($prod['horas_dia']) && $prod['horas_dia'] != ''){  
 										
-										if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $a  = "'".$ultimo_id."'" ;                                           }else{$a  = "''";}
-										if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){            $a .= ",'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ;  }else{$a .= ",''";}
-										if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ;  }else{$a .= ",''";}
-										if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){          $a .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$a .= ",''";}
+										if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                           }else{$SIS_data  = "''";}
+										if(isset($_SESSION['horas_extras_ing_basicos']['idSistema']) && $_SESSION['horas_extras_ing_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['idSistema']."'" ;  }else{$SIS_data .= ",''";}
+										if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'" ;  }else{$SIS_data .= ",''";}
+										if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'" ; }else{$SIS_data .= ",''";}
 										if(isset($_SESSION['horas_extras_ing_basicos']['Creacion_fecha']) && $_SESSION['horas_extras_ing_basicos']['Creacion_fecha'] != ''){  
-											$a .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
-											$a .= ",'".fecha2NSemana($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-											$a .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-											$a .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-											$a .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
-											$a .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+											$SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'" ;  
+											$SIS_data .= ",'".fecha2NSemana($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+											$SIS_data .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+											$SIS_data .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+											$SIS_data .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
+											$SIS_data .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'" ;
 										}else{
-											$a .= ",''";
-											$a .= ",''";
-											$a .= ",''";
-											$a .= ",''";
-											$a .= ",''";
-											$a .= ",''";
+											$SIS_data .= ",''";
+											$SIS_data .= ",''";
+											$SIS_data .= ",''";
+											$SIS_data .= ",''";
+											$SIS_data .= ",''";
+											$SIS_data .= ",''";
 										}
-										if(isset($prod['idTrabajador']) && $prod['idTrabajador'] != ''){                                                               $a .= ",'".$prod['idTrabajador']."'" ;                             }else{$a .= ",''";}
-										if(isset($prod['horas_dia']) && $prod['horas_dia'] != ''){                                                                     $a .= ",'".$prod['horas_dia']."'" ;                                }else{$a .= ",''";}
-										if(isset($prod['porcentaje_dia']) && $prod['porcentaje_dia'] != ''){                                                           $a .= ",'".$prod['porcentaje_dia']."'" ;                           }else{$a .= ",''";}
-										$a .= ",'1'";									
-															
+										if(isset($prod['idTrabajador']) && $prod['idTrabajador'] != ''){      $SIS_data .= ",'".$prod['idTrabajador']."'" ;    }else{$SIS_data .= ",''";}
+										if(isset($prod['horas_dia']) && $prod['horas_dia'] != ''){            $SIS_data .= ",'".$prod['horas_dia']."'" ;       }else{$SIS_data .= ",''";}
+										if(isset($prod['porcentaje_dia']) && $prod['porcentaje_dia'] != ''){  $SIS_data .= ",'".$prod['porcentaje_dia']."'" ;  }else{$SIS_data .= ",''";}
+										$SIS_data .= ",'1'";									
+										
 										// inserto los datos de registro en la db
-										$query  = "INSERT INTO `trabajadores_horas_extras_mensuales_facturacion_horas` (idFacturacion, idSistema,
-										idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Ano, idMes, idTrabajador,
-										N_Horas, idPorcentaje, idUso) 
-										VALUES (".$a.")";
-										//Consulta
-										$resultado = mysqli_query ($dbConn, $query);
-										//Si ejecuto correctamente la consulta
-										if(!$resultado){
-											//Genero numero aleatorio
-											$vardata = genera_password(8,'alfanumerico');
-																
-											//Guardo el error en una variable temporal
-											$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-											$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-											$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-																
-										}
+										$SIS_columns = 'idFacturacion, idSistema, idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Ano, idMes, idTrabajador,
+										N_Horas, idPorcentaje, idUso';
+										$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_horas_extras_mensuales_facturacion_horas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+										
 									}
 								}					
 							}

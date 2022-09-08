@@ -28,7 +28,7 @@ require_once 'core/Web.Header.Views.php';
 <div class="col-sm-12">
 	<?php
 	//Manejador de errores
-	if(isset($error)&&$error!=''){echo notifications_list($error);};
+	if(isset($error)&&$error!=''){echo notifications_list($error);}
 	//Include de la presentacion
 	include '1include_principal_cargas.php';
 	?>

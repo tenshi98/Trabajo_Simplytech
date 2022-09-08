@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -24,66 +23,36 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
-// Se trae un listado con todos los productos
-$z      = "WHERE bodegas_insumos_facturacion_existencias.idExistencia!=0";
-if(isset($_GET['idBodegaOrigen']) && $_GET['idBodegaOrigen'] != ''){       
-	$z .= " AND bodegas_insumos_facturacion.idBodegaOrigen=".$_GET['idBodegaOrigen'];
-}
-if(isset($_GET['idBodegaDestino']) && $_GET['idBodegaDestino'] != ''){     
-	$z .= " AND bodegas_insumos_facturacion.idBodegaDestino=".$_GET['idBodegaDestino'];
-}
-if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){                
-	$z .= " AND bodegas_insumos_facturacion.idSistema=".$_GET['idSistema'];
-}
-if(isset($_GET['idSistemaDestino']) && $_GET['idSistemaDestino'] != ''){   
-	$z .= " AND bodegas_insumos_facturacion.idSistemaDestino=".$_GET['idSistemaDestino'];
-}
-if(isset($_GET['idDocumentos']) && $_GET['idDocumentos'] != ''){           
-	$z .= " AND bodegas_insumos_facturacion.idDocumentos=".$_GET['idDocumentos'];
-}
-if(isset($_GET['N_Doc']) && $_GET['N_Doc'] != ''){                         
-	$z .= " AND bodegas_insumos_facturacion.N_Doc LIKE '%".$_GET['N_Doc']."%'";
-}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                       
-	$z .= " AND bodegas_insumos_facturacion.idTipo=".$_GET['idTipo'];
-}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){           
-	$z .= " AND bodegas_insumos_facturacion.idTrabajador=".$_GET['idTrabajador'];
-}
-if(isset($_GET['idProveedor']) && $_GET['idProveedor'] != ''){             
-	$z .= " AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];
-}
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){                 
-	$z .= " AND bodegas_insumos_facturacion.idCliente=".$_GET['idCliente'];
-}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                   
-	$z .= " AND bodegas_insumos_facturacion.idEstado=".$_GET['idEstado'];
-}
-if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){                 
-	$z .= " AND bodegas_insumos_facturacion.idDocPago=".$_GET['idDocPago'];
-}
-if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){                 
-	$z .= " AND bodegas_insumos_facturacion.N_DocPago LIKE '%".$_GET['N_DocPago']."%'";
-}
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){               
-	$z .= " AND bodegas_insumos_facturacion_existencias.idProducto=".$_GET['idProducto'];
-}
 
+/*******************************************************/
+// Se trae un listado con todos los productos
+$SIS_where = "bodegas_insumos_facturacion_existencias.idExistencia!=0";
+if(isset($_GET['idBodegaOrigen']) && $_GET['idBodegaOrigen'] != ''){      $SIS_where .= " AND bodegas_insumos_facturacion.idBodegaOrigen=".$_GET['idBodegaOrigen'];}
+if(isset($_GET['idBodegaDestino']) && $_GET['idBodegaDestino'] != ''){    $SIS_where .= " AND bodegas_insumos_facturacion.idBodegaDestino=".$_GET['idBodegaDestino'];}
+if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){                $SIS_where .= " AND bodegas_insumos_facturacion.idSistema=".$_GET['idSistema'];}
+if(isset($_GET['idSistemaDestino']) && $_GET['idSistemaDestino'] != ''){  $SIS_where .= " AND bodegas_insumos_facturacion.idSistemaDestino=".$_GET['idSistemaDestino'];}
+if(isset($_GET['idDocumentos']) && $_GET['idDocumentos'] != ''){          $SIS_where .= " AND bodegas_insumos_facturacion.idDocumentos=".$_GET['idDocumentos'];}
+if(isset($_GET['N_Doc']) && $_GET['N_Doc'] != ''){                        $SIS_where .= " AND bodegas_insumos_facturacion.N_Doc LIKE '%".$_GET['N_Doc']."%'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                      $SIS_where .= " AND bodegas_insumos_facturacion.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){          $SIS_where .= " AND bodegas_insumos_facturacion.idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['idProveedor']) && $_GET['idProveedor'] != ''){            $SIS_where .= " AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){                $SIS_where .= " AND bodegas_insumos_facturacion.idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                  $SIS_where .= " AND bodegas_insumos_facturacion.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){                $SIS_where .= " AND bodegas_insumos_facturacion.idDocPago=".$_GET['idDocPago'];}
+if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){                $SIS_where .= " AND bodegas_insumos_facturacion.N_DocPago LIKE '%".$_GET['N_DocPago']."%'";}
+if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){              $SIS_where .= " AND bodegas_insumos_facturacion_existencias.idProducto=".$_GET['idProducto'];}
 
 if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin'] != ''){   
-	$z .= " AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'" ;
+	$SIS_where .= " AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'" ;
 }
 if(isset($_GET['Pago_fecha_ini']) && $_GET['Pago_fecha_ini'] != ''&&isset($_GET['Pago_fecha_fin']) && $_GET['Pago_fecha_fin'] != ''){   
-	$z .= " AND bodegas_insumos_facturacion.Pago_fecha BETWEEN '".$_GET['Pago_fecha_ini']."' AND '".$_GET['Pago_fecha_fin']."'" ;
+	$SIS_where .= " AND bodegas_insumos_facturacion.Pago_fecha BETWEEN '".$_GET['Pago_fecha_ini']."' AND '".$_GET['Pago_fecha_fin']."'" ;
 }
 if(isset($_GET['F_Pago_ini']) && $_GET['F_Pago_ini'] != ''&&isset($_GET['F_Pago_fin']) && $_GET['F_Pago_fin'] != ''){   
-	$z .= " AND bodegas_insumos_facturacion.F_Pago BETWEEN '".$_GET['F_Pago_ini']."' AND '".$_GET['F_Pago_fin']."'" ;
+	$SIS_where .= " AND bodegas_insumos_facturacion.F_Pago BETWEEN '".$_GET['F_Pago_ini']."' AND '".$_GET['F_Pago_fin']."'" ;
 }
 
-				
-// Se trae un listado con todos los productos
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 bodegas_insumos_facturacion.Creacion_fecha,
 bodegas_insumos_facturacion.Creacion_Semana,
 bodegas_insumos_facturacion.Creacion_mes,
@@ -121,9 +90,8 @@ proveedor_listado.Nombre AS Prov_Nombre,
 clientes_listado.Nombre AS Cliente_Nombre,
 core_estado_facturacion.Nombre AS Estado,
 usuarios_listado.Nombre AS UsuarioPago,
-sistema_documentos_pago.Nombre AS Documento_pago
-
-FROM `bodegas_insumos_facturacion_existencias`
+sistema_documentos_pago.Nombre AS Documento_pago';
+$SIS_join  = '
 LEFT JOIN `bodegas_insumos_facturacion`            ON bodegas_insumos_facturacion.idFacturacion    = bodegas_insumos_facturacion_existencias.idFacturacion
 LEFT JOIN `insumos_listado`                        ON insumos_listado.idProducto                   = bodegas_insumos_facturacion_existencias.idProducto
 LEFT JOIN `bodegas_insumos_listado`  bod_origen    ON bod_origen.idBodega                          = bodegas_insumos_facturacion.idBodegaOrigen
@@ -137,44 +105,28 @@ LEFT JOIN `proveedor_listado`                      ON proveedor_listado.idProvee
 LEFT JOIN `clientes_listado`                       ON clientes_listado.idCliente                   = bodegas_insumos_facturacion.idCliente
 LEFT JOIN `core_estado_facturacion`                ON core_estado_facturacion.idEstado             = bodegas_insumos_facturacion.idEstado
 LEFT JOIN `usuarios_listado`                       ON usuarios_listado.idUsuario                   = bodegas_insumos_facturacion.idUsuarioPago
-LEFT JOIN `sistema_documentos_pago`                ON sistema_documentos_pago.idDocPago            = bodegas_insumos_facturacion.idDocPago
+LEFT JOIN `sistema_documentos_pago`                ON sistema_documentos_pago.idDocPago            = bodegas_insumos_facturacion.idDocPago';
+$SIS_order = 0;
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-
-".$z;
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
-
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator("Office 2007")
+$spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setLastModifiedBy("Office 2007")
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-
-
-
-            
-            
+          
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Bodega origen')
 			->setCellValue('B1', 'Bodega destino')
 			->setCellValue('C1', 'Sistema origen')
@@ -213,69 +165,69 @@ $objPHPExcel->setActiveSheetIndex(0)
 $nn=2;
 foreach ($arrProductos as $productos) { 
 
-
-$objPHPExcel->setActiveSheetIndex(0)
-			->setCellValue('A'.$nn, $productos['Bodega_origen'])
-			->setCellValue('B'.$nn, $productos['Bodega_destino'])
-			->setCellValue('C'.$nn, $productos['Sistema_origen'])
-			->setCellValue('D'.$nn, $productos['Sistema_destino'])
-			->setCellValue('E'.$nn, $productos['Creacion_fecha'])
-			->setCellValue('F'.$nn, $productos['Creacion_Semana'])
-			->setCellValue('G'.$nn, $productos['Creacion_mes'])
-			->setCellValue('H'.$nn, $productos['Creacion_ano'])
-			->setCellValue('I'.$nn, $productos['Documento_tipo'])
-			->setCellValue('J'.$nn, $productos['N_Doc'])
-			->setCellValue('K'.$nn, $productos['Tipo'])
-			->setCellValue('L'.$nn, $productos['idOT'])
-			->setCellValue('M'.$nn, $productos['Trab_Nombre'].' '.$productos['Trab_ApellidoPat'].' '.$productos['Trab_ApellidoMat'])
-			->setCellValue('N'.$nn, $productos['Prov_Nombre'])
-			->setCellValue('O'.$nn, $productos['Cliente_Nombre'])
-			->setCellValue('P'.$nn, $productos['Pago_fecha'])
-			->setCellValue('Q'.$nn, $productos['Pago_dia'])
-			->setCellValue('R'.$nn, $productos['Pago_Semana'])
-			->setCellValue('S'.$nn, $productos['Pago_mes'])
-			->setCellValue('T'.$nn, $productos['Pago_ano'])
-			->setCellValue('U'.$nn, $productos['Estado'])
-			->setCellValue('V'.$nn, $productos['DocRel'])
-			->setCellValue('W'.$nn, $productos['UsuarioPago'])
-			->setCellValue('X'.$nn, $productos['Documento_pago'])
-			->setCellValue('Y'.$nn, $productos['N_DocPago'])
-			->setCellValue('Z'.$nn, $productos['F_Pago'])
-			->setCellValue('AA'.$nn, $productos['F_Pago_dia'])
-			->setCellValue('AB'.$nn, $productos['F_Pago_mes'])
-			->setCellValue('AC'.$nn, $productos['F_Pago_ano'])
-			->setCellValue('AD'.$nn, $productos['Producto'])
-			->setCellValue('AE'.$nn, cantidades_excel($productos['Cantidad_ing']))
-			->setCellValue('AF'.$nn, cantidades_excel($productos['Cantidad_eg']))
-			->setCellValue('AG'.$nn, cantidades_excel($productos['Valor']))
-			->setCellValue('AH'.$nn, cantidades_excel($productos['ValorTotal']));
- $nn++;           
+	$spreadsheet->setActiveSheetIndex(0)
+				->setCellValue('A'.$nn, $productos['Bodega_origen'])
+				->setCellValue('B'.$nn, $productos['Bodega_destino'])
+				->setCellValue('C'.$nn, $productos['Sistema_origen'])
+				->setCellValue('D'.$nn, $productos['Sistema_destino'])
+				->setCellValue('E'.$nn, $productos['Creacion_fecha'])
+				->setCellValue('F'.$nn, $productos['Creacion_Semana'])
+				->setCellValue('G'.$nn, $productos['Creacion_mes'])
+				->setCellValue('H'.$nn, $productos['Creacion_ano'])
+				->setCellValue('I'.$nn, $productos['Documento_tipo'])
+				->setCellValue('J'.$nn, $productos['N_Doc'])
+				->setCellValue('K'.$nn, $productos['Tipo'])
+				->setCellValue('L'.$nn, $productos['idOT'])
+				->setCellValue('M'.$nn, $productos['Trab_Nombre'].' '.$productos['Trab_ApellidoPat'].' '.$productos['Trab_ApellidoMat'])
+				->setCellValue('N'.$nn, $productos['Prov_Nombre'])
+				->setCellValue('O'.$nn, $productos['Cliente_Nombre'])
+				->setCellValue('P'.$nn, $productos['Pago_fecha'])
+				->setCellValue('Q'.$nn, $productos['Pago_dia'])
+				->setCellValue('R'.$nn, $productos['Pago_Semana'])
+				->setCellValue('S'.$nn, $productos['Pago_mes'])
+				->setCellValue('T'.$nn, $productos['Pago_ano'])
+				->setCellValue('U'.$nn, $productos['Estado'])
+				->setCellValue('V'.$nn, $productos['DocRel'])
+				->setCellValue('W'.$nn, $productos['UsuarioPago'])
+				->setCellValue('X'.$nn, $productos['Documento_pago'])
+				->setCellValue('Y'.$nn, $productos['N_DocPago'])
+				->setCellValue('Z'.$nn, $productos['F_Pago'])
+				->setCellValue('AA'.$nn, $productos['F_Pago_dia'])
+				->setCellValue('AB'.$nn, $productos['F_Pago_mes'])
+				->setCellValue('AC'.$nn, $productos['F_Pago_ano'])
+				->setCellValue('AD'.$nn, $productos['Producto'])
+				->setCellValue('AE'.$nn, cantidades_excel($productos['Cantidad_ing']))
+				->setCellValue('AF'.$nn, cantidades_excel($productos['Cantidad_eg']))
+				->setCellValue('AG'.$nn, cantidades_excel($productos['Valor']))
+				->setCellValue('AH'.$nn, cantidades_excel($productos['ValorTotal']));
+	$nn++;           
    
 } 
 
 
 
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Datos');
-
+$spreadsheet->getActiveSheet()->setTitle('Datos');
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Exportar Datos Bodega Insumos.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Exportar Datos Bodega Insumos';
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

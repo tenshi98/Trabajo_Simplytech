@@ -33,7 +33,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idCanal']) )              $idCanal              = $_POST['idCanal'];
 	if ( !empty($_POST['Chanel']) )               $Chanel               = $_POST['Chanel'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -66,6 +65,17 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){                   $Nombre          = EstandarizarInput($Nombre); }
+	if(isset($Direccion) && $Direccion != ''){             $Direccion       = EstandarizarInput($Direccion); }
+	if(isset($Config_usuario) && $Config_usuario != ''){   $Config_usuario  = EstandarizarInput($Config_usuario); }
+	if(isset($Config_Password) && $Config_Password != ''){ $Config_Password = EstandarizarInput($Config_Password); }
+	if(isset($Config_IP) && $Config_IP != ''){             $Config_IP       = EstandarizarInput($Config_IP); }
+	if(isset($Config_Puerto) && $Config_Puerto != ''){     $Config_Puerto   = EstandarizarInput($Config_Puerto); }
+	if(isset($Config_Web) && $Config_Web != ''){           $Config_Web      = EstandarizarInput($Config_Web); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -104,65 +114,48 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                    $a  = "'".$idSistema."'" ;            }else{$a  ="''";}
-				if(isset($idEstado) && $idEstado != ''){                      $a .= ",'".$idEstado."'" ;            }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){                          $a .= ",'".$Nombre."'" ;              }else{$a .=",''";}
-				if(isset($idPais) && $idPais != ''){                          $a .= ",'".$idPais."'" ;              }else{$a .=",''";}
-				if(isset($idCiudad) && $idCiudad != ''){                      $a .= ",'".$idCiudad."'" ;            }else{$a .=",''";}
-				if(isset($idComuna) && $idComuna != ''){                      $a .= ",'".$idComuna."'" ;            }else{$a .=",''";}
-				if(isset($Direccion) && $Direccion != ''){                    $a .= ",'".$Direccion."'" ;           }else{$a .=",''";}
-				if(isset($N_Camaras) && $N_Camaras != ''){                    $a .= ",'".$N_Camaras."'" ;           }else{$a .=",''";}
-				if(isset($idSubconfiguracion) && $idSubconfiguracion != ''){  $a .= ",'".$idSubconfiguracion."'" ;  }else{$a .=",''";}
-				if(isset($idTipoCamara) && $idTipoCamara != ''){              $a .= ",'".$idTipoCamara."'" ;        }else{$a .=",''";}
-				if(isset($Config_usuario) && $Config_usuario != ''){          $a .= ",'".$Config_usuario."'" ;      }else{$a .=",''";}
-				if(isset($Config_Password) && $Config_Password != ''){        $a .= ",'".$Config_Password."'" ;     }else{$a .=",''";}
-				if(isset($Config_IP) && $Config_IP != ''){                    $a .= ",'".$Config_IP."'" ;           }else{$a .=",''";}
-				if(isset($Config_Puerto) && $Config_Puerto != ''){            $a .= ",'".$Config_Puerto."'" ;       }else{$a .=",''";}
-				if(isset($Config_Web) && $Config_Web != ''){                  $a .= ",'".$Config_Web."'" ;          }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){                    $SIS_data  = "'".$idSistema."'" ;            }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado != ''){                      $SIS_data .= ",'".$idEstado."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                          $SIS_data .= ",'".$Nombre."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($idPais) && $idPais != ''){                          $SIS_data .= ",'".$idPais."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($idCiudad) && $idCiudad != ''){                      $SIS_data .= ",'".$idCiudad."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($idComuna) && $idComuna != ''){                      $SIS_data .= ",'".$idComuna."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion != ''){                    $SIS_data .= ",'".$Direccion."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($N_Camaras) && $N_Camaras != ''){                    $SIS_data .= ",'".$N_Camaras."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idSubconfiguracion) && $idSubconfiguracion != ''){  $SIS_data .= ",'".$idSubconfiguracion."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idTipoCamara) && $idTipoCamara != ''){              $SIS_data .= ",'".$idTipoCamara."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Config_usuario) && $Config_usuario != ''){          $SIS_data .= ",'".$Config_usuario."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Config_Password) && $Config_Password != ''){        $SIS_data .= ",'".$Config_Password."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Config_IP) && $Config_IP != ''){                    $SIS_data .= ",'".$Config_IP."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Config_Puerto) && $Config_Puerto != ''){            $SIS_data .= ",'".$Config_Puerto."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Config_Web) && $Config_Web != ''){                  $SIS_data .= ",'".$Config_Web."'" ;          }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `seguridad_camaras_listado` (idSistema, idEstado, Nombre, idPais,
+				$SIS_columns = 'idSistema, idEstado, Nombre, idPais,
 				idCiudad, idComuna, Direccion, N_Camaras, idSubconfiguracion, idTipoCamara,
-				Config_usuario, Config_Password, Config_IP, Config_Puerto, Config_Web) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				Config_usuario, Config_Password, Config_IP, Config_Puerto, Config_Web';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seguridad_camaras_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
+				
 					//Se crean las nuevas camaras
 					for ($i = 1; $i <= $N_Camaras; $i++) {
 						
 						//filtros
-						if(isset($ultimo_id) && $ultimo_id != ''){    $a  = "'".$ultimo_id."'" ;   }else{$a  ="''";}
-						$a .= ",'1'" ;
-						$a .= ",'Camara ".$i."'" ;
+						if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;   }else{$SIS_data  = "''";}
+						$SIS_data .= ",'1'" ;
+						$SIS_data .= ",'Camara ".$i."'" ;
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `seguridad_camaras_listado_canales` (idCamara, idEstado, Nombre) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
+						$SIS_columns = 'idCamara, idEstado, Nombre';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'seguridad_camaras_listado_canales', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 					
-					
-						
+					//redirijo	
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -187,26 +180,26 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idCamara='".$idCamara."'" ;
-				if(isset($idSistema) && $idSistema != ''){                      $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                        $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                            $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idPais) && $idPais != ''){                            $a .= ",idPais='".$idPais."'" ;}
-				if(isset($idCiudad) && $idCiudad != ''){                        $a .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna != ''){                        $a .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Direccion) && $Direccion != ''){                      $a .= ",Direccion='".$Direccion."'" ;}
-				if(isset($N_Camaras) && $N_Camaras != ''){                      $a .= ",N_Camaras='".$N_Camaras."'" ;}
-				if(isset($idSubconfiguracion) && $idSubconfiguracion != ''){    $a .= ",idSubconfiguracion='".$idSubconfiguracion."'" ;}
-				if(isset($idTipoCamara) && $idTipoCamara != ''){                $a .= ",idTipoCamara='".$idTipoCamara."'" ;}
-				if(isset($Config_usuario) && $Config_usuario != ''){            $a .= ",Config_usuario='".$Config_usuario."'" ;}
-				if(isset($Config_Password) && $Config_Password != ''){          $a .= ",Config_Password='".$Config_Password."'" ;}
-				if(isset($Config_IP) && $Config_IP != ''){                      $a .= ",Config_IP='".$Config_IP."'" ;}
-				if(isset($Config_Puerto) && $Config_Puerto != ''){              $a .= ",Config_Puerto='".$Config_Puerto."'" ;}
-				if(isset($Config_Web) && $Config_Web != ''){                    $a .= ",Config_Web='".$Config_Web."'" ;}
+				$SIS_data = "idCamara='".$idCamara."'" ;
+				if(isset($idSistema) && $idSistema != ''){                      $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                        $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                            $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idPais) && $idPais != ''){                            $SIS_data .= ",idPais='".$idPais."'" ;}
+				if(isset($idCiudad) && $idCiudad != ''){                        $SIS_data .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna != ''){                        $SIS_data .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){                      $SIS_data .= ",Direccion='".$Direccion."'" ;}
+				if(isset($N_Camaras) && $N_Camaras != ''){                      $SIS_data .= ",N_Camaras='".$N_Camaras."'" ;}
+				if(isset($idSubconfiguracion) && $idSubconfiguracion != ''){    $SIS_data .= ",idSubconfiguracion='".$idSubconfiguracion."'" ;}
+				if(isset($idTipoCamara) && $idTipoCamara != ''){                $SIS_data .= ",idTipoCamara='".$idTipoCamara."'" ;}
+				if(isset($Config_usuario) && $Config_usuario != ''){            $SIS_data .= ",Config_usuario='".$Config_usuario."'" ;}
+				if(isset($Config_Password) && $Config_Password != ''){          $SIS_data .= ",Config_Password='".$Config_Password."'" ;}
+				if(isset($Config_IP) && $Config_IP != ''){                      $SIS_data .= ",Config_IP='".$Config_IP."'" ;}
+				if(isset($Config_Puerto) && $Config_Puerto != ''){              $SIS_data .= ",Config_Puerto='".$Config_Puerto."'" ;}
+				if(isset($Config_Web) && $Config_Web != ''){                    $SIS_data .= ",Config_Web='".$Config_Web."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seguridad_camaras_listado', 'idCamara = "'.$idCamara.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seguridad_camaras_listado', 'idCamara = "'.$idCamara.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -279,8 +272,8 @@ require_once '0_validate_user_1.php';
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'seguridad_camaras_listado', 'idCamara = "'.$idCamara.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'seguridad_camaras_listado', 'idCamara = "'.$idCamara.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -312,39 +305,27 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idCamara) && $idCamara != ''){                $a  = "'".$idCamara."'" ;             }else{$a  ="''";}
-				if(isset($idEstado) && $idEstado != ''){                $a .= ",'".$idEstado."'" ;            }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){                    $a .= ",'".$Nombre."'" ;              }else{$a .=",''";}
-				if(isset($idTipoCamara) && $idTipoCamara != ''){        $a .= ",'".$idTipoCamara."'" ;        }else{$a .=",''";}
-				if(isset($Config_usuario) && $Config_usuario != ''){    $a .= ",'".$Config_usuario."'" ;      }else{$a .=",''";}
-				if(isset($Config_Password) && $Config_Password != ''){  $a .= ",'".$Config_Password."'" ;     }else{$a .=",''";}
-				if(isset($Config_IP) && $Config_IP != ''){              $a .= ",'".$Config_IP."'" ;           }else{$a .=",''";}
-				if(isset($Config_Puerto) && $Config_Puerto != ''){      $a .= ",'".$Config_Puerto."'" ;       }else{$a .=",''";}
-				if(isset($Config_Web) && $Config_Web != ''){            $a .= ",'".$Config_Web."'" ;          }else{$a .=",''";}
-				if(isset($Chanel) && $Chanel != ''){                    $a .= ",'".$Chanel."'" ;              }else{$a .=",''";}
+				if(isset($idCamara) && $idCamara != ''){                $SIS_data  = "'".$idCamara."'" ;             }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado != ''){                $SIS_data .= ",'".$idEstado."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                    $SIS_data .= ",'".$Nombre."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($idTipoCamara) && $idTipoCamara != ''){        $SIS_data .= ",'".$idTipoCamara."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Config_usuario) && $Config_usuario != ''){    $SIS_data .= ",'".$Config_usuario."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Config_Password) && $Config_Password != ''){  $SIS_data .= ",'".$Config_Password."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Config_IP) && $Config_IP != ''){              $SIS_data .= ",'".$Config_IP."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Config_Puerto) && $Config_Puerto != ''){      $SIS_data .= ",'".$Config_Puerto."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Config_Web) && $Config_Web != ''){            $SIS_data .= ",'".$Config_Web."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Chanel) && $Chanel != ''){                    $SIS_data .= ",'".$Chanel."'" ;              }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `seguridad_camaras_listado_canales` (idCamara, idEstado, Nombre,idTipoCamara,
-				Config_usuario, Config_Password, Config_IP, Config_Puerto, Config_Web, Chanel) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idCamara, idEstado, Nombre,idTipoCamara,
+				Config_usuario, Config_Password, Config_IP, Config_Puerto, Config_Web, Chanel';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seguridad_camaras_listado_canales', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 		break;						
@@ -368,21 +349,21 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idCanal='".$idCanal."'" ;
-				if(isset($idCamara) && $idCamara != ''){                $a .= ",idCamara='".$idCamara."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                    $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idTipoCamara) && $idTipoCamara != ''){        $a .= ",idTipoCamara='".$idTipoCamara."'" ;}
-				if(isset($Config_usuario) && $Config_usuario != ''){    $a .= ",Config_usuario='".$Config_usuario."'" ;}
-				if(isset($Config_Password) && $Config_Password != ''){  $a .= ",Config_Password='".$Config_Password."'" ;}
-				if(isset($Config_IP) && $Config_IP != ''){              $a .= ",Config_IP='".$Config_IP."'" ;}
-				if(isset($Config_Puerto) && $Config_Puerto != ''){      $a .= ",Config_Puerto='".$Config_Puerto."'" ;}
-				if(isset($Config_Web) && $Config_Web != ''){            $a .= ",Config_Web='".$Config_Web."'" ;}
-				if(isset($Chanel) && $Chanel != ''){                    $a .= ",Chanel='".$Chanel."'" ;}
+				$SIS_data = "idCanal='".$idCanal."'" ;
+				if(isset($idCamara) && $idCamara != ''){                $SIS_data .= ",idCamara='".$idCamara."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                    $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idTipoCamara) && $idTipoCamara != ''){        $SIS_data .= ",idTipoCamara='".$idTipoCamara."'" ;}
+				if(isset($Config_usuario) && $Config_usuario != ''){    $SIS_data .= ",Config_usuario='".$Config_usuario."'" ;}
+				if(isset($Config_Password) && $Config_Password != ''){  $SIS_data .= ",Config_Password='".$Config_Password."'" ;}
+				if(isset($Config_IP) && $Config_IP != ''){              $SIS_data .= ",Config_IP='".$Config_IP."'" ;}
+				if(isset($Config_Puerto) && $Config_Puerto != ''){      $SIS_data .= ",Config_Puerto='".$Config_Puerto."'" ;}
+				if(isset($Config_Web) && $Config_Web != ''){            $SIS_data .= ",Config_Web='".$Config_Web."'" ;}
+				if(isset($Chanel) && $Chanel != ''){                    $SIS_data .= ",Chanel='".$Chanel."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seguridad_camaras_listado_canales', 'idCanal = "'.$idCanal.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seguridad_camaras_listado_canales', 'idCanal = "'.$idCanal.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

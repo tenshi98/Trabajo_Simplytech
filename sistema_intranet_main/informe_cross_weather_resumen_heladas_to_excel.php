@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -115,37 +114,34 @@ foreach ($arrEvento as $key => $eve){
 	$arrResumen['Tiempo'] = $arrResumen['Tiempo'] + $eve['Minutos'];
 }
 
-
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator("Office 2007")
+$spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setLastModifiedBy("Office 2007")
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-
-			
-$objPHPExcel->setActiveSheetIndex(0)
+		
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Temperatura Minima')
             ->setCellValue('B1', 'Duracion Temp Min')
             ->setCellValue('C1', 'Hora Temp Minima')
             ->setCellValue('D1', 'Tiempo bajo '.$arrHistorial[0]['CrossTech_TempMin'].'°C');
 
- 
-
-
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A2', $arrResumen['TempMinima'].'°C')
 			->setCellValue('B2', $arrResumen['Duracion'].'Horas')
 			->setCellValue('C2', $arrResumen['HoraTempMinima'])
 			->setCellValue('D2', Cantidades($arrResumen['Tiempo']), 0).' Horas'); 					
-
-         
-$objPHPExcel->setActiveSheetIndex(0)
+     
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A4', 'Inicio')
             ->setCellValue('B4', 'Termino')
             ->setCellValue('C4', 'Temperatura Minima (°C)')
@@ -153,10 +149,9 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('E4', 'Temperatura Promedio (°C)')
             ->setCellValue('F4', 'Duracion (horas)');
 
- 
 $nn       = 5; 
 foreach ($arrEvento as $key => $eve){
-	$objPHPExcel->setActiveSheetIndex(0)
+	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, $eve['HoraInicio'].' - '.fecha_estandar($eve['FechaInicio']))
 				->setCellValue('B'.$nn, $eve['HoraTermino'].' - '.fecha_estandar($eve['FechaTermino']))
 				->setCellValue('C'.$nn, Cantidades($eve['TempMinima'], 2))
@@ -171,26 +166,27 @@ foreach ($arrEvento as $key => $eve){
 
 
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Resumen Heladas');
-
+$spreadsheet->getActiveSheet()->setTitle('Resumen Heladas');
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Resumen Heladas.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Resumen Heladas';
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

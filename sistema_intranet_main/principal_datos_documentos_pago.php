@@ -46,35 +46,21 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Permiso asignado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Permiso asignado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 //Listo los documentos de pago
-$arrDocumentos = array();
-$query = "SELECT 
+$SIS_query = '
 sistema_documentos_pago.idDocPago,
 sistema_documentos_pago.Nombre,
-(SELECT COUNT(idDocPagoPermiso) FROM usuarios_documentos_pago WHERE idDocPago = sistema_documentos_pago.idDocPago AND idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario']." LIMIT 1) AS contar,
-(SELECT idDocPagoPermiso FROM usuarios_documentos_pago WHERE idDocPago = sistema_documentos_pago.idDocPago AND idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario']." LIMIT 1) AS idpermiso
-FROM `sistema_documentos_pago`
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDocumentos,$row );
-}
+(SELECT COUNT(idDocPagoPermiso) FROM usuarios_documentos_pago WHERE idDocPago = sistema_documentos_pago.idDocPago AND idUsuario = '.$_SESSION['usuario']['basic_data']['idUsuario'].' LIMIT 1) AS contar,
+(SELECT idDocPagoPermiso        FROM usuarios_documentos_pago WHERE idDocPago = sistema_documentos_pago.idDocPago AND idUsuario = '.$_SESSION['usuario']['basic_data']['idUsuario'].' LIMIT 1) AS idpermiso';
+$SIS_join  = '';
+$SIS_where = '';
+$SIS_order = '';
+$arrDocumentos = array();
+$arrDocumentos = db_select_array (false, $SIS_query, 'sistema_documentos_pago', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrDocumentos');
 
 /*************************************************/
 //permisos a las transacciones

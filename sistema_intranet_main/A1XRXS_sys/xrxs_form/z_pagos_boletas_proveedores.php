@@ -97,99 +97,72 @@ require_once '0_validate_user_1.php';
 						$idProveedor    = $tipo['idProveedor'];
 								
 						//Filtros
-						$a = "idFacturacion='".$idFacturacion."'" ;
-						if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuarioPago='".$idUsuario."'" ;}
-						if(isset($idDocPago) && $idDocPago != ''){       $a .= ",idDocPago='".$idDocPago."'" ;}
-						if(isset($N_DocPago) && $N_DocPago != ''){       $a .= ",N_DocPago='".$N_DocPago."'" ;}
+						$SIS_data = "idFacturacion='".$idFacturacion."'" ;
+						if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuarioPago='".$idUsuario."'" ;}
+						if(isset($idDocPago) && $idDocPago != ''){       $SIS_data .= ",idDocPago='".$idDocPago."'" ;}
+						if(isset($N_DocPago) && $N_DocPago != ''){       $SIS_data .= ",N_DocPago='".$N_DocPago."'" ;}
 						if(isset($F_Pago) && $F_Pago != ''){  
-							$a .= ",F_Pago='".$F_Pago."'" ;
-							$a .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'" ;
-							$a .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'" ;
-							$a .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'" ;
+							$SIS_data .= ",F_Pago='".$F_Pago."'" ;
+							$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'" ;
+							$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'" ;
+							$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'" ;
 						}else{
-							$a .= ",''";
-							$a .= ",''";
-							$a .= ",''";
-							$a .= ",''";
+							$SIS_data .= ",''";
+							$SIS_data .= ",''";
+							$SIS_data .= ",''";
+							$SIS_data .= ",''";
 						}
-						if(isset($ValorTotal) &&$ValorTotal!= ''){   $a .= ",MontoPagado='".$MontoPagado."'" ;}
+						if(isset($ValorTotal) &&$ValorTotal!= ''){   $SIS_data .= ",MontoPagado='".$MontoPagado."'" ;}
 						if($ValorTotal==$MontoCancelado){
-							$a .= ",idEstado='2'" ;
+							$SIS_data .= ",idEstado='2'" ;
 						}else{
-							$a .= ",idEstado='1'" ;
+							$SIS_data .= ",idEstado='1'" ;
 						}
 						
 						/*******************************************************/
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 						/*********************************************************************/		
 						//Se guarda en historial la accion
-						if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $a  = "'".$tipo['idFacturacion']."'" ;  }else{$a  = "''";}
-						if(isset($F_Pago) && $F_Pago != ''){                                  $a .= ",'".$F_Pago."'" ;                }else{$a .= ",''";}
-						$a .= ",'1'";                                                                             //Creacion Satisfactoria
-						$a .= ",'Pago del documento con el documento ".$rowDoc['Nombre']." N° ".$N_DocPago."'";   //Observacion
-						$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                           //idUsuario
-								
-											
+						if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $SIS_data  = "'".$tipo['idFacturacion']."'" ;  }else{$SIS_data  = "''";}
+						if(isset($F_Pago) && $F_Pago != ''){                                  $SIS_data .= ",'".$F_Pago."'" ;                }else{$SIS_data .= ",''";}
+						$SIS_data .= ",'1'";                                                                             //Creacion Satisfactoria
+						$SIS_data .= ",'Pago del documento con el documento ".$rowDoc['Nombre']." N° ".$N_DocPago."'";   //Observacion
+						$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                           //idUsuario
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `boleta_honorarios_facturacion_historial` (idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-									
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-						}
+						$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'boleta_honorarios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 						/**************************************************************************************/
 						//Agrego el pago al historial de pagos
-						if(isset($idFacturacion) && $idFacturacion != ''){  $a  = "'".$idFacturacion."'" ;   }else{ $a  = "''"; }
-						if(isset($idDocPago) && $idDocPago != ''){          $a .= ",'".$idDocPago."'" ;      }else{ $a .= ",''"; }
-						if(isset($N_DocPago) && $N_DocPago != ''){          $a .= ",'".$N_DocPago."'" ;      }else{ $a .= ",''"; }
+						if(isset($idFacturacion) && $idFacturacion != ''){  $SIS_data  = "'".$idFacturacion."'" ;   }else{ $SIS_data  = "''"; }
+						if(isset($idDocPago) && $idDocPago != ''){          $SIS_data .= ",'".$idDocPago."'" ;      }else{ $SIS_data .= ",''"; }
+						if(isset($N_DocPago) && $N_DocPago != ''){          $SIS_data .= ",'".$N_DocPago."'" ;      }else{ $SIS_data .= ",''"; }
 						if(isset($F_Pago) && $F_Pago != ''){  
-							$a .= ",'".$F_Pago."'" ;
-							$a .= ",'".fecha2NdiaMes($F_Pago)."'" ;
-							$a .= ",'".fecha2NSemana($F_Pago)."'" ;
-							$a .= ",'".fecha2NMes($F_Pago)."'" ;
-							$a .= ",'".fecha2Ano($F_Pago)."'" ;
+							$SIS_data .= ",'".$F_Pago."'" ;
+							$SIS_data .= ",'".fecha2NdiaMes($F_Pago)."'" ;
+							$SIS_data .= ",'".fecha2NSemana($F_Pago)."'" ;
+							$SIS_data .= ",'".fecha2NMes($F_Pago)."'" ;
+							$SIS_data .= ",'".fecha2Ano($F_Pago)."'" ;
 						}else{
-							$a .= ",''";
-							$a .= ",''";
-							$a .= ",''";
-							$a .= ",''";
-							$a .= ",''";
+							$SIS_data .= ",''";
+							$SIS_data .= ",''";
+							$SIS_data .= ",''";
+							$SIS_data .= ",''";
+							$SIS_data .= ",''";
 						}
-						if(isset($ValorTotal) && $ValorTotal != ''){           $a .= ",'".$ValorTotal."'" ;      }else{ $a .= ",''"; }
-						if(isset($MontoCancelado) && $MontoCancelado != ''){   $a .= ",'".$MontoCancelado."'" ;  }else{ $a .= ",''"; }
-						if(isset($idUsuario) && $idUsuario != ''){             $a .= ",'".$idUsuario."'" ;       }else{ $a .= ",''"; }
-						if(isset($idSistema) && $idSistema != ''){             $a .= ",'".$idSistema."'" ;       }else{ $a .= ",''"; }
-						if(isset($idProveedor) && $idProveedor != ''){       $a .= ",'".$idProveedor."'" ;    }else{ $a .= ",''"; }
-								
+						if(isset($ValorTotal) && $ValorTotal != ''){           $SIS_data .= ",'".$ValorTotal."'" ;      }else{ $SIS_data .= ",''"; }
+						if(isset($MontoCancelado) && $MontoCancelado != ''){   $SIS_data .= ",'".$MontoCancelado."'" ;  }else{ $SIS_data .= ",''"; }
+						if(isset($idUsuario) && $idUsuario != ''){             $SIS_data .= ",'".$idUsuario."'" ;       }else{ $SIS_data .= ",''"; }
+						if(isset($idSistema) && $idSistema != ''){             $SIS_data .= ",'".$idSistema."'" ;       }else{ $SIS_data .= ",''"; }
+						if(isset($idProveedor) && $idProveedor != ''){         $SIS_data .= ",'".$idProveedor."'" ;     }else{ $SIS_data .= ",''"; }
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `pagos_boletas_empresas` (idFacturacion, idDocPago, N_DocPago, F_Pago,
-						F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idProveedor) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-									
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-						}
+						$SIS_columns = 'idFacturacion, idDocPago, N_DocPago, F_Pago, F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idProveedor';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_boletas_empresas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 				}
 				

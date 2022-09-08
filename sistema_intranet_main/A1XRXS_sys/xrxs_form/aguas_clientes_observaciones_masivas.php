@@ -48,6 +48,11 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observacion) && $Observacion != ''){ $Observacion = EstandarizarInput($Observacion); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita la Observacion, contiene palabras no permitidas'; }	
@@ -91,20 +96,17 @@ require_once '0_validate_user_1.php';
 					
 					$idCliente = $usuarios['idCliente'];
 					//filtros
-					if(isset($idCliente) && $idCliente != ''){     $a = "'".$idCliente."'" ;       }else{$a ="''";}
-					if(isset($idUsuario) && $idUsuario != ''){     $a .= ",'".$idUsuario."'" ;     }else{$a .= ",''";}
-					if(isset($Fecha) && $Fecha != ''){             $a .= ",'".$Fecha."'" ;         }else{$a .= ",''";}
-					if(isset($Observacion) && $Observacion != ''){ $a .= ",'".$Observacion."'" ;   }else{$a .= ",''";}
+					if(isset($idCliente) && $idCliente != ''){     $SIS_data  = "'".$idCliente."'" ;      }else{$SIS_data  = "''";}
+					if(isset($idUsuario) && $idUsuario != ''){     $SIS_data .= ",'".$idUsuario."'" ;     }else{$SIS_data .= ",''";}
+					if(isset($Fecha) && $Fecha != ''){             $SIS_data .= ",'".$Fecha."'" ;         }else{$SIS_data .= ",''";}
+					if(isset($Observacion) && $Observacion != ''){ $SIS_data .= ",'".$Observacion."'" ;   }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `aguas_clientes_observaciones` (idCliente, idUsuario, Fecha, Observacion) VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					$SIS_columns = 'idCliente, idUsuario, Fecha, Observacion';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_clientes_observaciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Si ejecuto correctamente la consulta
-					if($resultado){
-						
-						//recibo el último id generado por mi sesion
-						$ultimo_id = mysqli_insert_id($dbConn);
+					if($ultimo_id!=0){
 						
 						/***********************************************************************************/
 						if ($_FILES["Formulario"]["error"] > 0){
@@ -167,11 +169,11 @@ require_once '0_validate_user_1.php';
 									if ($move_result){
 											
 										//Filtro para idSistema		
-										$a = "Formulario='".$sufijo.$_FILES['Formulario']['name']."'" ;
+										$SIS_data = "Formulario='".$sufijo.$_FILES['Formulario']['name']."'" ;
 										
 										/*******************************************************/
 										//se actualizan los datos
-										$resultado = db_update_data (false, $a, 'aguas_clientes_observaciones', 'idObservacion = "'.$ultimo_id.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+										$resultado = db_update_data (false, $SIS_data, 'aguas_clientes_observaciones', 'idObservacion = "'.$ultimo_id.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 										//Si ejecuto correctamente la consulta
 										if($resultado==true){
 											//redirijo
@@ -275,11 +277,11 @@ require_once '0_validate_user_1.php';
 										imagedestroy($imgBase);
 										
 										//Filtro para idSistema		
-										$a = "Foto='".$sufijo.$_FILES['Foto']['name']."'" ;
+										$SIS_data = "Foto='".$sufijo.$_FILES['Foto']['name']."'" ;
 										
 										/*******************************************************/
 										//se actualizan los datos
-										$resultado = db_update_data (false, $a, 'aguas_clientes_observaciones', 'idObservacion = "'.$ultimo_id.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+										$resultado = db_update_data (false, $SIS_data, 'aguas_clientes_observaciones', 'idObservacion = "'.$ultimo_id.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 										//Si ejecuto correctamente la consulta
 										if($resultado==true){
 											//redirijo
@@ -298,16 +300,6 @@ require_once '0_validate_user_1.php';
 								$error['Foto']       = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 							}
 						}
-					//si da error, guardar en el log de errores una copia
-					}else{
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
 					}
 				}
 				

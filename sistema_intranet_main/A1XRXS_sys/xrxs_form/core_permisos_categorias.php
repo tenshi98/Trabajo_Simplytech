@@ -37,11 +37,15 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){ $Nombre  = EstandarizarInput($Nombre); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	//if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre, contiene palabras no permitidas'; }	
 
-	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -69,30 +73,20 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){        $a  = "'".$Nombre."'" ;    }else{$a  ="''";}
-				if(isset($idFont) && $idFont != ''){        $a .= ",'".$idFont."'" ;   }else{$a .=",''";}
-				if(isset($IconColor) && $IconColor != ''){  $a .= ",'".$IconColor."'" ;   }else{$a .=",''";}
-				
+				if(isset($Nombre) && $Nombre != ''){        $SIS_data  = "'".$Nombre."'" ;       }else{$SIS_data  = "''";}
+				if(isset($idFont) && $idFont != ''){        $SIS_data .= ",'".$idFont."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($IconColor) && $IconColor != ''){  $SIS_data .= ",'".$IconColor."'" ;   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `core_permisos_categorias` (Nombre,idFont, IconColor) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Nombre,idFont, IconColor';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_permisos_categorias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($ultimo_id!=0){
 					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -118,14 +112,14 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "id_pmcat='".$id_pmcat."'" ;
-				if(isset($Nombre) && $Nombre != ''){         $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idFont) && $idFont != ''){         $a .= ",idFont='".$idFont."'" ;}
-				if(isset($IconColor) && $IconColor != ''){   $a .= ",IconColor='".$IconColor."'" ;}
+				$SIS_data = "id_pmcat='".$id_pmcat."'" ;
+				if(isset($Nombre) && $Nombre != ''){         $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idFont) && $idFont != ''){         $SIS_data .= ",idFont='".$idFont."'" ;}
+				if(isset($IconColor) && $IconColor != ''){   $SIS_data .= ",IconColor='".$IconColor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'core_permisos_categorias', 'id_pmcat = "'.$id_pmcat.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'core_permisos_categorias', 'id_pmcat = "'.$id_pmcat.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

@@ -168,58 +168,43 @@ require_once '0_validate_user_1.php';
 						//Hago los insert dentro de cada alumno activo
 						foreach ($arrAlumnos as $pre) {
 							//filtros
-							if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){       $a = "'".$pre['idAlumno']."'" ;      }else{$a ="''";}
-							if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){            $a .= ",'".$idQuiz."'" ;             }else{$a .= ",''";}
-							$a .= ",'".fecha_actual()."'" ;  
-							$a .= ",'".fecha2NMes(fecha_actual())."'" ;
-							$a .= ",'".fecha2Ano(fecha_actual())."'" ;
-							$a .= ",'1'" ; //estado:abierta
-							if(isset($Total_Preguntas) && $Total_Preguntas != ''){        $a .= ",'".$Total_Preguntas."'" ;  }else{$a .= ",''";}
-							if(isset($Tiempo) && $Tiempo != ''){                          $a .= ",'".$Tiempo."'" ;           }else{$a .= ",''";}
+							if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){ $SIS_data  = "'".$pre['idAlumno']."'" ; }else{$SIS_data  = "''";}
+							if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){      $SIS_data .= ",'".$idQuiz."'" ;         }else{$SIS_data .= ",''";}
+							$SIS_data .= ",'".fecha_actual()."'" ;  
+							$SIS_data .= ",'".fecha2NMes(fecha_actual())."'" ;
+							$SIS_data .= ",'".fecha2Ano(fecha_actual())."'" ;
+							$SIS_data .= ",'1'" ; //estado:abierta
+							if(isset($Total_Preguntas) && $Total_Preguntas != ''){ $SIS_data .= ",'".$Total_Preguntas."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($Tiempo) && $Tiempo != ''){                   $SIS_data .= ",'".$Tiempo."'" ;           }else{$SIS_data .= ",''";}
 							if(isset($Programada_fecha) && $Programada_fecha != ''){    
-								$a .= ",'".$Programada_fecha."'" ;  
-								$a .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
-								$a .= ",'".fecha2NMes($Programada_fecha)."'" ;
-								$a .= ",'".fecha2Ano($Programada_fecha)."'" ;  
+								$SIS_data .= ",'".$Programada_fecha."'" ;  
+								$SIS_data .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
+								$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'" ;
+								$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'" ;  
 							}else{
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($Semana) && $Semana != ''){                          $a .= ",'".$Semana."'" ;           }else{$a .= ",''";}
+							if(isset($Semana) && $Semana != ''){ $SIS_data .= ",'".$Semana."'" ; }else{$SIS_data .= ",''";}
 							
 							//Reviso las preguntas
 							for ($i = 1; $i <= 100; $i++) {
-								if(isset($BPreg[$i]) && $BPreg[$i] != ''){                $a .= ",'".$BPreg[$i]."'" ;         }else{$a .= ",''";}
+								if(isset($BPreg[$i]) && $BPreg[$i] != ''){ $SIS_data .= ",'".$BPreg[$i]."'" ; }else{$SIS_data .= ",''";}
 							}
 
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `quiz_realizadas` (idAlumno, idQuiz, 
-							Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
-							Programada_fecha, Programada_dia, Programada_mes, Programada_ano, Semana
-							".$cadena.") 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							$SIS_columns = 'idAlumno, idQuiz, Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, 
+							Total_Preguntas, Duracion_Max, Programada_fecha, Programada_dia, Programada_mes, 
+							Programada_ano, Semana '.$cadena;
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'quiz_realizadas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
+							if($ultimo_id!=0){
+								$MemoLastID[$pre['idAlumno']] = $ultimo_id;
+								$Total_Alumnos++;
 							}
-							//recibo el último id generado por mi sesion
-							$ultimo_id = mysqli_insert_id($dbConn);
-							
-							$MemoLastID[$pre['idAlumno']] = $ultimo_id;
-							
-							
-							$Total_Alumnos++;
 						}
 						/**************************************************************************************/	
 						//Registro los datos de la prueba
@@ -227,44 +212,30 @@ require_once '0_validate_user_1.php';
 						$N_Alumnos      = $Total_Alumnos;
 						$N_Alumnos_Rep  = 0;
 						//filtros
-						if(isset($idSistema) && $idSistema != ''){               $a = "'".$idSistema."'" ;   }else{$a ="''";}
-						if(isset($idAsignar) && $idAsignar != ''){               $a .= ",'".$idAsignar."'" ; }else{$a .=",''";}
-						if(isset($idCurso) && $idCurso != ''){                   $a .= ",'".$idCurso."'" ;   }else{$a .=",''";}
-						if(isset($idQuiz) && $idQuiz != ''){                     $a .= ",'".$idQuiz."'" ;    }else{$a .=",''";}
+						if(isset($idSistema) && $idSistema != ''){               $SIS_data  = "'".$idSistema."'" ;  }else{$SIS_data  = "''";}
+						if(isset($idAsignar) && $idAsignar != ''){               $SIS_data .= ",'".$idAsignar."'" ; }else{$SIS_data .= ",''";}
+						if(isset($idCurso) && $idCurso != ''){                   $SIS_data .= ",'".$idCurso."'" ;   }else{$SIS_data .= ",''";}
+						if(isset($idQuiz) && $idQuiz != ''){                     $SIS_data .= ",'".$idQuiz."'" ;    }else{$SIS_data .= ",''";}
 						if(isset($Programada_fecha) && $Programada_fecha != ''){    
-							$a .= ",'".$Programada_fecha."'" ;  
-							$a .= ",'".fecha2NMes($Programada_fecha)."'" ;
-							$a .= ",'".fecha2Ano($Programada_fecha)."'" ;  
+							$SIS_data .= ",'".$Programada_fecha."'" ;  
+							$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'" ;
+							$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'" ;  
 						}else{
-							$a .=",''";
-							$a .=",''";
-							$a .=",''";
+							$SIS_data .= ",''";
+							$SIS_data .= ",''";
+							$SIS_data .= ",''";
 						}
-						if(isset($N_preguntas) && $N_preguntas != ''){        $a .= ",'".$N_preguntas."'" ;     }else{$a .=",''";}
-						if(isset($N_Alumnos) && $N_Alumnos != ''){            $a .= ",'".$N_Alumnos."'" ;       }else{$a .=",''";}
-						if(isset($N_Alumnos_Rep) && $N_Alumnos_Rep != ''){    $a .= ",'".$N_Alumnos_Rep."'" ;   }else{$a .=",''";}
-						if(isset($Semana) && $Semana != ''){                  $a .= ",'".$Semana."'" ;          }else{$a .= ",''";}
+						if(isset($N_preguntas) && $N_preguntas != ''){        $SIS_data .= ",'".$N_preguntas."'" ;     }else{$SIS_data .= ",''";}
+						if(isset($N_Alumnos) && $N_Alumnos != ''){            $SIS_data .= ",'".$N_Alumnos."'" ;       }else{$SIS_data .= ",''";}
+						if(isset($N_Alumnos_Rep) && $N_Alumnos_Rep != ''){    $SIS_data .= ",'".$N_Alumnos_Rep."'" ;   }else{$SIS_data .= ",''";}
+						if(isset($Semana) && $Semana != ''){                  $SIS_data .= ",'".$Semana."'" ;          }else{$SIS_data .= ",''";}
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `alumnos_evaluaciones_asignadas` (idSistema, idAsignar, idCurso, idQuiz,
-						Programada_fecha, Programada_mes, Programada_ano, N_preguntas, N_Alumnos, N_Alumnos_Rep, Semana) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
+						$SIS_columns = 'idSistema, idAsignar, idCurso, idQuiz, Programada_fecha, Programada_mes, Programada_ano, N_preguntas, N_Alumnos, N_Alumnos_Rep, Semana';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}else{
-							//recibo el último id generado por mi sesion
-							$ultimo_id = mysqli_insert_id($dbConn);
-							
+						if($ultimo_id!=0){
 							/************************************/
 							//Categorias y su numero de preguntas
 							for ($i = 1; $i <= 30; $i++) {
@@ -272,50 +243,36 @@ require_once '0_validate_user_1.php';
 								if(isset($categoria[$i]) && $categoria[$i] != ''&&isset($n_categoria[$i]) && $n_categoria[$i] != ''){
 								
 									//filtros
-									$a = "'".$ultimo_id."'" ;
-									$a .= ",'".$categoria[$i]."'" ;
-									$a .= ",'".$n_categoria[$i]."'" ;
-									
+									$SIS_data  = "'".$ultimo_id."'" ;
+									$SIS_data .= ",'".$categoria[$i]."'" ;
+									$SIS_data .= ",'".$n_categoria[$i]."'" ;
+														
 									// inserto los datos de registro en la db
-									$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_categorias` (idAsignadas,
-									idCategoria, N_preguntas) 
-									VALUES (".$a.")";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									$SIS_columns = 'idAsignadas, idCategoria, N_preguntas';
+									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas_categorias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 								}
 							}
 							/************************************/
 							//Alumnos que se les hizo las pruebas
 							foreach ($arrAlumnos as $pre) {
 								//filtros
-								$a = "'".$ultimo_id."'" ;
-								$a .= ",'".$pre['idAlumno']."'" ;
-								$a .= ",'1'" ;
-								$a .= ",'".$Programada_fecha."'" ;
-									
+								$SIS_data  = "'".$ultimo_id."'" ;
+								$SIS_data .= ",'".$pre['idAlumno']."'" ;
+								$SIS_data .= ",'1'" ;
+								$SIS_data .= ",'".$Programada_fecha."'" ;
+								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_alumnos` (idAsignadas,
-								idAlumno, idTipo, Programada_fecha) 
-								VALUES (".$a.")";
-								$result = mysqli_query($dbConn, $query);
+								$SIS_columns = 'idAsignadas, idAlumno, idTipo, Programada_fecha';
+								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas_alumnos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
-								/*******************************************************/
-								//se actualizan los datos
-								$a = "idAsignadas='".$ultimo_id."'" ;
-								$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$MemoLastID[$pre['idAlumno']].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
-								
+								//Si ejecuto correctamente la consulta
+								if($ultimo_id2!=0){
+									/*******************************************************/
+									//se actualizan los datos
+									$SIS_data = "idAsignadas='".$ultimo_id."'" ;
+									$resultado = db_update_data (false, $SIS_data, 'quiz_realizadas', 'idQuizRealizadas = "'.$MemoLastID[$pre['idAlumno']].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								}
 							}
 							
 							header( 'Location: '.$location.'&created=true' );
@@ -388,59 +345,42 @@ require_once '0_validate_user_1.php';
 				foreach ($arrAlumnos as $pre) {		
 
 					//filtros
-					if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){       $a = "'".$pre['idAlumno']."'" ;      }else{$a ="''";}
-					if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){            $a .= ",'".$idQuiz."'" ;             }else{$a .= ",''";}
-					$a .= ",'".fecha_actual()."'" ;  
-					$a .= ",'".fecha2NMes(fecha_actual())."'" ;
-					$a .= ",'".fecha2Ano(fecha_actual())."'" ;
-					$a .= ",'1'" ; //estado:abierta
-					if(isset($Total_Preguntas) && $Total_Preguntas != ''){        $a .= ",'".$Total_Preguntas."'" ;  }else{$a .= ",''";}
-					if(isset($Tiempo) && $Tiempo != ''){                          $a .= ",'".$Tiempo."'" ;           }else{$a .= ",''";}
+					if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){  $SIS_data  = "'".$pre['idAlumno']."'" ;  }else{$SIS_data  = "''";}
+					if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){       $SIS_data .= ",'".$idQuiz."'" ;          }else{$SIS_data .= ",''";}
+					$SIS_data .= ",'".fecha_actual()."'" ;  
+					$SIS_data .= ",'".fecha2NMes(fecha_actual())."'" ;
+					$SIS_data .= ",'".fecha2Ano(fecha_actual())."'" ;
+					$SIS_data .= ",'1'" ; //estado:abierta
+					if(isset($Total_Preguntas) && $Total_Preguntas != ''){ $SIS_data .= ",'".$Total_Preguntas."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($Tiempo) && $Tiempo != ''){                   $SIS_data .= ",'".$Tiempo."'" ;           }else{$SIS_data .= ",''";}
 					if(isset($Programada_fecha) && $Programada_fecha != ''){    
-						$a .= ",'".$Programada_fecha."'" ;  
-						$a .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
-						$a .= ",'".fecha2NMes($Programada_fecha)."'" ;
-						$a .= ",'".fecha2Ano($Programada_fecha)."'" ;  
+						$SIS_data .= ",'".$Programada_fecha."'" ;  
+						$SIS_data .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
+						$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'" ;
+						$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'" ;  
 					}else{
-						$a .=",''";
-						$a .=",''";
-						$a .=",''";
-						$a .=",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
 					}
-					if(isset($Semana) && $Semana != ''){                  $a .= ",'".$Semana."'" ;          }else{$a .= ",''";}
+					if(isset($Semana) && $Semana != ''){ $SIS_data .= ",'".$Semana."'" ; }else{$SIS_data .= ",''";}
 					//Reviso las preguntas
 					for ($i = 1; $i <= 100; $i++) {
-							if(isset($BPreg[$i]) && $BPreg[$i] != ''){    $a .= ",'".$BPreg[$i]."'" ;        }else{$a .= ",''";}
+							if(isset($BPreg[$i]) && $BPreg[$i] != ''){ $SIS_data .= ",'".$BPreg[$i]."'" ; }else{$SIS_data .= ",''";}
 					}
-							
-
+					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `quiz_realizadas` (idAlumno, idQuiz, 
-					Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
-					Programada_fecha, Programada_dia, Programada_mes, Programada_ano, Semana
-					".$cadena.") 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					$SIS_columns = 'idAlumno, idQuiz, Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, 
+					Total_Preguntas, Duracion_Max, Programada_fecha, Programada_dia, Programada_mes, Programada_ano, 
+					Semana '.$cadena;
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'quiz_realizadas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-							
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						
-					}
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-							
-					$MemoLastID[$pre['idAlumno']] = $ultimo_id;
-							
-					$Total_Alumnos++;
-						
+					if($ultimo_id!=0){
+						$MemoLastID[$pre['idAlumno']] = $ultimo_id;
+						$Total_Alumnos++;
+					}	
 				}
 				
 				/**************************************************************************************/	
@@ -449,44 +389,30 @@ require_once '0_validate_user_1.php';
 				$N_Alumnos      = $Total_Alumnos;
 				$N_Alumnos_Rep  = 0;
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){               $a = "'".$idSistema."'" ;   }else{$a ="''";}
-				if(isset($idAsignar) && $idAsignar != ''){               $a .= ",'".$idAsignar."'" ; }else{$a .=",''";}
-				if(isset($idCurso) && $idCurso != ''){                   $a .= ",'".$idCurso."'" ;   }else{$a .=",''";}
-				if(isset($idQuiz) && $idQuiz != ''){                     $a .= ",'".$idQuiz."'" ;    }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){               $SIS_data  = "'".$idSistema."'" ;  }else{$SIS_data  = "''";}
+				if(isset($idAsignar) && $idAsignar != ''){               $SIS_data .= ",'".$idAsignar."'" ; }else{$SIS_data .= ",''";}
+				if(isset($idCurso) && $idCurso != ''){                   $SIS_data .= ",'".$idCurso."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idQuiz) && $idQuiz != ''){                     $SIS_data .= ",'".$idQuiz."'" ;    }else{$SIS_data .= ",''";}
 				if(isset($Programada_fecha) && $Programada_fecha != ''){    
-					$a .= ",'".$Programada_fecha."'" ;  
-					$a .= ",'".fecha2NMes($Programada_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Programada_fecha)."'" ;  
+					$SIS_data .= ",'".$Programada_fecha."'" ;  
+					$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'" ;  
 				}else{
-					$a .=",''";
-					$a .=",''";
-					$a .=",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($N_preguntas) && $N_preguntas != ''){        $a .= ",'".$N_preguntas."'" ;     }else{$a .=",''";}
-				if(isset($N_Alumnos) && $N_Alumnos != ''){            $a .= ",'".$N_Alumnos."'" ;       }else{$a .=",''";}
-				if(isset($N_Alumnos_Rep) && $N_Alumnos_Rep != ''){    $a .= ",'".$N_Alumnos_Rep."'" ;   }else{$a .=",''";}
-				if(isset($Semana) && $Semana != ''){                  $a .= ",'".$Semana."'" ;          }else{$a .= ",''";}
-							
+				if(isset($N_preguntas) && $N_preguntas != ''){        $SIS_data .= ",'".$N_preguntas."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($N_Alumnos) && $N_Alumnos != ''){            $SIS_data .= ",'".$N_Alumnos."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($N_Alumnos_Rep) && $N_Alumnos_Rep != ''){    $SIS_data .= ",'".$N_Alumnos_Rep."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Semana) && $Semana != ''){                  $SIS_data .= ",'".$Semana."'" ;          }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `alumnos_evaluaciones_asignadas` (idSistema, idAsignar, idCurso, idQuiz,
-				Programada_fecha, Programada_mes, Programada_ano, N_preguntas, N_Alumnos, N_Alumnos_Rep, Semana) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idAsignar, idCurso, idQuiz, Programada_fecha, Programada_mes, Programada_ano, N_preguntas, N_Alumnos, N_Alumnos_Rep, Semana';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-							
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-							
+				if($ultimo_id!=0){
 					/************************************/
 					//Categorias y su numero de preguntas
 					for ($i = 1; $i <= 30; $i++) {
@@ -494,48 +420,33 @@ require_once '0_validate_user_1.php';
 						if(isset($categoria[$i]) && $categoria[$i] != ''){
 								
 							//filtros
-							$a = "'".$ultimo_id."'" ;
-							$a .= ",'".$i."'" ;
-							$a .= ",'".$categoria[$i]."'" ;
-									
+							$SIS_data  = "'".$ultimo_id."'" ;
+							$SIS_data .= ",'".$i."'" ;
+							$SIS_data .= ",'".$categoria[$i]."'" ;
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_categorias` (idAsignadas,
-							idCategoria, N_preguntas) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-										
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-							}
+							$SIS_columns = 'idAsignadas, idCategoria, N_preguntas';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas_categorias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/************************************/
 					//Alumnos que se les hizo las pruebas
 					foreach ($arrAlumnos as $pre) {
 						//filtros
-						$a = "'".$ultimo_id."'" ;
-						$a .= ",'".$pre['idAlumno']."'" ;
-						$a .= ",'1'" ;
-						$a .= ",'".$Programada_fecha."'" ;
-									
+						$SIS_data  = "'".$ultimo_id."'" ;
+						$SIS_data .= ",'".$pre['idAlumno']."'" ;
+						$SIS_data .= ",'1'" ;
+						$SIS_data .= ",'".$Programada_fecha."'" ;
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_alumnos` (idAsignadas,
-						idAlumno, idTipo, Programada_fecha) 
-						VALUES (".$a.")";
-						$result = mysqli_query($dbConn, $query);
+						$SIS_columns = 'idAsignadas, idAlumno, idTipo, Programada_fecha';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas_alumnos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						/*******************************************************/
 						//se actualizan los datos
-						$a = "idAsignadas='".$ultimo_id."'" ;
-						$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$MemoLastID[$pre['idAlumno']].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$SIS_data = "idAsignadas='".$ultimo_id."'" ;
+						$resultado = db_update_data (false, $SIS_data, 'quiz_realizadas', 'idQuizRealizadas = "'.$MemoLastID[$pre['idAlumno']].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 					}
 					
@@ -603,57 +514,42 @@ require_once '0_validate_user_1.php';
 				foreach ($arrAlumnos as $pre) {		
 					
 					//filtros
-					if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){       $a = "'".$pre['idAlumno']."'" ;      }else{$a ="''";}
-					if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){            $a .= ",'".$idQuiz."'" ;             }else{$a .= ",''";}
-					$a .= ",'".fecha_actual()."'" ;  
-					$a .= ",'".fecha2NMes(fecha_actual())."'" ;
-					$a .= ",'".fecha2Ano(fecha_actual())."'" ;
-					$a .= ",'1'" ; //estado:abierta
-					if(isset($Total_Preguntas) && $Total_Preguntas != ''){        $a .= ",'".$Total_Preguntas."'" ;  }else{$a .= ",''";}
-					if(isset($Tiempo) && $Tiempo != ''){                          $a .= ",'".$Tiempo."'" ;           }else{$a .= ",''";}
+					if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){   $SIS_data  = "'".$pre['idAlumno']."'" ;  }else{$SIS_data  = "''";}
+					if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){        $SIS_data .= ",'".$idQuiz."'" ;          }else{$SIS_data .= ",''";}
+					$SIS_data .= ",'".fecha_actual()."'" ;  
+					$SIS_data .= ",'".fecha2NMes(fecha_actual())."'" ;
+					$SIS_data .= ",'".fecha2Ano(fecha_actual())."'" ;
+					$SIS_data .= ",'1'" ; //estado:abierta
+					if(isset($Total_Preguntas) && $Total_Preguntas != ''){ $SIS_data .= ",'".$Total_Preguntas."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($Tiempo) && $Tiempo != ''){                   $SIS_data .= ",'".$Tiempo."'" ;           }else{$SIS_data .= ",''";}
 					if(isset($Programada_fecha) && $Programada_fecha != ''){    
-						$a .= ",'".$Programada_fecha."'" ;  
-						$a .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
-						$a .= ",'".fecha2NMes($Programada_fecha)."'" ;
-						$a .= ",'".fecha2Ano($Programada_fecha)."'" ;  
+						$SIS_data .= ",'".$Programada_fecha."'" ;  
+						$SIS_data .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
+						$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'" ;
+						$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'" ;  
 					}else{
-						$a .=",''";
-						$a .=",''";
-						$a .=",''";
-						$a .=",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
 					}
-					if(isset($Semana) && $Semana != ''){                  $a .= ",'".$Semana."'" ;          }else{$a .= ",''";}
+					if(isset($Semana) && $Semana != ''){ $SIS_data .= ",'".$Semana."'" ; }else{$SIS_data .= ",''";}
 					//Reviso las preguntas
 					for ($i = 1; $i <= 100; $i++) {
-						if(isset($BPreg[$pre['idAlumno']][$i]) && $BPreg[$pre['idAlumno']][$i] != ''){   $a .= ",'".$BPreg[$pre['idAlumno']][$i]."'" ;         }else{$a .= ",''";}
+						if(isset($BPreg[$pre['idAlumno']][$i]) && $BPreg[$pre['idAlumno']][$i] != ''){ $SIS_data .= ",'".$BPreg[$pre['idAlumno']][$i]."'" ; }else{$SIS_data .= ",''";}
 					}
-							
-
+					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `quiz_realizadas` (idAlumno, idQuiz, 
-					Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
-					Programada_fecha, Programada_dia, Programada_mes, Programada_ano, Semana
-					".$cadena.") 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					$SIS_columns = 'idAlumno, idQuiz, Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, 
+					Total_Preguntas, Duracion_Max, Programada_fecha, Programada_dia, Programada_mes, Programada_ano, 
+					Semana '.$cadena;
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'quiz_realizadas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-								
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
+					if($ultimo_id!=0){
+						$MemoLastID[$pre['idAlumno']] = $ultimo_id;
+						$Total_Alumnos++;	
 					}
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-							
-					$MemoLastID[$pre['idAlumno']] = $ultimo_id;
-						
-					$Total_Alumnos++;	
 
 				}
 
@@ -663,44 +559,31 @@ require_once '0_validate_user_1.php';
 				$N_Alumnos      = $Total_Alumnos;
 				$N_Alumnos_Rep  = 0;
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){               $a = "'".$idSistema."'" ;   }else{$a ="''";}
-				if(isset($idAsignar) && $idAsignar != ''){               $a .= ",'".$idAsignar."'" ; }else{$a .=",''";}
-				if(isset($idCurso) && $idCurso != ''){                   $a .= ",'".$idCurso."'" ;   }else{$a .=",''";}
-				if(isset($idQuiz) && $idQuiz != ''){                     $a .= ",'".$idQuiz."'" ;    }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){               $SIS_data  = "'".$idSistema."'" ;  }else{$SIS_data  = "''";}
+				if(isset($idAsignar) && $idAsignar != ''){               $SIS_data .= ",'".$idAsignar."'" ; }else{$SIS_data .= ",''";}
+				if(isset($idCurso) && $idCurso != ''){                   $SIS_data .= ",'".$idCurso."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idQuiz) && $idQuiz != ''){                     $SIS_data .= ",'".$idQuiz."'" ;    }else{$SIS_data .= ",''";}
 				if(isset($Programada_fecha) && $Programada_fecha != ''){    
-					$a .= ",'".$Programada_fecha."'" ;  
-					$a .= ",'".fecha2NMes($Programada_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Programada_fecha)."'" ;  
+					$SIS_data .= ",'".$Programada_fecha."'" ;  
+					$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'" ;  
 				}else{
-					$a .=",''";
-					$a .=",''";
-					$a .=",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($N_preguntas) && $N_preguntas != ''){        $a .= ",'".$N_preguntas."'" ;     }else{$a .=",''";}
-				if(isset($N_Alumnos) && $N_Alumnos != ''){            $a .= ",'".$N_Alumnos."'" ;       }else{$a .=",''";}
-				if(isset($N_Alumnos_Rep) && $N_Alumnos_Rep != ''){    $a .= ",'".$N_Alumnos_Rep."'" ;   }else{$a .=",''";}
-				if(isset($Semana) && $Semana != ''){                  $a .= ",'".$Semana."'" ;          }else{$a .= ",''";}
-							
+				if(isset($N_preguntas) && $N_preguntas != ''){        $SIS_data .= ",'".$N_preguntas."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($N_Alumnos) && $N_Alumnos != ''){            $SIS_data .= ",'".$N_Alumnos."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($N_Alumnos_Rep) && $N_Alumnos_Rep != ''){    $SIS_data .= ",'".$N_Alumnos_Rep."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Semana) && $Semana != ''){                  $SIS_data .= ",'".$Semana."'" ;          }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `alumnos_evaluaciones_asignadas` (idSistema, idAsignar, idCurso, idQuiz,
-				Programada_fecha, Programada_mes, Programada_ano, N_preguntas, N_Alumnos, N_Alumnos_Rep, Semana) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idAsignar, idCurso, idQuiz, Programada_fecha, Programada_mes, 
+				Programada_ano, N_preguntas, N_Alumnos, N_Alumnos_Rep, Semana';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-							
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-							
+				if($ultimo_id!=0){
 					/************************************/
 					//Categorias y su numero de preguntas
 					for ($i = 1; $i <= 30; $i++) {
@@ -708,57 +591,39 @@ require_once '0_validate_user_1.php';
 						if(isset($categoria[$i]) && $categoria[$i] != ''){
 								
 							//filtros
-							$a = "'".$ultimo_id."'" ;
-							$a .= ",'".$i."'" ;
-							$a .= ",'".$categoria[$i]."'" ;
-									
+							$SIS_data = "'".$ultimo_id."'" ;
+							$SIS_data .= ",'".$i."'" ;
+							$SIS_data .= ",'".$categoria[$i]."'" ;
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_categorias` (idAsignadas,
-							idCategoria, N_preguntas) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-										
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-							}
+							$SIS_columns = 'idAsignadas, idCategoria, N_preguntas';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas_categorias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/************************************/
 					//Alumnos que se les hizo las pruebas
 					foreach ($arrAlumnos as $pre) {
 						//filtros
-						$a = "'".$ultimo_id."'" ;
-						$a .= ",'".$pre['idAlumno']."'" ;
-						$a .= ",'1'" ;
-						$a .= ",'".$Programada_fecha."'" ;
-									
+						$SIS_data = "'".$ultimo_id."'" ;
+						$SIS_data .= ",'".$pre['idAlumno']."'" ;
+						$SIS_data .= ",'1'" ;
+						$SIS_data .= ",'".$Programada_fecha."'" ;
+						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_alumnos` (idAsignadas,
-						idAlumno, idTipo, Programada_fecha) 
-						VALUES (".$a.")";
-						$result = mysqli_query($dbConn, $query);
+						$SIS_columns = 'idAsignadas, idAlumno, idTipo, Programada_fecha';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas_alumnos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						/*******************************************************/
 						//se actualizan los datos
-						$a = "idAsignadas='".$ultimo_id."'" ;
-						$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$MemoLastID[$pre['idAlumno']].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$SIS_data = "idAsignadas='".$ultimo_id."'" ;
+						$resultado = db_update_data (false, $SIS_data, 'quiz_realizadas', 'idQuizRealizadas = "'.$MemoLastID[$pre['idAlumno']].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 					}
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
-				
-
-				
 			}
 			
 	
@@ -838,54 +703,39 @@ require_once '0_validate_user_1.php';
 						//Hago los insert dentro de cada alumno activo
 						foreach ($arrAlumnos as $pre) {
 							//filtros
-							if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){       $a = "'".$pre['idAlumno']."'" ;      }else{$a ="''";}
-							if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){            $a .= ",'".$idQuiz."'" ;             }else{$a .= ",''";}
-							$a .= ",'".fecha_actual()."'" ;  
-							$a .= ",'".fecha2NMes(fecha_actual())."'" ;
-							$a .= ",'".fecha2Ano(fecha_actual())."'" ;
-							$a .= ",'1'" ; //estado:abierta
-							if(isset($Total_Preguntas) && $Total_Preguntas != ''){        $a .= ",'".$Total_Preguntas."'" ;  }else{$a .= ",''";}
-							if(isset($Tiempo) && $Tiempo != ''){                          $a .= ",'".$Tiempo."'" ;           }else{$a .= ",''";}
+							if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){  $SIS_data  = "'".$pre['idAlumno']."'" ;  }else{$SIS_data  = "''";}
+							if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){       $SIS_data .= ",'".$idQuiz."'" ;          }else{$SIS_data .= ",''";}
+							$SIS_data .= ",'".fecha_actual()."'" ;  
+							$SIS_data .= ",'".fecha2NMes(fecha_actual())."'" ;
+							$SIS_data .= ",'".fecha2Ano(fecha_actual())."'" ;
+							$SIS_data .= ",'1'" ; //estado:abierta
+							if(isset($Total_Preguntas) && $Total_Preguntas != ''){ $SIS_data .= ",'".$Total_Preguntas."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($Tiempo) && $Tiempo != ''){                   $SIS_data .= ",'".$Tiempo."'" ;           }else{$SIS_data .= ",''";}
 							if(isset($Programada_fecha) && $Programada_fecha != ''){    
-								$a .= ",'".$Programada_fecha."'" ;  
-								$a .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
-								$a .= ",'".fecha2NMes($Programada_fecha)."'" ;
-								$a .= ",'".fecha2Ano($Programada_fecha)."'" ;  
+								$SIS_data .= ",'".$Programada_fecha."'" ;  
+								$SIS_data .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
+								$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'" ;
+								$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'" ;  
 							}else{
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($Semana) && $Semana != ''){                  $a .= ",'".$Semana."'" ;          }else{$a .= ",''";}
+							if(isset($Semana) && $Semana != ''){  $SIS_data .= ",'".$Semana."'" ; }else{$SIS_data .= ",''";}
 							
 							//Reviso las preguntas
 							for ($i = 1; $i <= 100; $i++) {
-								if(isset($BPreg[$i]) && $BPreg[$i] != ''){                $a .= ",'".$BPreg[$i]."'" ;         }else{$a .= ",''";}
+								if(isset($BPreg[$i]) && $BPreg[$i] != ''){ $SIS_data .= ",'".$BPreg[$i]."'" ; }else{$SIS_data .= ",''";}
 							}
 
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `quiz_realizadas` (idAlumno, idQuiz, 
-							Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
-							Programada_fecha, Programada_dia, Programada_mes, Programada_ano, Semana
-							".$cadena.") 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-										
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-							}
-
+							$SIS_columns = 'idAlumno, idQuiz, Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, 
+							Total_Preguntas, Duracion_Max, Programada_fecha, Programada_dia, Programada_mes, 
+							Programada_ano, Semana '.$cadena;
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'quiz_realizadas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
-						
 						break;
 					/********************************************************/
 					//Random unico
@@ -924,57 +774,40 @@ require_once '0_validate_user_1.php';
 						foreach ($arrAlumnos as $pre) {		
 
 							//filtros
-							if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){       $a = "'".$pre['idAlumno']."'" ;      }else{$a ="''";}
-							if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){            $a .= ",'".$idQuiz."'" ;             }else{$a .= ",''";}
-							$a .= ",'".fecha_actual()."'" ;  
-							$a .= ",'".fecha2NMes(fecha_actual())."'" ;
-							$a .= ",'".fecha2Ano(fecha_actual())."'" ;
-							$a .= ",'1'" ; //estado:abierta
-							if(isset($Total_Preguntas) && $Total_Preguntas != ''){        $a .= ",'".$Total_Preguntas."'" ;  }else{$a .= ",''";}
-							if(isset($Tiempo) && $Tiempo != ''){                          $a .= ",'".$Tiempo."'" ;           }else{$a .= ",''";}
+							if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){ $SIS_data  = "'".$pre['idAlumno']."'" ; }else{$SIS_data  = "''";}
+							if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){      $SIS_data .= ",'".$idQuiz."'" ;         }else{$SIS_data .= ",''";}
+							$SIS_data .= ",'".fecha_actual()."'" ;  
+							$SIS_data .= ",'".fecha2NMes(fecha_actual())."'" ;
+							$SIS_data .= ",'".fecha2Ano(fecha_actual())."'" ;
+							$SIS_data .= ",'1'" ; //estado:abierta
+							if(isset($Total_Preguntas) && $Total_Preguntas != ''){  $SIS_data .= ",'".$Total_Preguntas."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($Tiempo) && $Tiempo != ''){                    $SIS_data .= ",'".$Tiempo."'" ;           }else{$SIS_data .= ",''";}
 							if(isset($Programada_fecha) && $Programada_fecha != ''){    
-								$a .= ",'".$Programada_fecha."'" ;  
-								$a .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
-								$a .= ",'".fecha2NMes($Programada_fecha)."'" ;
-								$a .= ",'".fecha2Ano($Programada_fecha)."'" ;  
+								$SIS_data .= ",'".$Programada_fecha."'" ;  
+								$SIS_data .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
+								$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'" ;
+								$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'" ;  
 							}else{
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($idAsignadas) && $idAsignadas != ''){                $a .= ",'".$idAsignadas."'" ;           }else{$a .= ",''";}
-							if(isset($Semana) && $Semana != ''){                          $a .= ",'".$Semana."'" ;                }else{$a .= ",''";}
+							if(isset($idAsignadas) && $idAsignadas != ''){  $SIS_data .= ",'".$idAsignadas."'" ; }else{$SIS_data .= ",''";}
+							if(isset($Semana) && $Semana != ''){            $SIS_data .= ",'".$Semana."'" ;      }else{$SIS_data .= ",''";}
 							
 							//Reviso las preguntas
 							for ($i = 1; $i <= 100; $i++) {
-									if(isset($BPreg[$i]) && $BPreg[$i] != ''){            $a .= ",'".$BPreg[$i]."'" ;        }else{$a .= ",''";}
+									if(isset($BPreg[$i]) && $BPreg[$i] != ''){ $SIS_data .= ",'".$BPreg[$i]."'" ; }else{$SIS_data .= ",''";}
 							}
-									
-
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `quiz_realizadas` (idAlumno, idQuiz, 
-							Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
-							Programada_fecha, Programada_dia, Programada_mes, Programada_ano, idAsignadas, Semana
-							".$cadena.") 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-										
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-							}
+							$SIS_columns = 'idAlumno, idQuiz, Creacion_fecha, Creacion_mes, Creacion_ano, 
+							idEstado, Total_Preguntas, Duracion_Max, Programada_fecha, Programada_dia, 
+							Programada_mes, Programada_ano, idAsignadas, Semana '.$cadena;
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'quiz_realizadas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 						}
-				
-				
 						break;
 					/********************************************************/
 					//Random para todos
@@ -1016,57 +849,40 @@ require_once '0_validate_user_1.php';
 						foreach ($arrAlumnos as $pre) {		
 							
 							//filtros
-							if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){       $a = "'".$pre['idAlumno']."'" ;      }else{$a ="''";}
-							if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){            $a .= ",'".$idQuiz."'" ;             }else{$a .= ",''";}
-							$a .= ",'".fecha_actual()."'" ;  
-							$a .= ",'".fecha2NMes(fecha_actual())."'" ;
-							$a .= ",'".fecha2Ano(fecha_actual())."'" ;
-							$a .= ",'1'" ; //estado:abierta
-							if(isset($Total_Preguntas) && $Total_Preguntas != ''){        $a .= ",'".$Total_Preguntas."'" ;  }else{$a .= ",''";}
-							if(isset($Tiempo) && $Tiempo != ''){                          $a .= ",'".$Tiempo."'" ;           }else{$a .= ",''";}
+							if(isset($pre['idAlumno']) && $pre['idAlumno'] != ''){ $SIS_data  = "'".$pre['idAlumno']."'" ; }else{$SIS_data  = "''";}
+							if(isset($idQuiz) && $idQuiz!= '' &&$idQuiz!= 0){      $SIS_data .= ",'".$idQuiz."'" ;         }else{$SIS_data .= ",''";}
+							$SIS_data .= ",'".fecha_actual()."'" ;  
+							$SIS_data .= ",'".fecha2NMes(fecha_actual())."'" ;
+							$SIS_data .= ",'".fecha2Ano(fecha_actual())."'" ;
+							$SIS_data .= ",'1'" ; //estado:abierta
+							if(isset($Total_Preguntas) && $Total_Preguntas != ''){  $SIS_data .= ",'".$Total_Preguntas."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($Tiempo) && $Tiempo != ''){                    $SIS_data .= ",'".$Tiempo."'" ;           }else{$SIS_data .= ",''";}
 							if(isset($Programada_fecha) && $Programada_fecha != ''){    
-								$a .= ",'".$Programada_fecha."'" ;  
-								$a .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
-								$a .= ",'".fecha2NMes($Programada_fecha)."'" ;
-								$a .= ",'".fecha2Ano($Programada_fecha)."'" ;  
+								$SIS_data .= ",'".$Programada_fecha."'" ;  
+								$SIS_data .= ",'".fecha2NdiaMes($Programada_fecha)."'" ;
+								$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'" ;
+								$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'" ;  
 							}else{
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($idAsignadas) && $idAsignadas != ''){                $a .= ",'".$idAsignadas."'" ;           }else{$a .= ",''";}
-							if(isset($Semana) && $Semana != ''){                          $a .= ",'".$Semana."'" ;                }else{$a .= ",''";}
+							if(isset($idAsignadas) && $idAsignadas != ''){ $SIS_data .= ",'".$idAsignadas."'" ; }else{$SIS_data .= ",''";}
+							if(isset($Semana) && $Semana != ''){           $SIS_data .= ",'".$Semana."'" ;      }else{$SIS_data .= ",''";}
 							
 							//Reviso las preguntas
 							for ($i = 1; $i <= 100; $i++) {
-								if(isset($BPreg[$pre['idAlumno']][$i]) && $BPreg[$pre['idAlumno']][$i] != ''){   $a .= ",'".$BPreg[$pre['idAlumno']][$i]."'" ;         }else{$a .= ",''";}
+								if(isset($BPreg[$pre['idAlumno']][$i]) && $BPreg[$pre['idAlumno']][$i] != ''){   $SIS_data .= ",'".$BPreg[$pre['idAlumno']][$i]."'" ;  }else{$SIS_data .= ",''";}
 							}
-									
-
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `quiz_realizadas` (idAlumno, idQuiz, 
-							Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, Total_Preguntas, Duracion_Max,
-							Programada_fecha, Programada_dia, Programada_mes, Programada_ano, idAsignadas, Semana
-							".$cadena.") 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-										
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-							}
-
+							$SIS_columns = 'idAlumno, idQuiz, Creacion_fecha, Creacion_mes, Creacion_ano, idEstado, 
+							Total_Preguntas, Duracion_Max, Programada_fecha, Programada_dia, Programada_mes, 
+							Programada_ano, idAsignadas, Semana '.$cadena;
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'quiz_realizadas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
-				
-				
 						break;
 				}
 				
@@ -1076,29 +892,27 @@ require_once '0_validate_user_1.php';
 				foreach ($arrAlumnos as $pre) {
 					/*****************/
 					//Guardo los datos en los alumnos que realizan la prueba
-					$a = "'".$idAsignadas."'" ;
-					$a .= ",'".$pre['idAlumno']."'" ;
-					$a .= ",'2'" ;
-					$a .= ",'".$Programada_fecha."'" ;
-								
+					$SIS_data = "'".$idAsignadas."'" ;
+					$SIS_data .= ",'".$pre['idAlumno']."'" ;
+					$SIS_data .= ",'2'" ;
+					$SIS_data .= ",'".$Programada_fecha."'" ;
+					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `alumnos_evaluaciones_asignadas_alumnos` (idAsignadas,
-					idAlumno, idTipo, Programada_fecha) 
-					VALUES (".$a.")";
-					$result = mysqli_query($dbConn, $query);
+					$SIS_columns = 'idAsignadas, idAlumno, idTipo, Programada_fecha';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas_alumnos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					/*******************************************************/
 					//se actualizan los datos
-					$a = "idEstadoAprobacion='3'" ;
-					$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$pre['idQuizRealizadas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$SIS_data = "idEstadoAprobacion='3'" ;
+					$resultado = db_update_data (false, $SIS_data, 'quiz_realizadas', 'idQuizRealizadas = "'.$pre['idQuizRealizadas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 				}
 				
 				/*******************************************************/
 				//se actualizan los datos
 				$nuevo_valor = $N_Alumnos_Rep + $ndata_1;
-				$a = "N_Alumnos_Rep='".$nuevo_valor."'" ;
-				$resultado = db_update_data (false, $a, 'alumnos_evaluaciones_asignadas', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$SIS_data = "N_Alumnos_Rep='".$nuevo_valor."'" ;
+				$resultado = db_update_data (false, $SIS_data, 'alumnos_evaluaciones_asignadas', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//redirijo
 				header( 'Location: '.$location.'&created=true' );
@@ -1127,16 +941,16 @@ require_once '0_validate_user_1.php';
 				$R_Respuestas        = 0;
 				
 				//Filtros
-				$a = "idQuizRealizadas='".$idQuizRealizadas."'" ;
+				$SIS_data = "idQuizRealizadas='".$idQuizRealizadas."'" ;
 				//validaciones
 				for ($i = 1; $i <= 100; $i++) {
 					//guardo la respuesta
 					if(isset($Respuesta[$i]) && $Respuesta[$i] != ''){   
-						$a .= ",Respuesta_".$i."='".$Respuesta[$i]."'" ; 
+						$SIS_data .= ",Respuesta_".$i."='".$Respuesta[$i]."'" ; 
 						//sumo la cantidad de respuestas dadas
 						$Respondido++;       
 					}else{
-						$a .= ",Respuesta_".$i."=''";
+						$SIS_data .= ",Respuesta_".$i."=''";
 					}
 					//Reviso la cantidad de respuestas correctas
 					if(isset($Correcta[$i]) && $Correcta[$i] != ''&&$Correcta[$i] != 0&&isset($Respuesta[$i]) && $Respuesta[$i] != ''){   
@@ -1158,15 +972,15 @@ require_once '0_validate_user_1.php';
 					$idEstadoAprobacion = 2;//aprobado
 				}
 				//resto de datos
-				$a .= ",idEstado=2" ;
-				$a .= ",idEstadoAprobacion='".$idEstadoAprobacion."'" ;  
-				$a .= ",Respondido='".$Respondido."'" ;
-				$a .= ",Correctas='".$R_Correctas."'" ;
-				$a .= ",Rendimiento='".$Rendimiento."'" ;
+				$SIS_data .= ",idEstado=2" ;
+				$SIS_data .= ",idEstadoAprobacion='".$idEstadoAprobacion."'" ;  
+				$SIS_data .= ",Respondido='".$Respondido."'" ;
+				$SIS_data .= ",Correctas='".$R_Correctas."'" ;
+				$SIS_data .= ",Rendimiento='".$Rendimiento."'" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$idQuizRealizadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'quiz_realizadas', 'idQuizRealizadas = "'.$idQuizRealizadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -1188,33 +1002,33 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idQuizRealizadas='".$idQuizRealizadas."'" ;
-				if(isset($idAlumno) && $idAlumno != ''){                      $a .= ",idAlumno='".$idAlumno."'" ;}
-				if(isset($idQuiz) && $idQuiz != ''){                          $a .= ",idQuiz='".$idQuiz."'" ;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){          $a .= ",Creacion_fecha='".$Creacion_fecha."'" ;}
-				if(isset($Creacion_mes) && $Creacion_mes != ''){              $a .= ",Creacion_mes='".$Creacion_mes."'" ;}
-				if(isset($Creacion_ano) && $Creacion_ano != ''){              $a .= ",Creacion_ano='".$Creacion_ano."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                      $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Total_Preguntas) && $Total_Preguntas != ''){        $a .= ",Total_Preguntas='".$Total_Preguntas."'" ;}
-				if(isset($Duracion_Max) && $Duracion_Max != ''){              $a .= ",Duracion_Max='".$Duracion_Max."'" ;}
-				if(isset($Programada_fecha) && $Programada_fecha != ''){      $a .= ",Programada_fecha='".$Programada_fecha."'" ;}
-				if(isset($Programada_dia) && $Programada_dia != ''){          $a .= ",Programada_dia='".$Programada_dia."'" ;}
-				if(isset($Programada_mes) && $Programada_mes != ''){          $a .= ",Programada_mes='".$Programada_mes."'" ;}
-				if(isset($Programada_ano) && $Programada_ano != ''){          $a .= ",Programada_ano='".$Programada_ano."'" ;}
-				if(isset($Ejecucion_fecha) && $Ejecucion_fecha != ''){        $a .= ",Ejecucion_fecha='".$Ejecucion_fecha."'" ;}
-				if(isset($Ejecucion_mes) && $Ejecucion_mes != ''){            $a .= ",Ejecucion_mes='".$Ejecucion_mes."'" ;}
-				if(isset($Ejecucion_ano) && $Ejecucion_ano != ''){            $a .= ",Ejecucion_ano='".$Ejecucion_ano."'" ;}
-				if(isset($Ejecucion_hora) && $Ejecucion_hora != ''){          $a .= ",Ejecucion_hora='".$Ejecucion_hora."'" ;}
-				if(isset($idEstadoAprobacion) && $idEstadoAprobacion != ''){  $a .= ",idEstadoAprobacion='".$idEstadoAprobacion."'" ;}
-				if(isset($Respondido) && $Respondido != ''){                  $a .= ",Respondido='".$Respondido."'" ;}
-				if(isset($Correctas) && $Correctas != ''){                    $a .= ",Correctas='".$Correctas."'" ;}
-				if(isset($Rendimiento) && $Rendimiento != ''){                $a .= ",Rendimiento='".$Rendimiento."'" ;}
-				if(isset($idAsignadas) && $idAsignadas != ''){                $a .= ",idAsignadas='".$idAsignadas."'" ;}
-				if(isset($Semana) && $Semana != ''){                          $a .= ",Semana='".$Semana."'" ;}
+				$SIS_data = "idQuizRealizadas='".$idQuizRealizadas."'" ;
+				if(isset($idAlumno) && $idAlumno != ''){                      $SIS_data .= ",idAlumno='".$idAlumno."'" ;}
+				if(isset($idQuiz) && $idQuiz != ''){                          $SIS_data .= ",idQuiz='".$idQuiz."'" ;}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){          $SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;}
+				if(isset($Creacion_mes) && $Creacion_mes != ''){              $SIS_data .= ",Creacion_mes='".$Creacion_mes."'" ;}
+				if(isset($Creacion_ano) && $Creacion_ano != ''){              $SIS_data .= ",Creacion_ano='".$Creacion_ano."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                      $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Total_Preguntas) && $Total_Preguntas != ''){        $SIS_data .= ",Total_Preguntas='".$Total_Preguntas."'" ;}
+				if(isset($Duracion_Max) && $Duracion_Max != ''){              $SIS_data .= ",Duracion_Max='".$Duracion_Max."'" ;}
+				if(isset($Programada_fecha) && $Programada_fecha != ''){      $SIS_data .= ",Programada_fecha='".$Programada_fecha."'" ;}
+				if(isset($Programada_dia) && $Programada_dia != ''){          $SIS_data .= ",Programada_dia='".$Programada_dia."'" ;}
+				if(isset($Programada_mes) && $Programada_mes != ''){          $SIS_data .= ",Programada_mes='".$Programada_mes."'" ;}
+				if(isset($Programada_ano) && $Programada_ano != ''){          $SIS_data .= ",Programada_ano='".$Programada_ano."'" ;}
+				if(isset($Ejecucion_fecha) && $Ejecucion_fecha != ''){        $SIS_data .= ",Ejecucion_fecha='".$Ejecucion_fecha."'" ;}
+				if(isset($Ejecucion_mes) && $Ejecucion_mes != ''){            $SIS_data .= ",Ejecucion_mes='".$Ejecucion_mes."'" ;}
+				if(isset($Ejecucion_ano) && $Ejecucion_ano != ''){            $SIS_data .= ",Ejecucion_ano='".$Ejecucion_ano."'" ;}
+				if(isset($Ejecucion_hora) && $Ejecucion_hora != ''){          $SIS_data .= ",Ejecucion_hora='".$Ejecucion_hora."'" ;}
+				if(isset($idEstadoAprobacion) && $idEstadoAprobacion != ''){  $SIS_data .= ",idEstadoAprobacion='".$idEstadoAprobacion."'" ;}
+				if(isset($Respondido) && $Respondido != ''){                  $SIS_data .= ",Respondido='".$Respondido."'" ;}
+				if(isset($Correctas) && $Correctas != ''){                    $SIS_data .= ",Correctas='".$Correctas."'" ;}
+				if(isset($Rendimiento) && $Rendimiento != ''){                $SIS_data .= ",Rendimiento='".$Rendimiento."'" ;}
+				if(isset($idAsignadas) && $idAsignadas != ''){                $SIS_data .= ",idAsignadas='".$idAsignadas."'" ;}
+				if(isset($Semana) && $Semana != ''){                          $SIS_data .= ",Semana='".$Semana."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idQuizRealizadas = "'.$idQuizRealizadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'quiz_realizadas', 'idQuizRealizadas = "'.$idQuizRealizadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -1291,34 +1105,34 @@ require_once '0_validate_user_1.php';
 				
 				/*************************************************************/
 				//tabla principal
-				$a = "idAsignadas='".$idAsignadas."'" ;
+				$SIS_data = "idAsignadas='".$idAsignadas."'" ;
 				if(isset($Programada_fecha) && $Programada_fecha != ''){    
-					$a .= ",Programada_fecha='".$Programada_fecha."'" ;  
-					$a .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'" ;
-					$a .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'" ; 
+					$SIS_data .= ",Programada_fecha='".$Programada_fecha."'" ;  
+					$SIS_data .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'" ;
+					$SIS_data .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'" ; 
 				}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'alumnos_evaluaciones_asignadas', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'alumnos_evaluaciones_asignadas', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*************************************************************/
 				//tabla dependiente
-				$a = "Programada_fecha='".$Programada_fecha."'" ;
+				$SIS_data = "Programada_fecha='".$Programada_fecha."'" ;
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'alumnos_evaluaciones_asignadas_alumnos', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'alumnos_evaluaciones_asignadas_alumnos', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*************************************************************/
 				//tabla con la prueba
-				$a = "idAsignadas='".$idAsignadas."'" ;
+				$SIS_data = "idAsignadas='".$idAsignadas."'" ;
 				if(isset($Programada_fecha) && $Programada_fecha != ''){    
-					$a .= ",Programada_fecha='".$Programada_fecha."'" ; 
-					$a .= ",Programada_dia='".fecha2NdiaMes($Programada_fecha)."'" ; 
-					$a .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'" ;
-					$a .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'" ; 
+					$SIS_data .= ",Programada_fecha='".$Programada_fecha."'" ; 
+					$SIS_data .= ",Programada_dia='".fecha2NdiaMes($Programada_fecha)."'" ; 
+					$SIS_data .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'" ;
+					$SIS_data .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'" ; 
 				}
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'quiz_realizadas', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'quiz_realizadas', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

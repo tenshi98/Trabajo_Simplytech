@@ -28,9 +28,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['MontoCuota']) )     $MontoCuota      = $_POST['MontoCuota'];
 	if ( !empty($_POST['oldidProducto']) )  $oldidProducto   = $_POST['oldidProducto'];
 	
-	
-	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -57,9 +54,13 @@ require_once '0_validate_user_1.php';
 			case 'MontoCuota':      if(empty($MontoCuota)){       $error['MontoCuota']       = 'error/No ha ingresado el monto de la cuota';}break;
 			case 'oldidProducto':   if(empty($oldidProducto)){    $error['oldidProducto']    = 'error/No ha ingresado el id de la cuota';}break;
 			
-		
 		}
 	}	
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -70,7 +71,6 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-
 /*******************************************************************************************************************/
 /*                                                                                                                 */
 /*                                                        INGRESOS                                                 */
@@ -373,7 +373,7 @@ require_once '0_validate_user_1.php';
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
 						//Sufijo
-						$sufijo = 'descuentos_cuotas_ingreso_'.fecha_actual().'_';
+						$sufijo = 'descuentos_cuotas_ingreso_'.genera_password_unica().'_';
 					  
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
@@ -478,92 +478,66 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 			//Se guardan los datos basicos
-				if(isset($_SESSION['desc_cuotas_basicos']['idSistema']) && $_SESSION['desc_cuotas_basicos']['idSistema'] != ''){            $a  = "'".$_SESSION['desc_cuotas_basicos']['idSistema']."'" ;       }else{$a  = "''";}
-				if(isset($_SESSION['desc_cuotas_basicos']['idUsuario']) && $_SESSION['desc_cuotas_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['desc_cuotas_basicos']['idUsuario']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['desc_cuotas_basicos']['idTipo']) && $_SESSION['desc_cuotas_basicos']['idTipo'] != ''){                  $a .= ",'".$_SESSION['desc_cuotas_basicos']['idTipo']."'" ;         }else{$a .= ",''";}
-				if(isset($_SESSION['desc_cuotas_basicos']['idTrabajador']) && $_SESSION['desc_cuotas_basicos']['idTrabajador'] != ''){      $a .= ",'".$_SESSION['desc_cuotas_basicos']['idTrabajador']."'" ;   }else{$a .= ",''";}
-				if(isset($_SESSION['desc_cuotas_basicos']['fecha_auto']) && $_SESSION['desc_cuotas_basicos']['fecha_auto'] != ''){          $a .= ",'".$_SESSION['desc_cuotas_basicos']['fecha_auto']."'" ;     }else{$a .= ",''";}
+				if(isset($_SESSION['desc_cuotas_basicos']['idSistema']) && $_SESSION['desc_cuotas_basicos']['idSistema'] != ''){            $SIS_data  = "'".$_SESSION['desc_cuotas_basicos']['idSistema']."'" ;       }else{$SIS_data  = "''";}
+				if(isset($_SESSION['desc_cuotas_basicos']['idUsuario']) && $_SESSION['desc_cuotas_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['idUsuario']."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['desc_cuotas_basicos']['idTipo']) && $_SESSION['desc_cuotas_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['idTipo']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['desc_cuotas_basicos']['idTrabajador']) && $_SESSION['desc_cuotas_basicos']['idTrabajador'] != ''){      $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['idTrabajador']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['desc_cuotas_basicos']['fecha_auto']) && $_SESSION['desc_cuotas_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['fecha_auto']."'" ;     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['desc_cuotas_basicos']['Creacion_fecha']) && $_SESSION['desc_cuotas_basicos']['Creacion_fecha'] != ''){  
-					$a .= ",'".$_SESSION['desc_cuotas_basicos']['Creacion_fecha']."'" ;  
-					$a .= ",'".fecha2NSemana($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
-					$a .= ",'".fecha2NMes($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
-					$a .= ",'".fecha2Ano($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['Creacion_fecha']."'" ;  
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".fecha2NMes($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".fecha2Ano($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['desc_cuotas_basicos']['Observaciones']) && $_SESSION['desc_cuotas_basicos']['Observaciones'] != ''){    $a .= ",'".$_SESSION['desc_cuotas_basicos']['Observaciones']."'" ;  }else{$a .= ",''";}
-				if(isset($_SESSION['desc_cuotas_basicos']['Monto']) && $_SESSION['desc_cuotas_basicos']['Monto'] != ''){                    $a .= ",'".$_SESSION['desc_cuotas_basicos']['Monto']."'" ;          }else{$a .= ",''";}
-				if(isset($_SESSION['desc_cuotas_basicos']['N_Cuotas'])&&$_SESSION['desc_cuotas_basicos']['N_Cuotas']!=''){                  $a .= ",'".$_SESSION['desc_cuotas_basicos']['N_Cuotas']."'";        }else{$a .= ",''";}
+				if(isset($_SESSION['desc_cuotas_basicos']['Observaciones']) && $_SESSION['desc_cuotas_basicos']['Observaciones'] != ''){    $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['Observaciones']."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['desc_cuotas_basicos']['Monto']) && $_SESSION['desc_cuotas_basicos']['Monto'] != ''){                    $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['Monto']."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['desc_cuotas_basicos']['N_Cuotas'])&&$_SESSION['desc_cuotas_basicos']['N_Cuotas']!=''){                  $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['N_Cuotas']."'";        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `trabajadores_descuentos_cuotas` (idSistema, idUsuario, idTipo, idTrabajador,
-				fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Observaciones, Monto, N_Cuotas) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idUsuario, idTipo, idTrabajador, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Observaciones, Monto, N_Cuotas';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_descuentos_cuotas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los servicios
 					if(isset($_SESSION['desc_cuotas_listado'])){		
 						foreach ($_SESSION['desc_cuotas_listado'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                  $a  = "'".$ultimo_id."'" ;                                          }else{$a  = "''";}
-							if(isset($_SESSION['desc_cuotas_basicos']['idSistema']) && $_SESSION['desc_cuotas_basicos']['idSistema'] != ''){            $a .= ",'".$_SESSION['desc_cuotas_basicos']['idSistema']."'" ;      }else{$a .= ",''";}
-							if(isset($_SESSION['desc_cuotas_basicos']['idUsuario']) && $_SESSION['desc_cuotas_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['desc_cuotas_basicos']['idUsuario']."'" ;      }else{$a .= ",''";}
-							if(isset($_SESSION['desc_cuotas_basicos']['idTipo']) && $_SESSION['desc_cuotas_basicos']['idTipo'] != ''){                  $a .= ",'".$_SESSION['desc_cuotas_basicos']['idTipo']."'" ;         }else{$a .= ",''";}
-							if(isset($_SESSION['desc_cuotas_basicos']['idTrabajador']) && $_SESSION['desc_cuotas_basicos']['idTrabajador'] != ''){      $a .= ",'".$_SESSION['desc_cuotas_basicos']['idTrabajador']."'" ;   }else{$a .= ",''";}
-							if(isset($_SESSION['desc_cuotas_basicos']['fecha_auto']) && $_SESSION['desc_cuotas_basicos']['fecha_auto'] != ''){          $a .= ",'".$_SESSION['desc_cuotas_basicos']['fecha_auto']."'" ;     }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                  $SIS_data  = "'".$ultimo_id."'" ;                                          }else{$SIS_data  = "''";}
+							if(isset($_SESSION['desc_cuotas_basicos']['idSistema']) && $_SESSION['desc_cuotas_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['idSistema']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['desc_cuotas_basicos']['idUsuario']) && $_SESSION['desc_cuotas_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['idUsuario']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['desc_cuotas_basicos']['idTipo']) && $_SESSION['desc_cuotas_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['idTipo']."'" ;         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['desc_cuotas_basicos']['idTrabajador']) && $_SESSION['desc_cuotas_basicos']['idTrabajador'] != ''){      $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['idTrabajador']."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['desc_cuotas_basicos']['fecha_auto']) && $_SESSION['desc_cuotas_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['fecha_auto']."'" ;     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['desc_cuotas_basicos']['Creacion_fecha']) && $_SESSION['desc_cuotas_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['desc_cuotas_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NSemana($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2NMes($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NSemana($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2NMes($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['fecha']) && $producto['fecha'] != ''){                                                        $a .= ",'".$producto['fecha']."'" ;                            }else{$a .= ",''";}
-							if(isset($producto['cuota']) && $producto['cuota'] != ''){                                                        $a .= ",'".$producto['cuota']."'" ;                            }else{$a .= ",''";}
-							if(isset($_SESSION['desc_cuotas_basicos']['N_Cuotas']) && $_SESSION['desc_cuotas_basicos']['N_Cuotas'] != ''){    $a .= ",'".$_SESSION['desc_cuotas_basicos']['N_Cuotas']."'" ;  }else{$a .= ",''";}
-							if(isset($producto['monto']) && $producto['monto'] != ''){                                                        $a .= ",'".$producto['monto']."'" ;                            }else{$a .= ",''";}
-							$a .= ",'1'" ; 
-								
+							if(isset($producto['fecha']) && $producto['fecha'] != ''){                                                        $SIS_data .= ",'".$producto['fecha']."'" ;                            }else{$SIS_data .= ",''";}
+							if(isset($producto['cuota']) && $producto['cuota'] != ''){                                                        $SIS_data .= ",'".$producto['cuota']."'" ;                            }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['desc_cuotas_basicos']['N_Cuotas']) && $_SESSION['desc_cuotas_basicos']['N_Cuotas'] != ''){    $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['N_Cuotas']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($producto['monto']) && $producto['monto'] != ''){                                                        $SIS_data .= ",'".$producto['monto']."'" ;                            }else{$SIS_data .= ",''";}
+							$SIS_data .= ",'1'" ; 
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `trabajadores_descuentos_cuotas_listado` (idFacturacion,idSistema, idUsuario, idTipo, idTrabajador,
-							fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,Fecha, nCuota, TotalCuotas, monto_cuotas, idUso ) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idFacturacion,idSistema, idUsuario, idTipo, idTrabajador,
+							fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,Fecha, nCuota, TotalCuotas, monto_cuotas, idUso';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_descuentos_cuotas_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					
@@ -573,42 +547,30 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['desc_cuotas_archivos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                  $a  = "'".$ultimo_id."'" ;                                          }else{$a  = "''";}
-							if(isset($_SESSION['desc_cuotas_basicos']['idSistema']) && $_SESSION['desc_cuotas_basicos']['idSistema'] != ''){            $a .= ",'".$_SESSION['desc_cuotas_basicos']['idSistema']."'" ;      }else{$a .= ",''";}
-							if(isset($_SESSION['desc_cuotas_basicos']['idUsuario']) && $_SESSION['desc_cuotas_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['desc_cuotas_basicos']['idUsuario']."'" ;      }else{$a .= ",''";}
-							if(isset($_SESSION['desc_cuotas_basicos']['idTipo']) && $_SESSION['desc_cuotas_basicos']['idTipo'] != ''){                  $a .= ",'".$_SESSION['desc_cuotas_basicos']['idTipo']."'" ;         }else{$a .= ",''";}
-							if(isset($_SESSION['desc_cuotas_basicos']['idTrabajador']) && $_SESSION['desc_cuotas_basicos']['idTrabajador'] != ''){      $a .= ",'".$_SESSION['desc_cuotas_basicos']['idTrabajador']."'" ;   }else{$a .= ",''";}
-							if(isset($_SESSION['desc_cuotas_basicos']['fecha_auto']) && $_SESSION['desc_cuotas_basicos']['fecha_auto'] != ''){          $a .= ",'".$_SESSION['desc_cuotas_basicos']['fecha_auto']."'" ;     }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                  $SIS_data  = "'".$ultimo_id."'" ;                                          }else{$SIS_data  = "''";}
+							if(isset($_SESSION['desc_cuotas_basicos']['idSistema']) && $_SESSION['desc_cuotas_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['idSistema']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['desc_cuotas_basicos']['idUsuario']) && $_SESSION['desc_cuotas_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['idUsuario']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['desc_cuotas_basicos']['idTipo']) && $_SESSION['desc_cuotas_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['idTipo']."'" ;         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['desc_cuotas_basicos']['idTrabajador']) && $_SESSION['desc_cuotas_basicos']['idTrabajador'] != ''){      $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['idTrabajador']."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['desc_cuotas_basicos']['fecha_auto']) && $_SESSION['desc_cuotas_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['fecha_auto']."'" ;     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['desc_cuotas_basicos']['Creacion_fecha']) && $_SESSION['desc_cuotas_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['desc_cuotas_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NSemana($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2NMes($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['desc_cuotas_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NSemana($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2NMes($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $a .= ",'".$producto['Nombre']."'" ;     }else{$a .= ",''";}
+							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `trabajadores_descuentos_cuotas_archivos` (idFacturacion,idSistema, idUsuario, idTipo, idTrabajador,
-							fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,Nombre) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idFacturacion,idSistema, idUsuario, idTipo, idTrabajador,
+							fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,Nombre';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_descuentos_cuotas_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					

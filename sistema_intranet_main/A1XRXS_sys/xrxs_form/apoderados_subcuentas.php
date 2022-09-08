@@ -48,6 +48,15 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){           $Nombre      = EstandarizarInput($Nombre); }
+	if(isset($Usuario) && $Usuario != ''){         $Usuario     = EstandarizarInput($Usuario); }
+	if(isset($Password) && $Password != ''){       $Password    = EstandarizarInput($Password); }
+	if(isset($email) && $email != ''){             $email       = EstandarizarInput($email); }
+	if(isset($dispositivo) && $dispositivo != ''){ $dispositivo = EstandarizarInput($dispositivo); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Usuario)){
@@ -91,39 +100,25 @@ require_once '0_validate_user_1.php';
 				
 				
 				//filtros
-				if(isset($idApoderado) && $idApoderado != ''){    $a  = "'".$idApoderado."'" ;   }else{$a  = "''";}
-				if(isset($Nombre) && $Nombre != ''){              $a .= ",'".$Nombre."'" ;       }else{$a .= ",''";}
-				if(isset($Usuario) && $Usuario != ''){            $a .= ",'".$Usuario."'" ;      }else{$a .= ",''";}
-				if(isset($Password) && $Password != ''){          $a .= ",'".$Password."'" ;     }else{$a .= ",''";}
-				if(isset($email) && $email != ''){                $a .= ",'".$email."'" ;        }else{$a .= ",''";}
-				if(isset($dispositivo) && $dispositivo != ''){    $a .= ",'".$dispositivo."'" ;  }else{$a .= ",''";}
-				if(isset($IMEI) && $IMEI != ''){                  $a .= ",'".$IMEI."'" ;         }else{$a .= ",''";}
-				if(isset($GSM) && $GSM != ''){                    $a .= ",'".$GSM."'" ;          }else{$a .= ",''";}
+				if(isset($idApoderado) && $idApoderado != ''){    $SIS_data  = "'".$idApoderado."'" ;   }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){              $SIS_data .= ",'".$Nombre."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Usuario) && $Usuario != ''){            $SIS_data .= ",'".$Usuario."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Password) && $Password != ''){          $SIS_data .= ",'".$Password."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($email) && $email != ''){                $SIS_data .= ",'".$email."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($dispositivo) && $dispositivo != ''){    $SIS_data .= ",'".$dispositivo."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($IMEI) && $IMEI != ''){                  $SIS_data .= ",'".$IMEI."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($GSM) && $GSM != ''){                    $SIS_data .= ",'".$GSM."'" ;          }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `apoderados_subcuentas` (idApoderado, Nombre, Usuario, 
-				Password, email, dispositivo, IMEI, GSM) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idApoderado, Nombre, Usuario, Password, email, dispositivo, IMEI, GSM';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'apoderados_subcuentas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($ultimo_id!=0){
 					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+					//redirijo	
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -149,19 +144,19 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idSubcuenta='".$idSubcuenta."'" ;
-				if(isset($idApoderado) && $idApoderado != ''){  $a .= ",idApoderado='".$idApoderado."'" ;}
-				if(isset($Nombre) && $Nombre != ''){            $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Usuario) && $Usuario != ''){          $a .= ",Usuario='".$Usuario."'" ;}
-				if(isset($Password) && $Password != ''){        $a .= ",Password='".$Password."'" ;}
-				if(isset($email) && $email != ''){              $a .= ",email='".$email."'" ;}
-				if(isset($dispositivo) && $dispositivo != ''){  $a .= ",dispositivo='".$dispositivo."'" ;}
-				if(isset($IMEI) && $IMEI != ''){                $a .= ",IMEI='".$IMEI."'" ;}
-				if(isset($GSM) && $GSM != ''){                  $a .= ",GSM='".$GSM."'" ;}
+				$SIS_data = "idSubcuenta='".$idSubcuenta."'" ;
+				if(isset($idApoderado) && $idApoderado != ''){  $SIS_data .= ",idApoderado='".$idApoderado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){            $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Usuario) && $Usuario != ''){          $SIS_data .= ",Usuario='".$Usuario."'" ;}
+				if(isset($Password) && $Password != ''){        $SIS_data .= ",Password='".$Password."'" ;}
+				if(isset($email) && $email != ''){              $SIS_data .= ",email='".$email."'" ;}
+				if(isset($dispositivo) && $dispositivo != ''){  $SIS_data .= ",dispositivo='".$dispositivo."'" ;}
+				if(isset($IMEI) && $IMEI != ''){                $SIS_data .= ",IMEI='".$IMEI."'" ;}
+				if(isset($GSM) && $GSM != ''){                  $SIS_data .= ",GSM='".$GSM."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'apoderados_subcuentas', 'idSubcuenta = "'.$idSubcuenta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'apoderados_subcuentas', 'idSubcuenta = "'.$idSubcuenta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

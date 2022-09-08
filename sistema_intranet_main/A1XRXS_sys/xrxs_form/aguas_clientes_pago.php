@@ -43,7 +43,12 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
-
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($nDocPago) && $nDocPago != ''){    $nDocPago  = EstandarizarInput($nDocPago); }
+	if(isset($montoPago) && $montoPago != ''){  $montoPago = EstandarizarInput($montoPago); }
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -64,38 +69,31 @@ require_once '0_validate_user_1.php';
 				
 				/*********************************************************************************/
 				//Se crea el registro madre con el pago ingresado
-				if(isset($idTipoPago) && $idTipoPago != ''){                      $a  = "'".$idTipoPago."'" ;              }else{$a  ="''";}
-				if(isset($nDocPago) && $nDocPago != ''){                          $a .= ",'".$nDocPago."'" ;               }else{$a .= ",''";}
-				if(isset($montoPago) && $montoPago != ''){                        $a .= ",'".$montoPago."'" ;              }else{$a .= ",''";}
-				if(isset($idUsuarioPago) && $idUsuarioPago != ''){                $a .= ",'".$idUsuarioPago."'" ;          }else{$a .= ",''";}
-				if(isset($idCliente) && $idCliente != ''){                        $a .= ",'".$idCliente."'" ;              }else{$a .= ",''";}
-				if(isset($idFacturacionDetalle) && $idFacturacionDetalle != ''){  $a .= ",'".$idFacturacionDetalle."'" ;   }else{$a .= ",''";}
+				if(isset($idTipoPago) && $idTipoPago != ''){                      $SIS_data  = "'".$idTipoPago."'" ;              }else{$SIS_data  = "''";}
+				if(isset($nDocPago) && $nDocPago != ''){                          $SIS_data .= ",'".$nDocPago."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($montoPago) && $montoPago != ''){                        $SIS_data .= ",'".$montoPago."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($idUsuarioPago) && $idUsuarioPago != ''){                $SIS_data .= ",'".$idUsuarioPago."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente != ''){                        $SIS_data .= ",'".$idCliente."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($idFacturacionDetalle) && $idFacturacionDetalle != ''){  $SIS_data .= ",'".$idFacturacionDetalle."'" ;   }else{$SIS_data .= ",''";}
 				if(isset($fechaPago) && $fechaPago != ''){                  
-					$a .= ",'".$fechaPago."'" ; 
-					$a .= ",'".fecha2NdiaMes($fechaPago)."'" ; 
-					$a .= ",'".fecha2NMes($fechaPago)."'" ; 
-					$a .= ",'".fecha2Ano($fechaPago)."'" ;         
+					$SIS_data .= ",'".$fechaPago."'" ; 
+					$SIS_data .= ",'".fecha2NdiaMes($fechaPago)."'" ; 
+					$SIS_data .= ",'".fecha2NMes($fechaPago)."'" ; 
+					$SIS_data .= ",'".fecha2Ano($fechaPago)."'" ;         
 				}else{
-					$a .=",''";
-					$a .=",''";
-					$a .=",''";
-					$a .=",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
 				
-				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `aguas_clientes_pago` (idTipoPago, nDocPago, montoPago, idUsuarioPago,
-				idCliente, idFacturacionDetalle, fechaPago, DiaPago, idMesPago, AnoPago) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idTipoPago, nDocPago, montoPago, idUsuarioPago, idCliente, idFacturacionDetalle, fechaPago, DiaPago, idMesPago, AnoPago';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_clientes_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
-					
+				if($ultimo_id!=0){
+				
 					/* ******************************** */
 					//creo las variables
 					$temp_monto1     = $montoPago;
@@ -116,51 +114,50 @@ require_once '0_validate_user_1.php';
 							
 							/**************************************************************/
 							//actualizo el esto y los detalles de la facturacion
-							$a = "idEstado='2'";
-							if(isset($idTipoPago) && $idTipoPago != ''){        $a .= ",idTipoPago='".$idTipoPago."'" ;}
-							if(isset($nDocPago) && $nDocPago != ''){            $a .= ",nDocPago='".$nDocPago."'" ;}
+							$SIS_data = "idEstado='2'";
+							if(isset($idTipoPago) && $idTipoPago != ''){        $SIS_data .= ",idTipoPago='".$idTipoPago."'" ;}
+							if(isset($nDocPago) && $nDocPago != ''){            $SIS_data .= ",nDocPago='".$nDocPago."'" ;}
 							if(isset($fechaPago) && $fechaPago != ''){          
-								$a .= ",fechaPago='".$fechaPago."'" ;
-								$a .= ",DiaPago='".fecha2NdiaMes($fechaPago)."'" ; 
-								$a .= ",idMesPago='".fecha2NMes($fechaPago)."'" ; 
-								$a .= ",AnoPago='".fecha2Ano($fechaPago)."'" ;
+								$SIS_data .= ",fechaPago='".$fechaPago."'" ;
+								$SIS_data .= ",DiaPago='".fecha2NdiaMes($fechaPago)."'" ; 
+								$SIS_data .= ",idMesPago='".fecha2NMes($fechaPago)."'" ; 
+								$SIS_data .= ",AnoPago='".fecha2Ano($fechaPago)."'" ;
 							}
-							if(isset($montoPago) && $montoPago != ''){          $a .= ",montoPago='".$fac['DetalleTotalAPagar']."'" ;}
-							if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $a .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
-							if(isset($ultimo_id) && $ultimo_id != ''){          $a .= ",idPago='".$ultimo_id."'" ;}
+							if(isset($montoPago) && $montoPago != ''){          $SIS_data .= ",montoPago='".$fac['DetalleTotalAPagar']."'" ;}
+							if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $SIS_data .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
+							if(isset($ultimo_id) && $ultimo_id != ''){          $SIS_data .= ",idPago='".$ultimo_id."'" ;}
 								
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'aguas_facturacion_listado_detalle', 'idFacturacionDetalle = "'.$fac['idFacturacionDetalle'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'aguas_facturacion_listado_detalle', 'idFacturacionDetalle = "'.$fac['idFacturacionDetalle'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
 							/**************************************************************/
 							//Guardo los pagos relacionados
-							if(isset($idTipoPago) && $idTipoPago != ''){   $a  = "'".$idTipoPago."'" ; }else{$a  ="''";}
-							if(isset($nDocPago) && $nDocPago != ''){       $a .= ",'".$nDocPago."'" ;  }else{$a .=",''";}
+							if(isset($idTipoPago) && $idTipoPago != ''){   $SIS_data  = "'".$idTipoPago."'" ; }else{$SIS_data  = "''";}
+							if(isset($nDocPago) && $nDocPago != ''){       $SIS_data .= ",'".$nDocPago."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($fechaPago) && $fechaPago != ''){          
-								$a .= ",'".$fechaPago."'" ;
-								$a .= ",'".fecha2NdiaMes($fechaPago)."'" ; 
-								$a .= ",'".fecha2NMes($fechaPago)."'" ; 
-								$a .= ",'".fecha2Ano($fechaPago)."'" ;
+								$SIS_data .= ",'".$fechaPago."'" ;
+								$SIS_data .= ",'".fecha2NdiaMes($fechaPago)."'" ; 
+								$SIS_data .= ",'".fecha2NMes($fechaPago)."'" ; 
+								$SIS_data .= ",'".fecha2Ano($fechaPago)."'" ;
 							}else{
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($montoPago) && $montoPago != ''){           $a .= ",'".$montoPago."'" ;        }else{$a .=",''";}
-							if(isset($idUsuarioPago) && $idUsuarioPago != ''){   $a .= ",'".$idUsuarioPago."'" ;    }else{$a .=",''";}
-							if(isset($idCliente) && $idCliente != ''){           $a .= ",'".$idCliente."'" ;        }else{$a .=",''";}
+							if(isset($montoPago) && $montoPago != ''){           $SIS_data .= ",'".$montoPago."'" ;        }else{$SIS_data .= ",''";}
+							if(isset($idUsuarioPago) && $idUsuarioPago != ''){   $SIS_data .= ",'".$idUsuarioPago."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($idCliente) && $idCliente != ''){           $SIS_data .= ",'".$idCliente."'" ;        }else{$SIS_data .= ",''";}
 							if(isset($fac['idFacturacionDetalle']) && $fac['idFacturacionDetalle'] != ''){           
-								$a .= ",'".$fac['idFacturacionDetalle']."'" ;    
+								$SIS_data .= ",'".$fac['idFacturacionDetalle']."'" ;    
 							}else{
-								$a .=",''";
+								$SIS_data .= ",''";
 							}
-									
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `aguas_clientes_pagos_relacionados` (idTipoPago, nDocPago, fechaPago, DiaPago, idMesPago, AnoPago,
-							montoPago, idUsuarioPago, idCliente, idFacturacionDetalle) VALUES (".$a.")";
-							$resultado = mysqli_query ($dbConn, $query);
+							$SIS_columns = 'idTipoPago, nDocPago, fechaPago, DiaPago, idMesPago, AnoPago, montoPago, idUsuarioPago, idCliente, idFacturacionDetalle';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_clientes_pagos_relacionados', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
 						}else{
 							$fact_impagas++;
@@ -170,83 +167,73 @@ require_once '0_validate_user_1.php';
 					
 					/**************************************************************/
 					//actualizo el estado de la ultima facturacion
-					$a = "idFacturacionDetalle = '".$idFacturacionDetalle."' ";
+					$SIS_data = "idFacturacionDetalle = '".$idFacturacionDetalle."' ";
 					//verifico que el saldo haya alcanzado para pagar
 					//si el ultimo pago no alcanzo para el pago
 					if($ultimo_pago>$montoPago){
-						$a .= ",idEstado='1'";
+						$SIS_data .= ",idEstado='1'";
 					//si alcanzo justo
 					}elseif($ultimo_pago==$montoPago){
-						$a .= ",idEstado='2'";
+						$SIS_data .= ",idEstado='2'";
 					//si sobro
 					}elseif($ultimo_pago<=$montoPago){
-						$a .= ",idEstado='2'";
+						$SIS_data .= ",idEstado='2'";
 					//excepciones
 					}else{
 						//si no hay facturas impagas
-						if($fact_impagas==0){ $a .= ",idEstado='2'"; }
+						if($fact_impagas==0){ $SIS_data .= ",idEstado='2'"; }
 					}
-					if(isset($idTipoPago) && $idTipoPago != ''){        $a .= ",idTipoPago='".$idTipoPago."'" ;}
-					if(isset($nDocPago) && $nDocPago != ''){            $a .= ",nDocPago='".$nDocPago."'" ;}
+					if(isset($idTipoPago) && $idTipoPago != ''){        $SIS_data .= ",idTipoPago='".$idTipoPago."'" ;}
+					if(isset($nDocPago) && $nDocPago != ''){            $SIS_data .= ",nDocPago='".$nDocPago."'" ;}
 					if(isset($fechaPago) && $fechaPago != ''){          
-						$a .= ",fechaPago='".$fechaPago."'" ;
-						$a .= ",DiaPago='".fecha2NdiaMes($fechaPago)."'" ; 
-						$a .= ",idMesPago='".fecha2NMes($fechaPago)."'" ; 
-						$a .= ",AnoPago='".fecha2Ano($fechaPago)."'" ;
+						$SIS_data .= ",fechaPago='".$fechaPago."'" ;
+						$SIS_data .= ",DiaPago='".fecha2NdiaMes($fechaPago)."'" ; 
+						$SIS_data .= ",idMesPago='".fecha2NMes($fechaPago)."'" ; 
+						$SIS_data .= ",AnoPago='".fecha2Ano($fechaPago)."'" ;
 					}
 					//se verifica si se tiene algun pago anterior, si es asi se suman los montos
 					if($pago_anterior>0){
 						$nuevo_pago = $pago_anterior + $montoPago;
-						if(isset($montoPago) && $montoPago != ''){      $a .= ",montoPago='".$nuevo_pago."'" ;}
+						if(isset($montoPago) && $montoPago != ''){      $SIS_data .= ",montoPago='".$nuevo_pago."'" ;}
 					}else{
-						if(isset($montoPago) && $montoPago != ''){      $a .= ",montoPago='".$montoPago."'" ;}
+						if(isset($montoPago) && $montoPago != ''){      $SIS_data .= ",montoPago='".$montoPago."'" ;}
 					}
-					if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $a .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
-					if(isset($ultimo_id) && $ultimo_id != ''){          $a .= ",idPago='".$ultimo_id."'" ;}
+					if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $SIS_data .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
+					if(isset($ultimo_id) && $ultimo_id != ''){          $SIS_data .= ",idPago='".$ultimo_id."'" ;}
 								
 					/*******************************************************/
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'aguas_facturacion_listado_detalle', 'idFacturacionDetalle = "'.$idFacturacionDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'aguas_facturacion_listado_detalle', 'idFacturacionDetalle = "'.$idFacturacionDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se actualiza el estado del cliente dependiendo del no pago
-					/*$a = "idCliente='".$idCliente."'" ;
+					/*$SIS_data = "idCliente='".$idCliente."'" ;
 					switch ($fact_impagas) {
-						case 0:   $a .= ",idEstadoPago='1'" ; break;
-						case 1:   $a .= ",idEstadoPago='2'" ; break;
-						case 2:   $a .= ",idEstadoPago='3'" ; break;
-						case 3:   $a .= ",idEstadoPago='3'" ; break;
-						case 4:   $a .= ",idEstadoPago='3'" ; break;
-						case 5:   $a .= ",idEstadoPago='3'" ; break;
-						case 6:   $a .= ",idEstadoPago='3'" ; break;
-						case 7:   $a .= ",idEstadoPago='3'" ; break;
-						case 8:   $a .= ",idEstadoPago='3'" ; break;
-						case 9:   $a .= ",idEstadoPago='3'" ; break;
-						case 10:  $a .= ",idEstadoPago='3'" ; break;
-						case 11:  $a .= ",idEstadoPago='3'" ; break;
-						case 12:  $a .= ",idEstadoPago='3'" ; break;
+						case 0:   $SIS_data .= ",idEstadoPago='1'" ; break;
+						case 1:   $SIS_data .= ",idEstadoPago='2'" ; break;
+						case 2:   $SIS_data .= ",idEstadoPago='3'" ; break;
+						case 3:   $SIS_data .= ",idEstadoPago='3'" ; break;
+						case 4:   $SIS_data .= ",idEstadoPago='3'" ; break;
+						case 5:   $SIS_data .= ",idEstadoPago='3'" ; break;
+						case 6:   $SIS_data .= ",idEstadoPago='3'" ; break;
+						case 7:   $SIS_data .= ",idEstadoPago='3'" ; break;
+						case 8:   $SIS_data .= ",idEstadoPago='3'" ; break;
+						case 9:   $SIS_data .= ",idEstadoPago='3'" ; break;
+						case 10:  $SIS_data .= ",idEstadoPago='3'" ; break;
+						case 11:  $SIS_data .= ",idEstadoPago='3'" ; break;
+						case 12:  $SIS_data .= ",idEstadoPago='3'" ; break;
 					}
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					//Se actualiza el estado del cliente en caso de que el pago actual cubra la facturacion actual
 					if($ultimo_pago<=$montoPago){
 						//se actualizan los datos
-						$a = "idEstadoPago='1'" ;
-						$resultado = db_update_data (false, $a, 'clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$SIS_data = "idEstadoPago='1'" ;
+						$resultado = db_update_data (false, $SIS_data, 'clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					}*/
 					
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}

@@ -87,12 +87,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/ 
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Traspaso Realizado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Traspaso Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Traspaso borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Traspaso Realizado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Traspaso Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Traspaso borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['editProd']) ) { 
 //Traspaso la variable de bodega
 $query = "SELECT
@@ -507,20 +507,22 @@ if($valor_0!=0){
 	
 	<div class="clearfix"></div>
 	<div class="col-sm-12" style="margin-bottom:30px">
+		<div class="btn-group pull-right" role="group" aria-label="...">
 
-	<?php 
-	$ubicacion = $location.'&view=true&trasp_bodega=true';
-	$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
-	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width"><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>	
+			<?php 
+			$ubicacion = $location.'&clear_all=true';
+			$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+			<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+			<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-	<?php 
-	$ubicacion = $location.'&clear_all=true';
-	$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
-	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
+			<?php 
+			$ubicacion = $location.'&view=true&trasp_bodega=true';
+			$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
+			<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary"><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>	
 
-	<div class="clearfix"></div>
+		</div>
+		<div class="clearfix"></div>
 	</div> 
 <?php } ?>
 
@@ -614,8 +616,8 @@ if($valor_0!=0){
 		</table>
     </div>
     
-    <div class="row">
-		<div class="col-xs-12">
+    <div class="col-xs-12">
+		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
 			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['insumos_traspaso_basicos']['Observaciones'];?></p>
 		</div>

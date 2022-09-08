@@ -48,11 +48,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Variedad creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Variedad editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Variedad borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Imagen creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Imagen editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Imagen borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos del producto
 $query = "SELECT Nombre,Direccion_img,idTipoImagen

@@ -40,13 +40,13 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created']))     {$error['usuario'] 	  = 'sucess/Orden de Trabajo creada correctamente';}
-if (isset($_GET['edited']))      {$error['usuario'] 	  = 'sucess/Orden de Trabajo editada correctamente';}
-if (isset($_GET['deleted']))     {$error['usuario'] 	  = 'sucess/Orden de Trabajo borrada correctamente';}
-if (isset($_GET['notslectjob'])) {$error['notslectjob']   = 'error/No ha seleccionado un trabajo a realizar';}
+if (isset($_GET['created'])){     $error['created']     = 'sucess/Orden de Trabajo creada correctamente';}
+if (isset($_GET['edited'])){      $error['edited']      = 'sucess/Orden de Trabajo editada correctamente';}
+if (isset($_GET['deleted'])){     $error['deleted']     = 'sucess/Orden de Trabajo borrada correctamente';}
+if (isset($_GET['notslectjob'])){ $error['notslectjob'] = 'error/No ha seleccionado un trabajo a realizar';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['clone']) ) {  ?>
 
 

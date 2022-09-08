@@ -37,21 +37,20 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Equipo creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Equipo editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$SIS_query = 'Nombre,id_Geo, id_Sensores,
-Capacidad, CrossCrane_tiempo_revision, CrossCrane_grupo_amperaje,
-CrossCrane_grupo_elevacion, CrossCrane_grupo_giro, CrossCrane_grupo_carro, 
-CrossCrane_grupo_voltaje, CrossCrane_grupo_motor_subida, CrossCrane_grupo_motor_bajada';
+$SIS_query = 'Nombre,id_Geo, id_Sensores,Capacidad, CrossCrane_tiempo_revision, CrossCrane_grupo_amperaje,
+CrossCrane_grupo_elevacion, CrossCrane_grupo_giro, CrossCrane_grupo_carro,CrossCrane_grupo_voltaje, 
+CrossCrane_grupo_motor_subida, CrossCrane_grupo_motor_bajada, idGrupoDespliegue,idGrupoVmonofasico, 
+idGrupoVTrifasico, idGrupoPotencia, idGrupoConsumoMesHabil, idGrupoConsumoMesCurso,idGenerador, 
+idTelGenerador, FechaInsGen, idUbicacion';
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-
+//Verifico el tipo de usuario que esta ingresando
+$w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
+$w.= " AND telemetria_listado.idTab=9";//CrossEnergy	
 ?>
 
 <div class="col-sm-12">
@@ -86,6 +85,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 						<li class=""><a href="<?php echo 'telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>
 						<li class="active"><a href="<?php echo 'telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 						
 					</ul>
@@ -93,20 +93,29 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 			</ul>	
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
+			<div class="col-sm-8 fcenter" style="padding-top:40px;margin-bottom: 400px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
 			
 					<?php  
 					//Se verifican si existen los datos
-					if(isset($Capacidad)) {                      $x1 = $Capacidad;                         }else{$x1 = Cantidades_decimales_justos($rowdata['Capacidad']);}
-					if(isset($CrossCrane_tiempo_revision)) {     $x2 = $CrossCrane_tiempo_revision;        }else{$x2 = $rowdata['CrossCrane_tiempo_revision'];}
-					if(isset($CrossCrane_grupo_amperaje)) {      $x3 = $CrossCrane_grupo_amperaje;         }else{$x3 = $rowdata['CrossCrane_grupo_amperaje'];}
-					if(isset($CrossCrane_grupo_elevacion)) {     $x4 = $CrossCrane_grupo_elevacion;        }else{$x4 = $rowdata['CrossCrane_grupo_elevacion'];}
-					if(isset($CrossCrane_grupo_giro)) {          $x5 = $CrossCrane_grupo_giro;             }else{$x5 = $rowdata['CrossCrane_grupo_giro'];}
-					if(isset($CrossCrane_grupo_carro)) {         $x6 = $CrossCrane_grupo_carro;            }else{$x6 = $rowdata['CrossCrane_grupo_carro'];}
-					if(isset($CrossCrane_grupo_voltaje)) {       $x7 = $CrossCrane_grupo_voltaje;          }else{$x7 = $rowdata['CrossCrane_grupo_voltaje'];}
-					if(isset($CrossCrane_grupo_motor_subida)) {  $x8 = $CrossCrane_grupo_motor_subida;     }else{$x8 = $rowdata['CrossCrane_grupo_motor_subida'];}
-					if(isset($CrossCrane_grupo_motor_bajada)) {  $x9 = $CrossCrane_grupo_motor_bajada;     }else{$x9 = $rowdata['CrossCrane_grupo_motor_bajada'];}
+					if(isset($Capacidad)) {                      $x1  = $Capacidad;                        }else{$x1  = Cantidades_decimales_justos($rowdata['Capacidad']);}
+					if(isset($CrossCrane_tiempo_revision)) {     $x2  = $CrossCrane_tiempo_revision;       }else{$x2  = $rowdata['CrossCrane_tiempo_revision'];}
+					if(isset($CrossCrane_grupo_amperaje)) {      $x3  = $CrossCrane_grupo_amperaje;        }else{$x3  = $rowdata['CrossCrane_grupo_amperaje'];}
+					if(isset($CrossCrane_grupo_elevacion)) {     $x4  = $CrossCrane_grupo_elevacion;       }else{$x4  = $rowdata['CrossCrane_grupo_elevacion'];}
+					if(isset($CrossCrane_grupo_giro)) {          $x5  = $CrossCrane_grupo_giro;            }else{$x5  = $rowdata['CrossCrane_grupo_giro'];}
+					if(isset($CrossCrane_grupo_carro)) {         $x6  = $CrossCrane_grupo_carro;           }else{$x6  = $rowdata['CrossCrane_grupo_carro'];}
+					if(isset($CrossCrane_grupo_voltaje)) {       $x7  = $CrossCrane_grupo_voltaje;         }else{$x7  = $rowdata['CrossCrane_grupo_voltaje'];}
+					if(isset($CrossCrane_grupo_motor_subida)) {  $x8  = $CrossCrane_grupo_motor_subida;    }else{$x8  = $rowdata['CrossCrane_grupo_motor_subida'];}
+					if(isset($CrossCrane_grupo_motor_bajada)) {  $x9  = $CrossCrane_grupo_motor_bajada;    }else{$x9  = $rowdata['CrossCrane_grupo_motor_bajada'];}
+					if(isset($idGrupoDespliegue)) {              $x10 = $idGrupoDespliegue;                }else{$x10 = $rowdata['idGrupoDespliegue'];}
+					if(isset($idGrupoVmonofasico)) {             $x11 = $idGrupoVmonofasico;               }else{$x11 = $rowdata['idGrupoVmonofasico'];}
+					if(isset($idGrupoVTrifasico)) {              $x12 = $idGrupoVTrifasico;                }else{$x12 = $rowdata['idGrupoVTrifasico'];}
+					if(isset($idGrupoPotencia)) {                $x13 = $idGrupoPotencia;                  }else{$x13 = $rowdata['idGrupoPotencia'];}
+					if(isset($idGrupoConsumoMesHabil)) {         $x14 = $idGrupoConsumoMesHabil;           }else{$x14 = $rowdata['idGrupoConsumoMesHabil'];}
+					if(isset($idGrupoConsumoMesCurso)) {         $x15 = $idGrupoConsumoMesCurso;           }else{$x15 = $rowdata['idGrupoConsumoMesCurso'];}
+					if(isset($idTelGenerador)) {                 $x16 = $idTelGenerador;                   }else{$x16 = $rowdata['idTelGenerador'];}
+					if(isset($FechaInsGen)) {                    $x17 = $FechaInsGen;                      }else{$x17 = $rowdata['FechaInsGen'];}
+					if(isset($idUbicacion)) {                    $x18 = $idUbicacion;                      }else{$x18 = $rowdata['idUbicacion'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -125,6 +134,24 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 					$Form_Inputs->form_select('Grupo Amperaje Motor Subida','CrossCrane_grupo_motor_subida', $x8, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
 					$Form_Inputs->form_select('Grupo Amperaje Motor Bajada','CrossCrane_grupo_motor_bajada', $x9, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
 					
+					$Form_Inputs->form_tittle(3, 'CrossEnergy');
+					$Form_Inputs->form_post_data(2, '<strong>Grupos a Desplegar: </strong>Permite seleccionar los grupo de sensores a desplegar en el grafico de CrossEnergy.' );
+					$Form_Inputs->form_select_filter('Grupo Despliegue','idGrupoDespliegue', $x10, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Grupo V monofasico','idGrupoVmonofasico', $x11, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Grupo V Trifasico','idGrupoVTrifasico', $x12, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Grupo Potencia','idGrupoPotencia', $x13, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Grupo Consumo Mes Habil','idGrupoConsumoMesHabil', $x14, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Grupo Consumo Mes Curso','idGrupoConsumoMesCurso', $x15, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
+					
+					//Si esta activo el uso del generador
+					$Form_Inputs->form_tittle(3, 'CrossCrane Gruas');
+					if(isset($rowdata['idGenerador'])&&$rowdata['idGenerador']==1){
+						$Form_Inputs->form_post_data(2, '<strong>Uso Generador: </strong>Indica si la alimentacion electrica es directa o por generador, despliega una lista de equipos de telemetria configurados con el tab de <strong>CrossE</strong>, esto genera un boton en el widget principal.' );
+						$Form_Inputs->form_select_filter('Generador','idTelGenerador', $x16, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+						$Form_Inputs->form_date('Fecha Instalacion Generador','FechaInsGen', $x17, 1);
+					}
+					$Form_Inputs->form_post_data(2, '<strong>Ubicacion: </strong>Determina si el equipo esta en la planta de mantencion o en una obra.' );
+					$Form_Inputs->form_select('Ubicacion Equipo','idUbicacion', $x18, 1, 'idUbicacion', 'Nombre', 'core_telemetria_ubicaciones', 0, '', $dbConn);	
 					
 					
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);

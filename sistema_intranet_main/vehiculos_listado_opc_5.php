@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit']) )  { 
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert_pasajero';
 	require_once 'A1XRXS_sys/xrxs_form/vehiculos_listado.php';
@@ -35,8 +35,8 @@ if ( !empty($_POST['submit']) )  {
 //se borra un dato
 if ( !empty($_GET['del_pasajero']) )     {
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_pasajero';
 	require_once 'A1XRXS_sys/xrxs_form/vehiculos_listado.php';	
@@ -49,11 +49,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Vehiculo creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Vehiculo editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Vehiculo borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Pasajeros creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Pasajeros editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Pasajeros borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['new']) ) { 
 //valido los permisos

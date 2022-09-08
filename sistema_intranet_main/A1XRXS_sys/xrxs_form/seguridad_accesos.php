@@ -33,7 +33,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['PersonaReunion']) )        $PersonaReunion         = $_POST['PersonaReunion'];
 	if ( !empty($_POST['idEstado']) )              $idEstado               = $_POST['idEstado'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -67,6 +66,13 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){                 $Nombre         = EstandarizarInput($Nombre); }
+	if(isset($Destino) && $Destino != ''){               $Destino        = EstandarizarInput($Destino); }
+	if(isset($PersonaReunion) && $PersonaReunion != ''){ $PersonaReunion = EstandarizarInput($PersonaReunion); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                  $error['Nombre']         = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -98,7 +104,7 @@ require_once '0_validate_user_1.php';
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
 						//Sufijo
-						$sufijo = 'acceso_img_'.fecha_actual().'_';
+						$sufijo = 'acceso_img_'.genera_password_unica().'_';
 									  
 						if (in_array($_FILES['Direccion_img']['type'], $permitidos) && $_FILES['Direccion_img']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
@@ -174,47 +180,36 @@ require_once '0_validate_user_1.php';
 									imagedestroy($imgBase);
 							
 									//filtros
-									if(isset($idSistema) && $idSistema != ''){                  $a  = "'".$idSistema."'" ;           }else{$a  ="''";}
-									if(isset($idUsuario) && $idUsuario != ''){                  $a .= ",'".$idUsuario."'" ;          }else{$a .=",''";}
-									if(isset($Fecha) && $Fecha != ''){                          $a .= ",'".$Fecha."'" ;              }else{$a .=",''";}
-									if(isset($Hora) && $Hora != ''){                            $a .= ",'".$Hora."'" ;               }else{$a .=",''";}
-									if(isset($HoraSalida) && $HoraSalida != ''){                $a .= ",'".$HoraSalida."'" ;         }else{$a .=",''";}
-									if(isset($Nombre) && $Nombre != ''){                        $a .= ",'".$Nombre."'" ;             }else{$a .=",''";}
-									if(isset($Rut) && $Rut != ''){                              $a .= ",'".$Rut."'" ;                }else{$a .=",''";}
-									if(isset($NDocCedula) && $NDocCedula != ''){                $a .= ",'".$NDocCedula."'" ;         }else{$a .=",''";}
-									if(isset($Destino) && $Destino != ''){                      $a .= ",'".$Destino."'" ;            }else{$a .=",''";}
-									if(isset($idUbicacion) && $idUbicacion != ''){              $a .= ",'".$idUbicacion."'" ;        }else{$a .=",''";}
-									if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){  $a .= ",'".$idUbicacion_lvl_1."'" ;  }else{$a .=",''";}
-									if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){  $a .= ",'".$idUbicacion_lvl_2."'" ;  }else{$a .=",''";}
-									if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){  $a .= ",'".$idUbicacion_lvl_3."'" ;  }else{$a .=",''";}
-									if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){  $a .= ",'".$idUbicacion_lvl_4."'" ;  }else{$a .=",''";}
-									if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){  $a .= ",'".$idUbicacion_lvl_5."'" ;  }else{$a .=",''";}
-									if(isset($PersonaReunion) && $PersonaReunion != ''){        $a .= ",'".$PersonaReunion."'" ;     }else{$a .=",''";}
-									if(isset($idEstado) && $idEstado != ''){                    $a .= ",'".$idEstado."'" ;           }else{$a .=",''";}
-									$a .= ",'".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+									if(isset($idSistema) && $idSistema != ''){                  $SIS_data  = "'".$idSistema."'" ;           }else{$SIS_data  = "''";}
+									if(isset($idUsuario) && $idUsuario != ''){                  $SIS_data .= ",'".$idUsuario."'" ;          }else{$SIS_data .= ",''";}
+									if(isset($Fecha) && $Fecha != ''){                          $SIS_data .= ",'".$Fecha."'" ;              }else{$SIS_data .= ",''";}
+									if(isset($Hora) && $Hora != ''){                            $SIS_data .= ",'".$Hora."'" ;               }else{$SIS_data .= ",''";}
+									if(isset($HoraSalida) && $HoraSalida != ''){                $SIS_data .= ",'".$HoraSalida."'" ;         }else{$SIS_data .= ",''";}
+									if(isset($Nombre) && $Nombre != ''){                        $SIS_data .= ",'".$Nombre."'" ;             }else{$SIS_data .= ",''";}
+									if(isset($Rut) && $Rut != ''){                              $SIS_data .= ",'".$Rut."'" ;                }else{$SIS_data .= ",''";}
+									if(isset($NDocCedula) && $NDocCedula != ''){                $SIS_data .= ",'".$NDocCedula."'" ;         }else{$SIS_data .= ",''";}
+									if(isset($Destino) && $Destino != ''){                      $SIS_data .= ",'".$Destino."'" ;            }else{$SIS_data .= ",''";}
+									if(isset($idUbicacion) && $idUbicacion != ''){              $SIS_data .= ",'".$idUbicacion."'" ;        }else{$SIS_data .= ",''";}
+									if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){  $SIS_data .= ",'".$idUbicacion_lvl_1."'" ;  }else{$SIS_data .= ",''";}
+									if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){  $SIS_data .= ",'".$idUbicacion_lvl_2."'" ;  }else{$SIS_data .= ",''";}
+									if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){  $SIS_data .= ",'".$idUbicacion_lvl_3."'" ;  }else{$SIS_data .= ",''";}
+									if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){  $SIS_data .= ",'".$idUbicacion_lvl_4."'" ;  }else{$SIS_data .= ",''";}
+									if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){  $SIS_data .= ",'".$idUbicacion_lvl_5."'" ;  }else{$SIS_data .= ",''";}
+									if(isset($PersonaReunion) && $PersonaReunion != ''){        $SIS_data .= ",'".$PersonaReunion."'" ;     }else{$SIS_data .= ",''";}
+									if(isset($idEstado) && $idEstado != ''){                    $SIS_data .= ",'".$idEstado."'" ;           }else{$SIS_data .= ",''";}
+									$SIS_data .= ",'".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 									
 									// inserto los datos de registro en la db
-									$query  = "INSERT INTO `seguridad_accesos` (idSistema, idUsuario, Fecha, Hora, HoraSalida, Nombre, Rut, 
+									$SIS_columns = 'idSistema, idUsuario, Fecha, Hora, HoraSalida, Nombre, Rut, 
 									NDocCedula, Destino, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3,
-									idUbicacion_lvl_4, idUbicacion_lvl_5, PersonaReunion, idEstado, Direccion_img) 
-									VALUES (".$a.")";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
+									idUbicacion_lvl_4, idUbicacion_lvl_5, PersonaReunion, idEstado, Direccion_img';
+									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seguridad_accesos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 									//Si ejecuto correctamente la consulta
-									if($resultado){
-										
+									if($ultimo_id!=0){
+										//redirijo
 										header( 'Location: '.$location.'&created=true' );
 										die;	
-										
-									//si da error, guardar en el log de errores una copia
-									}else{
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									}
 													
 								} else {
@@ -230,51 +225,37 @@ require_once '0_validate_user_1.php';
 				}else{
 					
 					//filtros
-					if(isset($idSistema) && $idSistema != ''){                  $a  = "'".$idSistema."'" ;           }else{$a  ="''";}
-					if(isset($idUsuario) && $idUsuario != ''){                  $a .= ",'".$idUsuario."'" ;          }else{$a .=",''";}
-					if(isset($Fecha) && $Fecha != ''){                          $a .= ",'".$Fecha."'" ;              }else{$a .=",''";}
-					if(isset($Hora) && $Hora != ''){                            $a .= ",'".$Hora."'" ;               }else{$a .=",''";}
-					if(isset($HoraSalida) && $HoraSalida != ''){                $a .= ",'".$HoraSalida."'" ;         }else{$a .=",''";}
-					if(isset($Nombre) && $Nombre != ''){                        $a .= ",'".$Nombre."'" ;             }else{$a .=",''";}
-					if(isset($Rut) && $Rut != ''){                              $a .= ",'".$Rut."'" ;                }else{$a .=",''";}
-					if(isset($NDocCedula) && $NDocCedula != ''){                $a .= ",'".$NDocCedula."'" ;         }else{$a .=",''";}
-					if(isset($Destino) && $Destino != ''){                      $a .= ",'".$Destino."'" ;            }else{$a .=",''";}
-					if(isset($idUbicacion) && $idUbicacion != ''){              $a .= ",'".$idUbicacion."'" ;        }else{$a .=",''";}
-					if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){  $a .= ",'".$idUbicacion_lvl_1."'" ;  }else{$a .=",''";}
-					if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){  $a .= ",'".$idUbicacion_lvl_2."'" ;  }else{$a .=",''";}
-					if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){  $a .= ",'".$idUbicacion_lvl_3."'" ;  }else{$a .=",''";}
-					if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){  $a .= ",'".$idUbicacion_lvl_4."'" ;  }else{$a .=",''";}
-					if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){  $a .= ",'".$idUbicacion_lvl_5."'" ;  }else{$a .=",''";}
-					if(isset($PersonaReunion) && $PersonaReunion != ''){        $a .= ",'".$PersonaReunion."'" ;     }else{$a .=",''";}
-					if(isset($idEstado) && $idEstado != ''){                    $a .= ",'".$idEstado."'" ;           }else{$a .=",''";}
+					if(isset($idSistema) && $idSistema != ''){                  $SIS_data  = "'".$idSistema."'" ;           }else{$SIS_data  = "''";}
+					if(isset($idUsuario) && $idUsuario != ''){                  $SIS_data .= ",'".$idUsuario."'" ;          }else{$SIS_data .= ",''";}
+					if(isset($Fecha) && $Fecha != ''){                          $SIS_data .= ",'".$Fecha."'" ;              }else{$SIS_data .= ",''";}
+					if(isset($Hora) && $Hora != ''){                            $SIS_data .= ",'".$Hora."'" ;               }else{$SIS_data .= ",''";}
+					if(isset($HoraSalida) && $HoraSalida != ''){                $SIS_data .= ",'".$HoraSalida."'" ;         }else{$SIS_data .= ",''";}
+					if(isset($Nombre) && $Nombre != ''){                        $SIS_data .= ",'".$Nombre."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($Rut) && $Rut != ''){                              $SIS_data .= ",'".$Rut."'" ;                }else{$SIS_data .= ",''";}
+					if(isset($NDocCedula) && $NDocCedula != ''){                $SIS_data .= ",'".$NDocCedula."'" ;         }else{$SIS_data .= ",''";}
+					if(isset($Destino) && $Destino != ''){                      $SIS_data .= ",'".$Destino."'" ;            }else{$SIS_data .= ",''";}
+					if(isset($idUbicacion) && $idUbicacion != ''){              $SIS_data .= ",'".$idUbicacion."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){  $SIS_data .= ",'".$idUbicacion_lvl_1."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){  $SIS_data .= ",'".$idUbicacion_lvl_2."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){  $SIS_data .= ",'".$idUbicacion_lvl_3."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){  $SIS_data .= ",'".$idUbicacion_lvl_4."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){  $SIS_data .= ",'".$idUbicacion_lvl_5."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($PersonaReunion) && $PersonaReunion != ''){        $SIS_data .= ",'".$PersonaReunion."'" ;     }else{$SIS_data .= ",''";}
+					if(isset($idEstado) && $idEstado != ''){                    $SIS_data .= ",'".$idEstado."'" ;           }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `seguridad_accesos` (idSistema, idUsuario, Fecha, Hora, HoraSalida, Nombre, Rut, 
+					$SIS_columns = 'idSistema, idUsuario, Fecha, Hora, HoraSalida, Nombre, Rut, 
 					NDocCedula, Destino, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3,
-					idUbicacion_lvl_4, idUbicacion_lvl_5, PersonaReunion, idEstado) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					idUbicacion_lvl_4, idUbicacion_lvl_5, PersonaReunion, idEstado';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seguridad_accesos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Si ejecuto correctamente la consulta
-					if($resultado){
-						
+					if($ultimo_id!=0){
+						//redirijo
 						header( 'Location: '.$location.'&created=true' );
 						die;
-						
-					//si da error, guardar en el log de errores una copia
-					}else{
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
 					}
-					
-				}					
-				
+				}		
 			}
 			
 			
@@ -302,7 +283,7 @@ require_once '0_validate_user_1.php';
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
 						//Sufijo
-						$sufijo = 'acceso_img_'.fecha_actual().'_';
+						$sufijo = 'acceso_img_'.genera_password_unica().'_';
 									  
 						if (in_array($_FILES['Direccion_img']['type'], $permitidos) && $_FILES['Direccion_img']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
@@ -378,29 +359,29 @@ require_once '0_validate_user_1.php';
 									imagedestroy($imgBase);
 							
 									//Filtros
-									$a = "idAcceso='".$idAcceso."'" ;
-									if(isset($idSistema) && $idSistema != ''){                  $a .= ",idSistema='".$idSistema."'" ;}
-									if(isset($idUsuario) && $idUsuario != ''){                  $a .= ",idUsuario='".$idUsuario."'" ;}
-									if(isset($Fecha) && $Fecha != ''){                          $a .= ",Fecha='".$Fecha."'" ;}
-									if(isset($Hora) && $Hora != ''){                            $a .= ",Hora='".$Hora."'" ;}
-									if(isset($HoraSalida) && $HoraSalida != ''){                $a .= ",HoraSalida='".$HoraSalida."'" ;}
-									if(isset($Nombre) && $Nombre != ''){                        $a .= ",Nombre='".$Nombre."'" ;}
-									if(isset($Rut) && $Rut != ''){                              $a .= ",Rut='".$Rut."'" ;}
-									if(isset($NDocCedula) && $NDocCedula != ''){                $a .= ",NDocCedula='".$NDocCedula."'" ;}
-									if(isset($Destino) && $Destino != ''){                      $a .= ",Destino='".$Destino."'" ;}
-									if(isset($idUbicacion) && $idUbicacion != ''){              $a .= ",idUbicacion='".$idUbicacion."'" ;}
-									if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){  $a .= ",idUbicacion_lvl_1='".$idUbicacion_lvl_1."'" ;}
-									if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){  $a .= ",idUbicacion_lvl_2='".$idUbicacion_lvl_2."'" ;}
-									if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){  $a .= ",idUbicacion_lvl_3='".$idUbicacion_lvl_3."'" ;}
-									if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){  $a .= ",idUbicacion_lvl_4='".$idUbicacion_lvl_4."'" ;}
-									if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){  $a .= ",idUbicacion_lvl_5='".$idUbicacion_lvl_5."'" ;}
-									if(isset($PersonaReunion) && $PersonaReunion != ''){        $a .= ",PersonaReunion='".$PersonaReunion."'" ;}
-									if(isset($idEstado) && $idEstado != ''){                    $a .= ",idEstado='".$idEstado."'" ;}
-									$a .= ",Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+									$SIS_data = "idAcceso='".$idAcceso."'" ;
+									if(isset($idSistema) && $idSistema != ''){                  $SIS_data .= ",idSistema='".$idSistema."'" ;}
+									if(isset($idUsuario) && $idUsuario != ''){                  $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+									if(isset($Fecha) && $Fecha != ''){                          $SIS_data .= ",Fecha='".$Fecha."'" ;}
+									if(isset($Hora) && $Hora != ''){                            $SIS_data .= ",Hora='".$Hora."'" ;}
+									if(isset($HoraSalida) && $HoraSalida != ''){                $SIS_data .= ",HoraSalida='".$HoraSalida."'" ;}
+									if(isset($Nombre) && $Nombre != ''){                        $SIS_data .= ",Nombre='".$Nombre."'" ;}
+									if(isset($Rut) && $Rut != ''){                              $SIS_data .= ",Rut='".$Rut."'" ;}
+									if(isset($NDocCedula) && $NDocCedula != ''){                $SIS_data .= ",NDocCedula='".$NDocCedula."'" ;}
+									if(isset($Destino) && $Destino != ''){                      $SIS_data .= ",Destino='".$Destino."'" ;}
+									if(isset($idUbicacion) && $idUbicacion != ''){              $SIS_data .= ",idUbicacion='".$idUbicacion."'" ;}
+									if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){  $SIS_data .= ",idUbicacion_lvl_1='".$idUbicacion_lvl_1."'" ;}
+									if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){  $SIS_data .= ",idUbicacion_lvl_2='".$idUbicacion_lvl_2."'" ;}
+									if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){  $SIS_data .= ",idUbicacion_lvl_3='".$idUbicacion_lvl_3."'" ;}
+									if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){  $SIS_data .= ",idUbicacion_lvl_4='".$idUbicacion_lvl_4."'" ;}
+									if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){  $SIS_data .= ",idUbicacion_lvl_5='".$idUbicacion_lvl_5."'" ;}
+									if(isset($PersonaReunion) && $PersonaReunion != ''){        $SIS_data .= ",PersonaReunion='".$PersonaReunion."'" ;}
+									if(isset($idEstado) && $idEstado != ''){                    $SIS_data .= ",idEstado='".$idEstado."'" ;}
+									$SIS_data .= ",Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 									
 									/*******************************************************/
 									//se actualizan los datos
-									$resultado = db_update_data (false, $a, 'seguridad_accesos', 'idAcceso = "'.$idAcceso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									$resultado = db_update_data (false, $SIS_data, 'seguridad_accesos', 'idAcceso = "'.$idAcceso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
 									if($resultado==true){
 										
@@ -422,28 +403,28 @@ require_once '0_validate_user_1.php';
 				}else{
 					
 					//Filtros
-					$a = "idAcceso='".$idAcceso."'" ;
-					if(isset($idSistema) && $idSistema != ''){                  $a .= ",idSistema='".$idSistema."'" ;}
-					if(isset($idUsuario) && $idUsuario != ''){                  $a .= ",idUsuario='".$idUsuario."'" ;}
-					if(isset($Fecha) && $Fecha != ''){                          $a .= ",Fecha='".$Fecha."'" ;}
-					if(isset($Hora) && $Hora != ''){                            $a .= ",Hora='".$Hora."'" ;}
-					if(isset($HoraSalida) && $HoraSalida != ''){                $a .= ",HoraSalida='".$HoraSalida."'" ;}
-					if(isset($Nombre) && $Nombre != ''){                        $a .= ",Nombre='".$Nombre."'" ;}
-					if(isset($Rut) && $Rut != ''){                              $a .= ",Rut='".$Rut."'" ;}
-					if(isset($NDocCedula) && $NDocCedula != ''){                $a .= ",NDocCedula='".$NDocCedula."'" ;}
-					if(isset($Destino) && $Destino != ''){                      $a .= ",Destino='".$Destino."'" ;}
-					if(isset($idUbicacion) && $idUbicacion != ''){              $a .= ",idUbicacion='".$idUbicacion."'" ;}
-					if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){  $a .= ",idUbicacion_lvl_1='".$idUbicacion_lvl_1."'" ;}
-					if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){  $a .= ",idUbicacion_lvl_2='".$idUbicacion_lvl_2."'" ;}
-					if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){  $a .= ",idUbicacion_lvl_3='".$idUbicacion_lvl_3."'" ;}
-					if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){  $a .= ",idUbicacion_lvl_4='".$idUbicacion_lvl_4."'" ;}
-					if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){  $a .= ",idUbicacion_lvl_5='".$idUbicacion_lvl_5."'" ;}
-					if(isset($PersonaReunion) && $PersonaReunion != ''){        $a .= ",PersonaReunion='".$PersonaReunion."'" ;}
-					if(isset($idEstado) && $idEstado != ''){                    $a .= ",idEstado='".$idEstado."'" ;}
+					$SIS_data = "idAcceso='".$idAcceso."'" ;
+					if(isset($idSistema) && $idSistema != ''){                  $SIS_data .= ",idSistema='".$idSistema."'" ;}
+					if(isset($idUsuario) && $idUsuario != ''){                  $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+					if(isset($Fecha) && $Fecha != ''){                          $SIS_data .= ",Fecha='".$Fecha."'" ;}
+					if(isset($Hora) && $Hora != ''){                            $SIS_data .= ",Hora='".$Hora."'" ;}
+					if(isset($HoraSalida) && $HoraSalida != ''){                $SIS_data .= ",HoraSalida='".$HoraSalida."'" ;}
+					if(isset($Nombre) && $Nombre != ''){                        $SIS_data .= ",Nombre='".$Nombre."'" ;}
+					if(isset($Rut) && $Rut != ''){                              $SIS_data .= ",Rut='".$Rut."'" ;}
+					if(isset($NDocCedula) && $NDocCedula != ''){                $SIS_data .= ",NDocCedula='".$NDocCedula."'" ;}
+					if(isset($Destino) && $Destino != ''){                      $SIS_data .= ",Destino='".$Destino."'" ;}
+					if(isset($idUbicacion) && $idUbicacion != ''){              $SIS_data .= ",idUbicacion='".$idUbicacion."'" ;}
+					if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1 != ''){  $SIS_data .= ",idUbicacion_lvl_1='".$idUbicacion_lvl_1."'" ;}
+					if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2 != ''){  $SIS_data .= ",idUbicacion_lvl_2='".$idUbicacion_lvl_2."'" ;}
+					if(isset($idUbicacion_lvl_3) && $idUbicacion_lvl_3 != ''){  $SIS_data .= ",idUbicacion_lvl_3='".$idUbicacion_lvl_3."'" ;}
+					if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4 != ''){  $SIS_data .= ",idUbicacion_lvl_4='".$idUbicacion_lvl_4."'" ;}
+					if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5 != ''){  $SIS_data .= ",idUbicacion_lvl_5='".$idUbicacion_lvl_5."'" ;}
+					if(isset($PersonaReunion) && $PersonaReunion != ''){        $SIS_data .= ",PersonaReunion='".$PersonaReunion."'" ;}
+					if(isset($idEstado) && $idEstado != ''){                    $SIS_data .= ",idEstado='".$idEstado."'" ;}
 					
 					/*******************************************************/
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'seguridad_accesos', 'idAcceso = "'.$idAcceso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'seguridad_accesos', 'idAcceso = "'.$idAcceso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
 						
@@ -536,8 +517,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Direccion_img=''" ;
-			$resultado = db_update_data (false, $a, 'seguridad_accesos', 'idAcceso = "'.$idAcceso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'seguridad_accesos', 'idAcceso = "'.$idAcceso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				

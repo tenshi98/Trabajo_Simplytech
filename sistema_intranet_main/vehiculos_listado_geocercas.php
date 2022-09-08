@@ -26,8 +26,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit']) )  { 
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert_geocerca';
 	require_once 'A1XRXS_sys/xrxs_form/vehiculos_listado.php';
@@ -36,8 +36,8 @@ if ( !empty($_POST['submit']) )  {
 //se borra un dato
 if ( !empty($_GET['del_geocerca']) )     {
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_geocerca';
 	require_once 'A1XRXS_sys/xrxs_form/vehiculos_listado.php';	
@@ -50,10 +50,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Geocerca creada correctamente';}
-if (isset($_GET['del_doc_vehi'])) {$error['usuario']  = 'sucess/Geocerca borrada correctamente';}
+if (isset($_GET['created'])){      $error['created']      = 'sucess/Geocerca creada correctamente';}
+if (isset($_GET['del_doc_vehi'])){ $error['del_doc_vehi'] = 'sucess/Geocerca borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['new']) ) { 
 //valido los permisos

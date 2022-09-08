@@ -7,8 +7,6 @@ define('XMBCXRXSKGC', 1);
 /*                                          Se llaman a los archivos necesarios                                                   */
 /**********************************************************************************************************************************/
 require_once 'core/Load.Utils.Web.php';
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel/IOFactory.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
@@ -59,11 +57,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Predio creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Predio editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Predio borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Predio creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Predio editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Predio borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['new_plantilla']) ) {  
 //valido los permisos
@@ -553,7 +551,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'cross_predios_listado', $SIS_jo
 				$Form_Inputs->form_input_text('Nombre del Predio', 'Nombre', $x1, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				$Form_Inputs->form_select_country('Pais','idPais', $x3, 1, $dbConn);
-				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x4, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Region','idCiudad', $x4, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x5, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x6, 1,'fa fa-map'); 

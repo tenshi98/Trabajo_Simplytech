@@ -77,6 +77,12 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Resumen) && $Resumen != ''){       $Resumen    = EstandarizarInput($Resumen); }
+	if(isset($Resolucion) && $Resolucion != ''){ $Resolucion = EstandarizarInput($Resolucion); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Resumen)&&contar_palabras_censuradas($Resumen)!=0){        $error['Resumen']    = 'error/Edita Resumen, contiene palabras no permitidas'; }	
@@ -105,62 +111,46 @@ require_once '0_validate_user_1.php';
 				$Duracion = restahoras($h_Inicio,$h_Termino);
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){          $a = "'".$idSistema."'" ;       }else{$a ="''";}
-				if(isset($idServicio) && $idServicio != ''){        $a .= ",'".$idServicio."'" ;    }else{$a .= ",''";}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){    $a .= ",'".$idOpciones_1."'" ;  }else{$a .= ",''";}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){    $a .= ",'".$idOpciones_2."'" ;  }else{$a .= ",''";}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){    $a .= ",'".$idOpciones_3."'" ;  }else{$a .= ",''";}
-				if(isset($idUsuario) && $idUsuario != ''){          $a .= ",'".$idUsuario."'" ;     }else{$a .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){          $SIS_data  = "'".$idSistema."'" ;      }else{$SIS_data  = "''";}
+				if(isset($idServicio) && $idServicio != ''){        $SIS_data .= ",'".$idServicio."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){    $SIS_data .= ",'".$idOpciones_1."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){    $SIS_data .= ",'".$idOpciones_2."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){    $SIS_data .= ",'".$idOpciones_3."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){          $SIS_data .= ",'".$idUsuario."'" ;     }else{$SIS_data .= ",''";}
 				if(isset($Fecha) && $Fecha != ''){                  
-					$a .= ",'".$Fecha."'" ;   
-					$a .= ",'".fecha2NdiaMes($Fecha)."'" ; 
-					$a .= ",'".fecha2NMes($Fecha)."'" ; 
-					$a .= ",'".fecha2NSemana($Fecha)."'" ; 
-					$a .= ",'".fecha2Ano($Fecha)."'" ;       
+					$SIS_data .= ",'".$Fecha."'" ;   
+					$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'" ; 
+					$SIS_data .= ",'".fecha2NMes($Fecha)."'" ; 
+					$SIS_data .= ",'".fecha2NSemana($Fecha)."'" ; 
+					$SIS_data .= ",'".fecha2Ano($Fecha)."'" ;       
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($h_Inicio) && $h_Inicio != ''){                  $a .= ",'".$h_Inicio."'" ;         }else{$a .= ",''";}
-				if(isset($h_Termino) && $h_Termino != ''){                $a .= ",'".$h_Termino."'" ;        }else{$a .= ",''";}
-				if(isset($Duracion) && $Duracion != ''){                  $a .= ",'".$Duracion."'" ;         }else{$a .= ",''";}
-				if(isset($Resumen) && $Resumen != ''){                    $a .= ",'".$Resumen."'" ;          }else{$a .= ",''";}
-				if(isset($Resolucion) && $Resolucion != ''){              $a .= ",'".$Resolucion."'" ;       }else{$a .= ",''";}
-				if(isset($Recepcion_Nombre) && $Recepcion_Nombre != ''){  $a .= ",'".$Recepcion_Nombre."'" ; }else{$a .= ",''";}
-				if(isset($Recepcion_Rut) && $Recepcion_Rut != ''){        $a .= ",'".$Recepcion_Rut."'" ;    }else{$a .= ",''";}
-				if(isset($Recepcion_Email) && $Recepcion_Email != ''){    $a .= ",'".$Recepcion_Email."'" ;  }else{$a .= ",''";}
-				if(isset($Path_Firma) && $Path_Firma != ''){              $a .= ",'".$Path_Firma."'" ;       }else{$a .= ",''";}
+				if(isset($h_Inicio) && $h_Inicio != ''){                  $SIS_data .= ",'".$h_Inicio."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($h_Termino) && $h_Termino != ''){                $SIS_data .= ",'".$h_Termino."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Duracion) && $Duracion != ''){                  $SIS_data .= ",'".$Duracion."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Resumen) && $Resumen != ''){                    $SIS_data .= ",'".$Resumen."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Resolucion) && $Resolucion != ''){              $SIS_data .= ",'".$Resolucion."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Recepcion_Nombre) && $Recepcion_Nombre != ''){  $SIS_data .= ",'".$Recepcion_Nombre."'" ; }else{$SIS_data .= ",''";}
+				if(isset($Recepcion_Rut) && $Recepcion_Rut != ''){        $SIS_data .= ",'".$Recepcion_Rut."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Recepcion_Email) && $Recepcion_Email != ''){    $SIS_data .= ",'".$Recepcion_Email."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Path_Firma) && $Path_Firma != ''){              $SIS_data .= ",'".$Path_Firma."'" ;       }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_historial_mantencion` (idSistema, idServicio, idOpciones_1,
-				idOpciones_2, idOpciones_3, idUsuario, Fecha, Dia, idMes, Semana, Ano, h_Inicio, h_Termino, 
-				Duracion, Resumen, Resolucion, Recepcion_Nombre, Recepcion_Rut, Recepcion_Email, Path_Firma) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idServicio, idOpciones_1, idOpciones_2, idOpciones_3, idUsuario, Fecha, Dia, idMes, Semana, Ano, h_Inicio, h_Termino, 
+				Duracion, Resumen, Resolucion, Recepcion_Nombre, Recepcion_Rut, Recepcion_Email, Path_Firma';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_historial_mantencion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
+				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
 				}
-				
-				
-				
 			}
 	
 		break;
@@ -182,33 +172,33 @@ require_once '0_validate_user_1.php';
 				$Duracion = restahoras($h_Inicio,$h_Termino);
 				
 				//Filtros
-				$a = "idMantencion='".$idMantencion."'" ;
-				if(isset($idSistema) && $idSistema != ''){         $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idServicio) && $idServicio != ''){       $a .= ",idServicio='".$idServicio."'" ;}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){   $a .= ",idOpciones_1='".$idOpciones_1."'" ;}else{$a .= ",idOpciones_1='1'";}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){   $a .= ",idOpciones_2='".$idOpciones_2."'" ;}else{$a .= ",idOpciones_2='1'";}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){   $a .= ",idOpciones_3='".$idOpciones_3."'" ;}else{$a .= ",idOpciones_3='1'";}
-				if(isset($idUsuario) && $idUsuario != ''){         $a .= ",idUsuario='".$idUsuario."'" ;}
+				$SIS_data = "idMantencion='".$idMantencion."'" ;
+				if(isset($idSistema) && $idSistema != ''){         $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idServicio) && $idServicio != ''){       $SIS_data .= ",idServicio='".$idServicio."'" ;}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){   $SIS_data .= ",idOpciones_1='".$idOpciones_1."'" ;}else{$SIS_data .= ",idOpciones_1='1'";}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){   $SIS_data .= ",idOpciones_2='".$idOpciones_2."'" ;}else{$SIS_data .= ",idOpciones_2='1'";}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){   $SIS_data .= ",idOpciones_3='".$idOpciones_3."'" ;}else{$SIS_data .= ",idOpciones_3='1'";}
+				if(isset($idUsuario) && $idUsuario != ''){         $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
 				if(isset($Fecha) && $Fecha != ''){                 
-					$a .= ",Fecha='".$Fecha."'" ;
-					$a .= ",Dia='".fecha2NdiaMes($Fecha)."'" ;
-					$a .= ",idMes='".fecha2NMes($Fecha)."'" ;
-					$a .= ",Semana='".fecha2NSemana($Fecha)."'" ;
-					$a .= ",Ano='".fecha2Ano($Fecha)."'" ;
+					$SIS_data .= ",Fecha='".$Fecha."'" ;
+					$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'" ;
+					$SIS_data .= ",idMes='".fecha2NMes($Fecha)."'" ;
+					$SIS_data .= ",Semana='".fecha2NSemana($Fecha)."'" ;
+					$SIS_data .= ",Ano='".fecha2Ano($Fecha)."'" ;
 				}
-				if(isset($h_Inicio) && $h_Inicio != ''){                  $a .= ",h_Inicio='".$h_Inicio."'" ;}
-				if(isset($h_Termino) && $h_Termino != ''){                $a .= ",h_Termino='".$h_Termino."'" ;}
-				if(isset($Duracion) && $Duracion != ''){                  $a .= ",Duracion='".$Duracion."'" ;}
-				if(isset($Resumen) && $Resumen != ''){                    $a .= ",Resumen='".$Resumen."'" ;}
-				if(isset($Resolucion) && $Resolucion != ''){              $a .= ",Resolucion='".$Resolucion."'" ;}
-				if(isset($Recepcion_Nombre) && $Recepcion_Nombre != ''){  $a .= ",Recepcion_Nombre='".$Recepcion_Nombre."'" ;}
-				if(isset($Recepcion_Rut) && $Recepcion_Rut != ''){        $a .= ",Recepcion_Rut='".$Recepcion_Rut."'" ;}
-				if(isset($Recepcion_Email) && $Recepcion_Email != ''){    $a .= ",Recepcion_Email='".$Recepcion_Email."'" ;}
-				if(isset($Path_Firma) && $Path_Firma != ''){              $a .= ",Path_Firma='".$Path_Firma."'" ;}
+				if(isset($h_Inicio) && $h_Inicio != ''){                  $SIS_data .= ",h_Inicio='".$h_Inicio."'" ;}
+				if(isset($h_Termino) && $h_Termino != ''){                $SIS_data .= ",h_Termino='".$h_Termino."'" ;}
+				if(isset($Duracion) && $Duracion != ''){                  $SIS_data .= ",Duracion='".$Duracion."'" ;}
+				if(isset($Resumen) && $Resumen != ''){                    $SIS_data .= ",Resumen='".$Resumen."'" ;}
+				if(isset($Resolucion) && $Resolucion != ''){              $SIS_data .= ",Resolucion='".$Resolucion."'" ;}
+				if(isset($Recepcion_Nombre) && $Recepcion_Nombre != ''){  $SIS_data .= ",Recepcion_Nombre='".$Recepcion_Nombre."'" ;}
+				if(isset($Recepcion_Rut) && $Recepcion_Rut != ''){        $SIS_data .= ",Recepcion_Rut='".$Recepcion_Rut."'" ;}
+				if(isset($Recepcion_Email) && $Recepcion_Email != ''){    $SIS_data .= ",Recepcion_Email='".$Recepcion_Email."'" ;}
+				if(isset($Path_Firma) && $Path_Firma != ''){              $SIS_data .= ",Path_Firma='".$Path_Firma."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_historial_mantencion', 'idMantencion = "'.$idMantencion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_historial_mantencion', 'idMantencion = "'.$idMantencion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo
@@ -316,27 +306,15 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idMantencion) && $idMantencion != ''){  $a = "'".$idMantencion."'" ;    }else{$a ="''";}
-				if(isset($idTelemetria) && $idTelemetria != ''){  $a .= ",'".$idTelemetria."'" ;  }else{$a .= ",''";}
+				if(isset($idMantencion) && $idMantencion != ''){  $SIS_data  = "'".$idMantencion."'" ;    }else{$SIS_data  = "''";}
+				if(isset($idTelemetria) && $idTelemetria != ''){  $SIS_data .= ",'".$idTelemetria."'" ;   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_historial_mantencion_equipos` (idMantencion, idTelemetria) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idMantencion, idTelemetria';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_historial_mantencion_equipos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
+				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&id='.$idMantencion.'&created=true' );
 					die;
@@ -469,26 +447,13 @@ require_once '0_validate_user_1.php';
 											$nombre_arc = $sufijo.$images['name'][$i] ;
 
 											//filtros
-											if(isset($idMantencion) && $idMantencion != ''){    $a  = "'".$idMantencion."'" ;  }else{$a  ="''";}
-											if(isset($nombre_arc) && $nombre_arc != ''){        $a .= ",'".$nombre_arc."'" ;   }else{$a .=",''";}
-														
+											if(isset($idMantencion) && $idMantencion != ''){    $SIS_data  = "'".$idMantencion."'" ;  }else{$SIS_data  = "''";}
+											if(isset($nombre_arc) && $nombre_arc != ''){        $SIS_data .= ",'".$nombre_arc."'" ;   }else{$SIS_data .= ",''";}
+											
 											// inserto los datos de registro en la db
-											$query  = "INSERT INTO `telemetria_historial_mantencion_archivos` (idMantencion,Nombre ) 
-											VALUES (".$a.")";
-											//Consulta
-											$resultado = mysqli_query ($dbConn, $query);
-											//Si ejecuto correctamente la consulta
-											if(!$resultado){
-												//Genero numero aleatorio
-												$vardata = genera_password(8,'alfanumerico');
-													
-												//Guardo el error en una variable temporal
-												$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-												$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-												$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-													
-											}
-
+											$SIS_columns = 'idMantencion,Nombre';
+											$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_historial_mantencion_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 										} else {
 											$error['files_adj'.$i]     = 'error/Ocurrio un error al mover el archivo'; 
 										}
@@ -670,11 +635,11 @@ require_once '0_validate_user_1.php';
 						//Filtro para idSistema
 						if ( !empty($_POST['idMantencion']) )    $idMantencion       = $_POST['idMantencion'];
 						
-						$a = "Path_Firma='".$sufijo.$_FILES['Path_Firma']['name']."'" ;
+						$SIS_data = "Path_Firma='".$sufijo.$_FILES['Path_Firma']['name']."'" ;
 						
 						/*******************************************************/
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'telemetria_historial_mantencion', 'idMantencion = "'.$idMantencion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'telemetria_historial_mantencion', 'idMantencion = "'.$idMantencion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//Si ejecuto correctamente la consulta
 						if($resultado==true){
 							header( 'Location: '.$location.'&id='.$idMantencion );
@@ -705,8 +670,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Path_Firma=''" ;
-			$resultado = db_update_data (false, $a, 'telemetria_historial_mantencion', 'idMantencion = "'.$_GET['del_firma'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Path_Firma=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'telemetria_historial_mantencion', 'idMantencion = "'.$_GET['del_firma'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				

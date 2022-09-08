@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -27,56 +26,40 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 //obtengo los datos de la empresa
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
-
-// Se trae un listado con todos los productos
-$arrProductos = array();
-$query = "SELECT 
+/*******************************************************/
+$SIS_query = '
 productos_listado.StockLimite,
 productos_listado.Nombre AS NombreProd,
 core_tipo_producto.Nombre AS tipo_producto,
 sistema_productos_uml.Nombre AS UnidadMedida,
-(SELECT SUM(Cantidad_ing) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega=".$_GET['idBodega']."  LIMIT 1) AS stock_entrada,
-(SELECT SUM(Cantidad_eg) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega=".$_GET['idBodega']." LIMIT 1) AS stock_salida,
-(SELECT Nombre FROM bodegas_productos_listado WHERE idBodega=".$_GET['idBodega']." LIMIT 1) AS NombreBodega
-
-FROM `productos_listado`
+(SELECT SUM(Cantidad_ing) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega='.$_GET['idBodega'].'  LIMIT 1) AS stock_entrada,
+(SELECT SUM(Cantidad_eg) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega='.$_GET['idBodega'].' LIMIT 1) AS stock_salida,
+(SELECT Nombre FROM bodegas_productos_listado WHERE idBodega='.$_GET['idBodega'].' LIMIT 1) AS NombreBodega';
+$SIS_join  = '
 LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml           = productos_listado.idUml
-LEFT JOIN `core_tipo_producto`       ON core_tipo_producto.idTipoProducto     = productos_listado.idTipoProducto
-ORDER BY productos_listado.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
+LEFT JOIN `core_tipo_producto`       ON core_tipo_producto.idTipoProducto     = productos_listado.idTipoProducto';
+$SIS_where = '';
+$SIS_order = 'productos_listado.Nombre ASC';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
-
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
 							 ->setLastModifiedBy($rowEmpresa['Nombre'])
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-
-
-
-            
-            
+          
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Alertas')
             ->setCellValue('B1', 'Tipo')
             ->setCellValue('C1', 'Nombre')
@@ -86,43 +69,42 @@ $objPHPExcel->setActiveSheetIndex(0)
             
 $nn=2;
 foreach ($arrProductos as $productos) { 
-$stock_actual = $productos['stock_entrada'] - $productos['stock_salida']; 
-if ($productos['StockLimite']>$stock_actual){$delta = 'Stock Bajo';}else{$delta = '';}
+	$stock_actual = $productos['stock_entrada'] - $productos['stock_salida']; 
+	if ($productos['StockLimite']>$stock_actual){$delta = 'Stock Bajo';}else{$delta = '';}
 
-$objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A'.$nn, "$delta")
-            ->setCellValue('B'.$nn, $productos['tipo_producto'])
-            ->setCellValue('C'.$nn, $productos['NombreProd'])
-            ->setCellValue('D'.$nn, cantidades_excel($productos['StockLimite']))
-            ->setCellValue('E'.$nn, cantidades_excel($stock_actual))
-            ->setCellValue('F'.$nn, $productos['UnidadMedida']);
- $nn++;           
+	$spreadsheet->setActiveSheetIndex(0)
+				->setCellValue('A'.$nn, "$delta")
+				->setCellValue('B'.$nn, $productos['tipo_producto'])
+				->setCellValue('C'.$nn, $productos['NombreProd'])
+				->setCellValue('D'.$nn, cantidades_excel($productos['StockLimite']))
+				->setCellValue('E'.$nn, cantidades_excel($stock_actual))
+				->setCellValue('F'.$nn, $productos['UnidadMedida']);
+	$nn++;           
    
 } 
 
-
-
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle(cortar('Bodega '.$arrProductos[0]['NombreBodega'], 25));
-
+$spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.$arrProductos[0]['NombreBodega'], 25));
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Stock Bodega '.$arrProductos[0]['NombreBodega'].' al '.fecha_actual().'.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Stock Bodega '.$arrProductos[0]['NombreBodega'].' al '.fecha_actual();
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

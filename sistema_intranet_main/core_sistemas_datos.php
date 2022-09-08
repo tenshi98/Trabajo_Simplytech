@@ -35,11 +35,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Sistema creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Sistema editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Sistema borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Sistema creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sistema editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $SIS_query = 'Nombre, Rut, Direccion,idCiudad, idComuna, Rubro, RepresentanteNombre, RepresentanteRut';
@@ -99,7 +99,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 					$Form_Inputs->form_tittle(3, 'Datos Basicos');
 					$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 2);
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x2, 2);
-					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');            

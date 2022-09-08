@@ -65,11 +65,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Matriz creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Matriz editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Matriz borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Matriz creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Matriz editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Matriz borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['clone_idMatriz']) ) { 
 	

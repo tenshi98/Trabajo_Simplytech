@@ -52,11 +52,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Correo Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Correo Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Correo borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Correo Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Correo Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Correo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) {
 //valido los permisos
@@ -70,7 +70,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /********************************************/
 //se consulta
-$SIS_query = 'idCorreosCat, idUsuario, Chat_id';
+$SIS_query = 'idCorreosCat, idUsuario';
 $SIS_join  = '';
 $SIS_where = 'idCorreos = '.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_list', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
@@ -90,39 +90,17 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_list', $SI
 				//Se verifican si existen los datos
 				if(isset($idCorreosCat)) {    $x1 = $idCorreosCat;    }else{$x1 = $rowdata['idCorreosCat'];}
 				if(isset($idUsuario)) {       $x2 = $idUsuario;       }else{$x2 = $rowdata['idUsuario'];}
-				if(isset($Chat_id)) {         $x3 = $Chat_id;         }else{$x3 = $rowdata['Chat_id'];}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select('Categoria','idCorreosCat', $x1, 2, 'idCorreosCat', 'Nombre', 'telemetria_mnt_correos_cat', 0, '', $dbConn);
+				$Form_Inputs->form_post_data(2, '<strong>Tiempos de envio: </strong>Todas las notificaciones estan afectas a los tiempos de envio configurados por defecto en el sistema o en el equipo de telemetria.' );
+				$Form_Inputs->form_select('Categoria','idCorreosCat', $x1, 2, 'idCorreosCat', 'Nombre', 'telemetria_mnt_correos_cat', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Inputs->form_input_text('Chat ID', 'Chat_id', $x3, 1);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCorreos', $_GET['id'], 2);
 				?>
-				
-				<script>
-					document.getElementById('div_Chat_id').style.display = 'none';	
-					
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
-						
-						$("#idCorreosCat").on("change", function(){ //se ejecuta al cambiar valor del select
-							let tipo_val = $("#idCorreosCat").val();//Asignamos el valor seleccionado
-								
-							//Proveedores
-							if(tipo_val >= 45 && tipo_val <= 50){ 
-								document.getElementById('div_Chat_id').style.display = '';
-							} else { 
-								document.getElementById('div_Chat_id').style.display = 'none';
-							}
-							
-						}); 
-						
-					}); 
-						
-				</script>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
@@ -160,39 +138,16 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				//Se verifican si existen los datos
 				if(isset($idCorreosCat)) {    $x1 = $idCorreosCat;    }else{$x1 = '';}
 				if(isset($idUsuario)) {       $x2 = $idUsuario;       }else{$x2 = '';}
-				if(isset($Chat_id)) {         $x3 = $Chat_id;         }else{$x3 = '';}
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select('Categoria','idCorreosCat', $x1, 2, 'idCorreosCat', 'Nombre', 'telemetria_mnt_correos_cat', 0, '', $dbConn);
+				$Form_Inputs->form_post_data(2, '<strong>Tiempos de envio: </strong>Todas las notificaciones estan afectas a los tiempos de envio configurados por defecto en el sistema o en el equipo de telemetria.' );
+				$Form_Inputs->form_select('Categoria','idCorreosCat', $x1, 2, 'idCorreosCat', 'Nombre', 'telemetria_mnt_correos_cat', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Inputs->form_input_text('Chat ID', 'Chat_id', $x3, 1);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
-				
-				<script>
-					document.getElementById('div_Chat_id').style.display = 'none';	
-					
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
-						
-						$("#idCorreosCat").on("change", function(){ //se ejecuta al cambiar valor del select
-							let tipo_val = $("#idCorreosCat").val();//Asignamos el valor seleccionado
-								
-							//Proveedores
-							if(tipo_val >= 45 && tipo_val <= 50){ 
-								document.getElementById('div_Chat_id').style.display = '';
-							} else { 
-								document.getElementById('div_Chat_id').style.display = 'none';
-								document.getElementById('Chat_id').value = "0";
-							}
-							
-						}); 
-						
-					}); 
-						
-				</script>
 				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
@@ -234,8 +189,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'nombre_desc':    $order_by = 'usuarios_listado.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
 		case 'email_asc':      $order_by = 'usuarios_listado.email ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Email Ascendente';break;
 		case 'email_desc':     $order_by = 'usuarios_listado.email DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Email Descendente';break;
-		case 'chatid_asc':     $order_by = 'telemetria_mnt_correos_list.Chat_id ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Chat ID Ascendente';break;
-		case 'chatid_desc':    $order_by = 'telemetria_mnt_correos_list.Chat_id DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Chat ID Descendente';break;
+		case 'fono_asc':       $order_by = 'usuarios_listado.Fono ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fono Ascendente';break;
+		case 'fono_desc':      $order_by = 'usuarios_listado.Fono DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fono Descendente';break;
 		
 		default: $order_by = 'telemetria_mnt_correos_cat.Nombre ASC, usuarios_listado.email ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Categoria, Email Ascendente';
 	}
@@ -266,8 +221,8 @@ $SIS_query = '
 telemetria_mnt_correos_list.idCorreos,
 usuarios_listado.Nombre AS NombreEmail,
 usuarios_listado.email AS Email,
+usuarios_listado.Fono AS Fono,
 telemetria_mnt_correos_cat.Nombre AS Categoria,
-telemetria_mnt_correos_list.Chat_id,
 core_sistemas.Nombre AS sistema';
 $SIS_join  = '
 LEFT JOIN `telemetria_mnt_correos_cat` ON telemetria_mnt_correos_cat.idCorreosCat  = telemetria_mnt_correos_list.idCorreosCat
@@ -304,7 +259,7 @@ $arrCorreos = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_list',
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select('Categoria','idCorreosCat', $x1, 1, 'idCorreosCat', 'Nombre', 'telemetria_mnt_correos_cat', 0, '', $dbConn);
+				$Form_Inputs->form_select('Categoria','idCorreosCat', $x1, 1, 'idCorreosCat', 'Nombre', 'telemetria_mnt_correos_cat', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x2, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
 				
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
@@ -359,12 +314,21 @@ $arrCorreos = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_list',
 							</div>
 						</th>
 						<th>
+							<div class="pull-left">Fono</div>
+							<div class="btn-group pull-right" style="width: 50px;" >
+								<a href="<?php echo $location.'&order_by=fono_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&order_by=fono_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
+							</div>
+						</th>
+						<?php 
+						/*<th>
 							<div class="pull-left">Chat ID</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=chatid_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=chatid_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
 							</div>
 						</th>
+						*/ ?>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
@@ -375,7 +339,7 @@ $arrCorreos = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_list',
 						<td><?php echo $comunas['Categoria']; ?></td>
 						<td><?php echo $comunas['NombreEmail']; ?></td>
 						<td><?php echo $comunas['Email']; ?></td>
-						<td><?php echo $comunas['Chat_id']; ?></td>
+						<td><?php echo $comunas['Fono']; ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $comunas['sistema']; ?></td><?php } ?>			
 						<td>
 							<div class="btn-group" style="width: 70px;" >

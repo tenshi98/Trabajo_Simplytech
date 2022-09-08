@@ -1,7 +1,7 @@
 <?php
 /************************************************************/
 // Se trae la informacion del producto
-$query = "SELECT 
+$SIS_query = '
 cross_shipping_consolidacion.Creacion_fecha,
 cross_shipping_consolidacion.CTNNombreCompañia,
 cross_shipping_consolidacion.FechaInicioEmbarque,
@@ -49,10 +49,8 @@ core_oc_estado.Nombre AS Estado,
 trabajadores_listado.Nombre AS InspectorNombre,
 trabajadores_listado.ApellidoPat AS InspectorApellido,
 cross_shipping_recibidores.Nombre AS RecibidorNombre,
-cross_shipping_recibidores.Codigo AS RecibidorCodigo
-
-
-FROM `cross_shipping_consolidacion`
+cross_shipping_recibidores.Codigo AS RecibidorCodigo';
+$SIS_join  = '
 LEFT JOIN `core_sistemas`                                ON core_sistemas.idSistema                                   = cross_shipping_consolidacion.idSistema
 LEFT JOIN `usuarios_listado`                             ON usuarios_listado.idUsuario                                = cross_shipping_consolidacion.idUsuario
 LEFT JOIN `cross_shipping_plantas`                       ON cross_shipping_plantas.idPlantaDespacho                   = cross_shipping_consolidacion.idPlantaDespacho
@@ -69,108 +67,59 @@ LEFT JOIN `core_cross_shipping_consolidacion_condicion`  ON core_cross_shipping_
 LEFT JOIN `core_sistemas_opciones`                       ON core_sistemas_opciones.idOpciones                         = cross_shipping_consolidacion.idSellado
 LEFT JOIN `core_oc_estado`                               ON core_oc_estado.idEstado                                   = cross_shipping_consolidacion.idEstado
 LEFT JOIN `trabajadores_listado`                         ON trabajadores_listado.idTrabajador                         = cross_shipping_consolidacion.idAprobador
-LEFT JOIN `cross_shipping_recibidores`                   ON cross_shipping_recibidores.idRecibidor                    = cross_shipping_consolidacion.idRecibidor
-
-WHERE cross_shipping_consolidacion.idConsolidacion = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-$rowConso = mysqli_fetch_assoc ($resultado);				
+LEFT JOIN `cross_shipping_recibidores`                   ON cross_shipping_recibidores.idRecibidor                    = cross_shipping_consolidacion.idRecibidor';
+$SIS_where = 'cross_shipping_consolidacion.idConsolidacion = '.$_GET['view'];
+$rowConso = db_select_data (false, $SIS_query, 'cross_shipping_consolidacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConso');
 			
 /************************************************************/
 // Se traen las estibas
-$arrEstibas = array();
-$query = "SELECT 
+$SIS_query = '
 cross_shipping_consolidacion_estibas.idEstibaListado,
 cross_shipping_consolidacion_estibas.NPallet,
 cross_shipping_consolidacion_estibas.Temperatura,
 cross_shipping_consolidacion_estibas.NSerieSensor,
-
 core_estibas.Nombre AS Estiba,
 core_estibas_ubicacion.Nombre AS EstibaUbicacion,
 core_cross_shipping_consolidacion_posicion.Nombre AS Posicion,
 cross_shipping_envase.Nombre AS Envase,
-cross_shipping_termografo.Nombre AS Termografo
-
-FROM `cross_shipping_consolidacion_estibas`
+cross_shipping_termografo.Nombre AS Termografo';
+$SIS_join  = '
 LEFT JOIN `core_estibas`                                  ON core_estibas.idEstiba                                    = cross_shipping_consolidacion_estibas.idEstiba
 LEFT JOIN `core_estibas_ubicacion`                        ON core_estibas_ubicacion.idEstibaUbicacion                 = cross_shipping_consolidacion_estibas.idEstibaUbicacion
 LEFT JOIN `core_cross_shipping_consolidacion_posicion`    ON core_cross_shipping_consolidacion_posicion.idPosicion    = cross_shipping_consolidacion_estibas.idPosicion
 LEFT JOIN `cross_shipping_envase`                         ON cross_shipping_envase.idEnvase                           = cross_shipping_consolidacion_estibas.idEnvase
-LEFT JOIN `cross_shipping_termografo`                     ON cross_shipping_termografo.idTermografo                   = cross_shipping_consolidacion_estibas.idTermografo
-
-WHERE cross_shipping_consolidacion_estibas.idConsolidacion = ".$_GET['view']."
-ORDER BY cross_shipping_consolidacion_estibas.idEstiba ASC, core_estibas_ubicacion.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrEstibas,$row );
-}
+LEFT JOIN `cross_shipping_termografo`                     ON cross_shipping_termografo.idTermografo                   = cross_shipping_consolidacion_estibas.idTermografo';
+$SIS_where = 'cross_shipping_consolidacion_estibas.idConsolidacion ='.$_GET['view'];
+$SIS_order = 'cross_shipping_consolidacion_estibas.idEstiba ASC, core_estibas_ubicacion.Nombre ASC';
+$arrEstibas = array();
+$arrEstibas = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion_estibas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEstibas');
 
 /************************************************************/
 // Se traen los archivos
-$arrArchivos = array();
-$query = "SELECT 
+$SIS_query = '
 cross_shipping_consolidacion_archivo.idArchivo,
 cross_shipping_consolidacion_archivo.idArchivoTipo,
 cross_shipping_consolidacion_archivo.Nombre,
+core_cross_shipping_archivos_tipos.Nombre AS Tipo';
+$SIS_join  = 'LEFT JOIN `core_cross_shipping_archivos_tipos` ON core_cross_shipping_archivos_tipos.idArchivoTipo = cross_shipping_consolidacion_archivo.idArchivoTipo';
+$SIS_where = 'cross_shipping_consolidacion_archivo.idConsolidacion ='.$_GET['view'];
+$SIS_order = 0;
+$arrArchivos = array();
+$arrArchivos = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion_archivo', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivos');
 
-core_cross_shipping_archivos_tipos.Nombre AS Tipo
-
-FROM `cross_shipping_consolidacion_archivo`
-LEFT JOIN `core_cross_shipping_archivos_tipos`     ON core_cross_shipping_archivos_tipos.idArchivoTipo     = cross_shipping_consolidacion_archivo.idArchivoTipo
-
-WHERE cross_shipping_consolidacion_archivo.idConsolidacion = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrArchivos,$row );
-}
+/************************************************************/
+if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
+	if(isset($rowConso['idEstado'])&&$rowConso['idEstado']!=2){
+		echo '<div class="col-xs-12" style="margin-top:15px;">';
+			$Alert_Text  = '<strong>Fecha: </strong>'.fecha_estandar($rowConso['Aprobacion_Fecha']).'<br/>';
+			$Alert_Text .= '<strong>Hora: </strong>'.$rowConso['Aprobacion_Hora'].'<br/>';
+			$Alert_Text .= '<strong>Observacion: </strong>'.$rowConso['Observacion'];
+			alert_post_data(4,1,1,  $Alert_Text);
+		echo '</div>
+		<div class="clearfix" style="margin-bottom:15px;"></div>';
+	}
+} 
 ?>
-
-<?php if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
-	if(isset($rowConso['idEstado'])&&$rowConso['idEstado']!=2){ ?>
-		<div class="col-xs-12" style="margin-top:15px;">
-			<?php
-				$Alert_Text  = '<strong>Fecha: </strong>'.fecha_estandar($rowConso['Aprobacion_Fecha']).'<br/>';
-				$Alert_Text .= '<strong>Hora: </strong>'.$rowConso['Aprobacion_Hora'].'<br/>';
-				$Alert_Text .= '<strong>Observacion: </strong>'.$rowConso['Observacion'];
-				alert_post_data(4,1,1,  $Alert_Text);
-			?>
-		</div>
-		<div class="clearfix" style="margin-bottom:15px;"></div>
-	<?php } ?> 
-<?php } ?>
-
 
 <div class="col-sm-12">
 

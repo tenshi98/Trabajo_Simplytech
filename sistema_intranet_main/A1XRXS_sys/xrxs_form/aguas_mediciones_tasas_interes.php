@@ -24,7 +24,6 @@ require_once '0_validate_user_1.php';
 	if ( isset($_POST['TasaDia']) )           $TasaDia          = $_POST['TasaDia'];
 	if ( isset($_POST['MC']) )                $MC               = $_POST['MC'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -48,7 +47,14 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
-
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Ano) && $Ano != ''){                     $Ano           = EstandarizarInput($Ano); }
+	if(isset($TasaCorriente) && $TasaCorriente != ''){ $TasaCorriente = EstandarizarInput($TasaCorriente); }
+	if(isset($TasaDia) && $TasaDia != ''){             $TasaDia       = EstandarizarInput($TasaDia); }
+	if(isset($MC) && $MC != ''){                       $MC            = EstandarizarInput($MC); }
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -75,43 +81,32 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){             $a  = "'".$idSistema."'" ;       }else{$a  ="''";}
+				if(isset($idSistema) && $idSistema != ''){  $SIS_data  = "'".$idSistema."'" ; }else{$SIS_data  = "''";}
 				if(isset($Fecha) && $Fecha != ''){                     
-					$a .= ",'".$Fecha."'" ; 
-					$a .= ",'".fecha2NdiaMes($Fecha)."'" ;
-					$a .= ",'".fecha2NMes($Fecha)."'" ;
-					$a .= ",'".fecha2Ano($Fecha)."'" ;         
+					$SIS_data .= ",'".$Fecha."'" ; 
+					$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'" ;
+					$SIS_data .= ",'".fecha2NMes($Fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Fecha)."'" ;         
 				}else{
-					$a .=",''";
-					$a .=",''";
-					$a .=",''";
-					$a .=",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($TasaCorriente) && $TasaCorriente != ''){     $a .= ",'".$TasaCorriente."'" ;  }else{$a .=",''";}
-				if(isset($TasaDia) && $TasaDia != ''){                 $a .= ",'".$TasaDia."'" ;        }else{$a .=",''";}
-				if(isset($MC) && $MC != ''){                           $a .= ",'".$MC."'" ;             }else{$a .=",''";}
+				if(isset($TasaCorriente) && $TasaCorriente != ''){     $SIS_data .= ",'".$TasaCorriente."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($TasaDia) && $TasaDia != ''){                 $SIS_data .= ",'".$TasaDia."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($MC) && $MC != ''){                           $SIS_data .= ",'".$MC."'" ;             }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `aguas_mediciones_tasas_interes` (idSistema, Fecha, Dia, 
-				idMes, Ano, TasaCorriente, TasaDia, MC) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, Fecha, Dia, idMes, Ano, TasaCorriente, TasaDia, MC';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_mediciones_tasas_interes', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($ultimo_id!=0){
 					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -137,21 +132,21 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idTasasInteres='".$idTasasInteres."'" ;
-				if(isset($idSistema) && $idSistema != ''){             $a .= ",idSistema='".$idSistema."'" ;}
+				$SIS_data = "idTasasInteres='".$idTasasInteres."'" ;
+				if(isset($idSistema) && $idSistema != ''){             $SIS_data .= ",idSistema='".$idSistema."'" ;}
 				if(isset($Fecha) && $Fecha != ''){                     
-					$a .= ",Fecha='".$Fecha."'" ;
-					$a .= ",Dia='".fecha2NdiaMes($Fecha)."'" ;
-					$a .= ",idMes='".fecha2NMes($Fecha)."'" ;
-					$a .= ",Ano='".fecha2Ano($Fecha)."'" ;   
+					$SIS_data .= ",Fecha='".$Fecha."'" ;
+					$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'" ;
+					$SIS_data .= ",idMes='".fecha2NMes($Fecha)."'" ;
+					$SIS_data .= ",Ano='".fecha2Ano($Fecha)."'" ;   
 				}
-				if(isset($TasaCorriente) && $TasaCorriente != ''){     $a .= ",TasaCorriente='".$TasaCorriente."'" ;}
-				if(isset($TasaDia) && $TasaDia != ''){                 $a .= ",TasaDia='".$TasaDia."'" ;}
-				if(isset($MC) && $MC != ''){                           $a .= ",MC='".$MC."'" ;}
+				if(isset($TasaCorriente) && $TasaCorriente != ''){     $SIS_data .= ",TasaCorriente='".$TasaCorriente."'" ;}
+				if(isset($TasaDia) && $TasaDia != ''){                 $SIS_data .= ",TasaDia='".$TasaDia."'" ;}
+				if(isset($MC) && $MC != ''){                           $SIS_data .= ",MC='".$MC."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'aguas_mediciones_tasas_interes', 'idTasasInteres = "'.$idTasasInteres.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'aguas_mediciones_tasas_interes', 'idTasasInteres = "'.$idTasasInteres.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo

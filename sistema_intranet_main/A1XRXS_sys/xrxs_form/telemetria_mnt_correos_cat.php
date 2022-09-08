@@ -16,7 +16,7 @@ require_once '0_validate_user_1.php';
 	//Traspaso de valores input a variables
 	if ( !empty($_POST['idCorreosCat']) )   $idCorreosCat    = $_POST['idCorreosCat'];
 	if ( !empty($_POST['Nombre']) )         $Nombre          = $_POST['Nombre'];
-	
+	if ( !empty($_POST['idEstado']) )       $idEstado        = $_POST['idEstado'];
 	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -31,9 +31,15 @@ require_once '0_validate_user_1.php';
 		switch ($INT_valor) {
 			case 'idCorreosCat':   if(empty($idCorreosCat)){   $error['idCorreosCat']   = 'error/No ha ingresado el id';}break;
 			case 'Nombre':         if(empty($Nombre)){         $error['Nombre']         = 'error/No ha ingresado el nombre';}break;
+			case 'idEstado':       if(empty($idEstado)){       $error['idEstado']       = 'error/No ha seleccionado el estado';}break;
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){ $Nombre = EstandarizarInput($Nombre); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -65,28 +71,18 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){  $a = "'".$Nombre."'" ;  }else{$a ="''";}
+				if(isset($Nombre) && $Nombre != ''){      $SIS_data = "'".$Nombre."'" ;     }else{$SIS_data = "''";}
+				if(isset($idEstado) && $idEstado != ''){  $SIS_data.= ",'".$idEstado."'" ;  }else{$SIS_data.= ",''";}
 
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_mnt_correos_cat` (Nombre) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Nombre, idEstado';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_mnt_correos_cat', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -111,12 +107,13 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idCorreosCat='".$idCorreosCat."'" ;
-				if(isset($Nombre) && $Nombre != ''){  $a .= ",Nombre='".$Nombre."'" ;}
+				$SIS_data = "idCorreosCat='".$idCorreosCat."'" ;
+				if(isset($Nombre) && $Nombre != ''){      $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idEstado) && $idEstado != ''){  $SIS_data .= ",idEstado='".$idEstado."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_mnt_correos_cat', 'idCorreosCat = "'.$idCorreosCat.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_mnt_correos_cat', 'idCorreosCat = "'.$idCorreosCat.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

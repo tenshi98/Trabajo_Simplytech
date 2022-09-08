@@ -13,6 +13,7 @@ switch ($_SESSION['usuario']['basic_data']['idInterfaz']) {
     case 6: include '1include_principal_interfaz_6.php'; break;//Interfaz CrossTech
     case 7: include '1include_principal_interfaz_7.php'; break;//Interfaz Intranet CrossTech
     case 8: include '1include_principal_interfaz_8.php'; break;//Interfaz Seguridad Vecinal
+    case 9: include '1include_principal_interfaz_9.php'; break;//Interfaz Administracion Sitios
 }
 ?>
 

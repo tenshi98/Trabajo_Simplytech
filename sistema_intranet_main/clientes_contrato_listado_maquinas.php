@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'createBasicDataMaquina';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -34,8 +34,8 @@ if ( !empty($_POST['submit']) )  {
 //se borra un dato
 if ( !empty($_GET['del']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'delBasicData';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';	
@@ -44,8 +44,8 @@ if ( !empty($_GET['del']) )     {
 //se clona la maquina
 if ( !empty($_POST['clone_Maquina']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'clone_Maquina';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -54,8 +54,8 @@ if ( !empty($_POST['clone_Maquina']) )  {
 //se edita la maquina
 if ( !empty($_POST['submit_edit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'updateBasicData';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -64,8 +64,8 @@ if ( !empty($_POST['submit_edit']) )  {
 //Si el estado esta distinto de vacio
 if ( !empty($_GET['estado']) ) {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'].'&status='.$_GET['status'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'].'&status='.$_GET['status'];
 	//Llamamos al formulario
 	$form_trabajo= 'estadoMaquina';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -74,8 +74,8 @@ if ( !empty($_GET['estado']) ) {
 //formulario para editar
 if ( !empty($_POST['submit_config']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'updateBasicData';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -84,8 +84,8 @@ if ( !empty($_POST['submit_config']) )  {
 //formulario para crear
 if ( !empty($_POST['submit_idLevel']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'].'&componente='.$_GET['componente'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'].'&componente='.$_GET['componente'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -93,8 +93,8 @@ if ( !empty($_POST['submit_idLevel']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit_idLevel']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'].'&componente='.$_GET['componente'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'].'&componente='.$_GET['componente'];
 	//Llamamos al formulario
 	$form_trabajo= 'update_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -102,8 +102,8 @@ if ( !empty($_POST['submit_edit_idLevel']) )  {
 //se agrega un trabajo
 if ( !empty($_POST['submit_addTrabajo']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'].'&componente='.$_GET['componente'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'].'&componente='.$_GET['componente'];
 	//Llamamos al formulario
 	$form_trabajo= 'add_trabajo';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';	
@@ -111,8 +111,8 @@ if ( !empty($_POST['submit_addTrabajo']) )     {
 //se borra un dato
 if ( !empty($_GET['del_idLevel']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'].'&componente='.$_GET['componente'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'].'&componente='.$_GET['componente'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';	
@@ -120,8 +120,8 @@ if ( !empty($_GET['del_idLevel']) )     {
 //se borra un dato
 if ( !empty($_GET['clone_compo']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'].'&componente='.$_GET['componente'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'].'&componente='.$_GET['componente'];
 	//Llamamos al formulario
 	$form_trabajo= 'clone_component';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';	
@@ -131,7 +131,7 @@ if ( !empty($_GET['clone_compo']) )     {
 if ( !empty($_POST['submitMatriz']) )  { 
 	//se agregan ubicaciones
 	$location = $new_location;
-	$location.='&id='.$_GET['id'].'&matriz='.$_GET['matriz'];
+	$location.= '&id='.$_GET['id'].'&matriz='.$_GET['matriz'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert_matriz';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -140,8 +140,8 @@ if ( !empty($_POST['submitMatriz']) )  {
 if ( !empty($_POST['submit_editMatriz']) )  { 
 	//se agregan ubicaciones
 	$location = $new_location;
-	$location.='&id='.$_GET['id'].'&matriz='.$_GET['matriz'];
-	$location.='&idMatriz='.$_GET['idMatriz'];
+	$location.= '&id='.$_GET['id'].'&matriz='.$_GET['matriz'];
+	$location.= '&idMatriz='.$_GET['idMatriz'];
 	//Llamamos al formulario
 	$form_trabajo= 'update_matriz';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -150,7 +150,7 @@ if ( !empty($_POST['submit_editMatriz']) )  {
 if ( !empty($_GET['delMatriz']) )     {
 	//se agregan ubicaciones
 	$location = $new_location;
-	$location.='&id='.$_GET['id'].'&matriz='.$_GET['matriz'];
+	$location.= '&id='.$_GET['id'].'&matriz='.$_GET['matriz'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_matriz';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';	
@@ -159,7 +159,7 @@ if ( !empty($_GET['delMatriz']) )     {
 if ( !empty($_POST['clone_Matriz']) )  { 
 	//se agregan ubicaciones
 	$location = $new_location;
-	$location.='&id='.$_GET['id'].'&matriz='.$_GET['matriz'];
+	$location.= '&id='.$_GET['id'].'&matriz='.$_GET['matriz'];
 	//Llamamos al formulario
 	$form_trabajo= 'clone_Matriz';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -172,11 +172,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Dato creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Dato editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Dato borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Dato creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Dato editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Dato borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['clone_idMaquina']) ) { 
 	

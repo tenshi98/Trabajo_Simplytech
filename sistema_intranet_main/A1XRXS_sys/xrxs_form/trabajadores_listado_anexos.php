@@ -87,31 +87,19 @@ require_once '0_validate_user_1.php';
 							
 							//Inserto el registro de las mantenciones
 							//filtros
-							$a = "'".$sufijo.$_FILES['Documento']['name']."'" ;
-							if(isset($idTrabajador) && $idTrabajador != ''){        $a .= ",'".$idTrabajador."'" ;   }else{$a .= ",''";}
-							if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){      $a .= ",'".$Fecha_ingreso."'" ;  }else{$a .= ",''";}
+							$SIS_data = "'".$sufijo.$_FILES['Documento']['name']."'" ;
+							if(isset($idTrabajador) && $idTrabajador != ''){    $SIS_data .= ",'".$idTrabajador."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){  $SIS_data .= ",'".$Fecha_ingreso."'" ;  }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `trabajadores_listado_anexos` (Documento, idTrabajador, Fecha_ingreso) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							$SIS_columns = 'Documento, idTrabajador, Fecha_ingreso';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_listado_anexos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 							//Si ejecuto correctamente la consulta
-							if($resultado){
-								
+							if($ultimo_id!=0){
+								//redirijo
 								header( 'Location: '.$location );
 								die;
-								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
 							}
 							
 						} else {

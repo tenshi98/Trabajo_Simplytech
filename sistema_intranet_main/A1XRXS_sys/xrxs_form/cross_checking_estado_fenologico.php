@@ -20,7 +20,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idEstado']) )      $idEstado      = $_POST['idEstado'];
 	if ( !empty($_POST['idSistema']) )     $idSistema     = $_POST['idSistema'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -40,6 +39,12 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){  $Nombre = EstandarizarInput($Nombre); }
+	if(isset($Codigo) && $Codigo != ''){  $Codigo = EstandarizarInput($Codigo); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -72,31 +77,20 @@ if(isset($Codigo)&&contar_palabras_censuradas($Codigo)!=0){  $error['Codigo'] = 
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){        $a  = "'".$Nombre."'" ;     }else{$a  ="''";}
-				if(isset($Codigo) && $Codigo != ''){        $a .= ",'".$Codigo."'" ;    }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){    $a .= ",'".$idEstado."'" ;  }else{$a .=",''";}
-				if(isset($idSistema) && $idSistema != ''){  $a .= ",'".$idSistema."'" ; }else{$a .=",''";}
+				if(isset($Nombre) && $Nombre != ''){        $SIS_data  = "'".$Nombre."'" ;     }else{$SIS_data  = "''";}
+				if(isset($Codigo) && $Codigo != ''){        $SIS_data .= ",'".$Codigo."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){    $SIS_data .= ",'".$idEstado."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){  $SIS_data .= ",'".$idSistema."'" ; }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_checking_estado_fenologico` (Nombre, Codigo, idEstado, idSistema) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Nombre, Codigo, idEstado, idSistema';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_checking_estado_fenologico', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 				
 			}
@@ -122,15 +116,15 @@ if(isset($Codigo)&&contar_palabras_censuradas($Codigo)!=0){  $error['Codigo'] = 
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idEstadoFen='".$idEstadoFen."'" ;
-				if(isset($Nombre) && $Nombre != ''){        $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Codigo) && $Codigo != ''){        $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($idEstado) && $idEstado != ''){    $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idSistema) && $idSistema != ''){  $a .= ",idSistema='".$idSistema."'" ;}
+				$SIS_data = "idEstadoFen='".$idEstadoFen."'" ;
+				if(isset($Nombre) && $Nombre != ''){        $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Codigo) && $Codigo != ''){        $SIS_data .= ",Codigo='".$Codigo."'" ;}
+				if(isset($idEstado) && $idEstado != ''){    $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idSistema) && $idSistema != ''){  $SIS_data .= ",idSistema='".$idSistema."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_checking_estado_fenologico', 'idEstadoFen = "'.$idEstadoFen.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_checking_estado_fenologico', 'idEstadoFen = "'.$idEstadoFen.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

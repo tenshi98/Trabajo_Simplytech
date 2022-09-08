@@ -53,11 +53,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Laboratorio creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Laboratorio editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Laboratorio borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Laboratorio creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Laboratorio editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Laboratorio borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
@@ -225,7 +225,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 2);
 				$Form_Inputs->form_date('F Ingreso','fNacimiento', $x4, 1);
 				$Form_Inputs->form_select_country('Pais','idPais', $x5, 2, $dbConn);
-				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Region','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 2,'fa fa-map'); 
@@ -389,7 +389,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'laboratorio_listado', $SIS_join
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
 				$Form_Inputs->form_date('F Ingreso','fNacimiento', $x4, 1);
 				$Form_Inputs->form_select_country('Pais','idPais', $x5, 1, $dbConn);
-				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Region','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map'); 

@@ -63,14 +63,14 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idTablaSeguro='".$idTablaSeguro."'" ;
-				if(isset($idTipoContrato) && $idTipoContrato != ''){    $a .= ",idTipoContrato='".$idTipoContrato."'" ;}
-				if(isset($Porc_Empleador) && $Porc_Empleador != ''){    $a .= ",Porc_Empleador='".$Porc_Empleador."'" ;}
-				if(isset($Porc_Trabajador) && $Porc_Trabajador != ''){  $a .= ",Porc_Trabajador='".$Porc_Trabajador."'" ;}
+				$SIS_data = "idTablaSeguro='".$idTablaSeguro."'" ;
+				if(isset($idTipoContrato) && $idTipoContrato != ''){    $SIS_data .= ",idTipoContrato='".$idTipoContrato."'" ;}
+				if(isset($Porc_Empleador) && $Porc_Empleador != ''){    $SIS_data .= ",Porc_Empleador='".$Porc_Empleador."'" ;}
+				if(isset($Porc_Trabajador) && $Porc_Trabajador != ''){  $SIS_data .= ",Porc_Trabajador='".$Porc_Trabajador."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'sistema_rrhh_tabla_seguro_cesantia', 'idTablaSeguro = "'.$idTablaSeguro.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'sistema_rrhh_tabla_seguro_cesantia', 'idTablaSeguro = "'.$idTablaSeguro.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

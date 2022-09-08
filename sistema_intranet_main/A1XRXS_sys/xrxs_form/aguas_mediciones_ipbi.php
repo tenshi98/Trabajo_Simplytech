@@ -20,7 +20,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Ano']) )          $Ano          = $_POST['Ano'];
 	if ( !empty($_POST['Valor']) )        $Valor        = $_POST['Valor'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -40,7 +39,12 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
-
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Ano) && $Ano != ''){      $Ano   = EstandarizarInput($Ano); }
+	if(isset($Valor) && $Valor != ''){  $Valor = EstandarizarInput($Valor); }
+	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -67,31 +71,21 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){    $a  = "'".$idSistema."'" ;  }else{$a  ="''";}
-				if(isset($idMes) && $idMes != ''){            $a .= ",'".$idMes."'" ;     }else{$a .=",''";}
-				if(isset($Ano) && $Ano != ''){                $a .= ",'".$Ano."'" ;       }else{$a .=",''";}
-				if(isset($Valor) && $Valor != ''){            $a .= ",'".$Valor."'" ;     }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){    $SIS_data  = "'".$idSistema."'" ;  }else{$SIS_data  = "''";}
+				if(isset($idMes) && $idMes != ''){            $SIS_data .= ",'".$idMes."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Ano) && $Ano != ''){                $SIS_data .= ",'".$Ano."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Valor) && $Valor != ''){            $SIS_data .= ",'".$Valor."'" ;     }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `aguas_mediciones_ipbi` (idSistema, idMes, Ano, Valor) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idMes, Ano, Valor';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_mediciones_ipbi', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($ultimo_id!=0){
 					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 				}
 			}
@@ -117,15 +111,15 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idIPBI='".$idIPBI."'" ;
-				if(isset($idSistema) && $idSistema != ''){   $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idMes) && $idMes != ''){           $a .= ",idMes='".$idMes."'" ;}
-				if(isset($Ano) && $Ano != ''){               $a .= ",Ano='".$Ano."'" ;}
-				if(isset($Valor) && $Valor != ''){           $a .= ",Valor='".$Valor."'" ;}
+				$SIS_data = "idIPBI='".$idIPBI."'" ;
+				if(isset($idSistema) && $idSistema != ''){   $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idMes) && $idMes != ''){           $SIS_data .= ",idMes='".$idMes."'" ;}
+				if(isset($Ano) && $Ano != ''){               $SIS_data .= ",Ano='".$Ano."'" ;}
+				if(isset($Valor) && $Valor != ''){           $SIS_data .= ",Valor='".$Valor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'aguas_mediciones_ipbi', 'idIPBI = "'.$idIPBI.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'aguas_mediciones_ipbi', 'idIPBI = "'.$idIPBI.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo

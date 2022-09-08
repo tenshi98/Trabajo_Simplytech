@@ -96,9 +96,15 @@ require_once '0_validate_user_1.php';
 			case 'Observacion':       if(empty($Observacion)){      $error['Observacion']     = 'error/No ha ingresado la Observacion';}break;
 			case 'idTipo':            if(empty($idTipo)){           $error['idTipo']          = 'error/No ha ingresado el Tipo';}break;
 			
-			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+	if(isset($Nombre) && $Nombre != ''){               $Nombre        = EstandarizarInput($Nombre); }
+	if(isset($Observacion) && $Observacion != ''){     $Observacion   = EstandarizarInput($Observacion); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -111,8 +117,6 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-
-
 /*******************************************************************************************************************/
 /*                                                                                                                 */
 /*                                                       INGRESOS                                                  */
@@ -903,7 +907,7 @@ require_once '0_validate_user_1.php';
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
 						//Sufijo
-						$sufijo = 'ocompra_'.fecha_actual().'_';
+						$sufijo = 'ocompra_'.genera_password_unica().'_';
 					  
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
@@ -1063,85 +1067,59 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Se guardan los datos basicos
-				if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $a  = "'".$_SESSION['ocompra_basicos']['idSistema']."'" ;   }else{$a  ="''";}
-				if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;  }else{$a .= ",''";}
-				if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $a .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;  }else{$a .= ",''";}
-				if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $a .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$a .= ",''";}
+				if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $SIS_data  = "'".$_SESSION['ocompra_basicos']['idSistema']."'" ;     }else{$SIS_data  = "''";}
+				if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-					$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
-					$a .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-					$a .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+					$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['ocompra_basicos']['Observaciones']) && $_SESSION['ocompra_basicos']['Observaciones'] != ''){        $a .= ",'".$_SESSION['ocompra_basicos']['Observaciones']."'" ;        }else{$a .= ",''";}
-				if(isset($_SESSION['ocompra_basicos']['Solicitud']) && $_SESSION['ocompra_basicos']['Solicitud'] != ''){                $a .= ",'".$_SESSION['ocompra_basicos']['Solicitud']."'" ;            }else{$a .= ",''";}
-				
+				if(isset($_SESSION['ocompra_basicos']['Observaciones']) && $_SESSION['ocompra_basicos']['Observaciones'] != ''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['Observaciones']."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['ocompra_basicos']['Solicitud']) && $_SESSION['ocompra_basicos']['Solicitud'] != ''){                $SIS_data .= ",'".$_SESSION['ocompra_basicos']['Solicitud']."'" ;            }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado` (idSistema,idUsuario,idEstado, idProveedor, Creacion_fecha, Creacion_mes,
-				Creacion_ano, Observaciones, Solicitud ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema,idUsuario,idEstado, idProveedor, Creacion_fecha, Creacion_mes,
+				Creacion_ano, Observaciones, Solicitud';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-		
+				if($ultimo_id!=0){
 					/*********************************************************************/		
 					//Insumos
 					if(isset($_SESSION['ocompra_insumos'])){
 						foreach ($_SESSION['ocompra_insumos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $a .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $a .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $SIS_data  = "'".$ultimo_id."'" ;                                    }else{$SIS_data  = "''";}
+							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $a .= ",'".$producto['idProducto']."'" ;   }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $a .= ",'".$producto['Cantidad']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){     $a .= ",'".$producto['vUnitario']."'" ;    }else{$a .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){           $a .= ",'".$producto['vTotal']."'" ;       }else{$a .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $SIS_data .= ",'".$producto['idProducto']."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $SIS_data .= ",'".$producto['Cantidad']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){     $SIS_data .= ",'".$producto['vUnitario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){           $SIS_data .= ",'".$producto['vTotal']."'" ;       }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_existencias_insumos` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
-							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
+							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_insumos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -1150,42 +1128,30 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['ocompra_productos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $a .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $a .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $SIS_data  = "'".$ultimo_id."'" ;                                    }else{$SIS_data  = "''";}
+							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $a .= ",'".$producto['idProducto']."'" ;   }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $a .= ",'".$producto['Cantidad']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){     $a .= ",'".$producto['vUnitario']."'" ;    }else{$a .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){           $a .= ",'".$producto['vTotal']."'" ;       }else{$a .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $SIS_data .= ",'".$producto['idProducto']."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $SIS_data .= ",'".$producto['Cantidad']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){     $SIS_data .= ",'".$producto['vUnitario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){           $SIS_data .= ",'".$producto['vTotal']."'" ;       }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_existencias_productos` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
-							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
+							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -1194,43 +1160,31 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['ocompra_arriendos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $a .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $a .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $SIS_data  = "'".$ultimo_id."'" ;                                    }else{$SIS_data  = "''";}
+							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){           $a .= ",'".$producto['idEquipo']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $a .= ",'".$producto['Cantidad']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $a .= ",'".$producto['idFrecuencia']."'" ;  }else{$a .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){         $a .= ",'".$producto['vUnitario']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){               $a .= ",'".$producto['vTotal']."'" ;        }else{$a .= ",''";}
+							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){           $SIS_data .= ",'".$producto['idEquipo']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $SIS_data .= ",'".$producto['Cantidad']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $SIS_data .= ",'".$producto['idFrecuencia']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){         $SIS_data .= ",'".$producto['vUnitario']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){               $SIS_data .= ",'".$producto['vTotal']."'" ;        }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_existencias_arriendos` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
-							Creacion_mes, Creacion_ano, idEquipo, Cantidad, idFrecuencia, vUnitario, vTotal) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
+							Creacion_mes, Creacion_ano, idEquipo, Cantidad, idFrecuencia, vUnitario, vTotal';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_arriendos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -1239,43 +1193,31 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['ocompra_servicios'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $a .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $a .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $SIS_data  = "'".$ultimo_id."'" ;                                    }else{$SIS_data  = "''";}
+							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idServicio']) && $producto['idServicio'] != ''){       $a .= ",'".$producto['idServicio']."'" ;    }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $a .= ",'".$producto['Cantidad']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $a .= ",'".$producto['idFrecuencia']."'" ;  }else{$a .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){         $a .= ",'".$producto['vUnitario']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){               $a .= ",'".$producto['vTotal']."'" ;        }else{$a .= ",''";}
+							if(isset($producto['idServicio']) && $producto['idServicio'] != ''){       $SIS_data .= ",'".$producto['idServicio']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $SIS_data .= ",'".$producto['Cantidad']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $SIS_data .= ",'".$producto['idFrecuencia']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){         $SIS_data .= ",'".$producto['vUnitario']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){               $SIS_data .= ",'".$producto['vTotal']."'" ;        }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_existencias_servicios` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
-							Creacion_mes, Creacion_ano, idServicio, Cantidad, idFrecuencia, vUnitario, vTotal) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
+							Creacion_mes, Creacion_ano, idServicio, Cantidad, idFrecuencia, vUnitario, vTotal';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_servicios', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -1284,43 +1226,32 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['ocompra_otros'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $a .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $a .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $SIS_data  = "'".$ultimo_id."'" ;                                    }else{$SIS_data  = "''";}
+							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){               $a .= ",'".$producto['Nombre']."'" ;        }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $a .= ",'".$producto['Cantidad']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $a .= ",'".$producto['idFrecuencia']."'" ;  }else{$a .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){         $a .= ",'".$producto['vUnitario']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){               $a .= ",'".$producto['vTotal']."'" ;        }else{$a .= ",''";}
+							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){               $SIS_data .= ",'".$producto['Nombre']."'" ;        }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $SIS_data .= ",'".$producto['Cantidad']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $SIS_data .= ",'".$producto['idFrecuencia']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){         $SIS_data .= ",'".$producto['vUnitario']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){               $SIS_data .= ",'".$producto['vTotal']."'" ;        }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_existencias_otros` (idOcompra, idSistema, idUsuario, idEstado, idProveedor, 
-							Creacion_fecha, Creacion_mes, Creacion_ano, Nombre, Cantidad, idFrecuencia, vUnitario, vTotal) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, 
+							Creacion_fecha, Creacion_mes, Creacion_ano, Nombre, Cantidad, idFrecuencia, 
+							vUnitario, vTotal';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_otros', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -1329,41 +1260,28 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['ocompra_boletas'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $SIS_data  = "'".$ultimo_id."'" ;                                    }else{$SIS_data  = "''";}
+							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idTrabajador']) && $producto['idTrabajador'] != ''){  $a .= ",'".$producto['idTrabajador']."'" ;   }else{$a .= ",''";}
-							if(isset($producto['N_Doc']) && $producto['N_Doc'] != ''){                $a .= ",'".$producto['N_Doc']."'" ;          }else{$a .= ",''";}
-							if(isset($producto['Descripcion']) && $producto['Descripcion'] != ''){    $a .= ",'".$producto['Descripcion']."'" ;    }else{$a .= ",''";}
-							if(isset($producto['Valor']) && $producto['Valor'] != ''){                $a .= ",'".$producto['Valor']."'" ;          }else{$a .= ",''";}
-							$a .= ",'1'" ; //no utilizado
+							if(isset($producto['idTrabajador']) && $producto['idTrabajador'] != ''){  $SIS_data .= ",'".$producto['idTrabajador']."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($producto['N_Doc']) && $producto['N_Doc'] != ''){                $SIS_data .= ",'".$producto['N_Doc']."'" ;          }else{$SIS_data .= ",''";}
+							if(isset($producto['Descripcion']) && $producto['Descripcion'] != ''){    $SIS_data .= ",'".$producto['Descripcion']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($producto['Valor']) && $producto['Valor'] != ''){                $SIS_data .= ",'".$producto['Valor']."'" ;          }else{$SIS_data .= ",''";}
+							$SIS_data .= ",'1'" ; //no utilizado
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_existencias_boletas` (idOcompra, idSistema, idUsuario, 
-							Creacion_fecha, Creacion_mes, Creacion_ano, idTrabajador, N_Doc, Descripcion, Valor, idUso) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idTrabajador, N_Doc, Descripcion, Valor, idUso';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_boletas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -1372,38 +1290,25 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['ocompra_boletasEmp'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $SIS_data  = "'".$ultimo_id."'" ;                                    }else{$SIS_data  = "''";}
+							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['Descripcion']) && $producto['Descripcion'] != ''){    $a .= ",'".$producto['Descripcion']."'" ;    }else{$a .= ",''";}
-							if(isset($producto['Valor']) && $producto['Valor'] != ''){                $a .= ",'".$producto['Valor']."'" ;          }else{$a .= ",''";}
+							if(isset($producto['Descripcion']) && $producto['Descripcion'] != ''){    $SIS_data .= ",'".$producto['Descripcion']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($producto['Valor']) && $producto['Valor'] != ''){                $SIS_data .= ",'".$producto['Valor']."'" ;          }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_existencias_boletas_empresas` (idOcompra, idSistema, idUsuario, 
-							Creacion_fecha, Creacion_mes, Creacion_ano, Descripcion, Valor) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, Descripcion, Valor';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_boletas_empresas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -1412,44 +1317,32 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['ocompra_documentos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $a .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $a .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $SIS_data  = "'".$ultimo_id."'" ;                                    }else{$SIS_data  = "''";}
+							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2NSemana($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2NSemana($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idDocPago']) && $producto['idDocPago'] != ''){    $a .= ",'".$producto['idDocPago']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['NDocPago']) && $producto['NDocPago'] != ''){      $a .= ",'".$producto['NDocPago']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['Fpago']) && $producto['Fpago'] != ''){            $a .= ",'".$producto['Fpago']."'" ;         }else{$a .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){          $a .= ",'".$producto['vTotal']."'" ;        }else{$a .= ",''";}
+							if(isset($producto['idDocPago']) && $producto['idDocPago'] != ''){    $SIS_data .= ",'".$producto['idDocPago']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['NDocPago']) && $producto['NDocPago'] != ''){      $SIS_data .= ",'".$producto['NDocPago']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['Fpago']) && $producto['Fpago'] != ''){            $SIS_data .= ",'".$producto['Fpago']."'" ;         }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){          $SIS_data .= ",'".$producto['vTotal']."'" ;        }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_documentos` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
-							Creacion_mes, Creacion_ano, Creacion_semana, idDocPago, NDocPago, Fpago, vTotal) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
+							Creacion_mes, Creacion_ano, Creacion_semana, idDocPago, NDocPago, Fpago, vTotal';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_documentos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -1458,39 +1351,27 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['ocompra_archivos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $a .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $a .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $SIS_data  = "'".$ultimo_id."'" ;                                    }else{$SIS_data  = "''";}
+							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $a .= ",'".$producto['Nombre']."'" ;     }else{$a .= ",''";}
+							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_archivos` (idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
-							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
+							Creacion_mes, Creacion_ano, Nombre';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					
@@ -1500,44 +1381,31 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['ocompra_sol_rel'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $a .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $a .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $SIS_data  = "'".$ultimo_id."'" ;                                    }else{$SIS_data  = "''";}
+							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado'] != ''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor'] != ''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['Type']) && $producto['Type'] != ''){                  $a .= ",'".$producto['Type']."'" ;          }else{$a .= ",''";}
-							if(isset($producto['idExistencia']) && $producto['idExistencia'] != ''){  $a .= ",'".$producto['idExistencia']."'" ;  }else{$a .= ",''";}
+							if(isset($producto['Type']) && $producto['Type'] != ''){                  $SIS_data .= ",'".$producto['Type']."'" ;          }else{$SIS_data .= ",''";}
+							if(isset($producto['idExistencia']) && $producto['idExistencia'] != ''){  $SIS_data .= ",'".$producto['idExistencia']."'" ;  }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_sol_rel` (idOcompra, idSistema, idUsuario, idEstado, idProveedor, 
-							Creacion_fecha, Creacion_mes, Creacion_ano, Type, idExistencia) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, 
+							Creacion_fecha, Creacion_mes, Creacion_ano, Type, idExistencia';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_sol_rel', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
 							/****************************************************************/
 							//Dato a Actualizar
-							$a = "idOcompra='".$ultimo_id."'" ;
+							$SIS_data = "idOcompra='".$ultimo_id."'" ;
 									
 							//Actualizar OC en las tablas de solicitudes
 							switch ($producto['Type']) {
@@ -1545,31 +1413,31 @@ require_once '0_validate_user_1.php';
 								//Productos
 								case 1:
 									//se actualizan los datos
-									$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_productos', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_productos', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									break;
 								/****************************************/
 								//Insumos
 								case 2:
 									//se actualizan los datos
-									$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_insumos', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_insumos', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									break;
 								/****************************************/
 								//Arriendos
 								case 3:
 									//se actualizan los datos
-									$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_arriendos', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_arriendos', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									break;
 								/****************************************/
 								//Servicios
 								case 4:
 									//se actualizan los datos
-									$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_servicios', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_servicios', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									break;
 								/****************************************/
 								//Otros
 								case 5:
 									//se actualizan los datos
-									$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									break;
 							}
 							
@@ -1578,33 +1446,19 @@ require_once '0_validate_user_1.php';
 					}
 					/*********************************************************************/		
 					//Se guarda en historial la accion
-					if(isset($ultimo_id) && $ultimo_id != ''){    $a  = "'".$ultimo_id."'" ;  }else{$a  = "''";}
+					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
 					if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha'] != ''){  
-						$a .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
+						$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'" ;  
 					}else{
-						$a .= ",''";
+						$SIS_data .= ",''";
 					}
-					$a .= ",'1'";                                                                                            //Creacion Satisfactoria
-					$a .= ",'Creacion de la Orden de Compra N°".n_doc($ultimo_id, 5).", queda en espera de aprobacion'";     //Observacion
-					$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                                          //idUsuario
+					$SIS_data .= ",'1'";                                                                                            //Creacion Satisfactoria
+					$SIS_data .= ",'Creacion de la Orden de Compra N°".n_doc($ultimo_id, 5).", queda en espera de aprobacion'";     //Observacion
+					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                                          //idUsuario
 					
-								
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
+					$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
@@ -1759,47 +1613,35 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/	
 				
 				//Filtros
-				$a = "idOcompra='".$idOcompra."'" ;
-				if(isset($idSistema) && $idSistema != ''){        $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){        $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idEstado) && $idEstado != ''){          $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idProveedor) && $idProveedor != ''){    $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idOcompra='".$idOcompra."'" ;
+				if(isset($idSistema) && $idSistema != ''){        $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){        $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idEstado) && $idEstado != ''){          $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idProveedor) && $idProveedor != ''){    $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				}
-				if(isset($Observaciones) && $Observaciones != ''){   $a .= ",Observaciones='".$Observaciones."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){   $SIS_data .= ",Observaciones='".$Observaciones."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					header( 'Location: '.$location.'&edited=true' );
@@ -1832,43 +1674,29 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;     }else{$a  ="''";}
-				if(isset($idSistema) && $idSistema != ''){              $a .= ",'".$idSistema."'" ;    }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){                $a .= ",'".$idEstado."'" ;     }else{$a .=",''";}
-				if(isset($idProveedor) && $idProveedor != ''){          $a .= ",'".$idProveedor."'" ;  }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;     }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema != ''){              $SIS_data .= ",'".$idSistema."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                $SIS_data .= ",'".$idEstado."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idProveedor) && $idProveedor != ''){          $SIS_data .= ",'".$idProveedor."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",'".$Creacion_fecha."'" ;
-					$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".$Creacion_fecha."'" ;
+					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($idProducto) && $idProducto != ''){            $a .= ",'".$idProducto."'" ;  }else{$a .=",''";}
-				if(isset($Cantidad) && $Cantidad != ''){                $a .= ",'".$Cantidad."'" ;    }else{$a .=",''";}
-				if(isset($vUnitario) && $vUnitario != ''){              $a .= ",'".$vUnitario."'" ;   }else{$a .=",''";}
-				if(isset($vTotal) && $vTotal != ''){                    $a .= ",'".$vTotal."'" ;      }else{$a .=",''";}
+				if(isset($idProducto) && $idProducto != ''){            $SIS_data .= ",'".$idProducto."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Cantidad) && $Cantidad != ''){                $SIS_data .= ",'".$Cantidad."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($vUnitario) && $vUnitario != ''){              $SIS_data .= ",'".$vUnitario."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($vTotal) && $vTotal != ''){                    $SIS_data .= ",'".$vTotal."'" ;      }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_existencias_productos` (idOcompra, idSistema, 
-				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
-				idProducto, Cantidad, vUnitario, vTotal) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
+				idProducto, Cantidad, vUnitario, vTotal';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*********************************************************************/	
 				/*********************************************************************/	
@@ -1885,28 +1713,16 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/	
 				
@@ -1951,51 +1767,39 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				
 				//Filtros
-				$a = "idExistencia='".$idExistencia."'" ;
-				if(isset($idOcompra) && $idOcompra != ''){       $a .= ",idOcompra='".$idOcompra."'" ;}
-				if(isset($idSistema) && $idSistema != ''){       $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idEstado) && $idEstado != ''){         $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idExistencia='".$idExistencia."'" ;
+				if(isset($idOcompra) && $idOcompra != ''){       $SIS_data .= ",idOcompra='".$idOcompra."'" ;}
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idEstado) && $idEstado != ''){         $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idProveedor) && $idProveedor != ''){   $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				}
-				if(isset($idProducto) && $idProducto != ''){   $a .= ",idProducto='".$idProducto."'" ;}
-				if(isset($Cantidad) && $Cantidad != ''){       $a .= ",Cantidad='".$Cantidad."'" ;}
-				if(isset($vUnitario) && $vUnitario != ''){     $a .= ",vUnitario='".$vUnitario."'" ;}
-				if(isset($vTotal) && $vTotal != ''){           $a .= ",vTotal='".$vTotal."'" ;}
+				if(isset($idProducto) && $idProducto != ''){   $SIS_data .= ",idProducto='".$idProducto."'" ;}
+				if(isset($Cantidad) && $Cantidad != ''){       $SIS_data .= ",Cantidad='".$Cantidad."'" ;}
+				if(isset($vUnitario) && $vUnitario != ''){     $SIS_data .= ",vUnitario='".$vUnitario."'" ;}
+				if(isset($vTotal) && $vTotal != ''){           $SIS_data .= ",vTotal='".$vTotal."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					header( 'Location: '.$location.'&edited=true' );
@@ -2050,28 +1854,16 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_2['idOcompra'];
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-					
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				//se borran los datos
@@ -2114,43 +1906,29 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;     }else{$a  ="''";}
-				if(isset($idSistema) && $idSistema != ''){              $a .= ",'".$idSistema."'" ;    }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){                $a .= ",'".$idEstado."'" ;     }else{$a .=",''";}
-				if(isset($idProveedor) && $idProveedor != ''){          $a .= ",'".$idProveedor."'" ;  }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;     }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema != ''){              $SIS_data .= ",'".$idSistema."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                $SIS_data .= ",'".$idEstado."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idProveedor) && $idProveedor != ''){          $SIS_data .= ",'".$idProveedor."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",'".$Creacion_fecha."'" ;
-					$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".$Creacion_fecha."'" ;
+					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($idProducto) && $idProducto != ''){            $a .= ",'".$idProducto."'" ;  }else{$a .=",''";}
-				if(isset($Cantidad) && $Cantidad != ''){                $a .= ",'".$Cantidad."'" ;    }else{$a .=",''";}
-				if(isset($vUnitario) && $vUnitario != ''){              $a .= ",'".$vUnitario."'" ;   }else{$a .=",''";}
-				if(isset($vTotal) && $vTotal != ''){                    $a .= ",'".$vTotal."'" ;      }else{$a .=",''";}
+				if(isset($idProducto) && $idProducto != ''){            $SIS_data .= ",'".$idProducto."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Cantidad) && $Cantidad != ''){                $SIS_data .= ",'".$Cantidad."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($vUnitario) && $vUnitario != ''){              $SIS_data .= ",'".$vUnitario."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($vTotal) && $vTotal != ''){                    $SIS_data .= ",'".$vTotal."'" ;      }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_existencias_insumos` (idOcompra, idSistema, 
-				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
-				idProducto, Cantidad, vUnitario, vTotal) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
+				idProducto, Cantidad, vUnitario, vTotal';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_insumos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*********************************************************************/	
 				/*********************************************************************/	
@@ -2167,28 +1945,16 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                                      //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/	
 					
@@ -2232,51 +1998,39 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                                      //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				
 				//Filtros
-				$a = "idExistencia='".$idExistencia."'" ;
-				if(isset($idOcompra) && $idOcompra != ''){       $a .= ",idOcompra='".$idOcompra."'" ;}
-				if(isset($idSistema) && $idSistema != ''){       $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idEstado) && $idEstado != ''){         $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idExistencia='".$idExistencia."'" ;
+				if(isset($idOcompra) && $idOcompra != ''){       $SIS_data .= ",idOcompra='".$idOcompra."'" ;}
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idEstado) && $idEstado != ''){         $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idProveedor) && $idProveedor != ''){   $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				}
-				if(isset($idProducto) && $idProducto != ''){   $a .= ",idProducto='".$idProducto."'" ;}
-				if(isset($Cantidad) && $Cantidad != ''){       $a .= ",Cantidad='".$Cantidad."'" ;}
-				if(isset($vUnitario) && $vUnitario != ''){     $a .= ",vUnitario='".$vUnitario."'" ;}
-				if(isset($vTotal) && $vTotal != ''){           $a .= ",vTotal='".$vTotal."'" ;}
+				if(isset($idProducto) && $idProducto != ''){   $SIS_data .= ",idProducto='".$idProducto."'" ;}
+				if(isset($Cantidad) && $Cantidad != ''){       $SIS_data .= ",Cantidad='".$Cantidad."'" ;}
+				if(isset($vUnitario) && $vUnitario != ''){     $SIS_data .= ",vUnitario='".$vUnitario."'" ;}
+				if(isset($vTotal) && $vTotal != ''){           $SIS_data .= ",vTotal='".$vTotal."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					header( 'Location: '.$location.'&edited=true' );
@@ -2331,28 +2085,16 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_2['idOcompra'];
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                                      //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-					
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				//se borran los datos
@@ -2395,44 +2137,30 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;     }else{$a  ="''";}
-				if(isset($idSistema) && $idSistema != ''){              $a .= ",'".$idSistema."'" ;    }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){                $a .= ",'".$idEstado."'" ;     }else{$a .=",''";}
-				if(isset($idProveedor) && $idProveedor != ''){          $a .= ",'".$idProveedor."'" ;  }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;     }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema != ''){              $SIS_data .= ",'".$idSistema."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                $SIS_data .= ",'".$idEstado."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idProveedor) && $idProveedor != ''){          $SIS_data .= ",'".$idProveedor."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",'".$Creacion_fecha."'" ;
-					$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".$Creacion_fecha."'" ;
+					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($idEquipo) && $idEquipo != ''){                $a .= ",'".$idEquipo."'" ;      }else{$a .=",''";}
-				if(isset($Cantidad) && $Cantidad != ''){                $a .= ",'".$Cantidad."'" ;      }else{$a .=",''";}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){        $a .= ",'".$idFrecuencia."'" ;  }else{$a .=",''";}
-				if(isset($vUnitario) && $vUnitario != ''){              $a .= ",'".$vUnitario."'" ;     }else{$a .=",''";}
-				if(isset($vTotal) && $vTotal != ''){                    $a .= ",'".$vTotal."'" ;        }else{$a .=",''";}
+				if(isset($idEquipo) && $idEquipo != ''){                $SIS_data .= ",'".$idEquipo."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Cantidad) && $Cantidad != ''){                $SIS_data .= ",'".$Cantidad."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idFrecuencia) && $idFrecuencia != ''){        $SIS_data .= ",'".$idFrecuencia."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($vUnitario) && $vUnitario != ''){              $SIS_data .= ",'".$vUnitario."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($vTotal) && $vTotal != ''){                    $SIS_data .= ",'".$vTotal."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_existencias_arriendos` (idOcompra, idSistema, 
-				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
-				idEquipo, Cantidad, idFrecuencia, vUnitario, vTotal) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
+				idEquipo, Cantidad, idFrecuencia, vUnitario, vTotal';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_arriendos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*********************************************************************/	
 				/*********************************************************************/	
@@ -2450,28 +2178,16 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                                      //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 					
@@ -2515,52 +2231,40 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				
 				//Filtros
-				$a = "idExistencia='".$idExistencia."'" ;
-				if(isset($idOcompra) && $idOcompra != ''){       $a .= ",idOcompra='".$idOcompra."'" ;}
-				if(isset($idSistema) && $idSistema != ''){       $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idEstado) && $idEstado != ''){         $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idExistencia='".$idExistencia."'" ;
+				if(isset($idOcompra) && $idOcompra != ''){       $SIS_data .= ",idOcompra='".$idOcompra."'" ;}
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idEstado) && $idEstado != ''){         $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idProveedor) && $idProveedor != ''){   $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				}
-				if(isset($idEquipo) && $idEquipo != ''){             $a .= ",idEquipo='".$idEquipo."'" ;}
-				if(isset($Cantidad) && $Cantidad != ''){             $a .= ",Cantidad='".$Cantidad."'" ;}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){     $a .= ",idFrecuencia='".$idFrecuencia."'" ;}
-				if(isset($vUnitario) && $vUnitario != ''){           $a .= ",vUnitario='".$vUnitario."'" ;}
-				if(isset($vTotal) && $vTotal != ''){                 $a .= ",vTotal='".$vTotal."'" ;}
+				if(isset($idEquipo) && $idEquipo != ''){             $SIS_data .= ",idEquipo='".$idEquipo."'" ;}
+				if(isset($Cantidad) && $Cantidad != ''){             $SIS_data .= ",Cantidad='".$Cantidad."'" ;}
+				if(isset($idFrecuencia) && $idFrecuencia != ''){     $SIS_data .= ",idFrecuencia='".$idFrecuencia."'" ;}
+				if(isset($vUnitario) && $vUnitario != ''){           $SIS_data .= ",vUnitario='".$vUnitario."'" ;}
+				if(isset($vTotal) && $vTotal != ''){                 $SIS_data .= ",vTotal='".$vTotal."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					header( 'Location: '.$location.'&edited=true' );
@@ -2615,28 +2319,16 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_3['idOcompra'];
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-					
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				//se borran los datos
@@ -2679,44 +2371,30 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;     }else{$a  ="''";}
-				if(isset($idSistema) && $idSistema != ''){              $a .= ",'".$idSistema."'" ;    }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){                $a .= ",'".$idEstado."'" ;     }else{$a .=",''";}
-				if(isset($idProveedor) && $idProveedor != ''){          $a .= ",'".$idProveedor."'" ;  }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;     }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema != ''){              $SIS_data .= ",'".$idSistema."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                $SIS_data .= ",'".$idEstado."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idProveedor) && $idProveedor != ''){          $SIS_data .= ",'".$idProveedor."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",'".$Creacion_fecha."'" ;
-					$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".$Creacion_fecha."'" ;
+					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($idServicio) && $idServicio != ''){            $a .= ",'".$idServicio."'" ;    }else{$a .=",''";}
-				if(isset($Cantidad) && $Cantidad != ''){                $a .= ",'".$Cantidad."'" ;      }else{$a .=",''";}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){        $a .= ",'".$idFrecuencia."'" ;  }else{$a .=",''";}
-				if(isset($vUnitario) && $vUnitario != ''){              $a .= ",'".$vUnitario."'" ;     }else{$a .=",''";}
-				if(isset($vTotal) && $vTotal != ''){                    $a .= ",'".$vTotal."'" ;        }else{$a .=",''";}
+				if(isset($idServicio) && $idServicio != ''){            $SIS_data .= ",'".$idServicio."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Cantidad) && $Cantidad != ''){                $SIS_data .= ",'".$Cantidad."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idFrecuencia) && $idFrecuencia != ''){        $SIS_data .= ",'".$idFrecuencia."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($vUnitario) && $vUnitario != ''){              $SIS_data .= ",'".$vUnitario."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($vTotal) && $vTotal != ''){                    $SIS_data .= ",'".$vTotal."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_existencias_servicios` (idOcompra, idSistema, 
-				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
-				idServicio, Cantidad, idFrecuencia, vUnitario, vTotal) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
+				idServicio, Cantidad, idFrecuencia, vUnitario, vTotal';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_servicios', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*********************************************************************/	
 				/*********************************************************************/	
@@ -2734,28 +2412,16 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                                      //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 					
@@ -2800,52 +2466,40 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				
 				//Filtros
-				$a = "idExistencia='".$idExistencia."'" ;
-				if(isset($idOcompra) && $idOcompra != ''){       $a .= ",idOcompra='".$idOcompra."'" ;}
-				if(isset($idSistema) && $idSistema != ''){       $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idEstado) && $idEstado != ''){         $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idExistencia='".$idExistencia."'" ;
+				if(isset($idOcompra) && $idOcompra != ''){       $SIS_data .= ",idOcompra='".$idOcompra."'" ;}
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idEstado) && $idEstado != ''){         $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idProveedor) && $idProveedor != ''){   $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				}
-				if(isset($idServicio) && $idServicio != ''){         $a .= ",idServicio='".$idServicio."'" ;}
-				if(isset($Cantidad) && $Cantidad != ''){             $a .= ",Cantidad='".$Cantidad."'" ;}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){     $a .= ",idFrecuencia='".$idFrecuencia."'" ;}
-				if(isset($vUnitario) && $vUnitario != ''){           $a .= ",vUnitario='".$vUnitario."'" ;}
-				if(isset($vTotal) && $vTotal != ''){                 $a .= ",vTotal='".$vTotal."'" ;}
+				if(isset($idServicio) && $idServicio != ''){         $SIS_data .= ",idServicio='".$idServicio."'" ;}
+				if(isset($Cantidad) && $Cantidad != ''){             $SIS_data .= ",Cantidad='".$Cantidad."'" ;}
+				if(isset($idFrecuencia) && $idFrecuencia != ''){     $SIS_data .= ",idFrecuencia='".$idFrecuencia."'" ;}
+				if(isset($vUnitario) && $vUnitario != ''){           $SIS_data .= ",vUnitario='".$vUnitario."'" ;}
+				if(isset($vTotal) && $vTotal != ''){                 $SIS_data .= ",vTotal='".$vTotal."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					header( 'Location: '.$location.'&edited=true' );
@@ -2900,28 +2554,16 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha      = fecha_actual();
 				$idOcompra  = $rowdata_3['idOcompra'];
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-					
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				//se borran los datos
@@ -2953,44 +2595,30 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;     }else{$a  ="''";}
-				if(isset($idSistema) && $idSistema != ''){              $a .= ",'".$idSistema."'" ;    }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){                $a .= ",'".$idEstado."'" ;     }else{$a .=",''";}
-				if(isset($idProveedor) && $idProveedor != ''){          $a .= ",'".$idProveedor."'" ;  }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;     }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema != ''){              $SIS_data .= ",'".$idSistema."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                $SIS_data .= ",'".$idEstado."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idProveedor) && $idProveedor != ''){          $SIS_data .= ",'".$idProveedor."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",'".$Creacion_fecha."'" ;
-					$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".$Creacion_fecha."'" ;
+					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($Nombre) && $Nombre != ''){                    $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
-				if(isset($Cantidad) && $Cantidad != ''){                $a .= ",'".$Cantidad."'" ;      }else{$a .=",''";}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){        $a .= ",'".$idFrecuencia."'" ;  }else{$a .=",''";}
-				if(isset($vUnitario) && $vUnitario != ''){              $a .= ",'".$vUnitario."'" ;     }else{$a .=",''";}
-				if(isset($vTotal) && $vTotal != ''){                    $a .= ",'".$vTotal."'" ;        }else{$a .=",''";}
+				if(isset($Nombre) && $Nombre != ''){                    $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Cantidad) && $Cantidad != ''){                $SIS_data .= ",'".$Cantidad."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idFrecuencia) && $idFrecuencia != ''){        $SIS_data .= ",'".$idFrecuencia."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($vUnitario) && $vUnitario != ''){              $SIS_data .= ",'".$vUnitario."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($vTotal) && $vTotal != ''){                    $SIS_data .= ",'".$vTotal."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_existencias_otros` (idOcompra, idSistema, 
-				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
-				Nombre, Cantidad, idFrecuencia, vUnitario, vTotal) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
+				Nombre, Cantidad, idFrecuencia, vUnitario, vTotal';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_otros', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*********************************************************************/	
 				/*********************************************************************/	
@@ -3007,28 +2635,16 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 					
@@ -3061,52 +2677,40 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				
 				//Filtros
-				$a = "idExistencia='".$idExistencia."'" ;
-				if(isset($idOcompra) && $idOcompra != ''){       $a .= ",idOcompra='".$idOcompra."'" ;}
-				if(isset($idSistema) && $idSistema != ''){       $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idEstado) && $idEstado != ''){         $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idExistencia='".$idExistencia."'" ;
+				if(isset($idOcompra) && $idOcompra != ''){       $SIS_data .= ",idOcompra='".$idOcompra."'" ;}
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idEstado) && $idEstado != ''){         $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idProveedor) && $idProveedor != ''){   $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				}
-				if(isset($Nombre) && $Nombre != ''){                 $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Cantidad) && $Cantidad != ''){             $a .= ",Cantidad='".$Cantidad."'" ;}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){     $a .= ",idFrecuencia='".$idFrecuencia."'" ;}
-				if(isset($vUnitario) && $vUnitario != ''){           $a .= ",vUnitario='".$vUnitario."'" ;}
-				if(isset($vTotal) && $vTotal != ''){                 $a .= ",vTotal='".$vTotal."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                 $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Cantidad) && $Cantidad != ''){             $SIS_data .= ",Cantidad='".$Cantidad."'" ;}
+				if(isset($idFrecuencia) && $idFrecuencia != ''){     $SIS_data .= ",idFrecuencia='".$idFrecuencia."'" ;}
+				if(isset($vUnitario) && $vUnitario != ''){           $SIS_data .= ",vUnitario='".$vUnitario."'" ;}
+				if(isset($vTotal) && $vTotal != ''){                 $SIS_data .= ",vTotal='".$vTotal."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_otros', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_otros', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					header( 'Location: '.$location.'&edited=true' );
@@ -3162,28 +2766,16 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_3['idOcompra'];
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-					
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				//se borran los datos
@@ -3216,42 +2808,28 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;     }else{$a  ="''";}
-				if(isset($idSistema) && $idSistema != ''){              $a .= ",'".$idSistema."'" ;    }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;     }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema != ''){              $SIS_data .= ",'".$idSistema."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",'".$Creacion_fecha."'" ;
-					$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".$Creacion_fecha."'" ;
+					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($idTrabajador) && $idTrabajador != ''){   $a .= ",'".$idTrabajador."'" ;  }else{$a .=",''";}
-				if(isset($N_Doc) && $N_Doc != ''){                 $a .= ",'".$N_Doc."'" ;         }else{$a .=",''";}
-				if(isset($Descripcion) && $Descripcion != ''){     $a .= ",'".$Descripcion."'" ;   }else{$a .=",''";}
-				if(isset($Valor) && $Valor != ''){                 $a .= ",'".$Valor."'" ;         }else{$a .=",''";}
-				$a .= ",'1'" ; //no utilizado
+				if(isset($idTrabajador) && $idTrabajador != ''){   $SIS_data .= ",'".$idTrabajador."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($N_Doc) && $N_Doc != ''){                 $SIS_data .= ",'".$N_Doc."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion != ''){     $SIS_data .= ",'".$Descripcion."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Valor) && $Valor != ''){                 $SIS_data .= ",'".$Valor."'" ;         }else{$SIS_data .= ",''";}
+				$SIS_data .= ",'1'" ; //no utilizado
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_existencias_boletas` (idOcompra, idSistema, 
-				idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idTrabajador, N_Doc, Descripcion,
-				Valor, idUso ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idTrabajador, N_Doc, Descripcion,
+				Valor, idUso';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_boletas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*********************************************************************/	
 				/*********************************************************************/	
@@ -3268,28 +2846,16 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 					
@@ -3322,49 +2888,37 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				
 				//Filtros
-				$a = "idExistencia='".$idExistencia."'" ;
-				if(isset($idOcompra) && $idOcompra != ''){       $a .= ",idOcompra='".$idOcompra."'" ;}
-				if(isset($idSistema) && $idSistema != ''){       $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
+				$SIS_data = "idExistencia='".$idExistencia."'" ;
+				if(isset($idOcompra) && $idOcompra != ''){       $SIS_data .= ",idOcompra='".$idOcompra."'" ;}
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				}
-				if(isset($idTrabajador) && $idTrabajador != ''){  $a .= ",idTrabajador='".$idTrabajador."'" ;}
-				if(isset($N_Doc) && $N_Doc != ''){                $a .= ",N_Doc='".$N_Doc."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){    $a .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($Valor) && $Valor != ''){                $a .= ",Valor='".$Valor."'" ;}
+				if(isset($idTrabajador) && $idTrabajador != ''){  $SIS_data .= ",idTrabajador='".$idTrabajador."'" ;}
+				if(isset($N_Doc) && $N_Doc != ''){                $SIS_data .= ",N_Doc='".$N_Doc."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){    $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
+				if(isset($Valor) && $Valor != ''){                $SIS_data .= ",Valor='".$Valor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_boletas', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_boletas', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					header( 'Location: '.$location.'&edited=true' );
@@ -3419,28 +2973,16 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_3['idOcompra'];
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-					
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				//se borran los datos
@@ -3472,38 +3014,25 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;     }else{$a  ="''";}
-				if(isset($idSistema) && $idSistema != ''){              $a .= ",'".$idSistema."'" ;    }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;     }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema != ''){              $SIS_data .= ",'".$idSistema."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",'".$Creacion_fecha."'" ;
-					$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".$Creacion_fecha."'" ;
+					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($Descripcion) && $Descripcion != ''){     $a .= ",'".$Descripcion."'" ;   }else{$a .=",''";}
-				if(isset($Valor) && $Valor != ''){                 $a .= ",'".$Valor."'" ;         }else{$a .=",''";}
+				if(isset($Descripcion) && $Descripcion != ''){     $SIS_data .= ",'".$Descripcion."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Valor) && $Valor != ''){                 $SIS_data .= ",'".$Valor."'" ;         }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_existencias_boletas_empresas` (idOcompra, idSistema, 
-				idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, Descripcion,Valor ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, idSistema, 
+				idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, Descripcion,Valor';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_boletas_empresas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*********************************************************************/	
 				/*********************************************************************/	
@@ -3513,28 +3042,16 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 					
@@ -3566,47 +3083,35 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				
 				//Filtros
-				$a = "idExistencia='".$idExistencia."'" ;
-				if(isset($idOcompra) && $idOcompra != ''){       $a .= ",idOcompra='".$idOcompra."'" ;}
-				if(isset($idSistema) && $idSistema != ''){       $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
+				$SIS_data = "idExistencia='".$idExistencia."'" ;
+				if(isset($idOcompra) && $idOcompra != ''){       $SIS_data .= ",idOcompra='".$idOcompra."'" ;}
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				}
-				if(isset($Descripcion) && $Descripcion != ''){    $a .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($Valor) && $Valor != ''){                $a .= ",Valor='".$Valor."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){    $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
+				if(isset($Valor) && $Valor != ''){                $SIS_data .= ",Valor='".$Valor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_boletas_empresas', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_boletas_empresas', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					header( 'Location: '.$location.'&edited=true' );
@@ -3661,28 +3166,16 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_3['idOcompra'];
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-					
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				//se borran los datos
@@ -3714,45 +3207,31 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;     }else{$a  ="''";}
-				if(isset($idSistema) && $idSistema != ''){              $a .= ",'".$idSistema."'" ;    }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){                $a .= ",'".$idEstado."'" ;     }else{$a .=",''";}
-				if(isset($idProveedor) && $idProveedor != ''){          $a .= ",'".$idProveedor."'" ;  }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;     }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema != ''){              $SIS_data .= ",'".$idSistema."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                $SIS_data .= ",'".$idEstado."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idProveedor) && $idProveedor != ''){          $SIS_data .= ",'".$idProveedor."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",'".$Creacion_fecha."'" ;
-					$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2NSemana($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".$Creacion_fecha."'" ;
+					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2NSemana($Creacion_fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($idDocPago) && $idDocPago != ''){      $a .= ",'".$idDocPago."'" ;      }else{$a .=",''";}
-				if(isset($NDocPago) && $NDocPago != ''){        $a .= ",'".$NDocPago."'" ;       }else{$a .=",''";}
-				if(isset($Fpago) && $Fpago != ''){              $a .= ",'".$Fpago."'" ;          }else{$a .=",''";}
-				if(isset($vTotal) && $vTotal != ''){            $a .= ",'".$vTotal."'" ;         }else{$a .=",''";}
+				if(isset($idDocPago) && $idDocPago != ''){      $SIS_data .= ",'".$idDocPago."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($NDocPago) && $NDocPago != ''){        $SIS_data .= ",'".$NDocPago."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Fpago) && $Fpago != ''){              $SIS_data .= ",'".$Fpago."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($vTotal) && $vTotal != ''){            $SIS_data .= ",'".$vTotal."'" ;         }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_documentos` (idOcompra, idSistema, 
-				idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
-				Creacion_semana, idDocPago, NDocPago, Fpago, vTotal) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
+				Creacion_semana, idDocPago, NDocPago, Fpago, vTotal';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_documentos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/*********************************************************************/	
 				/*********************************************************************/	
@@ -3769,28 +3248,16 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 					
@@ -3823,52 +3290,40 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				
 				//Filtros
-				$a = "idDocumento='".$idDocumento."'" ;
-				if(isset($idOcompra) && $idOcompra != ''){       $a .= ",idOcompra='".$idOcompra."'" ;}
-				if(isset($idSistema) && $idSistema != ''){       $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idEstado) && $idEstado != ''){         $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idDocumento='".$idDocumento."'" ;
+				if(isset($idOcompra) && $idOcompra != ''){       $SIS_data .= ",idOcompra='".$idOcompra."'" ;}
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idEstado) && $idEstado != ''){         $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idProveedor) && $idProveedor != ''){   $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
-					$a .= ",Creacion_semana='".fecha2NSemana($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_semana='".fecha2NSemana($Creacion_fecha)."'" ;
 				}
-				if(isset($idDocPago) && $idDocPago != ''){   $a .= ",idDocPago='".$idDocPago."'" ;}
-				if(isset($NDocPago) && $NDocPago != ''){     $a .= ",NDocPago='".$NDocPago."'" ;}
-				if(isset($Fpago) && $Fpago != ''){           $a .= ",Fpago='".$Fpago."'" ;}
-				if(isset($vTotal) && $vTotal != ''){         $a .= ",vTotal='".$vTotal."'" ;}
+				if(isset($idDocPago) && $idDocPago != ''){   $SIS_data .= ",idDocPago='".$idDocPago."'" ;}
+				if(isset($NDocPago) && $NDocPago != ''){     $SIS_data .= ",NDocPago='".$NDocPago."'" ;}
+				if(isset($Fpago) && $Fpago != ''){           $SIS_data .= ",Fpago='".$Fpago."'" ;}
+				if(isset($vTotal) && $vTotal != ''){         $SIS_data .= ",vTotal='".$vTotal."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_documentos', 'idDocumento = "'.$idDocumento.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_documentos', 'idDocumento = "'.$idDocumento.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					header( 'Location: '.$location.'&edited=true' );
@@ -3922,28 +3377,16 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-					
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				//se borran los datos
@@ -4008,7 +3451,7 @@ require_once '0_validate_user_1.php';
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
 						//Sufijo
-						$sufijo = 'ocompra_'.fecha_actual().'_';
+						$sufijo = 'ocompra_'.genera_password_unica().'_';
 					  
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
@@ -4023,39 +3466,25 @@ require_once '0_validate_user_1.php';
 									$Nombre = $sufijo.$_FILES['exFile']['name'];
 									
 									//filtros
-									if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;     }else{$a  ="''";}
-									if(isset($idSistema) && $idSistema != ''){              $a .= ",'".$idSistema."'" ;    }else{$a .=",''";}
-									if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
-									if(isset($idEstado) && $idEstado != ''){                $a .= ",'".$idEstado."'" ;     }else{$a .=",''";}
-									if(isset($idProveedor) && $idProveedor != ''){          $a .= ",'".$idProveedor."'" ;  }else{$a .=",''";}
+									if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;     }else{$SIS_data  = "''";}
+									if(isset($idSistema) && $idSistema != ''){              $SIS_data .= ",'".$idSistema."'" ;    }else{$SIS_data .= ",''";}
+									if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
+									if(isset($idEstado) && $idEstado != ''){                $SIS_data .= ",'".$idEstado."'" ;     }else{$SIS_data .= ",''";}
+									if(isset($idProveedor) && $idProveedor != ''){          $SIS_data .= ",'".$idProveedor."'" ;  }else{$SIS_data .= ",''";}
 									if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-										$a .= ",'".$Creacion_fecha."'" ;
-										$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-										$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+										$SIS_data .= ",'".$Creacion_fecha."'" ;
+										$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+										$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 									}else{
-										$a .= ",''";
-										$a .= ",''";
-										$a .= ",''";
+										$SIS_data .= ",''";
+										$SIS_data .= ",''";
+										$SIS_data .= ",''";
 									}
-									if(isset($Nombre) && $Nombre != ''){      $a .= ",'".$Nombre."'" ;      }else{$a .=",''";}
+									if(isset($Nombre) && $Nombre != ''){      $SIS_data .= ",'".$Nombre."'" ;      }else{$SIS_data .=",''";}
 									
 									// inserto los datos de registro en la db
-									$query  = "INSERT INTO `ocompra_listado_archivos` (idOcompra, idSistema, 
-									idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, Nombre) 
-									VALUES (".$a.")";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, Nombre';
+									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									
 									/*********************************************************************/	
 									/*********************************************************************/	
@@ -4065,28 +3494,16 @@ require_once '0_validate_user_1.php';
 									/******************************************/
 									//Se guarda en historial la accion
 									$fecha = fecha_actual();
-									if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-									if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-									$a .= ",'2'";                                                     //Creacion Satisfactoria
-									$a .= ",'".$cambios."'";                                          //Observacion
-									$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+									if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+									if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+									$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+									$SIS_data .= ",'".$cambios."'";                                          //Observacion
+									$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
 									
 									// inserto los datos de registro en la db
-									$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-									VALUES (".$a.")";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);
-									//Si ejecuto correctamente la consulta
-									if(!$resultado){
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-										
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-									}
+									$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									
 									/*********************************************************************/	
 									/*********************************************************************/
 										
@@ -4151,28 +3568,16 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
-				if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-				if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-				$a .= ",'2'";                                                     //Creacion Satisfactoria
-				$a .= ",'".$cambios."'";                                          //Observacion
-				$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-					
+				if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+				if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+				$SIS_data .= ",'".$cambios."'";                                          //Observacion
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-						
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				/*********************************************************************/	
 				/*********************************************************************/
 				//se borran los datos
@@ -4238,27 +3643,16 @@ require_once '0_validate_user_1.php';
 							/******************************************/
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
-							if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-							if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-							$a .= ",'2'";                                                     //Creacion Satisfactoria
-							$a .= ",'".$cambios."'";                                          //Observacion
-							$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+							if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+							$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+							$SIS_data .= ",'".$cambios."'";                                          //Observacion
+							$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 							/*********************************************************************/	
 							/*********************************************************************/
 							//Verifico cantidades
@@ -4268,17 +3662,17 @@ require_once '0_validate_user_1.php';
 								//se borran los datos
 								$resultado = db_delete_data (false, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
-								$a = "idOcompra=0" ;
-								$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_productos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "idOcompra=0" ;
+								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_productos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Sino Actualizo valores
 							}else{
 								$nuevo = $Resta * $rowdata['vUnitario'];
 								//se actualizan los datos
-								$a = "Cantidad=".$Resta.", vTotal=".$nuevo ;
-								$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "Cantidad=".$Resta.", vTotal=".$nuevo ;
+								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
-								$a = "idOcompra=0" ;
-								$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_productos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "idOcompra=0" ;
+								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_productos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							}
 							break;
@@ -4295,27 +3689,16 @@ require_once '0_validate_user_1.php';
 							/******************************************/
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
-							if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-							if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-							$a .= ",'2'";                                                     //Creacion Satisfactoria
-							$a .= ",'".$cambios."'";                                          //Observacion
-							$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+							if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+							$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+							$SIS_data .= ",'".$cambios."'";                                          //Observacion
+							$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 							/*********************************************************************/	
 							/*********************************************************************/
 							//Verifico cantidades
@@ -4325,17 +3708,17 @@ require_once '0_validate_user_1.php';
 								//se borran los datos
 								$resultado = db_delete_data (false, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
-								$a = "idOcompra=0" ;
-								$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_insumos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "idOcompra=0" ;
+								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_insumos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Sino Actualizo valores
 							}else{
 								$nuevo = $Resta * $rowdata['vUnitario'];
 								//se actualizan los datos
-								$a = "Cantidad=".$Resta.", vTotal=".$nuevo ;
-								$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "Cantidad=".$Resta.", vTotal=".$nuevo ;
+								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
-								$a = "idOcompra=0" ;
-								$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_insumos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "idOcompra=0" ;
+								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_insumos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							}
 							break;
@@ -4352,27 +3735,16 @@ require_once '0_validate_user_1.php';
 							/******************************************/
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
-							if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-							if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-							$a .= ",'2'";                                                     //Creacion Satisfactoria
-							$a .= ",'".$cambios."'";                                          //Observacion
-							$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+							if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+							$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+							$SIS_data .= ",'".$cambios."'";                                          //Observacion
+							$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 							/*********************************************************************/	
 							/*********************************************************************/
 							//Verifico cantidades
@@ -4382,18 +3754,18 @@ require_once '0_validate_user_1.php';
 								//se borran los datos
 								$resultado = db_delete_data (false, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
-								$a = "idOcompra=0" ;
-								$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_arriendos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "idOcompra=0" ;
+								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_arriendos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							//Sino Actualizo valores
 							}else{
 								$nuevo = $Resta * $rowdata['vUnitario'];
 								//se actualizan los datos
-								$a = "Cantidad=".$Resta.", vTotal=".$nuevo ;
-								$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "Cantidad=".$Resta.", vTotal=".$nuevo ;
+								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
-								$a = "idOcompra=0" ;
-								$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_arriendos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "idOcompra=0" ;
+								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_arriendos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							}
 							break;
@@ -4410,27 +3782,17 @@ require_once '0_validate_user_1.php';
 							/******************************************/
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
-							if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-							if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-							$a .= ",'2'";                                                     //Creacion Satisfactoria
-							$a .= ",'".$cambios."'";                                          //Observacion
-							$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+							if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+							$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+							$SIS_data .= ",'".$cambios."'";                                          //Observacion
+							$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 							/*********************************************************************/	
 							/*********************************************************************/
 							//Verifico cantidades
@@ -4440,18 +3802,18 @@ require_once '0_validate_user_1.php';
 								//se borran los datos
 								$resultado = db_delete_data (false, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
-								$a = "idOcompra=0" ;
-								$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_servicios', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "idOcompra=0" ;
+								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_servicios', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							//Sino Actualizo valores
 							}else{
 								$nuevo = $Resta * $rowdata['vUnitario'];
 								//se actualizan los datos
-								$a = "Cantidad=".$Resta.", vTotal=".$nuevo ;
-								$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "Cantidad=".$Resta.", vTotal=".$nuevo ;
+								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
-								$a = "idOcompra=0" ;
-								$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_servicios', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "idOcompra=0" ;
+								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_servicios', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							}
 							break;
@@ -4468,27 +3830,16 @@ require_once '0_validate_user_1.php';
 							/******************************************/
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
-							if(isset($idOcompra) && $idOcompra != ''){ $a  = "'".$idOcompra."'" ;  }else{ $a  = "''";}
-							if(isset($fecha) && $fecha != ''){         $a .= ",'".$fecha."'" ;     }else{ $a .= ",''"; }
-							$a .= ",'2'";                                                     //Creacion Satisfactoria
-							$a .= ",'".$cambios."'";                                          //Observacion
-							$a .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							if(isset($idOcompra) && $idOcompra != ''){ $SIS_data  = "'".$idOcompra."'" ;  }else{ $SIS_data  = "''";}
+							if(isset($fecha) && $fecha != ''){         $SIS_data .= ",'".$fecha."'" ;     }else{ $SIS_data .= ",''"; }
+							$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
+							$SIS_data .= ",'".$cambios."'";                                          //Observacion
+							$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 							/*********************************************************************/	
 							/*********************************************************************/
 							//Verifico cantidades
@@ -4498,18 +3849,18 @@ require_once '0_validate_user_1.php';
 								//se borran los datos
 								$resultado = db_delete_data (false, 'ocompra_listado_existencias_otros', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
-								$a = "idOcompra=0" ;
-								$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "idOcompra=0" ;
+								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							//Sino Actualizo valores
 							}else{
 								$nuevo = $Resta * $rowdata['vUnitario'];
 								//se actualizan los datos
-								$a = "Cantidad=".$Resta.", vTotal=".$nuevo ;
-								$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_otros', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "Cantidad=".$Resta.", vTotal=".$nuevo ;
+								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_otros', 'idExistencia = "'.$rowdata['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//se actualizan los datos
-								$a = "idOcompra=0" ;
-								$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$SIS_data = "idOcompra=0" ;
+								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							}
 							break;
@@ -4546,25 +3897,25 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idEstado='1'" ;
+				$SIS_data = "idEstado='1'" ;
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_archivos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_archivos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_archivos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_archivos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_documentos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_documentos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_arriendos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_arriendos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_insumos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_insumos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_otros', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_otros', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/**********************************************************/
 				//Creo los datos en el historial
@@ -4574,31 +3925,22 @@ require_once '0_validate_user_1.php';
 				$Observacion      = 'La Orden de Compra ha sido modificada, queda en espera de aprobacion';
 				$idUsuario        = $_SESSION['usuario']['basic_data']['idUsuario'];
 				
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;         }else{$a  ="''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $a .= ",'".$Creacion_fecha."'" ;   }else{$a .=",''";}
-				if(isset($idTipo) && $idTipo != ''){                    $a .= ",'".$idTipo."'" ;           }else{$a .=",''";}
-				if(isset($Observacion) && $Observacion != ''){          $a .= ",'".$Observacion."'" ;      }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;         }else{$SIS_data  = "''";}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $SIS_data .= ",'".$Creacion_fecha."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo != ''){                    $SIS_data .= ",'".$idTipo."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){          $SIS_data .= ",'".$Observacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-				header( 'Location: '.$location.'&edited=true' );
-				die;
+				//Si ejecuto correctamente la consulta
+				if($ultimo_id!=0){
+					//redirijo
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+				}
 			}
 		
 		break;	
@@ -4609,52 +3951,43 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idEstado='3'" ;
+				$SIS_data = "idEstado='3'" ;
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_archivos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_archivos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_documentos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_documentos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_arriendos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_arriendos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_insumos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_insumos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_otros', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_otros', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/**********************************************************/
 				//Creo los datos en el historial
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;         }else{$a  ="''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $a .= ",'".$Creacion_fecha."'" ;   }else{$a .=",''";}
-				if(isset($Creacion_hora) && $Creacion_hora != ''){      $a .= ",'".$Creacion_hora."'" ;    }else{$a .=",''";}
-				if(isset($idTipo) && $idTipo != ''){                    $a .= ",'".$idTipo."'" ;           }else{$a .=",''";}
-				if(isset($Observacion) && $Observacion != ''){          $a .= ",'".$Observacion."'" ;      }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;         }else{$SIS_data  = "''";}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $SIS_data .= ",'".$Creacion_fecha."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Creacion_hora) && $Creacion_hora != ''){      $SIS_data .= ",'".$Creacion_hora."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo != ''){                    $SIS_data .= ",'".$idTipo."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){          $SIS_data .= ",'".$Observacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-				header( 'Location: '.$location.'&edited=true' );
-				die;
+				//Si ejecuto correctamente la consulta
+				if($ultimo_id!=0){
+					//redirijo
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+				}
 			}
 		
 		
@@ -4665,52 +3998,43 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idEstado='4'" ;
+				$SIS_data = "idEstado='4'" ;
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_archivos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_archivos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_documentos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_documentos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_arriendos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_arriendos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_insumos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_insumos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_otros', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_otros', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/**********************************************************/
 				//Creo los datos en el historial
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;         }else{$a  ="''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $a .= ",'".$Creacion_fecha."'" ;   }else{$a .=",''";}
-				if(isset($Creacion_hora) && $Creacion_hora != ''){      $a .= ",'".$Creacion_hora."'" ;    }else{$a .=",''";}
-				if(isset($idTipo) && $idTipo != ''){                    $a .= ",'".$idTipo."'" ;           }else{$a .=",''";}
-				if(isset($Observacion) && $Observacion != ''){          $a .= ",'".$Observacion."'" ;      }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;         }else{$SIS_data  = "''";}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $SIS_data .= ",'".$Creacion_fecha."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Creacion_hora) && $Creacion_hora != ''){      $SIS_data .= ",'".$Creacion_hora."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo != ''){                    $SIS_data .= ",'".$idTipo."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){          $SIS_data .= ",'".$Observacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
-				header( 'Location: '.$location.'&edited=true' );
-				die;
+				//Si ejecuto correctamente la consulta
+				if($ultimo_id!=0){
+					//redirijo
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+				}
 			}
 		
 		
@@ -4746,53 +4070,27 @@ require_once '0_validate_user_1.php';
 				$idTipo           = 2;
 				$Observacion      = 'La Orden de Compra ha sido aceptada por un aprobador';
 				
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;         }else{$a  ="''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $a .= ",'".$Creacion_fecha."'" ;   }else{$a .=",''";}
-				if(isset($Creacion_hora) && $Creacion_hora != ''){      $a .= ",'".$Creacion_hora."'" ;    }else{$a .=",''";}
-				if(isset($idTipo) && $idTipo != ''){                    $a .= ",'".$idTipo."'" ;           }else{$a .=",''";}
-				if(isset($Observacion) && $Observacion != ''){          $a .= ",'".$Observacion."'" ;      }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;         }else{$SIS_data  = "''";}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $SIS_data .= ",'".$Creacion_fecha."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Creacion_hora) && $Creacion_hora != ''){      $SIS_data .= ",'".$Creacion_hora."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo != ''){                    $SIS_data .= ",'".$idTipo."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){          $SIS_data .= ",'".$Observacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/**********************************************************/
 				//Inserto la aprobacion en la tabla de aprobaciones
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;         }else{$a  ="''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $a .= ",'".$Creacion_fecha."'" ;   }else{$a .=",''";}
-				if(isset($Creacion_hora) && $Creacion_hora != ''){      $a .= ",'".$Creacion_hora."'" ;   }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;         }else{$SIS_data  = "''";}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $SIS_data .= ",'".$Creacion_fecha."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Creacion_hora) && $Creacion_hora != ''){      $SIS_data .= ",'".$Creacion_hora."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_aprobaciones` (idOcompra, Creacion_fecha, Creacion_hora, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
+				$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_aprobaciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				/**********************************************************/
 				//Reviso si las aprobaciones igualan a los aprobadores
@@ -4812,57 +4110,43 @@ require_once '0_validate_user_1.php';
 				//verifico cantidades
 				if($napro_list==$napro_true){
 					//Filtros
-					$a = "idEstado='2'" ;
+					$SIS_data = "idEstado='2'" ;
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'ocompra_listado', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'ocompra_listado', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'ocompra_listado_archivos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_archivos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'ocompra_listado_documentos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_documentos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_arriendos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_arriendos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_insumos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_insumos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_otros', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_otros', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					
 					//Creo los datos en el historial
 					$idTipo           = 1;
 					$Observacion      = 'La Orden de Compra ha sido aprobada';
 					
-					if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;         }else{$a  ="''";}
-					if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $a .= ",'".$Creacion_fecha."'" ;   }else{$a .=",''";}
-					if(isset($Creacion_hora) && $Creacion_hora != ''){      $a .= ",'".$Creacion_hora."'" ;    }else{$a .=",''";}
-					if(isset($idTipo) && $idTipo != ''){                    $a .= ",'".$idTipo."'" ;           }else{$a .=",''";}
-					if(isset($Observacion) && $Observacion != ''){          $a .= ",'".$Observacion."'" ;      }else{$a .=",''";}
-					if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
+					if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;         }else{$SIS_data  = "''";}
+					if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $SIS_data .= ",'".$Creacion_fecha."'" ;   }else{$SIS_data .= ",''";}
+					if(isset($Creacion_hora) && $Creacion_hora != ''){      $SIS_data .= ",'".$Creacion_hora."'" ;    }else{$SIS_data .= ",''";}
+					if(isset($idTipo) && $idTipo != ''){                    $SIS_data .= ",'".$idTipo."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($Observacion) && $Observacion != ''){          $SIS_data .= ",'".$Observacion."'" ;      }else{$SIS_data .= ",''";}
+					if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
+					$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 				}
 				
-				
-				
-				
+				//redirijo
 				header( 'Location: '.$location.'&edited=true' );
 				die;
 			}
@@ -4876,23 +4160,23 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idEstado='2'" ;
+				$SIS_data = "idEstado='2'" ;
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_archivos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_archivos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_documentos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_documentos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_arriendos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_arriendos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_insumos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_insumos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_otros', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_otros', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 					
 				//Creo los datos en el historial
@@ -4904,33 +4188,23 @@ require_once '0_validate_user_1.php';
 				$idUsuario        = $_SESSION['usuario']['basic_data']['idUsuario'];
 				
 					
-				if(isset($idOcompra) && $idOcompra != ''){              $a  = "'".$idOcompra."'" ;         }else{$a  ="''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $a .= ",'".$Creacion_fecha."'" ;   }else{$a .=",''";}
-				if(isset($Creacion_hora) && $Creacion_hora != ''){      $a .= ",'".$Creacion_hora."'" ;    }else{$a .=",''";}
-				if(isset($idTipo) && $idTipo != ''){                    $a .= ",'".$idTipo."'" ;           }else{$a .=",''";}
-				if(isset($Observacion) && $Observacion != ''){          $a .= ",'".$Observacion."'" ;      }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
-					
+				if(isset($idOcompra) && $idOcompra != ''){              $SIS_data  = "'".$idOcompra."'" ;         }else{$SIS_data  = "''";}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $SIS_data .= ",'".$Creacion_fecha."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Creacion_hora) && $Creacion_hora != ''){      $SIS_data .= ",'".$Creacion_hora."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo != ''){                    $SIS_data .= ",'".$idTipo."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){          $SIS_data .= ",'".$Observacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ocompra_listado_historial` (idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+				if($ultimo_id!=0){
+					//redirijo
+					header( 'Location: '.$location.'&edited=true' );
+					die;
 				}
-				
-				
-				header( 'Location: '.$location.'&edited=true' );
-				die;
 			}
 		
 		
@@ -4952,7 +4226,7 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idExistencia='".$idExistencia."'" ;
+				$SIS_data = "idExistencia='".$idExistencia."'" ;
 				
 				// inserto los datos de registro en la db
 				switch ($_GET['type']) {
@@ -4960,49 +4234,49 @@ require_once '0_validate_user_1.php';
 					//Servicios
 					case 1:
 						//Variables
-						if(isset($cant_ingresada) && $cant_ingresada != ''){  $a .= ",cant_ingresada='".$cant_ingresada."'" ;}
+						if(isset($cant_ingresada) && $cant_ingresada != ''){  $SIS_data .= ",cant_ingresada='".$cant_ingresada."'" ;}
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						break;
 					/********************************************************/
 					//Arriendo
 					case 2:
 						//Variables
-						if(isset($cant_ingresada) && $cant_ingresada != ''){  $a .= ",cant_ingresada='".$cant_ingresada."'" ;}
+						if(isset($cant_ingresada) && $cant_ingresada != ''){  $SIS_data .= ",cant_ingresada='".$cant_ingresada."'" ;}
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						break;
 					/********************************************************/
 					//Insumo
 					case 3:
 						//Variables
-						if(isset($cant_ingresada) && $cant_ingresada != ''){  $a .= ",cant_ingresada='".$cant_ingresada."'" ;}
+						if(isset($cant_ingresada) && $cant_ingresada != ''){  $SIS_data .= ",cant_ingresada='".$cant_ingresada."'" ;}
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_insumos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						break;
 					/********************************************************/
 					//Productos
 					case 4:
 						//Variables
-						if(isset($cant_ingresada) && $cant_ingresada != ''){  $a .= ",cant_ingresada='".$cant_ingresada."'" ;}
+						if(isset($cant_ingresada) && $cant_ingresada != ''){  $SIS_data .= ",cant_ingresada='".$cant_ingresada."'" ;}
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						break;
 					/********************************************************/
 					//Boletas Trabajadores
 					case 5:
 						//Variables
-						$a .= ",idUso='2'" ;
+						$SIS_data .= ",idUso='2'" ;
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_boletas', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_boletas', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						break;
 					/********************************************************/
 					//Boletas Empresas
 					case 6:
 						//Variables
-						if(isset($cant_ingresada) && $cant_ingresada != ''){  $a .= ",Total_Ingresado='".$cant_ingresada."'" ;}
+						if(isset($cant_ingresada) && $cant_ingresada != ''){  $SIS_data .= ",Total_Ingresado='".$cant_ingresada."'" ;}
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'ocompra_listado_existencias_boletas_empresas', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_boletas_empresas', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						break;
 				}
 				
@@ -5088,25 +4362,21 @@ require_once '0_validate_user_1.php';
 					$Hora_elim   = hora_actual();
 					
 					//filtros
-					$a = "'".$idOcompra."'" ;
-					$a .= ",'".$idSistema."'" ;
-					$a .= ",'".$idUsuario."'" ;
-					$a .= ",'".$Fecha_elim."'" ;
-					$a .= ",'".$Hora_elim."'" ;
+					$SIS_data = "'".$idOcompra."'" ;
+					$SIS_data .= ",'".$idSistema."'" ;
+					$SIS_data .= ",'".$idUsuario."'" ;
+					$SIS_data .= ",'".$Fecha_elim."'" ;
+					$SIS_data .= ",'".$Hora_elim."'" ;
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `ocompra_listado_log_eliminacion` (idOcompra, idSistema, idUsuario, Fecha_elim, Hora_elim) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					
+					$SIS_columns = 'idOcompra, idSistema, idUsuario, Fecha_elim, Hora_elim';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_log_eliminacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 					/********************************************************/
 					// Se trae un listado con todos los archivos relacionados
 					$arrArchivos = array();
 					$arrArchivos = db_select_array (false, 'Nombre', 'ocompra_listado_archivos', '', 'idOcompra ='.$indice, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 											
-					
 					/********************************************************/
 					//se borran los datos
 					$resultado_1  = db_delete_data (false, 'ocompra_listado', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -5144,7 +4414,6 @@ require_once '0_validate_user_1.php';
 						die;
 						
 					}
-					
 					
 				}
 			}else{

@@ -23,20 +23,19 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Orden de Trabajo creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Orden de Trabajo editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Orden de Trabajo borrada correctamente';}
-if (isset($_GET['terminated'])) {$error['usuario'] 	  = 'sucess/Orden de Trabajo terminada correctamente';}
-if (isset($_GET['addins']))  {$error['usuario'] 	  = 'sucess/Insumo agregado correctamente';}
-if (isset($_GET['delins']))  {$error['usuario'] 	  = 'sucess/Insumo borrado correctamente';}
-if (isset($_GET['editins'])) {$error['usuario'] 	  = 'sucess/Insumo editado correctamente';}
-if (isset($_GET['addprod']))  {$error['usuario'] 	  = 'sucess/Producto agregado correctamente';}
-if (isset($_GET['delprod']))  {$error['usuario'] 	  = 'sucess/Producto borrado correctamente';}
-if (isset($_GET['editprod'])) {$error['usuario'] 	  = 'sucess/Producto editado correctamente';}
+if (isset($_GET['created'])){    $error['created']    = 'sucess/Orden de Trabajo creada correctamente';}
+if (isset($_GET['edited'])){     $error['edited']     = 'sucess/Orden de Trabajo editada correctamente';}
+if (isset($_GET['deleted'])){    $error['deleted']    = 'sucess/Orden de Trabajo borrada correctamente';}
+if (isset($_GET['terminated'])){ $error['terminated'] = 'sucess/Orden de Trabajo terminada correctamente';}
+if (isset($_GET['addins'])){     $error['addins']     = 'sucess/Insumo agregado correctamente';}
+if (isset($_GET['delins'])){     $error['delins']     = 'sucess/Insumo borrado correctamente';}
+if (isset($_GET['editins'])){    $error['editins']    = 'sucess/Insumo editado correctamente';}
+if (isset($_GET['addprod'])){    $error['addprod']    = 'sucess/Producto agregado correctamente';}
+if (isset($_GET['delprod'])){    $error['delprod']    = 'sucess/Producto borrado correctamente';}
+if (isset($_GET['editprod'])){   $error['editprod']   = 'sucess/Producto editado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['addInsumo']) ) { ?>
 	
 	

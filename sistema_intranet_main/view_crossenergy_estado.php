@@ -43,20 +43,13 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 
 /**************************************************************/
-//variables
-//Grupo Sensores
-$idGrupoVmonofasico      = 87;
-$idGrupoVTrifasico       = 106;
-$idGrupoPotencia         = 99;
-$idGrupoConsumoMesHabil  = 99;
-$idGrupoConsumoMesCurso  = 99;
-
 //Para el mes Habil
-
 $s_mes = mes_actual()-1;
 $s_ano = ano_actual();
 if($s_mes==0){$s_mes = 12;$s_ano = ano_actual()-1;}
-$Habil_FechaInicio    = $s_ano.'-'.$s_mes.'-01';
+if($s_mes<10){$Mesx = '0'.$s_mes;}else{$Mesx = $s_mes;}
+
+$Habil_FechaInicio    = $s_ano.'-'.$Mesx.'-01';
 $Habil_HoraInicio     = '00:00:01';
 $Habil_FechaTermino   = Fecha_ultimo_dia_mes($Habil_FechaInicio);
 $Habil_HoraTermino    = '23:59:59';
@@ -93,7 +86,8 @@ $Demanda_HoraTermino    = hora_actual();
 
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre, cantSensores';
+$subquery_1 = 'Nombre, cantSensores,idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia,
+idGrupoConsumoMesHabil,idGrupoConsumoMesCurso';
 $subquery_2 = 'idTabla';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery_1 .= ',SensoresGrupo_'.$i;
@@ -113,6 +107,14 @@ $SIS_query = 'Nombre, CrossEnergy_PeriodoInicio, CrossEnergy_PeriodoTermino, Cro
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'];
 $rowSistema = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSistema');
+
+//Grupo Sensores
+if(isset($rowdata['idGrupoDespliegue'])&&$rowdata['idGrupoDespliegue']!=''){            $idGrupoDespliegue       = $rowdata['idGrupoDespliegue'];       }else{$idGrupoDespliegue      = 106;}
+if(isset($rowdata['idGrupoVmonofasico'])&&$rowdata['idGrupoVmonofasico']!=''){          $idGrupoVmonofasico      = $rowdata['idGrupoVmonofasico'];      }else{$idGrupoVmonofasico     = 87;}
+if(isset($rowdata['idGrupoVTrifasico'])&&$rowdata['idGrupoVTrifasico']!=''){            $idGrupoVTrifasico       = $rowdata['idGrupoVTrifasico'];       }else{$idGrupoVTrifasico      = 106;}
+if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''){                $idGrupoPotencia         = $rowdata['idGrupoPotencia'];         }else{$idGrupoPotencia        = 99;}
+if(isset($rowdata['idGrupoConsumoMesHabil'])&&$rowdata['idGrupoConsumoMesHabil']!=''){  $idGrupoConsumoMesHabil  = $rowdata['idGrupoConsumoMesHabil'];  }else{$idGrupoConsumoMesHabil = 99;}
+if(isset($rowdata['idGrupoConsumoMesCurso'])&&$rowdata['idGrupoConsumoMesCurso']!=''){  $idGrupoConsumoMesCurso  = $rowdata['idGrupoConsumoMesCurso'];  }else{$idGrupoConsumoMesCurso = 99;}
 
 
 //Temporales
@@ -156,7 +158,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 			$TempCount_5++;
 		}
 		//para la subconsulta
-		if($rowdata['SensoresGrupo_'.$i]==$idGrupoVmonofasico){
+		if($rowdata['SensoresGrupo_'.$i]==$idGrupoDespliegue){
 			$Subquery .= ',Sensor_'.$i.' AS SSens_'.$CountSub;
 			$arrSensores[$CountSub]['Nombre'] = $rowdata['SensoresNombre_'.$i];
 			$CountSub++;
@@ -173,7 +175,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 	}
 }
 //cierro subquery
-$Subquery_2 .= ') AS Total';
+if($Subquery_2!=''){$Subquery_2 .= ') AS Total';}
 //Se hace consulta de los graficos
 //$arrGraficos = array();
 //$arrGraficos = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery, 'telemetria_listado_crossenergy_hora', '', 'idTelemetria = '.$X_Puntero.' AND (FechaSistema BETWEEN "'.$rowSistema['CrossEnergy_PeriodoInicio'].'" AND "'.$rowSistema['CrossEnergy_PeriodoTermino'].'") AND HoraSistema > "'.$rowSistema['CrossEnergy_HorarioInicio'].'" AND HoraSistema < "'.$rowSistema['CrossEnergy_HorarioTermino'].'" GROUP BY TimeStamp', 'Total DESC LIMIT 52', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGraficos');
@@ -210,13 +212,22 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 	}
 }
 //cierro subquery
-$Subquery_2 .= ') AS Total';
+if($Subquery_2!=''){
+	$Subquery_2 .= ') AS Total';
+	$SIS_order = 'Total DESC LIMIT 52';
+}else{
+	$SIS_order = 'FechaSistema DESC LIMIT 52';
+}
+
+
+
+
 //Se hace consulta de los graficos
 $arrPotencia = array();
-$arrPotencia = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2, 'telemetria_listado_crossenergy_hora', '', 'idTelemetria = '.$X_Puntero.' AND (FechaSistema BETWEEN "'.$rowSistema['CrossEnergy_PeriodoInicio'].'" AND "'.$rowSistema['CrossEnergy_PeriodoTermino'].'") AND HoraSistema > "'.$rowSistema['CrossEnergy_HorarioInicio'].'" AND HoraSistema < "'.$rowSistema['CrossEnergy_HorarioTermino'].'" GROUP BY TimeStamp', 'Total DESC LIMIT 52', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPotencia');
+$arrPotencia = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2, 'telemetria_listado_crossenergy_hora', '', 'idTelemetria = '.$X_Puntero.' AND (FechaSistema BETWEEN "'.$rowSistema['CrossEnergy_PeriodoInicio'].'" AND "'.$rowSistema['CrossEnergy_PeriodoTermino'].'") AND HoraSistema > "'.$rowSistema['CrossEnergy_HorarioInicio'].'" AND HoraSistema < "'.$rowSistema['CrossEnergy_HorarioTermino'].'" GROUP BY TimeStamp', $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPotencia');
 
 $arrDemanda = array();
-$arrDemanda = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2, 'telemetria_listado_crossenergy_hora', '', 'idTelemetria = '.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Demanda_FechaInicio.' '.$Demanda_HoraInicio .'" AND "'.$Demanda_FechaTermino.' '.$Demanda_HoraTermino.'")  GROUP BY TimeStamp', 'Total DESC LIMIT 2', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDemanda');
+$arrDemanda = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2, 'telemetria_listado_crossenergy_hora', '', 'idTelemetria = '.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Demanda_FechaInicio.' '.$Demanda_HoraInicio .'" AND "'.$Demanda_FechaTermino.' '.$Demanda_HoraTermino.'")  GROUP BY TimeStamp', $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDemanda');
 
 //Datos para los informes
 $Informes_3_FechaInicio    = $rowSistema['CrossEnergy_PeriodoInicio'];

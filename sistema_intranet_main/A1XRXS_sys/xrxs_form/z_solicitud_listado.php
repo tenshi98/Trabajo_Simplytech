@@ -21,7 +21,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Creacion_ano']) )       $Creacion_ano         = $_POST['Creacion_ano'];
 	if ( !empty($_POST['Observaciones']) )      $Observaciones        = $_POST['Observaciones'];
 	
-	
 	if ( !empty($_POST['idProducto']) )         $idProducto           = $_POST['idProducto'];
 	if ( !empty($_POST['Cantidad']) )           $Cantidad             = $_POST['Cantidad'];
 	if ( !empty($_POST['oldidProducto']) )      $oldidProducto        = $_POST['oldidProducto'];
@@ -67,9 +66,14 @@ require_once '0_validate_user_1.php';
 			
 			case 'idEstado':          if(empty($idEstado)){         $error['idEstado']        = 'error/No ha seleccionado el Estado';}break;
 			
-			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+	if(isset($Nombre) && $Nombre != ''){               $Nombre        = EstandarizarInput($Nombre); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -81,8 +85,6 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-
-
 /*******************************************************************************************************************/
 /*                                                                                                                 */
 /*                                                       INGRESOS                                                  */
@@ -619,79 +621,52 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Se guardan los datos basicos
-				if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){      $a  = "'".$_SESSION['solicitud_basicos']['idSistema']."'" ;   }else{$a  ="''";}
-				if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;  }else{$a .= ",''";}
+				if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){      $SIS_data  = "'".$_SESSION['solicitud_basicos']['idSistema']."'" ;   }else{$SIS_data  ="''";}
+				if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha'] != ''){  
-					$a .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
-					$a .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
-					$a .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
+					$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['solicitud_basicos']['Observaciones']) && $_SESSION['solicitud_basicos']['Observaciones'] != ''){        $a .= ",'".$_SESSION['solicitud_basicos']['Observaciones']."'" ;        }else{$a .= ",''";}
-				
+				if(isset($_SESSION['solicitud_basicos']['Observaciones']) && $_SESSION['solicitud_basicos']['Observaciones'] != ''){        $SIS_data .= ",'".$_SESSION['solicitud_basicos']['Observaciones']."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `solicitud_listado` (idSistema,idUsuario,Creacion_fecha, Creacion_mes,
-				Creacion_ano, Observaciones ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema,idUsuario,Creacion_fecha, Creacion_mes, Creacion_ano, Observaciones';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'solicitud_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-		
+				if($ultimo_id!=0){
 					/*********************************************************************/		
 					//Insumos
 					if(isset($_SESSION['solicitud_insumos'])){
 						foreach ($_SESSION['solicitud_insumos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                              $a  = "'".$ultimo_id."'" ;                                       }else{$a  = "''";}
-							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){            $a .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;     }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                              $SIS_data  = "'".$ultimo_id."'" ;                                       }else{$SIS_data  = "''";}
+							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $a .= ",'".$producto['idProducto']."'" ;   }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $a .= ",'".$producto['Cantidad']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['idProveedor']) && $producto['idProveedor'] != ''){ $a .= ",'".$producto['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $SIS_data .= ",'".$producto['idProducto']."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $SIS_data .= ",'".$producto['Cantidad']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['idProveedor']) && $producto['idProveedor'] != ''){ $SIS_data .= ",'".$producto['idProveedor']."'" ;  }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `solicitud_listado_existencias_insumos` (idSolicitud, idSistema, idUsuario, Creacion_fecha,
-							Creacion_mes, Creacion_ano, idProducto, Cantidad, idProveedor) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idSolicitud, idSistema, idUsuario, Creacion_fecha,
+							Creacion_mes, Creacion_ano, idProducto, Cantidad, idProveedor';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'solicitud_listado_existencias_insumos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -700,39 +675,27 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['solicitud_productos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                              $a  = "'".$ultimo_id."'" ;                                       }else{$a  = "''";}
-							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){            $a .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;     }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                              $SIS_data  = "'".$ultimo_id."'" ;                                       }else{$SIS_data  = "''";}
+							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $a .= ",'".$producto['idProducto']."'" ;   }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $a .= ",'".$producto['Cantidad']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['idProveedor']) && $producto['idProveedor'] != ''){ $a .= ",'".$producto['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $SIS_data .= ",'".$producto['idProducto']."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $SIS_data .= ",'".$producto['Cantidad']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['idProveedor']) && $producto['idProveedor'] != ''){ $SIS_data .= ",'".$producto['idProveedor']."'" ;  }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `solicitud_listado_existencias_productos` (idSolicitud, idSistema, idUsuario, Creacion_fecha,
-							Creacion_mes, Creacion_ano, idProducto, Cantidad, idProveedor) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idSolicitud, idSistema, idUsuario, Creacion_fecha,
+							Creacion_mes, Creacion_ano, idProducto, Cantidad, idProveedor';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'solicitud_listado_existencias_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -741,40 +704,28 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['solicitud_arriendos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                              $a  = "'".$ultimo_id."'" ;                                       }else{$a  = "''";}
-							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){            $a .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;     }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                              $SIS_data  = "'".$ultimo_id."'" ;                                       }else{$SIS_data  = "''";}
+							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){           $a .= ",'".$producto['idEquipo']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $a .= ",'".$producto['Cantidad']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $a .= ",'".$producto['idFrecuencia']."'" ;  }else{$a .= ",''";}
-							if(isset($producto['idProveedor']) && $producto['idProveedor'] != ''){ $a .= ",'".$producto['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){           $SIS_data .= ",'".$producto['idEquipo']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $SIS_data .= ",'".$producto['Cantidad']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $SIS_data .= ",'".$producto['idFrecuencia']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($producto['idProveedor']) && $producto['idProveedor'] != ''){     $SIS_data .= ",'".$producto['idProveedor']."'" ;   }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `solicitud_listado_existencias_arriendos` (idSolicitud, idSistema, idUsuario, Creacion_fecha,
-							Creacion_mes, Creacion_ano, idEquipo, Cantidad, idFrecuencia, idProveedor) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idSolicitud, idSistema, idUsuario, Creacion_fecha,
+							Creacion_mes, Creacion_ano, idEquipo, Cantidad, idFrecuencia, idProveedor';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'solicitud_listado_existencias_arriendos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -783,40 +734,28 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['solicitud_servicios'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                              $a  = "'".$ultimo_id."'" ;                                       }else{$a  = "''";}
-							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){            $a .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;     }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                              $SIS_data  = "'".$ultimo_id."'" ;                                       }else{$SIS_data  = "''";}
+							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idServicio']) && $producto['idServicio'] != ''){       $a .= ",'".$producto['idServicio']."'" ;    }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $a .= ",'".$producto['Cantidad']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $a .= ",'".$producto['idFrecuencia']."'" ;  }else{$a .= ",''";}
-							if(isset($producto['idProveedor']) && $producto['idProveedor'] != ''){ $a .= ",'".$producto['idProveedor']."'" ;  }else{$a .= ",''";}
+							if(isset($producto['idServicio']) && $producto['idServicio'] != ''){       $SIS_data .= ",'".$producto['idServicio']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $SIS_data .= ",'".$producto['Cantidad']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $SIS_data .= ",'".$producto['idFrecuencia']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($producto['idProveedor']) && $producto['idProveedor'] != ''){     $SIS_data .= ",'".$producto['idProveedor']."'" ;   }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `solicitud_listado_existencias_servicios` (idSolicitud, idSistema, idUsuario, Creacion_fecha,
-							Creacion_mes, Creacion_ano, idServicio, Cantidad, idFrecuencia, idProveedor) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idSolicitud, idSistema, idUsuario, Creacion_fecha,
+							Creacion_mes, Creacion_ano, idServicio, Cantidad, idFrecuencia, idProveedor';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'solicitud_listado_existencias_servicios', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -825,39 +764,27 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['solicitud_otros'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                              $a  = "'".$ultimo_id."'" ;                                       }else{$a  = "''";}
-							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){            $a .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'" ;     }else{$a .= ",''";}
-							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;     }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                              $SIS_data  = "'".$ultimo_id."'" ;                                       }else{$SIS_data  = "''";}
+							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){               $a .= ",'".$producto['Nombre']."'" ;        }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $a .= ",'".$producto['Cantidad']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $a .= ",'".$producto['idFrecuencia']."'" ;  }else{$a .= ",''";}
+							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){               $SIS_data .= ",'".$producto['Nombre']."'" ;        }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $SIS_data .= ",'".$producto['Cantidad']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $SIS_data .= ",'".$producto['idFrecuencia']."'" ;  }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `solicitud_listado_existencias_otros` (idSolicitud, idSistema, idUsuario, Creacion_fecha,
-							Creacion_mes, Creacion_ano, Nombre, Cantidad, idFrecuencia) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idSolicitud, idSistema, idUsuario, Creacion_fecha,
+							Creacion_mes, Creacion_ano, Nombre, Cantidad, idFrecuencia';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'solicitud_listado_existencias_otros', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/
@@ -889,12 +816,12 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idProducto='".$idProducto."'" ;
-				if(isset($idProveedor) && $idProveedor != ''){  $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idProducto='".$idProducto."'" ;
+				if(isset($idProveedor) && $idProveedor != ''){  $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_productos', 'idOcompra=0 AND idProducto="'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_productos', 'idOcompra=0 AND idProducto="'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -915,12 +842,12 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idProducto='".$idProducto."'" ;
-				if(isset($idProveedor) && $idProveedor != ''){  $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idProducto='".$idProducto."'" ;
+				if(isset($idProveedor) && $idProveedor != ''){  $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_insumos', 'idOcompra=0 AND idProducto="'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_insumos', 'idOcompra=0 AND idProducto="'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -941,12 +868,12 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idEquipo='".$idEquipo."'" ;
-				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idEquipo='".$idEquipo."'" ;
+				if(isset($idProveedor) && $idProveedor != ''){   $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_arriendos', 'idOcompra=0 AND idEquipo="'.$idEquipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_arriendos', 'idOcompra=0 AND idEquipo="'.$idEquipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -967,12 +894,12 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idServicio='".$idServicio."'" ;
-				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idServicio='".$idServicio."'" ;
+				if(isset($idProveedor) && $idProveedor != ''){   $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_servicios', 'idOcompra=0 AND idServicio="'.$idServicio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_servicios', 'idOcompra=0 AND idServicio="'.$idServicio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -992,12 +919,12 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idExistencia='".$idExistencia."'" ;
-				if(isset($idProveedor) && $idProveedor != ''){   $a .= ",idProveedor='".$idProveedor."'" ;}
+				$SIS_data = "idExistencia='".$idExistencia."'" ;
+				if(isset($idProveedor) && $idProveedor != ''){   $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

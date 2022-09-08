@@ -1339,21 +1339,6 @@ $Total_4 = 0;
 //Se definen las variables
 if(isset($_GET["Ano"])){   $Ano = $_GET["Ano"];   } else { $Ano  = ano_actual(); }
 
-//arreglo con los meses
-$meses=array(1=>"Enero", 
-				"Febrero", 
-				"Marzo", 
-				"Abril", 
-				"Mayo", 
-				"Junio", 
-				"Julio",
-				"Agosto", 
-				"Septiembre", 
-				"Octubre", 
-				"Noviembre", 
-				"Diciembre"
-			);
-			
 //Solo compras pagadas totalmente
 $z1 = "WHERE bodegas_arriendos_facturacion.idTipo=2"; //solo ventas
 $z2 = "WHERE bodegas_insumos_facturacion.idTipo=2";   //solo ventas

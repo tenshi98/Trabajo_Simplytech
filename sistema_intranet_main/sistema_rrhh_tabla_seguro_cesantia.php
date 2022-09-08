@@ -33,11 +33,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Tabla Seguro de cesantia Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Tabla Seguro de cesantia Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Tabla Seguro de cesantia borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Tabla Seguro de cesantia Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tabla Seguro de cesantia Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tabla Seguro de cesantia borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos

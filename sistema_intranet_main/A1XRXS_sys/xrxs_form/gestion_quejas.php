@@ -48,6 +48,12 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($NombreQueja) && $NombreQueja != ''){     $NombreQueja   = EstandarizarInput($NombreQueja); }
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($NombreQueja)&&contar_palabras_censuradas($NombreQueja)!=0){      $error['NombreQueja']   = 'error/Edita Nombre Queja, contiene palabras no permitidas'; }	
@@ -72,37 +78,24 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                    $a  = "'".$idSistema."'" ;          }else{$a  ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){                    $a .= ",'".$idUsuario."'" ;         }else{$a .= ",''";}
-				if(isset($idUsuarioQueja) && $idUsuarioQueja != ''){          $a .= ",'".$idUsuarioQueja."'" ;    }else{$a .= ",''";}
-				if(isset($idTrabajadorQueja) && $idTrabajadorQueja != ''){    $a .= ",'".$idTrabajadorQueja."'" ; }else{$a .= ",''";}
-				if(isset($NombreQueja) && $NombreQueja != ''){                $a .= ",'".$NombreQueja."'" ;       }else{$a .= ",''";}
-				if(isset($idTipoQueja) && $idTipoQueja != ''){                $a .= ",'".$idTipoQueja."'" ;       }else{$a .= ",''";}
-				if(isset($Observaciones) && $Observaciones != ''){            $a .= ",'".$Observaciones."'" ;     }else{$a .= ",''";}
-				if(isset($FechaQueja) && $FechaQueja != ''){                  $a .= ",'".$FechaQueja."'" ;        }else{$a .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){                    $SIS_data  = "'".$idSistema."'" ;          }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario != ''){                    $SIS_data .= ",'".$idUsuario."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idUsuarioQueja) && $idUsuarioQueja != ''){          $SIS_data .= ",'".$idUsuarioQueja."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idTrabajadorQueja) && $idTrabajadorQueja != ''){    $SIS_data .= ",'".$idTrabajadorQueja."'" ; }else{$SIS_data .= ",''";}
+				if(isset($NombreQueja) && $NombreQueja != ''){                $SIS_data .= ",'".$NombreQueja."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($idTipoQueja) && $idTipoQueja != ''){                $SIS_data .= ",'".$idTipoQueja."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Observaciones) && $Observaciones != ''){            $SIS_data .= ",'".$Observaciones."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($FechaQueja) && $FechaQueja != ''){                  $SIS_data .= ",'".$FechaQueja."'" ;        }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `gestion_quejas` (idSistema, idUsuario, 
-				idUsuarioQueja, idTrabajadorQueja, NombreQueja, idTipoQueja, Observaciones, FechaQueja) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idUsuario, idUsuarioQueja, idTrabajadorQueja, NombreQueja, idTipoQueja, Observaciones, FechaQueja';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'gestion_quejas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -120,19 +113,19 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idQueja='".$idQueja."'" ;
-				if(isset($idSistema) && $idSistema != ''){                 $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){                 $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idUsuarioQueja) && $idUsuarioQueja != ''){       $a .= ",idUsuarioQueja='".$idUsuarioQueja."'" ;}
-				if(isset($idTrabajadorQueja) && $idTrabajadorQueja != ''){ $a .= ",idTrabajadorQueja='".$idTrabajadorQueja."'" ;}
-				if(isset($NombreQueja) && $NombreQueja != ''){             $a .= ",NombreQueja='".$NombreQueja."'" ;}
-				if(isset($idTipoQueja) && $idTipoQueja != ''){             $a .= ",idTipoQueja='".$idTipoQueja."'" ;}
-				if(isset($Observaciones) && $Observaciones != ''){         $a .= ",Observaciones='".$Observaciones."'" ;}
-				if(isset($FechaQueja) && $FechaQueja != ''){               $a .= ",FechaQueja='".$FechaQueja."'" ;}
+				$SIS_data = "idQueja='".$idQueja."'" ;
+				if(isset($idSistema) && $idSistema != ''){                 $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){                 $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idUsuarioQueja) && $idUsuarioQueja != ''){       $SIS_data .= ",idUsuarioQueja='".$idUsuarioQueja."'" ;}
+				if(isset($idTrabajadorQueja) && $idTrabajadorQueja != ''){ $SIS_data .= ",idTrabajadorQueja='".$idTrabajadorQueja."'" ;}
+				if(isset($NombreQueja) && $NombreQueja != ''){             $SIS_data .= ",NombreQueja='".$NombreQueja."'" ;}
+				if(isset($idTipoQueja) && $idTipoQueja != ''){             $SIS_data .= ",idTipoQueja='".$idTipoQueja."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){         $SIS_data .= ",Observaciones='".$Observaciones."'" ;}
+				if(isset($FechaQueja) && $FechaQueja != ''){               $SIS_data .= ",FechaQueja='".$FechaQueja."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'gestion_quejas', 'idQueja = "'.$idQueja.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'gestion_quejas', 'idQueja = "'.$idQueja.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

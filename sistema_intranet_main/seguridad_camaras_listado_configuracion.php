@@ -55,11 +55,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Camara creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Camara editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Camara borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Camara creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Camara editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Camara borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit_camara']) ) {
 // consulto los datos

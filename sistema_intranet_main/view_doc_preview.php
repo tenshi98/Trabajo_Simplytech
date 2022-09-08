@@ -34,7 +34,7 @@ require_once 'core/Web.Header.Views.php';
 		$Directorio = simpleDecode($_GET['path'], fecha_actual());
 		$Archivo    = simpleDecode($_GET['file'], fecha_actual());
 		//funcion
-		echo preview_docs($Directorio, $Archivo, '', '', ''); 
+		echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, $Directorio.'/'.$Archivo, ''); 
 		?>
 	</div>
 

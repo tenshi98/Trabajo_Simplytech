@@ -1,4 +1,7 @@
 <?php
+//Llamamos a la libreria para importar datos en excel
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
@@ -148,6 +151,19 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){                   $Nombre          = EstandarizarInput($Nombre); }
+	if(isset($ApellidoPat) && $ApellidoPat != ''){         $ApellidoPat     = EstandarizarInput($ApellidoPat); }
+	if(isset($ApellidoMat) && $ApellidoMat != ''){         $ApellidoMat     = EstandarizarInput($ApellidoMat); }
+	if(isset($Cargo) && $Cargo != ''){                     $Cargo           = EstandarizarInput($Cargo); }
+	if(isset($Direccion) && $Direccion != ''){             $Direccion       = EstandarizarInput($Direccion); }
+	if(isset($Observaciones) && $Observaciones != ''){     $Observaciones   = EstandarizarInput($Observaciones); }
+	if(isset($ContactoPersona) && $ContactoPersona != ''){ $ContactoPersona = EstandarizarInput($ContactoPersona); }
+	if(isset($ContactoFono) && $ContactoFono != ''){       $ContactoFono    = EstandarizarInput($ContactoFono); }
+	if(isset($email) && $email != ''){                     $email           = EstandarizarInput($email); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                    $error['Nombre']          = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -199,65 +215,65 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                                      $a  = "'".$idSistema."'" ;                     }else{$a  = "''";}
-				if(isset($idEstado) && $idEstado != ''){                                        $a .= ",'".$idEstado."'" ;                     }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                                            $a .= ",'".$Nombre."'" ;                       }else{$a .= ",''";}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){                                  $a .= ",'".$ApellidoPat."'" ;                  }else{$a .= ",''";}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){                                  $a .= ",'".$ApellidoMat."'" ;                  }else{$a .= ",''";}
-				if(isset($idTipo) && $idTipo != ''){                                            $a .= ",'".$idTipo."'" ;                       }else{$a .= ",''";}
-				if(isset($Cargo) && $Cargo != ''){                                              $a .= ",'".$Cargo."'" ;                        }else{$a .= ",''";}
-				if(isset($Fono) && $Fono != ''){                                                $a .= ",'".$Fono."'" ;                         }else{$a .= ",''";}
-				if(isset($Rut) && $Rut != ''){                                                  $a .= ",'".$Rut."'" ;                          }else{$a .= ",''";}
-				if(isset($N_Documento) && $N_Documento != ''){                                  $a .= ",'".$N_Documento."'" ;                  }else{$a .= ",''";}
-				if(isset($idCiudad) && $idCiudad != ''){                                        $a .= ",'".$idCiudad."'" ;                     }else{$a .= ",''";}
-				if(isset($idComuna) && $idComuna != ''){                                        $a .= ",'".$idComuna."'" ;                     }else{$a .= ",''";}
-				if(isset($Direccion) && $Direccion != ''){                                      $a .= ",'".$Direccion."'" ;                    }else{$a .= ",''";}
-				if(isset($Observaciones) && $Observaciones != ''){                              $a .= ",'".$Observaciones."'" ;                }else{$a .= ",''";}
-				if(isset($idLicitacion) && $idLicitacion != ''){                                $a .= ",'".$idLicitacion."'" ;                 }else{$a .= ",''";}
-				if(isset($FechaContrato) && $FechaContrato != ''){                              $a .= ",'".$FechaContrato."'" ;                }else{$a .= ",''";}
-				if(isset($F_Inicio_Contrato) && $F_Inicio_Contrato != ''){                      $a .= ",'".$F_Inicio_Contrato."'" ;            }else{$a .= ",''";}
-				if(isset($F_Termino_Contrato) && $F_Termino_Contrato != ''){                    $a .= ",'".$F_Termino_Contrato."'" ;           }else{$a .= ",''";}
-				if(isset($idAFP) && $idAFP != ''){                                              $a .= ",'".$idAFP."'" ;                        }else{$a .= ",''";}
-				if(isset($idSalud) && $idSalud != ''){                                          $a .= ",'".$idSalud."'" ;                      }else{$a .= ",''";}
-				if(isset($idTipoContrato) && $idTipoContrato != ''){                            $a .= ",'".$idTipoContrato."'" ;               }else{$a .= ",''";}
-				if(isset($idTipoLicencia) && $idTipoLicencia != ''){                            $a .= ",'".$idTipoLicencia."'" ;               }else{$a .= ",''";}
-				if(isset($CA_Licencia) && $CA_Licencia != ''){                                  $a .= ",'".$CA_Licencia."'" ;                  }else{$a .= ",''";}
-				if(isset($LicenciaFechaControl) && $LicenciaFechaControl != ''){                $a .= ",'".$LicenciaFechaControl."'" ;         }else{$a .= ",''";}
-				if(isset($LicenciaFechaControlUltimo) && $LicenciaFechaControlUltimo != ''){    $a .= ",'".$LicenciaFechaControlUltimo."'" ;   }else{$a .= ",''";}
-				if(isset($ContactoPersona) && $ContactoPersona != ''){                          $a .= ",'".$ContactoPersona."'" ;              }else{$a .= ",''";}
-				if(isset($ContactoFono) && $ContactoFono != ''){                                $a .= ",'".$ContactoFono."'" ;                 }else{$a .= ",''";}
-				if(isset($idSexo) && $idSexo != ''){                                            $a .= ",'".$idSexo."'" ;                       }else{$a .= ",''";}
-				if(isset($FNacimiento) && $FNacimiento != ''){                                  $a .= ",'".$FNacimiento."'" ;                  }else{$a .= ",''";}
-				if(isset($idEstadoCivil) && $idEstadoCivil != ''){                              $a .= ",'".$idEstadoCivil."'" ;                }else{$a .= ",''";}
-				if(isset($SueldoLiquido) && $SueldoLiquido != ''){                              $a .= ",'".$SueldoLiquido."'" ;                }else{$a .= ",''";}
-				if(isset($SueldoDia) && $SueldoDia != ''){                                      $a .= ",'".$SueldoDia."'" ;                    }else{$a .= ",''";}
-				if(isset($SueldoHora) && $SueldoHora != ''){                                    $a .= ",'".$SueldoHora."'" ;                   }else{$a .= ",''";}
-				if(isset($email) && $email != ''){                                              $a .= ",'".$email."'" ;                        }else{$a .= ",''";}
-				if(isset($idTransporte) && $idTransporte != ''){                                $a .= ",'".$idTransporte."'" ;                 }else{$a .= ",''";}
-				if(isset($idTipoContratoTrab) && $idTipoContratoTrab != ''){                    $a .= ",'".$idTipoContratoTrab."'" ;           }else{$a .= ",''";}
-				if(isset($horas_pactadas) && $horas_pactadas != ''){                            $a .= ",'".$horas_pactadas."'" ;               }else{$a .= ",''";}
-				if(isset($Gratificacion) && $Gratificacion != ''){                              $a .= ",'".$Gratificacion."'" ;                }else{$a .= ",''";}
-				if(isset($idTipoTrabajador) && $idTipoTrabajador != ''){                        $a .= ",'".$idTipoTrabajador."'" ;             }else{$a .= ",''";}
-				if(isset($idContratista) && $idContratista != ''){                              $a .= ",'".$idContratista."'" ;                }else{$a .= ",''";}
-				if(isset($idCentroCosto) && $idCentroCosto != ''){                              $a .= ",'".$idCentroCosto."'" ;                }else{$a .= ",''";}
-				if(isset($idLevel_1) && $idLevel_1 != ''){                                      $a .= ",'".$idLevel_1."'" ;                    }else{$a .= ",''";}
-				if(isset($idLevel_2) && $idLevel_2 != ''){                                      $a .= ",'".$idLevel_2."'" ;                    }else{$a .= ",''";}
-				if(isset($idLevel_3) && $idLevel_3 != ''){                                      $a .= ",'".$idLevel_3."'" ;                    }else{$a .= ",''";}
-				if(isset($idLevel_4) && $idLevel_4 != ''){                                      $a .= ",'".$idLevel_4."'" ;                    }else{$a .= ",''";}
-				if(isset($idLevel_5) && $idLevel_5 != ''){                                      $a .= ",'".$idLevel_5."'" ;                    }else{$a .= ",''";}
-				if(isset($idTipoTrabajo) && $idTipoTrabajo != ''){                              $a .= ",'".$idTipoTrabajo."'" ;                }else{$a .= ",''";}
-				if(isset($PorcentajeTrabajoPesado) && $PorcentajeTrabajoPesado != ''){          $a .= ",'".$PorcentajeTrabajoPesado."'" ;      }else{$a .= ",''";}
-				if(isset($idMutual) && $idMutual != ''){                                        $a .= ",'".$idMutual."'" ;                     }else{$a .= ",''";}
-				if(isset($idCotizacionSaludExtra) && $idCotizacionSaludExtra != ''){            $a .= ",'".$idCotizacionSaludExtra."'" ;       }else{$a .= ",''";}
-				if(isset($PorcCotSaludExtra) && $PorcCotSaludExtra != ''){                      $a .= ",'".$PorcCotSaludExtra."'" ;            }else{$a .= ",''";}
-				if(isset($MontoCotSaludExtra) && $MontoCotSaludExtra != ''){                    $a .= ",'".$MontoCotSaludExtra."'" ;           }else{$a .= ",''";}
-				if(isset($idBanco) && $idBanco != ''){                                          $a .= ",'".$idBanco."'" ;                      }else{$a .= ",''";}
-				if(isset($idTipoCuenta) && $idTipoCuenta != ''){                                $a .= ",'".$idTipoCuenta."'" ;                 }else{$a .= ",''";}
-				if(isset($N_Cuenta) && $N_Cuenta != ''){                                        $a .= ",'".$N_Cuenta."'" ;                     }else{$a .= ",''";}
-				if(isset($UbicacionTrabajo) && $UbicacionTrabajo != ''){                        $a .= ",'".$UbicacionTrabajo."'" ;             }else{$a .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){                                      $SIS_data  = "'".$idSistema."'" ;                     }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado != ''){                                        $SIS_data .= ",'".$idEstado."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                                            $SIS_data .= ",'".$Nombre."'" ;                       }else{$SIS_data .= ",''";}
+				if(isset($ApellidoPat) && $ApellidoPat != ''){                                  $SIS_data .= ",'".$ApellidoPat."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($ApellidoMat) && $ApellidoMat != ''){                                  $SIS_data .= ",'".$ApellidoMat."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo != ''){                                            $SIS_data .= ",'".$idTipo."'" ;                       }else{$SIS_data .= ",''";}
+				if(isset($Cargo) && $Cargo != ''){                                              $SIS_data .= ",'".$Cargo."'" ;                        }else{$SIS_data .= ",''";}
+				if(isset($Fono) && $Fono != ''){                                                $SIS_data .= ",'".$Fono."'" ;                         }else{$SIS_data .= ",''";}
+				if(isset($Rut) && $Rut != ''){                                                  $SIS_data .= ",'".$Rut."'" ;                          }else{$SIS_data .= ",''";}
+				if(isset($N_Documento) && $N_Documento != ''){                                  $SIS_data .= ",'".$N_Documento."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($idCiudad) && $idCiudad != ''){                                        $SIS_data .= ",'".$idCiudad."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($idComuna) && $idComuna != ''){                                        $SIS_data .= ",'".$idComuna."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion != ''){                                      $SIS_data .= ",'".$Direccion."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($Observaciones) && $Observaciones != ''){                              $SIS_data .= ",'".$Observaciones."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($idLicitacion) && $idLicitacion != ''){                                $SIS_data .= ",'".$idLicitacion."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($FechaContrato) && $FechaContrato != ''){                              $SIS_data .= ",'".$FechaContrato."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($F_Inicio_Contrato) && $F_Inicio_Contrato != ''){                      $SIS_data .= ",'".$F_Inicio_Contrato."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($F_Termino_Contrato) && $F_Termino_Contrato != ''){                    $SIS_data .= ",'".$F_Termino_Contrato."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idAFP) && $idAFP != ''){                                              $SIS_data .= ",'".$idAFP."'" ;                        }else{$SIS_data .= ",''";}
+				if(isset($idSalud) && $idSalud != ''){                                          $SIS_data .= ",'".$idSalud."'" ;                      }else{$SIS_data .= ",''";}
+				if(isset($idTipoContrato) && $idTipoContrato != ''){                            $SIS_data .= ",'".$idTipoContrato."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($idTipoLicencia) && $idTipoLicencia != ''){                            $SIS_data .= ",'".$idTipoLicencia."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($CA_Licencia) && $CA_Licencia != ''){                                  $SIS_data .= ",'".$CA_Licencia."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($LicenciaFechaControl) && $LicenciaFechaControl != ''){                $SIS_data .= ",'".$LicenciaFechaControl."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($LicenciaFechaControlUltimo) && $LicenciaFechaControlUltimo != ''){    $SIS_data .= ",'".$LicenciaFechaControlUltimo."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($ContactoPersona) && $ContactoPersona != ''){                          $SIS_data .= ",'".$ContactoPersona."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($ContactoFono) && $ContactoFono != ''){                                $SIS_data .= ",'".$ContactoFono."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($idSexo) && $idSexo != ''){                                            $SIS_data .= ",'".$idSexo."'" ;                       }else{$SIS_data .= ",''";}
+				if(isset($FNacimiento) && $FNacimiento != ''){                                  $SIS_data .= ",'".$FNacimiento."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($idEstadoCivil) && $idEstadoCivil != ''){                              $SIS_data .= ",'".$idEstadoCivil."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($SueldoLiquido) && $SueldoLiquido != ''){                              $SIS_data .= ",'".$SueldoLiquido."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($SueldoDia) && $SueldoDia != ''){                                      $SIS_data .= ",'".$SueldoDia."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($SueldoHora) && $SueldoHora != ''){                                    $SIS_data .= ",'".$SueldoHora."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($email) && $email != ''){                                              $SIS_data .= ",'".$email."'" ;                        }else{$SIS_data .= ",''";}
+				if(isset($idTransporte) && $idTransporte != ''){                                $SIS_data .= ",'".$idTransporte."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($idTipoContratoTrab) && $idTipoContratoTrab != ''){                    $SIS_data .= ",'".$idTipoContratoTrab."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($horas_pactadas) && $horas_pactadas != ''){                            $SIS_data .= ",'".$horas_pactadas."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($Gratificacion) && $Gratificacion != ''){                              $SIS_data .= ",'".$Gratificacion."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($idTipoTrabajador) && $idTipoTrabajador != ''){                        $SIS_data .= ",'".$idTipoTrabajador."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($idContratista) && $idContratista != ''){                              $SIS_data .= ",'".$idContratista."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($idCentroCosto) && $idCentroCosto != ''){                              $SIS_data .= ",'".$idCentroCosto."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($idLevel_1) && $idLevel_1 != ''){                                      $SIS_data .= ",'".$idLevel_1."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idLevel_2) && $idLevel_2 != ''){                                      $SIS_data .= ",'".$idLevel_2."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idLevel_3) && $idLevel_3 != ''){                                      $SIS_data .= ",'".$idLevel_3."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idLevel_4) && $idLevel_4 != ''){                                      $SIS_data .= ",'".$idLevel_4."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idLevel_5) && $idLevel_5 != ''){                                      $SIS_data .= ",'".$idLevel_5."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idTipoTrabajo) && $idTipoTrabajo != ''){                              $SIS_data .= ",'".$idTipoTrabajo."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($PorcentajeTrabajoPesado) && $PorcentajeTrabajoPesado != ''){          $SIS_data .= ",'".$PorcentajeTrabajoPesado."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idMutual) && $idMutual != ''){                                        $SIS_data .= ",'".$idMutual."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($idCotizacionSaludExtra) && $idCotizacionSaludExtra != ''){            $SIS_data .= ",'".$idCotizacionSaludExtra."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($PorcCotSaludExtra) && $PorcCotSaludExtra != ''){                      $SIS_data .= ",'".$PorcCotSaludExtra."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($MontoCotSaludExtra) && $MontoCotSaludExtra != ''){                    $SIS_data .= ",'".$MontoCotSaludExtra."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idBanco) && $idBanco != ''){                                          $SIS_data .= ",'".$idBanco."'" ;                      }else{$SIS_data .= ",''";}
+				if(isset($idTipoCuenta) && $idTipoCuenta != ''){                                $SIS_data .= ",'".$idTipoCuenta."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($N_Cuenta) && $N_Cuenta != ''){                                        $SIS_data .= ",'".$N_Cuenta."'" ;                     }else{$SIS_data .= ",''";}
+				if(isset($UbicacionTrabajo) && $UbicacionTrabajo != ''){                        $SIS_data .= ",'".$UbicacionTrabajo."'" ;             }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `trabajadores_listado` (idSistema, idEstado, Nombre, ApellidoPat, 
+				$SIS_columns = 'idSistema, idEstado, Nombre, ApellidoPat, 
 				ApellidoMat, idTipo, Cargo, Fono, Rut, N_Documento, idCiudad, idComuna, Direccion, Observaciones, 
 				idLicitacion, FechaContrato, F_Inicio_Contrato, F_Termino_Contrato, idAFP, idSalud, idTipoContrato,
 				idTipoLicencia,CA_Licencia,LicenciaFechaControl,LicenciaFechaControlUltimo,ContactoPersona,
@@ -265,29 +281,14 @@ require_once '0_validate_user_1.php';
 				idTransporte, idTipoContratoTrab, horas_pactadas, Gratificacion, idTipoTrabajador,
 				idContratista, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5,
 				idTipoTrabajo, PorcentajeTrabajoPesado, idMutual, idCotizacionSaludExtra, PorcCotSaludExtra,
-				MontoCotSaludExtra, idBanco, idTipoCuenta, N_Cuenta, UbicacionTrabajo) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				MontoCotSaludExtra, idBanco, idTipoCuenta, N_Cuenta, UbicacionTrabajo';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -317,67 +318,67 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idTrabajador='".$idTrabajador."'" ;
-				if(isset($idSistema) && $idSistema != ''){                                      $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                                        $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                                            $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){                                  $a .= ",ApellidoPat='".$ApellidoPat."'" ;}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){                                  $a .= ",ApellidoMat='".$ApellidoMat."'" ;}
-				if(isset($idTipo) && $idTipo != ''){                                            $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($Cargo) && $Cargo != ''){                                              $a .= ",Cargo='".$Cargo."'" ;}
-				if(isset($Fono) && $Fono != ''){                                                $a .= ",Fono='".$Fono."'" ;}
-				if(isset($Rut) && $Rut != ''){                                                  $a .= ",Rut='".$Rut."'" ;}
-				if(isset($N_Documento) && $N_Documento != ''){                                  $a .= ",N_Documento='".$N_Documento."'" ;}
-				if(isset($idCiudad) && $idCiudad != ''){                                        $a .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna != ''){                                        $a .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Direccion) && $Direccion != ''){                                      $a .= ",Direccion='".$Direccion."'" ;}
-				if(isset($Observaciones) && $Observaciones != ''){                              $a .= ",Observaciones='".$Observaciones."'" ;}
-				if(isset($idLicitacion) && $idLicitacion != ''){                                $a .= ",idLicitacion='".$idLicitacion."'" ;}
-				if(isset($FechaContrato) && $FechaContrato != ''){                              $a .= ",FechaContrato='".$FechaContrato."'" ;}
-				if(isset($F_Inicio_Contrato) && $F_Inicio_Contrato != ''){                      $a .= ",F_Inicio_Contrato='".$F_Inicio_Contrato."'" ;}
-				if(isset($F_Termino_Contrato) && $F_Termino_Contrato != ''){                    $a .= ",F_Termino_Contrato='".$F_Termino_Contrato."'" ;}
-				if(isset($idAFP) && $idAFP != ''){                                              $a .= ",idAFP='".$idAFP."'" ;}
-				if(isset($idSalud) && $idSalud != ''){                                          $a .= ",idSalud='".$idSalud."'" ;}
-				if(isset($idTipoContrato) && $idTipoContrato != ''){                            $a .= ",idTipoContrato='".$idTipoContrato."'" ;}
-				if(isset($idTipoLicencia) && $idTipoLicencia != ''){                            $a .= ",idTipoLicencia='".$idTipoLicencia."'" ;}
-				if(isset($CA_Licencia) && $CA_Licencia != ''){                                  $a .= ",CA_Licencia='".$CA_Licencia."'" ;}
-				if(isset($LicenciaFechaControl) && $LicenciaFechaControl != ''){                $a .= ",LicenciaFechaControl='".$LicenciaFechaControl."'" ;}
-				if(isset($LicenciaFechaControlUltimo) && $LicenciaFechaControlUltimo != ''){    $a .= ",LicenciaFechaControlUltimo='".$LicenciaFechaControlUltimo."'" ;}
-				if(isset($ContactoPersona) && $ContactoPersona != ''){                          $a .= ",ContactoPersona='".$ContactoPersona."'" ;}
-				if(isset($ContactoFono) && $ContactoFono != ''){                                $a .= ",ContactoFono='".$ContactoFono."'" ;}
-				if(isset($idSexo) && $idSexo != ''){                                            $a .= ",idSexo='".$idSexo."'" ;}
-				if(isset($FNacimiento) && $FNacimiento != ''){                                  $a .= ",FNacimiento='".$FNacimiento."'" ;}
-				if(isset($idEstadoCivil) && $idEstadoCivil != ''){                              $a .= ",idEstadoCivil='".$idEstadoCivil."'" ;}
-				if(isset($SueldoLiquido) && $SueldoLiquido != ''){                              $a .= ",SueldoLiquido='".$SueldoLiquido."'" ;}
-				if(isset($SueldoDia) && $SueldoDia != ''){                                      $a .= ",SueldoDia='".$SueldoDia."'" ;}
-				if(isset($SueldoHora) && $SueldoHora != ''){                                    $a .= ",SueldoHora='".$SueldoHora."'" ;}
-				if(isset($email) && $email != ''){                                              $a .= ",email='".$email."'" ;}
-				if(isset($idTransporte) && $idTransporte != ''){                                $a .= ",idTransporte='".$idTransporte."'" ;}
-				if(isset($idTipoContratoTrab) && $idTipoContratoTrab != ''){                    $a .= ",idTipoContratoTrab='".$idTipoContratoTrab."'" ;}
-				if(isset($horas_pactadas) && $horas_pactadas != ''){                            $a .= ",horas_pactadas='".$horas_pactadas."'" ;}
-				if(isset($Gratificacion) && $Gratificacion != ''){                              $a .= ",Gratificacion='".$Gratificacion."'" ;}
-				if(isset($idTipoTrabajador) && $idTipoTrabajador != ''){                        $a .= ",idTipoTrabajador='".$idTipoTrabajador."'" ;}
-				if(isset($idContratista) && $idContratista != ''){                              $a .= ",idContratista='".$idContratista."'" ;}
-				if(isset($idCentroCosto) && $idCentroCosto != ''){                              $a .= ",idCentroCosto='".$idCentroCosto."'" ;}
-				if(isset($idLevel_1) && $idLevel_1 != ''){                                      $a .= ",idLevel_1='".$idLevel_1."'" ;}
-				if(isset($idLevel_2) && $idLevel_2 != ''){                                      $a .= ",idLevel_2='".$idLevel_2."'" ;}
-				if(isset($idLevel_3) && $idLevel_3 != ''){                                      $a .= ",idLevel_3='".$idLevel_3."'" ;}
-				if(isset($idLevel_4) && $idLevel_4 != ''){                                      $a .= ",idLevel_4='".$idLevel_4."'" ;}
-				if(isset($idLevel_5) && $idLevel_5 != ''){                                      $a .= ",idLevel_5='".$idLevel_5."'" ;}
-				if(isset($idTipoTrabajo) && $idTipoTrabajo != ''){                              $a .= ",idTipoTrabajo='".$idTipoTrabajo."'" ;}
-				if(isset($PorcentajeTrabajoPesado) && $PorcentajeTrabajoPesado != ''){          $a .= ",PorcentajeTrabajoPesado='".$PorcentajeTrabajoPesado."'" ;}
-				if(isset($idMutual) && $idMutual != ''){                                        $a .= ",idMutual='".$idMutual."'" ;}
-				if(isset($idCotizacionSaludExtra) && $idCotizacionSaludExtra != ''){            $a .= ",idCotizacionSaludExtra='".$idCotizacionSaludExtra."'" ;}
-				if(isset($PorcCotSaludExtra) && $PorcCotSaludExtra != ''){                      $a .= ",PorcCotSaludExtra='".$PorcCotSaludExtra."'" ;}
-				if(isset($MontoCotSaludExtra) && $MontoCotSaludExtra != ''){                    $a .= ",MontoCotSaludExtra='".$MontoCotSaludExtra."'" ;}
-				if(isset($idBanco) && $idBanco != ''){                                          $a .= ",idBanco='".$idBanco."'" ;}
-				if(isset($idTipoCuenta) && $idTipoCuenta != ''){                                $a .= ",idTipoCuenta='".$idTipoCuenta."'" ;}
-				if(isset($N_Cuenta) && $N_Cuenta != ''){                                        $a .= ",N_Cuenta='".$N_Cuenta."'" ;}
-				if(isset($UbicacionTrabajo) && $UbicacionTrabajo != ''){                        $a .= ",UbicacionTrabajo='".$UbicacionTrabajo."'" ;}
+				$SIS_data = "idTrabajador='".$idTrabajador."'" ;
+				if(isset($idSistema) && $idSistema != ''){                                      $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                                        $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                                            $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($ApellidoPat) && $ApellidoPat != ''){                                  $SIS_data .= ",ApellidoPat='".$ApellidoPat."'" ;}
+				if(isset($ApellidoMat) && $ApellidoMat != ''){                                  $SIS_data .= ",ApellidoMat='".$ApellidoMat."'" ;}
+				if(isset($idTipo) && $idTipo != ''){                                            $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($Cargo) && $Cargo != ''){                                              $SIS_data .= ",Cargo='".$Cargo."'" ;}
+				if(isset($Fono) && $Fono != ''){                                                $SIS_data .= ",Fono='".$Fono."'" ;}
+				if(isset($Rut) && $Rut != ''){                                                  $SIS_data .= ",Rut='".$Rut."'" ;}
+				if(isset($N_Documento) && $N_Documento != ''){                                  $SIS_data .= ",N_Documento='".$N_Documento."'" ;}
+				if(isset($idCiudad) && $idCiudad != ''){                                        $SIS_data .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna != ''){                                        $SIS_data .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){                                      $SIS_data .= ",Direccion='".$Direccion."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){                              $SIS_data .= ",Observaciones='".$Observaciones."'" ;}
+				if(isset($idLicitacion) && $idLicitacion != ''){                                $SIS_data .= ",idLicitacion='".$idLicitacion."'" ;}
+				if(isset($FechaContrato) && $FechaContrato != ''){                              $SIS_data .= ",FechaContrato='".$FechaContrato."'" ;}
+				if(isset($F_Inicio_Contrato) && $F_Inicio_Contrato != ''){                      $SIS_data .= ",F_Inicio_Contrato='".$F_Inicio_Contrato."'" ;}
+				if(isset($F_Termino_Contrato) && $F_Termino_Contrato != ''){                    $SIS_data .= ",F_Termino_Contrato='".$F_Termino_Contrato."'" ;}
+				if(isset($idAFP) && $idAFP != ''){                                              $SIS_data .= ",idAFP='".$idAFP."'" ;}
+				if(isset($idSalud) && $idSalud != ''){                                          $SIS_data .= ",idSalud='".$idSalud."'" ;}
+				if(isset($idTipoContrato) && $idTipoContrato != ''){                            $SIS_data .= ",idTipoContrato='".$idTipoContrato."'" ;}
+				if(isset($idTipoLicencia) && $idTipoLicencia != ''){                            $SIS_data .= ",idTipoLicencia='".$idTipoLicencia."'" ;}
+				if(isset($CA_Licencia) && $CA_Licencia != ''){                                  $SIS_data .= ",CA_Licencia='".$CA_Licencia."'" ;}
+				if(isset($LicenciaFechaControl) && $LicenciaFechaControl != ''){                $SIS_data .= ",LicenciaFechaControl='".$LicenciaFechaControl."'" ;}
+				if(isset($LicenciaFechaControlUltimo) && $LicenciaFechaControlUltimo != ''){    $SIS_data .= ",LicenciaFechaControlUltimo='".$LicenciaFechaControlUltimo."'" ;}
+				if(isset($ContactoPersona) && $ContactoPersona != ''){                          $SIS_data .= ",ContactoPersona='".$ContactoPersona."'" ;}
+				if(isset($ContactoFono) && $ContactoFono != ''){                                $SIS_data .= ",ContactoFono='".$ContactoFono."'" ;}
+				if(isset($idSexo) && $idSexo != ''){                                            $SIS_data .= ",idSexo='".$idSexo."'" ;}
+				if(isset($FNacimiento) && $FNacimiento != ''){                                  $SIS_data .= ",FNacimiento='".$FNacimiento."'" ;}
+				if(isset($idEstadoCivil) && $idEstadoCivil != ''){                              $SIS_data .= ",idEstadoCivil='".$idEstadoCivil."'" ;}
+				if(isset($SueldoLiquido) && $SueldoLiquido != ''){                              $SIS_data .= ",SueldoLiquido='".$SueldoLiquido."'" ;}
+				if(isset($SueldoDia) && $SueldoDia != ''){                                      $SIS_data .= ",SueldoDia='".$SueldoDia."'" ;}
+				if(isset($SueldoHora) && $SueldoHora != ''){                                    $SIS_data .= ",SueldoHora='".$SueldoHora."'" ;}
+				if(isset($email) && $email != ''){                                              $SIS_data .= ",email='".$email."'" ;}
+				if(isset($idTransporte) && $idTransporte != ''){                                $SIS_data .= ",idTransporte='".$idTransporte."'" ;}
+				if(isset($idTipoContratoTrab) && $idTipoContratoTrab != ''){                    $SIS_data .= ",idTipoContratoTrab='".$idTipoContratoTrab."'" ;}
+				if(isset($horas_pactadas) && $horas_pactadas != ''){                            $SIS_data .= ",horas_pactadas='".$horas_pactadas."'" ;}
+				if(isset($Gratificacion) && $Gratificacion != ''){                              $SIS_data .= ",Gratificacion='".$Gratificacion."'" ;}
+				if(isset($idTipoTrabajador) && $idTipoTrabajador != ''){                        $SIS_data .= ",idTipoTrabajador='".$idTipoTrabajador."'" ;}
+				if(isset($idContratista) && $idContratista != ''){                              $SIS_data .= ",idContratista='".$idContratista."'" ;}
+				if(isset($idCentroCosto) && $idCentroCosto != ''){                              $SIS_data .= ",idCentroCosto='".$idCentroCosto."'" ;}
+				if(isset($idLevel_1) && $idLevel_1 != ''){                                      $SIS_data .= ",idLevel_1='".$idLevel_1."'" ;}
+				if(isset($idLevel_2) && $idLevel_2 != ''){                                      $SIS_data .= ",idLevel_2='".$idLevel_2."'" ;}
+				if(isset($idLevel_3) && $idLevel_3 != ''){                                      $SIS_data .= ",idLevel_3='".$idLevel_3."'" ;}
+				if(isset($idLevel_4) && $idLevel_4 != ''){                                      $SIS_data .= ",idLevel_4='".$idLevel_4."'" ;}
+				if(isset($idLevel_5) && $idLevel_5 != ''){                                      $SIS_data .= ",idLevel_5='".$idLevel_5."'" ;}
+				if(isset($idTipoTrabajo) && $idTipoTrabajo != ''){                              $SIS_data .= ",idTipoTrabajo='".$idTipoTrabajo."'" ;}
+				if(isset($PorcentajeTrabajoPesado) && $PorcentajeTrabajoPesado != ''){          $SIS_data .= ",PorcentajeTrabajoPesado='".$PorcentajeTrabajoPesado."'" ;}
+				if(isset($idMutual) && $idMutual != ''){                                        $SIS_data .= ",idMutual='".$idMutual."'" ;}
+				if(isset($idCotizacionSaludExtra) && $idCotizacionSaludExtra != ''){            $SIS_data .= ",idCotizacionSaludExtra='".$idCotizacionSaludExtra."'" ;}
+				if(isset($PorcCotSaludExtra) && $PorcCotSaludExtra != ''){                      $SIS_data .= ",PorcCotSaludExtra='".$PorcCotSaludExtra."'" ;}
+				if(isset($MontoCotSaludExtra) && $MontoCotSaludExtra != ''){                    $SIS_data .= ",MontoCotSaludExtra='".$MontoCotSaludExtra."'" ;}
+				if(isset($idBanco) && $idBanco != ''){                                          $SIS_data .= ",idBanco='".$idBanco."'" ;}
+				if(isset($idTipoCuenta) && $idTipoCuenta != ''){                                $SIS_data .= ",idTipoCuenta='".$idTipoCuenta."'" ;}
+				if(isset($N_Cuenta) && $N_Cuenta != ''){                                        $SIS_data .= ",N_Cuenta='".$N_Cuenta."'" ;}
+				if(isset($UbicacionTrabajo) && $UbicacionTrabajo != ''){                        $SIS_data .= ",UbicacionTrabajo='".$UbicacionTrabajo."'" ;}
 					
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -537,8 +538,8 @@ require_once '0_validate_user_1.php';
 			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -640,11 +641,11 @@ require_once '0_validate_user_1.php';
 							imagedestroy($imgBase);
 											
 							//Filtro para idSistema
-							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -677,8 +678,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Direccion_img=''" ;
-			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -747,11 +748,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "File_Curriculum='".$sufijo.$_FILES['File_Curriculum']['name']."'" ;
+							$SIS_data = "File_Curriculum='".$sufijo.$_FILES['File_Curriculum']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -785,8 +786,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "File_Curriculum=''" ;
-			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Curriculum'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "File_Curriculum=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Curriculum'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -855,11 +856,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "File_Antecedentes='".$sufijo.$_FILES['File_Antecedentes']['name']."'" ;
+							$SIS_data = "File_Antecedentes='".$sufijo.$_FILES['File_Antecedentes']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -893,8 +894,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "File_Antecedentes=''" ;
-			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Antecedentes'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "File_Antecedentes=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Antecedentes'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -962,11 +963,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "File_Carnet='".$sufijo.$_FILES['File_Carnet']['name']."'" ;
+							$SIS_data = "File_Carnet='".$sufijo.$_FILES['File_Carnet']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -1000,8 +1001,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "File_Carnet=''" ;
-			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Carnet'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "File_Carnet=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Carnet'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1070,11 +1071,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "File_Contrato='".$sufijo.$_FILES['File_Contrato']['name']."'" ;
+							$SIS_data = "File_Contrato='".$sufijo.$_FILES['File_Contrato']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -1107,8 +1108,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "File_Contrato=''" ;
-			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "File_Contrato=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1145,15 +1146,15 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idTrabajador='".$idTrabajador."'" ;
-				if(isset($idTipoLicencia) && $idTipoLicencia != ''){                            $a .= ",idTipoLicencia='".$idTipoLicencia."'" ;}
-				if(isset($CA_Licencia) && $CA_Licencia != ''){                                  $a .= ",CA_Licencia='".$CA_Licencia."'" ;}
-				if(isset($LicenciaFechaControl) && $LicenciaFechaControl != ''){                $a .= ",LicenciaFechaControl='".$LicenciaFechaControl."'" ;}
-				if(isset($LicenciaFechaControlUltimo) && $LicenciaFechaControlUltimo != ''){    $a .= ",LicenciaFechaControlUltimo='".$LicenciaFechaControlUltimo."'" ;}
+				$SIS_data = "idTrabajador='".$idTrabajador."'" ;
+				if(isset($idTipoLicencia) && $idTipoLicencia != ''){                            $SIS_data .= ",idTipoLicencia='".$idTipoLicencia."'" ;}
+				if(isset($CA_Licencia) && $CA_Licencia != ''){                                  $SIS_data .= ",CA_Licencia='".$CA_Licencia."'" ;}
+				if(isset($LicenciaFechaControl) && $LicenciaFechaControl != ''){                $SIS_data .= ",LicenciaFechaControl='".$LicenciaFechaControl."'" ;}
+				if(isset($LicenciaFechaControlUltimo) && $LicenciaFechaControlUltimo != ''){    $SIS_data .= ",LicenciaFechaControlUltimo='".$LicenciaFechaControlUltimo."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				if ($_FILES["File_Licencia"]["error"] > 0){ 
 					$error['File_Licencia'] = 'error/'.uploadPHPError($_FILES["File_Licencia"]["error"]); 
@@ -1192,11 +1193,11 @@ require_once '0_validate_user_1.php';
 							if ($move_result){
 						
 								//Filtro para idSistema
-								$a = "File_Licencia='".$sufijo.$_FILES['File_Licencia']['name']."'" ;
+								$SIS_data = "File_Licencia='".$sufijo.$_FILES['File_Licencia']['name']."'" ;
 								
 								/*******************************************************/
 								//se actualizan los datos
-								$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//Si ejecuto correctamente la consulta
 								if($resultado==true){
 									
@@ -1230,8 +1231,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "File_Licencia=''" ;
-			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Licencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "File_Licencia=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Licencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1300,12 +1301,12 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "File_RHTM='".$sufijo.$_FILES['File_RHTM']['name']."'" ;
-							if(isset($File_RHTM_Fecha) && $File_RHTM_Fecha != ''){   $a .= ",File_RHTM_Fecha='".$File_RHTM_Fecha."'" ;}
+							$SIS_data = "File_RHTM='".$sufijo.$_FILES['File_RHTM']['name']."'" ;
+							if(isset($File_RHTM_Fecha) && $File_RHTM_Fecha != ''){   $SIS_data .= ",File_RHTM_Fecha='".$File_RHTM_Fecha."'" ;}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -1339,8 +1340,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "File_RHTM='', File_RHTM_Fecha=''" ;
-			$resultado = db_update_data (false, $a, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_RHTM'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "File_RHTM='', File_RHTM_Fecha=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_RHTM'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1400,59 +1401,64 @@ require_once '0_validate_user_1.php';
 							$ndata_3  = 0;
 							$ndata_4  = 0;
 							$ndata_5  = 0;
-							//Cargo la libreria de lectura de archivos excel
-							$objPHPExcel = PHPExcel_IOFactory::load($_FILES['FileTrabajador']['tmp_name']);
-							//recorro la hoja excel
-							foreach ($objPHPExcel->getWorksheetIterator() as $worksheet){ 
+							//Cargo el archivo
+							$spreadsheet = IOFactory::load($_FILES['FileTrabajador']['tmp_name']);
+							//Obtengo los nombres de las hojas
+							$loadedSheetNames = $spreadsheet->getSheetNames();
+							//recorro las hojas
+							foreach ($loadedSheetNames as $sheetIndex => $loadedSheetName) {
+								//seteo la hoja
+								$spreadsheet->setActiveSheetIndex($sheetIndex);
+								//selecciono la hoja
+								$worksheet = $spreadsheet->getActiveSheet();
+								//obtengo el total de datos
 								$highestRow = $worksheet->getHighestRow(); 
-								$sheetname  = $worksheet->getTitle(); 
-								//solo reviso la pestaña predio
-								if ($sheetname == "Trabajadores"){ 
+								//si es una hoja en especifico
+								if ($loadedSheetName == "Trabajadores"){ 
+									//recorro
 									for ($row=2; $row<=$highestRow; $row++){ 
 										
-										$Post_Nombre   = $worksheet->getCellByColumnAndRow(0,  $row)->getValue(); 							  
-										$Post_Rut      = $worksheet->getCellByColumnAndRow(3,  $row)->getValue(); 
-										$Post_Email    = $worksheet->getCellByColumnAndRow(9,  $row)->getValue(); 
-										$Post_Fono     = $worksheet->getCellByColumnAndRow(5,  $row)->getValue(); 
-										$Post_Sueldo   = $worksheet->getCellByColumnAndRow(15, $row)->getValue(); 
-													
-										//si existe nombre pero no existe rut	
-										if(isset($Post_Nombre)&&$Post_Nombre!=''&& (!isset($Post_Rut) OR $Post_Rut=='')){
-											$ndata_1++;	
-										}	
-										//verifico si el rut ingresado en el excel existe
-										if(isset($Post_Nombre)&&$Post_Nombre!=''&&isset($Post_Rut)&&$Post_Rut!=''){
-											$SIS_query = 'Rut';
-											$SIS_join  = '';
-											$SIS_where = 'idSistema='.$idSistema.' AND Rut="'.$Post_Rut.'"';
-											$nRows = db_select_nrows (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'nRows');
+										$Post_Nombre   = $worksheet->getCellByColumnAndRow(1,  $row)->getValue(); 							  
+										$Post_Rut      = $worksheet->getCellByColumnAndRow(4,  $row)->getValue(); 
+										$Post_Email    = $worksheet->getCellByColumnAndRow(10, $row)->getValue(); 
+										$Post_Fono     = $worksheet->getCellByColumnAndRow(6,  $row)->getValue(); 
+										$Post_Sueldo   = $worksheet->getCellByColumnAndRow(16, $row)->getValue(); 
+										
+										//si la celda no esta vacia
+										if($Post_Nombre!=''){
+											//si existe el rut	
+											if(!isset($Post_Rut) OR $Post_Rut==''){
+												$ndata_1++;	
+											}
+											//verifico si el rut ingresado en el excel existe
+											if(isset($Post_Rut)&&$Post_Rut!=''){
+												$SIS_query = 'Rut';
+												$SIS_join  = '';
+												$SIS_where = 'idSistema='.$idSistema.' AND Rut="'.$Post_Rut.'"';
+												$nRows = db_select_nrows (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'nRows');
 
-											//Si existe se marca error
-											if(isset($nRows)&&$nRows!=0){
-												$ndata_2++;	
-											}	
-										}
-										//Verifico la existencia de un email
-										if(isset($Post_Nombre)&&$Post_Nombre!=''&&isset($Post_Email)&&$Post_Email!=''){
-											if(isset($email)&&!validarEmail($email)){
+												//Si existe se marca error
+												if(isset($nRows)&&$nRows!=0){
+													$ndata_2++;	
+												}	
+											}
+											//Verifico la existencia de un email
+											if(isset($Post_Email)&&$Post_Email!=''&&!validarEmail($Post_Email)){
 												$ndata_3++;	
 											}
-										}
-										//Verifico la existencia de un email
-										if(isset($Post_Nombre)&&$Post_Nombre!=''&&isset($Post_Fono)&&$Post_Fono!=''){
-											if(isset($Post_Fono)&&!validarNumero($Post_Fono)) {
-												$ndata_4++;	
+											//Verifico la existencia de un email
+											if(isset($Post_Fono)&&$Post_Fono!=''&&!validarNumero($Post_Fono)){
+												$ndata_4++;
 											}
-										}
-										//Verifico la existencia de un email
-										if(isset($Post_Nombre)&&$Post_Nombre!=''&&isset($Post_Sueldo)&&$Post_Sueldo!=''){
-											if(isset($Post_Sueldo)&&!validarNumero($Post_Sueldo)) {
-												$ndata_5++;	
+											//Verifico la existencia de un email
+											if(isset($Post_Sueldo)&&$Post_Sueldo!=''&&!validarNumero($Post_Sueldo)){
+												$ndata_5++;
 											}
-										}
+										}	
 									}
 								}
 							}
+							
 							/*******************************************************************/
 							//generacion de errores
 							if($ndata_1 > 0) {  $error['ndata_1']  = 'error/Revisar los trabajadores, uno no tiene rut';}
@@ -1505,124 +1511,130 @@ require_once '0_validate_user_1.php';
 									
 								
 								/*******************************************************************/
-								//Cargo la libreria de lectura de archivos excel
-								$objPHPExcel = PHPExcel_IOFactory::load($_FILES['FileTrabajador']['tmp_name']);
-								//recorro la hoja excel
-								foreach ($objPHPExcel->getWorksheetIterator() as $worksheet){ 
+								//Cargo el archivo
+								$spreadsheet = IOFactory::load($_FILES['FileTrabajador']['tmp_name']);
+								//Obtengo los nombres de las hojas
+								$loadedSheetNames = $spreadsheet->getSheetNames();
+								//recorro las hojas
+								foreach ($loadedSheetNames as $sheetIndex => $loadedSheetName) {
+									//seteo la hoja
+									$spreadsheet->setActiveSheetIndex($sheetIndex);
+									//selecciono la hoja
+									$worksheet = $spreadsheet->getActiveSheet();
+									//obtengo el total de datos
 									$highestRow = $worksheet->getHighestRow(); 
-									$sheetname  = $worksheet->getTitle(); 
-									//solo reviso la pestaña predio
-									if ($sheetname == "Trabajadores"){ 
+									//si es una hoja en especifico
+									if ($loadedSheetName == "Trabajadores"){ 
+										//recorro
 										for ($row=2; $row<=$highestRow; $row++){ 
-																		  
-											$Post_Nombre           = $worksheet->getCellByColumnAndRow(0,  $row)->getValue(); 
-											$Post_Ape_Pat          = $worksheet->getCellByColumnAndRow(1,  $row)->getValue(); 
-											$Post_Ape_Mat          = $worksheet->getCellByColumnAndRow(2,  $row)->getValue(); 
-											$Post_Rut              = $worksheet->getCellByColumnAndRow(3,  $row)->getValue(); 
-											$Post_Sexo             = $worksheet->getCellByColumnAndRow(4,  $row)->getValue(); 
-											$Post_Fono             = $worksheet->getCellByColumnAndRow(5,  $row)->getValue(); 
-											$Post_Ciudad           = $worksheet->getCellByColumnAndRow(6,  $row)->getValue(); 
-											$Post_Comuna           = $worksheet->getCellByColumnAndRow(7,  $row)->getValue(); 
-											$Post_Direccion        = $worksheet->getCellByColumnAndRow(8,  $row)->getValue(); 
-											$Post_Email            = $worksheet->getCellByColumnAndRow(9,  $row)->getValue(); 
-											$Post_EstadoCivil      = $worksheet->getCellByColumnAndRow(10, $row)->getValue(); 
-											$Post_TipoTrabajador   = $worksheet->getCellByColumnAndRow(11, $row)->getValue(); 
-											$Post_TipoContrato     = $worksheet->getCellByColumnAndRow(12, $row)->getValue(); 
-											$Post_AFP              = $worksheet->getCellByColumnAndRow(13, $row)->getValue(); 
-											$Post_Salud            = $worksheet->getCellByColumnAndRow(14, $row)->getValue(); 
-											$Post_Sueldo           = $worksheet->getCellByColumnAndRow(15, $row)->getValue(); 
+											
+											$Post_Nombre           = $worksheet->getCellByColumnAndRow(1,  $row)->getValue(); 
+											$Post_Ape_Pat          = $worksheet->getCellByColumnAndRow(2,  $row)->getValue(); 
+											$Post_Ape_Mat          = $worksheet->getCellByColumnAndRow(3,  $row)->getValue(); 
+											$Post_Rut              = $worksheet->getCellByColumnAndRow(4,  $row)->getValue(); 
+											$Post_Sexo             = $worksheet->getCellByColumnAndRow(5,  $row)->getValue(); 
+											$Post_Fono             = $worksheet->getCellByColumnAndRow(6,  $row)->getValue(); 
+											$Post_Ciudad           = $worksheet->getCellByColumnAndRow(7,  $row)->getValue(); 
+											$Post_Comuna           = $worksheet->getCellByColumnAndRow(8,  $row)->getValue(); 
+											$Post_Direccion        = $worksheet->getCellByColumnAndRow(9,  $row)->getValue(); 
+											$Post_Email            = $worksheet->getCellByColumnAndRow(10, $row)->getValue(); 
+											$Post_EstadoCivil      = $worksheet->getCellByColumnAndRow(11, $row)->getValue(); 
+											$Post_TipoTrabajador   = $worksheet->getCellByColumnAndRow(12, $row)->getValue(); 
+											$Post_TipoContrato     = $worksheet->getCellByColumnAndRow(13, $row)->getValue(); 
+											$Post_AFP              = $worksheet->getCellByColumnAndRow(14, $row)->getValue(); 
+											$Post_Salud            = $worksheet->getCellByColumnAndRow(15, $row)->getValue(); 
+											$Post_Sueldo           = $worksheet->getCellByColumnAndRow(16, $row)->getValue(); 
 											
 											//Mientras exista dato ejecuta
 											if(isset($Post_Nombre)&&$Post_Nombre!=''&&isset($Post_Rut)&&$Post_Rut!=''){
 												
 												//verifico si existen los datos
-												if(isset($Post_Sexo)&&isset($arrSexoMod[$Post_Sexo]['ID'])){                                $ID_Sexo            = $arrSexoMod[$Especie]['ID'];}   
-												if(isset($Post_Ciudad)&&isset($arrCiudadMod[$Post_Ciudad]['ID'])){                          $ID_Ciudad          = $arrCiudadMod[$Variedad]['ID'];}  
-												if(isset($Post_Comuna)&&isset($arrComunaMod[$Post_Comuna]['ID'])){                          $ID_Comuna          = $arrComunaMod[$EstadoProductivo]['ID'];} 
-												if(isset($Post_EstadoCivil)&&isset($arrEstadoCivilMod[$Post_EstadoCivil]['ID'])){           $ID_EstadoCivil     = $arrEstadoCivilMod[$EstadoProductivo]['ID'];} 
-												if(isset($Post_TipoTrabajador)&&isset($arrTipoTrabajadorMod[$Post_TipoTrabajador]['ID'])){  $ID_TipoTrabajador  = $arrTipoTrabajadorMod[$EstadoProductivo]['ID'];} 
-												if(isset($Post_TipoContrato)&&isset($arrTipoContratoMod[$Post_TipoContrato]['ID'])){        $ID_TipoContrato    = $arrTipoContratoMod[$EstadoProductivo]['ID'];} 
-												if(isset($Post_AFP)&&isset($arrAFPMod[$Post_AFP]['ID'])){                                   $ID_AFP             = $arrAFPMod[$EstadoProductivo]['ID'];} 
-												if(isset($Post_Salud)&&isset($arrSaludMod[$Post_Salud]['ID'])){                             $ID_Salud           = $arrSaludMod[$EstadoProductivo]['ID'];} 
+												if(isset($Post_Sexo)&&isset($arrSexoMod[$Post_Sexo]['ID'])){                                $ID_Sexo            = $arrSexoMod[$Post_Sexo]['ID'];}   
+												if(isset($Post_Ciudad)&&isset($arrCiudadMod[$Post_Ciudad]['ID'])){                          $ID_Ciudad          = $arrCiudadMod[$Post_Ciudad]['ID'];}  
+												if(isset($Post_Comuna)&&isset($arrComunaMod[$Post_Comuna]['ID'])){                          $ID_Comuna          = $arrComunaMod[$Post_Comuna]['ID'];} 
+												if(isset($Post_EstadoCivil)&&isset($arrEstadoCivilMod[$Post_EstadoCivil]['ID'])){           $ID_EstadoCivil     = $arrEstadoCivilMod[$Post_EstadoCivil]['ID'];} 
+												if(isset($Post_TipoTrabajador)&&isset($arrTipoTrabajadorMod[$Post_TipoTrabajador]['ID'])){  $ID_TipoTrabajador  = $arrTipoTrabajadorMod[$Post_TipoTrabajador]['ID'];} 
+												if(isset($Post_TipoContrato)&&isset($arrTipoContratoMod[$Post_TipoContrato]['ID'])){        $ID_TipoContrato    = $arrTipoContratoMod[$Post_TipoContrato]['ID'];} 
+												if(isset($Post_AFP)&&isset($arrAFPMod[$Post_AFP]['ID'])){                                   $ID_AFP             = $arrAFPMod[$Post_AFP]['ID'];} 
+												if(isset($Post_Salud)&&isset($arrSaludMod[$Post_Salud]['ID'])){                             $ID_Salud           = $arrSaludMod[$Post_Salud]['ID'];} 
 												
 												
 												/****************************************************/
 												//filtros
-												if(isset($idSistema) && $idSistema != ''){                  $a  = "'".$idSistema."'" ;           }else{$a  ="''";}
-												if(isset($idEstado) && $idEstado != ''){                    $a .= ",'".$idEstado."'" ;           }else{$a .=",''";}
-												if(isset($Post_Nombre) && $Post_Nombre != ''){              $a .= ",'".$Post_Nombre."'" ;        }else{$a .=",''";}
-												if(isset($Post_Ape_Pat) && $Post_Ape_Pat != ''){            $a .= ",'".$Post_Ape_Pat."'" ;       }else{$a .=",''";}
-												if(isset($Post_Ape_Mat) && $Post_Ape_Mat != ''){            $a .= ",'".$Post_Ape_Mat."'" ;       }else{$a .=",''";}
-												if(isset($Post_Rut) && $Post_Rut != ''){                    $a .= ",'".$Post_Rut."'" ;           }else{$a .=",''";}
-												if(isset($ID_Sexo) && $ID_Sexo != ''){                      $a .= ",'".$ID_Sexo."'" ;            }else{$a .=",''";}
-												if(isset($Post_Fono) && $Post_Fono != ''){                  $a .= ",'".$Post_Fono."'" ;          }else{$a .=",''";}
-												if(isset($ID_Ciudad) && $ID_Ciudad != ''){                  $a .= ",'".$ID_Ciudad."'" ;          }else{$a .=",''";}
-												if(isset($ID_Comuna) && $ID_Comuna != ''){                  $a .= ",'".$ID_Comuna."'" ;          }else{$a .=",''";}
-												if(isset($Post_Direccion) && $Post_Direccion != ''){        $a .= ",'".$Post_Direccion."'" ;     }else{$a .=",''";}
-												if(isset($Post_Email) && $Post_Email != ''){                $a .= ",'".$Post_Email."'" ;         }else{$a .=",''";}
-												if(isset($ID_EstadoCivil) && $ID_EstadoCivil != ''){        $a .= ",'".$ID_EstadoCivil."'" ;     }else{$a .=",''";}
-												if(isset($ID_TipoTrabajador) && $ID_TipoTrabajador != ''){  $a .= ",'".$ID_TipoTrabajador."'" ;  }else{$a .=",''";}
-												if(isset($ID_TipoContrato) && $ID_TipoContrato != ''){      $a .= ",'".$ID_TipoContrato."'" ;    }else{$a .=",''";}
-												if(isset($ID_AFP) && $ID_AFP != ''){                        $a .= ",'".$ID_AFP."'" ;             }else{$a .=",''";}
-												if(isset($ID_Salud) && $ID_Salud != ''){                    $a .= ",'".$ID_Salud."'" ;           }else{$a .=",''";}
-												if(isset($Post_Sueldo) && $Post_Sueldo != ''){              $a .= ",'".$Post_Sueldo."'" ;        }else{$a .=",''";}
+												if(isset($idSistema) && $idSistema != ''){                  $SIS_data  = "'".$idSistema."'" ;           }else{$SIS_data  = "''";}
+												if(isset($idEstado) && $idEstado != ''){                    $SIS_data .= ",'".$idEstado."'" ;           }else{$SIS_data .= ",''";}
+												if(isset($Post_Nombre) && $Post_Nombre != ''){              $SIS_data .= ",'".$Post_Nombre."'" ;        }else{$SIS_data .= ",''";}
+												if(isset($Post_Ape_Pat) && $Post_Ape_Pat != ''){            $SIS_data .= ",'".$Post_Ape_Pat."'" ;       }else{$SIS_data .= ",''";}
+												if(isset($Post_Ape_Mat) && $Post_Ape_Mat != ''){            $SIS_data .= ",'".$Post_Ape_Mat."'" ;       }else{$SIS_data .= ",''";}
+												if(isset($Post_Rut) && $Post_Rut != ''){                    $SIS_data .= ",'".$Post_Rut."'" ;           }else{$SIS_data .= ",''";}
+												if(isset($ID_Sexo) && $ID_Sexo != ''){                      $SIS_data .= ",'".$ID_Sexo."'" ;            }else{$SIS_data .= ",''";}
+												if(isset($Post_Fono) && $Post_Fono != ''){                  $SIS_data .= ",'".$Post_Fono."'" ;          }else{$SIS_data .= ",''";}
+												if(isset($ID_Ciudad) && $ID_Ciudad != ''){                  $SIS_data .= ",'".$ID_Ciudad."'" ;          }else{$SIS_data .= ",''";}
+												if(isset($ID_Comuna) && $ID_Comuna != ''){                  $SIS_data .= ",'".$ID_Comuna."'" ;          }else{$SIS_data .= ",''";}
+												if(isset($Post_Direccion) && $Post_Direccion != ''){        $SIS_data .= ",'".$Post_Direccion."'" ;     }else{$SIS_data .= ",''";}
+												if(isset($Post_Email) && $Post_Email != ''){                $SIS_data .= ",'".$Post_Email."'" ;         }else{$SIS_data .= ",''";}
+												if(isset($ID_EstadoCivil) && $ID_EstadoCivil != ''){        $SIS_data .= ",'".$ID_EstadoCivil."'" ;     }else{$SIS_data .= ",''";}
+												if(isset($ID_TipoTrabajador) && $ID_TipoTrabajador != ''){  $SIS_data .= ",'".$ID_TipoTrabajador."'" ;  }else{$SIS_data .= ",''";}
+												if(isset($ID_TipoContrato) && $ID_TipoContrato != ''){      $SIS_data .= ",'".$ID_TipoContrato."'" ;    }else{$SIS_data .= ",''";}
+												if(isset($ID_AFP) && $ID_AFP != ''){                        $SIS_data .= ",'".$ID_AFP."'" ;             }else{$SIS_data .= ",''";}
+												if(isset($ID_Salud) && $ID_Salud != ''){                    $SIS_data .= ",'".$ID_Salud."'" ;           }else{$SIS_data .= ",''";}
+												if(isset($Post_Sueldo) && $Post_Sueldo != ''){              $SIS_data .= ",'".$Post_Sueldo."'" ;        }else{$SIS_data .= ",''";}
 												
 												// inserto los datos de registro en la db
-												$query  = "INSERT INTO `trabajadores_listado` (idSistema,idEstado,Nombre,ApellidoPat,ApellidoMat,
-												Rut,idSexo,Fono,idCiudad,idComuna,Direccion,email,idEstadoCivil,idTipoTrabajador,
-												idTipoContrato,idAFP,idSalud,SueldoLiquido) 
-												VALUES (".$a.")";
-												//Consulta
-												$resultado = mysqli_query ($dbConn, $query);
+												$SIS_columns = 'idSistema,idEstado,Nombre,ApellidoPat,ApellidoMat, Rut,idSexo,Fono,idCiudad,idComuna,Direccion,email,idEstadoCivil,idTipoTrabajador, idTipoContrato,idAFP,idSalud,SueldoLiquido';
+												$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 												
-												/****************************************************/
-												//Verifico la existencia de un email y si se desea enviar correos
-												if(isset($Post_Email)&&$Post_Email!=''&&isset($idOpciones)&&$idOpciones==1){
-													
-													//variables
-													$login_logo  = DB_SITE_MAIN.'/img/login_logo.png';
-													$Link        = DB_SITE_MAIN;
-													$Nombre      = '';
-													if(isset($Post_Nombre) && $Post_Nombre != ''){    $Nombre .= $Post_Nombre;}
-													if(isset($Post_Ape_Pat) && $Post_Ape_Pat != ''){  $Nombre .= " ".$Post_Ape_Pat;}
-													if(isset($Post_Ape_Mat) && $Post_Ape_Mat != ''){  $Nombre .= " ".$Post_Ape_Mat;}
-													
-													//envio de correo
-													try {
+												//Si ejecuto correctamente la consulta
+												if($ultimo_id!=0){
+													/****************************************************/
+													//Verifico la existencia de un email y si se desea enviar correos
+													if(isset($Post_Email)&&$Post_Email!=''&&isset($idOpciones)&&$idOpciones==1){
 														
-														//se consulta el correo
-														$rowusr = db_select_data (false, 'Nombre, email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas', '', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-															
-														//Se crea el cuerpo	
-														$BodyMail  = '<div style="background-color: #D9D9D9; padding: 10px;">';
-														$BodyMail .= '<img src="'.$login_logo.'" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
-														$BodyMail .= '<h3 style="text-align: center;font-size: 30px;">';
-														$BodyMail .= '¡Hola <strong>'.$Nombre.'</strong>!<br/>';
-														$BodyMail .= 'Bienvenido/a a <strong>'.$rowusr['Nombre'].'</strong>';
-														$BodyMail .= '</h3>';
-														$BodyMail .= '<p style="text-align: center;font-size: 20px;">';
-														$BodyMail .= '';
-														$BodyMail .= '</p>';
-														$BodyMail .= '<a href="'.$Link.'" style="display:block;width:100%;text-align: center;font-size: 20px;text-decoration: none;color: #004AAD;"><strong>Empezar &#8594;</strong></a>';
-														$BodyMail .= '</div>';
-															
-														$rmail = tareas_envio_correo($rowusr['email_principal'], 'Crosstech', 
-																					 $Post_Email, $Nombre, 
-																					 '', '', 
-																					 'Registro de Usuario', 
-																					 $BodyMail,'', 
-																					 '', 
-																					 1, 
-																					 $rowusr['Gmail_Usuario'], 
-																					 $rowusr['Gmail_Password']);
-														//se guarda el log
-														log_response(1, $rmail, $email.' (Asunto:Registro de Usuario)');	
+														//variables
+														$login_logo  = DB_SITE_MAIN.'/img/login_logo.png';
+														$Link        = DB_SITE_MAIN;
+														$Nombre      = '';
+														if(isset($Post_Nombre) && $Post_Nombre != ''){    $Nombre .= $Post_Nombre;}
+														if(isset($Post_Ape_Pat) && $Post_Ape_Pat != ''){  $Nombre .= " ".$Post_Ape_Pat;}
+														if(isset($Post_Ape_Mat) && $Post_Ape_Mat != ''){  $Nombre .= " ".$Post_Ape_Mat;}
 														
-													} catch (Exception $e) {
-														php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'error de registro:'.$e->getMessage(), '' );
+														//envio de correo
+														try {
+															
+															//se consulta el correo
+															$rowusr = db_select_data (false, 'Nombre, email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas', '', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+																
+															//Se crea el cuerpo	
+															$BodyMail  = '<div style="background-color: #D9D9D9; padding: 10px;">';
+															$BodyMail .= '<img src="'.$login_logo.'" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
+															$BodyMail .= '<h3 style="text-align: center;font-size: 30px;">';
+															$BodyMail .= '¡Hola <strong>'.$Nombre.'</strong>!<br/>';
+															$BodyMail .= 'Bienvenido/a a <strong>'.$rowusr['Nombre'].'</strong>';
+															$BodyMail .= '</h3>';
+															$BodyMail .= '<p style="text-align: center;font-size: 20px;">';
+															$BodyMail .= '';
+															$BodyMail .= '</p>';
+															$BodyMail .= '<a href="'.$Link.'" style="display:block;width:100%;text-align: center;font-size: 20px;text-decoration: none;color: #004AAD;"><strong>Empezar &#8594;</strong></a>';
+															$BodyMail .= '</div>';
+																
+															$rmail = tareas_envio_correo($rowusr['email_principal'], 'Crosstech', 
+																						 $Post_Email, $Nombre, 
+																						 '', '', 
+																						 'Registro de Usuario', 
+																						 $BodyMail,'', 
+																						 '', 
+																						 1, 
+																						 $rowusr['Gmail_Usuario'], 
+																						 $rowusr['Gmail_Password']);
+															//se guarda el log
+															log_response(1, $rmail, $email.' (Asunto:Registro de Usuario)');	
+															
+														} catch (Exception $e) {
+															php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'error de registro:'.$e->getMessage(), '' );
+														}
 													}
 												}
-											}
+											}	
 										}
 									}
 								}

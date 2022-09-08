@@ -43,12 +43,26 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 
 /**************************************************************/
-//variables
+//numero sensores equipo
+$N_Maximo_Sensores = 20;
+$subquery_1 = 'Nombre, cantSensores, FechaInsGen,idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia';
+
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$subquery_1 .= ',SensoresNombre_'.$i;
+	$subquery_1 .= ',SensoresGrupo_'.$i;
+	$subquery_1 .= ',SensoresMedActual_'.$i;
+	$subquery_1 .= ',SensoresActivo_'.$i;
+}
+
+//Obtengo los datos
+$rowdata  = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+
+/**************************************************************/
 //Grupo Sensores
-$idGrupoVmonofasico  = 87;
-$idGrupoVTrifasico   = 106;
-$idGrupoPotencia     = 99;
-$idGrupoAmperaje     = 99;
+if(isset($rowdata['idGrupoVmonofasico'])&&$rowdata['idGrupoVmonofasico']!=''){ $idGrupoVmonofasico = $rowdata['idGrupoVmonofasico']; }else{$idGrupoVmonofasico  = 87;}
+if(isset($rowdata['idGrupoVTrifasico'])&&$rowdata['idGrupoVTrifasico']!=''){   $idGrupoVTrifasico  = $rowdata['idGrupoVTrifasico'];  }else{$idGrupoVTrifasico   = 106;}
+if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''){       $idGrupoPotencia    = $rowdata['idGrupoPotencia'];    }else{$idGrupoPotencia     = 99;}
+if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''){       $idGrupoAmperaje    = $rowdata['idGrupoPotencia'];    }else{$idGrupoAmperaje     = 99;}
 $idVista             = 1; //1 = Vmonofasico - 2 = VTrifasico 
 
 //Para el grafico
@@ -60,21 +74,6 @@ $Grafico_HoraTermino    = hora_actual();
 if($Grafico_HoraInicio>$Grafico_HoraTermino){
 	$Grafico_FechaInicio = restarDias(fecha_actual(),1);
 }
-
-/**************************************************************/
-//numero sensores equipo
-$N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre, cantSensores, FechaInsGen';
-
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery_1 .= ',SensoresNombre_'.$i;
-	$subquery_1 .= ',SensoresGrupo_'.$i;
-	$subquery_1 .= ',SensoresMedActual_'.$i;
-	$subquery_1 .= ',SensoresActivo_'.$i;
-}
-
-//Obtengo los datos
-$rowdata  = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 /**************************************************************/
 $Uso_FechaInicio   = $rowdata['FechaInsGen'];
@@ -174,7 +173,6 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 		//variables							
 		$Temp_1 .= "'".$data['HoraSistema']."',";
 		
-		
 		/***************************************/
 		//Verifico si es voltaje monofasico
 		if($idVista==1){
@@ -218,10 +216,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 			$arrData_2[$x]['Name'] = "'".$arrSensores_3[$x]['Nombre']."'";	
 		}
 
-		
 	}
-
-
 
 	/*******************************************************/
 	/*******************************************************/

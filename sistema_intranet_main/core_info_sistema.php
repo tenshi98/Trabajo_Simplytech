@@ -32,10 +32,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['error'])) {$error['usuario'] 	  = 'error/'.$_GET['error'];}
-if (isset($_GET['send']))  {$error['usuario'] 	  = 'sucess/Email enviado correctamente';}
+if (isset($_GET['error'])){ $error['error'] = 'error/'.$_GET['error'];}
+if (isset($_GET['send'])){  $error['send']  = 'sucess/Email enviado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 
 //verifica la capa de desarrollo
 $whitelist = array( 'localhost', '127.0.0.1', '::1' );

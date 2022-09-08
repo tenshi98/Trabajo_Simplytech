@@ -27,7 +27,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idCiudad']) )           $idCiudad              = $_POST['idCiudad'];
 	if ( !empty($_POST['idComuna']) )           $idComuna              = $_POST['idComuna'];
 	if ( !empty($_POST['Direccion']) )          $Direccion             = $_POST['Direccion'];
-			
 	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -54,9 +53,16 @@ require_once '0_validate_user_1.php';
 			case 'idComuna':         if(empty($idComuna)){          $error['idComuna']          = 'error/No ha ingresado la comuna';}break;
 			case 'Direccion':        if(empty($Direccion)){         $error['Direccion']         = 'error/No ha ingresado la direccion';}break;
 			
-		
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Asunto) && $Asunto != ''){       $Asunto    = EstandarizarInput($Asunto); }
+	if(isset($Cuerpo) && $Cuerpo != ''){       $Cuerpo    = EstandarizarInput($Cuerpo); }
+	if(isset($Nombre) && $Nombre != ''){       $Nombre    = EstandarizarInput($Nombre); }
+	if(isset($Direccion) && $Direccion != ''){ $Direccion = EstandarizarInput($Direccion); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -100,22 +106,18 @@ require_once '0_validate_user_1.php';
 				/***************************************************************/
 				//guardo registro del correo
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){   $a  = "'".$idSistema."'" ;   }else{$a  ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){   $a .= ",'".$idUsuario."'" ;  }else{$a .=",''";}
-				if(isset($Fecha) && $Fecha != ''){           $a .= ",'".$Fecha."'" ;      }else{$a .=",''";}
-				if(isset($Asunto) && $Asunto != ''){         $a .= ",'".$Asunto."'" ;     }else{$a .=",''";}
-				if(isset($Cuerpo) && $Cuerpo != ''){         $a .= ",'".$Cuerpo."'" ;     }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){   $SIS_data  = "'".$idSistema."'" ;   }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario != ''){   $SIS_data .= ",'".$idUsuario."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){           $SIS_data .= ",'".$Fecha."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Asunto) && $Asunto != ''){         $SIS_data .= ",'".$Asunto."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Cuerpo) && $Cuerpo != ''){         $SIS_data .= ",'".$Cuerpo."'" ;     }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `comunicaciones_internas_email` (idSistema, idUsuario, Fecha, Asunto, Cuerpo) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idUsuario, Fecha, Asunto, Cuerpo';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'comunicaciones_internas_email', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);	
-					
+				if($ultimo_id!=0){
 					//se consulta el correo de la empresa
 					$rowusr = db_select_data (false, 'Nombre, email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas', '', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
@@ -183,26 +185,13 @@ require_once '0_validate_user_1.php';
 																 
 							/******************************************/
 							//guardo registro de a quien se lo envie
-							if(isset($ultimo_id) && $ultimo_id != ''){                   $a  = "'".$ultimo_id."'" ;               }else{$a  ="''";}
-							if(isset($noti['idUsuario']) && $noti['idUsuario'] != ''){   $a .= ",'".$noti['idUsuario']."'" ;     }else{$a .=",''";}
-								
+							if(isset($ultimo_id) && $ultimo_id != ''){                   $SIS_data  = "'".$ultimo_id."'" ;              }else{$SIS_data  = "''";}
+							if(isset($noti['idUsuario']) && $noti['idUsuario'] != ''){   $SIS_data .= ",'".$noti['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `comunicaciones_internas_email_listado` (idEmail,idUsuario) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-									
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-							}
-						
+							$SIS_columns = 'idEmail,idUsuario';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'comunicaciones_internas_email_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						} catch (Exception $e) {
 							php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'En el envio de la notificacion:'.$e->getMessage(), '' );
 						}
@@ -212,20 +201,7 @@ require_once '0_validate_user_1.php';
 					//redirijo	
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
-				
 			}
 	
 		break;

@@ -115,22 +115,22 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['not_modbase']))  {$error['not_modbase'] 	  	   = 'sucess/Datos basicos editados correctamente';}
-if (isset($_GET['not_addcuartel']))  {$error['not_addcuartel'] 	   = 'sucess/Cuartel agregado correctamente';}
-if (isset($_GET['not_closecuartel']))  {$error['not_closecuartel'] = 'sucess/Cuartel cerrado correctamente';}
-if (isset($_GET['not_delcuartel'])) {$error['not_delcuartel'] 	   = 'sucess/Cuartel borrado correctamente';}
-if (isset($_GET['not_addtractor']))  {$error['not_addtractor'] 	   = 'sucess/Tractor agregado correctamente';}
-if (isset($_GET['not_edittrac']))  {$error['not_edittrac'] 	       = 'sucess/Tractor editado correctamente';}
-if (isset($_GET['not_deltractor']))  {$error['not_deltractor'] 	   = 'sucess/Tractor borrado correctamente';}
-if (isset($_GET['not_addprod']))  {$error['not_addprod'] 	  	   = 'sucess/Producto agregado correctamente';}
-if (isset($_GET['not_editprod'])) {$error['not_editprod'] 	  	   = 'sucess/Producto editado correctamente';}
-if (isset($_GET['not_delprod']))  {$error['not_delprod'] 	  	   = 'sucess/Producto borrado correctamente';}
-if (isset($_GET['not_adddetalle']))  {$error['not_adddetalle']     = 'sucess/Detalle agregado correctamente';}
-if (isset($_GET['not_addmaterial']))  {$error['not_addmaterial']   = 'sucess/Material agregado correctamente';}
-if (isset($_GET['not_delmaterial']))  {$error['not_delmaterial']   = 'sucess/Material borrado correctamente';}
+if (isset($_GET['not_modbase'])){      $error['not_modbase']      = 'sucess/Datos basicos editados correctamente';}
+if (isset($_GET['not_addcuartel'])){   $error['not_addcuartel']   = 'sucess/Cuartel agregado correctamente';}
+if (isset($_GET['not_closecuartel'])){ $error['not_closecuartel'] = 'sucess/Cuartel cerrado correctamente';}
+if (isset($_GET['not_delcuartel'])){   $error['not_delcuartel']   = 'sucess/Cuartel borrado correctamente';}
+if (isset($_GET['not_addtractor'])){   $error['not_addtractor']   = 'sucess/Tractor agregado correctamente';}
+if (isset($_GET['not_edittrac'])){     $error['not_edittrac']     = 'sucess/Tractor editado correctamente';}
+if (isset($_GET['not_deltractor'])){   $error['not_deltractor']   = 'sucess/Tractor borrado correctamente';}
+if (isset($_GET['not_addprod'])){      $error['not_addprod']      = 'sucess/Producto agregado correctamente';}
+if (isset($_GET['not_editprod'])){     $error['not_editprod']     = 'sucess/Producto editado correctamente';}
+if (isset($_GET['not_delprod'])){      $error['not_delprod']      = 'sucess/Producto borrado correctamente';}
+if (isset($_GET['not_adddetalle'])){   $error['not_adddetalle']   = 'sucess/Detalle agregado correctamente';}
+if (isset($_GET['not_addmaterial'])){  $error['not_addmaterial']  = 'sucess/Material agregado correctamente';}
+if (isset($_GET['not_delmaterial'])){  $error['not_delmaterial']  = 'sucess/Material borrado correctamente';}
 
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(isset($error1)&&$error1!=''){echo notifications_list($error1);};
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 

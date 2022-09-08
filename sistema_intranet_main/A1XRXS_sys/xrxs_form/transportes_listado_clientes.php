@@ -39,26 +39,19 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-				$query  = "INSERT INTO `transportes_listado_clientes` (idTransporte, idCliente) 
-				VALUES ('$idTransporte','$idCliente')";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				//filtros
+				if(isset($idTransporte) && $idTransporte != ''){ $SIS_data  = "'".$idTransporte."'" ; }else{$SIS_data  = "''";}
+				if(isset($idCliente) && $idCliente != ''){       $SIS_data .= ",'".$idCliente."'" ;   }else{$SIS_data .= ",''";}
+				
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idTransporte, idCliente';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'transportes_listado_clientes', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			
 			}
@@ -136,13 +129,13 @@ require_once '0_validate_user_1.php';
 			foreach ($arrClientes as $cli) {
 				
 				//variables
-				$a  = "'".$idTransporte."'" ;  
-				$a .= ",'".$cli['idCliente']."'" ;
-				//Inserto datos	
-				$query  = "INSERT INTO `transportes_listado_clientes` (idTransporte, idCliente) 
-				VALUES ($a)";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_data  = "'".$idTransporte."'" ;  
+				$SIS_data .= ",'".$cli['idCliente']."'" ;
+				
+				// inserto los datos de registro en la db
+				$SIS_columns = 'idTransporte, idCliente';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'transportes_listado_clientes', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 
 			}
 			

@@ -21,7 +21,6 @@ require_once '0_validate_user_1.php';
 	if ( isset($_POST['Tasa']) )              $Tasa              = $_POST['Tasa'];
 	if ( isset($_POST['Rebaja']) )            $Rebaja            = $_POST['Rebaja'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -42,6 +41,11 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Tramo) && $Tramo != ''){ $Tramo = EstandarizarInput($Tramo); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -72,16 +76,16 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idTablaImpuesto='".$idTablaImpuesto."'" ;
-				if(isset($Tramo) && $Tramo != ''){          $a .= ",Tramo='".$Tramo."'" ;}
-				if(isset($UTM_Desde) && $UTM_Desde != ''){  $a .= ",UTM_Desde='".$UTM_Desde."'" ;}
-				if(isset($UTM_Hasta) && $UTM_Hasta != ''){  $a .= ",UTM_Hasta='".$UTM_Hasta."'" ;}
-				if(isset($Tasa) && $Tasa != ''){            $a .= ",Tasa='".$Tasa."'" ;}
-				if(isset($Rebaja) && $Rebaja != ''){        $a .= ",Rebaja='".$Rebaja."'" ;}
+				$SIS_data = "idTablaImpuesto='".$idTablaImpuesto."'" ;
+				if(isset($Tramo) && $Tramo != ''){          $SIS_data .= ",Tramo='".$Tramo."'" ;}
+				if(isset($UTM_Desde) && $UTM_Desde != ''){  $SIS_data .= ",UTM_Desde='".$UTM_Desde."'" ;}
+				if(isset($UTM_Hasta) && $UTM_Hasta != ''){  $SIS_data .= ",UTM_Hasta='".$UTM_Hasta."'" ;}
+				if(isset($Tasa) && $Tasa != ''){            $SIS_data .= ",Tasa='".$Tasa."'" ;}
+				if(isset($Rebaja) && $Rebaja != ''){        $SIS_data .= ",Rebaja='".$Rebaja."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'sistema_rrhh_tabla_iusc', 'idTablaImpuesto = "'.$idTablaImpuesto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'sistema_rrhh_tabla_iusc', 'idTablaImpuesto = "'.$idTablaImpuesto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

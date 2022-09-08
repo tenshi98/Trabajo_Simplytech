@@ -20,7 +20,6 @@ require_once '0_validate_user_1.php';
 	if ( isset($_POST['Valor_Hasta']) )    $Valor_Hasta    = $_POST['Valor_Hasta'];
 	if ( isset($_POST['Valor_Pago']) )     $Valor_Pago     = $_POST['Valor_Pago'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -40,6 +39,11 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Tramo) && $Tramo != ''){ $Tramo = EstandarizarInput($Tramo); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -70,15 +74,15 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idTablaCarga='".$idTablaCarga."'" ;
-				if(isset($Tramo) && $Tramo != ''){              $a .= ",Tramo='".$Tramo."'" ;}
-				if(isset($Valor_Desde) && $Valor_Desde != ''){  $a .= ",Valor_Desde='".$Valor_Desde."'" ;}
-				if(isset($Valor_Hasta) && $Valor_Hasta != ''){  $a .= ",Valor_Hasta='".$Valor_Hasta."'" ;}
-				if(isset($Valor_Pago) && $Valor_Pago != ''){    $a .= ",Valor_Pago='".$Valor_Pago."'" ;}
+				$SIS_data = "idTablaCarga='".$idTablaCarga."'" ;
+				if(isset($Tramo) && $Tramo != ''){              $SIS_data .= ",Tramo='".$Tramo."'" ;}
+				if(isset($Valor_Desde) && $Valor_Desde != ''){  $SIS_data .= ",Valor_Desde='".$Valor_Desde."'" ;}
+				if(isset($Valor_Hasta) && $Valor_Hasta != ''){  $SIS_data .= ",Valor_Hasta='".$Valor_Hasta."'" ;}
+				if(isset($Valor_Pago) && $Valor_Pago != ''){    $SIS_data .= ",Valor_Pago='".$Valor_Pago."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'sistema_rrhh_tabla_carga_familiar', 'idTablaCarga = "'.$idTablaCarga.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'sistema_rrhh_tabla_carga_familiar', 'idTablaCarga = "'.$idTablaCarga.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

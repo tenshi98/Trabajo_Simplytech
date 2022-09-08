@@ -47,22 +47,15 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Evento Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Evento Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Evento borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Evento Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Evento Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evento borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 
 //Include de la presentacion
 include '1include_principal_calendario.php';?>
-
-<div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px; margin-top:30px">
-<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
-</div>
-
-          
+        
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

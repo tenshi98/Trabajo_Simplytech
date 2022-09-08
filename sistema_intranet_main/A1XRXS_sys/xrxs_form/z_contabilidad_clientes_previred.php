@@ -107,38 +107,28 @@ require_once '0_validate_user_1.php';
 				//recorro los clientes
 				foreach ($arrClientes as $clientes){
 					//Se guardan los datos basicos
-					if(isset($clientes['idCliente']) && $clientes['idCliente'] != ''){  $a  = "'".$clientes['idCliente']."'" ;   }else{$a  = "''";}
-					if(isset($idSistema) && $idSistema != ''){                          $a .= ",'".$idSistema."'" ;              }else{$a .= ",''";}
-					if(isset($idUsuario) && $idUsuario != ''){                          $a .= ",'".$idUsuario."'" ;              }else{$a .= ",''";}
-					if(isset($idTipo) && $idTipo != ''){                                $a .= ",'".$idTipo."'" ;                 }else{$a .= ",''";}
-					if(isset($fecha_auto) && $fecha_auto != ''){                        $a .= ",'".$fecha_auto."'" ;             }else{$a .= ",''";}
-					if(isset($idEstado) && $idEstado != ''){                            $a .= ",'".$idEstado."'" ;               }else{$a .= ",''";}
+					if(isset($clientes['idCliente']) && $clientes['idCliente'] != ''){  $SIS_data  = "'".$clientes['idCliente']."'" ;   }else{$SIS_data  = "''";}
+					if(isset($idSistema) && $idSistema != ''){                          $SIS_data .= ",'".$idSistema."'" ;              }else{$SIS_data .= ",''";}
+					if(isset($idUsuario) && $idUsuario != ''){                          $SIS_data .= ",'".$idUsuario."'" ;              }else{$SIS_data .= ",''";}
+					if(isset($idTipo) && $idTipo != ''){                                $SIS_data .= ",'".$idTipo."'" ;                 }else{$SIS_data .= ",''";}
+					if(isset($fecha_auto) && $fecha_auto != ''){                        $SIS_data .= ",'".$fecha_auto."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($idEstado) && $idEstado != ''){                            $SIS_data .= ",'".$idEstado."'" ;               }else{$SIS_data .= ",''";}
 					if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-						$a .= ",'".$Creacion_fecha."'" ;  
-						$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-						$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+						$SIS_data .= ",'".$Creacion_fecha."'" ;  
+						$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+						$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 					}else{
-						$a .= ",''";
-						$a .= ",''";
-						$a .= ",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
+						$SIS_data .= ",''";
 					}
+					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `contabilidad_clientes_previred` (idCliente,idSistema, 
-					idUsuario, idTipo, fecha_auto, idEstado, Creacion_fecha, Creacion_mes,Creacion_ano) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					$SIS_columns = 'idCliente, idSistema, idUsuario, idTipo, fecha_auto, idEstado, Creacion_fecha, Creacion_mes,Creacion_ano';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'contabilidad_clientes_previred', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					//si se guarda correctamente se hace envio del correo	
-					}else{
+					if($ultimo_id!=0){
 						//se verifica que se quiere enviar correos
 						if(isset($idOpciones)&&$idOpciones==1){
 							//se comprueba si existen correos
@@ -188,37 +178,37 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idContabPrevired='".$idContabPrevired."'" ;
-				if(isset($idCliente) && $idCliente != ''){          $a .= ",idCliente='".$idCliente."'" ;}
-				if(isset($idSistema) && $idSistema != ''){          $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){          $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idTipo) && $idTipo != ''){                $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($fecha_auto) && $fecha_auto != ''){        $a .= ",fecha_auto='".$fecha_auto."'" ;}
-				if(isset($idEstado) && $idEstado != ''){            $a .= ",idEstado='".$idEstado."'" ;}
+				$SIS_data = "idContabPrevired='".$idContabPrevired."'" ;
+				if(isset($idCliente) && $idCliente != ''){          $SIS_data .= ",idCliente='".$idCliente."'" ;}
+				if(isset($idSistema) && $idSistema != ''){          $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){          $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idTipo) && $idTipo != ''){                $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($fecha_auto) && $fecha_auto != ''){        $SIS_data .= ",fecha_auto='".$fecha_auto."'" ;}
+				if(isset($idEstado) && $idEstado != ''){            $SIS_data .= ",idEstado='".$idEstado."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;  
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;  
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				}
 				/****************************************************************/
 				//Verifico el cambio de estado
 				if(isset($idEstadoOld)&&$idEstadoOld!=$idEstado&&$idEstado!=1){
-					if(isset($idUsuarioCierre) && $idUsuarioCierre != ''){        $a .= ",idUsuarioCierre='".$idUsuarioCierre."'" ;}
+					if(isset($idUsuarioCierre) && $idUsuarioCierre != ''){        $SIS_data .= ",idUsuarioCierre='".$idUsuarioCierre."'" ;}
 					if(isset($Cierre_fecha) && $Cierre_fecha != ''){  
-						$a .= ",Cierre_fecha='".$Cierre_fecha."'" ;  
-						$a .= ",Cierre_mes='".fecha2NMes($Cierre_fecha)."'" ;
-						$a .= ",Cierre_ano='".fecha2Ano($Cierre_fecha)."'" ;
+						$SIS_data .= ",Cierre_fecha='".$Cierre_fecha."'" ;  
+						$SIS_data .= ",Cierre_mes='".fecha2NMes($Cierre_fecha)."'" ;
+						$SIS_data .= ",Cierre_ano='".fecha2Ano($Cierre_fecha)."'" ;
 					//si no se ingresa la fecha se crea de forma automatica
 					}else{
-						$a .= ",Cierre_fecha='".fecha_actual()."'" ;  
-						$a .= ",Cierre_mes='".mes_actual()."'" ;
-						$a .= ",Cierre_ano='".ano_actual()."'" ;
+						$SIS_data .= ",Cierre_fecha='".fecha_actual()."'" ;  
+						$SIS_data .= ",Cierre_mes='".mes_actual()."'" ;
+						$SIS_data .= ",Cierre_ano='".ano_actual()."'" ;
 					}
 				}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'contabilidad_clientes_previred', 'idContabPrevired = "'.$idContabPrevired.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'contabilidad_clientes_previred', 'idContabPrevired = "'.$idContabPrevired.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

@@ -9,62 +9,31 @@ $diaActual = dia_actual();
 $diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
-//arreglo con los meses
-$meses=array(1=>"Enero", 
-				"Febrero", 
-				"Marzo", 
-				"Abril", 
-				"Mayo", 
-				"Junio", 
-				"Julio",
-				"Agosto", 
-				"Septiembre", 
-				"Octubre", 
-				"Noviembre", 
-				"Diciembre"
-			);
 //Filtro
-$z =" AND pagos_facturas_clientes.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where = 'pagos_facturas_clientes.F_Pago_ano='.$Ano;
+$SIS_where.= ' AND pagos_facturas_clientes.F_Pago_mes='.$Mes;
+$SIS_where.= ' AND pagos_facturas_clientes.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_join  = 'LEFT JOIN `sistema_documentos_pago`  ON sistema_documentos_pago.idDocPago   = pagos_facturas_clientes.idDocPago';
 //verifico el tipo de usuario
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){	
-	$join = "";
+	
 }else{
-	$z.=" AND usuarios_documentos_pago.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-	$join = " INNER JOIN usuarios_documentos_pago  ON usuarios_documentos_pago.idDocPago  = pagos_facturas_clientes.idDocPago";	
+	$SIS_where.= ' AND usuarios_documentos_pago.idUsuario = '.$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_join .= ' INNER JOIN usuarios_documentos_pago  ON usuarios_documentos_pago.idDocPago  = pagos_facturas_clientes.idDocPago';	
 }
 //Traigo los eventos guardados en la base de datos
-$arrEventos = array();
-$query = "SELECT 
+$SIS_query = '
 pagos_facturas_clientes.idTipo, 
 pagos_facturas_clientes.idFacturacion, 
 sistema_documentos_pago.Nombre AS Documento, 
 pagos_facturas_clientes.N_DocPago, 
-pagos_facturas_clientes.F_Pago_dia
-
-FROM `pagos_facturas_clientes`
-LEFT JOIN `sistema_documentos_pago`  ON sistema_documentos_pago.idDocPago   = pagos_facturas_clientes.idDocPago
-".$join." 
-WHERE pagos_facturas_clientes.F_Pago_ano='".$Ano."' AND pagos_facturas_clientes.F_Pago_mes='".$Mes."' 
-".$z." 
-ORDER BY pagos_facturas_clientes.F_Pago ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrEventos,$row );
-}
+pagos_facturas_clientes.F_Pago_dia';
+$SIS_order = 'pagos_facturas_clientes.F_Pago ASC';
+$arrEventos = array();
+$arrEventos = db_select_array (false, $SIS_query, 'pagos_facturas_clientes', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEventos');
 
 ?>
+
 <style>
 .tooltip {
     position: initial!important;
@@ -97,7 +66,7 @@ array_push( $arrEventos,$row );
 							if (($Mes+1)==13) {$mes_adelante=1; $Ano_b=$Ano_b+1;}else{$mes_adelante=$Mes+1; }
 							?>
 							<td class="fc-header-left"><a href="<?php echo $original.'?Mes='.$mes_atras.'&Ano='.$Ano_a ?>" class="btn btn-default">‹</a></td>
-							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo $meses[$Mes]." ".$Ano?></h2></span></td>
+							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo numero_a_mes($Mes)." ".$Ano?></h2></span></td>
 							<td class="fc-header-right"><a href="<?php echo $original.'?Mes='.$mes_adelante.'&Ano='.$Ano_b ?>" class="btn btn-default">›</a></td>
 						</tr>
 					</tbody>

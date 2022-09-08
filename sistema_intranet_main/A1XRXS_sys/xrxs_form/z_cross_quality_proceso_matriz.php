@@ -38,7 +38,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Validar_2']) )            $Validar_2             = $_POST['Validar_2'];
 	if ( !empty($_POST['Validar_3']) )            $Validar_3             = $_POST['Validar_3'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -78,6 +77,12 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){           $Nombre      = EstandarizarInput($Nombre); }
+	if(isset($PuntoNombre) && $PuntoNombre != ''){ $PuntoNombre = EstandarizarInput($PuntoNombre); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -109,40 +114,24 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){             $a  = "'".$Nombre."'" ;         }else{$a ="''";}
-				if(isset($cantPuntos) && $cantPuntos != ''){     $a .= ",'".$cantPuntos."'" ;    }else{$a .=",''";}
-				if(isset($idTipo) && $idTipo != ''){             $a .= ",'".$idTipo."'" ;        }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){         $a .= ",'".$idEstado."'" ;      }else{$a .=",''";}
-				if(isset($idSistema) && $idSistema != ''){       $a .= ",'".$idSistema."'" ;     }else{$a .=",''";}
-				if(isset($idNota_1) && $idNota_1 != ''){         $a .= ",'".$idNota_1."'" ;      }else{$a .=",''";}
-				if(isset($idNota_2) && $idNota_2 != ''){         $a .= ",'".$idNota_2."'" ;      }else{$a .=",''";}
-				if(isset($idNota_3) && $idNota_3 != ''){         $a .= ",'".$idNota_3."'" ;      }else{$a .=",''";}
+				if(isset($Nombre) && $Nombre != ''){             $SIS_data  = "'".$Nombre."'" ;         }else{$SIS_data  = "''";}
+				if(isset($cantPuntos) && $cantPuntos != ''){     $SIS_data .= ",'".$cantPuntos."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo != ''){             $SIS_data .= ",'".$idTipo."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){         $SIS_data .= ",'".$idEstado."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",'".$idSistema."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idNota_1) && $idNota_1 != ''){         $SIS_data .= ",'".$idNota_1."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idNota_2) && $idNota_2 != ''){         $SIS_data .= ",'".$idNota_2."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idNota_3) && $idNota_3 != ''){         $SIS_data .= ",'".$idNota_3."'" ;      }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_quality_proceso_matriz` (Nombre, cantPuntos, idTipo, idEstado,
-				idSistema, idNota_1, idNota_2, idNota_3) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Nombre, cantPuntos, idTipo, idEstado, idSistema, idNota_1, idNota_2, idNota_3';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_quality_proceso_matriz', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&idMatriz='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 		
@@ -168,33 +157,33 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 		
 				//Filtros
-				$a = "idMatriz='".$idMatriz."'" ;
-				if(isset($Nombre) && $Nombre != ''){                              $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($cantPuntos) && $cantPuntos != ''){                      $a .= ",cantPuntos='".$cantPuntos."'" ;}
-				if(isset($idTipo) && $idTipo != ''){                              $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($PuntoNombre) && $PuntoNombre != ''){                    $a .= ",PuntoNombre_".$mod."='".$PuntoNombre."'" ;}
-				if(isset($PuntoidTipo) && $PuntoidTipo != ''){                    $a .= ",PuntoidTipo_".$mod."='".$PuntoidTipo."'" ;}
-				if(isset($PuntoMedAceptable) && $PuntoMedAceptable != ''){        $a .= ",PuntoMedAceptable_".$mod."='".$PuntoMedAceptable."'" ;}
-				if(isset($PuntoMedAlerta) && $PuntoMedAlerta != ''){              $a .= ",PuntoMedAlerta_".$mod."='".$PuntoMedAlerta."'" ;}
-				if(isset($PuntoMedCondenatorio) && $PuntoMedCondenatorio != ''){  $a .= ",PuntoMedCondenatorio_".$mod."='".$PuntoMedCondenatorio."'" ;}
-				if(isset($PuntoUniMed) && $PuntoUniMed != ''){                    $a .= ",PuntoUniMed_".$mod."='".$PuntoUniMed."'" ;}
-				if(isset($PuntoidGrupo) && $PuntoidGrupo != ''){                  $a .= ",PuntoidGrupo_".$mod."='".$PuntoidGrupo."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                          $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idNota_1) && $idNota_1 != ''){                          $a .= ",idNota_1='".$idNota_1."'" ;}
-				if(isset($idNota_2) && $idNota_2 != ''){                          $a .= ",idNota_2='".$idNota_2."'" ;}
-				if(isset($idNota_3) && $idNota_3 != ''){                          $a .= ",idNota_3='".$idNota_3."'" ;}
-				if(isset($idNotaTipo_1) && $idNotaTipo_1 != ''){                  $a .= ",idNotaTipo_1='".$idNotaTipo_1."'" ;}
-				if(isset($idNotaTipo_2) && $idNotaTipo_2 != ''){                  $a .= ",idNotaTipo_2='".$idNotaTipo_2."'" ;}
-				if(isset($idNotaTipo_3) && $idNotaTipo_3 != ''){                  $a .= ",idNotaTipo_3='".$idNotaTipo_3."'" ;}
-				if(isset($idSistema) && $idSistema != ''){                        $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Validar) && $Validar != ''){                            $a .= ",Validacion_".$mod."='".$Validar."'" ;}
-				if(isset($Validar_1) && $Validar_1 != ''){                        $a .= ",Validar_1='".$Validar_1."'" ;}
-				if(isset($Validar_2) && $Validar_2 != ''){                        $a .= ",Validar_2='".$Validar_2."'" ;}
-				if(isset($Validar_3) && $Validar_3 != ''){                        $a .= ",Validar_3='".$Validar_3."'" ;}
+				$SIS_data = "idMatriz='".$idMatriz."'" ;
+				if(isset($Nombre) && $Nombre != ''){                              $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($cantPuntos) && $cantPuntos != ''){                      $SIS_data .= ",cantPuntos='".$cantPuntos."'" ;}
+				if(isset($idTipo) && $idTipo != ''){                              $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($PuntoNombre) && $PuntoNombre != ''){                    $SIS_data .= ",PuntoNombre_".$mod."='".$PuntoNombre."'" ;}
+				if(isset($PuntoidTipo) && $PuntoidTipo != ''){                    $SIS_data .= ",PuntoidTipo_".$mod."='".$PuntoidTipo."'" ;}
+				if(isset($PuntoMedAceptable) && $PuntoMedAceptable != ''){        $SIS_data .= ",PuntoMedAceptable_".$mod."='".$PuntoMedAceptable."'" ;}
+				if(isset($PuntoMedAlerta) && $PuntoMedAlerta != ''){              $SIS_data .= ",PuntoMedAlerta_".$mod."='".$PuntoMedAlerta."'" ;}
+				if(isset($PuntoMedCondenatorio) && $PuntoMedCondenatorio != ''){  $SIS_data .= ",PuntoMedCondenatorio_".$mod."='".$PuntoMedCondenatorio."'" ;}
+				if(isset($PuntoUniMed) && $PuntoUniMed != ''){                    $SIS_data .= ",PuntoUniMed_".$mod."='".$PuntoUniMed."'" ;}
+				if(isset($PuntoidGrupo) && $PuntoidGrupo != ''){                  $SIS_data .= ",PuntoidGrupo_".$mod."='".$PuntoidGrupo."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                          $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idNota_1) && $idNota_1 != ''){                          $SIS_data .= ",idNota_1='".$idNota_1."'" ;}
+				if(isset($idNota_2) && $idNota_2 != ''){                          $SIS_data .= ",idNota_2='".$idNota_2."'" ;}
+				if(isset($idNota_3) && $idNota_3 != ''){                          $SIS_data .= ",idNota_3='".$idNota_3."'" ;}
+				if(isset($idNotaTipo_1) && $idNotaTipo_1 != ''){                  $SIS_data .= ",idNotaTipo_1='".$idNotaTipo_1."'" ;}
+				if(isset($idNotaTipo_2) && $idNotaTipo_2 != ''){                  $SIS_data .= ",idNotaTipo_2='".$idNotaTipo_2."'" ;}
+				if(isset($idNotaTipo_3) && $idNotaTipo_3 != ''){                  $SIS_data .= ",idNotaTipo_3='".$idNotaTipo_3."'" ;}
+				if(isset($idSistema) && $idSistema != ''){                        $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($Validar) && $Validar != ''){                            $SIS_data .= ",Validacion_".$mod."='".$Validar."'" ;}
+				if(isset($Validar_1) && $Validar_1 != ''){                        $SIS_data .= ",Validar_1='".$Validar_1."'" ;}
+				if(isset($Validar_2) && $Validar_2 != ''){                        $SIS_data .= ",Validar_2='".$Validar_2."'" ;}
+				if(isset($Validar_3) && $Validar_3 != ''){                        $SIS_data .= ",Validar_3='".$Validar_3."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_quality_proceso_matriz', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_quality_proceso_matriz', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -295,54 +284,40 @@ require_once '0_validate_user_1.php';
 				
 				/*******************************************************************/
 				//filtros
-				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos'] != ''){       $a  = "'".$rowdata['cantPuntos']."'" ;      }else{$a  ="''";}
-				if(isset($rowdata['idTipo']) && $rowdata['idTipo'] != ''){               $a .= ",'".$rowdata['idTipo']."'" ;         }else{$a .= ",''";}
-				if(isset($rowdata['idSistema']) && $rowdata['idSistema'] != ''){         $a .= ",'".$rowdata['idSistema']."'" ;      }else{$a .= ",''";}
-				if(isset($rowdata['idEstado']) && $rowdata['idEstado'] != ''){           $a .= ",'".$rowdata['idEstado']."'" ;       }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                                     $a .= ",'".$Nombre."'" ;                    }else{$a .= ",''";}
-				if(isset($rowdata['idNota_1']) && $rowdata['idNota_1'] != ''){           $a .= ",'".$rowdata['idNota_1']."'" ;       }else{$a .= ",''";}
-				if(isset($rowdata['idNota_2']) && $rowdata['idNota_2'] != ''){           $a .= ",'".$rowdata['idNota_2']."'" ;       }else{$a .= ",''";}
-				if(isset($rowdata['idNota_3']) && $rowdata['idNota_3'] != ''){           $a .= ",'".$rowdata['idNota_3']."'" ;       }else{$a .= ",''";}
-				if(isset($rowdata['idNotaTipo_1']) && $rowdata['idNotaTipo_1'] != ''){   $a .= ",'".$rowdata['idNotaTipo_1']."'" ;   }else{$a .= ",''";}
-				if(isset($rowdata['idNotaTipo_2']) && $rowdata['idNotaTipo_2'] != ''){   $a .= ",'".$rowdata['idNotaTipo_2']."'" ;   }else{$a .= ",''";}
-				if(isset($rowdata['idNotaTipo_3']) && $rowdata['idNotaTipo_3'] != ''){   $a .= ",'".$rowdata['idNotaTipo_3']."'" ;   }else{$a .= ",''";}
+				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos'] != ''){       $SIS_data  = "'".$rowdata['cantPuntos']."'" ;      }else{$SIS_data  = "''";}
+				if(isset($rowdata['idTipo']) && $rowdata['idTipo'] != ''){               $SIS_data .= ",'".$rowdata['idTipo']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idSistema']) && $rowdata['idSistema'] != ''){         $SIS_data .= ",'".$rowdata['idSistema']."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idEstado']) && $rowdata['idEstado'] != ''){           $SIS_data .= ",'".$rowdata['idEstado']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                                     $SIS_data .= ",'".$Nombre."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNota_1']) && $rowdata['idNota_1'] != ''){           $SIS_data .= ",'".$rowdata['idNota_1']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNota_2']) && $rowdata['idNota_2'] != ''){           $SIS_data .= ",'".$rowdata['idNota_2']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNota_3']) && $rowdata['idNota_3'] != ''){           $SIS_data .= ",'".$rowdata['idNota_3']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNotaTipo_1']) && $rowdata['idNotaTipo_1'] != ''){   $SIS_data .= ",'".$rowdata['idNotaTipo_1']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNotaTipo_2']) && $rowdata['idNotaTipo_2'] != ''){   $SIS_data .= ",'".$rowdata['idNotaTipo_2']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNotaTipo_3']) && $rowdata['idNotaTipo_3'] != ''){   $SIS_data .= ",'".$rowdata['idNotaTipo_3']."'" ;   }else{$SIS_data .= ",''";}
 				
 
 				for ($i = 1; $i <= 100; $i++) {
-					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i] != ''){                    $a .= ",'".$rowdata['PuntoNombre_'.$i]."'" ;           }else{$a .= ",''";}
-					if(isset($rowdata['PuntoMedAceptable_'.$i]) && $rowdata['PuntoMedAceptable_'.$i] != ''){        $a .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'" ;     }else{$a .= ",''";}
-					if(isset($rowdata['PuntoMedAlerta_'.$i]) && $rowdata['PuntoMedAlerta_'.$i] != ''){              $a .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'" ;        }else{$a .= ",''";}
-					if(isset($rowdata['PuntoMedCondenatorio_'.$i]) && $rowdata['PuntoMedCondenatorio_'.$i] != ''){  $a .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'" ;  }else{$a .= ",''";}
-					if(isset($rowdata['PuntoUniMed_'.$i]) && $rowdata['PuntoUniMed_'.$i] != ''){                    $a .= ",'".$rowdata['PuntoUniMed_'.$i]."'" ;           }else{$a .= ",''";}
-					if(isset($rowdata['PuntoidTipo_'.$i]) && $rowdata['PuntoidTipo_'.$i] != ''){                    $a .= ",'".$rowdata['PuntoidTipo_'.$i]."'" ;           }else{$a .= ",''";}
-					if(isset($rowdata['PuntoidGrupo_'.$i]) && $rowdata['PuntoidGrupo_'.$i] != ''){                  $a .= ",'".$rowdata['PuntoidGrupo_'.$i]."'" ;          }else{$a .= ",''";}
-					if(isset($rowdata['Validacion_'.$i]) && $rowdata['Validacion_'.$i] != ''){                      $a .= ",'".$rowdata['Validacion_'.$i]."'" ;            }else{$a .= ",''";}
+					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i] != ''){                    $SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoMedAceptable_'.$i]) && $rowdata['PuntoMedAceptable_'.$i] != ''){        $SIS_data .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'" ;     }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoMedAlerta_'.$i]) && $rowdata['PuntoMedAlerta_'.$i] != ''){              $SIS_data .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoMedCondenatorio_'.$i]) && $rowdata['PuntoMedCondenatorio_'.$i] != ''){  $SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoUniMed_'.$i]) && $rowdata['PuntoUniMed_'.$i] != ''){                    $SIS_data .= ",'".$rowdata['PuntoUniMed_'.$i]."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoidTipo_'.$i]) && $rowdata['PuntoidTipo_'.$i] != ''){                    $SIS_data .= ",'".$rowdata['PuntoidTipo_'.$i]."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoidGrupo_'.$i]) && $rowdata['PuntoidGrupo_'.$i] != ''){                  $SIS_data .= ",'".$rowdata['PuntoidGrupo_'.$i]."'" ;          }else{$SIS_data .= ",''";}
+					if(isset($rowdata['Validacion_'.$i]) && $rowdata['Validacion_'.$i] != ''){                      $SIS_data .= ",'".$rowdata['Validacion_'.$i]."'" ;            }else{$SIS_data .= ",''";}
 					
 				}
-					
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_quality_proceso_matriz` (cantPuntos,idTipo,idSistema,idEstado, Nombre,
-				idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3
-				".$qry.") 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'cantPuntos,idTipo,idSistema,idEstado, Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3 '.$qry;
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_quality_proceso_matriz', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&clone=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 			
@@ -387,54 +362,40 @@ require_once '0_validate_user_1.php';
 				
 				/*******************************************************************/
 				//filtros
-				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos'] != ''){       $a  = "'".$rowdata['cantPuntos']."'" ;      }else{$a  ="''";}
-				if(isset($rowdata['idTipo']) && $rowdata['idTipo'] != ''){               $a .= ",'".$rowdata['idTipo']."'" ;         }else{$a .= ",''";}
-				if(isset($idSistema) && $idSistema != ''){                               $a .= ",'".$idSistema."'" ;                 }else{$a .= ",''";}
-				if(isset($rowdata['idEstado']) && $rowdata['idEstado'] != ''){           $a .= ",'".$rowdata['idEstado']."'" ;       }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                                     $a .= ",'".$Nombre."'" ;                    }else{$a .= ",''";}
-				if(isset($rowdata['idNota_1']) && $rowdata['idNota_1'] != ''){           $a .= ",'".$rowdata['idNota_1']."'" ;       }else{$a .= ",''";}
-				if(isset($rowdata['idNota_2']) && $rowdata['idNota_2'] != ''){           $a .= ",'".$rowdata['idNota_2']."'" ;       }else{$a .= ",''";}
-				if(isset($rowdata['idNota_3']) && $rowdata['idNota_3'] != ''){           $a .= ",'".$rowdata['idNota_3']."'" ;       }else{$a .= ",''";}
-				if(isset($rowdata['idNotaTipo_1']) && $rowdata['idNotaTipo_1'] != ''){   $a .= ",'".$rowdata['idNotaTipo_1']."'" ;   }else{$a .= ",''";}
-				if(isset($rowdata['idNotaTipo_2']) && $rowdata['idNotaTipo_2'] != ''){   $a .= ",'".$rowdata['idNotaTipo_2']."'" ;   }else{$a .= ",''";}
-				if(isset($rowdata['idNotaTipo_3']) && $rowdata['idNotaTipo_3'] != ''){   $a .= ",'".$rowdata['idNotaTipo_3']."'" ;   }else{$a .= ",''";}
+				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos'] != ''){       $SIS_data  = "'".$rowdata['cantPuntos']."'" ;      }else{$SIS_data  = "''";}
+				if(isset($rowdata['idTipo']) && $rowdata['idTipo'] != ''){               $SIS_data .= ",'".$rowdata['idTipo']."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){                               $SIS_data .= ",'".$idSistema."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idEstado']) && $rowdata['idEstado'] != ''){           $SIS_data .= ",'".$rowdata['idEstado']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                                     $SIS_data .= ",'".$Nombre."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNota_1']) && $rowdata['idNota_1'] != ''){           $SIS_data .= ",'".$rowdata['idNota_1']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNota_2']) && $rowdata['idNota_2'] != ''){           $SIS_data .= ",'".$rowdata['idNota_2']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNota_3']) && $rowdata['idNota_3'] != ''){           $SIS_data .= ",'".$rowdata['idNota_3']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNotaTipo_1']) && $rowdata['idNotaTipo_1'] != ''){   $SIS_data .= ",'".$rowdata['idNotaTipo_1']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNotaTipo_2']) && $rowdata['idNotaTipo_2'] != ''){   $SIS_data .= ",'".$rowdata['idNotaTipo_2']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idNotaTipo_3']) && $rowdata['idNotaTipo_3'] != ''){   $SIS_data .= ",'".$rowdata['idNotaTipo_3']."'" ;   }else{$SIS_data .= ",''";}
 				
 
 				for ($i = 1; $i <= 100; $i++) {
-					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i] != ''){                    $a .= ",'".$rowdata['PuntoNombre_'.$i]."'" ;           }else{$a .= ",''";}
-					if(isset($rowdata['PuntoMedAceptable_'.$i]) && $rowdata['PuntoMedAceptable_'.$i] != ''){        $a .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'" ;     }else{$a .= ",''";}
-					if(isset($rowdata['PuntoMedAlerta_'.$i]) && $rowdata['PuntoMedAlerta_'.$i] != ''){              $a .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'" ;        }else{$a .= ",''";}
-					if(isset($rowdata['PuntoMedCondenatorio_'.$i]) && $rowdata['PuntoMedCondenatorio_'.$i] != ''){  $a .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'" ;  }else{$a .= ",''";}
-					if(isset($rowdata['PuntoUniMed_'.$i]) && $rowdata['PuntoUniMed_'.$i] != ''){                    $a .= ",'".$rowdata['PuntoUniMed_'.$i]."'" ;           }else{$a .= ",''";}
-					if(isset($rowdata['PuntoidTipo_'.$i]) && $rowdata['PuntoidTipo_'.$i] != ''){                    $a .= ",'".$rowdata['PuntoidTipo_'.$i]."'" ;           }else{$a .= ",''";}
-					if(isset($rowdata['PuntoidGrupo_'.$i]) && $rowdata['PuntoidGrupo_'.$i] != ''){                  $a .= ",'".$rowdata['PuntoidGrupo_'.$i]."'" ;          }else{$a .= ",''";}
-					if(isset($rowdata['Validacion_'.$i]) && $rowdata['Validacion_'.$i] != ''){                      $a .= ",'".$rowdata['Validacion_'.$i]."'" ;            }else{$a .= ",''";}
+					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i] != ''){                    $SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoMedAceptable_'.$i]) && $rowdata['PuntoMedAceptable_'.$i] != ''){        $SIS_data .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'" ;     }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoMedAlerta_'.$i]) && $rowdata['PuntoMedAlerta_'.$i] != ''){              $SIS_data .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoMedCondenatorio_'.$i]) && $rowdata['PuntoMedCondenatorio_'.$i] != ''){  $SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoUniMed_'.$i]) && $rowdata['PuntoUniMed_'.$i] != ''){                    $SIS_data .= ",'".$rowdata['PuntoUniMed_'.$i]."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoidTipo_'.$i]) && $rowdata['PuntoidTipo_'.$i] != ''){                    $SIS_data .= ",'".$rowdata['PuntoidTipo_'.$i]."'" ;           }else{$SIS_data .= ",''";}
+					if(isset($rowdata['PuntoidGrupo_'.$i]) && $rowdata['PuntoidGrupo_'.$i] != ''){                  $SIS_data .= ",'".$rowdata['PuntoidGrupo_'.$i]."'" ;          }else{$SIS_data .= ",''";}
+					if(isset($rowdata['Validacion_'.$i]) && $rowdata['Validacion_'.$i] != ''){                      $SIS_data .= ",'".$rowdata['Validacion_'.$i]."'" ;            }else{$SIS_data .= ",''";}
 					
 				}
-					
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_quality_proceso_matriz` (cantPuntos,idTipo,idSistema,idEstado, Nombre,
-				idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3
-				".$qry.") 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'cantPuntos,idTipo,idSistema,idEstado, Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3 '.$qry;
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_quality_proceso_matriz', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&clone=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 			

@@ -52,11 +52,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Mercado Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Mercado Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Mercado borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Mercado Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Mercado Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Mercado borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos

@@ -90,9 +90,15 @@ require_once '0_validate_user_1.php';
 			case 'idImpuesto':        if(empty($idImpuesto)){       $error['idImpuesto']      = 'error/No ha ingresado el impuesto';}break;
 			case 'fecha_auto':        if(empty($fecha_auto)){       $error['fecha_auto']      = 'error/No ha ingresado la fecha de creacion';}break;
 			
-			
 		}
-	}	
+	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+	if(isset($Nombre) && $Nombre != ''){               $Nombre        = EstandarizarInput($Nombre); }
+	if(isset($Observacion) && $Observacion != ''){     $Observacion   = EstandarizarInput($Observacion); }
+		
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -105,8 +111,6 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-
-
 /*******************************************************************************************************************/
 /*                                                                                                                 */
 /*                                                       INGRESOS                                                  */
@@ -640,7 +644,7 @@ require_once '0_validate_user_1.php';
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
 						//Sufijo
-						$sufijo = 'cotizacion_'.fecha_actual().'_';
+						$sufijo = 'cotizacion_'.genera_password_unica().'_';
 					  
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
@@ -807,96 +811,70 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Se guardan los datos basicos
-				if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){      $a  = "'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;   }else{$a  ="''";}
-				if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;  }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){  $a .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;  }else{$a .= ",''";}
+				if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){  $SIS_data  = "'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;   }else{$SIS_data  = "''";}
+				if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha'] != ''){  
-					$a .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
-					$a .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
-					$a .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
+					$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+					$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['cotizacion_basicos']['Observaciones']) && $_SESSION['cotizacion_basicos']['Observaciones'] != ''){  $a .= ",'".$_SESSION['cotizacion_basicos']['Observaciones']."'" ;  }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_basicos']['fecha_auto']) && $_SESSION['cotizacion_basicos']['fecha_auto'] != ''){        $a .= ",'".$_SESSION['cotizacion_basicos']['fecha_auto']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_basicos']['vtotal_neto'])&&$_SESSION['cotizacion_basicos']['vtotal_neto']!=''){          $a .= ",'".$_SESSION['cotizacion_basicos']['vtotal_neto']."'";     }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_basicos']['vtotal_total'])&&$_SESSION['cotizacion_basicos']['vtotal_total']!=''){        $a .= ",'".$_SESSION['cotizacion_basicos']['vtotal_total']."'";    }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][1]['valor'])&&$_SESSION['cotizacion_impuestos'][1]['valor']!=''){            $a .= ",'".$_SESSION['cotizacion_impuestos'][1]['valor']."'";      }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][2]['valor'])&&$_SESSION['cotizacion_impuestos'][2]['valor']!=''){            $a .= ",'".$_SESSION['cotizacion_impuestos'][2]['valor']."'";      }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][3]['valor'])&&$_SESSION['cotizacion_impuestos'][3]['valor']!=''){            $a .= ",'".$_SESSION['cotizacion_impuestos'][3]['valor']."'";      }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][4]['valor'])&&$_SESSION['cotizacion_impuestos'][4]['valor']!=''){            $a .= ",'".$_SESSION['cotizacion_impuestos'][4]['valor']."'";      }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][5]['valor'])&&$_SESSION['cotizacion_impuestos'][5]['valor']!=''){            $a .= ",'".$_SESSION['cotizacion_impuestos'][5]['valor']."'";      }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][6]['valor'])&&$_SESSION['cotizacion_impuestos'][6]['valor']!=''){            $a .= ",'".$_SESSION['cotizacion_impuestos'][6]['valor']."'";      }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][7]['valor'])&&$_SESSION['cotizacion_impuestos'][7]['valor']!=''){            $a .= ",'".$_SESSION['cotizacion_impuestos'][7]['valor']."'";      }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][8]['valor'])&&$_SESSION['cotizacion_impuestos'][8]['valor']!=''){            $a .= ",'".$_SESSION['cotizacion_impuestos'][8]['valor']."'";      }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][9]['valor'])&&$_SESSION['cotizacion_impuestos'][9]['valor']!=''){            $a .= ",'".$_SESSION['cotizacion_impuestos'][9]['valor']."'";      }else{$a .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][10]['valor'])&&$_SESSION['cotizacion_impuestos'][10]['valor']!=''){          $a .= ",'".$_SESSION['cotizacion_impuestos'][10]['valor']."'";     }else{$a .= ",''";}
-				
+				if(isset($_SESSION['cotizacion_basicos']['Observaciones']) && $_SESSION['cotizacion_basicos']['Observaciones'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Observaciones']."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_basicos']['fecha_auto']) && $_SESSION['cotizacion_basicos']['fecha_auto'] != ''){        $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['fecha_auto']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_basicos']['vtotal_neto'])&&$_SESSION['cotizacion_basicos']['vtotal_neto']!=''){          $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['vtotal_neto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_basicos']['vtotal_total'])&&$_SESSION['cotizacion_basicos']['vtotal_total']!=''){        $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['vtotal_total']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][1]['valor'])&&$_SESSION['cotizacion_impuestos'][1]['valor']!=''){            $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][1]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][2]['valor'])&&$_SESSION['cotizacion_impuestos'][2]['valor']!=''){            $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][2]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][3]['valor'])&&$_SESSION['cotizacion_impuestos'][3]['valor']!=''){            $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][3]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][4]['valor'])&&$_SESSION['cotizacion_impuestos'][4]['valor']!=''){            $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][4]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][5]['valor'])&&$_SESSION['cotizacion_impuestos'][5]['valor']!=''){            $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][5]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][6]['valor'])&&$_SESSION['cotizacion_impuestos'][6]['valor']!=''){            $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][6]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][7]['valor'])&&$_SESSION['cotizacion_impuestos'][7]['valor']!=''){            $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][7]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][8]['valor'])&&$_SESSION['cotizacion_impuestos'][8]['valor']!=''){            $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][8]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][9]['valor'])&&$_SESSION['cotizacion_impuestos'][9]['valor']!=''){            $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][9]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][10]['valor'])&&$_SESSION['cotizacion_impuestos'][10]['valor']!=''){          $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][10]['valor']."'";     }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cotizacion_listado` (idSistema,idUsuario, idCliente, Creacion_fecha, Creacion_mes,
+				$SIS_columns = 'idSistema,idUsuario, idCliente, Creacion_fecha, Creacion_mes,
 				Creacion_ano, Observaciones, fecha_auto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, Impuesto_04, 
-				Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10 ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cotizacion_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-		
+				if($ultimo_id!=0){
 					/*********************************************************************/		
 					//Insumos
 					if(isset($_SESSION['cotizacion_insumos'])){
 						foreach ($_SESSION['cotizacion_insumos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){  $a .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                      $SIS_data  = "'".$ultimo_id."'" ;                                     }else{$SIS_data  = "''";}
+							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $a .= ",'".$producto['idProducto']."'" ;   }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $a .= ",'".$producto['Cantidad']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){     $a .= ",'".$producto['vUnitario']."'" ;    }else{$a .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){           $a .= ",'".$producto['vTotal']."'" ;       }else{$a .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $SIS_data .= ",'".$producto['idProducto']."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $SIS_data .= ",'".$producto['Cantidad']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){     $SIS_data .= ",'".$producto['vUnitario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){           $SIS_data .= ",'".$producto['vTotal']."'" ;       }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `cotizacion_listado_existencias_insumos` (idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
-							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
+							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cotizacion_listado_existencias_insumos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -905,41 +883,29 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['cotizacion_productos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){  $a .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                      $SIS_data  = "'".$ultimo_id."'" ;                                     }else{$SIS_data  = "''";}
+							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $a .= ",'".$producto['idProducto']."'" ;   }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $a .= ",'".$producto['Cantidad']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){     $a .= ",'".$producto['vUnitario']."'" ;    }else{$a .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){           $a .= ",'".$producto['vTotal']."'" ;       }else{$a .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto'] != ''){   $SIS_data .= ",'".$producto['idProducto']."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){       $SIS_data .= ",'".$producto['Cantidad']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){     $SIS_data .= ",'".$producto['vUnitario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){           $SIS_data .= ",'".$producto['vTotal']."'" ;       }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `cotizacion_listado_existencias_productos` (idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
-							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
+							Creacion_mes, Creacion_ano, idProducto, Cantidad, vUnitario, vTotal';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cotizacion_listado_existencias_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -948,42 +914,30 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['cotizacion_arriendos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){  $a .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                      $SIS_data  = "'".$ultimo_id."'" ;                                     }else{$SIS_data  = "''";}
+							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){           $a .= ",'".$producto['idEquipo']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $a .= ",'".$producto['Cantidad']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $a .= ",'".$producto['idFrecuencia']."'" ;  }else{$a .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){         $a .= ",'".$producto['vUnitario']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){               $a .= ",'".$producto['vTotal']."'" ;        }else{$a .= ",''";}
+							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){           $SIS_data .= ",'".$producto['idEquipo']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $SIS_data .= ",'".$producto['Cantidad']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $SIS_data .= ",'".$producto['idFrecuencia']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){         $SIS_data .= ",'".$producto['vUnitario']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){               $SIS_data .= ",'".$producto['vTotal']."'" ;        }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `cotizacion_listado_existencias_arriendos` (idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
-							Creacion_mes, Creacion_ano, idEquipo, Cantidad, idFrecuencia, vUnitario, vTotal) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
+							Creacion_mes, Creacion_ano, idEquipo, Cantidad, idFrecuencia, vUnitario, vTotal';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cotizacion_listado_existencias_arriendos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -992,42 +946,30 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['cotizacion_servicios'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){  $a .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                          $SIS_data  = "'".$ultimo_id."'" ;                                       }else{$SIS_data  = "''";}
+							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['idServicio']) && $producto['idServicio'] != ''){       $a .= ",'".$producto['idServicio']."'" ;    }else{$a .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $a .= ",'".$producto['Cantidad']."'" ;      }else{$a .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $a .= ",'".$producto['idFrecuencia']."'" ;  }else{$a .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){         $a .= ",'".$producto['vUnitario']."'" ;     }else{$a .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){               $a .= ",'".$producto['vTotal']."'" ;        }else{$a .= ",''";}
+							if(isset($producto['idServicio']) && $producto['idServicio'] != ''){       $SIS_data .= ",'".$producto['idServicio']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad'] != ''){           $SIS_data .= ",'".$producto['Cantidad']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){   $SIS_data .= ",'".$producto['idFrecuencia']."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario'] != ''){         $SIS_data .= ",'".$producto['vUnitario']."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){               $SIS_data .= ",'".$producto['vTotal']."'" ;        }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `cotizacion_listado_existencias_servicios` (idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
-							Creacion_mes, Creacion_ano, idServicio, Cantidad, idFrecuencia, vUnitario, vTotal) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
+							Creacion_mes, Creacion_ano, idServicio, Cantidad, idFrecuencia, vUnitario, vTotal';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cotizacion_listado_existencias_servicios', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 					/*********************************************************************/		
@@ -1036,42 +978,28 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['cotizacion_archivos'] as $key => $producto){
 						
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                    $a  = "'".$ultimo_id."'" ;                                    }else{$a  = "''";}
-							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){      $a .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){      $a .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;    }else{$a .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){  $a .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;  }else{$a .= ",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){                                                                          $SIS_data  = "'".$ultimo_id."'" ;                                       }else{$SIS_data  = "''";}
+							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema'] != ''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario'] != ''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'" ;    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente'] != ''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'" ;    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha'] != ''){  
-								$a .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
-								$a .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
-								$a .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'" ;  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
+								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $a .= ",'".$producto['Nombre']."'" ;     }else{$a .= ",''";}
+							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `cotizacion_listado_archivos` (idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
-							Creacion_mes, Creacion_ano, Nombre) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							$SIS_columns = 'idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
+							Creacion_mes, Creacion_ano, Nombre';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cotizacion_listado_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
-					
-					
 					
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos

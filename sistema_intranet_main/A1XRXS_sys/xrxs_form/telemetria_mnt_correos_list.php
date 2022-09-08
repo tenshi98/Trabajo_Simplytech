@@ -21,7 +21,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['TimeStamp']) )      $TimeStamp      = $_POST['TimeStamp'];
 	if ( !empty($_POST['Chat_id']) )        $Chat_id        = $_POST['Chat_id'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -79,35 +78,22 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idCorreosCat) && $idCorreosCat != ''){   $a  = "'".$idCorreosCat."'" ;   }else{$a  = "''";}
-				if(isset($idSistema) && $idSistema != ''){         $a .= ",'".$idSistema."'" ;     }else{$a .= ",''";}
-				if(isset($idUsuario) && $idUsuario != ''){         $a .= ",'".$idUsuario."'" ;     }else{$a .= ",''";}
-				if(isset($TimeStamp) && $TimeStamp != ''){         $a .= ",'".$TimeStamp."'" ;     }else{$a .= ",''";}
-				if(isset($Chat_id) && $Chat_id != ''){             $a .= ",'".$Chat_id."'" ;     }else{$a .= ",''";}
+				if(isset($idCorreosCat) && $idCorreosCat != ''){   $SIS_data  = "'".$idCorreosCat."'" ;   }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema != ''){         $SIS_data .= ",'".$idSistema."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){         $SIS_data .= ",'".$idUsuario."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($TimeStamp) && $TimeStamp != ''){         $SIS_data .= ",'".$TimeStamp."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Chat_id) && $Chat_id != ''){             $SIS_data .= ",'".$Chat_id."'" ;       }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_mnt_correos_list` (idCorreosCat, idSistema, idUsuario, TimeStamp, Chat_id) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idCorreosCat, idSistema, idUsuario, TimeStamp, Chat_id';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_mnt_correos_list', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
 			}
 	
 		break;
@@ -143,16 +129,16 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idCorreos='".$idCorreos."'" ;
-				if(isset($idCorreosCat) && $idCorreosCat != ''){    $a .= ",idCorreosCat='".$idCorreosCat."'" ;}
-				if(isset($idSistema) && $idSistema != ''){          $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){          $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($TimeStamp) && $TimeStamp != ''){          $a .= ",TimeStamp='".$TimeStamp."'" ;}
-				if(isset($Chat_id) && $Chat_id != ''){              $a .= ",Chat_id='".$Chat_id."'" ;}
+				$SIS_data = "idCorreos='".$idCorreos."'" ;
+				if(isset($idCorreosCat) && $idCorreosCat != ''){    $SIS_data .= ",idCorreosCat='".$idCorreosCat."'" ;}
+				if(isset($idSistema) && $idSistema != ''){          $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){          $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($TimeStamp) && $TimeStamp != ''){          $SIS_data .= ",TimeStamp='".$TimeStamp."'" ;}
+				if(isset($Chat_id) && $Chat_id != ''){              $SIS_data .= ",Chat_id='".$Chat_id."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_mnt_correos_list', 'idCorreos = "'.$idCorreos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_mnt_correos_list', 'idCorreos = "'.$idCorreos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -254,12 +240,12 @@ require_once '0_validate_user_1.php';
 				
 				//Filtros
 				if(isset($Fecha_noMolestar) && $Fecha_noMolestar != ''&&isset($Hora_noMolestar) && $Hora_noMolestar != ''){          
-					$a = "TimeStamp='".$Fecha_noMolestar." ".$Hora_noMolestar."'" ;
+					$SIS_data = "TimeStamp='".$Fecha_noMolestar." ".$Hora_noMolestar."'" ;
 				}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_mnt_correos_list', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_mnt_correos_list', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

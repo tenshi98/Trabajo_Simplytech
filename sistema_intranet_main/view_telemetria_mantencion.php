@@ -186,15 +186,15 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 		</table>			
     </div>
 
-	<div class="row">
-		<div class="col-xs-12">
+	<div class="col-xs-12">
+		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Diagnostico tecnico y acciones realizadas:</p>
 			<div class="text-muted well well-sm no-shadow" ><?php echo $row_data['Resumen'];?></div>
 		</div>
 	</div>
 	
-	<div class="row">
-		<div class="col-xs-12">
+	<div class="col-xs-12">
+		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Resumen de Visita:</p>
 			<div class="text-muted well well-sm no-shadow" ><?php echo $row_data['Resolucion'];?></div>
 		</div>

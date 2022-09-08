@@ -91,6 +91,7 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 //verifico si se selecciono un equipo
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where.= " AND telemetria_listado_errores.idTelemetria='".$_GET['idTelemetria']."'";
+	$search .= '&idTelemetria='.$_GET['idTelemetria'];
 }
 //verifico el tipo de error
 if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
@@ -99,6 +100,12 @@ if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
 //verifico si esta leido
 if(isset($_GET['idLeido'])&&$_GET['idLeido']!=''){
 	$SIS_where.= " AND telemetria_listado_errores.idLeido='".$_GET['idLeido']."'";
+	$search .= '&idLeido='.$_GET['idLeido'];
+}
+
+//verifico si esta leido
+if(isset($_GET['submit_filter'])&&$_GET['submit_filter']!=''){
+	$search .= '&submit_filter='.$_GET['submit_filter'];
 }
 //Verifico el tipo de usuario que esta ingresando
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria';

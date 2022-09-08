@@ -49,11 +49,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['not_modbase']))  {$error['not_modbase']  = 'sucess/Cambio de estado cambiado correctamente';}
+if (isset($_GET['not_modbase'])){ $error['not_modbase'] = 'sucess/Cambio de estado cambiado correctamente';}
 
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['ejecution']) ) {
 // consulto los datos
 $query = "SELECT f_ejecucion, horaEjecucion, f_ejecucion_fin, horaEjecucion_fin

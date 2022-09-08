@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit']) )  { 
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_observaciones.php';
@@ -34,8 +34,8 @@ if ( !empty($_POST['submit']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit']) )  { 
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_observaciones.php';
@@ -43,8 +43,8 @@ if ( !empty($_POST['submit_edit']) )  {
 //se borra un dato
 if ( !empty($_GET['del']) )     {
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_observaciones.php';	
@@ -57,33 +57,20 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Observacion creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Observacion editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Observacion borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Observacion creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Observacion editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Observacion borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 // consulto los datos
-$query = "SELECT Observacion
-FROM `usuarios_observaciones`
-WHERE idObservacion = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
+$SIS_query = 'Observacion';
+$SIS_join  = '';
+$SIS_where = 'idObservacion ='.$_GET['edit'];
+$rowdata = db_select_data (false, $SIS_query, 'usuarios_observaciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
- ?>
+?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
@@ -156,31 +143,19 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['view']) ) { 
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 usuario_observado.Nombre AS nombre_cliente,
 usuario_evaluador.Nombre AS nombre_usuario,
 usuarios_observaciones.Fecha,
-usuarios_observaciones.Observacion
-FROM `usuarios_observaciones`
-LEFT JOIN `usuarios_listado` usuario_observado  ON usuario_observado.idUsuario     = usuarios_observaciones.idUsuario_observado
-LEFT JOIN `usuarios_listado` usuario_evaluador  ON usuario_evaluador.idUsuario     = usuarios_observaciones.idUsuario
-WHERE usuarios_observaciones.idObservacion = ".$_GET['view']."
-ORDER BY usuarios_observaciones.idObservacion ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+usuarios_observaciones.Observacion';
+$SIS_join  = '
+LEFT JOIN `usuarios_listado` usuario_observado  ON usuario_observado.idUsuario = usuarios_observaciones.idUsuario_observado
+LEFT JOIN `usuarios_listado` usuario_evaluador  ON usuario_evaluador.idUsuario = usuarios_observaciones.idUsuario';
+$SIS_where = 'usuarios_observaciones.idObservacion ='.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'usuarios_observaciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
+
 <div class="col-sm-8 fcenter">
 	<div class="box">	
 		<header>		
@@ -215,79 +190,38 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
 // consulto los datos
-$query = "SELECT Nombre
-FROM `usuarios_listado`
-WHERE idUsuario = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-// consulto los datos
-$arrObservaciones = array();
-$query = "SELECT 
-usuarios_observaciones.idObservacion,
-usuario_observado.Nombre AS nombre_cliente,
-usuario_evaluador.Nombre AS nombre_usuario,
-usuarios_observaciones.Fecha,
-usuarios_observaciones.Observacion
-FROM `usuarios_observaciones`
-LEFT JOIN `usuarios_listado` usuario_observado  ON usuario_observado.idUsuario     = usuarios_observaciones.idUsuario_observado
-LEFT JOIN `usuarios_listado` usuario_evaluador  ON usuario_evaluador.idUsuario     = usuarios_observaciones.idUsuario
-WHERE usuarios_observaciones.idUsuario_observado = ".$_GET['id']."
-ORDER BY usuarios_observaciones.idObservacion ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrObservaciones,$row );
-}
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idUsuario ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /********************************************************************************/
 /********************************************************************************/
 //Se verifican los permisos que tiene el usuario seleccionado
+$SIS_query = '
+usuarios_observaciones.idObservacion,
+usuario_observado.Nombre AS nombre_cliente,
+usuario_evaluador.Nombre AS nombre_usuario,
+usuarios_observaciones.Fecha,
+usuarios_observaciones.Observacion';
+$SIS_join  = '
+LEFT JOIN `usuarios_listado` usuario_observado  ON usuario_observado.idUsuario = usuarios_observaciones.idUsuario_observado
+LEFT JOIN `usuarios_listado` usuario_evaluador  ON usuario_evaluador.idUsuario = usuarios_observaciones.idUsuario';
+$SIS_where = 'usuarios_observaciones.idUsuario_observado='.$_GET['id'];
+$SIS_order = 'usuarios_observaciones.idObservacion ASC';
+$arrObservaciones = array();
+$arrObservaciones = db_select_array (false, $SIS_query, 'usuarios_observaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrObservaciones');
+
+/********************************************************************************/
+/********************************************************************************/
+//Se verifican los permisos que tiene el usuario seleccionado
+$SIS_query = 'core_permisos_listado.Direccionbase';
+$SIS_join  = 'INNER JOIN  core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm';
+$SIS_where = 'usuarios_permisos.idUsuario='.$_GET['id'];
+$SIS_order = 'core_permisos_listado.Direccionbase ASC';
 $arrPermiso = array();
-$query = "SELECT 
-core_permisos_listado.Direccionbase
-FROM `usuarios_permisos`
-INNER JOIN  core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm
-WHERE usuarios_permisos.idUsuario='".$_GET['id']."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-						
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermiso,$row );
-}
+$arrPermiso = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermiso');
+
 $arrPer = array();
 foreach ($arrPermiso as $ins) {
 	$arrPer[$ins['Direccionbase']] = 1;
@@ -381,8 +315,6 @@ $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_ejecutar.php";             
 $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_finalizadas.php";                 //65 - Orden de Trabajo - Finalizadas
 $x_nperm++; $trans[$x_nperm] = "orden_trabajo_motivo_terminar.php";                    //66 - Orden de Trabajo - Forzar Cierre
 
-
-
 /******************************************************/
 //Genero los permisos
 for ($i = 1; $i <= $x_nperm; $i++) {
@@ -393,8 +325,6 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 		$prm_x[$i] = 1;
 	}
 }
-
-
 
 /******************************************************/
 $arriendos    = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4] + $prm_x[5] + $prm_x[6] + $prm_x[7] + $prm_x[8];
@@ -408,10 +338,8 @@ $x_permisos_4 = $prm_x[54] + $prm_x[55] + $prm_x[56] + $prm_x[57] + $prm_x[58];
 $x_permisos_5 = $prm_x[44] + $prm_x[45] + $prm_x[46] + $prm_x[47] + $prm_x[48] + $prm_x[49] + $prm_x[50] + $prm_x[51] + $prm_x[52] + $prm_x[53];
 $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
-
-
-
 ?>
+
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Observaciones');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">

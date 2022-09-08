@@ -51,33 +51,22 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Tipo Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Tipo Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Tipo borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Tipo Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tipo Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tipo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
-$query = "SELECT Nombre
-FROM `vehiculos_tipo_carga`
-WHERE idTipoCarga = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idTipoCarga = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'vehiculos_tipo_carga', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
  
 <div class="col-sm-8 fcenter">
 	<div class="box dark">

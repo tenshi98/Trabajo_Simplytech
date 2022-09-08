@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit_idLevel']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -34,8 +34,8 @@ if ( !empty($_POST['submit_idLevel']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit_idLevel']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'update_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -44,8 +44,8 @@ if ( !empty($_POST['submit_edit_idLevel']) )  {
 //se agrega un trabajo
 if ( !empty($_POST['submit_addTrabajo']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'add_trabajo';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';	
@@ -54,8 +54,8 @@ if ( !empty($_POST['submit_addTrabajo']) )     {
 //se borra un dato
 if ( !empty($_GET['del_idLevel']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';	
@@ -64,8 +64,8 @@ if ( !empty($_GET['del_idLevel']) )     {
 //se borra un dato
 if ( !empty($_GET['clone_compo']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'clone_component';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';	
@@ -74,8 +74,8 @@ if ( !empty($_GET['clone_compo']) )     {
 //formulario para editar
 if ( !empty($_POST['submit_edit_img']) )  { 
 	//Nueva ubicacion
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'submit_img_comp';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';
@@ -83,8 +83,8 @@ if ( !empty($_POST['submit_edit_img']) )  {
 //se borra un dato
 if ( !empty($_GET['del_img']) )     {
 	//Nueva ubicacion
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_img_comp';
 	require_once 'A1XRXS_sys/xrxs_form/z_maquinas_listado.php';	
@@ -97,12 +97,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created']))    {$error['usuario'] 	  = 'sucess/Dato creado correctamente';}
-if (isset($_GET['edited']))     {$error['usuario'] 	  = 'sucess/Dato editado correctamente';}
-if (isset($_GET['deleted']))    {$error['usuario'] 	  = 'sucess/Dato borrado correctamente';}
-if (isset($_GET['clone_comp'])) {$error['usuario'] 	  = 'sucess/Componente clonado correctamente';}
+if (isset($_GET['created'])){    $error['created']    = 'sucess/Dato creado correctamente';}
+if (isset($_GET['edited'])){     $error['edited']     = 'sucess/Dato editado correctamente';}
+if (isset($_GET['deleted'])){    $error['deleted']    = 'sucess/Dato borrado correctamente';}
+if (isset($_GET['clone_comp'])){ $error['clone_comp'] = 'sucess/Componente clonado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['addTrabajo']) ) { 
 //Verifico el tipo de usuario que esta ingresando

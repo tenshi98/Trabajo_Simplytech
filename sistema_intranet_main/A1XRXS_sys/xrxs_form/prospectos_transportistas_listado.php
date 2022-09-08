@@ -48,6 +48,13 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){         $Nombre     = EstandarizarInput($Nombre); }
+	if(isset($email) && $email != ''){           $email      = EstandarizarInput($email); }
+	if(isset($email_noti) && $email_noti != ''){ $email_noti = EstandarizarInput($email_noti); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){          $error['Nombre']     = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -94,41 +101,25 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                           $a  = "'".$idSistema."'" ;               }else{$a ="''";}
-				if(isset($Nombre) && $Nombre != ''){                                 $a .= ",'".$Nombre."'" ;                 }else{$a .= ",''";}
-				if(isset($Fono) && $Fono != ''){                                     $a .= ",'".$Fono."'" ;                   }else{$a .= ",''";}
-				if(isset($email) && $email != ''){                                   $a .= ",'".$email."'" ;                  }else{$a .= ",''";}
-				if(isset($email_noti) && $email_noti != ''){                         $a .= ",'".$email_noti."'" ;             }else{$a .= ",''";}
-				if(isset($F_Ingreso) && $F_Ingreso != ''){                           $a .= ",'".$F_Ingreso."'" ;              }else{$a .= ",''";}
-				if(isset($idEstadoFidelizacion) && $idEstadoFidelizacion != ''){     $a .= ",'".$idEstadoFidelizacion."'" ;   }else{$a .= ",''";}
-				if(isset($idEtapa) && $idEtapa != ''){                               $a .= ",'".$idEtapa."'" ;                }else{$a .= ",''";}
-				
+				if(isset($idSistema) && $idSistema != ''){                           $SIS_data  = "'".$idSistema."'" ;               }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){                                 $SIS_data .= ",'".$Nombre."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($Fono) && $Fono != ''){                                     $SIS_data .= ",'".$Fono."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($email) && $email != ''){                                   $SIS_data .= ",'".$email."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($email_noti) && $email_noti != ''){                         $SIS_data .= ",'".$email_noti."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($F_Ingreso) && $F_Ingreso != ''){                           $SIS_data .= ",'".$F_Ingreso."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($idEstadoFidelizacion) && $idEstadoFidelizacion != ''){     $SIS_data .= ",'".$idEstadoFidelizacion."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idEtapa) && $idEtapa != ''){                               $SIS_data .= ",'".$idEtapa."'" ;                }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `prospectos_transportistas_listado` (idSistema, Nombre, Fono, email, email_noti,
-				F_Ingreso, idEstadoFidelizacion, idEtapa) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, Nombre, Fono, email, email_noti,
+				F_Ingreso, idEstadoFidelizacion, idEtapa';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'prospectos_transportistas_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -158,19 +149,19 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idProspecto='".$idProspecto."'" ;
-				if(isset($idSistema) && $idSistema != ''){                       $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                             $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Fono) && $Fono != ''){                                 $a .= ",Fono='".$Fono."'" ;}
-				if(isset($email) && $email != ''){                               $a .= ",email='".$email."'" ;}
-				if(isset($email_noti) && $email_noti != ''){                     $a .= ",email_noti='".$email_noti."'" ;}
-				if(isset($F_Ingreso) && $F_Ingreso!= ''){                        $a .= ",F_Ingreso='".$F_Ingreso."'" ;}
-				if(isset($idEstadoFidelizacion) && $idEstadoFidelizacion!= ''){  $a .= ",idEstadoFidelizacion='".$idEstadoFidelizacion."'" ;}
-				if(isset($idEtapa) && $idEtapa!= ''){                            $a .= ",idEtapa='".$idEtapa."'" ;}
+				$SIS_data = "idProspecto='".$idProspecto."'" ;
+				if(isset($idSistema) && $idSistema != ''){                       $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                             $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Fono) && $Fono != ''){                                 $SIS_data .= ",Fono='".$Fono."'" ;}
+				if(isset($email) && $email != ''){                               $SIS_data .= ",email='".$email."'" ;}
+				if(isset($email_noti) && $email_noti != ''){                     $SIS_data .= ",email_noti='".$email_noti."'" ;}
+				if(isset($F_Ingreso) && $F_Ingreso!= ''){                        $SIS_data .= ",F_Ingreso='".$F_Ingreso."'" ;}
+				if(isset($idEstadoFidelizacion) && $idEstadoFidelizacion!= ''){  $SIS_data .= ",idEstadoFidelizacion='".$idEstadoFidelizacion."'" ;}
+				if(isset($idEtapa) && $idEtapa!= ''){                            $SIS_data .= ",idEtapa='".$idEtapa."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'prospectos_transportistas_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'prospectos_transportistas_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

@@ -36,12 +36,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//Listado de errores no manejables
-if (isset($_GET['created'])) {$error['Prospecto'] 	  = 'sucess/Prospecto creado correctamente';}
-if (isset($_GET['edited']))  {$error['Prospecto'] 	  = 'sucess/Prospecto editado correctamente';}
-if (isset($_GET['deleted'])) {$error['Prospecto'] 	  = 'sucess/Prospecto borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos de mi Prospecto
 $query = "SELECT Fono1,Fono2, Fax, email, Web, Nombre 

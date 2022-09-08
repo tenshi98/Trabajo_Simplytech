@@ -165,24 +165,24 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['edited']))  {$error['edited'] 	          = 'sucess/Datos editados correctamente';}
-if (isset($_GET['addtrab']))  {$error['addtrab'] 	      = 'sucess/Trabajador agregado correctamente';}
-if (isset($_GET['edittrab']))  {$error['edittrab'] 	      = 'sucess/Trabajador editado correctamente';}
-if (isset($_GET['deltrab'])) {$error['deltrab'] 	      = 'sucess/Trabajador borrado correctamente';}
-if (isset($_GET['addins']))  {$error['addins'] 	          = 'sucess/Insumo agregado correctamente';}
-if (isset($_GET['editins'])) {$error['editins'] 	      = 'sucess/Insumo editado correctamente';}
-if (isset($_GET['delins']))  {$error['delins'] 	          = 'sucess/Insumo borrado correctamente';}
-if (isset($_GET['addprod']))  {$error['addprod'] 	      = 'sucess/Producto agregado correctamente';}
-if (isset($_GET['editprod'])) {$error['editprod'] 	      = 'sucess/Producto editado correctamente';}
-if (isset($_GET['delprod']))  {$error['delprod'] 	      = 'sucess/Producto borrado correctamente';}
-if (isset($_GET['addtarea']))  {$error['addtarea'] 	      = 'sucess/Tarea agregada correctamente';}
-if (isset($_GET['edittarea'])) {$error['edittarea'] 	  = 'sucess/Tarea editada correctamente';}
-if (isset($_GET['deltarea']))  {$error['deltarea'] 	      = 'sucess/Tarea borrada correctamente';}
-if (isset($_GET['addArchivo']))  {$error['addArchivo'] 	  = 'sucess/Archivo agregado correctamente';}
-if (isset($_GET['delArchivo']))  {$error['delArchivo'] 	  = 'sucess/Archivo borrado correctamente';}
+if (isset($_GET['edited'])){     $error['edited']      = 'sucess/Datos editados correctamente';}
+if (isset($_GET['addtrab'])){    $error['addtrab']     = 'sucess/Trabajador agregado correctamente';}
+if (isset($_GET['edittrab'])){   $error['edittrab']    = 'sucess/Trabajador editado correctamente';}
+if (isset($_GET['deltrab'])){    $error['deltrab']     = 'sucess/Trabajador borrado correctamente';}
+if (isset($_GET['addins'])){     $error['addins']      = 'sucess/Insumo agregado correctamente';}
+if (isset($_GET['editins'])){    $error['editins']     = 'sucess/Insumo editado correctamente';}
+if (isset($_GET['delins'])){     $error['delins']      = 'sucess/Insumo borrado correctamente';}
+if (isset($_GET['addprod'])){    $error['addprod']     = 'sucess/Producto agregado correctamente';}
+if (isset($_GET['editprod'])){   $error['editprod']    = 'sucess/Producto editado correctamente';}
+if (isset($_GET['delprod'])){    $error['delprod']     = 'sucess/Producto borrado correctamente';}
+if (isset($_GET['addtarea'])){   $error['addtarea']    = 'sucess/Tarea agregada correctamente';}
+if (isset($_GET['edittarea'])){  $error['edittarea']   = 'sucess/Tarea editada correctamente';}
+if (isset($_GET['deltarea'])){   $error['deltarea']    = 'sucess/Tarea borrada correctamente';}
+if (isset($_GET['addArchivo'])){ $error['addArchivo']  = 'sucess/Archivo agregado correctamente';}
+if (isset($_GET['delArchivo'])){ $error['delArchivo']  = 'sucess/Archivo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['addFile']) ) {
 //Se traen los datos de la ot
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';

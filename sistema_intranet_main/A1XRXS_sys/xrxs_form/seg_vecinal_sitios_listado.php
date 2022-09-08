@@ -36,6 +36,12 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){       $Nombre    = EstandarizarInput($Nombre); }
+	if(isset($Direccion) && $Direccion != ''){ $Direccion = EstandarizarInput($Direccion); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){        $error['Nombre']    = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -73,30 +79,18 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){        $a  = "'".$Nombre."'" ;      }else{$a  ="''";}
-				if(isset($Direccion) && $Direccion != ''){  $a .= ",'".$Direccion."'" ;  }else{$a .=",''";}
+				if(isset($Nombre) && $Nombre != ''){        $SIS_data  = "'".$Nombre."'" ;      }else{$SIS_data  = "''";}
+				if(isset($Direccion) && $Direccion != ''){  $SIS_data .= ",'".$Direccion."'" ;  }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `seg_vecinal_sitios_listado` (Nombre, Direccion) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Nombre, Direccion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seg_vecinal_sitios_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 				
 			}
@@ -122,13 +116,13 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idSitio='".$idSitio."'" ;
-				if(isset($Nombre) && $Nombre != ''){        $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Direccion) && $Direccion != ''){  $a .= ",Direccion='".$Direccion."'" ;}
+				$SIS_data = "idSitio='".$idSitio."'" ;
+				if(isset($Nombre) && $Nombre != ''){        $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Direccion) && $Direccion != ''){  $SIS_data .= ",Direccion='".$Direccion."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seg_vecinal_sitios_listado', 'idSitio = "'.$idSitio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_sitios_listado', 'idSitio = "'.$idSitio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

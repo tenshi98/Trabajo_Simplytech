@@ -37,14 +37,14 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['Alumno'] 	  = 'sucess/Alumno creado correctamente';}
-if (isset($_GET['edited']))  {$error['Alumno'] 	  = 'sucess/Alumno editado correctamente';}
-if (isset($_GET['deleted'])) {$error['Alumno'] 	  = 'sucess/Alumno borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Alumno creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Alumno editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Alumno borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos de mi Alumno
-$query = "SELECT Nombre, PersonaContacto, PersonaContacto_Fono, PersonaContacto_email 
+$query = "SELECT Nombre, ApellidoPat, PersonaContacto, PersonaContacto_Fono, PersonaContacto_email 
 FROM `alumnos_listado`
 WHERE idAlumno = ".$_GET['id'];
 //Consulta
@@ -63,7 +63,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="col-sm-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'], 'Editar Persona de contacto');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'], 'Editar Persona de contacto');?>
 </div>
 <div class="clearfix"></div>
 

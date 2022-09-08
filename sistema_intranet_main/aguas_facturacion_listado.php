@@ -7,8 +7,6 @@ define('XMBCXRXSKGC', 1);
 /*                                          Se llaman a los archivos necesarios                                                   */
 /**********************************************************************************************************************************/
 require_once 'core/Load.Utils.Web.php';
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel/IOFactory.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
@@ -61,12 +59,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Medicion Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Medicion Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Medicion borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Medicion Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Medicion Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Medicion borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['view_facturacion']) ) { 
 //Obtengo los datos principales
 $query = "SELECT 
@@ -255,19 +253,21 @@ array_push( $arrFacturacion,$row );
 }elseif ( ! empty($_GET['view']) ) { ?>
 	
 <div class="col-sm-12" style="margin-bottom:30px">
+	<div class="btn-group pull-right" role="group" aria-label="...">
+	
+		<?php 
+		$ubicacion = $location.'&clear_all=true';
+		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger dialogBox"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
-	<?php 		
-	$ubicacion = $location.'&view=true&ing_doc=true';
-	$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
-	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
+		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<?php 		
+		$ubicacion = $location.'&view=true&ing_doc=true';
+		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
 
-	<?php 
-	$ubicacion = $location.'&clear_all=true';
-	$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
-	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger fright margin_width dialogBox"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
-
+	</div>
 	<div class="clearfix"></div>
 </div> 
 	

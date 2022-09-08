@@ -21,8 +21,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Hora']) )           $Hora            = $_POST['Hora'];
 	if ( !empty($_POST['Observacion']) )    $Observacion     = $_POST['Observacion'];
 
-	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -44,6 +42,11 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observacion) && $Observacion != ''){ $Observacion = EstandarizarInput($Observacion); }
+
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita la Observacion, contiene palabras no permitidas'; }	
@@ -63,35 +66,21 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){     $a = "'".$idSistema."'" ;       }else{$a ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){     $a .= ",'".$idUsuario."'" ;     }else{$a .= ",''";}
-				if(isset($Fecha) && $Fecha != ''){             $a .= ",'".$Fecha."'" ;         }else{$a .= ",''";}
-				if(isset($Hora) && $Hora != ''){               $a .= ",'".$Hora."'" ;          }else{$a .= ",''";}
-				if(isset($Observacion) && $Observacion != ''){ $a .= ",'".$Observacion."'" ;   }else{$a .= ",''";}
-				
+				if(isset($idSistema) && $idSistema != ''){     $SIS_data  = "'".$idSistema."'" ;      }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario != ''){     $SIS_data .= ",'".$idUsuario."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){             $SIS_data .= ",'".$Fecha."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Hora) && $Hora != ''){               $SIS_data .= ",'".$Hora."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){ $SIS_data .= ",'".$Observacion."'" ;   }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `seguridad_eventos_listado` ( idSistema, idUsuario, Fecha, Hora, Observacion) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idUsuario, Fecha, Hora, Observacion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seguridad_eventos_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				}
 			}
 	
@@ -105,16 +94,16 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idEvento='".$idEvento."'" ;
-				if(isset($idSistema) && $idSistema != ''){       $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($Fecha) && $Fecha != ''){               $a .= ",Fecha='".$Fecha."'" ;}
-				if(isset($Hora) && $Hora != ''){                 $a .= ",Hora='".$Hora."'" ;}
-				if(isset($Observacion) && $Observacion != ''){   $a .= ",Observacion='".$Observacion."'" ;}
+				$SIS_data = "idEvento='".$idEvento."'" ;
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
+				if(isset($Hora) && $Hora != ''){                 $SIS_data .= ",Hora='".$Hora."'" ;}
+				if(isset($Observacion) && $Observacion != ''){   $SIS_data .= ",Observacion='".$Observacion."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seguridad_eventos_listado', 'idEvento = "'.$idEvento.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seguridad_eventos_listado', 'idEvento = "'.$idEvento.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -248,29 +237,18 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a  = "'".$idEvento."'" ;
-							$a .= ",'".$sufijo.$_FILES['event_file']['name']."'" ;
+							$SIS_data  = "'".$idEvento."'" ;
+							$SIS_data .= ",'".$sufijo.$_FILES['event_file']['name']."'" ;
 							
-							//se ejecuta la consulta
-							$query  = "INSERT INTO `seguridad_eventos_listado_archivos` ( idEvento, Nombre) VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							// inserto los datos de registro en la db
+							$SIS_columns = 'idEvento, Nombre';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seguridad_eventos_listado_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 							//Si ejecuto correctamente la consulta
-							if($resultado){
-								
+							if($ultimo_id!=0){
+								//redirijo
 								header( 'Location: '.$location.'&created=true' );
 								die;
-								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
 							}
 					
 						} else {

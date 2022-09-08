@@ -1,4 +1,7 @@
 <?php
+//Llamamos a la libreria para importar datos en excel
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
@@ -32,7 +35,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idDatosDetalle']) )            $idDatosDetalle            = $_POST['idDatosDetalle'];
 	if ( !empty($_POST['Consumo']) )                   $Consumo                   = $_POST['Consumo'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -64,6 +66,14 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){                 $Nombre         = EstandarizarInput($Nombre); }
+	if(isset($Observaciones) && $Observaciones != ''){   $Observaciones  = EstandarizarInput($Observaciones); }
+	if(isset($ConsumoMedidor) && $ConsumoMedidor != ''){ $ConsumoMedidor = EstandarizarInput($ConsumoMedidor); }
+	if(isset($Consumo) && $Consumo != ''){               $Consumo        = EstandarizarInput($Consumo); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -206,21 +216,32 @@ require_once '0_validate_user_1.php';
 								}
 							//si es un excel normal	
 							}else{
-								//Cargo la libreria de lectura de archivos excel
-								$objPHPExcel = PHPExcel_IOFactory::load($_FILES['File_Med']['tmp_name']);
-								//recorro la hoja excel
-								foreach ($objPHPExcel->getWorksheetIterator() as $worksheet){ 
-									$highestRow = $worksheet->getHighestRow();  
-									for ($row=2; $row<=$highestRow; $row++){ 
-																	  
-										$ID_Cliente     = $worksheet->getCellByColumnAndRow(0,  $row)->getValue(); 
-										//Se eliminan espacios en blanco
-										$ID_Cliente = str_replace(' ', '', $ID_Cliente);
-										
-										//verifico si el usuario ingresado en el excel existe
-										if(!isset($arrClientesMod[$ID_Cliente]['Identificador'])&&$ID_Cliente!=''&&$ID_Cliente!='N.Cliente'){
-											$ndata_2++;	
-										}	
+								//Cargo el archivo
+								$spreadsheet = IOFactory::load($_FILES['File_Med']['tmp_name']);
+								//Obtengo los nombres de las hojas
+								$loadedSheetNames = $spreadsheet->getSheetNames();
+								//recorro las hojas
+								foreach ($loadedSheetNames as $sheetIndex => $loadedSheetName) {
+									//seteo la hoja
+									$spreadsheet->setActiveSheetIndex($sheetIndex);
+									//selecciono la hoja
+									$worksheet = $spreadsheet->getActiveSheet();
+									//obtengo el total de datos
+									$highestRow = $worksheet->getHighestRow(); 
+									//si es una hoja en especifico
+									if ($loadedSheetName == "Datos"){ 
+										//recorro
+										for ($row=2; $row<=$highestRow; $row++){ 
+											
+											$ID_Cliente     = $worksheet->getCellByColumnAndRow(1,  $row)->getValue(); 
+											//Se eliminan espacios en blanco
+											$ID_Cliente = str_replace(' ', '', $ID_Cliente);
+											
+											//verifico si el usuario ingresado en el excel existe
+											if(!isset($arrClientesMod[$ID_Cliente]['Identificador'])&&$ID_Cliente!=''&&$ID_Cliente!='N.Cliente'){
+												$ndata_2++;	
+											}	
+										}
 									}
 								}
 							}		
@@ -231,37 +252,32 @@ require_once '0_validate_user_1.php';
 							// si no hay errores ejecuto el codigo	
 							if ( empty($error) ) {
 								//Creo el registro en la tabla madre
-								if(isset($idSistema) && $idSistema != ''){   $a  = "'".$idSistema."'" ;   }else{$a  ="''";}
-								if(isset($idUsuario) && $idUsuario != ''){   $a .= ",'".$idUsuario."'" ;  }else{$a .=",''";}
+								if(isset($idSistema) && $idSistema != ''){   $SIS_data  = "'".$idSistema."'" ;   }else{$SIS_data  = "''";}
+								if(isset($idUsuario) && $idUsuario != ''){   $SIS_data .= ",'".$idUsuario."'" ;  }else{$SIS_data .= ",''";}
 								if(isset($Fecha) && $Fecha != ''){                  
-									$a .= ",'".$Fecha."'" ; 
-									$a .= ",'".fecha2NdiaMes($Fecha)."'" ; 
-									$a .= ",'".fecha2NMes($Fecha)."'" ; 
-									$a .= ",'".fecha2Ano($Fecha)."'" ;  
-									$a .= ",'Facturación mes ".fecha2NombreMes($Fecha)." ".fecha2Ano($Fecha)."'" ;        
+									$SIS_data .= ",'".$Fecha."'" ; 
+									$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'" ; 
+									$SIS_data .= ",'".fecha2NMes($Fecha)."'" ; 
+									$SIS_data .= ",'".fecha2Ano($Fecha)."'" ;  
+									$SIS_data .= ",'Facturación mes ".fecha2NombreMes($Fecha)." ".fecha2Ano($Fecha)."'" ;        
 								}else{
-									$a .=",''";
-									$a .=",''";
-									$a .=",''";
-									$a .=",''";
-									$a .=",''";
+									$SIS_data .= ",''";
+									$SIS_data .= ",''";
+									$SIS_data .= ",''";
+									$SIS_data .= ",''";
+									$SIS_data .= ",''";
 								}
-								if(isset($Observaciones) && $Observaciones != ''){ $a .= ",'".$Observaciones."'" ; }else{$a .=",'Sin Observaciones'";}
-								$a .=",'".fecha_actual()."'";
-								$a .=",'1'";
+								if(isset($Observaciones) && $Observaciones != ''){ $SIS_data .= ",'".$Observaciones."'" ; }else{$SIS_data .=",'Sin Observaciones'";}
+								$SIS_data .=",'".fecha_actual()."'";
+								$SIS_data .=",'1'";
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `aguas_mediciones_datos` (idSistema, idUsuario, Fecha, Dia, 
-								idMes, Ano, Nombre, Observaciones, fCreacion, idTipo) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if($resultado){
-									
-									//recibo el último id generado por mi sesion
-									$ultimo_id = mysqli_insert_id($dbConn);
+								$SIS_columns = 'idSistema, idUsuario, Fecha, Dia, idMes, Ano, Nombre, Observaciones, fCreacion, idTipo';
+								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_mediciones_datos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
+								//Si ejecuto correctamente la consulta
+								if($ultimo_id!=0){
+									
 									//Se verifica el tipo de archivo
 									if($_FILES['File_Med']['type']=='text/csv'){
 										
@@ -295,40 +311,39 @@ require_once '0_validate_user_1.php';
 												$idRemarcadores  = $arrClientesMod[$ID_Cliente]['idRemarcadores'];
 														
 												//filtros
-												if(isset($idSistema) && $idSistema != ''){    $a  = "'".$idSistema."'" ;     }else{$a  ="''";}
-												if(isset($idUsuario) && $idUsuario != ''){    $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
-												$a .= ",'".$ultimo_id."'" ;       
+												if(isset($idSistema) && $idSistema != ''){    $SIS_data  = "'".$idSistema."'" ;     }else{$SIS_data  = "''";}
+												if(isset($idUsuario) && $idUsuario != ''){    $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
+												$SIS_data .= ",'".$ultimo_id."'" ;       
 												if(isset($ID_FLectura) && $ID_FLectura != ''){                  
-													$a .= ",'".ExcelFechaCompleta($ID_FLectura)."'" ; 
-													$a .= ",'".ExcelFechaDia($ID_FLectura)."'" ; 
-													$a .= ",'".ExcelFechaMes($ID_FLectura)."'" ; 
-													$a .= ",'".ExcelFechaAno($ID_FLectura)."'" ;          
+													$SIS_data .= ",'".ExcelFechaCompleta($ID_FLectura)."'" ; 
+													$SIS_data .= ",'".ExcelFechaDia($ID_FLectura)."'" ; 
+													$SIS_data .= ",'".ExcelFechaMes($ID_FLectura)."'" ; 
+													$SIS_data .= ",'".ExcelFechaAno($ID_FLectura)."'" ;          
 												}else{
-													$a .=",''";
-													$a .=",''";
-													$a .=",''";
-													$a .=",''";
+													$SIS_data .= ",''";
+													$SIS_data .= ",''";
+													$SIS_data .= ",''";
+													$SIS_data .= ",''";
 												}
-												if(isset($idCliente) && $idCliente != ''){             $a .= ",'".$idCliente."'" ;        }else{$a .=",''";}
-												if(isset($idMarcadores) && $idMarcadores != ''){       $a .= ",'".$idMarcadores."'" ;     }else{$a .=",''";}
-												if(isset($idRemarcadores) && $idRemarcadores != ''){   $a .= ",'".$idRemarcadores."'" ;   }else{$a .=",''";}
-												if(isset($ID_TipoMIU) && $ID_TipoMIU != ''){           $a .= ",'".$ID_TipoMIU."'" ;       }else{$a .=",''";}
-												if(isset($ID_MIU) && $ID_MIU != ''){                   $a .= ",'".$ID_MIU."'" ;           }else{$a .=",''";}
-												if(isset($ID_Contador) && $ID_Contador != ''){         $a .= ",'".$ID_Contador."'" ;      }else{$a .=",''";}
-												if(isset($ID_Consumo) && $ID_Consumo != ''){           $a .= ",'".$ID_Consumo."'" ;       }else{$a .=",''";}
-												$a .= ",'1'" ;
-												$a .= ",'0'" ;
-												$a .=",'".fecha_actual()."'";
-												$a .= ",'1'" ;
-												$a .= ",'1'" ;
-														
+												if(isset($idCliente) && $idCliente != ''){             $SIS_data .= ",'".$idCliente."'" ;        }else{$SIS_data .= ",''";}
+												if(isset($idMarcadores) && $idMarcadores != ''){       $SIS_data .= ",'".$idMarcadores."'" ;     }else{$SIS_data .= ",''";}
+												if(isset($idRemarcadores) && $idRemarcadores != ''){   $SIS_data .= ",'".$idRemarcadores."'" ;   }else{$SIS_data .= ",''";}
+												if(isset($ID_TipoMIU) && $ID_TipoMIU != ''){           $SIS_data .= ",'".$ID_TipoMIU."'" ;       }else{$SIS_data .= ",''";}
+												if(isset($ID_MIU) && $ID_MIU != ''){                   $SIS_data .= ",'".$ID_MIU."'" ;           }else{$SIS_data .= ",''";}
+												if(isset($ID_Contador) && $ID_Contador != ''){         $SIS_data .= ",'".$ID_Contador."'" ;      }else{$SIS_data .= ",''";}
+												if(isset($ID_Consumo) && $ID_Consumo != ''){           $SIS_data .= ",'".$ID_Consumo."'" ;       }else{$SIS_data .= ",''";}
+												$SIS_data .= ",'1'" ;
+												$SIS_data .= ",'0'" ;
+												$SIS_data .=",'".fecha_actual()."'";
+												$SIS_data .= ",'1'" ;
+												$SIS_data .= ",'1'" ;
+												
 												// inserto los datos de registro en la db
-												$query  = "INSERT INTO `aguas_mediciones_datos_detalle` (idSistema, idUsuario, idDatos, Fecha, 
+												$SIS_columns = 'idSistema, idUsuario, idDatos, Fecha, 
 												Dia, idMes, Ano, idCliente, idMarcadores, idRemarcadores, TipoMIU, MIU, Contador, Consumo, 
-												idFacturado, idFacturacion, fCreacion, idTipoFacturacion,idTipoLectura) 
-												VALUES (".$a.")";
-												//Consulta
-												$resultado = mysqli_query ($dbConn, $query);
+												idFacturado, idFacturacion, fCreacion, idTipoFacturacion,idTipoLectura';
+												$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_mediciones_datos_detalle', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+												
 											}
 										}
 										
@@ -339,87 +354,91 @@ require_once '0_validate_user_1.php';
 									//si es un excel normal	
 									}else{
 										
-										
-										//Cargo la libreria de lectura de archivos excel
-										$objPHPExcel = PHPExcel_IOFactory::load($_FILES['File_Med']['tmp_name']);
-										//recorro la hoja excel
-										foreach ($objPHPExcel->getWorksheetIterator() as $worksheet){ 
-											$highestRow = $worksheet->getHighestRow();  
-											for ($row=2; $row<=$highestRow; $row++){ 
-																		  
-												$ID_Cliente     = $worksheet->getCellByColumnAndRow(0,  $row)->getValue(); 
-												$ID_Nombre      = $worksheet->getCellByColumnAndRow(1,  $row)->getValue();  
-												$ID_Direccion   = $worksheet->getCellByColumnAndRow(2,  $row)->getValue();  
-												$ID_Consumo     = $worksheet->getCellByColumnAndRow(3,  $row)->getValue(); 
-												$ID_FLectura    = $worksheet->getCellByColumnAndRow(5,  $row)->getValue(); 
-												$ID_TipoMIU     = $worksheet->getCellByColumnAndRow(8,  $row)->getValue();
-												$ID_MIU         = $worksheet->getCellByColumnAndRow(9,  $row)->getValue(); 
-												$ID_Contador    = $worksheet->getCellByColumnAndRow(11, $row)->getValue(); 
-				
-												//Se eliminan espacios en blanco
-												$ID_Cliente = str_replace(' ', '', $ID_Cliente);
-												//Se cambian comas por puntos
-												$ID_Consumo = str_replace(',', '.', $ID_Consumo);
-										  
-												//verifico si el usuario ingresado en el excel existe
-												if(isset($arrClientesMod[$ID_Cliente]['Identificador'])&&$ID_Cliente!=''&&$ID_Cliente!='N.Cliente'){
+										//Cargo el archivo
+										$spreadsheet = IOFactory::load($_FILES['File_Med']['tmp_name']);
+										//Obtengo los nombres de las hojas
+										$loadedSheetNames = $spreadsheet->getSheetNames();
+										//recorro las hojas
+										foreach ($loadedSheetNames as $sheetIndex => $loadedSheetName) {
+											//seteo la hoja
+											$spreadsheet->setActiveSheetIndex($sheetIndex);
+											//selecciono la hoja
+											$worksheet = $spreadsheet->getActiveSheet();
+											//obtengo el total de datos
+											$highestRow = $worksheet->getHighestRow(); 
+											//si es una hoja en especifico
+											if ($loadedSheetName == "Datos"){ 
+												//recorro
+												for ($row=2; $row<=$highestRow; $row++){ 
 													
-													//defino variables
-													$idCliente       = $arrClientesMod[$ID_Cliente]['idCliente'];
-													$idMarcadores    = $arrClientesMod[$ID_Cliente]['idMarcadores'];
-													$idRemarcadores  = $arrClientesMod[$ID_Cliente]['idRemarcadores'];
+													$ID_Cliente     = $worksheet->getCellByColumnAndRow(1,  $row)->getValue(); 
+													$ID_Nombre      = $worksheet->getCellByColumnAndRow(2,  $row)->getValue();  
+													$ID_Direccion   = $worksheet->getCellByColumnAndRow(3,  $row)->getValue();  
+													$ID_Consumo     = $worksheet->getCellByColumnAndRow(4,  $row)->getValue(); 
+													$ID_FLectura    = $worksheet->getCellByColumnAndRow(6,  $row)->getValue(); 
+													$ID_TipoMIU     = $worksheet->getCellByColumnAndRow(9,  $row)->getValue();
+													$ID_MIU         = $worksheet->getCellByColumnAndRow(10, $row)->getValue(); 
+													$ID_Contador    = $worksheet->getCellByColumnAndRow(12, $row)->getValue(); 
+													
+													//si la celda no esta vacia
+													if($ID_Cliente!=''){
+														//Se eliminan espacios en blanco
+														$ID_Cliente = str_replace(' ', '', $ID_Cliente);
+														//Se cambian comas por puntos
+														$ID_Consumo = str_replace(',', '.', $ID_Consumo);
+												  
+														//verifico si el usuario ingresado en el excel existe
+														if(isset($arrClientesMod[$ID_Cliente]['Identificador'])&&$ID_Cliente!=''&&$ID_Cliente!='N.Cliente'){
 															
-													//filtros
-													if(isset($idSistema) && $idSistema != ''){    $a  = "'".$idSistema."'" ;     }else{$a  ="''";}
-													if(isset($idUsuario) && $idUsuario != ''){    $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
-													$a .= ",'".$ultimo_id."'" ;       
-													if(isset($Fecha) && $Fecha != ''){                  
-														$a .= ",'".$Fecha."'" ; 
-														$a .= ",'".fecha2NdiaMes($Fecha)."'" ; 
-														$a .= ",'".fecha2NMes($Fecha)."'" ; 
-														$a .= ",'".fecha2Ano($Fecha)."'" ;
-													}else{
-														$a .=",''";
-														$a .=",''";
-														$a .=",''";
-														$a .=",''";
-													}
-													if(isset($idCliente) && $idCliente != ''){             $a .= ",'".$idCliente."'" ;        }else{$a .=",''";}
-													if(isset($idMarcadores) && $idMarcadores != ''){       $a .= ",'".$idMarcadores."'" ;     }else{$a .=",''";}
-													if(isset($idRemarcadores) && $idRemarcadores != ''){   $a .= ",'".$idRemarcadores."'" ;   }else{$a .=",''";}
-													if(isset($ID_TipoMIU) && $ID_TipoMIU != ''){           $a .= ",'".$ID_TipoMIU."'" ;       }else{$a .=",''";}
-													if(isset($ID_MIU) && $ID_MIU != ''){                   $a .= ",'".$ID_MIU."'" ;           }else{$a .=",''";}
-													if(isset($ID_Contador) && $ID_Contador != ''){         $a .= ",'".$ID_Contador."'" ;      }else{$a .=",''";}
-													if(isset($ID_Consumo) && $ID_Consumo != ''){           $a .= ",'".$ID_Consumo."'" ;       }else{$a .=",''";}
-													$a .= ",'1'" ;
-													$a .= ",'0'" ;
-													$a .=",'".fecha_actual()."'";
-													$a .= ",'1'" ;
-													$a .= ",'1'" ;
+															//defino variables
+															$idCliente       = $arrClientesMod[$ID_Cliente]['idCliente'];
+															$idMarcadores    = $arrClientesMod[$ID_Cliente]['idMarcadores'];
+															$idRemarcadores  = $arrClientesMod[$ID_Cliente]['idRemarcadores'];
+																	
+															//filtros
+															if(isset($idSistema) && $idSistema != ''){    $SIS_data  = "'".$idSistema."'" ;     }else{$SIS_data  = "''";}
+															if(isset($idUsuario) && $idUsuario != ''){    $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
+															$SIS_data .= ",'".$ultimo_id."'" ;       
+															if(isset($Fecha) && $Fecha != ''){                  
+																$SIS_data .= ",'".$Fecha."'" ; 
+																$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'" ; 
+																$SIS_data .= ",'".fecha2NMes($Fecha)."'" ; 
+																$SIS_data .= ",'".fecha2Ano($Fecha)."'" ;
+															}else{
+																$SIS_data .= ",''";
+																$SIS_data .= ",''";
+																$SIS_data .= ",''";
+																$SIS_data .= ",''";
+															}
+															if(isset($idCliente) && $idCliente != ''){             $SIS_data .= ",'".$idCliente."'" ;        }else{$SIS_data .= ",''";}
+															if(isset($idMarcadores) && $idMarcadores != ''){       $SIS_data .= ",'".$idMarcadores."'" ;     }else{$SIS_data .= ",''";}
+															if(isset($idRemarcadores) && $idRemarcadores != ''){   $SIS_data .= ",'".$idRemarcadores."'" ;   }else{$SIS_data .= ",''";}
+															if(isset($ID_TipoMIU) && $ID_TipoMIU != ''){           $SIS_data .= ",'".$ID_TipoMIU."'" ;       }else{$SIS_data .= ",''";}
+															if(isset($ID_MIU) && $ID_MIU != ''){                   $SIS_data .= ",'".$ID_MIU."'" ;           }else{$SIS_data .= ",''";}
+															if(isset($ID_Contador) && $ID_Contador != ''){         $SIS_data .= ",'".$ID_Contador."'" ;      }else{$SIS_data .= ",''";}
+															if(isset($ID_Consumo) && $ID_Consumo != ''){           $SIS_data .= ",'".$ID_Consumo."'" ;       }else{$SIS_data .= ",''";}
+															$SIS_data .= ",'1'" ;
+															$SIS_data .= ",'0'" ;
+															$SIS_data .= ",'".fecha_actual()."'";
+															$SIS_data .= ",'1'" ;
+															$SIS_data .= ",'1'" ;
 															
-													// inserto los datos de registro en la db
-													$query  = "INSERT INTO `aguas_mediciones_datos_detalle` (idSistema, idUsuario, idDatos, Fecha, 
-													Dia, idMes, Ano, idCliente, idMarcadores, idRemarcadores, TipoMIU, MIU, Contador, Consumo, 
-													idFacturado, idFacturacion, fCreacion, idTipoFacturacion,idTipoLectura) 
-													VALUES (".$a.")";
-													//Consulta
-													$resultado = mysqli_query ($dbConn, $query);
-												}						  
+															// inserto los datos de registro en la db
+															$SIS_columns = 'idSistema, idUsuario, idDatos, Fecha, 
+															Dia, idMes, Ano, idCliente, idMarcadores, idRemarcadores, TipoMIU, MIU, Contador, Consumo, 
+															idFacturado, idFacturacion, fCreacion, idTipoFacturacion,idTipoLectura';
+															$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_mediciones_datos_detalle', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+															
+														}
+													}	
+												}
 											}
 										}
+										
 										//redirijo
 										header( 'Location: '.$location.'&created=true' );
 										die;
 									}		
-								//si da error, guardar en el log de errores una copia
-								}else{
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-											
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 								}
 							}
 							
@@ -445,26 +464,26 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idDatos='".$idDatos."'" ;
-				if(isset($idSistema) && $idSistema != ''){    $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){    $a .= ",idUsuario='".$idUsuario."'" ;}
+				$SIS_data = "idDatos='".$idDatos."'" ;
+				if(isset($idSistema) && $idSistema != ''){    $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){    $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
 				if(isset($Fecha) && $Fecha != ''){                               
-					$a .= ",Fecha='".$Fecha."'" ; 
-					$a .= ",Dia='".fecha2NdiaMes($Fecha)."'" ; 
-					$a .= ",idMes='".fecha2NMes($Fecha)."'" ; 
-					$a .= ",Ano='".fecha2Ano($Fecha)."'" ;  
-					$a .= ",Nombre='Facturación mes ".fecha2NombreMes($Fecha)." ".fecha2Ano($Fecha)."'" ;
+					$SIS_data .= ",Fecha='".$Fecha."'" ; 
+					$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'" ; 
+					$SIS_data .= ",idMes='".fecha2NMes($Fecha)."'" ; 
+					$SIS_data .= ",Ano='".fecha2Ano($Fecha)."'" ;  
+					$SIS_data .= ",Nombre='Facturación mes ".fecha2NombreMes($Fecha)." ".fecha2Ano($Fecha)."'" ;
 				}
-				if(isset($Observaciones) && $Observaciones != ''){            $a .= ",Observaciones='".$Observaciones."'" ;}
-				if(isset($fCreacion) && $fCreacion != ''){                    $a .= ",fCreacion='".$fCreacion."'" ;}
-				if(isset($idTipo) && $idTipo != ''){                          $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idTipoMedicion) && $idTipoMedicion != ''){          $a .= ",idTipoMedicion='".$idTipoMedicion."'" ;}
-				if(isset($idMarcadoresUsado) && $idMarcadoresUsado != ''){    $a .= ",idMarcadoresUsado='".$idMarcadoresUsado."'" ;}
-				if(isset($ConsumoMedidor) && $ConsumoMedidor != ''){          $a .= ",ConsumoMedidor='".$ConsumoMedidor."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){            $SIS_data .= ",Observaciones='".$Observaciones."'" ;}
+				if(isset($fCreacion) && $fCreacion != ''){                    $SIS_data .= ",fCreacion='".$fCreacion."'" ;}
+				if(isset($idTipo) && $idTipo != ''){                          $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($idTipoMedicion) && $idTipoMedicion != ''){          $SIS_data .= ",idTipoMedicion='".$idTipoMedicion."'" ;}
+				if(isset($idMarcadoresUsado) && $idMarcadoresUsado != ''){    $SIS_data .= ",idMarcadoresUsado='".$idMarcadoresUsado."'" ;}
+				if(isset($ConsumoMedidor) && $ConsumoMedidor != ''){          $SIS_data .= ",ConsumoMedidor='".$ConsumoMedidor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'aguas_mediciones_datos', 'idDatos = "'.$idDatos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'aguas_mediciones_datos', 'idDatos = "'.$idDatos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo
@@ -485,12 +504,12 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idDatosDetalle='".$idDatosDetalle."'" ;
-				if(isset($Consumo) && $Consumo != ''){    $a .= ",Consumo='".$Consumo."'" ;}
+				$SIS_data = "idDatosDetalle='".$idDatosDetalle."'" ;
+				if(isset($Consumo) && $Consumo != ''){    $SIS_data .= ",Consumo='".$Consumo."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'aguas_mediciones_datos_detalle', 'idDatosDetalle = "'.$idDatosDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'aguas_mediciones_datos_detalle', 'idDatosDetalle = "'.$idDatosDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo

@@ -58,6 +58,13 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Direccion) && $Direccion != ''){                       $Direccion            = EstandarizarInput($Direccion); }
+	if(isset($DescripcionTipo) && $DescripcionTipo != ''){           $DescripcionTipo      = EstandarizarInput($DescripcionTipo); }
+	if(isset($DescripcionSituacion) && $DescripcionSituacion != ''){ $DescripcionSituacion = EstandarizarInput($DescripcionSituacion); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){                        $error['Direccion']            = 'error/Edita la Direccion, contiene palabras no permitidas'; }	
@@ -78,30 +85,30 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idEvento='".$idEvento."'" ;
-				if(isset($idSistema) && $idSistema != ''){                        $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idCliente) && $idCliente != ''){                        $a .= ",idCliente='".$idCliente."'" ;}
-				if(isset($idTipo) && $idTipo != ''){                              $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idCiudad) && $idCiudad != ''){                          $a .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna != ''){                          $a .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Direccion) && $Direccion != ''){                        $a .= ",Direccion='".$Direccion."'" ;}
-				if(isset($GeoLatitud) && $GeoLatitud != ''){                      $a .= ",GeoLatitud='".$GeoLatitud."'" ;}
-				if(isset($GeoLongitud) && $GeoLongitud != ''){                    $a .= ",GeoLongitud='".$GeoLongitud."'" ;}
+				$SIS_data = "idEvento='".$idEvento."'" ;
+				if(isset($idSistema) && $idSistema != ''){                        $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idCliente) && $idCliente != ''){                        $SIS_data .= ",idCliente='".$idCliente."'" ;}
+				if(isset($idTipo) && $idTipo != ''){                              $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($idCiudad) && $idCiudad != ''){                          $SIS_data .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna != ''){                          $SIS_data .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){                        $SIS_data .= ",Direccion='".$Direccion."'" ;}
+				if(isset($GeoLatitud) && $GeoLatitud != ''){                      $SIS_data .= ",GeoLatitud='".$GeoLatitud."'" ;}
+				if(isset($GeoLongitud) && $GeoLongitud != ''){                    $SIS_data .= ",GeoLongitud='".$GeoLongitud."'" ;}
 				if(isset($Fecha) && $Fecha != ''){                               
-					$a .= ",Fecha='".$Fecha."'" ;
-					$a .= ",Semana='".fecha2NSemana($Fecha)."'" ;
-					$a .= ",Dia='".fecha2NdiaMes($Fecha)."'" ;
-					$a .= ",idMes='".fecha2NMes($Fecha)."'" ;
-					$a .= ",Ano='".fecha2Ano($Fecha)."'" ;
+					$SIS_data .= ",Fecha='".$Fecha."'" ;
+					$SIS_data .= ",Semana='".fecha2NSemana($Fecha)."'" ;
+					$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'" ;
+					$SIS_data .= ",idMes='".fecha2NMes($Fecha)."'" ;
+					$SIS_data .= ",Ano='".fecha2Ano($Fecha)."'" ;
 				}
-				if(isset($Hora) && $Hora != ''){                                  $a .= ",Hora='".$Hora."'" ;}
-				if(isset($DescripcionTipo) && $DescripcionTipo != ''){            $a .= ",DescripcionTipo='".$DescripcionTipo."'" ;}
-				if(isset($DescripcionSituacion) && $DescripcionSituacion != ''){  $a .= ",DescripcionSituacion='".$DescripcionSituacion."'" ;}
-				if(isset($idValidado) && $idValidado != ''){                      $a .= ",idValidado='".$idValidado."'" ;}
+				if(isset($Hora) && $Hora != ''){                                  $SIS_data .= ",Hora='".$Hora."'" ;}
+				if(isset($DescripcionTipo) && $DescripcionTipo != ''){            $SIS_data .= ",DescripcionTipo='".$DescripcionTipo."'" ;}
+				if(isset($DescripcionSituacion) && $DescripcionSituacion != ''){  $SIS_data .= ",DescripcionSituacion='".$DescripcionSituacion."'" ;}
+				if(isset($idValidado) && $idValidado != ''){                      $SIS_data .= ",idValidado='".$idValidado."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'seg_vecinal_eventos_listado', 'idEvento = "'.$idEvento.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_eventos_listado', 'idEvento = "'.$idEvento.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

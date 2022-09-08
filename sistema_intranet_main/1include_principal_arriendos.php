@@ -10,64 +10,29 @@ $diaActual = dia_actual();
 $diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
-//arreglo con los meses
-$meses=array(1=>"Enero", 
-				"Febrero", 
-				"Marzo", 
-				"Abril", 
-				"Mayo", 
-				"Junio", 
-				"Julio",
-				"Agosto", 
-				"Septiembre", 
-				"Octubre", 
-				"Noviembre", 
-				"Diciembre"
-			);
-
-	
 //filtros para las consultas
-$z ="WHERE idTipo=".$idTipo;      //Solo ingresos - egresos
-$z.=" AND idEstadoDevolucion=1";  //No devueltos aun
-$z.=" AND Pago_mes=".$Mes;        //el mes actual
-$z.=" AND Pago_ano=".$Ano;        //el año actual
-$z.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where ='idTipo='.$idTipo;            //Solo ingresos - egresos
+$SIS_where.=' AND idEstadoDevolucion=1';  //No devueltos aun
+$SIS_where.=' AND Pago_mes='.$Mes;        //el mes actual
+$SIS_where.=' AND Pago_ano='.$Ano;        //el año actual
+$SIS_where.=' AND bodegas_arriendos_facturacion.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$join = "";	
+	$SIS_join = '';	
 }else{
-	$z.=" AND usuarios_bodegas_arriendos.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
-	$join = "INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega =  bodegas_arriendos_facturacion.idBodega";
+	$SIS_where.= ' AND usuarios_bodegas_arriendos.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_join  = 'INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega =  bodegas_arriendos_facturacion.idBodega';
 }
 /******************************/
 // Se trae un listado con todas las facturas no pagadas del mes
-$arrFacturas_1 = array();
-$query = "SELECT  
+$SIS_query = '
 bodegas_arriendos_facturacion.idFacturacion, 
 bodegas_arriendos_facturacion.Devolucion_dia AS Dia, 
-bodegas_arriendos_facturacion.N_Doc AS NumDoc
-FROM `bodegas_arriendos_facturacion`
-".$join."
-".$z."
-ORDER BY Devolucion_dia ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrFacturas_1,$row );
-}
-
+bodegas_arriendos_facturacion.N_Doc AS NumDoc';
+$SIS_order = 'Devolucion_dia ASC';
+$arrFacturas_1 = array();
+$arrFacturas_1 = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFacturas_1');
 
 ?>
 
@@ -100,7 +65,7 @@ array_push( $arrFacturas_1,$row );
 							if (($Mes+1)==13) {$mes_adelante=1; $Ano_b=$Ano_b+1;}else{$mes_adelante=$Mes+1; }
 							?>
 							<td class="fc-header-left"><a href="<?php echo $original.'?idTipo='.$idTipo.'&Mes='.$mes_atras.'&Ano='.$Ano_a ?>" class="btn btn-default">‹</a></td>
-							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo $meses[$Mes]." ".$Ano?></h2></span></td>
+							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo numero_a_mes($Mes)." ".$Ano?></h2></span></td>
 							<td class="fc-header-right"><a href="<?php echo $original.'?idTipo='.$idTipo.'&Mes='.$mes_adelante.'&Ano='.$Ano_b ?>" class="btn btn-default">›</a></td>
 						</tr>
 					</tbody>

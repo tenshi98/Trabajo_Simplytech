@@ -16,32 +16,15 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 $original = "core_info_sistema.php";
 $location = $original;
 /**********************************************************************************************************************************/
-/*                                          Se llaman a las partes de los formularios                                             */
-/**********************************************************************************************************************************/
-//formulario para editar
-if ( !empty($_POST['submit_email']) )  { 
-	//Llamamos al formulario
-	$form_trabajo= 'send_mail';
-	require_once 'A1XRXS_sys/xrxs_form/z_server_test.php';
-}
-//se borra un dato
-if ( !empty($_GET['del_error']) )     {
-	//Llamamos al formulario
-	$form_trabajo= 'del_error';
-	require_once 'A1XRXS_sys/xrxs_form/z_server_test.php';	
-}
-/**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//Listado de errores no manejables
-if (isset($_GET['error'])) {$error['usuario'] 	  = 'error/'.$_GET['error'];}
-if (isset($_GET['send']))  {$error['usuario'] 	  = 'sucess/Email enviado correctamente';}
+
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 
 //verifica la capa de desarrollo
 $whitelist = array( 'localhost', '127.0.0.1', '::1' );

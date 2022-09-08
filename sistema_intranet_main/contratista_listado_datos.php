@@ -37,11 +37,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Contratista creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Contratista editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Contratista borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Contratista creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Contratista editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Contratista borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $query = "SELECT idTipo, Nombre , Rut, fNacimiento, idPais, idCiudad, idComuna, Direccion, idSistema, Giro
@@ -108,7 +108,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
 					$Form_Inputs->form_date('F Ingreso','fNacimiento', $x4, 1);
 					$Form_Inputs->form_select_country('Pais','idPais', $x5, 1, $dbConn);
-					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Region','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 											 $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map'); 

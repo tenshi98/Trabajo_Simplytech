@@ -47,13 +47,13 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created']))     {$error['usuario'] 	  = 'sucess/Solicitud creada correctamente';}
-if (isset($_GET['edited']))      {$error['usuario'] 	  = 'sucess/Solicitud editada correctamente';}
-if (isset($_GET['deleted']))     {$error['usuario'] 	  = 'sucess/Solicitud borrada correctamente';}
-if (isset($_GET['notslectjob'])) {$error['notslectjob']   = 'error/No ha seleccionado un trabajo a realizar';}
+if (isset($_GET['created'])){     $error['created']     = 'sucess/Solicitud creada correctamente';}
+if (isset($_GET['edited'])){      $error['edited']      = 'sucess/Solicitud editada correctamente';}
+if (isset($_GET['deleted'])){     $error['deleted']     = 'sucess/Solicitud borrada correctamente';}
+if (isset($_GET['notslectjob'])){ $error['notslectjob'] = 'error/No ha seleccionado un trabajo a realizar';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit_Cuarteles']) ) {?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 

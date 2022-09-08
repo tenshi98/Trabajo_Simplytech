@@ -60,11 +60,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Reserva Oficina Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Reserva Oficina Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Reserva Oficina borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Reserva Oficina Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Reserva Oficina Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Reserva Oficina borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos

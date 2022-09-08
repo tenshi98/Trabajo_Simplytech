@@ -54,11 +54,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Tasa de Interes Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Tasa de Interes Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Tasa de Interes borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Tasa de Interes Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tasa de Interes Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tasa de Interes borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos

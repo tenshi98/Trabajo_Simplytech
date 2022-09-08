@@ -23,11 +23,13 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Procedimiento Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Procedimiento Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Procedimiento borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Procedimiento Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Procedimiento Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Procedimiento borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+
+?>
 
 <style>
 	.iframe_elfinder{height: 700px;}

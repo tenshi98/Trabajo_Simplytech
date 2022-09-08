@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -88,59 +87,42 @@ $arrData[$xx] = "BF";$xx++;
 /*******************************************************************************/
 //Funcion para escribir datos
 function crear_data($limite, $idVehiculo, $f_inicio, $f_termino, $dbConn ) {
-	//Se traen todos los registros
-	$arrRutas = array();
-	$query = "SELECT 
+	
+	/*******************************************************/
+	$SIS_query = '
 	vehiculos_listado.Nombre AS NombreEquipo,
+	vehiculos_listado_tablarelacionada_'.$idVehiculo.'.FechaSistema,
+	vehiculos_listado_tablarelacionada_'.$idVehiculo.'.HoraSistema,
+	vehiculos_listado_tablarelacionada_'.$idVehiculo.'.GeoLatitud AS GeoLatitudEquipo,
+	vehiculos_listado_tablarelacionada_'.$idVehiculo.'.GeoLongitud AS GeoLongitudEquipo,
+	vehiculos_listado_tablarelacionada_'.$idVehiculo.'.GeoVelocidad AS GeoVelocidadEquipo,
+	vehiculos_listado_tablarelacionada_'.$idVehiculo.'.GeoDireccion AS GeoDireccionEquipo,
+	vehiculos_listado_tablarelacionada_'.$idVehiculo.'.GeoMovimiento AS GeoMovimientoEquipo';
+	$SIS_join  = 'LEFT JOIN `vehiculos_listado` ON vehiculos_listado.idVehiculo = vehiculos_listado_tablarelacionada_'.$idVehiculo.'.idVehiculo';
+	$SIS_where = '(FechaSistema BETWEEN "'.$f_inicio.'" AND "'.$f_termino.'") LIMIT '.$limite.', 5000';
+	$SIS_order = 0;
+	$arrRutas = array();
+	$arrRutas = db_select_array (false, $SIS_query, 'vehiculos_listado_tablarelacionada_'.$idVehiculo, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRutas');
 
-	vehiculos_listado_tablarelacionada_".$idVehiculo.".FechaSistema,
-	vehiculos_listado_tablarelacionada_".$idVehiculo.".HoraSistema,
-	vehiculos_listado_tablarelacionada_".$idVehiculo.".GeoLatitud AS GeoLatitudEquipo,
-	vehiculos_listado_tablarelacionada_".$idVehiculo.".GeoLongitud AS GeoLongitudEquipo,
-	vehiculos_listado_tablarelacionada_".$idVehiculo.".GeoVelocidad AS GeoVelocidadEquipo,
-	vehiculos_listado_tablarelacionada_".$idVehiculo.".GeoDireccion AS GeoDireccionEquipo,
-	vehiculos_listado_tablarelacionada_".$idVehiculo.".GeoMovimiento AS GeoMovimientoEquipo
-	
-
-	FROM `vehiculos_listado_tablarelacionada_".$idVehiculo."`
-	LEFT JOIN `vehiculos_listado`     ON vehiculos_listado.idVehiculo   = vehiculos_listado_tablarelacionada_".$idVehiculo.".idVehiculo
-	WHERE (FechaSistema BETWEEN '".$f_inicio."' AND '".$f_termino."') 
-	LIMIT ".$limite.", 5000";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrRutas,$row );
-	}
-	
+	//Devuelvo
 	return $arrRutas;
 	
 }
 
-
-/*******************************************************************/
-/*******************************************************************/
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator("Office 2007")
+$spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setLastModifiedBy("Office 2007")
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-
 
 /*********************************************************************************/
 //Verifico si se selecciono el equipo
@@ -150,12 +132,9 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	//Llamo a la funcion
 	$arrTemporal = crear_data($set_lim, $_GET['idVehiculo'], $_GET['f_inicio'], $_GET['f_termino'] , $dbConn);
 	
-
-	 
 	/***********************************************************/
 	//Titulo columnas
-	$objPHPExcel->setActiveSheetIndex(0)
-
+	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A2', 'Equipo')
 				->setCellValue('B2', 'Fecha')
 				->setCellValue('C2', 'Hora')
@@ -164,14 +143,13 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 				->setCellValue('F2', 'Velocidad')
 				->setCellValue('G2', 'Direccion')
 				->setCellValue('H2', 'Movimiento');
-				
 			
 	/***********************************************************/
 	//Datos        
 	$nn=3;
 	foreach ($arrTemporal as $rutas) {
 							
-		$objPHPExcel->setActiveSheetIndex(0)
+		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, $rutas['NombreEquipo'])
 					->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']))
 					->setCellValue('C'.$nn, $rutas['HoraSistema'])
@@ -180,9 +158,8 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 					->setCellValue('F'.$nn, $rutas['GeoVelocidadEquipo'])
 					->setCellValue('G'.$nn, $rutas['GeoDireccionEquipo'])
 					->setCellValue('H'.$nn, $rutas['GeoMovimientoEquipo']);
-
-				   
-		 $nn++;           
+		   
+		$nn++;           
 	   
 	} 
 	/***********************************************************/
@@ -191,41 +168,25 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	if(isset($arrTemporal[0]['NombreEquipo'])&&$arrTemporal[0]['NombreEquipo']!=''){
 		$super_titulo = cortar($arrTemporal[0]['NombreEquipo'], 25);
 	}
-	$objPHPExcel->getActiveSheet(0)->setTitle($super_titulo);
+	$spreadsheet->getActiveSheet(0)->setTitle($super_titulo);
 		
 	
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
 }else{
 	//Inicia variable
-	$z="WHERE vehiculos_listado.idVehiculo>0"; 
+	$SIS_where = "vehiculos_listado.idVehiculo>0"; 
 
 	//Verifico el tipo de usuario que esta ingresando
-	$z.=" AND vehiculos_listado.idSistema=".$_GET['idSistema'];
+	$SIS_where.= " AND vehiculos_listado.idSistema=".$_GET['idSistema'];
 	
-	/*********************************************/
-	// Se trae un listado con todos los elementos
-	$arrEquipos = array();
-	$query = "SELECT 
+	/*******************************************************/
+	$SIS_query = '
 	vehiculos_listado.idVehiculo, 
-	vehiculos_listado.Nombre
-	FROM `vehiculos_listado`
-	".$z."
-	ORDER BY idVehiculo ASC ";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//variables
-		$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-		$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-		//generar log
-		php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrEquipos,$row );
-	}
+	vehiculos_listado.Nombre';
+	$SIS_join  = '';
+	$SIS_order = 'idVehiculo ASC';
+	$arrEquipos = array();
+	$arrEquipos = db_select_array (false, $SIS_query, 'vehiculos_listado_error_detenciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
 
 	/*********************************************/
 	$sheet = 0;
@@ -233,15 +194,13 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		//Variable temporal
 		$arrTemporal = array();
 		//Se crea nueva hoja
-		$objPHPExcel->createSheet();
+		$spreadsheet->createSheet();
 		//Llamo a la funcion
 		$arrTemporal = crear_data($set_lim, $equipo['idVehiculo'], $_GET['f_inicio'], $_GET['f_termino'] , $dbConn);
 		
-		 
 		/***********************************************************/
 		//Titulo columnas
-		$objPHPExcel->setActiveSheetIndex($sheet)
-
+		$spreadsheet->setActiveSheetIndex($sheet)
 					->setCellValue('A2', 'Equipo')
 					->setCellValue('B2', 'Fecha')
 					->setCellValue('C2', 'Hora')
@@ -250,15 +209,13 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 					->setCellValue('F2', 'Velocidad')
 					->setCellValue('G2', 'Direccion')
 					->setCellValue('H2', 'Movimiento');
-					  
-
-		 
+			
 		/***********************************************************/
 		//Datos        
 		$nn=3;
 		foreach ($arrTemporal as $rutas) {
 								
-			$objPHPExcel->setActiveSheetIndex($sheet)
+			$spreadsheet->setActiveSheetIndex($sheet)
 						->setCellValue('A'.$nn, $rutas['NombreEquipo'])
 						->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']))
 						->setCellValue('C'.$nn, $rutas['HoraSistema'])
@@ -267,9 +224,8 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 						->setCellValue('F'.$nn, $rutas['GeoVelocidadEquipo'])
 						->setCellValue('G'.$nn, $rutas['GeoDireccionEquipo'])
 						->setCellValue('H'.$nn, $rutas['GeoMovimientoEquipo']);
-						
 					   
-			 $nn++;           
+			$nn++;           
 		   
 		} 
 		/***********************************************************/
@@ -278,34 +234,31 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		if(isset($arrTemporal[0]['NombreEquipo'])&&$arrTemporal[0]['NombreEquipo']!=''){
 			$super_titulo = cortar($arrTemporal[0]['NombreEquipo'], 25);
 		}
-		$objPHPExcel->getActiveSheet($sheet)->setTitle($super_titulo);
+		$spreadsheet->getActiveSheet($sheet)->setTitle($super_titulo);
 	
-		
 		$sheet++;
 	}
-
-
 }	
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-//header('Content-Disposition: attachment;filename="Informe Datos.xls"');
-header('Content-Disposition: attachment;filename="Informe Datos archivo '.$_GET['num'].'.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Informe Datos archivo '.$_GET['num'];
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-//$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

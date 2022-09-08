@@ -53,10 +53,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Zona de Peligro Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Zona de Peligro borrado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Zona de Peligro Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Zona de Peligro borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
@@ -109,7 +109,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Vecino','idCliente', $x1, 2, 'idCliente', 'Nombre', 'seg_vecinal_clientes_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Peligro','idTipo', $x2, 2, 'idTipo', 'Nombre', 'seg_vecinal_peligros_tipos', 0, '',$dbConn);
-				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 												  'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 												  $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
@@ -236,7 +236,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Vecino','idCliente', $x1, 1, 'idCliente', 'Nombre', 'seg_vecinal_clientes_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Peligro','idTipo', $x2, 1, 'idTipo', 'Nombre', 'seg_vecinal_peligros_tipos', 0, '',$dbConn);
-				$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 												  'Comuna','idComuna', $x4, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 												  $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 1,'fa fa-map');

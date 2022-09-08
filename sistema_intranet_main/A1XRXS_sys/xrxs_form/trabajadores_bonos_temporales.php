@@ -25,7 +25,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Observacion']) )           $Observacion            = $_POST['Observacion'];
 	if ( !empty($_POST['idUso']) )                 $idUso                  = $_POST['idUso'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -50,6 +49,11 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observacion) && $Observacion != ''){ $Observacion = EstandarizarInput($Observacion); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -81,51 +85,36 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){            $a  = "'".$idSistema."'" ;       }else{$a  ="''";}
-				if(isset($idTrabajador) && $idTrabajador != ''){      $a .= ",'".$idTrabajador."'" ;   }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){            $a .= ",'".$idUsuario."'" ;      }else{$a .=",''";}
-				if(isset($fecha_auto) && $fecha_auto != ''){          $a .= ",'".$fecha_auto."'" ;     }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){            $SIS_data  = "'".$idSistema."'" ;       }else{$SIS_data  = "''";}
+				if(isset($idTrabajador) && $idTrabajador != ''){      $SIS_data .= ",'".$idTrabajador."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){            $SIS_data .= ",'".$idUsuario."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $SIS_data .= ",'".$fecha_auto."'" ;     }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",'".$Creacion_fecha."'" ;  
-					$a .= ",'".fecha2NSemana($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".$Creacion_fecha."'" ;  
+					$SIS_data .= ",'".fecha2NSemana($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($idBonoTemporal) && $idBonoTemporal != ''){   $a .= ",'".$idBonoTemporal."'" ;   }else{$a .=",''";}
-				if(isset($Monto) && $Monto != ''){                     $a .= ",'".$Monto."'" ;            }else{$a .=",''";}
-				if(isset($Observacion) && $Observacion != ''){         $a .= ",'".$Observacion."'" ;      }else{$a .=",''";}
-				if(isset($idUso) && $idUso != ''){                     $a .= ",'".$idUso."'" ;            }else{$a .=",''";}
+				if(isset($idBonoTemporal) && $idBonoTemporal != ''){   $SIS_data .= ",'".$idBonoTemporal."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Monto) && $Monto != ''){                     $SIS_data .= ",'".$Monto."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){         $SIS_data .= ",'".$Observacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idUso) && $idUso != ''){                     $SIS_data .= ",'".$idUso."'" ;            }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `trabajadores_bonos_temporales` (idSistema, idTrabajador, idUsuario,
-				fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idBonoTemporal, Monto,
-				Observacion, idUso) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idTrabajador, idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idBonoTemporal, Monto, Observacion, idUso';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_bonos_temporales', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
-				
 			}
 	
 		break;
@@ -149,25 +138,25 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idAnticipos='".$idAnticipos."'" ;
-				if(isset($idSistema) && $idSistema != ''){            $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idTrabajador) && $idTrabajador != ''){      $a .= ",idTrabajador='".$idTrabajador."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){            $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($fecha_auto) && $fecha_auto != ''){          $a .= ",fecha_auto='".$fecha_auto."'" ;}
+				$SIS_data = "idAnticipos='".$idAnticipos."'" ;
+				if(isset($idSistema) && $idSistema != ''){            $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idTrabajador) && $idTrabajador != ''){      $SIS_data .= ",idTrabajador='".$idTrabajador."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){            $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($fecha_auto) && $fecha_auto != ''){          $SIS_data .= ",fecha_auto='".$fecha_auto."'" ;}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",Creacion_fecha='".$Creacion_fecha."'" ;  
-					$a .= ",Creacion_Semana='".fecha2NSemana($Creacion_fecha)."'" ;
-					$a .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;  
+					$SIS_data .= ",Creacion_Semana='".fecha2NSemana($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'" ;
 				}
-				if(isset($idBonoTemporal) && $idBonoTemporal != ''){   $a .= ",idBonoTemporal='".$idBonoTemporal."'" ;}
-				if(isset($Monto) && $Monto != ''){                     $a .= ",Monto='".$Monto."'" ;}
-				if(isset($Observacion) && $Observacion != ''){         $a .= ",Observacion='".$Observacion."'" ;}
-				if(isset($idUso) && $idUso != ''){                     $a .= ",idUso='".$idUso."'" ;}
+				if(isset($idBonoTemporal) && $idBonoTemporal != ''){   $SIS_data .= ",idBonoTemporal='".$idBonoTemporal."'" ;}
+				if(isset($Monto) && $Monto != ''){                     $SIS_data .= ",Monto='".$Monto."'" ;}
+				if(isset($Observacion) && $Observacion != ''){         $SIS_data .= ",Observacion='".$Observacion."'" ;}
+				if(isset($idUso) && $idUso != ''){                     $SIS_data .= ",idUso='".$idUso."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'trabajadores_bonos_temporales', 'idAnticipos = "'.$idAnticipos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'trabajadores_bonos_temporales', 'idAnticipos = "'.$idAnticipos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

@@ -51,11 +51,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Evento Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Evento Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Evento borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Evento Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Evento Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evento borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos
@@ -315,7 +315,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {        $SIS_where .= " AND orden_trabajo_eventos_listado.idUsuario = '".$_GET['idUsuario']."'" ;}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != '')  {  $SIS_where .= " AND orden_trabajo_eventos_listado.idTrabajador = '".$_GET['idUsuario']."'" ;}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != '')  {  $SIS_where .= " AND orden_trabajo_eventos_listado.idTrabajador = '".$_GET['idTrabajador']."'" ;}
 if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {        $SIS_where .= " AND orden_trabajo_eventos_listado.idMaquina = '".$_GET['idMaquina']."'" ;}
 if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
 	$SIS_where .= " AND orden_trabajo_eventos_listado.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'" ;

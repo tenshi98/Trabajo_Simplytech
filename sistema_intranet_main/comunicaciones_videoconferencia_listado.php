@@ -49,11 +49,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/VideoConferencia Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/VideoConferencia Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/VideoConferencia borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/VideoConferencia Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/VideoConferencia Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/VideoConferencia borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 //valido los permisos

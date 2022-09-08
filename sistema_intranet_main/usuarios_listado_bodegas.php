@@ -105,11 +105,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created']))  {$error['usuario'] 	  = 'sucess/Permisos asignados correctamente';}
-if (isset($_GET['deleted']))  {$error['usuario'] 	  = 'sucess/Permisos eliminados correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Permiso asignado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Permisos asignados correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Permisos eliminados correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Permiso asignado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $SIS_query = 'Nombre';
@@ -342,7 +342,7 @@ if($arriendos!=0){
 						<th width="160">Sistema</th>
 						<th width="10">Acciones</th>
 					</tr>
-					<?php echo widget_sherlock(1, 3);?>
+					<?php echo widget_sherlock(1, 3, 'TableFiltered');?>
 				</thead>
 								  
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">

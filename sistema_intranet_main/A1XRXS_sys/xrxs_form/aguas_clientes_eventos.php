@@ -58,6 +58,13 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observacion) && $Observacion != ''){  $Observacion  = EstandarizarInput($Observacion); }
+	if(isset($Archivo) && $Archivo != ''){          $Archivo      = EstandarizarInput($Archivo); }
+	if(isset($NSello) && $NSello != ''){            $NSello       = EstandarizarInput($NSello); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita Observacion, contiene palabras no permitidas'; }	
@@ -166,50 +173,37 @@ require_once '0_validate_user_1.php';
 								if ($move_result){
 									
 									//filtros
-									if(isset($idSistema) && $idSistema != ''){             $a  = "'".$idSistema."'" ;         }else{$a  ="''";}
-									if(isset($idCliente) && $idCliente != ''){             $a .= ",'".$idCliente."'" ;        }else{$a .=",''";}
-									if(isset($idUsuario) && $idUsuario != ''){             $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
-									if(isset($idTipo) && $idTipo != ''){                   $a .= ",'".$idTipo."'" ;           }else{$a .=",''";}
-									if(isset($FechaEjecucion) && $FechaEjecucion != ''){   $a .= ",'".$FechaEjecucion."'" ;   }else{$a .=",''";}
+									if(isset($idSistema) && $idSistema != ''){             $SIS_data  = "'".$idSistema."'" ;         }else{$SIS_data  ="''";}
+									if(isset($idCliente) && $idCliente != ''){             $SIS_data .= ",'".$idCliente."'" ;        }else{$SIS_data .=",''";}
+									if(isset($idUsuario) && $idUsuario != ''){             $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .=",''";}
+									if(isset($idTipo) && $idTipo != ''){                   $SIS_data .= ",'".$idTipo."'" ;           }else{$SIS_data .=",''";}
+									if(isset($FechaEjecucion) && $FechaEjecucion != ''){   $SIS_data .= ",'".$FechaEjecucion."'" ;   }else{$SIS_data .=",''";}
 									if(isset($Fecha) && $Fecha != ''){                  
-										$a .= ",'".$Fecha."'" ; 
-										$a .= ",'".fecha2NdiaMes($Fecha)."'" ; 
-										$a .= ",'".fecha2NMes($Fecha)."'" ; 
-										$a .= ",'".fecha2Ano($Fecha)."'" ;         
+										$SIS_data .= ",'".$Fecha."'" ; 
+										$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'" ; 
+										$SIS_data .= ",'".fecha2NMes($Fecha)."'" ; 
+										$SIS_data .= ",'".fecha2Ano($Fecha)."'" ;         
 									}else{
-										$a .=",''";
-										$a .=",''";
-										$a .=",''";
-										$a .=",''";
+										$SIS_data .=",''";
+										$SIS_data .=",''";
+										$SIS_data .=",''";
+										$SIS_data .=",''";
 									}
-									if(isset($Observacion) && $Observacion != ''){   $a .= ",'".$Observacion."'" ;   }else{$a .=",''";}
-									if(isset($ValorEvento) && $ValorEvento != ''){   $a .= ",'".$ValorEvento."'" ;   }else{$a .=",''";}
-									if(isset($NSello) && $NSello != ''){             $a .= ",'".$NSello."'" ;        }else{$a .=",''";}
-									$a .= ",'".$sufijo.$_FILES['Archivo']['name']."'" ;
+									if(isset($Observacion) && $Observacion != ''){   $SIS_data .= ",'".$Observacion."'" ;   }else{$SIS_data .=",''";}
+									if(isset($ValorEvento) && $ValorEvento != ''){   $SIS_data .= ",'".$ValorEvento."'" ;   }else{$SIS_data .=",''";}
+									if(isset($NSello) && $NSello != ''){             $SIS_data .= ",'".$NSello."'" ;        }else{$SIS_data .=",''";}
+									$SIS_data .= ",'".$sufijo.$_FILES['Archivo']['name']."'" ;
 									
 									// inserto los datos de registro en la db
-									$query  = "INSERT INTO `aguas_clientes_eventos` (idSistema, idCliente, idUsuario, idTipo,
-									FechaEjecucion, Fecha, Dia, idMes, Ano, Observacion, ValorEvento, NSello, Archivo ) 
-									VALUES (".$a.")";
-									//Consulta
-									$resultado = mysqli_query ($dbConn, $query);		
-									
+									$SIS_columns = 'idSistema, idCliente, idUsuario, idTipo, FechaEjecucion, Fecha, Dia, idMes, Ano, Observacion, ValorEvento, NSello, Archivo';
+									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_clientes_eventos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 									//Si ejecuto correctamente la consulta
-									if($resultado){
+									if($ultimo_id!=0){
 										
 										//redirijo	
 										header( 'Location: '.$location.'&created=true' );
 										die;	
-											
-									//si da error, guardar en el log de errores una copia
-									}else{
-										//Genero numero aleatorio
-										$vardata = genera_password(8,'alfanumerico');
-											
-										//Guardo el error en una variable temporal
-										$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-										$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 											
 									}	
 								} else {
@@ -226,49 +220,36 @@ require_once '0_validate_user_1.php';
 				//si no hay archivo
 				}else{
 					//filtros
-					if(isset($idSistema) && $idSistema != ''){             $a  = "'".$idSistema."'" ;         }else{$a  ="''";}
-					if(isset($idCliente) && $idCliente != ''){             $a .= ",'".$idCliente."'" ;        }else{$a .=",''";}
-					if(isset($idUsuario) && $idUsuario != ''){             $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
-					if(isset($idTipo) && $idTipo != ''){                   $a .= ",'".$idTipo."'" ;           }else{$a .=",''";}
-					if(isset($FechaEjecucion) && $FechaEjecucion != ''){   $a .= ",'".$FechaEjecucion."'" ;   }else{$a .=",''";}
+					if(isset($idSistema) && $idSistema != ''){             $SIS_data  = "'".$idSistema."'" ;         }else{$SIS_data  ="''";}
+					if(isset($idCliente) && $idCliente != ''){             $SIS_data .= ",'".$idCliente."'" ;        }else{$SIS_data .=",''";}
+					if(isset($idUsuario) && $idUsuario != ''){             $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .=",''";}
+					if(isset($idTipo) && $idTipo != ''){                   $SIS_data .= ",'".$idTipo."'" ;           }else{$SIS_data .=",''";}
+					if(isset($FechaEjecucion) && $FechaEjecucion != ''){   $SIS_data .= ",'".$FechaEjecucion."'" ;   }else{$SIS_data .=",''";}
 					if(isset($Fecha) && $Fecha != ''){                  
-						$a .= ",'".$Fecha."'" ; 
-						$a .= ",'".fecha2NdiaMes($Fecha)."'" ; 
-						$a .= ",'".fecha2NMes($Fecha)."'" ; 
-						$a .= ",'".fecha2Ano($Fecha)."'" ;         
+						$SIS_data .= ",'".$Fecha."'" ; 
+						$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'" ; 
+						$SIS_data .= ",'".fecha2NMes($Fecha)."'" ; 
+						$SIS_data .= ",'".fecha2Ano($Fecha)."'" ;         
 					}else{
-						$a .=",''";
-						$a .=",''";
-						$a .=",''";
-						$a .=",''";
+						$SIS_data .=",''";
+						$SIS_data .=",''";
+						$SIS_data .=",''";
+						$SIS_data .=",''";
 					}				
-					if(isset($Observacion) && $Observacion != ''){   $a .= ",'".$Observacion."'" ;   }else{$a .=",''";}
-					if(isset($ValorEvento) && $ValorEvento != ''){   $a .= ",'".$ValorEvento."'" ;   }else{$a .=",''";}
-					if(isset($NSello) && $NSello != ''){             $a .= ",'".$NSello."'" ;        }else{$a .=",''";}
-									
-					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `aguas_clientes_eventos` (idSistema, idCliente, idUsuario, idTipo,
-					FechaEjecucion, Fecha, Dia, idMes, Ano, Observacion, ValorEvento, NSello ) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					if(isset($Observacion) && $Observacion != ''){   $SIS_data .= ",'".$Observacion."'" ;   }else{$SIS_data .=",''";}
+					if(isset($ValorEvento) && $ValorEvento != ''){   $SIS_data .= ",'".$ValorEvento."'" ;   }else{$SIS_data .=",''";}
+					if(isset($NSello) && $NSello != ''){             $SIS_data .= ",'".$NSello."'" ;        }else{$SIS_data .=",''";}
 					
+					// inserto los datos de registro en la db
+					$SIS_columns = 'idSistema, idCliente, idUsuario, idTipo, FechaEjecucion, Fecha, Dia, idMes, Ano, Observacion, ValorEvento, NSello';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_clientes_eventos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//Si ejecuto correctamente la consulta
-					if($resultado){
-										
+					if($ultimo_id!=0){
+						
 						//redirijo	
 						header( 'Location: '.$location.'&created=true' );
 						die;	
-											
-					//si da error, guardar en el log de errores una copia
-					}else{
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-											
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 											
 					}
 				}
@@ -372,26 +353,26 @@ require_once '0_validate_user_1.php';
 								if ($move_result){
 									
 									//Filtros
-									$a = "idEventos='".$idEventos."'" ;
-									if(isset($idSistema) && $idSistema != ''){              $a .= ",idSistema='".$idSistema."'" ;}
-									if(isset($idCliente) && $idCliente != ''){              $a .= ",idCliente='".$idCliente."'" ;}
-									if(isset($idUsuario) && $idUsuario != ''){              $a .= ",idUsuario='".$idUsuario."'" ;}
-									if(isset($idTipo) && $idTipo != ''){                    $a .= ",idTipo='".$idTipo."'" ;}
-									if(isset($FechaEjecucion) && $FechaEjecucion != ''){    $a .= ",FechaEjecucion='".$FechaEjecucion."'" ;}
+									$SIS_data = "idEventos='".$idEventos."'" ;
+									if(isset($idSistema) && $idSistema != ''){              $SIS_data .= ",idSistema='".$idSistema."'" ;}
+									if(isset($idCliente) && $idCliente != ''){              $SIS_data .= ",idCliente='".$idCliente."'" ;}
+									if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+									if(isset($idTipo) && $idTipo != ''){                    $SIS_data .= ",idTipo='".$idTipo."'" ;}
+									if(isset($FechaEjecucion) && $FechaEjecucion != ''){    $SIS_data .= ",FechaEjecucion='".$FechaEjecucion."'" ;}
 									if(isset($Fecha) && $Fecha != ''){                                 
-										$a .= ",Fecha='".$Fecha."'" ;
-										$a .= ",Dia='".fecha2NdiaMes($Fecha)."'" ; 
-										$a .= ",idMes='".fecha2NMes($Fecha)."'" ; 
-										$a .= ",Ano='".fecha2Ano($Fecha)."'" ;  
+										$SIS_data .= ",Fecha='".$Fecha."'" ;
+										$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'" ; 
+										$SIS_data .= ",idMes='".fecha2NMes($Fecha)."'" ; 
+										$SIS_data .= ",Ano='".fecha2Ano($Fecha)."'" ;  
 									}
-									if(isset($Observacion) && $Observacion != ''){   $a .= ",Observacion='".$Observacion."'" ;}
-									if(isset($ValorEvento) && $ValorEvento!= ''){    $a .= ",ValorEvento='".$ValorEvento."'" ;}
-									if(isset($NSello) && $NSello!= ''){              $a .= ",NSello='".$NSello."'" ;}
-									$a .= ",Archivo='".$sufijo.$_FILES['Archivo']['name']."'" ;
+									if(isset($Observacion) && $Observacion != ''){   $SIS_data .= ",Observacion='".$Observacion."'" ;}
+									if(isset($ValorEvento) && $ValorEvento!= ''){    $SIS_data .= ",ValorEvento='".$ValorEvento."'" ;}
+									if(isset($NSello) && $NSello!= ''){              $SIS_data .= ",NSello='".$NSello."'" ;}
+									$SIS_data .= ",Archivo='".$sufijo.$_FILES['Archivo']['name']."'" ;
 									
 									/*******************************************************/
 									//se actualizan los datos
-									$resultado = db_update_data (false, $a, 'aguas_clientes_eventos', 'idEventos = "'.$idEventos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									$resultado = db_update_data (false, $SIS_data, 'aguas_clientes_eventos', 'idEventos = "'.$idEventos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
 									if($resultado==true){
 										//redirijo
@@ -413,25 +394,25 @@ require_once '0_validate_user_1.php';
 				//si no hay archivo
 				}else{
 					//Filtros
-					$a = "idEventos='".$idEventos."'" ;
-					if(isset($idSistema) && $idSistema != ''){              $a .= ",idSistema='".$idSistema."'" ;}
-					if(isset($idCliente) && $idCliente != ''){              $a .= ",idCliente='".$idCliente."'" ;}
-					if(isset($idUsuario) && $idUsuario != ''){              $a .= ",idUsuario='".$idUsuario."'" ;}
-					if(isset($idTipo) && $idTipo != ''){                    $a .= ",idTipo='".$idTipo."'" ;}
-					if(isset($FechaEjecucion) && $FechaEjecucion != ''){    $a .= ",FechaEjecucion='".$FechaEjecucion."'" ;}
+					$SIS_data = "idEventos='".$idEventos."'" ;
+					if(isset($idSistema) && $idSistema != ''){              $SIS_data .= ",idSistema='".$idSistema."'" ;}
+					if(isset($idCliente) && $idCliente != ''){              $SIS_data .= ",idCliente='".$idCliente."'" ;}
+					if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+					if(isset($idTipo) && $idTipo != ''){                    $SIS_data .= ",idTipo='".$idTipo."'" ;}
+					if(isset($FechaEjecucion) && $FechaEjecucion != ''){    $SIS_data .= ",FechaEjecucion='".$FechaEjecucion."'" ;}
 					if(isset($Fecha) && $Fecha != ''){                                 
-						$a .= ",Fecha='".$Fecha."'" ;
-						$a .= ",Dia='".fecha2NdiaMes($Fecha)."'" ; 
-						$a .= ",idMes='".fecha2NMes($Fecha)."'" ; 
-						$a .= ",Ano='".fecha2Ano($Fecha)."'" ;  
+						$SIS_data .= ",Fecha='".$Fecha."'" ;
+						$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'" ; 
+						$SIS_data .= ",idMes='".fecha2NMes($Fecha)."'" ; 
+						$SIS_data .= ",Ano='".fecha2Ano($Fecha)."'" ;  
 					}
-					if(isset($Observacion) && $Observacion != ''){   $a .= ",Observacion='".$Observacion."'" ;}
-					if(isset($ValorEvento) && $ValorEvento!= ''){    $a .= ",ValorEvento='".$ValorEvento."'" ;}
-					if(isset($NSello) && $NSello!= ''){              $a .= ",NSello='".$NSello."'" ;}
+					if(isset($Observacion) && $Observacion != ''){   $SIS_data .= ",Observacion='".$Observacion."'" ;}
+					if(isset($ValorEvento) && $ValorEvento!= ''){    $SIS_data .= ",ValorEvento='".$ValorEvento."'" ;}
+					if(isset($NSello) && $NSello!= ''){              $SIS_data .= ",NSello='".$NSello."'" ;}
 					
 					/*******************************************************/
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'aguas_clientes_eventos', 'idEventos = "'.$idEventos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'aguas_clientes_eventos', 'idEventos = "'.$idEventos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
 						//redirijo

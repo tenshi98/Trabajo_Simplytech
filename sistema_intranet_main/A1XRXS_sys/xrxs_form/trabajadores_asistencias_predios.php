@@ -53,6 +53,7 @@ if( ! defined('XMBCXRXSKGC')) {
 			
 		}
 	}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -89,42 +90,27 @@ if( ! defined('XMBCXRXSKGC')) {
 				
 				/**************************************************************/
 				//Inserto la fecha con el ingreso
-				if(isset($idSistema) && $idSistema != ''){        $a  = "'".$idSistema."'" ;        }else{$a  = "''";}
-				if(isset($idTrabajador) && $idTrabajador != ''){  $a .= ",'".$idTrabajador."'" ;    }else{$a .= ",''";}
-				if(isset($Fecha) && $Fecha != ''){                $a .= ",'".$Fecha."'" ;           }else{$a .= ",''";}
-				if(isset($Hora) && $Hora != ''){                  $a .= ",'".$Hora."'" ;            }else{$a .= ",''";}
-				if(isset($TimeStamp) && $TimeStamp != ''){        $a .= ",'".$TimeStamp."'" ;       }else{$a .= ",''";}
-				if(isset($IP_Client) && $IP_Client != ''){        $a .= ",'".$IP_Client."'" ;       }else{$a .= ",''";}
-				if(isset($Latitud) && $Latitud != ''){            $a .= ",'".$Latitud."'" ;         }else{$a .= ",''";}
-				if(isset($Longitud) && $Longitud != ''){          $a .= ",'".$Longitud."'" ;        }else{$a .= ",''";}
-				if(isset($idZona) && $idZona != ''){              $a .= ",'".$idZona."'" ;          }else{$a .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){          $a .= ",'".$idEstado."'" ;        }else{$a .= ",''";}
-										
+				if(isset($idSistema) && $idSistema != ''){        $SIS_data  = "'".$idSistema."'" ;        }else{$SIS_data  = "''";}
+				if(isset($idTrabajador) && $idTrabajador != ''){  $SIS_data .= ",'".$idTrabajador."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){                $SIS_data .= ",'".$Fecha."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($Hora) && $Hora != ''){                  $SIS_data .= ",'".$Hora."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($TimeStamp) && $TimeStamp != ''){        $SIS_data .= ",'".$TimeStamp."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($IP_Client) && $IP_Client != ''){        $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($Latitud) && $Latitud != ''){            $SIS_data .= ",'".$Latitud."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Longitud) && $Longitud != ''){          $SIS_data .= ",'".$Longitud."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($idZona) && $idZona != ''){              $SIS_data .= ",'".$idZona."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){          $SIS_data .= ",'".$idEstado."'" ;        }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `trabajadores_asistencias_predios` (idSistema,idTrabajador,Fecha,Hora,TimeStamp,
-				IP_Client,Latitud,Longitud,idZona,idEstado) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema,idTrabajador,Fecha,Hora,TimeStamp, IP_Client,Latitud,Longitud,idZona,idEstado';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_asistencias_predios', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
-				}	
-				
-						
+				}			
 			} 
 		break;
 /*******************************************************************************************************************/		
@@ -151,21 +137,21 @@ if( ! defined('XMBCXRXSKGC')) {
 				$TimeStamp  = $Fecha.' '.$Hora;
 				
 				//Filtros
-				$a = "idAsistencia='".$idAsistencia."'" ;
-				if(isset($idSistema) && $idSistema != ''){        $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idTrabajador) && $idTrabajador != ''){  $a .= ",idTrabajador='".$idTrabajador."'" ;}
-				if(isset($Fecha) && $Fecha != ''){                $a .= ",Fecha='".$Fecha."'" ;}
-				if(isset($Hora) && $Hora != ''){                  $a .= ",Hora='".$Hora."'" ;}
-				if(isset($TimeStamp) && $TimeStamp != ''){        $a .= ",TimeStamp='".$TimeStamp."'" ;}
-				if(isset($IP_Client) && $IP_Client != ''){        $a .= ",IP_Client='".$IP_Client."'" ;}
-				if(isset($Latitud) && $Latitud != ''){            $a .= ",Latitud='".$Latitud."'" ;}
-				if(isset($Longitud) && $Longitud != ''){          $a .= ",Longitud='".$Longitud."'" ;}
-				if(isset($idZona) && $idZona != ''){              $a .= ",idZona='".$idZona."'" ;}
-				if(isset($idEstado) && $idEstado != ''){          $a .= ",idEstado='".$idEstado."'" ;}
+				$SIS_data = "idAsistencia='".$idAsistencia."'" ;
+				if(isset($idSistema) && $idSistema != ''){        $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idTrabajador) && $idTrabajador != ''){  $SIS_data .= ",idTrabajador='".$idTrabajador."'" ;}
+				if(isset($Fecha) && $Fecha != ''){                $SIS_data .= ",Fecha='".$Fecha."'" ;}
+				if(isset($Hora) && $Hora != ''){                  $SIS_data .= ",Hora='".$Hora."'" ;}
+				if(isset($TimeStamp) && $TimeStamp != ''){        $SIS_data .= ",TimeStamp='".$TimeStamp."'" ;}
+				if(isset($IP_Client) && $IP_Client != ''){        $SIS_data .= ",IP_Client='".$IP_Client."'" ;}
+				if(isset($Latitud) && $Latitud != ''){            $SIS_data .= ",Latitud='".$Latitud."'" ;}
+				if(isset($Longitud) && $Longitud != ''){          $SIS_data .= ",Longitud='".$Longitud."'" ;}
+				if(isset($idZona) && $idZona != ''){              $SIS_data .= ",idZona='".$idZona."'" ;}
+				if(isset($idEstado) && $idEstado != ''){          $SIS_data .= ",idEstado='".$idEstado."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'trabajadores_asistencias_predios', 'idAsistencia = "'.$idAsistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'trabajadores_asistencias_predios', 'idAsistencia = "'.$idAsistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

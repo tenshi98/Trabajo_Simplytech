@@ -55,11 +55,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['Transporte'] 	  = 'sucess/Tipo Embalaje creado correctamente';}
-if (isset($_GET['edited']))  {$error['Transporte'] 	  = 'sucess/Tipo Embalaje editado correctamente';}
-if (isset($_GET['deleted'])) {$error['Transporte'] 	  = 'sucess/Tipo Embalaje borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Tipo Embalaje creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tipo Embalaje editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tipo Embalaje borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 //verifico que sea un administrador

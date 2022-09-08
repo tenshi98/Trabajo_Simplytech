@@ -28,7 +28,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['NErroresActual']) )   $NErroresActual      = $_POST['NErroresActual'];
 	if ( !empty($_POST['idEstado']) )         $idEstado            = $_POST['idEstado'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -56,6 +55,11 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){ $Nombre = EstandarizarInput($Nombre); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -87,42 +91,28 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idTelemetria) && $idTelemetria != ''){          $a = "'".$idTelemetria."'" ;       }else{$a ="''";}
-				if(isset($Nombre) && $Nombre != ''){                      $a .= ",'".$Nombre."'" ;           }else{$a .=",''";}
-				if(isset($idTipo) && $idTipo != ''){                      $a .= ",'".$idTipo."'" ;           }else{$a .=",''";}
-				if(isset($idTipoAlerta) && $idTipoAlerta != ''){          $a .= ",'".$idTipoAlerta."'" ;     }else{$a .=",''";}
-				if(isset($idUniMed) && $idUniMed != ''){                  $a .= ",'".$idUniMed."'" ;         }else{$a .=",''";}
-				if(isset($valor_error) && $valor_error != ''){            $a .= ",'".$valor_error."'" ;      }else{$a .=",''";}
-				if(isset($valor_diferencia) && $valor_diferencia != ''){  $a .= ",'".$valor_diferencia."'" ; }else{$a .=",''";}
-				if(isset($Rango_ini) && $Rango_ini != ''){                $a .= ",'".$Rango_ini."'" ;        }else{$a .=",''";}
-				if(isset($Rango_fin) && $Rango_fin != ''){                $a .= ",'".$Rango_fin."'" ;        }else{$a .=",''";}
-				if(isset($NErroresMax) && $NErroresMax != ''){            $a .= ",'".$NErroresMax."'" ;      }else{$a .=",''";}
-				if(isset($NErroresActual) && $NErroresActual != ''){      $a .= ",'".$NErroresActual."'" ;   }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){                  $a .= ",'".$idEstado."'" ;         }else{$a .=",''";}
+				if(isset($idTelemetria) && $idTelemetria != ''){          $SIS_data  = "'".$idTelemetria."'" ;      }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){                      $SIS_data .= ",'".$Nombre."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo != ''){                      $SIS_data .= ",'".$idTipo."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idTipoAlerta) && $idTipoAlerta != ''){          $SIS_data .= ",'".$idTipoAlerta."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idUniMed) && $idUniMed != ''){                  $SIS_data .= ",'".$idUniMed."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($valor_error) && $valor_error != ''){            $SIS_data .= ",'".$valor_error."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($valor_diferencia) && $valor_diferencia != ''){  $SIS_data .= ",'".$valor_diferencia."'" ; }else{$SIS_data .= ",''";}
+				if(isset($Rango_ini) && $Rango_ini != ''){                $SIS_data .= ",'".$Rango_ini."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Rango_fin) && $Rango_fin != ''){                $SIS_data .= ",'".$Rango_fin."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($NErroresMax) && $NErroresMax != ''){            $SIS_data .= ",'".$NErroresMax."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($NErroresActual) && $NErroresActual != ''){      $SIS_data .= ",'".$NErroresActual."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                  $SIS_data .= ",'".$idEstado."'" ;         }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_listado_alarmas_perso` (idTelemetria, Nombre, 
-				idTipo, idTipoAlerta, idUniMed, valor_error, valor_diferencia, Rango_ini, 
-				Rango_fin, NErroresMax, NErroresActual, idEstado) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idTelemetria, Nombre, idTipo, idTipoAlerta, idUniMed, valor_error, valor_diferencia, Rango_ini, Rango_fin, NErroresMax, NErroresActual, idEstado';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_alarmas_perso', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -147,23 +137,23 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idAlarma='".$idAlarma."'" ;
-				if(isset($idTelemetria) && $idTelemetria != ''){            $a .= ",idTelemetria='".$idTelemetria."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                        $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idTipo) && $idTipo != ''){                        $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idTipoAlerta) && $idTipoAlerta != ''){            $a .= ",idTipoAlerta='".$idTipoAlerta."'" ;}
-				if(isset($idUniMed) && $idUniMed != ''){                    $a .= ",idUniMed='".$idUniMed."'" ;}
-				if(isset($valor_error) && $valor_error != ''){              $a .= ",valor_error='".$valor_error."'" ;}
-				if(isset($valor_diferencia) && $valor_diferencia != ''){    $a .= ",valor_diferencia='".$valor_diferencia."'" ;}
-				if(isset($Rango_ini) && $Rango_ini != ''){                  $a .= ",Rango_ini='".$Rango_ini."'" ;}
-				if(isset($Rango_fin) && $Rango_fin != ''){                  $a .= ",Rango_fin='".$Rango_fin."'" ;}
-				if(isset($NErroresMax) && $NErroresMax != ''){              $a .= ",NErroresMax='".$NErroresMax."'" ;         }else{$a .= ",NErroresMax='0'" ;}
-				if(isset($NErroresActual) && $NErroresActual != ''){        $a .= ",NErroresActual='".$NErroresActual."'" ;   }else{$a .= ",NErroresActual='0'" ;}
-				if(isset($idEstado) && $idEstado != ''){                    $a .= ",idEstado='".$idEstado."'" ;   }
+				$SIS_data = "idAlarma='".$idAlarma."'" ;
+				if(isset($idTelemetria) && $idTelemetria != ''){            $SIS_data .= ",idTelemetria='".$idTelemetria."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                        $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idTipo) && $idTipo != ''){                        $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($idTipoAlerta) && $idTipoAlerta != ''){            $SIS_data .= ",idTipoAlerta='".$idTipoAlerta."'" ;}
+				if(isset($idUniMed) && $idUniMed != ''){                    $SIS_data .= ",idUniMed='".$idUniMed."'" ;}
+				if(isset($valor_error) && $valor_error != ''){              $SIS_data .= ",valor_error='".$valor_error."'" ;}
+				if(isset($valor_diferencia) && $valor_diferencia != ''){    $SIS_data .= ",valor_diferencia='".$valor_diferencia."'" ;}
+				if(isset($Rango_ini) && $Rango_ini != ''){                  $SIS_data .= ",Rango_ini='".$Rango_ini."'" ;}
+				if(isset($Rango_fin) && $Rango_fin != ''){                  $SIS_data .= ",Rango_fin='".$Rango_fin."'" ;}
+				if(isset($NErroresMax) && $NErroresMax != ''){              $SIS_data .= ",NErroresMax='".$NErroresMax."'" ;         }else{$SIS_data .= ",NErroresMax='0'" ;}
+				if(isset($NErroresActual) && $NErroresActual != ''){        $SIS_data .= ",NErroresActual='".$NErroresActual."'" ;   }else{$SIS_data .= ",NErroresActual='0'" ;}
+				if(isset($idEstado) && $idEstado != ''){                    $SIS_data .= ",idEstado='".$idEstado."'" ;   }
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_listado_alarmas_perso', 'idAlarma = "'.$idAlarma.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_alarmas_perso', 'idAlarma = "'.$idAlarma.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -247,29 +237,27 @@ require_once '0_validate_user_1.php';
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$a = "idEstado='".$idEstado."'" ;
-				$resultado = db_update_data (false, $a, 'telemetria_listado_alarmas_perso', 'idAlarma = "'.$idAlarma.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$SIS_data = "idEstado='".$idEstado."'" ;
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_alarmas_perso', 'idAlarma = "'.$idAlarma.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
 					//actualizo historial
 					//filtros
-					if(isset($idTelemetria) && $idTelemetria != ''){    $a = "'".$idTelemetria."'" ;  }else{$a ="''";}
-					if(isset($idAlarma) && $idAlarma != ''){            $a .= ",'".$idAlarma."'" ;    }else{$a .=",''";}
-					if(isset($idEstado) && $idEstado != ''){            $a .= ",'".$idEstado."'" ;    }else{$a .=",''";}
-					if(isset($idUsuario) && $idUsuario != ''){          $a .= ",'".$idUsuario."'" ;   }else{$a .=",''";}
-					if(isset($Fecha) && $Fecha != ''){                  $a .= ",'".$Fecha."'" ;       }else{$a .=",''";}
-					if(isset($Hora) && $Hora != ''){                    $a .= ",'".$Hora."'" ;        }else{$a .=",''";}
-					if(isset($TimeStamp) && $TimeStamp != ''){          $a .= ",'".$TimeStamp."'" ;   }else{$a .=",''";}
+					if(isset($idTelemetria) && $idTelemetria != ''){    $SIS_data  = "'".$idTelemetria."'" ; }else{$SIS_data  = "''";}
+					if(isset($idAlarma) && $idAlarma != ''){            $SIS_data .= ",'".$idAlarma."'" ;    }else{$SIS_data .= ",''";}
+					if(isset($idEstado) && $idEstado != ''){            $SIS_data .= ",'".$idEstado."'" ;    }else{$SIS_data .= ",''";}
+					if(isset($idUsuario) && $idUsuario != ''){          $SIS_data .= ",'".$idUsuario."'" ;   }else{$SIS_data .= ",''";}
+					if(isset($Fecha) && $Fecha != ''){                  $SIS_data .= ",'".$Fecha."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($Hora) && $Hora != ''){                    $SIS_data .= ",'".$Hora."'" ;        }else{$SIS_data .= ",''";}
+					if(isset($TimeStamp) && $TimeStamp != ''){          $SIS_data .= ",'".$TimeStamp."'" ;   }else{$SIS_data .= ",''";}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `telemetria_listado_alarmas_perso_historial` (idTelemetria, idAlarma, 
-					idEstado, idUsuario, Fecha, Hora, TimeStamp) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					$SIS_columns = 'idTelemetria, idAlarma, idEstado, idUsuario, Fecha, Hora, TimeStamp';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_alarmas_perso_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Si ejecuto correctamente la consulta
-					if($resultado){
+					if($ultimo_id!=0){
 						//redirijo
 						header( 'Location: '.$location.'&edited=true' );
 						die;
@@ -313,28 +301,26 @@ require_once '0_validate_user_1.php';
 
 				/*******************************************************/
 				//se actualizan los datos
-				$a = "idEstado='".$idEstado."'" ;
-				$resultado = db_update_data (false, $a, 'telemetria_listado_alarmas_perso', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$SIS_data = "idEstado='".$idEstado."'" ;
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_alarmas_perso', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
 					//actualizo historial
 					foreach ($arrAlarmas as $alarm) {
 						//filtros
-						if(isset($idTelemetria) && $idTelemetria != ''){            $a  = "'".$idTelemetria."'" ;          }else{$a  ="''";}
-						if(isset($alarm['idAlarma']) && $alarm['idAlarma'] != ''){  $a .= ",'".$alarm['idAlarma']."'" ;    }else{$a .=",''";}
-						if(isset($idEstado) && $idEstado != ''){                    $a .= ",'".$idEstado."'" ;             }else{$a .=",''";}
-						if(isset($idUsuario) && $idUsuario != ''){                  $a .= ",'".$idUsuario."'" ;            }else{$a .=",''";}
-						if(isset($Fecha) && $Fecha != ''){                          $a .= ",'".$Fecha."'" ;                }else{$a .=",''";}
-						if(isset($Hora) && $Hora != ''){                            $a .= ",'".$Hora."'" ;                 }else{$a .=",''";}
-						if(isset($TimeStamp) && $TimeStamp != ''){                  $a .= ",'".$TimeStamp."'" ;            }else{$a .=",''";}
+						if(isset($idTelemetria) && $idTelemetria != ''){            $SIS_data  = "'".$idTelemetria."'" ;          }else{$SIS_data  = "''";}
+						if(isset($alarm['idAlarma']) && $alarm['idAlarma'] != ''){  $SIS_data .= ",'".$alarm['idAlarma']."'" ;    }else{$SIS_data .= ",''";}
+						if(isset($idEstado) && $idEstado != ''){                    $SIS_data .= ",'".$idEstado."'" ;             }else{$SIS_data .= ",''";}
+						if(isset($idUsuario) && $idUsuario != ''){                  $SIS_data .= ",'".$idUsuario."'" ;            }else{$SIS_data .= ",''";}
+						if(isset($Fecha) && $Fecha != ''){                          $SIS_data .= ",'".$Fecha."'" ;                }else{$SIS_data .= ",''";}
+						if(isset($Hora) && $Hora != ''){                            $SIS_data .= ",'".$Hora."'" ;                 }else{$SIS_data .= ",''";}
+						if(isset($TimeStamp) && $TimeStamp != ''){                  $SIS_data .= ",'".$TimeStamp."'" ;            }else{$SIS_data .= ",''";}
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `telemetria_listado_alarmas_perso_historial` (idTelemetria, idAlarma, 
-						idEstado, idUsuario, Fecha, Hora, TimeStamp) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
+						$SIS_columns = 'idTelemetria, idAlarma, idEstado, idUsuario, Fecha, Hora, TimeStamp';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_alarmas_perso_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 					
 					//redirijo

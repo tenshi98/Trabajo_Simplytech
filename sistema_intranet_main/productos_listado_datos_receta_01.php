@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit_1']) )  { 
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'new_receta_1';
 	require_once 'A1XRXS_sys/xrxs_form/productos_listado.php';
@@ -35,8 +35,8 @@ if ( !empty($_POST['submit_1']) )  {
 //formulario para crear
 if ( !empty($_POST['submit_prod']) )  { 
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'new_prod_ing';
 	require_once 'A1XRXS_sys/xrxs_form/productos_listado.php';
@@ -44,8 +44,8 @@ if ( !empty($_POST['submit_prod']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit_prod']) )  { 
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'edit_prod_ing';
 	require_once 'A1XRXS_sys/xrxs_form/productos_listado.php';
@@ -53,8 +53,8 @@ if ( !empty($_POST['submit_edit_prod']) )  {
 //se borra un dato
 if ( !empty($_GET['del_prod']) )     {
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_prod_ing';
 	require_once 'A1XRXS_sys/xrxs_form/productos_listado.php';	
@@ -63,8 +63,8 @@ if ( !empty($_GET['del_prod']) )     {
 //se borra un dato
 if ( !empty($_GET['finalizar']) )     {
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'finalizar';
 	require_once 'A1XRXS_sys/xrxs_form/productos_listado.php';	
@@ -72,8 +72,8 @@ if ( !empty($_GET['finalizar']) )     {
 //se borra un dato
 if ( !empty($_GET['del_receta']) )     {
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_receta';
 	require_once 'A1XRXS_sys/xrxs_form/productos_listado.php';	
@@ -82,8 +82,8 @@ if ( !empty($_GET['del_receta']) )     {
 //formulario para crear
 if ( !empty($_POST['submit_newprod']) )  { 
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'update_prod_ing_new';
 	require_once 'A1XRXS_sys/xrxs_form/productos_listado.php';
@@ -91,8 +91,8 @@ if ( !empty($_POST['submit_newprod']) )  {
 //formulario para crear
 if ( !empty($_POST['submit_edit']) )  { 
 	//se agregan ubicaciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'update_prod_ing';
 	require_once 'A1XRXS_sys/xrxs_form/productos_listado.php';
@@ -105,11 +105,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Receta creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Receta editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Receta borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Receta creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Receta editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Receta borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['newProd']) ) {  
 //filtro

@@ -38,11 +38,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Ruta creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Ruta editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Ruta borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Ruta creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ruta editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ruta borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $query = "SELECT Nombre, idSistema, idPais, idCiudad, idComuna, Direccion
@@ -94,7 +94,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre del Predio', 'Nombre', $x1, 2);
 					$Form_Inputs->form_select_country('Pais','idPais', $x2, 1, $dbConn);
-					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x4, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 											 $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 1,'fa fa-map'); 

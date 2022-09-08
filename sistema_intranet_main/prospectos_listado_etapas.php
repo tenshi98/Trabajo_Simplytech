@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/z_prospectos_etapa_fidelizacion.php';
@@ -34,8 +34,8 @@ if ( !empty($_POST['submit']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/z_prospectos_etapa_fidelizacion.php';
@@ -44,7 +44,7 @@ if ( !empty($_POST['submit_edit']) )  {
 if ( !empty($_GET['del_archivo']) )     {
 	//Nueva ubicacion
 	$location = $new_location;
-	$location.='&id='.$_GET['id'];
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_archivo';
 	require_once 'A1XRXS_sys/xrxs_form/z_prospectos_etapa_fidelizacion.php';	
@@ -57,12 +57,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Etapa creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Etapa editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Etapa borrada correctamente';}
-if (isset($_GET['del_arch'])) {$error['usuario'] 	  = 'sucess/Archivo borrado correctamente';}
+if (isset($_GET['created'])){  $error['created']  = 'sucess/Etapa creada correctamente';}
+if (isset($_GET['edited'])){   $error['edited']   = 'sucess/Etapa editada correctamente';}
+if (isset($_GET['deleted'])){  $error['deleted']  = 'sucess/Etapa borrada correctamente';}
+if (isset($_GET['del_arch'])){ $error['del_arch'] = 'sucess/Archivo borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 // consulto los datos
@@ -108,7 +108,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         
 					<div class="col-sm-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs('upload', $rowdata['Archivo'], '', '', ''); ?>
+						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Archivo'], ''); ?>
 					</div>
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_archivo='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>

@@ -65,8 +65,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['NSolicitud']) )           $NSolicitud              = $_POST['NSolicitud'];
 	if ( !empty($_POST['NSolicitudOld']) )        $NSolicitudOld           = $_POST['NSolicitudOld'];
 	
-
-	
 	//otros datos
 	if ( !empty($_POST['idZona']) )               $idZona                  = $_POST['idZona'];
 	if ( !empty($_POST['idTelemetria']) )         $idTelemetria            = $_POST['idTelemetria'];
@@ -92,9 +90,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['VelPromedio']) )          $VelPromedio             = $_POST['VelPromedio'];
 	if ( !empty($_POST['LitrosAplicados']) )      $LitrosAplicados         = $_POST['LitrosAplicados'];
 	if ( !empty($_POST['T_Aplicacion']) )         $T_Aplicacion            = $_POST['T_Aplicacion'];
-	
-
-					
+				
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -154,7 +150,6 @@ require_once '0_validate_user_1.php';
 			case 'NSolicitud':            if(empty($NSolicitud)){             $error['NSolicitud']              = 'error/No ha ingresado el numero de solicitud';}break;
 			case 'NSolicitudOld':         if(empty($NSolicitudOld)){          $error['NSolicitudOld']           = 'error/No ha ingresado el numero de solicitud';}break;
 			
-			
 			case 'idZona':                if(empty($idZona)){                 $error['idZona']                  = 'error/No ha seleccionado el cuartel';}break;
 			case 'idTelemetria':          if(empty($idTelemetria)){           $error['idTelemetria']            = 'error/No ha seleccionado el Equipo Aplicación';}break;
 			case 'idProducto':            if(empty($idProducto)){             $error['idProducto']              = 'error/No ha seleccionado el producto';}break;
@@ -182,6 +177,13 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+	if(isset($Observacion) && $Observacion != ''){     $Observacion   = EstandarizarInput($Observacion); }
+	if(isset($Objetivo) && $Objetivo != ''){           $Objetivo      = EstandarizarInput($Objetivo); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -1484,77 +1486,63 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				
-
 				/**********************************************/
 				//Se guardan los datos basicos
-				if(isset($_SESSION['sol_apli_basicos']['idSistema']) && $_SESSION['sol_apli_basicos']['idSistema'] != ''){            $a  = "'".$_SESSION['sol_apli_basicos']['idSistema']."'" ;        }else{$a  = "''";}
-				if(isset($_SESSION['sol_apli_basicos']['idPredio']) && $_SESSION['sol_apli_basicos']['idPredio'] != ''){              $a .= ",'".$_SESSION['sol_apli_basicos']['idPredio']."'" ;        }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['idUsuario']) && $_SESSION['sol_apli_basicos']['idUsuario'] != ''){            $a .= ",'".$_SESSION['sol_apli_basicos']['idUsuario']."'" ;       }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['idEstado']) && $_SESSION['sol_apli_basicos']['idEstado'] != ''){              $a .= ",'".$_SESSION['sol_apli_basicos']['idEstado']."'" ;        }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['idTemporada']) && $_SESSION['sol_apli_basicos']['idTemporada'] != ''){        $a .= ",'".$_SESSION['sol_apli_basicos']['idTemporada']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['idEstadoFen']) && $_SESSION['sol_apli_basicos']['idEstadoFen'] != ''){        $a .= ",'".$_SESSION['sol_apli_basicos']['idEstadoFen']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['idCategoria']) && $_SESSION['sol_apli_basicos']['idCategoria'] != ''){        $a .= ",'".$_SESSION['sol_apli_basicos']['idCategoria']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['idProducto']) && $_SESSION['sol_apli_basicos']['idProducto'] != ''){          $a .= ",'".$_SESSION['sol_apli_basicos']['idProducto']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['f_creacion']) && $_SESSION['sol_apli_basicos']['f_creacion'] != ''){          $a .= ",'".$_SESSION['sol_apli_basicos']['f_creacion']."'" ;      }else{$a .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['idSistema']) && $_SESSION['sol_apli_basicos']['idSistema'] != ''){            $SIS_data  = "'".$_SESSION['sol_apli_basicos']['idSistema']."'" ;        }else{$SIS_data  = "''";}
+				if(isset($_SESSION['sol_apli_basicos']['idPredio']) && $_SESSION['sol_apli_basicos']['idPredio'] != ''){              $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['idPredio']."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['idUsuario']) && $_SESSION['sol_apli_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['idUsuario']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['idEstado']) && $_SESSION['sol_apli_basicos']['idEstado'] != ''){              $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['idEstado']."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['idTemporada']) && $_SESSION['sol_apli_basicos']['idTemporada'] != ''){        $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['idTemporada']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['idEstadoFen']) && $_SESSION['sol_apli_basicos']['idEstadoFen'] != ''){        $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['idEstadoFen']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['idCategoria']) && $_SESSION['sol_apli_basicos']['idCategoria'] != ''){        $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['idCategoria']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['idProducto']) && $_SESSION['sol_apli_basicos']['idProducto'] != ''){          $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['idProducto']."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['f_creacion']) && $_SESSION['sol_apli_basicos']['f_creacion'] != ''){          $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['f_creacion']."'" ;      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['sol_apli_basicos']['f_programacion']) && $_SESSION['sol_apli_basicos']['f_programacion'] != ''){  
-					$a .= ",'".$_SESSION['sol_apli_basicos']['f_programacion']."'" ;  
-					$a .= ",'".fecha2NdiaMes($_SESSION['sol_apli_basicos']['f_programacion'])."'" ;
-					$a .= ",'".fecha2NSemana($_SESSION['sol_apli_basicos']['f_programacion'])."'" ;
-					$a .= ",'".fecha2NMes($_SESSION['sol_apli_basicos']['f_programacion'])."'" ;
-					$a .= ",'".fecha2Ano($_SESSION['sol_apli_basicos']['f_programacion'])."'" ;
+					$SIS_data .= ",'".$_SESSION['sol_apli_basicos']['f_programacion']."'" ;  
+					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['sol_apli_basicos']['f_programacion'])."'" ;
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['sol_apli_basicos']['f_programacion'])."'" ;
+					$SIS_data .= ",'".fecha2NMes($_SESSION['sol_apli_basicos']['f_programacion'])."'" ;
+					$SIS_data .= ",'".fecha2Ano($_SESSION['sol_apli_basicos']['f_programacion'])."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
 				if(isset($_SESSION['sol_apli_basicos']['f_programacion_fin']) && $_SESSION['sol_apli_basicos']['f_programacion_fin'] != ''){  
-					$a .= ",'".$_SESSION['sol_apli_basicos']['f_programacion_fin']."'" ;  
-					$a .= ",'".fecha2NdiaMes($_SESSION['sol_apli_basicos']['f_programacion_fin'])."'" ;
-					$a .= ",'".fecha2NSemana($_SESSION['sol_apli_basicos']['f_programacion_fin'])."'" ;
-					$a .= ",'".fecha2NMes($_SESSION['sol_apli_basicos']['f_programacion_fin'])."'" ;
-					$a .= ",'".fecha2Ano($_SESSION['sol_apli_basicos']['f_programacion_fin'])."'" ;
+					$SIS_data .= ",'".$_SESSION['sol_apli_basicos']['f_programacion_fin']."'" ;  
+					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['sol_apli_basicos']['f_programacion_fin'])."'" ;
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['sol_apli_basicos']['f_programacion_fin'])."'" ;
+					$SIS_data .= ",'".fecha2NMes($_SESSION['sol_apli_basicos']['f_programacion_fin'])."'" ;
+					$SIS_data .= ",'".fecha2Ano($_SESSION['sol_apli_basicos']['f_programacion_fin'])."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['sol_apli_basicos']['horaProg']) && $_SESSION['sol_apli_basicos']['horaProg'] != ''){             $a .= ",'".$_SESSION['sol_apli_basicos']['horaProg']."'" ;      }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['horaProg_fin']) && $_SESSION['sol_apli_basicos']['horaProg_fin'] != ''){     $a .= ",'".$_SESSION['sol_apli_basicos']['horaProg_fin']."'" ;  }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['Mojamiento']) && $_SESSION['sol_apli_basicos']['Mojamiento'] != ''){         $a .= ",'".$_SESSION['sol_apli_basicos']['Mojamiento']."'" ;    }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['VelTractor']) && $_SESSION['sol_apli_basicos']['VelTractor'] != ''){         $a .= ",'".$_SESSION['sol_apli_basicos']['VelTractor']."'" ;    }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['VelViento']) && $_SESSION['sol_apli_basicos']['VelViento'] != ''){           $a .= ",'".$_SESSION['sol_apli_basicos']['VelViento']."'" ;     }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['TempMin']) && $_SESSION['sol_apli_basicos']['TempMin'] != ''){               $a .= ",'".$_SESSION['sol_apli_basicos']['TempMin']."'" ;       }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['TempMax']) && $_SESSION['sol_apli_basicos']['TempMax'] != ''){               $a .= ",'".$_SESSION['sol_apli_basicos']['TempMax']."'" ;       }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['HumTempMax']) && $_SESSION['sol_apli_basicos']['HumTempMax'] != ''){         $a .= ",'".$_SESSION['sol_apli_basicos']['HumTempMax']."'" ;    }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['idPrioridad']) && $_SESSION['sol_apli_basicos']['idPrioridad'] != ''){       $a .= ",'".$_SESSION['sol_apli_basicos']['idPrioridad']."'" ;   }else{$a .= ",''";}
-				if(isset($_SESSION['sol_apli_basicos']['NSolicitud']) && $_SESSION['sol_apli_basicos']['NSolicitud'] != ''){         $a .= ",'".$_SESSION['sol_apli_basicos']['NSolicitud']."'" ;    }else{$a .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['horaProg']) && $_SESSION['sol_apli_basicos']['horaProg'] != ''){             $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['horaProg']."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['horaProg_fin']) && $_SESSION['sol_apli_basicos']['horaProg_fin'] != ''){     $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['horaProg_fin']."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['Mojamiento']) && $_SESSION['sol_apli_basicos']['Mojamiento'] != ''){         $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['Mojamiento']."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['VelTractor']) && $_SESSION['sol_apli_basicos']['VelTractor'] != ''){         $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['VelTractor']."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['VelViento']) && $_SESSION['sol_apli_basicos']['VelViento'] != ''){           $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['VelViento']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['TempMin']) && $_SESSION['sol_apli_basicos']['TempMin'] != ''){               $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['TempMin']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['TempMax']) && $_SESSION['sol_apli_basicos']['TempMax'] != ''){               $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['TempMax']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['HumTempMax']) && $_SESSION['sol_apli_basicos']['HumTempMax'] != ''){         $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['HumTempMax']."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['idPrioridad']) && $_SESSION['sol_apli_basicos']['idPrioridad'] != ''){       $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['idPrioridad']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['sol_apli_basicos']['NSolicitud']) && $_SESSION['sol_apli_basicos']['NSolicitud'] != ''){         $SIS_data .= ",'".$_SESSION['sol_apli_basicos']['NSolicitud']."'" ;    }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_solicitud_aplicacion_listado` (idSistema, idPredio, idUsuario, idEstado, idTemporada,
+				$SIS_columns = 'idSistema, idPredio, idUsuario, idEstado, idTemporada,
 				idEstadoFen, idCategoria, idProducto, f_creacion, f_programacion, progDia, progSemana, progMes, progAno, f_programacion_fin, 
 				progDia_fin, progSemana_fin, progMes_fin, progAno_fin, horaProg, horaProg_fin, Mojamiento, VelTractor, VelViento, TempMin, 
-				TempMax, HumTempMax, idPrioridad, NSolicitud) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				TempMax, HumTempMax, idPrioridad, NSolicitud';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
 					//Solo si se ejecuto correctamente
 					if(isset($ultimo_id)&&$ultimo_id!=''){
 						/*********************************************************************/		
@@ -1567,36 +1555,22 @@ require_once '0_validate_user_1.php';
 							$XObs .= '-'.$_SESSION['sol_apli_basicos']['Carencias'];
 						}
 						
+						/************************************************************/
 						//Se guarda en historial la accion
-						if(isset($ultimo_id) && $ultimo_id != ''){    $a  = "'".$ultimo_id."'" ;  }else{$a  = "''";}
+						if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
 						if(isset($_SESSION['sol_apli_basicos']['f_creacion']) && $_SESSION['sol_apli_basicos']['f_creacion'] != ''){  
-							$a .= ",'".$_SESSION['sol_apli_basicos']['f_creacion']."'" ;  
+							$SIS_data .= ",'".$_SESSION['sol_apli_basicos']['f_creacion']."'" ;  
 						}else{
-							$a .= ",''";
+							$SIS_data .= ",''";
 						}
-						$a .= ",'".$XObs."'";                                             //Observacion
-						$a .= ",'".$_SESSION['sol_apli_basicos']['idUsuario']."'";        //idUsuario
-						$a .= ",'".$_SESSION['sol_apli_basicos']['idEstado']."'" ;        //Guardo el estado 
+						$SIS_data .= ",'".$XObs."'";                                             //Observacion
+						$SIS_data .= ",'".$_SESSION['sol_apli_basicos']['idUsuario']."'";        //idUsuario
+						$SIS_data .= ",'".$_SESSION['sol_apli_basicos']['idEstado']."'" ;        //Guardo el estado 
 					
-									
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_historial` (idSolicitud, 
-						Creacion_fecha, Observacion, idUsuario, idEstado) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
-					
+						$SIS_columns = 'idSolicitud, Creacion_fecha, Observacion, idUsuario, idEstado';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 						/*********************************************************************/		
 						//se guardan los materiales
 						if(isset($_SESSION['sol_apli_materiales'])&&$_SESSION['sol_apli_materiales']!=''){
@@ -1606,25 +1580,13 @@ require_once '0_validate_user_1.php';
 							foreach ($_SESSION['sol_apli_materiales'] as $key => $mat){
 								
 								//filtros
-								if(isset($ultimo_id) && $ultimo_id != ''){                           $a = "'".$ultimo_id."'" ;                 }else{$a  = "''";}
-								if(isset($mat['idMatSeguridad']) && $mat['idMatSeguridad'] != ''){   $a .= ",'".$mat['idMatSeguridad']."'" ;   }else{$a .= ",''";}
+								if(isset($ultimo_id) && $ultimo_id != ''){                           $SIS_data  = "'".$ultimo_id."'" ;                }else{$SIS_data  = "''";}
+								if(isset($mat['idMatSeguridad']) && $mat['idMatSeguridad'] != ''){   $SIS_data .= ",'".$mat['idMatSeguridad']."'" ;   }else{$SIS_data .= ",''";}
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_materiales` (idSolicitud, idMatSeguridad) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
+								$SIS_columns = 'idSolicitud, idMatSeguridad';
+								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_materiales', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 							}
 						}
 						
@@ -1637,99 +1599,60 @@ require_once '0_validate_user_1.php';
 							foreach ($_SESSION['sol_apli_cuarteles'] as $key => $cuartel){
 								
 								//filtros
-								if(isset($ultimo_id) && $ultimo_id != ''){                             $a = "'".$ultimo_id."'" ;                  }else{$a  = "''";}
-								if(isset($cuartel['idZona']) && $cuartel['idZona'] != ''){             $a .= ",'".$cuartel['idZona']."'" ;        }else{$a .= ",''";}
-								if(isset($cuartel['Mojamiento']) && $cuartel['Mojamiento'] != ''){     $a .= ",'".$cuartel['Mojamiento']."'" ;    }else{$a .= ",''";}
-								if(isset($cuartel['VelTractor']) && $cuartel['VelTractor'] != ''){     $a .= ",'".$cuartel['VelTractor']."'" ;    }else{$a .= ",''";}
-								if(isset($cuartel['VelViento']) && $cuartel['VelViento'] != ''){       $a .= ",'".$cuartel['VelViento']."'" ;     }else{$a .= ",''";}
-								if(isset($cuartel['TempMin']) && $cuartel['TempMin'] != ''){           $a .= ",'".$cuartel['TempMin']."'" ;       }else{$a .= ",''";}
-								if(isset($cuartel['TempMax']) && $cuartel['TempMax'] != ''){           $a .= ",'".$cuartel['TempMax']."'" ;       }else{$a .= ",''";}
-								if(isset($cuartel['HumTempMax']) && $cuartel['HumTempMax'] != ''){     $a .= ",'".$cuartel['HumTempMax']."'" ;    }else{$a .= ",''";}
-								$a .= ",'1'" ; //se asigna el estado
-								if(isset($cuartel['idCategoria']) && $cuartel['idCategoria'] != ''){   $a .= ",'".$cuartel['idCategoria']."'" ;   }else{$a .= ",''";}
-								if(isset($cuartel['idProducto']) && $cuartel['idProducto'] != ''){     $a .= ",'".$cuartel['idProducto']."'" ;    }else{$a .= ",''";}
+								if(isset($ultimo_id) && $ultimo_id != ''){                             $SIS_data = "'".$ultimo_id."'" ;                  }else{$SIS_data  = "''";}
+								if(isset($cuartel['idZona']) && $cuartel['idZona'] != ''){             $SIS_data .= ",'".$cuartel['idZona']."'" ;        }else{$SIS_data .= ",''";}
+								if(isset($cuartel['Mojamiento']) && $cuartel['Mojamiento'] != ''){     $SIS_data .= ",'".$cuartel['Mojamiento']."'" ;    }else{$SIS_data .= ",''";}
+								if(isset($cuartel['VelTractor']) && $cuartel['VelTractor'] != ''){     $SIS_data .= ",'".$cuartel['VelTractor']."'" ;    }else{$SIS_data .= ",''";}
+								if(isset($cuartel['VelViento']) && $cuartel['VelViento'] != ''){       $SIS_data .= ",'".$cuartel['VelViento']."'" ;     }else{$SIS_data .= ",''";}
+								if(isset($cuartel['TempMin']) && $cuartel['TempMin'] != ''){           $SIS_data .= ",'".$cuartel['TempMin']."'" ;       }else{$SIS_data .= ",''";}
+								if(isset($cuartel['TempMax']) && $cuartel['TempMax'] != ''){           $SIS_data .= ",'".$cuartel['TempMax']."'" ;       }else{$SIS_data .= ",''";}
+								if(isset($cuartel['HumTempMax']) && $cuartel['HumTempMax'] != ''){     $SIS_data .= ",'".$cuartel['HumTempMax']."'" ;    }else{$SIS_data .= ",''";}
+								$SIS_data .= ",'1'" ; //se asigna el estado
+								if(isset($cuartel['idCategoria']) && $cuartel['idCategoria'] != ''){   $SIS_data .= ",'".$cuartel['idCategoria']."'" ;   }else{$SIS_data .= ",''";}
+								if(isset($cuartel['idProducto']) && $cuartel['idProducto'] != ''){     $SIS_data .= ",'".$cuartel['idProducto']."'" ;    }else{$SIS_data .= ",''";}
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_cuarteles` (idSolicitud, idZona, 
-								Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax, idEstado, idCategoria,
-								idProducto) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
+								$SIS_columns = 'idSolicitud, idZona, Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax, idEstado, idCategoria, idProducto';
+								$ultimo_cuartel = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_cuarteles', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-								$ultimo_cuartel = mysqli_insert_id($dbConn);
-						
-								/*******************************************/
-								//se recorren los tractores
-								if($_SESSION['sol_apli_tractores'][$cuartel['valor_id']]){
-									//Se recorren los tractores
-									foreach ($_SESSION['sol_apli_tractores'][$cuartel['valor_id']] as $key => $tract){
-										//filtros
-										if(isset($ultimo_id) && $ultimo_id != ''){                          $a = "'".$ultimo_id."'" ;                 }else{$a  = "''";}
-										if(isset($ultimo_cuartel) && $ultimo_cuartel != ''){                $a .= ",'".$ultimo_cuartel."'" ;          }else{$a .= ",''";}
-										if(isset($tract['idTelemetria']) && $tract['idTelemetria'] != ''){  $a .= ",'".$tract['idTelemetria']."'" ;   }else{$a .= ",''";}
-										if(isset($tract['idVehiculo']) && $tract['idVehiculo'] != ''){      $a .= ",'".$tract['idVehiculo']."'" ;     }else{$a .= ",''";}
-										if(isset($tract['idTrabajador']) && $tract['idTrabajador'] != ''){  $a .= ",'".$tract['idTrabajador']."'" ;   }else{$a .= ",''";}
-										
-										// inserto los datos de registro en la db
-										$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_tractores` (idSolicitud, idCuarteles, 
-										idTelemetria, idVehiculo, idTrabajador) 
-										VALUES (".$a.")";
-										//Consulta
-										$resultado = mysqli_query ($dbConn, $query);
-										//Si ejecuto correctamente la consulta
-										if(!$resultado){
-											//Genero numero aleatorio
-											$vardata = genera_password(8,'alfanumerico');
+								if($ultimo_cuartel!=0){
+									/*******************************************/
+									//se recorren los tractores
+									if($_SESSION['sol_apli_tractores'][$cuartel['valor_id']]){
+										//Se recorren los tractores
+										foreach ($_SESSION['sol_apli_tractores'][$cuartel['valor_id']] as $key => $tract){
+											//filtros
+											if(isset($ultimo_id) && $ultimo_id != ''){                          $SIS_data = "'".$ultimo_id."'" ;                 }else{$SIS_data  = "''";}
+											if(isset($ultimo_cuartel) && $ultimo_cuartel != ''){                $SIS_data .= ",'".$ultimo_cuartel."'" ;          }else{$SIS_data .= ",''";}
+											if(isset($tract['idTelemetria']) && $tract['idTelemetria'] != ''){  $SIS_data .= ",'".$tract['idTelemetria']."'" ;   }else{$SIS_data .= ",''";}
+											if(isset($tract['idVehiculo']) && $tract['idVehiculo'] != ''){      $SIS_data .= ",'".$tract['idVehiculo']."'" ;     }else{$SIS_data .= ",''";}
+											if(isset($tract['idTrabajador']) && $tract['idTrabajador'] != ''){  $SIS_data .= ",'".$tract['idTrabajador']."'" ;   }else{$SIS_data .= ",''";}
 											
-											//Guardo el error en una variable temporal
-											$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-											$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-											$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+											// inserto los datos de registro en la db
+											$SIS_columns = 'idSolicitud, idCuarteles, idTelemetria, idVehiculo, idTrabajador';
+											$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_tractores', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 											
 										}
 									}
-								}
-								/*******************************************/
-								//se recorren los cuarteles
-								if($_SESSION['sol_apli_productos'][$cuartel['valor_id']]){
-									//Se recorren los quimicos a utilizar
-									foreach ($_SESSION['sol_apli_productos'][$cuartel['valor_id']] as $key => $prod){
-										
-										//filtros
-										if(isset($ultimo_id) && $ultimo_id != ''){                                $a  = "'".$ultimo_id."'" ;                   }else{$a  = "''";}
-										if(isset($ultimo_cuartel) && $ultimo_cuartel != ''){                      $a .= ",'".$ultimo_cuartel."'" ;             }else{$a .= ",''";}
-										if(isset($prod['idProducto']) && $prod['idProducto'] != ''){              $a .= ",'".$prod['idProducto']."'" ;         }else{$a .= ",''";}
-										if(isset($prod['DosisRecomendada']) && $prod['DosisRecomendada'] != ''){  $a .= ",'".$prod['DosisRecomendada']."'" ;   }else{$a .= ",''";}
-										if(isset($prod['DosisAplicar']) && $prod['DosisAplicar'] != ''){          $a .= ",'".$prod['DosisAplicar']."'" ;       }else{$a .= ",''";}
-										if(isset($prod['idUml']) && $prod['idUml'] != ''){                        $a .= ",'".$prod['idUml']."'" ;              }else{$a .= ",''";}
-										if(isset($prod['Objetivo']) && $prod['Objetivo'] != ''){                  $a .= ",'".$prod['Objetivo']."'" ;           }else{$a .= ",''";}
-										
-										// inserto los datos de registro en la db
-										$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_productos` (idSolicitud, idCuarteles, 
-										idProducto, DosisRecomendada, DosisAplicar, idUml, Objetivo) 
-										VALUES (".$a.")";
-										//Consulta
-										$resultado = mysqli_query ($dbConn, $query);
-										//Si ejecuto correctamente la consulta
-										if(!$resultado){
-											//Genero numero aleatorio
-											$vardata = genera_password(8,'alfanumerico');
+									/*******************************************/
+									//se recorren los cuarteles
+									if($_SESSION['sol_apli_productos'][$cuartel['valor_id']]){
+										//Se recorren los quimicos a utilizar
+										foreach ($_SESSION['sol_apli_productos'][$cuartel['valor_id']] as $key => $prod){
 											
-											//Guardo el error en una variable temporal
-											$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-											$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-											$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+											//filtros
+											if(isset($ultimo_id) && $ultimo_id != ''){                                $SIS_data  = "'".$ultimo_id."'" ;                   }else{$SIS_data  = "''";}
+											if(isset($ultimo_cuartel) && $ultimo_cuartel != ''){                      $SIS_data .= ",'".$ultimo_cuartel."'" ;             }else{$SIS_data .= ",''";}
+											if(isset($prod['idProducto']) && $prod['idProducto'] != ''){              $SIS_data .= ",'".$prod['idProducto']."'" ;         }else{$SIS_data .= ",''";}
+											if(isset($prod['DosisRecomendada']) && $prod['DosisRecomendada'] != ''){  $SIS_data .= ",'".$prod['DosisRecomendada']."'" ;   }else{$SIS_data .= ",''";}
+											if(isset($prod['DosisAplicar']) && $prod['DosisAplicar'] != ''){          $SIS_data .= ",'".$prod['DosisAplicar']."'" ;       }else{$SIS_data .= ",''";}
+											if(isset($prod['idUml']) && $prod['idUml'] != ''){                        $SIS_data .= ",'".$prod['idUml']."'" ;              }else{$SIS_data .= ",''";}
+											if(isset($prod['Objetivo']) && $prod['Objetivo'] != ''){                  $SIS_data .= ",'".$prod['Objetivo']."'" ;           }else{$SIS_data .= ",''";}
+											
+											// inserto los datos de registro en la db
+											$SIS_columns = 'idSolicitud, idCuarteles, idProducto, DosisRecomendada, DosisAplicar, idUml, Objetivo';
+											$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 											
 										}
 									}
@@ -1920,112 +1843,110 @@ require_once '0_validate_user_1.php';
 				}
 				
 				//Filtros
-				$a = "idSolicitud='".$idSolicitud."'" ;
-				if(isset($idSistema) && $idSistema != ''){                     $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idPredio) && $idPredio != ''){                       $a .= ",idPredio='".$idPredio."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){                     $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                       $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idTemporada) && $idTemporada != ''){                 $a .= ",idTemporada='".$idTemporada."'" ;}
-				if(isset($idEstadoFen) && $idEstadoFen != ''){                 $a .= ",idEstadoFen='".$idEstadoFen."'" ;}
-				if(isset($idCategoria) && $idCategoria != ''){                 $a .= ",idCategoria='".$idCategoria."'" ;}
-				if(isset($idProducto) && $idProducto != ''){                   $a .= ",idProducto='".$idProducto."'" ;}
-				if(isset($f_creacion) && $f_creacion != ''){                   $a .= ",f_creacion='".$f_creacion."'" ;}
-				if(isset($f_programacion) && $f_programacion != ''){           $a .= ",f_programacion='".$f_programacion."'" ;}
-				if(isset($f_ejecucion) && $f_ejecucion != ''){                 $a .= ",f_ejecucion='".$f_ejecucion."'" ;}
-				if(isset($f_termino) && $f_termino != ''){                     $a .= ",f_termino='".$f_termino."'" ;}
-				if(isset($Observaciones) && $Observaciones != ''){             $a .= ",Observaciones='".$Observaciones."'" ;}
-				if(isset($horaProg) && $horaProg != ''){                       $a .= ",horaProg='".$horaProg."'" ;}
-				if(isset($horaEjecucion) && $horaEjecucion != ''){             $a .= ",horaEjecucion='".$horaEjecucion."'" ;}
-				if(isset($horaTermino) && $horaTermino != ''){                 $a .= ",horaTermino='".$horaTermino."'" ;}
-				if(isset($Mojamiento) && $Mojamiento != ''){                   $a .= ",Mojamiento='".$Mojamiento."'" ;}
-				if(isset($VelTractor) && $VelTractor != ''){                   $a .= ",VelTractor='".$VelTractor."'" ;}
-				if(isset($VelViento) && $VelViento != ''){                     $a .= ",VelViento='".$VelViento."'" ;}
-				if(isset($TempMin) && $TempMin != ''){                         $a .= ",TempMin='".$TempMin."'" ;}
-				if(isset($TempMax) && $TempMax != ''){                         $a .= ",TempMax='".$TempMax."'" ;}
-				if(isset($HumTempMax) && $HumTempMax != ''){                   $a .= ",HumTempMax='".$HumTempMax."'" ;}
-				if(isset($idPrioridad) && $idPrioridad != ''){                 $a .= ",idPrioridad='".$idPrioridad."'" ;}
-				if(isset($horaProg_fin) && $horaProg_fin != ''){               $a .= ",horaProg_fin='".$horaProg_fin."'" ;}
-				if(isset($horaEjecucion_fin) && $horaEjecucion_fin != ''){     $a .= ",horaEjecucion_fin='".$horaEjecucion_fin."'" ;}
-				if(isset($horaTermino_fin) && $horaTermino_fin != ''){         $a .= ",horaTermino_fin='".$horaTermino_fin."'" ;}
-				if(isset($f_programacion_fin) && $f_programacion_fin != ''){   $a .= ",f_programacion_fin='".$f_programacion_fin."'" ;}
-				if(isset($f_ejecucion_fin) && $f_ejecucion_fin != ''){         $a .= ",f_ejecucion_fin='".$f_ejecucion_fin."'" ;}
-				if(isset($f_termino_fin) && $f_termino_fin != ''){             $a .= ",f_termino_fin='".$f_termino_fin."'" ;}
-				if(isset($idDosificador) && $idDosificador != ''){             $a .= ",idDosificador='".$idDosificador."'" ;}
-				if(isset($NSolicitud) && $NSolicitud != ''){                   $a .= ",NSolicitud='".$NSolicitud."'" ;}
+				$SIS_data = "idSolicitud='".$idSolicitud."'" ;
+				if(isset($idSistema) && $idSistema != ''){                     $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idPredio) && $idPredio != ''){                       $SIS_data .= ",idPredio='".$idPredio."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){                     $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                       $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idTemporada) && $idTemporada != ''){                 $SIS_data .= ",idTemporada='".$idTemporada."'" ;}
+				if(isset($idEstadoFen) && $idEstadoFen != ''){                 $SIS_data .= ",idEstadoFen='".$idEstadoFen."'" ;}
+				if(isset($idCategoria) && $idCategoria != ''){                 $SIS_data .= ",idCategoria='".$idCategoria."'" ;}
+				if(isset($idProducto) && $idProducto != ''){                   $SIS_data .= ",idProducto='".$idProducto."'" ;}
+				if(isset($f_creacion) && $f_creacion != ''){                   $SIS_data .= ",f_creacion='".$f_creacion."'" ;}
+				if(isset($f_programacion) && $f_programacion != ''){           $SIS_data .= ",f_programacion='".$f_programacion."'" ;}
+				if(isset($f_ejecucion) && $f_ejecucion != ''){                 $SIS_data .= ",f_ejecucion='".$f_ejecucion."'" ;}
+				if(isset($f_termino) && $f_termino != ''){                     $SIS_data .= ",f_termino='".$f_termino."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){             $SIS_data .= ",Observaciones='".$Observaciones."'" ;}
+				if(isset($horaProg) && $horaProg != ''){                       $SIS_data .= ",horaProg='".$horaProg."'" ;}
+				if(isset($horaEjecucion) && $horaEjecucion != ''){             $SIS_data .= ",horaEjecucion='".$horaEjecucion."'" ;}
+				if(isset($horaTermino) && $horaTermino != ''){                 $SIS_data .= ",horaTermino='".$horaTermino."'" ;}
+				if(isset($Mojamiento) && $Mojamiento != ''){                   $SIS_data .= ",Mojamiento='".$Mojamiento."'" ;}
+				if(isset($VelTractor) && $VelTractor != ''){                   $SIS_data .= ",VelTractor='".$VelTractor."'" ;}
+				if(isset($VelViento) && $VelViento != ''){                     $SIS_data .= ",VelViento='".$VelViento."'" ;}
+				if(isset($TempMin) && $TempMin != ''){                         $SIS_data .= ",TempMin='".$TempMin."'" ;}
+				if(isset($TempMax) && $TempMax != ''){                         $SIS_data .= ",TempMax='".$TempMax."'" ;}
+				if(isset($HumTempMax) && $HumTempMax != ''){                   $SIS_data .= ",HumTempMax='".$HumTempMax."'" ;}
+				if(isset($idPrioridad) && $idPrioridad != ''){                 $SIS_data .= ",idPrioridad='".$idPrioridad."'" ;}
+				if(isset($horaProg_fin) && $horaProg_fin != ''){               $SIS_data .= ",horaProg_fin='".$horaProg_fin."'" ;}
+				if(isset($horaEjecucion_fin) && $horaEjecucion_fin != ''){     $SIS_data .= ",horaEjecucion_fin='".$horaEjecucion_fin."'" ;}
+				if(isset($horaTermino_fin) && $horaTermino_fin != ''){         $SIS_data .= ",horaTermino_fin='".$horaTermino_fin."'" ;}
+				if(isset($f_programacion_fin) && $f_programacion_fin != ''){   $SIS_data .= ",f_programacion_fin='".$f_programacion_fin."'" ;}
+				if(isset($f_ejecucion_fin) && $f_ejecucion_fin != ''){         $SIS_data .= ",f_ejecucion_fin='".$f_ejecucion_fin."'" ;}
+				if(isset($f_termino_fin) && $f_termino_fin != ''){             $SIS_data .= ",f_termino_fin='".$f_termino_fin."'" ;}
+				if(isset($idDosificador) && $idDosificador != ''){             $SIS_data .= ",idDosificador='".$idDosificador."'" ;}
+				if(isset($NSolicitud) && $NSolicitud != ''){                   $SIS_data .= ",NSolicitud='".$NSolicitud."'" ;}
 				
 				if(isset($f_programacion) && $f_programacion != ''){  
-					$a .= ",progDia='".fecha2NdiaMes($f_programacion)."'" ;
-					$a .= ",progSemana='".fecha2NSemana($f_programacion)."'" ;
-					$a .= ",progMes='".fecha2NMes($f_programacion)."'" ;
-					$a .= ",progAno='".fecha2Ano($f_programacion)."'" ;
+					$SIS_data .= ",progDia='".fecha2NdiaMes($f_programacion)."'" ;
+					$SIS_data .= ",progSemana='".fecha2NSemana($f_programacion)."'" ;
+					$SIS_data .= ",progMes='".fecha2NMes($f_programacion)."'" ;
+					$SIS_data .= ",progAno='".fecha2Ano($f_programacion)."'" ;
 				}
 				if(isset($f_ejecucion) && $f_ejecucion != ''){  
-					$a .= ",ejeDia='".fecha2NdiaMes($f_ejecucion)."'" ;
-					$a .= ",ejeSemana='".fecha2NSemana($f_ejecucion)."'" ;
-					$a .= ",ejeMes='".fecha2NMes($f_ejecucion)."'" ;
-					$a .= ",ejeAno='".fecha2Ano($f_ejecucion)."'" ;
+					$SIS_data .= ",ejeDia='".fecha2NdiaMes($f_ejecucion)."'" ;
+					$SIS_data .= ",ejeSemana='".fecha2NSemana($f_ejecucion)."'" ;
+					$SIS_data .= ",ejeMes='".fecha2NMes($f_ejecucion)."'" ;
+					$SIS_data .= ",ejeAno='".fecha2Ano($f_ejecucion)."'" ;
 				}
 				if(isset($f_termino) && $f_termino != ''){  
-					$a .= ",terDia='".fecha2NdiaMes($f_termino)."'" ;
-					$a .= ",terSemana='".fecha2NSemana($f_termino)."'" ;
-					$a .= ",terMes='".fecha2NMes($f_termino)."'" ;
-					$a .= ",terAno='".fecha2Ano($f_termino)."'" ;
+					$SIS_data .= ",terDia='".fecha2NdiaMes($f_termino)."'" ;
+					$SIS_data .= ",terSemana='".fecha2NSemana($f_termino)."'" ;
+					$SIS_data .= ",terMes='".fecha2NMes($f_termino)."'" ;
+					$SIS_data .= ",terAno='".fecha2Ano($f_termino)."'" ;
 				}
 				if(isset($f_programacion_fin) && $f_programacion_fin != ''){  
-					$a .= ",progDia_fin='".fecha2NdiaMes($f_programacion_fin)."'" ;
-					$a .= ",progSemana_fin='".fecha2NSemana($f_programacion_fin)."'" ;
-					$a .= ",progMes_fin='".fecha2NMes($f_programacion_fin)."'" ;
-					$a .= ",progAno_fin='".fecha2Ano($f_programacion_fin)."'" ;
+					$SIS_data .= ",progDia_fin='".fecha2NdiaMes($f_programacion_fin)."'" ;
+					$SIS_data .= ",progSemana_fin='".fecha2NSemana($f_programacion_fin)."'" ;
+					$SIS_data .= ",progMes_fin='".fecha2NMes($f_programacion_fin)."'" ;
+					$SIS_data .= ",progAno_fin='".fecha2Ano($f_programacion_fin)."'" ;
 				}
 				if(isset($f_ejecucion_fin) && $f_ejecucion_fin != ''){  
-					$a .= ",ejeDia_fin='".fecha2NdiaMes($f_ejecucion_fin)."'" ;
-					$a .= ",ejeSemana_fin='".fecha2NSemana($f_ejecucion_fin)."'" ;
-					$a .= ",ejeMes_fin='".fecha2NMes($f_ejecucion_fin)."'" ;
-					$a .= ",ejeAno_fin='".fecha2Ano($f_ejecucion_fin)."'" ;
+					$SIS_data .= ",ejeDia_fin='".fecha2NdiaMes($f_ejecucion_fin)."'" ;
+					$SIS_data .= ",ejeSemana_fin='".fecha2NSemana($f_ejecucion_fin)."'" ;
+					$SIS_data .= ",ejeMes_fin='".fecha2NMes($f_ejecucion_fin)."'" ;
+					$SIS_data .= ",ejeAno_fin='".fecha2Ano($f_ejecucion_fin)."'" ;
 				}
 				if(isset($f_termino_fin) && $f_termino_fin != ''){  
-					$a .= ",terDia_fin='".fecha2NdiaMes($f_termino_fin)."'" ;
-					$a .= ",terSemana_fin='".fecha2NSemana($f_termino_fin)."'" ;
-					$a .= ",terMes_fin='".fecha2NMes($f_termino_fin)."'" ;
-					$a .= ",terAno_fin='".fecha2Ano($f_termino_fin)."'" ;
+					$SIS_data .= ",terDia_fin='".fecha2NdiaMes($f_termino_fin)."'" ;
+					$SIS_data .= ",terSemana_fin='".fecha2NSemana($f_termino_fin)."'" ;
+					$SIS_data .= ",terMes_fin='".fecha2NMes($f_termino_fin)."'" ;
+					$SIS_data .= ",terAno_fin='".fecha2Ano($f_termino_fin)."'" ;
 				}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
 					//se actualizan los datos internos de los cuarteles
-					$a = "idSolicitud='".$idSolicitud."'" ;
-					if(isset($Mojamiento) && $Mojamiento != ''){           $a .= ",Mojamiento='".$Mojamiento."'" ;}
-					if(isset($VelTractor) && $VelTractor != ''){           $a .= ",VelTractor='".$VelTractor."'" ;}
-					if(isset($VelViento) && $VelViento != ''){             $a .= ",VelViento='".$VelViento."'" ;}
-					if(isset($TempMin) && $TempMin != ''){                 $a .= ",TempMin='".$TempMin."'" ;}
-					if(isset($TempMax) && $TempMax != ''){                 $a .= ",TempMax='".$TempMax."'" ;}
-					if(isset($HumTempMax) && $HumTempMax != ''){           $a .= ",HumTempMax='".$HumTempMax."'" ;}
+					$SIS_data = "idSolicitud='".$idSolicitud."'" ;
+					if(isset($Mojamiento) && $Mojamiento != ''){           $SIS_data .= ",Mojamiento='".$Mojamiento."'" ;}
+					if(isset($VelTractor) && $VelTractor != ''){           $SIS_data .= ",VelTractor='".$VelTractor."'" ;}
+					if(isset($VelViento) && $VelViento != ''){             $SIS_data .= ",VelViento='".$VelViento."'" ;}
+					if(isset($TempMin) && $TempMin != ''){                 $SIS_data .= ",TempMin='".$TempMin."'" ;}
+					if(isset($TempMax) && $TempMax != ''){                 $SIS_data .= ",TempMax='".$TempMax."'" ;}
+					if(isset($HumTempMax) && $HumTempMax != ''){           $SIS_data .= ",HumTempMax='".$HumTempMax."'" ;}
 					
 					/*******************************************************/
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_cuarteles', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado_cuarteles', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
 						
 						/******************************************/
 						//Historial
 						if(isset($Observacion)&&$Observacion!=''){
-							if(isset($idSolicitud) && $idSolicitud != ''){       $a  = "'".$idSolicitud."'" ;       }else{$a  ="''";}
-							if(isset($Creacion_fecha) && $Creacion_fecha != ''){ $a .= ",'".$Creacion_fecha."'" ;   }else{$a .=",''";}
-							if(isset($idUsuario) && $idUsuario != ''){           $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
-							if(isset($Observacion) && $Observacion != ''){       $a .= ",'".$Observacion."'" ;      }else{$a .=",''";}
-							if(isset($idEstado) && $idEstado != ''){             $a .= ",'".$idEstado."'" ;         }else{$a .=",''";}
+							if(isset($idSolicitud) && $idSolicitud != ''){       $SIS_data  = "'".$idSolicitud."'" ;       }else{$SIS_data  = "''";}
+							if(isset($Creacion_fecha) && $Creacion_fecha != ''){ $SIS_data .= ",'".$Creacion_fecha."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($idUsuario) && $idUsuario != ''){           $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
+							if(isset($Observacion) && $Observacion != ''){       $SIS_data .= ",'".$Observacion."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($idEstado) && $idEstado != ''){             $SIS_data .= ",'".$idEstado."'" ;         }else{$SIS_data .= ",''";}
 							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_historial` (idSolicitud, 
-							Creacion_fecha, idUsuario, Observacion, idEstado) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							$SIS_columns = 'idSolicitud, Creacion_fecha, idUsuario, Observacion, idEstado';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 						/******************************************/
 						//se consulta por el numero interno
@@ -2087,8 +2008,8 @@ require_once '0_validate_user_1.php';
 											$GeoMovimiento = obtenerDistancia( $GeoLatitud, $GeoLongitud, $tel['GeoLatitud'], $tel['GeoLongitud'] );
 											/*******************************************************/
 											//se actualizan los datos
-											$a = "GeoMovimiento='".$GeoMovimiento."'" ;
-											$resultado = db_update_data (false, $a, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idTabla = "'.$tel['idTabla'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											$SIS_data = "GeoMovimiento='".$GeoMovimiento."'" ;
+											$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idTabla = "'.$tel['idTabla'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 														
 										}
 										//actualizo variables
@@ -2104,17 +2025,17 @@ require_once '0_validate_user_1.php';
 									$rowTablaRel = db_select_data (false, 'SUM(GeoMovimiento) AS GeoDistance, SUM(Diferencia) AS Diferencia', 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], '', 'idZona = '.$trac['idZona'].' AND idSolicitud = '.$idSolicitud.' ORDER BY idTabla ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									/***************************************/
 									if(isset($rowTablaRel['GeoDistance']) && $rowTablaRel['GeoDistance'] != ''){                     
-										$a = "GeoDistance='".$rowTablaRel['GeoDistance']."'" ;
+										$SIS_data = "GeoDistance='".$rowTablaRel['GeoDistance']."'" ;
 									}else{
-										$a = "GeoDistance='0'" ;
+										$SIS_data = "GeoDistance='0'" ;
 									}
 									if(isset($rowTablaRel['Diferencia']) && $rowTablaRel['Diferencia'] != ''){
-										$a .= ",Diferencia='".$rowTablaRel['Diferencia']."'" ;
+										$SIS_data .= ",Diferencia='".$rowTablaRel['Diferencia']."'" ;
 									}
 																			
 									/*******************************************************/
 									//se actualizan los datos
-									$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_tractores', 'idTractores = "'.$trac['idTractores'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+									$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado_tractores', 'idTractores = "'.$trac['idTractores'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									
 
 								}
@@ -2252,98 +2173,55 @@ require_once '0_validate_user_1.php';
 				
 				/******************************************/
 				//Cuarteles
-				if(isset($idSolicitud) && $idSolicitud != ''){                    $a  = "'".$idSolicitud."'" ;               }else{$a  ="''";}
-				if(isset($idZona) && $idZona != ''){                              $a .= ",'".$idZona."'" ;                   }else{$a .=",''";}
-				if(isset($Mojamiento) && $Mojamiento != ''){                      $a .= ",'".$Mojamiento."'" ;               }else{$a .=",''";}
-				if(isset($VelTractor) && $VelTractor != ''){                      $a .= ",'".$VelTractor."'" ;               }else{$a .=",''";}
-				if(isset($VelViento) && $VelViento != ''){                        $a .= ",'".$VelViento."'" ;                }else{$a .=",''";}
-				if(isset($TempMin) && $TempMin != ''){                            $a .= ",'".$TempMin."'" ;                  }else{$a .=",''";}
-				if(isset($TempMax) && $TempMax != ''){                            $a .= ",'".$TempMax."'" ;                  }else{$a .=",''";}
-				if(isset($HumTempMax) && $HumTempMax != ''){                      $a .= ",'".$HumTempMax."'" ;               }else{$a .=",''";}
-				$a .= ",'1'" ; //se asigna el estado
-				if(isset($rowdata['idCategoria'])&&$rowdata['idCategoria']!=''){  $a .= ",'".$rowdata['idCategoria']."'" ;   }else{$a .=",''";}
-				if(isset($rowdata['idProducto'])&&$rowdata['idProducto']!=''){    $a .= ",'".$rowdata['idProducto']."'" ;    }else{$a .=",''";}
+				if(isset($idSolicitud) && $idSolicitud != ''){                    $SIS_data  = "'".$idSolicitud."'" ;               }else{$SIS_data  = "''";}
+				if(isset($idZona) && $idZona != ''){                              $SIS_data .= ",'".$idZona."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($Mojamiento) && $Mojamiento != ''){                      $SIS_data .= ",'".$Mojamiento."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($VelTractor) && $VelTractor != ''){                      $SIS_data .= ",'".$VelTractor."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($VelViento) && $VelViento != ''){                        $SIS_data .= ",'".$VelViento."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($TempMin) && $TempMin != ''){                            $SIS_data .= ",'".$TempMin."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($TempMax) && $TempMax != ''){                            $SIS_data .= ",'".$TempMax."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($HumTempMax) && $HumTempMax != ''){                      $SIS_data .= ",'".$HumTempMax."'" ;               }else{$SIS_data .= ",''";}
+				$SIS_data .= ",'1'" ; //se asigna el estado
+				if(isset($rowdata['idCategoria'])&&$rowdata['idCategoria']!=''){  $SIS_data .= ",'".$rowdata['idCategoria']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idProducto'])&&$rowdata['idProducto']!=''){    $SIS_data .= ",'".$rowdata['idProducto']."'" ;    }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_cuarteles` (idSolicitud, idZona,
-				Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax, idEstado, idCategoria, idProducto) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSolicitud, idZona, Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax, idEstado, idCategoria, idProducto';
+				$idCuarteles_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_cuarteles', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
+				if($idCuarteles_id!=0){
+					/******************************************/
+					//tractores
+					if(isset($idSolicitud) && $idSolicitud != ''){        $SIS_data  = "'".$idSolicitud."'" ;      }else{$SIS_data  = "''";}
+					if(isset($idCuarteles_id) && $idCuarteles_id != ''){  $SIS_data .= ",'".$idCuarteles_id."'" ;  }else{$SIS_data .= ",''";}
+					if(isset($idTelemetria) && $idTelemetria != ''){      $SIS_data .= ",'".$idTelemetria."'" ;    }else{$SIS_data .= ",''";}
+					if(isset($idVehiculo) && $idVehiculo != ''){          $SIS_data .= ",'".$idVehiculo."'" ;      }else{$SIS_data .= ",''";}
+					if(isset($idTrabajador) && $idTrabajador != ''){      $SIS_data .= ",'".$idTrabajador."'" ;    }else{$SIS_data .= ",''";}
 					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
+					// inserto los datos de registro en la db
+					$SIS_columns = 'idSolicitud, idCuarteles, idTelemetria, idVehiculo, idTrabajador';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_tractores', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
+					/******************************************/
+					//Producto
+					if(isset($idSolicitud) && $idSolicitud != ''){           $SIS_data  = "'".$idSolicitud."'" ;       }else{$SIS_data  = "''";}
+					if(isset($idCuarteles_id) && $idCuarteles_id != ''){     $SIS_data .= ",'".$idCuarteles_id."'" ;   }else{$SIS_data .= ",''";}
+					if(isset($idProducto) && $idProducto != ''){             $SIS_data .= ",'".$idProducto."'" ;       }else{$SIS_data .= ",''";}
+					if(isset($DosisRecomendada) && $DosisRecomendada != ''){ $SIS_data .= ",'".$DosisRecomendada."'" ; }else{$SIS_data .= ",''";}
+					if(isset($DosisAplicar) && $DosisAplicar != ''){         $SIS_data .= ",'".$DosisAplicar."'" ;     }else{$SIS_data .= ",''";}
+					if(isset($idUml) && $idUml != ''){                       $SIS_data .= ",'".$idUml."'" ;            }else{$SIS_data .= ",''";}
+					if(isset($Objetivo) && $Objetivo != ''){                 $SIS_data .= ",'".$Objetivo."'" ;         }else{$SIS_data .= ",''";}
+					
+					// inserto los datos de registro en la db
+					$SIS_columns = 'idSolicitud, idCuarteles, idProducto, DosisRecomendada, DosisAplicar, idUml, Objetivo';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+					/************************************************************/
+					//se redirije	
+					header( 'Location: '.$location.'&not_addcuartel=true' );
+					die;
 				}
-				//recibo el último id generado por mi sesion
-				$idCuarteles_id = mysqli_insert_id($dbConn);
-				
-				/******************************************/
-				//tractores
-				if(isset($idSolicitud) && $idSolicitud != ''){        $a  = "'".$idSolicitud."'" ;      }else{$a  ="''";}
-				if(isset($idCuarteles_id) && $idCuarteles_id != ''){  $a .= ",'".$idCuarteles_id."'" ;  }else{$a .=",''";}
-				if(isset($idTelemetria) && $idTelemetria != ''){      $a .= ",'".$idTelemetria."'" ;    }else{$a .=",''";}
-				if(isset($idVehiculo) && $idVehiculo != ''){          $a .= ",'".$idVehiculo."'" ;      }else{$a .=",''";}
-				if(isset($idTrabajador) && $idTrabajador != ''){      $a .= ",'".$idTrabajador."'" ;    }else{$a .=",''";}
-				
-				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_tractores` (idSolicitud, idCuarteles,
-				idTelemetria, idVehiculo, idTrabajador) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-				
-				/******************************************/
-				//Producto
-				if(isset($idSolicitud) && $idSolicitud != ''){           $a  = "'".$idSolicitud."'" ;       }else{$a  ="''";}
-				if(isset($idCuarteles_id) && $idCuarteles_id != ''){     $a .= ",'".$idCuarteles_id."'" ;   }else{$a .=",''";}
-				if(isset($idProducto) && $idProducto != ''){             $a .= ",'".$idProducto."'" ;       }else{$a .=",''";}
-				if(isset($DosisRecomendada) && $DosisRecomendada != ''){ $a .= ",'".$DosisRecomendada."'" ; }else{$a .=",''";}
-				if(isset($DosisAplicar) && $DosisAplicar != ''){         $a .= ",'".$DosisAplicar."'" ;     }else{$a .=",''";}
-				if(isset($idUml) && $idUml != ''){                       $a .= ",'".$idUml."'" ;            }else{$a .=",''";}
-				if(isset($Objetivo) && $Objetivo != ''){                 $a .= ",'".$Objetivo."'" ;         }else{$a .=",''";}
-				
-				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_productos` (idSolicitud, idCuarteles,
-				idProducto, DosisRecomendada, DosisAplicar, idUml, Objetivo) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}
-					
-				
-				/************************************************************/
-				//se redirije	
-				header( 'Location: '.$location.'&not_addcuartel=true' );
-				die;
-				
 			}
 
 		break;	
@@ -2362,21 +2240,21 @@ require_once '0_validate_user_1.php';
 				
 				/******************************************/
 				//Filtros
-				$a = "idCuarteles='".$idCuarteles."'" ;
-				if(isset($idSolicitud) && $idSolicitud != ''){                    $a .= ",idSolicitud='".$idSolicitud."'" ;}
-				if(isset($idZona) && $idZona != ''){                              $a .= ",idZona='".$idZona."'" ;}
-				if(isset($Mojamiento) && $Mojamiento != ''){                      $a .= ",Mojamiento='".$Mojamiento."'" ;}
-				if(isset($VelTractor) && $VelTractor != ''){                      $a .= ",VelTractor='".$VelTractor."'" ;}
-				if(isset($VelViento) && $VelViento != ''){                        $a .= ",VelViento='".$VelViento."'" ;}
-				if(isset($TempMin) && $TempMin != ''){                            $a .= ",TempMin='".$TempMin."'" ;}
-				if(isset($TempMax) && $TempMax != ''){                            $a .= ",TempMax='".$TempMax."'" ;}
-				if(isset($HumTempMax) && $HumTempMax != ''){                      $a .= ",HumTempMax='".$HumTempMax."'" ;}
-				if(isset($rowdata['idCategoria'])&&$rowdata['idCategoria']!=''){  $a .= ",idCategoria='".$rowdata['idCategoria']."'" ;}
-				if(isset($rowdata['idProducto'])&&$rowdata['idProducto']!=''){    $a .= ",idProducto='".$rowdata['idProducto']."'" ;}
+				$SIS_data = "idCuarteles='".$idCuarteles."'" ;
+				if(isset($idSolicitud) && $idSolicitud != ''){                    $SIS_data .= ",idSolicitud='".$idSolicitud."'" ;}
+				if(isset($idZona) && $idZona != ''){                              $SIS_data .= ",idZona='".$idZona."'" ;}
+				if(isset($Mojamiento) && $Mojamiento != ''){                      $SIS_data .= ",Mojamiento='".$Mojamiento."'" ;}
+				if(isset($VelTractor) && $VelTractor != ''){                      $SIS_data .= ",VelTractor='".$VelTractor."'" ;}
+				if(isset($VelViento) && $VelViento != ''){                        $SIS_data .= ",VelViento='".$VelViento."'" ;}
+				if(isset($TempMin) && $TempMin != ''){                            $SIS_data .= ",TempMin='".$TempMin."'" ;}
+				if(isset($TempMax) && $TempMax != ''){                            $SIS_data .= ",TempMax='".$TempMax."'" ;}
+				if(isset($HumTempMax) && $HumTempMax != ''){                      $SIS_data .= ",HumTempMax='".$HumTempMax."'" ;}
+				if(isset($rowdata['idCategoria'])&&$rowdata['idCategoria']!=''){  $SIS_data .= ",idCategoria='".$rowdata['idCategoria']."'" ;}
+				if(isset($rowdata['idProducto'])&&$rowdata['idProducto']!=''){    $SIS_data .= ",idProducto='".$rowdata['idProducto']."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_cuarteles', 'idCuarteles = "'.$idCuarteles.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado_cuarteles', 'idCuarteles = "'.$idCuarteles.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -2417,18 +2295,18 @@ require_once '0_validate_user_1.php';
 						
 						/***************************************/
 						//se cierra el cuartel
-						$a  = "idEstado='2'" ;
-						if(isset($f_cierre)&&$f_cierre!=''){                 $a .= ",f_cierre='".$f_cierre."'";}
-						if(isset($idUsuario)&&$idUsuario!=''){               $a .= ",idUsuario='".$idUsuario."'";}
-						if(isset($idEjecucion)&&$idEjecucion!=''){           $a .= ",idEjecucion='".$idEjecucion."'";}
-						if(isset($GeoDistance)&&$GeoDistance!=''){           $a .= ",GeoDistance='".$GeoDistance."'";}
-						if(isset($VelPromedio)&&$VelPromedio!=''){           $a .= ",VelPromedio='".$VelPromedio."'";}
-						if(isset($LitrosAplicados)&&$LitrosAplicados!=''){   $a .= ",LitrosAplicados='".$LitrosAplicados."'";}
-						if(isset($T_Aplicacion)&&$T_Aplicacion!=''){         $a .= ",T_Aplicacion='".$T_Aplicacion."'";}
+						$SIS_data  = "idEstado='2'" ;
+						if(isset($f_cierre)&&$f_cierre!=''){                 $SIS_data .= ",f_cierre='".$f_cierre."'";}
+						if(isset($idUsuario)&&$idUsuario!=''){               $SIS_data .= ",idUsuario='".$idUsuario."'";}
+						if(isset($idEjecucion)&&$idEjecucion!=''){           $SIS_data .= ",idEjecucion='".$idEjecucion."'";}
+						if(isset($GeoDistance)&&$GeoDistance!=''){           $SIS_data .= ",GeoDistance='".$GeoDistance."'";}
+						if(isset($VelPromedio)&&$VelPromedio!=''){           $SIS_data .= ",VelPromedio='".$VelPromedio."'";}
+						if(isset($LitrosAplicados)&&$LitrosAplicados!=''){   $SIS_data .= ",LitrosAplicados='".$LitrosAplicados."'";}
+						if(isset($T_Aplicacion)&&$T_Aplicacion!=''){         $SIS_data .= ",T_Aplicacion='".$T_Aplicacion."'";}
 						
 						/*******************************************************/
 						//se actualizan los datos
-						$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_cuarteles', 'idCuarteles = "'.$idCuarteles.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado_cuarteles', 'idCuarteles = "'.$idCuarteles.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//Si ejecuto correctamente la consulta
 						if($resultado==true){
 							
@@ -2485,16 +2363,16 @@ require_once '0_validate_user_1.php';
 								
 								/***************************************/
 								//se actualiza la solicitud
-								$a = "idSolicitud='".$trac['idSolicitud']."'" ;
+								$SIS_data = "idSolicitud='".$trac['idSolicitud']."'" ;
 									
 								//Actualizo los datos de cuando estaba dentro de la zona
-								$resultado = db_update_data (false, $a, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idZona = "'.$trac['idZona'].'"  AND idSolicitud=0 AND (FechaSistema BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'") AND (Sensor_1!=0 OR Sensor_2!=0)', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idZona = "'.$trac['idZona'].'"  AND idSolicitud=0 AND (FechaSistema BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'") AND (Sensor_1!=0 OR Sensor_2!=0)', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//Actualizo los datos de cuando estaba fuera de la zona
-								$resultado = db_update_data (false, $a, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idZona = 0 AND idSolicitud=0 AND (FechaSistema BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idZona = 0 AND idSolicitud=0 AND (FechaSistema BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//Actualizo las detenciones
-								$resultado = db_update_data (false, $a, 'telemetria_listado_error_detenciones', 'idTelemetria = '.$trac['idTelemetria'].' AND idZona = '.$trac['idZona'].' AND idSolicitud=0 AND (Fecha BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_error_detenciones', 'idTelemetria = '.$trac['idTelemetria'].' AND idZona = '.$trac['idZona'].' AND idSolicitud=0 AND (Fecha BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//Actualizo los fuera de linea
-								$resultado = db_update_data (false, $a, 'telemetria_listado_error_fuera_linea', 'idTelemetria = '.$trac['idTelemetria'].' AND idZona = '.$trac['idZona'].' AND idSolicitud=0 AND (Fecha_inicio BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_error_fuera_linea', 'idTelemetria = '.$trac['idTelemetria'].' AND idZona = '.$trac['idZona'].' AND idSolicitud=0 AND (Fecha_inicio BETWEEN "'.$f_ejecucion.'" AND "'.$f_ejecucion_fin.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							}
 							/******************************************************************/
@@ -2514,8 +2392,8 @@ require_once '0_validate_user_1.php';
 										$GeoMovimiento = obtenerDistancia( $GeoLatitud, $GeoLongitud, $tel['GeoLatitud'], $tel['GeoLongitud'] );
 										/*******************************************************/
 										//se actualizan los datos
-										$a = "GeoMovimiento='".$GeoMovimiento."'" ;
-										$resultado = db_update_data (false, $a, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idTabla = "'.$tel['idTabla'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+										$SIS_data = "GeoMovimiento='".$GeoMovimiento."'" ;
+										$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], 'idTabla = "'.$tel['idTabla'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 													
 									}
 									//actualizo variables
@@ -2572,36 +2450,36 @@ require_once '0_validate_user_1.php';
 								$Total_Seg           = $Total_Seg + $rowTablaRel['Segundos'];
 								
 								//se guardan los datos
-								$a = "idTractores='".$trac['idTractores']."'" ;
-								if(isset($rowTablaRel['GeoVelocidadMin']) && $rowTablaRel['GeoVelocidadMin'] != ''){             $a .= ",GeoVelocidadMin='".$rowTablaRel['GeoVelocidadMin']."'" ;}
-								if(isset($rowTablaRel['GeoVelocidadMax']) && $rowTablaRel['GeoVelocidadMax'] != ''){             $a .= ",GeoVelocidadMax='".$rowTablaRel['GeoVelocidadMax']."'" ;}
-								if(isset($rowTablaRel['GeoVelocidadProm']) && $rowTablaRel['GeoVelocidadProm'] != ''){           $a .= ",GeoVelocidadProm='".$rowTablaRel['GeoVelocidadProm']."'" ;}
-								if(isset($rowTablaRel['GeoDistance']) && $rowTablaRel['GeoDistance'] != ''){                     $a .= ",GeoDistance='".$rowTablaRel['GeoDistance']."'" ;}
-								if(isset($rowTablaRel['Diferencia']) && $rowTablaRel['Diferencia'] != ''){                       $a .= ",Diferencia='".$rowTablaRel['Diferencia']."'" ;}
-								if(isset($In_T_Aplicacion) && $In_T_Aplicacion != ''){                                           $a .= ",T_Aplicacion='".$In_T_Aplicacion."'" ;}
+								$SIS_data = "idTractores='".$trac['idTractores']."'" ;
+								if(isset($rowTablaRel['GeoVelocidadMin']) && $rowTablaRel['GeoVelocidadMin'] != ''){             $SIS_data .= ",GeoVelocidadMin='".$rowTablaRel['GeoVelocidadMin']."'" ;}
+								if(isset($rowTablaRel['GeoVelocidadMax']) && $rowTablaRel['GeoVelocidadMax'] != ''){             $SIS_data .= ",GeoVelocidadMax='".$rowTablaRel['GeoVelocidadMax']."'" ;}
+								if(isset($rowTablaRel['GeoVelocidadProm']) && $rowTablaRel['GeoVelocidadProm'] != ''){           $SIS_data .= ",GeoVelocidadProm='".$rowTablaRel['GeoVelocidadProm']."'" ;}
+								if(isset($rowTablaRel['GeoDistance']) && $rowTablaRel['GeoDistance'] != ''){                     $SIS_data .= ",GeoDistance='".$rowTablaRel['GeoDistance']."'" ;}
+								if(isset($rowTablaRel['Diferencia']) && $rowTablaRel['Diferencia'] != ''){                       $SIS_data .= ",Diferencia='".$rowTablaRel['Diferencia']."'" ;}
+								if(isset($In_T_Aplicacion) && $In_T_Aplicacion != ''){                                           $SIS_data .= ",T_Aplicacion='".$In_T_Aplicacion."'" ;}
 								
-								if(isset($rowTablaRel_out['GeoVelocidadMin']) && $rowTablaRel_out['GeoVelocidadMin'] != ''){     $a .= ",GeoVelocidadMin_out='".$rowTablaRel_out['GeoVelocidadMin']."'" ;}
-								if(isset($rowTablaRel_out['GeoVelocidadMax']) && $rowTablaRel_out['GeoVelocidadMax'] != ''){     $a .= ",GeoVelocidadMax_out='".$rowTablaRel_out['GeoVelocidadMax']."'" ;}
-								if(isset($rowTablaRel_out['GeoVelocidadProm']) && $rowTablaRel_out['GeoVelocidadProm'] != ''){   $a .= ",GeoVelocidadProm_out='".$rowTablaRel_out['GeoVelocidadProm']."'" ;}
-								if(isset($rowTablaRel_out['GeoDistance']) && $rowTablaRel_out['GeoDistance'] != ''){             $a .= ",GeoDistance_out='".$rowTablaRel_out['GeoDistance']."'" ;}
-								if(isset($rowTablaRel_out['Diferencia']) && $rowTablaRel_out['Diferencia'] != ''){               $a .= ",Diferencia_out='".$rowTablaRel_out['Diferencia']."'" ;}
-								if(isset($In_T_Aplicacion_out) && $In_T_Aplicacion_out != ''){                                   $a .= ",T_Aplicacion_out='".$In_T_Aplicacion_out."'" ;}
+								if(isset($rowTablaRel_out['GeoVelocidadMin']) && $rowTablaRel_out['GeoVelocidadMin'] != ''){     $SIS_data .= ",GeoVelocidadMin_out='".$rowTablaRel_out['GeoVelocidadMin']."'" ;}
+								if(isset($rowTablaRel_out['GeoVelocidadMax']) && $rowTablaRel_out['GeoVelocidadMax'] != ''){     $SIS_data .= ",GeoVelocidadMax_out='".$rowTablaRel_out['GeoVelocidadMax']."'" ;}
+								if(isset($rowTablaRel_out['GeoVelocidadProm']) && $rowTablaRel_out['GeoVelocidadProm'] != ''){   $SIS_data .= ",GeoVelocidadProm_out='".$rowTablaRel_out['GeoVelocidadProm']."'" ;}
+								if(isset($rowTablaRel_out['GeoDistance']) && $rowTablaRel_out['GeoDistance'] != ''){             $SIS_data .= ",GeoDistance_out='".$rowTablaRel_out['GeoDistance']."'" ;}
+								if(isset($rowTablaRel_out['Diferencia']) && $rowTablaRel_out['Diferencia'] != ''){               $SIS_data .= ",Diferencia_out='".$rowTablaRel_out['Diferencia']."'" ;}
+								if(isset($In_T_Aplicacion_out) && $In_T_Aplicacion_out != ''){                                   $SIS_data .= ",T_Aplicacion_out='".$In_T_Aplicacion_out."'" ;}
 								
 								//se recorre deacuerdo a la cantidad de sensores
 								for ($i = 1; $i <= $trac['cantSensores']; $i++) { 
-									if(isset($rowTablaRel['Sensor_'.$i.'_Prom']) && $rowTablaRel['Sensor_'.$i.'_Prom'] != ''){           $a .= ",Sensor_".$i."_Prom='".$rowTablaRel['Sensor_'.$i.'_Prom']."'" ;}
-									if(isset($rowTablaRel['Sensor_'.$i.'_Min']) && $rowTablaRel['Sensor_'.$i.'_Min'] != ''){             $a .= ",Sensor_".$i."_Min='".$rowTablaRel['Sensor_'.$i.'_Min']."'" ;}
-									if(isset($rowTablaRel['Sensor_'.$i.'_Max']) && $rowTablaRel['Sensor_'.$i.'_Max'] != ''){             $a .= ",Sensor_".$i."_Max='".$rowTablaRel['Sensor_'.$i.'_Max']."'" ;}
-									if(isset($rowTablaRel['Sensor_'.$i.'_Sum']) && $rowTablaRel['Sensor_'.$i.'_Sum'] != ''){             $a .= ",Sensor_".$i."_Sum='".$rowTablaRel['Sensor_'.$i.'_Sum']."'" ;}
-									if(isset($rowTablaRel_out['Sensor_'.$i.'_Prom']) && $rowTablaRel_out['Sensor_'.$i.'_Prom'] != ''){   $a .= ",Sensor_out_".$i."_Prom='".$rowTablaRel_out['Sensor_'.$i.'_Prom']."'" ;}
-									if(isset($rowTablaRel_out['Sensor_'.$i.'_Min']) && $rowTablaRel_out['Sensor_'.$i.'_Min'] != ''){     $a .= ",Sensor_out_".$i."_Min='".$rowTablaRel_out['Sensor_'.$i.'_Min']."'" ;}
-									if(isset($rowTablaRel_out['Sensor_'.$i.'_Max']) && $rowTablaRel_out['Sensor_'.$i.'_Max'] != ''){     $a .= ",Sensor_out_".$i."_Max='".$rowTablaRel_out['Sensor_'.$i.'_Max']."'" ;}
-									if(isset($rowTablaRel_out['Sensor_'.$i.'_Sum']) && $rowTablaRel_out['Sensor_'.$i.'_Sum'] != ''){     $a .= ",Sensor_out_".$i."_Sum='".$rowTablaRel_out['Sensor_'.$i.'_Sum']."'" ;}
+									if(isset($rowTablaRel['Sensor_'.$i.'_Prom']) && $rowTablaRel['Sensor_'.$i.'_Prom'] != ''){           $SIS_data .= ",Sensor_".$i."_Prom='".$rowTablaRel['Sensor_'.$i.'_Prom']."'" ;}
+									if(isset($rowTablaRel['Sensor_'.$i.'_Min']) && $rowTablaRel['Sensor_'.$i.'_Min'] != ''){             $SIS_data .= ",Sensor_".$i."_Min='".$rowTablaRel['Sensor_'.$i.'_Min']."'" ;}
+									if(isset($rowTablaRel['Sensor_'.$i.'_Max']) && $rowTablaRel['Sensor_'.$i.'_Max'] != ''){             $SIS_data .= ",Sensor_".$i."_Max='".$rowTablaRel['Sensor_'.$i.'_Max']."'" ;}
+									if(isset($rowTablaRel['Sensor_'.$i.'_Sum']) && $rowTablaRel['Sensor_'.$i.'_Sum'] != ''){             $SIS_data .= ",Sensor_".$i."_Sum='".$rowTablaRel['Sensor_'.$i.'_Sum']."'" ;}
+									if(isset($rowTablaRel_out['Sensor_'.$i.'_Prom']) && $rowTablaRel_out['Sensor_'.$i.'_Prom'] != ''){   $SIS_data .= ",Sensor_out_".$i."_Prom='".$rowTablaRel_out['Sensor_'.$i.'_Prom']."'" ;}
+									if(isset($rowTablaRel_out['Sensor_'.$i.'_Min']) && $rowTablaRel_out['Sensor_'.$i.'_Min'] != ''){     $SIS_data .= ",Sensor_out_".$i."_Min='".$rowTablaRel_out['Sensor_'.$i.'_Min']."'" ;}
+									if(isset($rowTablaRel_out['Sensor_'.$i.'_Max']) && $rowTablaRel_out['Sensor_'.$i.'_Max'] != ''){     $SIS_data .= ",Sensor_out_".$i."_Max='".$rowTablaRel_out['Sensor_'.$i.'_Max']."'" ;}
+									if(isset($rowTablaRel_out['Sensor_'.$i.'_Sum']) && $rowTablaRel_out['Sensor_'.$i.'_Sum'] != ''){     $SIS_data .= ",Sensor_out_".$i."_Sum='".$rowTablaRel_out['Sensor_'.$i.'_Sum']."'" ;}
 								}
 								
 								/*******************************************************/
 								//se actualizan los datos
-								$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_tractores', 'idTractores = "'.$trac['idTractores'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado_tractores', 'idTractores = "'.$trac['idTractores'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							}
 							
@@ -2610,15 +2488,15 @@ require_once '0_validate_user_1.php';
 							$In_Total_Seg = segundos2horas($Total_Seg);
 								
 							//se cierra el cuartel
-							$a  = "idEstado='2'" ;
-							if(isset($f_cierre)&&$f_cierre!=''){          $a .= ",f_cierre='".$f_cierre."'";}
-							if(isset($idUsuario)&&$idUsuario!=''){        $a .= ",idUsuario='".$idUsuario."'";}
-							if(isset($idEjecucion)&&$idEjecucion!=''){    $a .= ",idEjecucion='".$idEjecucion."'";}
-							if(isset($In_Total_Seg)&&$In_Total_Seg!=''){  $a .= ",T_Aplicacion='".$In_Total_Seg."'";}
+							$SIS_data  = "idEstado='2'" ;
+							if(isset($f_cierre)&&$f_cierre!=''){          $SIS_data .= ",f_cierre='".$f_cierre."'";}
+							if(isset($idUsuario)&&$idUsuario!=''){        $SIS_data .= ",idUsuario='".$idUsuario."'";}
+							if(isset($idEjecucion)&&$idEjecucion!=''){    $SIS_data .= ",idEjecucion='".$idEjecucion."'";}
+							if(isset($In_Total_Seg)&&$In_Total_Seg!=''){  $SIS_data .= ",T_Aplicacion='".$In_Total_Seg."'";}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_cuarteles', 'idCuarteles = "'.$idCuarteles.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado_cuarteles', 'idCuarteles = "'.$idCuarteles.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
 							
 							header( 'Location: '.$location.'&not_closecuartel=true' );
@@ -2695,35 +2573,22 @@ require_once '0_validate_user_1.php';
 
 				/******************************************/
 				//tractores
-				if(isset($idSolicitud) && $idSolicitud != ''){    $a  = "'".$idSolicitud."'" ;   }else{$a  ="''";}
-				if(isset($idCuarteles) && $idCuarteles != ''){    $a .= ",'".$idCuarteles."'" ;  }else{$a .=",''";}
-				if(isset($idTelemetria) && $idTelemetria != ''){  $a .= ",'".$idTelemetria."'" ; }else{$a .=",''";}
-				if(isset($idVehiculo) && $idVehiculo != ''){      $a .= ",'".$idVehiculo."'" ;   }else{$a .=",''";}
-				if(isset($idTrabajador) && $idTrabajador != ''){  $a .= ",'".$idTrabajador."'" ; }else{$a .=",''";}
+				if(isset($idSolicitud) && $idSolicitud != ''){    $SIS_data  = "'".$idSolicitud."'" ;   }else{$SIS_data  = "''";}
+				if(isset($idCuarteles) && $idCuarteles != ''){    $SIS_data .= ",'".$idCuarteles."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idTelemetria) && $idTelemetria != ''){  $SIS_data .= ",'".$idTelemetria."'" ; }else{$SIS_data .= ",''";}
+				if(isset($idVehiculo) && $idVehiculo != ''){      $SIS_data .= ",'".$idVehiculo."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idTrabajador) && $idTrabajador != ''){  $SIS_data .= ",'".$idTrabajador."'" ; }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_tractores` (idSolicitud, idCuarteles,
-				idTelemetria, idVehiculo, idTrabajador) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSolicitud, idCuarteles, idTelemetria, idVehiculo, idTrabajador';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_tractores', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
+				if($ultimo_id!=0){
 					//se redirije	
 					header( 'Location: '.$location.'&not_addtractor=true' );
 					die;
-				}	
-					
-				
+				}
 			}
 
 		break;	
@@ -2736,16 +2601,16 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idTractores='".$idTractores."'" ;
-				if(isset($idSolicitud) && $idSolicitud != ''){     $a .= ",idSolicitud='".$idSolicitud."'" ;}
-				if(isset($idCuarteles) && $idCuarteles != ''){     $a .= ",idCuarteles='".$idCuarteles."'" ;}
-				if(isset($idTelemetria) && $idTelemetria != ''){   $a .= ",idTelemetria='".$idTelemetria."'" ;}
-				if(isset($idVehiculo) && $idVehiculo != ''){       $a .= ",idVehiculo='".$idVehiculo."'" ;}
-				if(isset($idTrabajador) && $idTrabajador != ''){   $a .= ",idTrabajador='".$idTrabajador."'" ;}
+				$SIS_data = "idTractores='".$idTractores."'" ;
+				if(isset($idSolicitud) && $idSolicitud != ''){     $SIS_data .= ",idSolicitud='".$idSolicitud."'" ;}
+				if(isset($idCuarteles) && $idCuarteles != ''){     $SIS_data .= ",idCuarteles='".$idCuarteles."'" ;}
+				if(isset($idTelemetria) && $idTelemetria != ''){   $SIS_data .= ",idTelemetria='".$idTelemetria."'" ;}
+				if(isset($idVehiculo) && $idVehiculo != ''){       $SIS_data .= ",idVehiculo='".$idVehiculo."'" ;}
+				if(isset($idTrabajador) && $idTrabajador != ''){   $SIS_data .= ",idTrabajador='".$idTrabajador."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_tractores', 'idTractores = "'.$idTractores.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado_tractores', 'idTractores = "'.$idTractores.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -2828,31 +2693,19 @@ require_once '0_validate_user_1.php';
 
 				/******************************************/
 				//tractores
-				if(isset($idSolicitud) && $idSolicitud != ''){        $a  = "'".$idSolicitud."'" ;      }else{$a  ="''";}
-				if(isset($idMatSeguridad) && $idMatSeguridad != ''){  $a .= ",'".$idMatSeguridad."'" ;  }else{$a .=",''";}
+				if(isset($idSolicitud) && $idSolicitud != ''){        $SIS_data  = "'".$idSolicitud."'" ;      }else{$SIS_data  = "''";}
+				if(isset($idMatSeguridad) && $idMatSeguridad != ''){  $SIS_data .= ",'".$idMatSeguridad."'" ;  }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_materiales` (idSolicitud, idMatSeguridad) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSolicitud, idMatSeguridad';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_materiales', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
+				if($ultimo_id!=0){
 					//se redirije	
 					header( 'Location: '.$location.'&not_addmaterial=true' );
 					die;
-				}	
-					
-				
+				}
 			}
 
 		break;	
@@ -2916,37 +2769,24 @@ require_once '0_validate_user_1.php';
 	
 				/******************************************/
 				//Producto
-				if(isset($idSolicitud) && $idSolicitud != ''){           $a  = "'".$idSolicitud."'" ;       }else{$a  ="''";}
-				if(isset($idCuarteles) && $idCuarteles != ''){           $a .= ",'".$idCuarteles."'" ;      }else{$a .=",''";}
-				if(isset($idProducto) && $idProducto != ''){             $a .= ",'".$idProducto."'" ;       }else{$a .=",''";}
-				if(isset($DosisRecomendada) && $DosisRecomendada != ''){ $a .= ",'".$DosisRecomendada."'" ; }else{$a .=",''";}
-				if(isset($DosisAplicar) && $DosisAplicar != ''){         $a .= ",'".$DosisAplicar."'" ;     }else{$a .=",''";}
-				if(isset($idUml) && $idUml != ''){                       $a .= ",'".$idUml."'" ;            }else{$a .=",''";}
-				if(isset($Objetivo) && $Objetivo != ''){                 $a .= ",'".$Objetivo."'" ;         }else{$a .=",''";}
+				if(isset($idSolicitud) && $idSolicitud != ''){           $SIS_data  = "'".$idSolicitud."'" ;       }else{$SIS_data  = "''";}
+				if(isset($idCuarteles) && $idCuarteles != ''){           $SIS_data .= ",'".$idCuarteles."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idProducto) && $idProducto != ''){             $SIS_data .= ",'".$idProducto."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($DosisRecomendada) && $DosisRecomendada != ''){ $SIS_data .= ",'".$DosisRecomendada."'" ; }else{$SIS_data .= ",''";}
+				if(isset($DosisAplicar) && $DosisAplicar != ''){         $SIS_data .= ",'".$DosisAplicar."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($idUml) && $idUml != ''){                       $SIS_data .= ",'".$idUml."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Objetivo) && $Objetivo != ''){                 $SIS_data .= ",'".$Objetivo."'" ;         }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_productos` (idSolicitud, idCuarteles,
-				idProducto, DosisRecomendada, DosisAplicar, idUml, Objetivo) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSolicitud, idCuarteles, idProducto, DosisRecomendada, DosisAplicar, idUml, Objetivo';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
+				if($ultimo_id!=0){
 					//se redirije	
 					header( 'Location: '.$location.'&not_addprod=true' );
 					die;
 				}
-				
-				
 			}
 
 		break;	
@@ -2959,18 +2799,18 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idProdQuim='".$idProdQuim."'" ;
-				if(isset($idSolicitud) && $idSolicitud != ''){            $a .= ",idSolicitud='".$idSolicitud."'" ;}
-				if(isset($idCuarteles) && $idCuarteles != ''){            $a .= ",idCuarteles='".$idCuarteles."'" ;}
-				if(isset($idProducto) && $idProducto != ''){              $a .= ",idProducto='".$idProducto."'" ;}
-				if(isset($DosisRecomendada) && $DosisRecomendada != ''){  $a .= ",DosisRecomendada='".$DosisRecomendada."'" ;}
-				if(isset($DosisAplicar) && $DosisAplicar != ''){          $a .= ",DosisAplicar='".$DosisAplicar."'" ;}
-				if(isset($idUml) && $idUml != ''){                        $a .= ",idUml='".$idUml."'" ;}
-				if(isset($Objetivo) && $Objetivo != ''){                  $a .= ",Objetivo='".$Objetivo."'" ;}
+				$SIS_data = "idProdQuim='".$idProdQuim."'" ;
+				if(isset($idSolicitud) && $idSolicitud != ''){            $SIS_data .= ",idSolicitud='".$idSolicitud."'" ;}
+				if(isset($idCuarteles) && $idCuarteles != ''){            $SIS_data .= ",idCuarteles='".$idCuarteles."'" ;}
+				if(isset($idProducto) && $idProducto != ''){              $SIS_data .= ",idProducto='".$idProducto."'" ;}
+				if(isset($DosisRecomendada) && $DosisRecomendada != ''){  $SIS_data .= ",DosisRecomendada='".$DosisRecomendada."'" ;}
+				if(isset($DosisAplicar) && $DosisAplicar != ''){          $SIS_data .= ",DosisAplicar='".$DosisAplicar."'" ;}
+				if(isset($idUml) && $idUml != ''){                        $SIS_data .= ",idUml='".$idUml."'" ;}
+				if(isset($Objetivo) && $Objetivo != ''){                  $SIS_data .= ",Objetivo='".$Objetivo."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'cross_solicitud_aplicacion_listado_productos', 'idProdQuim = "'.$idProdQuim.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado_productos', 'idProdQuim = "'.$idProdQuim.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -3041,34 +2881,22 @@ require_once '0_validate_user_1.php';
 	
 				/******************************************/
 				//Producto
-				if(isset($idSolicitud) && $idSolicitud != ''){       $a  = "'".$idSolicitud."'" ;       }else{$a  ="''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){ $a .= ",'".$Creacion_fecha."'" ;   }else{$a .=",''";}
-				if(isset($idUsuario) && $idUsuario != ''){           $a .= ",'".$idUsuario."'" ;        }else{$a .=",''";}
-				if(isset($Observacion) && $Observacion != ''){       $a .= ",'".$Observacion."'" ;      }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){             $a .= ",'".$idEstado."'" ;         }else{$a .=",''";}
+				if(isset($idSolicitud) && $idSolicitud != ''){       $SIS_data  = "'".$idSolicitud."'" ;       }else{$SIS_data  = "''";}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){ $SIS_data .= ",'".$Creacion_fecha."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){           $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion != ''){       $SIS_data .= ",'".$Observacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){             $SIS_data .= ",'".$idEstado."'" ;         }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_historial` (idSolicitud, 
-				Creacion_fecha, idUsuario, Observacion, idEstado) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSolicitud, Creacion_fecha, idUsuario, Observacion, idEstado';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
+				if($ultimo_id!=0){
 					//se redirije	
 					header( 'Location: '.$location.'&not_adddetalle=true' );
 					die;
 				}
-				
 				
 			}
 			
@@ -3182,106 +3010,79 @@ require_once '0_validate_user_1.php';
 				/****************************************************************************/
 				/**********************************************/
 				//Se guardan los datos basicos
-				if(isset($idSistema) && $idSistema != ''){                                            $a  = "'".$idSistema."'" ;                        }else{$a  = "''";}
-				if(isset($rowSolicitud['idPredio']) && $rowSolicitud['idPredio'] != ''){              $a .= ",'".$rowSolicitud['idPredio']."'" ;        }else{$a .= ",''";}
-				if(isset($idUsuario) && $idUsuario != ''){                                            $a .= ",'".$idUsuario."'" ;                       }else{$a .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){                                              $a .= ",'".$idEstado."'" ;                        }else{$a .= ",''";}
-				if(isset($rowSolicitud['idTemporada']) && $rowSolicitud['idTemporada'] != ''){        $a .= ",'".$rowSolicitud['idTemporada']."'" ;     }else{$a .= ",''";}
-				if(isset($rowSolicitud['idEstadoFen']) && $rowSolicitud['idEstadoFen'] != ''){        $a .= ",'".$rowSolicitud['idEstadoFen']."'" ;     }else{$a .= ",''";}
-				if(isset($rowSolicitud['idCategoria']) && $rowSolicitud['idCategoria'] != ''){        $a .= ",'".$rowSolicitud['idCategoria']."'" ;     }else{$a .= ",''";}
-				if(isset($rowSolicitud['idProducto']) && $rowSolicitud['idProducto'] != ''){          $a .= ",'".$rowSolicitud['idProducto']."'" ;      }else{$a .= ",''";}
-				if(isset($f_creacion) && $f_creacion != ''){                                          $a .= ",'".$f_creacion."'" ;                      }else{$a .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){                                            $SIS_data  = "'".$idSistema."'" ;                        }else{$SIS_data  = "''";}
+				if(isset($rowSolicitud['idPredio']) && $rowSolicitud['idPredio'] != ''){              $SIS_data .= ",'".$rowSolicitud['idPredio']."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario != ''){                                            $SIS_data .= ",'".$idUsuario."'" ;                       }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                                              $SIS_data .= ",'".$idEstado."'" ;                        }else{$SIS_data .= ",''";}
+				if(isset($rowSolicitud['idTemporada']) && $rowSolicitud['idTemporada'] != ''){        $SIS_data .= ",'".$rowSolicitud['idTemporada']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($rowSolicitud['idEstadoFen']) && $rowSolicitud['idEstadoFen'] != ''){        $SIS_data .= ",'".$rowSolicitud['idEstadoFen']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($rowSolicitud['idCategoria']) && $rowSolicitud['idCategoria'] != ''){        $SIS_data .= ",'".$rowSolicitud['idCategoria']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($rowSolicitud['idProducto']) && $rowSolicitud['idProducto'] != ''){          $SIS_data .= ",'".$rowSolicitud['idProducto']."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($f_creacion) && $f_creacion != ''){                                          $SIS_data .= ",'".$f_creacion."'" ;                      }else{$SIS_data .= ",''";}
 				if(isset($f_programacion) && $f_programacion != ''){  
-					$a .= ",'".$f_programacion."'" ;  
-					$a .= ",'".fecha2NdiaMes($f_programacion)."'" ;
-					$a .= ",'".fecha2NSemana($f_programacion)."'" ;
-					$a .= ",'".fecha2NMes($f_programacion)."'" ;
-					$a .= ",'".fecha2Ano($f_programacion)."'" ;
+					$SIS_data .= ",'".$f_programacion."'" ;  
+					$SIS_data .= ",'".fecha2NdiaMes($f_programacion)."'" ;
+					$SIS_data .= ",'".fecha2NSemana($f_programacion)."'" ;
+					$SIS_data .= ",'".fecha2NMes($f_programacion)."'" ;
+					$SIS_data .= ",'".fecha2Ano($f_programacion)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
 				if(isset($f_programacion_fin) && $f_programacion_fin != ''){  
-					$a .= ",'".$f_programacion_fin."'" ;  
-					$a .= ",'".fecha2NdiaMes($f_programacion_fin)."'" ;
-					$a .= ",'".fecha2NSemana($f_programacion_fin)."'" ;
-					$a .= ",'".fecha2NMes($f_programacion_fin)."'" ;
-					$a .= ",'".fecha2Ano($f_programacion_fin)."'" ;
+					$SIS_data .= ",'".$f_programacion_fin."'" ;  
+					$SIS_data .= ",'".fecha2NdiaMes($f_programacion_fin)."'" ;
+					$SIS_data .= ",'".fecha2NSemana($f_programacion_fin)."'" ;
+					$SIS_data .= ",'".fecha2NMes($f_programacion_fin)."'" ;
+					$SIS_data .= ",'".fecha2Ano($f_programacion_fin)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($horaProg) && $horaProg != ''){                                             $a .= ",'".$horaProg."'" ;                      }else{$a .= ",''";}
-				if(isset($horaProg_fin) && $horaProg_fin != ''){                                     $a .= ",'".$horaProg_fin."'" ;                  }else{$a .= ",''";}
-				if(isset($rowSolicitud['Mojamiento']) && $rowSolicitud['Mojamiento'] != ''){         $a .= ",'".$rowSolicitud['Mojamiento']."'" ;    }else{$a .= ",''";}
-				if(isset($rowSolicitud['VelTractor']) && $rowSolicitud['VelTractor'] != ''){         $a .= ",'".$rowSolicitud['VelTractor']."'" ;    }else{$a .= ",''";}
-				if(isset($rowSolicitud['VelViento']) && $rowSolicitud['VelViento'] != ''){           $a .= ",'".$rowSolicitud['VelViento']."'" ;     }else{$a .= ",''";}
-				if(isset($rowSolicitud['TempMin']) && $rowSolicitud['TempMin'] != ''){               $a .= ",'".$rowSolicitud['TempMin']."'" ;       }else{$a .= ",''";}
-				if(isset($rowSolicitud['TempMax']) && $rowSolicitud['TempMax'] != ''){               $a .= ",'".$rowSolicitud['TempMax']."'" ;       }else{$a .= ",''";}
-				if(isset($rowSolicitud['HumTempMax']) && $rowSolicitud['HumTempMax'] != ''){         $a .= ",'".$rowSolicitud['HumTempMax']."'" ;    }else{$a .= ",''";}
-				if(isset($rowSolicitud['idPrioridad']) && $rowSolicitud['idPrioridad'] != ''){       $a .= ",'".$rowSolicitud['idPrioridad']."'" ;   }else{$a .= ",''";}
-				if(isset($NSolicitud) && $NSolicitud != ''){                                         $a .= ",'".$NSolicitud."'" ;                    }else{$a .= ",''";}
+				if(isset($horaProg) && $horaProg != ''){                                             $SIS_data .= ",'".$horaProg."'" ;                      }else{$SIS_data .= ",''";}
+				if(isset($horaProg_fin) && $horaProg_fin != ''){                                     $SIS_data .= ",'".$horaProg_fin."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($rowSolicitud['Mojamiento']) && $rowSolicitud['Mojamiento'] != ''){         $SIS_data .= ",'".$rowSolicitud['Mojamiento']."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($rowSolicitud['VelTractor']) && $rowSolicitud['VelTractor'] != ''){         $SIS_data .= ",'".$rowSolicitud['VelTractor']."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($rowSolicitud['VelViento']) && $rowSolicitud['VelViento'] != ''){           $SIS_data .= ",'".$rowSolicitud['VelViento']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($rowSolicitud['TempMin']) && $rowSolicitud['TempMin'] != ''){               $SIS_data .= ",'".$rowSolicitud['TempMin']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($rowSolicitud['TempMax']) && $rowSolicitud['TempMax'] != ''){               $SIS_data .= ",'".$rowSolicitud['TempMax']."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($rowSolicitud['HumTempMax']) && $rowSolicitud['HumTempMax'] != ''){         $SIS_data .= ",'".$rowSolicitud['HumTempMax']."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($rowSolicitud['idPrioridad']) && $rowSolicitud['idPrioridad'] != ''){       $SIS_data .= ",'".$rowSolicitud['idPrioridad']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($NSolicitud) && $NSolicitud != ''){                                         $SIS_data .= ",'".$NSolicitud."'" ;                    }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `cross_solicitud_aplicacion_listado` (idSistema, idPredio, idUsuario, idEstado, idTemporada,
+				$SIS_columns = 'idSistema, idPredio, idUsuario, idEstado, idTemporada,
 				idEstadoFen, idCategoria, idProducto, f_creacion, f_programacion, progDia, progSemana, progMes, progAno, f_programacion_fin, 
 				progDia_fin, progSemana_fin, progMes_fin, progAno_fin, horaProg, horaProg_fin, Mojamiento, VelTractor, VelViento, TempMin, 
-				TempMax, HumTempMax, idPrioridad, NSolicitud) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				TempMax, HumTempMax, idPrioridad, NSolicitud';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
 					//Solo si se ejecuto correctamente
 					if(isset($ultimo_id)&&$ultimo_id!=''){
 						/*********************************************************************/		
 						//Se guarda en historial la accion
-						if(isset($ultimo_id) && $ultimo_id != ''){    $a  = "'".$ultimo_id."'" ;  }else{$a  = "''";}
+						if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
 						if(isset($f_creacion) && $f_creacion != ''){  
-							$a .= ",'".$f_creacion."'" ;  
+							$SIS_data .= ",'".$f_creacion."'" ;  
 						}else{
-							$a .= ",''";
+							$SIS_data .= ",''";
 						}
-						$a .= ",'".$Observaciones."'";    //Observacion
-						$a .= ",'".$idUsuario."'";        //idUsuario
-						$a .= ",'".$idEstado."'" ;        //Guardo el estado 
+						$SIS_data .= ",'".$Observaciones."'";    //Observacion
+						$SIS_data .= ",'".$idUsuario."'";        //idUsuario
+						$SIS_data .= ",'".$idEstado."'" ;        //Guardo el estado 
 					
-									
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_historial` (idSolicitud, 
-						Creacion_fecha, Observacion, idUsuario, idEstado) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						$SIS_columns = 'idSolicitud, Creacion_fecha, Observacion, idUsuario, idEstado';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					
 						/*********************************************************************/		
 						//se guardan los materiales
@@ -3292,25 +3093,13 @@ require_once '0_validate_user_1.php';
 							foreach ($arrMateriales as $mat){
 								
 								//filtros
-								if(isset($ultimo_id) && $ultimo_id != ''){                           $a = "'".$ultimo_id."'" ;                 }else{$a  = "''";}
-								if(isset($mat['idMatSeguridad']) && $mat['idMatSeguridad'] != ''){   $a .= ",'".$mat['idMatSeguridad']."'" ;   }else{$a .= ",''";}
+								if(isset($ultimo_id) && $ultimo_id != ''){                           $SIS_data = "'".$ultimo_id."'" ;                 }else{$SIS_data  = "''";}
+								if(isset($mat['idMatSeguridad']) && $mat['idMatSeguridad'] != ''){   $SIS_data .= ",'".$mat['idMatSeguridad']."'" ;   }else{$SIS_data .= ",''";}
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_materiales` (idSolicitud, idMatSeguridad) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
+								$SIS_columns = 'idSolicitud, idMatSeguridad';
+								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_materiales', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 							}
 						}
 						
@@ -3323,38 +3112,22 @@ require_once '0_validate_user_1.php';
 							foreach ($arrCuarteles as $cuartel){
 								
 								//filtros
-								if(isset($ultimo_id) && $ultimo_id != ''){                             $a = "'".$ultimo_id."'" ;                  }else{$a  = "''";}
-								if(isset($cuartel['idZona']) && $cuartel['idZona'] != ''){             $a .= ",'".$cuartel['idZona']."'" ;        }else{$a .= ",''";}
-								if(isset($cuartel['Mojamiento']) && $cuartel['Mojamiento'] != ''){     $a .= ",'".$cuartel['Mojamiento']."'" ;    }else{$a .= ",''";}
-								if(isset($cuartel['VelTractor']) && $cuartel['VelTractor'] != ''){     $a .= ",'".$cuartel['VelTractor']."'" ;    }else{$a .= ",''";}
-								if(isset($cuartel['VelViento']) && $cuartel['VelViento'] != ''){       $a .= ",'".$cuartel['VelViento']."'" ;     }else{$a .= ",''";}
-								if(isset($cuartel['TempMin']) && $cuartel['TempMin'] != ''){           $a .= ",'".$cuartel['TempMin']."'" ;       }else{$a .= ",''";}
-								if(isset($cuartel['TempMax']) && $cuartel['TempMax'] != ''){           $a .= ",'".$cuartel['TempMax']."'" ;       }else{$a .= ",''";}
-								if(isset($cuartel['HumTempMax']) && $cuartel['HumTempMax'] != ''){     $a .= ",'".$cuartel['HumTempMax']."'" ;    }else{$a .= ",''";}
-								$a .= ",'1'" ; //se asigna el estado
-								if(isset($cuartel['idCategoria']) && $cuartel['idCategoria'] != ''){   $a .= ",'".$cuartel['idCategoria']."'" ;   }else{$a .= ",''";}
-								if(isset($cuartel['idProducto']) && $cuartel['idProducto'] != ''){     $a .= ",'".$cuartel['idProducto']."'" ;    }else{$a .= ",''";}
+								if(isset($ultimo_id) && $ultimo_id != ''){                             $SIS_data = "'".$ultimo_id."'" ;                  }else{$SIS_data  = "''";}
+								if(isset($cuartel['idZona']) && $cuartel['idZona'] != ''){             $SIS_data .= ",'".$cuartel['idZona']."'" ;        }else{$SIS_data .= ",''";}
+								if(isset($cuartel['Mojamiento']) && $cuartel['Mojamiento'] != ''){     $SIS_data .= ",'".$cuartel['Mojamiento']."'" ;    }else{$SIS_data .= ",''";}
+								if(isset($cuartel['VelTractor']) && $cuartel['VelTractor'] != ''){     $SIS_data .= ",'".$cuartel['VelTractor']."'" ;    }else{$SIS_data .= ",''";}
+								if(isset($cuartel['VelViento']) && $cuartel['VelViento'] != ''){       $SIS_data .= ",'".$cuartel['VelViento']."'" ;     }else{$SIS_data .= ",''";}
+								if(isset($cuartel['TempMin']) && $cuartel['TempMin'] != ''){           $SIS_data .= ",'".$cuartel['TempMin']."'" ;       }else{$SIS_data .= ",''";}
+								if(isset($cuartel['TempMax']) && $cuartel['TempMax'] != ''){           $SIS_data .= ",'".$cuartel['TempMax']."'" ;       }else{$SIS_data .= ",''";}
+								if(isset($cuartel['HumTempMax']) && $cuartel['HumTempMax'] != ''){     $SIS_data .= ",'".$cuartel['HumTempMax']."'" ;    }else{$SIS_data .= ",''";}
+								$SIS_data .= ",'1'" ; //se asigna el estado
+								if(isset($cuartel['idCategoria']) && $cuartel['idCategoria'] != ''){   $SIS_data .= ",'".$cuartel['idCategoria']."'" ;   }else{$SIS_data .= ",''";}
+								if(isset($cuartel['idProducto']) && $cuartel['idProducto'] != ''){     $SIS_data .= ",'".$cuartel['idProducto']."'" ;    }else{$SIS_data .= ",''";}
 								
 								// inserto los datos de registro en la db
-								$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_cuarteles` (idSolicitud, idZona, 
-								Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax, idEstado, idCategoria,
-								idProducto) 
-								VALUES (".$a.")";
-								//Consulta
-								$resultado = mysqli_query ($dbConn, $query);
-								//Si ejecuto correctamente la consulta
-								if(!$resultado){
-									//Genero numero aleatorio
-									$vardata = genera_password(8,'alfanumerico');
-									
-									//Guardo el error en una variable temporal
-									$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-									$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-								}
-								$ultimo_cuartel = mysqli_insert_id($dbConn);
-						
+								$SIS_columns = 'idSolicitud, idZona, Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax, idEstado, idCategoria, idProducto';
+								$ultimo_cuartel = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_cuarteles', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+								
 								/*******************************************/
 								//se recorren los tractores
 								if($arrTractores!=false && !empty($arrTractores) && $arrTractores!=''){
@@ -3363,29 +3136,16 @@ require_once '0_validate_user_1.php';
 										//si pertenece al mismo cuartel
 										if($cuartel['idCuarteles']==$tract['idCuarteles']){
 											//filtros
-											if(isset($ultimo_id) && $ultimo_id != ''){                          $a = "'".$ultimo_id."'" ;                 }else{$a  = "''";}
-											if(isset($ultimo_cuartel) && $ultimo_cuartel != ''){                $a .= ",'".$ultimo_cuartel."'" ;          }else{$a .= ",''";}
-											if(isset($tract['idTelemetria']) && $tract['idTelemetria'] != ''){  $a .= ",'".$tract['idTelemetria']."'" ;   }else{$a .= ",''";}
-											if(isset($tract['idVehiculo']) && $tract['idVehiculo'] != ''){      $a .= ",'".$tract['idVehiculo']."'" ;     }else{$a .= ",''";}
-											if(isset($tract['idTrabajador']) && $tract['idTrabajador'] != ''){  $a .= ",'".$tract['idTrabajador']."'" ;   }else{$a .= ",''";}
+											if(isset($ultimo_id) && $ultimo_id != ''){                          $SIS_data = "'".$ultimo_id."'" ;                 }else{$SIS_data  = "''";}
+											if(isset($ultimo_cuartel) && $ultimo_cuartel != ''){                $SIS_data .= ",'".$ultimo_cuartel."'" ;          }else{$SIS_data .= ",''";}
+											if(isset($tract['idTelemetria']) && $tract['idTelemetria'] != ''){  $SIS_data .= ",'".$tract['idTelemetria']."'" ;   }else{$SIS_data .= ",''";}
+											if(isset($tract['idVehiculo']) && $tract['idVehiculo'] != ''){      $SIS_data .= ",'".$tract['idVehiculo']."'" ;     }else{$SIS_data .= ",''";}
+											if(isset($tract['idTrabajador']) && $tract['idTrabajador'] != ''){  $SIS_data .= ",'".$tract['idTrabajador']."'" ;   }else{$SIS_data .= ",''";}
 											
 											// inserto los datos de registro en la db
-											$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_tractores` (idSolicitud, idCuarteles, 
-											idTelemetria, idVehiculo, idTrabajador) 
-											VALUES (".$a.")";
-											//Consulta
-											$resultado = mysqli_query ($dbConn, $query);
-											//Si ejecuto correctamente la consulta
-											if(!$resultado){
-												//Genero numero aleatorio
-												$vardata = genera_password(8,'alfanumerico');
-												
-												//Guardo el error en una variable temporal
-												$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-												$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-												$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-												
-											}
+											$SIS_columns = 'idSolicitud, idCuarteles, idTelemetria, idVehiculo, idTrabajador';
+											$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_tractores', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 										}
 									}
 								}
@@ -3397,31 +3157,18 @@ require_once '0_validate_user_1.php';
 										//si pertenece al mismo cuartel
 										if($cuartel['idCuarteles']==$prod['idCuarteles']){
 											//filtros
-											if(isset($ultimo_id) && $ultimo_id != ''){                                $a  = "'".$ultimo_id."'" ;                   }else{$a  = "''";}
-											if(isset($ultimo_cuartel) && $ultimo_cuartel != ''){                      $a .= ",'".$ultimo_cuartel."'" ;             }else{$a .= ",''";}
-											if(isset($prod['idProducto']) && $prod['idProducto'] != ''){              $a .= ",'".$prod['idProducto']."'" ;         }else{$a .= ",''";}
-											if(isset($prod['DosisRecomendada']) && $prod['DosisRecomendada'] != ''){  $a .= ",'".$prod['DosisRecomendada']."'" ;   }else{$a .= ",''";}
-											if(isset($prod['DosisAplicar']) && $prod['DosisAplicar'] != ''){          $a .= ",'".$prod['DosisAplicar']."'" ;       }else{$a .= ",''";}
-											if(isset($prod['idUml']) && $prod['idUml'] != ''){                        $a .= ",'".$prod['idUml']."'" ;              }else{$a .= ",''";}
-											if(isset($prod['Objetivo']) && $prod['Objetivo'] != ''){                  $a .= ",'".$prod['Objetivo']."'" ;           }else{$a .= ",''";}
+											if(isset($ultimo_id) && $ultimo_id != ''){                                $SIS_data  = "'".$ultimo_id."'" ;                   }else{$SIS_data  = "''";}
+											if(isset($ultimo_cuartel) && $ultimo_cuartel != ''){                      $SIS_data .= ",'".$ultimo_cuartel."'" ;             }else{$SIS_data .= ",''";}
+											if(isset($prod['idProducto']) && $prod['idProducto'] != ''){              $SIS_data .= ",'".$prod['idProducto']."'" ;         }else{$SIS_data .= ",''";}
+											if(isset($prod['DosisRecomendada']) && $prod['DosisRecomendada'] != ''){  $SIS_data .= ",'".$prod['DosisRecomendada']."'" ;   }else{$SIS_data .= ",''";}
+											if(isset($prod['DosisAplicar']) && $prod['DosisAplicar'] != ''){          $SIS_data .= ",'".$prod['DosisAplicar']."'" ;       }else{$SIS_data .= ",''";}
+											if(isset($prod['idUml']) && $prod['idUml'] != ''){                        $SIS_data .= ",'".$prod['idUml']."'" ;              }else{$SIS_data .= ",''";}
+											if(isset($prod['Objetivo']) && $prod['Objetivo'] != ''){                  $SIS_data .= ",'".$prod['Objetivo']."'" ;           }else{$SIS_data .= ",''";}
 											
 											// inserto los datos de registro en la db
-											$query  = "INSERT INTO `cross_solicitud_aplicacion_listado_productos` (idSolicitud, idCuarteles, 
-											idProducto, DosisRecomendada, DosisAplicar, idUml, Objetivo) 
-											VALUES (".$a.")";
-											//Consulta
-											$resultado = mysqli_query ($dbConn, $query);
-											//Si ejecuto correctamente la consulta
-											if(!$resultado){
-												//Genero numero aleatorio
-												$vardata = genera_password(8,'alfanumerico');
-												
-												//Guardo el error en una variable temporal
-												$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-												$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-												$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-												
-											}
+											$SIS_columns = 'idSolicitud, idCuarteles, idProducto, DosisRecomendada, DosisAplicar, idUml, Objetivo';
+											$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+											
 										}
 									}
 								}

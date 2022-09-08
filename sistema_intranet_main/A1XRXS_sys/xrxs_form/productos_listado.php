@@ -121,6 +121,20 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){                          $Nombre              = EstandarizarInput($Nombre); }
+	if(isset($Marca) && $Marca != ''){                            $Marca               = EstandarizarInput($Marca); }
+	if(isset($Descripcion) && $Descripcion != ''){                $Descripcion         = EstandarizarInput($Descripcion); }
+	if(isset($Codigo) && $Codigo != ''){                          $Codigo              = EstandarizarInput($Codigo); }
+	if(isset($IngredienteActivo) && $IngredienteActivo != ''){    $IngredienteActivo   = EstandarizarInput($IngredienteActivo); }
+	if(isset($Carencia) && $Carencia != ''){                      $Carencia            = EstandarizarInput($Carencia); }
+	if(isset($DosisRecomendada) && $DosisRecomendada != ''){      $DosisRecomendada    = EstandarizarInput($DosisRecomendada); }
+	if(isset($EfectoResidual) && $EfectoResidual != ''){          $EfectoResidual      = EstandarizarInput($EfectoResidual); }
+	if(isset($EfectoRetroactivo) && $EfectoRetroactivo != ''){    $EfectoRetroactivo   = EstandarizarInput($EfectoRetroactivo); }
+	if(isset($CarenciaExportador) && $CarenciaExportador != ''){  $CarenciaExportador  = EstandarizarInput($CarenciaExportador); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                          $error['Nombre']              = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -160,73 +174,58 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idTipo) && $idTipo != ''){                         $a  = "'".$idTipo."'" ;                }else{$a  ="''";}
-				if(isset($idCategoria) && $idCategoria != ''){               $a .= ",'".$idCategoria."'" ;          }else{$a .=",''";}
-				if(isset($idUml) && $idUml != ''){                           $a .= ",'".$idUml."'" ;                }else{$a .=",''";}
-				if(isset($idTipoProducto) && $idTipoProducto != ''){         $a .= ",'".$idTipoProducto."'" ;       }else{$a .=",''";}
-				if(isset($idTipoReceta) && $idTipoReceta != ''){             $a .= ",'".$idTipoReceta."'" ;         }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){                         $a .= ",'".$Nombre."'" ;               }else{$a .=",''";}
-				if(isset($Marca) && $Marca != ''){                           $a .= ",'".$Marca."'" ;                }else{$a .=",''";}
-				if(isset($StockLimite) && $StockLimite != ''){               $a .= ",'".$StockLimite."'" ;          }else{$a .=",''";}
-				if(isset($ValorIngreso) && $ValorIngreso != ''){             $a .= ",'".$ValorIngreso."'" ;         }else{$a .=",''";}
-				if(isset($ValorEgreso) && $ValorEgreso != ''){               $a .= ",'".$ValorEgreso."'" ;          }else{$a .=",''";}
-				if(isset($Descripcion) && $Descripcion != ''){               $a .= ",'".$Descripcion."'" ;          }else{$a .=",''";}
-				if(isset($Codigo) && $Codigo != ''){                         $a .= ",'".$Codigo."'" ;               }else{$a .=",''";}
-				if(isset($idProveedor) && $idProveedor != ''){               $a .= ",'".$idProveedor."'" ;          }else{$a .=",''";}
-				if(isset($idCliente) && $idCliente != ''){                   $a .= ",'".$idCliente."'" ;            }else{$a .=",''";}
-				if(isset($Direccion_img) && $Direccion_img != ''){           $a .= ",'".$Direccion_img."'" ;        }else{$a .=",''";}
-				if(isset($FichaTecnica) && $FichaTecnica != ''){             $a .= ",'".$FichaTecnica."'" ;         }else{$a .=",''";}
-				if(isset($HDS) && $HDS != ''){                               $a .= ",'".$HDS."'" ;                  }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){                     $a .= ",'".$idEstado."'" ;             }else{$a .=",''";}
-				if(isset($idSubTipo) && $idSubTipo != ''){                   $a .= ",'".$idSubTipo."'" ;            }else{$a .=",''";}
-				if(isset($idProveedorFijo) && $idProveedorFijo != ''){       $a .= ",'".$idProveedorFijo."'" ;      }else{$a .=",''";}
-				if(isset($idTipoImagen) && $idTipoImagen != ''){             $a .= ",'".$idTipoImagen."'" ;         }else{$a .=",''";}
-				if(isset($idCalidad) && $idCalidad != ''){                   $a .= ",'".$idCalidad."'" ;            }else{$a .=",''";}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){             $a .= ",'".$idOpciones_1."'" ;         }else{$a .=",''";}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){             $a .= ",'".$idOpciones_2."'" ;         }else{$a .=",''";}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){             $a .= ",'".$idOpciones_3."'" ;         }else{$a .=",''";}
-				if(isset($idOpciones_4) && $idOpciones_4 != ''){             $a .= ",'".$idOpciones_4."'" ;         }else{$a .=",''";}
-				if(isset($idOpciones_5) && $idOpciones_5 != ''){             $a .= ",'".$idOpciones_5."'" ;         }else{$a .=",''";}
-				if(isset($idOpciones_6) && $idOpciones_6 != ''){             $a .= ",'".$idOpciones_6."'" ;         }else{$a .=",''";}
-				if(isset($idOpciones_7) && $idOpciones_7 != ''){             $a .= ",'".$idOpciones_7."'" ;         }else{$a .=",''";}
-				if(isset($idOpciones_8) && $idOpciones_8 != ''){             $a .= ",'".$idOpciones_8."'" ;         }else{$a .=",''";}
-				if(isset($idOpciones_9) && $idOpciones_9 != ''){             $a .= ",'".$idOpciones_9."'" ;         }else{$a .=",''";}
-				if(isset($IngredienteActivo) && $IngredienteActivo != ''){   $a .= ",'".$IngredienteActivo."'" ;    }else{$a .=",''";}
-				if(isset($Carencia) && $Carencia != ''){                     $a .= ",'".$Carencia."'" ;             }else{$a .=",''";}
-				if(isset($DosisRecomendada) && $DosisRecomendada != ''){     $a .= ",'".$DosisRecomendada."'" ;     }else{$a .=",''";}
-				if(isset($EfectoResidual) && $EfectoResidual != ''){         $a .= ",'".$EfectoResidual."'" ;       }else{$a .=",''";}
-				if(isset($EfectoRetroactivo) && $EfectoRetroactivo != ''){   $a .= ",'".$EfectoRetroactivo."'" ;    }else{$a .=",''";}
-				if(isset($CarenciaExportador) && $CarenciaExportador != ''){ $a .= ",'".$CarenciaExportador."'" ;   }else{$a .=",''";}
-						
+				if(isset($idTipo) && $idTipo != ''){                         $SIS_data  = "'".$idTipo."'" ;                }else{$SIS_data  = "''";}
+				if(isset($idCategoria) && $idCategoria != ''){               $SIS_data .= ",'".$idCategoria."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($idUml) && $idUml != ''){                           $SIS_data .= ",'".$idUml."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($idTipoProducto) && $idTipoProducto != ''){         $SIS_data .= ",'".$idTipoProducto."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($idTipoReceta) && $idTipoReceta != ''){             $SIS_data .= ",'".$idTipoReceta."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                         $SIS_data .= ",'".$Nombre."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($Marca) && $Marca != ''){                           $SIS_data .= ",'".$Marca."'" ;                }else{$SIS_data .= ",''";}
+				if(isset($StockLimite) && $StockLimite != ''){               $SIS_data .= ",'".$StockLimite."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($ValorIngreso) && $ValorIngreso != ''){             $SIS_data .= ",'".$ValorIngreso."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($ValorEgreso) && $ValorEgreso != ''){               $SIS_data .= ",'".$ValorEgreso."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion != ''){               $SIS_data .= ",'".$Descripcion."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Codigo) && $Codigo != ''){                         $SIS_data .= ",'".$Codigo."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($idProveedor) && $idProveedor != ''){               $SIS_data .= ",'".$idProveedor."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente != ''){                   $SIS_data .= ",'".$idCliente."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Direccion_img) && $Direccion_img != ''){           $SIS_data .= ",'".$Direccion_img."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($FichaTecnica) && $FichaTecnica != ''){             $SIS_data .= ",'".$FichaTecnica."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($HDS) && $HDS != ''){                               $SIS_data .= ",'".$HDS."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){                     $SIS_data .= ",'".$idEstado."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($idSubTipo) && $idSubTipo != ''){                   $SIS_data .= ",'".$idSubTipo."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($idProveedorFijo) && $idProveedorFijo != ''){       $SIS_data .= ",'".$idProveedorFijo."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idTipoImagen) && $idTipoImagen != ''){             $SIS_data .= ",'".$idTipoImagen."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idCalidad) && $idCalidad != ''){                   $SIS_data .= ",'".$idCalidad."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){             $SIS_data .= ",'".$idOpciones_1."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){             $SIS_data .= ",'".$idOpciones_2."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){             $SIS_data .= ",'".$idOpciones_3."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_4) && $idOpciones_4 != ''){             $SIS_data .= ",'".$idOpciones_4."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_5) && $idOpciones_5 != ''){             $SIS_data .= ",'".$idOpciones_5."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_6) && $idOpciones_6 != ''){             $SIS_data .= ",'".$idOpciones_6."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_7) && $idOpciones_7 != ''){             $SIS_data .= ",'".$idOpciones_7."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_8) && $idOpciones_8 != ''){             $SIS_data .= ",'".$idOpciones_8."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_9) && $idOpciones_9 != ''){             $SIS_data .= ",'".$idOpciones_9."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($IngredienteActivo) && $IngredienteActivo != ''){   $SIS_data .= ",'".$IngredienteActivo."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Carencia) && $Carencia != ''){                     $SIS_data .= ",'".$Carencia."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($DosisRecomendada) && $DosisRecomendada != ''){     $SIS_data .= ",'".$DosisRecomendada."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($EfectoResidual) && $EfectoResidual != ''){         $SIS_data .= ",'".$EfectoResidual."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($EfectoRetroactivo) && $EfectoRetroactivo != ''){   $SIS_data .= ",'".$EfectoRetroactivo."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($CarenciaExportador) && $CarenciaExportador != ''){ $SIS_data .= ",'".$CarenciaExportador."'" ;   }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `productos_listado` (idTipo,idCategoria,idUml,idTipoProducto,idTipoReceta,Nombre,
+				$SIS_columns = 'idTipo,idCategoria,idUml,idTipoProducto,idTipoReceta,Nombre,
 				Marca,StockLimite,ValorIngreso,ValorEgreso,Descripcion,Codigo,idProveedor,idCliente, Direccion_img,
 				FichaTecnica,HDS, idEstado, idSubTipo, idProveedorFijo, idTipoImagen, idCalidad,
 				idOpciones_1, idOpciones_2, idOpciones_3, idOpciones_4, idOpciones_5, idOpciones_6, idOpciones_7, 
 				idOpciones_8, idOpciones_9, IngredienteActivo, Carencia, DosisRecomendada, EfectoResidual,
-				EfectoRetroactivo, CarenciaExportador ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				EfectoRetroactivo, CarenciaExportador';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'productos_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-								
+				if($ultimo_id!=0){
+					//redirijo			
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 				
 			}
@@ -253,48 +252,48 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idProducto='".$idProducto."'" ;
-				if(isset($idTipo) && $idTipo != ''){                          $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idCategoria) && $idCategoria != ''){                $a .= ",idCategoria='".$idCategoria."'" ;}
-				if(isset($idUml) && $idUml != ''){                            $a .= ",idUml='".$idUml."'" ;}
-				if(isset($idTipoProducto) && $idTipoProducto != ''){          $a .= ",idTipoProducto='".$idTipoProducto."'" ;}
-				if(isset($idTipoReceta) && $idTipoReceta != ''){              $a .= ",idTipoReceta='".$idTipoReceta."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                          $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Marca)){                                            $a .= ",Marca='".$Marca."'" ;}
-				if(isset($StockLimite) && $StockLimite != ''){                $a .= ",StockLimite='".$StockLimite."'" ;}
-				if(isset($ValorIngreso) && $ValorIngreso != ''){              $a .= ",ValorIngreso='".$ValorIngreso."'" ;}
-				if(isset($ValorEgreso) && $ValorEgreso != ''){                $a .= ",ValorEgreso='".$ValorEgreso."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){                $a .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($Codigo) && $Codigo != ''){                          $a .= ",Codigo='".$Codigo."'" ;}
-				if(isset($idProveedor) && $idProveedor != ''){                $a .= ",idProveedor='".$idProveedor."'" ;}
-				if(isset($idCliente) && $idCliente != ''){                    $a .= ",idCliente='".$idCliente."'" ;}
-				if(isset($Direccion_img) && $Direccion_img != ''){            $a .= ",Direccion_img='".$Direccion_img."'" ;}
-				if(isset($FichaTecnica) && $FichaTecnica != ''){              $a .= ",FichaTecnica='".$FichaTecnica."'" ;}
-				if(isset($HDS) && $HDS != ''){                                $a .= ",HDS='".$HDS."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                      $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idSubTipo) && $idSubTipo != ''){                    $a .= ",idSubTipo='".$idSubTipo."'" ;}
-				if(isset($idProveedorFijo) && $idProveedorFijo != ''){        $a .= ",idProveedorFijo='".$idProveedorFijo."'" ;}
-				if(isset($idTipoImagen) && $idTipoImagen != ''){              $a .= ",idTipoImagen='".$idTipoImagen."'" ;}
-				if(isset($idCalidad) && $idCalidad != ''){                    $a .= ",idCalidad='".$idCalidad."'" ;}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){              $a .= ",idOpciones_1='".$idOpciones_1."'" ;}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){              $a .= ",idOpciones_2='".$idOpciones_2."'" ;}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){              $a .= ",idOpciones_3='".$idOpciones_3."'" ;}
-				if(isset($idOpciones_4) && $idOpciones_4 != ''){              $a .= ",idOpciones_4='".$idOpciones_4."'" ;}
-				if(isset($idOpciones_5) && $idOpciones_5 != ''){              $a .= ",idOpciones_5='".$idOpciones_5."'" ;}
-				if(isset($idOpciones_6) && $idOpciones_6 != ''){              $a .= ",idOpciones_6='".$idOpciones_6."'" ;}
-				if(isset($idOpciones_7) && $idOpciones_7 != ''){              $a .= ",idOpciones_7='".$idOpciones_7."'" ;}
-				if(isset($idOpciones_8) && $idOpciones_8 != ''){              $a .= ",idOpciones_8='".$idOpciones_8."'" ;}
-				if(isset($idOpciones_9) && $idOpciones_9 != ''){              $a .= ",idOpciones_9='".$idOpciones_9."'" ;}
-				if(isset($IngredienteActivo) && $IngredienteActivo != ''){    $a .= ",IngredienteActivo='".$IngredienteActivo."'" ;}
-				if(isset($Carencia) && $Carencia != ''){                      $a .= ",Carencia='".$Carencia."'" ;}
-				if(isset($DosisRecomendada) && $DosisRecomendada != ''){      $a .= ",DosisRecomendada='".$DosisRecomendada."'" ;}
-				if(isset($EfectoResidual) && $EfectoResidual != ''){          $a .= ",EfectoResidual='".$EfectoResidual."'" ;}
-				if(isset($EfectoRetroactivo) && $EfectoRetroactivo != ''){    $a .= ",EfectoRetroactivo='".$EfectoRetroactivo."'" ;}
-				if(isset($CarenciaExportador) && $CarenciaExportador != ''){  $a .= ",CarenciaExportador='".$CarenciaExportador."'" ;}
+				$SIS_data = "idProducto='".$idProducto."'" ;
+				if(isset($idTipo) && $idTipo != ''){                          $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($idCategoria) && $idCategoria != ''){                $SIS_data .= ",idCategoria='".$idCategoria."'" ;}
+				if(isset($idUml) && $idUml != ''){                            $SIS_data .= ",idUml='".$idUml."'" ;}
+				if(isset($idTipoProducto) && $idTipoProducto != ''){          $SIS_data .= ",idTipoProducto='".$idTipoProducto."'" ;}
+				if(isset($idTipoReceta) && $idTipoReceta != ''){              $SIS_data .= ",idTipoReceta='".$idTipoReceta."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                          $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Marca)){                                            $SIS_data .= ",Marca='".$Marca."'" ;}
+				if(isset($StockLimite) && $StockLimite != ''){                $SIS_data .= ",StockLimite='".$StockLimite."'" ;}
+				if(isset($ValorIngreso) && $ValorIngreso != ''){              $SIS_data .= ",ValorIngreso='".$ValorIngreso."'" ;}
+				if(isset($ValorEgreso) && $ValorEgreso != ''){                $SIS_data .= ",ValorEgreso='".$ValorEgreso."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){                $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
+				if(isset($Codigo) && $Codigo != ''){                          $SIS_data .= ",Codigo='".$Codigo."'" ;}
+				if(isset($idProveedor) && $idProveedor != ''){                $SIS_data .= ",idProveedor='".$idProveedor."'" ;}
+				if(isset($idCliente) && $idCliente != ''){                    $SIS_data .= ",idCliente='".$idCliente."'" ;}
+				if(isset($Direccion_img) && $Direccion_img != ''){            $SIS_data .= ",Direccion_img='".$Direccion_img."'" ;}
+				if(isset($FichaTecnica) && $FichaTecnica != ''){              $SIS_data .= ",FichaTecnica='".$FichaTecnica."'" ;}
+				if(isset($HDS) && $HDS != ''){                                $SIS_data .= ",HDS='".$HDS."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                      $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idSubTipo) && $idSubTipo != ''){                    $SIS_data .= ",idSubTipo='".$idSubTipo."'" ;}
+				if(isset($idProveedorFijo) && $idProveedorFijo != ''){        $SIS_data .= ",idProveedorFijo='".$idProveedorFijo."'" ;}
+				if(isset($idTipoImagen) && $idTipoImagen != ''){              $SIS_data .= ",idTipoImagen='".$idTipoImagen."'" ;}
+				if(isset($idCalidad) && $idCalidad != ''){                    $SIS_data .= ",idCalidad='".$idCalidad."'" ;}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){              $SIS_data .= ",idOpciones_1='".$idOpciones_1."'" ;}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){              $SIS_data .= ",idOpciones_2='".$idOpciones_2."'" ;}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){              $SIS_data .= ",idOpciones_3='".$idOpciones_3."'" ;}
+				if(isset($idOpciones_4) && $idOpciones_4 != ''){              $SIS_data .= ",idOpciones_4='".$idOpciones_4."'" ;}
+				if(isset($idOpciones_5) && $idOpciones_5 != ''){              $SIS_data .= ",idOpciones_5='".$idOpciones_5."'" ;}
+				if(isset($idOpciones_6) && $idOpciones_6 != ''){              $SIS_data .= ",idOpciones_6='".$idOpciones_6."'" ;}
+				if(isset($idOpciones_7) && $idOpciones_7 != ''){              $SIS_data .= ",idOpciones_7='".$idOpciones_7."'" ;}
+				if(isset($idOpciones_8) && $idOpciones_8 != ''){              $SIS_data .= ",idOpciones_8='".$idOpciones_8."'" ;}
+				if(isset($idOpciones_9) && $idOpciones_9 != ''){              $SIS_data .= ",idOpciones_9='".$idOpciones_9."'" ;}
+				if(isset($IngredienteActivo) && $IngredienteActivo != ''){    $SIS_data .= ",IngredienteActivo='".$IngredienteActivo."'" ;}
+				if(isset($Carencia) && $Carencia != ''){                      $SIS_data .= ",Carencia='".$Carencia."'" ;}
+				if(isset($DosisRecomendada) && $DosisRecomendada != ''){      $SIS_data .= ",DosisRecomendada='".$DosisRecomendada."'" ;}
+				if(isset($EfectoResidual) && $EfectoResidual != ''){          $SIS_data .= ",EfectoResidual='".$EfectoResidual."'" ;}
+				if(isset($EfectoRetroactivo) && $EfectoRetroactivo != ''){    $SIS_data .= ",EfectoRetroactivo='".$EfectoRetroactivo."'" ;}
+				if(isset($CarenciaExportador) && $CarenciaExportador != ''){  $SIS_data .= ",CarenciaExportador='".$CarenciaExportador."'" ;}
 											
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -651,12 +650,12 @@ require_once '0_validate_user_1.php';
 						if ($result==1){
 								
 							//Filtro para idSistema		
-							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-							if(isset($idTipoImagen) && $idTipoImagen != ''){       $a .= ",idTipoImagen='".$idTipoImagen."'" ;}
+							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+							if(isset($idTipoImagen) && $idTipoImagen != ''){       $SIS_data .= ",idTipoImagen='".$idTipoImagen."'" ;}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -703,11 +702,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 								
 							//Filtro para idSistema		
-							$a = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
+							$SIS_data = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -753,11 +752,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 								
 							//Filtro para idSistema		
-							$a = "HDS='".$sufijo.$_FILES['HDS']['name']."'" ;
+							$SIS_data = "HDS='".$sufijo.$_FILES['HDS']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -788,8 +787,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Direccion_img='', idTipoImagen=0" ;
-			$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Direccion_img='', idTipoImagen=0" ;
+			$resultado = db_update_data (false, $SIS_data, 'productos_listado', 'idProducto = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -824,8 +823,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "FichaTecnica=''" ;
-			$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "FichaTecnica=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'productos_listado', 'idProducto = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -861,8 +860,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "HDS=''" ;
-			$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "HDS=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'productos_listado', 'idProducto = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1068,29 +1067,18 @@ require_once '0_validate_user_1.php';
 				foreach ($_SESSION['receta_productos'] as $key => $producto){
 				
 					//filtros
-					if(isset($idProducto) && $idProducto != ''){                          $a  = "'".$idProducto."'" ;               }else{$a  ="''";}
-					if(isset($producto['idProducto']) && $producto['idProducto'] != ''){  $a .= ",'".$producto['idProducto']."'" ;  }else{$a .= ",''";}
+					if(isset($idProducto) && $idProducto != ''){                          $SIS_data  = "'".$idProducto."'" ;               }else{$SIS_data  = "''";}
+					if(isset($producto['idProducto']) && $producto['idProducto'] != ''){  $SIS_data .= ",'".$producto['idProducto']."'" ;  }else{$SIS_data .= ",''";}
 					if(isset($producto['Number']) && $producto['Number'] != ''){          
-						$a .= ",'".($producto['Number']/$_SESSION['receta']['medida'])."'" ;      
+						$SIS_data .= ",'".($producto['Number']/$_SESSION['receta']['medida'])."'" ;      
 					}else{
-						$a .= ",''";
+						$SIS_data .= ",''";
 					}
 					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `productos_recetas` (idProducto, idProductoRel, Cantidad)VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-					}
+					$SIS_columns = 'idProducto, idProductoRel, Cantidad';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'productos_recetas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					
 				}
 				
@@ -1166,8 +1154,8 @@ require_once '0_validate_user_1.php';
 			$idEstado    = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'productos_listado', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1188,30 +1176,19 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idProducto) && $idProducto != ''){        $a  = "'".$idProducto."'" ;      }else{$a  ="''";}
-				if(isset($idProductoRel) && $idProductoRel != ''){  $a .= ",'".$idProductoRel."'" ;  }else{$a .= ",''";}
-				if(isset($Cantidad) && $Cantidad != ''){            $a .= ",'".($Cantidad)."'" ;     }else{$a .= ",''";}
-					
+				if(isset($idProducto) && $idProducto != ''){        $SIS_data  = "'".$idProducto."'" ;      }else{$SIS_data  = "''";}
+				if(isset($idProductoRel) && $idProductoRel != ''){  $SIS_data .= ",'".$idProductoRel."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Cantidad) && $Cantidad != ''){            $SIS_data .= ",'".($Cantidad)."'" ;     }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `productos_recetas` (idProducto, idProductoRel, Cantidad)VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idProducto, idProductoRel, Cantidad';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'productos_recetas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
 			}
 		
@@ -1227,13 +1204,13 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idReceta='".$idReceta."'" ;
-				if(isset($idProductoRel) && $idProductoRel != ''){   $a .= ",idProductoRel='".$idProductoRel."'" ;}
-				if(isset($Cantidad) && $Cantidad != ''){             $a .= ",Cantidad='".$Cantidad."'" ;}
+				$SIS_data = "idReceta='".$idReceta."'" ;
+				if(isset($idProductoRel) && $idProductoRel != ''){   $SIS_data .= ",idProductoRel='".$idProductoRel."'" ;}
+				if(isset($Cantidad) && $Cantidad != ''){             $SIS_data .= ",Cantidad='".$Cantidad."'" ;}
 											
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'productos_recetas', 'idReceta = "'.$idReceta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'productos_recetas', 'idReceta = "'.$idReceta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -1273,13 +1250,13 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				$a = "idReceta='".$idReceta."'" ;
-				if(isset($idProductoRel) && $idProductoRel != ''){   $a .= ",idProductoRel='".$idProductoRel."'" ;}
-				if(isset($Number) && $Number != ''){                 $a .= ",Cantidad='".$Number."'" ;}
+				$SIS_data = "idReceta='".$idReceta."'" ;
+				if(isset($idProductoRel) && $idProductoRel != ''){   $SIS_data .= ",idProductoRel='".$idProductoRel."'" ;}
+				if(isset($Number) && $Number != ''){                 $SIS_data .= ",Cantidad='".$Number."'" ;}
 											
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'productos_recetas', 'idReceta = "'.$idReceta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'productos_recetas', 'idReceta = "'.$idReceta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -1319,30 +1296,19 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//Filtros
-				if(isset($idProducto) && $idProducto != ''){        $a  = "'".$idProducto."'" ;      }else{$a  ="''";}
-				if(isset($idProductoRel) && $idProductoRel != ''){  $a .= ",'".$idProductoRel."'" ;  }else{$a .= ",''";}
-				if(isset($Number) && $Number != ''){                $a .= ",'".$Number."'" ;         }else{$a .= ",''";}
-					
+				if(isset($idProducto) && $idProducto != ''){        $SIS_data  = "'".$idProducto."'" ;      }else{$SIS_data  = "''";}
+				if(isset($idProductoRel) && $idProductoRel != ''){  $SIS_data .= ",'".$idProductoRel."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($Number) && $Number != ''){                $SIS_data .= ",'".$Number."'" ;         }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `productos_recetas` (idProducto, idProductoRel, Cantidad)VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idProducto, idProductoRel, Cantidad';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'productos_recetas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 

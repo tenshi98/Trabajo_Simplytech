@@ -22,13 +22,6 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Sistema creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Sistema editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Sistema borrado correctamente';}
-//Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 ?>
 
 <div class="col-sm-8 fcenter">

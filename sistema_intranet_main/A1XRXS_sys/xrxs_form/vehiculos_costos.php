@@ -24,7 +24,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Valor']) )              $Valor              = $_POST['Valor'];
 	if ( !empty($_POST['Observaciones']) )      $Observaciones      = $_POST['Observaciones'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -49,6 +48,11 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
@@ -68,43 +72,30 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idTipo) && $idTipo != ''){            $a = "'".$idTipo."'" ;         }else{$a ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){      $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
-				if(isset($idVehiculo) && $idVehiculo != ''){    $a .= ",'".$idVehiculo."'" ;   }else{$a .=",''";}
+				if(isset($idTipo) && $idTipo != ''){            $SIS_data  = "'".$idTipo."'" ;        }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario != ''){      $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idVehiculo) && $idVehiculo != ''){    $SIS_data .= ",'".$idVehiculo."'" ;   }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  
-					$a .= ",'".$Creacion_fecha."'" ;  
-					$a .= ",'".fecha2NMes($Creacion_fecha)."'" ;
-					$a .= ",'".fecha2Ano($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".$Creacion_fecha."'" ;  
+					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($Valor) && $Valor != ''){                    $a .= ",'".$Valor."'" ;           }else{$a .=",''";}
-				if(isset($Observaciones) && $Observaciones != ''){    $a .= ",'".$Observaciones."'" ;   }else{$a .=",''";}
+				if(isset($Valor) && $Valor != ''){                    $SIS_data .= ",'".$Valor."'" ;           }else{$SIS_data .=",''";}
+				if(isset($Observaciones) && $Observaciones != ''){    $SIS_data .= ",'".$Observaciones."'" ;   }else{$SIS_data .=",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `vehiculos_costos` (idTipo, idUsuario, idVehiculo, Creacion_fecha, Creacion_mes,
-				Creacion_ano, Valor, Observaciones) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idTipo, idUsuario, idVehiculo, Creacion_fecha, Creacion_mes, Creacion_ano, Valor, Observaciones';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_costos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -118,19 +109,19 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idCosto='".$idCosto."'" ;
-				if(isset($idTipo) && $idTipo != ''){                    $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){              $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idVehiculo) && $idVehiculo != ''){            $a .= ",idVehiculo='".$idVehiculo."'" ;}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $a .= ",Creacion_fecha='".$Creacion_fecha."'" ;}
-				if(isset($Creacion_mes) && $Creacion_mes != ''){        $a .= ",Creacion_mes='".$Creacion_mes."'" ;}
-				if(isset($Creacion_ano) && $Creacion_ano != ''){        $a .= ",Creacion_ano='".$Creacion_ano."'" ;}
-				if(isset($Valor) && $Valor != ''){                      $a .= ",Valor='".$Valor."'" ;}
-				if(isset($Observaciones) && $Observaciones != ''){      $a .= ",Observaciones='".$Observaciones."'" ;}
+				$SIS_data = "idCosto='".$idCosto."'" ;
+				if(isset($idTipo) && $idTipo != ''){                    $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){              $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idVehiculo) && $idVehiculo != ''){            $SIS_data .= ",idVehiculo='".$idVehiculo."'" ;}
+				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'" ;}
+				if(isset($Creacion_mes) && $Creacion_mes != ''){        $SIS_data .= ",Creacion_mes='".$Creacion_mes."'" ;}
+				if(isset($Creacion_ano) && $Creacion_ano != ''){        $SIS_data .= ",Creacion_ano='".$Creacion_ano."'" ;}
+				if(isset($Valor) && $Valor != ''){                      $SIS_data .= ",Valor='".$Valor."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){      $SIS_data .= ",Observaciones='".$Observaciones."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'vehiculos_costos', 'idCosto = "'.$idCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'vehiculos_costos', 'idCosto = "'.$idCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

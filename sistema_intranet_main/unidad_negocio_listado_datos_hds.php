@@ -47,12 +47,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Maquina creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Maquina editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Maquina borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos del producto
 $query = "SELECT Nombre,HDS, idConfig_1, idConfig_2
@@ -114,7 +110,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         
 					<div class="col-sm-10 fcenter">
 						<h3>Archivo</h3>
-						<?php echo preview_docs('upload', $rowdata['HDS'], '', '', ''); ?>
+						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['HDS'], ''); ?>
 						<br/>
 						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_hds='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					</div>

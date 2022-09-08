@@ -100,8 +100,8 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_j
 	</div>
 
 	<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){ ?>
-		<div class="row">
-			<div class="col-xs-12">
+		<div class="col-xs-12">
+			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
 				<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Observaciones'];?></p>
 			</div>

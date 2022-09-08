@@ -37,17 +37,16 @@ if(isset($sesion_IP_Client)&&$sesion_IP_Client!=''){
 	//verifico el numero de intentos de hackeo y guardo el dato
 	}elseif($n_hackeos<$sesion_N_Hacks){
 		//filtros
-		if(isset($sesion_fecha) && $sesion_fecha != ''){                $a  = "'".$sesion_fecha."'" ;           }else{$a  = "''";}
-		if(isset($sesion_hora) && $sesion_hora != ''){                  $a .= ",'".$sesion_hora."'" ;           }else{$a .= ",''";}
-		if(isset($sesion_IP_Client) && $sesion_IP_Client != ''){        $a .= ",'".$sesion_IP_Client."'" ;      }else{$a .= ",''";}
-		if(isset($sesion_Agent_Transp) && $sesion_Agent_Transp != ''){  $a .= ",'".$sesion_Agent_Transp."'" ;   }else{$a .= ",''";}
-		if(isset($sesion_usuario) && $sesion_usuario != ''){            $a .= ",'".$sesion_usuario."'" ;        }else{$a .= ",''";}
+		if(isset($sesion_fecha) && $sesion_fecha != ''){                $SIS_data  = "'".$sesion_fecha."'" ;           }else{$SIS_data  = "''";}
+		if(isset($sesion_hora) && $sesion_hora != ''){                  $SIS_data .= ",'".$sesion_hora."'" ;           }else{$SIS_data .= ",''";}
+		if(isset($sesion_IP_Client) && $sesion_IP_Client != ''){        $SIS_data .= ",'".$sesion_IP_Client."'" ;      }else{$SIS_data .= ",''";}
+		if(isset($sesion_Agent_Transp) && $sesion_Agent_Transp != ''){  $SIS_data .= ",'".$sesion_Agent_Transp."'" ;   }else{$SIS_data .= ",''";}
+		if(isset($sesion_usuario) && $sesion_usuario != ''){            $SIS_data .= ",'".$sesion_usuario."'" ;        }else{$SIS_data .= ",''";}
 						
 		// inserto los datos de registro en la db
-		$query  = "INSERT INTO `sistema_seguridad_hacking` (Fecha, Hora, IP_Client, Agent_Transp, usuario) 
-		VALUES (".$a.")";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
+		$SIS_columns = 'Fecha, Hora, IP_Client, Agent_Transp, usuario';
+		$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'sistema_seguridad_hacking', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 	}
 					
 	/****************************************************************/

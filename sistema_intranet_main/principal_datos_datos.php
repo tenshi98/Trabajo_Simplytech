@@ -31,30 +31,18 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Perfil creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Perfil editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Perfil borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Perfil creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Perfil editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Perfil borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT email, Nombre, Rut, fNacimiento, Direccion, Fono, idCiudad, idComuna
-FROM `usuarios_listado`
-WHERE idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'email, Nombre, Rut, fNacimiento, Direccion, Fono, idCiudad, idComuna';
+$SIS_join  = '';
+$SIS_where = 'idUsuario = '.$_SESSION['usuario']['basic_data']['idUsuario'];
+$rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 /*************************************************/
 //permisos a las transacciones
 $trans[1] = "pago_masivo_cliente.php";           //Pagos clientes
@@ -128,7 +116,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 					$Form_Inputs->form_input_icon('Email', 'email', $x7, 2,'fa fa-envelope-o');
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x8, 2);
 					$Form_Inputs->form_date('Fecha de Nacimiento','fNacimiento', $x9, 2); 
-					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Region','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											 'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 											 $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x12, 1,'fa fa-map');

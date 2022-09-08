@@ -20,8 +20,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['Fecha_ingreso']) )  $Fecha_ingreso   = $_POST['Fecha_ingreso'];
 	if ( !empty($_POST['Detalle']) )        $Detalle         = $_POST['Detalle'];
 
-	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -41,6 +39,11 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Detalle) && $Detalle != ''){  $Detalle = EstandarizarInput($Detalle); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -95,32 +98,21 @@ require_once '0_validate_user_1.php';
 					
 							//Inserto el registro de las mantenciones
 							//filtros
-							$a = "'".$sufijo.$_FILES['NombreArchivo']['name']."'" ;
-							if(isset($idLicitacion) && $idLicitacion != ''){    $a .= ",'".$idLicitacion."'" ;  }else{$a .= ",''";}
-							if(isset($idUsuario) && $idUsuario != ''){          $a .= ",'".$idUsuario."'" ;     }else{$a .= ",''";}
-							if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){  $a .= ",'".$Fecha_ingreso."'" ; }else{$a .= ",''";}
-							if(isset($Detalle) && $Detalle != ''){              $a .= ",'".$Detalle."'" ;       }else{$a .= ",''";}
-				
+							$SIS_data = "'".$sufijo.$_FILES['NombreArchivo']['name']."'" ;
+							if(isset($idLicitacion) && $idLicitacion != ''){    $SIS_data .= ",'".$idLicitacion."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($idUsuario) && $idUsuario != ''){          $SIS_data .= ",'".$idUsuario."'" ;     }else{$SIS_data .= ",''";}
+							if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){  $SIS_data .= ",'".$Fecha_ingreso."'" ; }else{$SIS_data .= ",''";}
+							if(isset($Detalle) && $Detalle != ''){              $SIS_data .= ",'".$Detalle."'" ;       }else{$SIS_data .= ",''";}
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `licitacion_listado_archivos` (NombreArchivo, idLicitacion, idUsuario, Fecha_ingreso, Detalle) VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							$SIS_columns = 'NombreArchivo, idLicitacion, idUsuario, Fecha_ingreso, Detalle';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 							//Si ejecuto correctamente la consulta
-							if($resultado){
-								
+							if($ultimo_id!=0){
+								//redirijo
 								header( 'Location: '.$location.'&created=true' );
 								die;
-								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
 							}
 							
 						} else {

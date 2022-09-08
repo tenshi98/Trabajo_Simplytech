@@ -27,8 +27,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['SensoresValor']) )        $SensoresValor         = $_POST['SensoresValor'];
 	if ( !empty($_POST['SensoresNumero']) )       $SensoresNumero        = $_POST['SensoresNumero'];
 	
-
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -51,9 +49,16 @@ require_once '0_validate_user_1.php';
 			case 'SensoresValor':       if(empty($SensoresValor)){        $error['SensoresValor']         = 'error/No ha ingresado el valor del sensor';}break;
 			case 'SensoresNumero':      if(empty($SensoresNumero)){       $error['SensoresNumero']        = 'error/No ha seleccionado el sensor a revisar';}break;
 			
-
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){                 $Nombre         = EstandarizarInput($Nombre); }
+	if(isset($PuntoNombre) && $PuntoNombre != ''){       $PuntoNombre    = EstandarizarInput($PuntoNombre); }
+	if(isset($SensoresValor) && $SensoresValor != ''){   $SensoresValor  = EstandarizarInput($SensoresValor); }
+	if(isset($SensoresNumero) && $SensoresNumero != ''){ $SensoresNumero = EstandarizarInput($SensoresNumero); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -88,35 +93,20 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){       $a  = "'".$idSistema."'" ;      }else{$a ="''";}
-				if(isset($Nombre) && $Nombre != ''){             $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
-				if(isset($cantPuntos) && $cantPuntos != ''){     $a .= ",'".$cantPuntos."'" ;    }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){         $a .= ",'".$idEstado."'" ;      }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data  = "'".$idSistema."'" ;      }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){             $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($cantPuntos) && $cantPuntos != ''){     $SIS_data .= ",'".$cantPuntos."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){         $SIS_data .= ",'".$idEstado."'" ;      }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_mantencion_matriz` (idSistema, Nombre, cantPuntos, idEstado) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, Nombre, cantPuntos, idEstado';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_mantencion_matriz', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&idMatriz='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 		
@@ -131,20 +121,20 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 		
 				//Filtros
-				$a = "idMatriz='".$idMatriz."'" ;
-				if(isset($idSistema) && $idSistema != ''){                        $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                          $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                              $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($cantPuntos) && $cantPuntos != ''){                      $a .= ",cantPuntos='".$cantPuntos."'" ;}
+				$SIS_data = "idMatriz='".$idMatriz."'" ;
+				if(isset($idSistema) && $idSistema != ''){                        $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                          $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                              $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($cantPuntos) && $cantPuntos != ''){                      $SIS_data .= ",cantPuntos='".$cantPuntos."'" ;}
 				
-				if(isset($PuntoNombre) && $PuntoNombre != ''){                    $a .= ",PuntoNombre_".$mod."='".$PuntoNombre."'" ;}
-				if(isset($SensoresTipo) && $SensoresTipo != ''){                  $a .= ",SensoresTipo_".$mod."='".$SensoresTipo."'" ;}
-				if(isset($SensoresValor) && $SensoresValor != ''){                $a .= ",SensoresValor_".$mod."='".$SensoresValor."'" ;}
-				if(isset($SensoresNumero) && $SensoresNumero != ''){              $a .= ",SensoresNumero_".$mod."='".$SensoresNumero."'" ;}
+				if(isset($PuntoNombre) && $PuntoNombre != ''){                    $SIS_data .= ",PuntoNombre_".$mod."='".$PuntoNombre."'" ;}
+				if(isset($SensoresTipo) && $SensoresTipo != ''){                  $SIS_data .= ",SensoresTipo_".$mod."='".$SensoresTipo."'" ;}
+				if(isset($SensoresValor) && $SensoresValor != ''){                $SIS_data .= ",SensoresValor_".$mod."='".$SensoresValor."'" ;}
+				if(isset($SensoresNumero) && $SensoresNumero != ''){              $SIS_data .= ",SensoresNumero_".$mod."='".$SensoresNumero."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'telemetria_mantencion_matriz', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'telemetria_mantencion_matriz', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -244,42 +234,29 @@ require_once '0_validate_user_1.php';
 				
 				/*******************************************************************/
 				//filtros
-				if(isset($rowdata['idSistema']) && $rowdata['idSistema'] != ''){     $a  = "'".$rowdata['idSistema']."'" ;     }else{$a  ="''";}
-				if(isset($rowdata['idEstado']) && $rowdata['idEstado'] != ''){       $a .= ",'".$rowdata['idEstado']."'" ;     }else{$a .= ",''";}
-				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos'] != ''){   $a .= ",'".$rowdata['cantPuntos']."'" ;   }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                                 $a .= ",'".$Nombre."'" ;                  }else{$a .= ",''";}
+				if(isset($rowdata['idSistema']) && $rowdata['idSistema'] != ''){     $SIS_data  = "'".$rowdata['idSistema']."'" ;     }else{$SIS_data  = "''";}
+				if(isset($rowdata['idEstado']) && $rowdata['idEstado'] != ''){       $SIS_data .= ",'".$rowdata['idEstado']."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos'] != ''){   $SIS_data .= ",'".$rowdata['cantPuntos']."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                                 $SIS_data .= ",'".$Nombre."'" ;                  }else{$SIS_data .= ",''";}
 				
 
 				for ($i = 1; $i <= 72; $i++) {
-					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i] != ''){        $a .= ",'".$rowdata['PuntoNombre_'.$i]."'" ;     }else{$a .= ",''";}
-					if(isset($rowdata['SensoresTipo_'.$i]) && $rowdata['SensoresTipo_'.$i] != ''){      $a .= ",'".$rowdata['SensoresTipo_'.$i]."'" ;    }else{$a .= ",''";}
-					if(isset($rowdata['SensoresValor_'.$i]) && $rowdata['SensoresValor_'.$i] != ''){    $a .= ",'".$rowdata['SensoresValor_'.$i]."'" ;   }else{$a .= ",''";}
-					if(isset($rowdata['SensoresNumero_'.$i]) && $rowdata['SensoresNumero_'.$i] != ''){  $a .= ",'".$rowdata['SensoresNumero_'.$i]."'" ;  }else{$a .= ",''";}
+					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i] != ''){        $SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'" ;     }else{$SIS_data .= ",''";}
+					if(isset($rowdata['SensoresTipo_'.$i]) && $rowdata['SensoresTipo_'.$i] != ''){      $SIS_data .= ",'".$rowdata['SensoresTipo_'.$i]."'" ;    }else{$SIS_data .= ",''";}
+					if(isset($rowdata['SensoresValor_'.$i]) && $rowdata['SensoresValor_'.$i] != ''){    $SIS_data .= ",'".$rowdata['SensoresValor_'.$i]."'" ;   }else{$SIS_data .= ",''";}
+					if(isset($rowdata['SensoresNumero_'.$i]) && $rowdata['SensoresNumero_'.$i] != ''){  $SIS_data .= ",'".$rowdata['SensoresNumero_'.$i]."'" ;  }else{$SIS_data .= ",''";}
 					
 				}
-					
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `telemetria_mantencion_matriz` (idSistema,idEstado,cantPuntos,Nombre
-				".$qry.") 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema,idEstado,cantPuntos,Nombre '.$qry;
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_mantencion_matriz', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&clone=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 			

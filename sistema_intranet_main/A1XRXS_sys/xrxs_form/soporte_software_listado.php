@@ -48,6 +48,14 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){               $Nombre        = EstandarizarInput($Nombre); }
+	if(isset($Descripcion) && $Descripcion != ''){     $Descripcion   = EstandarizarInput($Descripcion); }
+	if(isset($SitioWeb) && $SitioWeb != ''){           $SitioWeb      = EstandarizarInput($SitioWeb); }
+	if(isset($SitioDescarga) && $SitioDescarga != ''){ $SitioDescarga = EstandarizarInput($SitioDescarga); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -81,37 +89,24 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){                $a = "'".$Nombre."'" ;           }else{$a ="''";}
-				if(isset($Descripcion) && $Descripcion != ''){      $a .= ",'".$Descripcion."'" ;    }else{$a .=",''";}
-				if(isset($idLicencia) && $idLicencia != ''){        $a .= ",'".$idLicencia."'" ;     }else{$a .=",''";}
-				if(isset($Peso) && $Peso != ''){                    $a .= ",'".$Peso."'" ;           }else{$a .=",''";}
-				if(isset($idMedidaPeso) && $idMedidaPeso != ''){    $a .= ",'".$idMedidaPeso."'" ;   }else{$a .=",''";}
-				if(isset($SitioWeb) && $SitioWeb != ''){            $a .= ",'".$SitioWeb."'" ;       }else{$a .=",''";}
-				if(isset($SitioDescarga) && $SitioDescarga != ''){  $a .= ",'".$SitioDescarga."'" ;  }else{$a .=",''";}
-				if(isset($idCategoria) && $idCategoria != ''){      $a .= ",'".$idCategoria."'" ;    }else{$a .=",''";}
+				if(isset($Nombre) && $Nombre != ''){                $SIS_data  = "'".$Nombre."'" ;          }else{$SIS_data  = "''";}
+				if(isset($Descripcion) && $Descripcion != ''){      $SIS_data .= ",'".$Descripcion."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($idLicencia) && $idLicencia != ''){        $SIS_data .= ",'".$idLicencia."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Peso) && $Peso != ''){                    $SIS_data .= ",'".$Peso."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idMedidaPeso) && $idMedidaPeso != ''){    $SIS_data .= ",'".$idMedidaPeso."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($SitioWeb) && $SitioWeb != ''){            $SIS_data .= ",'".$SitioWeb."'" ;       }else{$SIS_data .= ",''";}
+				if(isset($SitioDescarga) && $SitioDescarga != ''){  $SIS_data .= ",'".$SitioDescarga."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($idCategoria) && $idCategoria != ''){      $SIS_data .= ",'".$idCategoria."'" ;    }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `soporte_software_listado` (Nombre, Descripcion, idLicencia, Peso,
-				idMedidaPeso, SitioWeb, SitioDescarga, idCategoria ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'Nombre, Descripcion, idLicencia, Peso, idMedidaPeso, SitioWeb, SitioDescarga, idCategoria';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'soporte_software_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
 			}
 	
@@ -136,19 +131,19 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idSoftware='".$idSoftware."'" ;
-				if(isset($Nombre) && $Nombre != ''){                   $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){         $a .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($idLicencia) && $idLicencia != ''){           $a .= ",idLicencia='".$idLicencia."'" ;}
-				if(isset($Peso) && $Peso != ''){                       $a .= ",Peso='".$Peso."'" ;}
-				if(isset($idMedidaPeso) && $idMedidaPeso != ''){       $a .= ",idMedidaPeso='".$idMedidaPeso."'" ;}
-				if(isset($SitioWeb) && $SitioWeb != ''){               $a .= ",SitioWeb='".$SitioWeb."'" ;}
-				if(isset($SitioDescarga) && $SitioDescarga != ''){     $a .= ",SitioDescarga='".$SitioDescarga."'" ;}
-				if(isset($idCategoria) && $idCategoria != ''){         $a .= ",idCategoria='".$idCategoria."'" ;}
+				$SIS_data = "idSoftware='".$idSoftware."'" ;
+				if(isset($Nombre) && $Nombre != ''){                   $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Descripcion) && $Descripcion != ''){         $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
+				if(isset($idLicencia) && $idLicencia != ''){           $SIS_data .= ",idLicencia='".$idLicencia."'" ;}
+				if(isset($Peso) && $Peso != ''){                       $SIS_data .= ",Peso='".$Peso."'" ;}
+				if(isset($idMedidaPeso) && $idMedidaPeso != ''){       $SIS_data .= ",idMedidaPeso='".$idMedidaPeso."'" ;}
+				if(isset($SitioWeb) && $SitioWeb != ''){               $SIS_data .= ",SitioWeb='".$SitioWeb."'" ;}
+				if(isset($SitioDescarga) && $SitioDescarga != ''){     $SIS_data .= ",SitioDescarga='".$SitioDescarga."'" ;}
+				if(isset($idCategoria) && $idCategoria != ''){         $SIS_data .= ",idCategoria='".$idCategoria."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'soporte_software_listado', 'idSoftware = "'.$idSoftware.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'soporte_software_listado', 'idSoftware = "'.$idSoftware.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

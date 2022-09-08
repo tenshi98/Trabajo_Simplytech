@@ -25,20 +25,15 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Procedimiento Creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Procedimiento Modificada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Procedimiento borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Procedimiento Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Procedimiento Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Procedimiento borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 
-<?php 
-	//Se dibuja el explorador de archivos
-	echo file_explorer(2, 'connector_procedimientos', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 3); ?>
+//Se dibuja el explorador de archivos
+echo file_explorer(2, 'connector_procedimientos', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 3); 
 
-
-
-         
-<?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/

@@ -46,10 +46,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {      $error['created']      = 'sucess/Bloqueo Creado correctamente';}
-if (isset($_GET['not_created'])) {  $error['not_created']  = 'sucess/Bloqueo Creado correctamente';}
+if (isset($_GET['created'])){      $error['created']     = 'sucess/Bloqueo Creado correctamente';}
+if (isset($_GET['not_created'])){  $error['not_created'] = 'sucess/Bloqueo Creado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) {  
 //tomo el numero de la pagina si es que este existe

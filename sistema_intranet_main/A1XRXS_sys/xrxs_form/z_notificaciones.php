@@ -31,7 +31,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idComuna']) )           $idComuna              = $_POST['idComuna'];
 	if ( !empty($_POST['Direccion']) )          $Direccion             = $_POST['Direccion'];
 
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -61,6 +60,14 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Titulo) && $Titulo != ''){             $Titulo       = EstandarizarInput($Titulo); }
+	if(isset($Notificacion) && $Notificacion != ''){ $Notificacion = EstandarizarInput($Notificacion); }
+	if(isset($Nombre) && $Nombre != ''){             $Nombre       = EstandarizarInput($Nombre); }
+	if(isset($Direccion) && $Direccion != ''){       $Direccion    = EstandarizarInput($Direccion); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Titulo)&&contar_palabras_censuradas($Titulo)!=0){              $error['Titulo']       = 'error/Edita Titulo, contiene palabras no permitidas'; }	
@@ -84,8 +91,8 @@ require_once '0_validate_user_1.php';
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$a = "idEstado=2, FechaVisto='".fecha_actual()."'" ;
-				$resultado = db_update_data (false, $a, 'principal_notificaciones_ver', 'idNoti = "'.$id.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$SIS_data = "idEstado=2, FechaVisto='".fecha_actual()."'" ;
+				$resultado = db_update_data (false, $SIS_data, 'principal_notificaciones_ver', 'idNoti = "'.$id.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -108,8 +115,8 @@ require_once '0_validate_user_1.php';
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$a = "idEstado=2, FechaVisto='".fecha_actual()."'" ;
-				$resultado = db_update_data (false, $a, 'principal_notificaciones_ver', 'idUsuario = "'.$all.'"  AND idEstado=1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$SIS_data = "idEstado=2, FechaVisto='".fecha_actual()."'" ;
+				$resultado = db_update_data (false, $SIS_data, 'principal_notificaciones_ver', 'idUsuario = "'.$all.'"  AND idEstado=1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -132,23 +139,19 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){         $a  = "'".$idSistema."'" ;          }else{$a  ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){         $a .= ",'".$idUsuario."'" ;         }else{$a .=",''";}
-				if(isset($Titulo) && $Titulo != ''){               $a .= ",'".$Titulo."'" ;            }else{$a .=",''";}
-				if(isset($Notificacion) && $Notificacion != ''){   $a .= ",'".$Notificacion."'" ;      }else{$a .=",''";}
-				if(isset($Fecha) && $Fecha != ''){                 $a .= ",'".$Fecha."'" ;             }else{$a .=",''";}
-				
+				if(isset($idSistema) && $idSistema != ''){         $SIS_data  = "'".$idSistema."'" ;          }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario != ''){         $SIS_data .= ",'".$idUsuario."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Titulo) && $Titulo != ''){               $SIS_data .= ",'".$Titulo."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Notificacion) && $Notificacion != ''){   $SIS_data .= ",'".$Notificacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){                 $SIS_data .= ",'".$Fecha."'" ;             }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `principal_notificaciones_listado` (idSistema,idUsuario,Titulo,Notificacion,Fecha) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema,idUsuario,Titulo,Notificacion,Fecha';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'principal_notificaciones_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
+				
 					//variables para armar el mensaje
 					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, '123333').'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
 					$Notificacion .= ' '.$Titulo;
@@ -160,49 +163,24 @@ require_once '0_validate_user_1.php';
 					
 					//Inserto el mensaje de entrega de materiales
 					foreach($arrUsuarios as $users) {
-						if(isset($idSistema) && $idSistema != ''){                     $a  = "'".$idSistema."'" ;               }else{$a  ="''";}
-						if(isset($users['idUsuario']) && $users['idUsuario'] != ''){   $a .= ",'".$users['idUsuario']."'" ;     }else{$a .=",''";}
-						if(isset($Notificacion) && $Notificacion != ''){               $a .= ",'".$Notificacion."'" ;           }else{$a .=",''";}
-						if(isset($Fecha) && $Fecha != ''){                             $a .= ",'".$Fecha."'" ;                  }else{$a .=",''";}
-						if(isset($Estado) && $Estado != ''){                           $a .= ",'".$Estado."'" ;                 }else{$a .=",''";}
-						if(isset($ultimo_id) && $ultimo_id != ''){                     $a .= ",'".$ultimo_id."'" ;              }else{$a .=",''";}
-						$a .= ",'".hora_actual()."'" ;
+						if(isset($idSistema) && $idSistema != ''){                     $SIS_data  = "'".$idSistema."'" ;               }else{$SIS_data  = "''";}
+						if(isset($users['idUsuario']) && $users['idUsuario'] != ''){   $SIS_data .= ",'".$users['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
+						if(isset($Notificacion) && $Notificacion != ''){               $SIS_data .= ",'".$Notificacion."'" ;           }else{$SIS_data .= ",''";}
+						if(isset($Fecha) && $Fecha != ''){                             $SIS_data .= ",'".$Fecha."'" ;                  }else{$SIS_data .= ",''";}
+						if(isset($Estado) && $Estado != ''){                           $SIS_data .= ",'".$Estado."'" ;                 }else{$SIS_data .= ",''";}
+						if(isset($ultimo_id) && $ultimo_id != ''){                     $SIS_data .= ",'".$ultimo_id."'" ;              }else{$SIS_data .= ",''";}
+						$SIS_data .= ",'".hora_actual()."'" ;
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `principal_notificaciones_ver` (idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones, Hora) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
+						$SIS_columns = 'idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones, Hora';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'principal_notificaciones_ver', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
 					}
 					
 					//redirijo	
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
-				
 			}
 	
 		break;
@@ -216,72 +194,42 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){         $a  = "'".$idSistema."'" ;          }else{$a  ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){         $a .= ",'".$idUsuario."'" ;         }else{$a .=",''";}
-				if(isset($Titulo) && $Titulo != ''){               $a .= ",'".$Titulo."'" ;            }else{$a .=",''";}
-				if(isset($Notificacion) && $Notificacion != ''){   $a .= ",'".$Notificacion."'" ;      }else{$a .=",''";}
-				if(isset($Fecha) && $Fecha != ''){                 $a .= ",'".$Fecha."'" ;             }else{$a .=",''";}
-				
+				if(isset($idSistema) && $idSistema != ''){         $SIS_data  = "'".$idSistema."'" ;          }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario != ''){         $SIS_data .= ",'".$idUsuario."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Titulo) && $Titulo != ''){               $SIS_data .= ",'".$Titulo."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Notificacion) && $Notificacion != ''){   $SIS_data .= ",'".$Notificacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){                 $SIS_data .= ",'".$Fecha."'" ;             }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `principal_notificaciones_listado` (idSistema,idUsuario,Titulo,Notificacion,Fecha) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema,idUsuario,Titulo,Notificacion,Fecha';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'principal_notificaciones_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
 					//variables para armar el mensaje
 					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, '123333').'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
 					$Notificacion .= ' '.$Titulo;
 					$Estado = '1';
 					
-					if(isset($idSistema) && $idSistema != ''){            $a  = "'".$idSistema."'" ;          }else{$a  ="''";}
-					if(isset($idUsrReceptor) && $idUsrReceptor != ''){    $a .= ",'".$idUsrReceptor."'" ;     }else{$a .=",''";}
-					if(isset($Notificacion) && $Notificacion != ''){      $a .= ",'".$Notificacion."'" ;      }else{$a .=",''";}
-					if(isset($Fecha) && $Fecha != ''){                    $a .= ",'".$Fecha."'" ;             }else{$a .=",''";}
-					if(isset($Estado) && $Estado != ''){                  $a .= ",'".$Estado."'" ;            }else{$a .=",''";}
-					if(isset($ultimo_id) && $ultimo_id != ''){            $a .= ",'".$ultimo_id."'" ;         }else{$a .=",''";}
-					$a .= ",'".hora_actual()."'" ;
-						
+					if(isset($idSistema) && $idSistema != ''){            $SIS_data  = "'".$idSistema."'" ;          }else{$SIS_data  = "''";}
+					if(isset($idUsrReceptor) && $idUsrReceptor != ''){    $SIS_data .= ",'".$idUsrReceptor."'" ;     }else{$SIS_data .= ",''";}
+					if(isset($Notificacion) && $Notificacion != ''){      $SIS_data .= ",'".$Notificacion."'" ;      }else{$SIS_data .= ",''";}
+					if(isset($Fecha) && $Fecha != ''){                    $SIS_data .= ",'".$Fecha."'" ;             }else{$SIS_data .= ",''";}
+					if(isset($Estado) && $Estado != ''){                  $SIS_data .= ",'".$Estado."'" ;            }else{$SIS_data .= ",''";}
+					if(isset($ultimo_id) && $ultimo_id != ''){            $SIS_data .= ",'".$ultimo_id."'" ;         }else{$SIS_data .= ",''";}
+					$SIS_data .= ",'".hora_actual()."'" ;
+					
 					// inserto los datos de registro en la db
-					$query  = "INSERT INTO `principal_notificaciones_ver` (idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones, Hora) 
-					VALUES (".$a.")";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
+					$SIS_columns = 'idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones, Hora';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'principal_notificaciones_ver', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
 					//Si ejecuto correctamente la consulta
-					if($resultado){
-						
+					if($ultimo_id!=0){
+						//redirijo
 						header( 'Location: '.$location.'&created=true' );
 						die;
-						
-					//si da error, guardar en el log de errores una copia
-					}else{
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-						
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
 					}
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
-				
 			}
 	
 		break;
@@ -312,23 +260,18 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){         $a  = "'".$idSistema."'" ;          }else{$a  ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){         $a .= ",'".$idUsuario."'" ;         }else{$a .=",''";}
-				if(isset($Titulo) && $Titulo != ''){               $a .= ",'".$Titulo."'" ;            }else{$a .=",''";}
-				if(isset($Notificacion) && $Notificacion != ''){   $a .= ",'".$Notificacion."'" ;      }else{$a .=",''";}
-				if(isset($Fecha) && $Fecha != ''){                 $a .= ",'".$Fecha."'" ;             }else{$a .=",''";}
-				
+				if(isset($idSistema) && $idSistema != ''){         $SIS_data  = "'".$idSistema."'" ;          }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario != ''){         $SIS_data .= ",'".$idUsuario."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Titulo) && $Titulo != ''){               $SIS_data .= ",'".$Titulo."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Notificacion) && $Notificacion != ''){   $SIS_data .= ",'".$Notificacion."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha != ''){                 $SIS_data .= ",'".$Fecha."'" ;             }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `principal_notificaciones_listado` (idSistema,idUsuario,Titulo,Notificacion,Fecha) VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema,idUsuario,Titulo,Notificacion,Fecha';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'principal_notificaciones_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
 					//variables para armar el mensaje
 					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, '123333').'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
 					$Notificacion .= ' '.$Titulo;
@@ -351,48 +294,25 @@ require_once '0_validate_user_1.php';
 					
 					//Inserto el mensaje de entrega de materiales
 					foreach($arrPermiso as $permiso) {
-						if(isset($idSistema) && $idSistema != ''){                         $a  = "'".$idSistema."'" ;               }else{$a  ="''";}
-						if(isset($permiso['idUsuario']) && $permiso['idUsuario'] != ''){   $a .= ",'".$permiso['idUsuario']."'" ;   }else{$a .=",''";}
-						if(isset($Notificacion) && $Notificacion != ''){                   $a .= ",'".$Notificacion."'" ;           }else{$a .=",''";}
-						if(isset($Fecha) && $Fecha != ''){                                 $a .= ",'".$Fecha."'" ;                  }else{$a .=",''";}
-						if(isset($Estado) && $Estado != ''){                               $a .= ",'".$Estado."'" ;                 }else{$a .=",''";}
-						if(isset($ultimo_id) && $ultimo_id != ''){                         $a .= ",'".$ultimo_id."'" ;              }else{$a .=",''";}
-						$a .= ",'".hora_actual()."'" ;
+						if(isset($idSistema) && $idSistema != ''){                         $SIS_data  = "'".$idSistema."'" ;               }else{$SIS_data  = "''";}
+						if(isset($permiso['idUsuario']) && $permiso['idUsuario'] != ''){   $SIS_data .= ",'".$permiso['idUsuario']."'" ;   }else{$SIS_data .= ",''";}
+						if(isset($Notificacion) && $Notificacion != ''){                   $SIS_data .= ",'".$Notificacion."'" ;           }else{$SIS_data .= ",''";}
+						if(isset($Fecha) && $Fecha != ''){                                 $SIS_data .= ",'".$Fecha."'" ;                  }else{$SIS_data .= ",''";}
+						if(isset($Estado) && $Estado != ''){                               $SIS_data .= ",'".$Estado."'" ;                 }else{$SIS_data .= ",''";}
+						if(isset($ultimo_id) && $ultimo_id != ''){                         $SIS_data .= ",'".$ultimo_id."'" ;              }else{$SIS_data .= ",''";}
+						$SIS_data .= ",'".hora_actual()."'" ;
 						
 						// inserto los datos de registro en la db
-						$query  = "INSERT INTO `principal_notificaciones_ver` (idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones, Hora) 
-						VALUES (".$a.")";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-							
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-						}
-					}
+						$SIS_columns = 'idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones, Hora';
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'principal_notificaciones_ver', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
+					}
+					
+					//redirijo	
 					header( 'Location: '.$location.'&created=true' );
 					die;
 					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
-				
 			}
 	
 		break;						

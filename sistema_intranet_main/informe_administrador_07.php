@@ -273,20 +273,19 @@ foreach ($arrGrupos as $sen) {
 							/*************************************************************/
 							//Listado de fuera de linea actuales							
 							foreach ($arrTelemetria as $tel) {
-								//calculo diferencia de dias
-								$n_dias = dias_transcurridos($tel['LastUpdateFecha'],fecha_actual());
-								//calculo del tiempo transcurrido
-								$Tiempo = restahoras($tel['LastUpdateHora'], hora_actual());
-								//Calculo del tiempo transcurrido
-								if($n_dias!=0){
-									if($n_dias>=2){
-										$n_dias       = $n_dias-1;
-										$horas_trans2 = multHoras('24:00:00',$n_dias);
-										$Tiempo       = sumahoras($Tiempo,$horas_trans2);
-									}
-								}
-								//imprimo
-								if($Tiempo>$tel['TiempoFueraLinea']&&$tel['TiempoFueraLinea']!='00:00:00'){
+								
+								$diaInicio   = $tel['LastUpdateFecha'];
+								$diaTermino  = fecha_actual();
+								$tiempo1     = $tel['LastUpdateHora'];
+								$tiempo2     = hora_actual();
+								$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
+								
+								//Comparaciones de tiempo
+								$Time_Tiempo     = horas2segundos($Tiempo);
+								$Time_Tiempo_FL  = horas2segundos($tel['TiempoFueraLinea']);
+								$Time_Tiempo_Max = horas2segundos('48:00:00');
+								//comparacion
+								if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
 									echo '
 									<tr class="odd">
 										<td>'.$tel['Sistema'].'</td>

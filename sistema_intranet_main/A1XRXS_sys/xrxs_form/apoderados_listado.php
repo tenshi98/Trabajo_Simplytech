@@ -41,7 +41,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idOpciones_4']) )                $idOpciones_4                 = $_POST['idOpciones_4'];
 	if ( !empty($_POST['idOpciones_5']) )                $idOpciones_5                 = $_POST['idOpciones_5'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -82,6 +81,15 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){           $Nombre         = EstandarizarInput($Nombre); }
+	if(isset($ApellidoPat) && $ApellidoPat != ''){ $ApellidoPat    = EstandarizarInput($ApellidoPat); }
+	if(isset($ApellidoMat) && $ApellidoMat != ''){ $ApellidoMat    = EstandarizarInput($ApellidoMat); }
+	if(isset($Direccion) && $Direccion != ''){     $Direccion      = EstandarizarInput($Direccion); }
+	if(isset($Password) && $Password != ''){       $Password       = EstandarizarInput($Password); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -130,58 +138,46 @@ require_once '0_validate_user_1.php';
 				$Password = genera_password(6,'alfanumerico');
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                       $a  = "'".$idSistema."'" ;               }else{$a  = "''";}
-				if(isset($idEstado) && $idEstado != ''){                         $a .= ",'".$idEstado."'" ;               }else{$a .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                             $a .= ",'".$Nombre."'" ;                 }else{$a .= ",''";}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){                   $a .= ",'".$ApellidoPat."'" ;            }else{$a .= ",''";}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){                   $a .= ",'".$ApellidoMat."'" ;            }else{$a .= ",''";}
-				if(isset($Fono1) && $Fono1 != ''){                               $a .= ",'".$Fono1."'" ;                  }else{$a .= ",''";}
-				if(isset($Fono2) && $Fono2 != ''){                               $a .= ",'".$Fono2."'" ;                  }else{$a .= ",''";}
-				if(isset($FNacimiento) && $FNacimiento != ''){                   $a .= ",'".$FNacimiento."'" ;            }else{$a .= ",''";}
-				if(isset($Rut) && $Rut != ''){                                   $a .= ",'".$Rut."'" ;                    }else{$a .= ",''";}
-				if(isset($idCiudad) && $idCiudad != ''){                         $a .= ",'".$idCiudad."'" ;               }else{$a .= ",''";}
-				if(isset($idComuna) && $idComuna != ''){                         $a .= ",'".$idComuna."'" ;               }else{$a .= ",''";}
-				if(isset($Direccion) && $Direccion != ''){                       $a .= ",'".$Direccion."'" ;              }else{$a .= ",''";}
-				if(isset($F_Inicio_Contrato) && $F_Inicio_Contrato != ''){       $a .= ",'".$F_Inicio_Contrato."'" ;      }else{$a .= ",''";}
-				if(isset($F_Termino_Contrato) && $F_Termino_Contrato != ''){     $a .= ",'".$F_Termino_Contrato."'" ;     }else{$a .= ",''";}
-				if(isset($Password) && $Password != ''){                         $a .= ",'".md5($Password)."'" ;          }else{$a .= ",''";}
-				if(isset($dispositivo) && $dispositivo != ''){                   $a .= ",'".$dispositivo."'" ;            }else{$a .= ",''";}
-				if(isset($IMEI) && $IMEI != ''){                                 $a .= ",'".$IMEI."'" ;                   }else{$a .= ",''";}
-				if(isset($GSM) && $GSM != ''){                                   $a .= ",'".$GSM."'" ;                    }else{$a .= ",''";}
-				if(isset($GeoLatitud) && $GeoLatitud != ''){                     $a .= ",'".$GeoLatitud."'" ;             }else{$a .= ",''";}
-				if(isset($GeoLongitud) && $GeoLongitud != ''){                   $a .= ",'".$GeoLongitud."'" ;            }else{$a .= ",''";}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){                 $a .= ",'".$idOpciones_1."'" ;           }else{$a .= ",''";}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){                 $a .= ",'".$idOpciones_2."'" ;           }else{$a .= ",''";}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){                 $a .= ",'".$idOpciones_3."'" ;           }else{$a .= ",''";}
-				if(isset($idOpciones_4) && $idOpciones_4 != ''){                 $a .= ",'".$idOpciones_4."'" ;           }else{$a .= ",''";}
-				if(isset($idOpciones_5) && $idOpciones_5 != ''){                 $a .= ",'".$idOpciones_5."'" ;           }else{$a .= ",''";}
+				if(isset($idSistema) && $idSistema != ''){                       $SIS_data  = "'".$idSistema."'" ;               }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado != ''){                         $SIS_data .= ",'".$idEstado."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){                             $SIS_data .= ",'".$Nombre."'" ;                 }else{$SIS_data .= ",''";}
+				if(isset($ApellidoPat) && $ApellidoPat != ''){                   $SIS_data .= ",'".$ApellidoPat."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($ApellidoMat) && $ApellidoMat != ''){                   $SIS_data .= ",'".$ApellidoMat."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Fono1) && $Fono1 != ''){                               $SIS_data .= ",'".$Fono1."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($Fono2) && $Fono2 != ''){                               $SIS_data .= ",'".$Fono2."'" ;                  }else{$SIS_data .= ",''";}
+				if(isset($FNacimiento) && $FNacimiento != ''){                   $SIS_data .= ",'".$FNacimiento."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($Rut) && $Rut != ''){                                   $SIS_data .= ",'".$Rut."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($idCiudad) && $idCiudad != ''){                         $SIS_data .= ",'".$idCiudad."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($idComuna) && $idComuna != ''){                         $SIS_data .= ",'".$idComuna."'" ;               }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion != ''){                       $SIS_data .= ",'".$Direccion."'" ;              }else{$SIS_data .= ",''";}
+				if(isset($F_Inicio_Contrato) && $F_Inicio_Contrato != ''){       $SIS_data .= ",'".$F_Inicio_Contrato."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($F_Termino_Contrato) && $F_Termino_Contrato != ''){     $SIS_data .= ",'".$F_Termino_Contrato."'" ;     }else{$SIS_data .= ",''";}
+				if(isset($Password) && $Password != ''){                         $SIS_data .= ",'".md5($Password)."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($dispositivo) && $dispositivo != ''){                   $SIS_data .= ",'".$dispositivo."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($IMEI) && $IMEI != ''){                                 $SIS_data .= ",'".$IMEI."'" ;                   }else{$SIS_data .= ",''";}
+				if(isset($GSM) && $GSM != ''){                                   $SIS_data .= ",'".$GSM."'" ;                    }else{$SIS_data .= ",''";}
+				if(isset($GeoLatitud) && $GeoLatitud != ''){                     $SIS_data .= ",'".$GeoLatitud."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($GeoLongitud) && $GeoLongitud != ''){                   $SIS_data .= ",'".$GeoLongitud."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){                 $SIS_data .= ",'".$idOpciones_1."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){                 $SIS_data .= ",'".$idOpciones_2."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){                 $SIS_data .= ",'".$idOpciones_3."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_4) && $idOpciones_4 != ''){                 $SIS_data .= ",'".$idOpciones_4."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_5) && $idOpciones_5 != ''){                 $SIS_data .= ",'".$idOpciones_5."'" ;           }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `apoderados_listado` (idSistema, idEstado, Nombre, ApellidoPat, 
-				ApellidoMat, Fono1, Fono2, FNacimiento, Rut, idCiudad, idComuna, Direccion, 
-				F_Inicio_Contrato, F_Termino_Contrato, Password, dispositivo, IMEI, GSM, GeoLatitud, GeoLongitud,
-				idOpciones_1, idOpciones_2, idOpciones_3, idOpciones_4, idOpciones_5) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idEstado, Nombre, ApellidoPat, ApellidoMat, Fono1, 
+				Fono2, FNacimiento, Rut, idCiudad, idComuna, Direccion, F_Inicio_Contrato, 
+				F_Termino_Contrato, Password, dispositivo, IMEI, GSM, GeoLatitud, GeoLongitud,
+				idOpciones_1, idOpciones_2, idOpciones_3, idOpciones_4, idOpciones_5';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'apoderados_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
+				if($ultimo_id!=0){
 					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+					//redirijo	
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
 					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 				}
 			}
 	
@@ -211,36 +207,36 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idApoderado='".$idApoderado."'" ;
-				if(isset($idSistema) && $idSistema != ''){                     $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                       $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                           $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){                 $a .= ",ApellidoPat='".$ApellidoPat."'" ;}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){                 $a .= ",ApellidoMat='".$ApellidoMat."'" ;}
-				if(isset($Fono1) && $Fono1 != ''){                             $a .= ",Fono1='".$Fono1."'" ;}
-				if(isset($Fono2) && $Fono2 != ''){                             $a .= ",Fono2='".$Fono2."'" ;}
-				if(isset($FNacimiento) && $FNacimiento != ''){                 $a .= ",FNacimiento='".$FNacimiento."'" ;}
-				if(isset($Rut) && $Rut != ''){                                 $a .= ",Rut='".$Rut."'" ;}
-				if(isset($idCiudad) && $idCiudad != ''){                       $a .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna != ''){                       $a .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Direccion) && $Direccion != ''){                     $a .= ",Direccion='".$Direccion."'" ;}
-				if(isset($F_Inicio_Contrato) && $F_Inicio_Contrato != ''){     $a .= ",F_Inicio_Contrato='".$F_Inicio_Contrato."'" ;}
-				if(isset($F_Termino_Contrato) && $F_Termino_Contrato != ''){   $a .= ",F_Termino_Contrato='".$F_Termino_Contrato."'" ;}
-				if(isset($Password) && $Password != ''){                       $a .= ",Password='".md5($Password)."'" ;}
-				if(isset($dispositivo) && $dispositivo != ''){                 $a .= ",dispositivo='".$dispositivo."'" ;}
-				if(isset($IMEI) && $IMEI != ''){                               $a .= ",IMEI='".$IMEI."'" ;}
-				if(isset($GSM) && $GSM != ''){                                 $a .= ",GSM='".$GSM."'" ;}
-				if(isset($GeoLatitud) && $GeoLatitud != ''){                   $a .= ",GeoLatitud='".$GeoLatitud."'" ;}
-				if(isset($GeoLongitud) && $GeoLongitud != ''){                 $a .= ",GeoLongitud='".$GeoLongitud."'" ;}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){               $a .= ",idOpciones_1='".$idOpciones_1."'" ;}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){               $a .= ",idOpciones_2='".$idOpciones_2."'" ;}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){               $a .= ",idOpciones_3='".$idOpciones_3."'" ;}
-				if(isset($idOpciones_4) && $idOpciones_4 != ''){               $a .= ",idOpciones_4='".$idOpciones_4."'" ;}
-				if(isset($idOpciones_5) && $idOpciones_5 != ''){               $a .= ",idOpciones_5='".$idOpciones_5."'" ;}
+				$SIS_data = "idApoderado='".$idApoderado."'" ;
+				if(isset($idSistema) && $idSistema != ''){                     $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                       $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                           $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($ApellidoPat) && $ApellidoPat != ''){                 $SIS_data .= ",ApellidoPat='".$ApellidoPat."'" ;}
+				if(isset($ApellidoMat) && $ApellidoMat != ''){                 $SIS_data .= ",ApellidoMat='".$ApellidoMat."'" ;}
+				if(isset($Fono1) && $Fono1 != ''){                             $SIS_data .= ",Fono1='".$Fono1."'" ;}
+				if(isset($Fono2) && $Fono2 != ''){                             $SIS_data .= ",Fono2='".$Fono2."'" ;}
+				if(isset($FNacimiento) && $FNacimiento != ''){                 $SIS_data .= ",FNacimiento='".$FNacimiento."'" ;}
+				if(isset($Rut) && $Rut != ''){                                 $SIS_data .= ",Rut='".$Rut."'" ;}
+				if(isset($idCiudad) && $idCiudad != ''){                       $SIS_data .= ",idCiudad='".$idCiudad."'" ;}
+				if(isset($idComuna) && $idComuna != ''){                       $SIS_data .= ",idComuna='".$idComuna."'" ;}
+				if(isset($Direccion) && $Direccion != ''){                     $SIS_data .= ",Direccion='".$Direccion."'" ;}
+				if(isset($F_Inicio_Contrato) && $F_Inicio_Contrato != ''){     $SIS_data .= ",F_Inicio_Contrato='".$F_Inicio_Contrato."'" ;}
+				if(isset($F_Termino_Contrato) && $F_Termino_Contrato != ''){   $SIS_data .= ",F_Termino_Contrato='".$F_Termino_Contrato."'" ;}
+				if(isset($Password) && $Password != ''){                       $SIS_data .= ",Password='".md5($Password)."'" ;}
+				if(isset($dispositivo) && $dispositivo != ''){                 $SIS_data .= ",dispositivo='".$dispositivo."'" ;}
+				if(isset($IMEI) && $IMEI != ''){                               $SIS_data .= ",IMEI='".$IMEI."'" ;}
+				if(isset($GSM) && $GSM != ''){                                 $SIS_data .= ",GSM='".$GSM."'" ;}
+				if(isset($GeoLatitud) && $GeoLatitud != ''){                   $SIS_data .= ",GeoLatitud='".$GeoLatitud."'" ;}
+				if(isset($GeoLongitud) && $GeoLongitud != ''){                 $SIS_data .= ",GeoLongitud='".$GeoLongitud."'" ;}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){               $SIS_data .= ",idOpciones_1='".$idOpciones_1."'" ;}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){               $SIS_data .= ",idOpciones_2='".$idOpciones_2."'" ;}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){               $SIS_data .= ",idOpciones_3='".$idOpciones_3."'" ;}
+				if(isset($idOpciones_4) && $idOpciones_4 != ''){               $SIS_data .= ",idOpciones_4='".$idOpciones_4."'" ;}
+				if(isset($idOpciones_5) && $idOpciones_5 != ''){               $SIS_data .= ",idOpciones_5='".$idOpciones_5."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo
@@ -345,8 +341,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -450,11 +446,11 @@ require_once '0_validate_user_1.php';
 						
 								
 							//Filtro para idSistema
-							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -487,8 +483,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Direccion_img=''" ;
-			$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'apoderados_listado', 'idApoderado = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -557,11 +553,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 								
 							//Filtro para idSistema
-							$a = "File_Contrato='".$sufijo.$_FILES['File_Contrato']['name']."'" ;
+							$SIS_data = "File_Contrato='".$sufijo.$_FILES['File_Contrato']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'apoderados_listado', 'idApoderado = "'.$idApoderado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -594,8 +590,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "File_Contrato=''" ;
-			$resultado = db_update_data (false, $a, 'apoderados_listado', 'idApoderado = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "File_Contrato=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'apoderados_listado', 'idApoderado = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				

@@ -37,11 +37,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Cliente creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Cliente editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Cliente borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Cliente creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Cliente editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Cliente borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $query = "SELECT idTipo, Nombre, Contrato_Nombre, Contrato_Numero, Contrato_idPeriodo, Contrato_Fecha_Ini, 

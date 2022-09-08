@@ -170,14 +170,14 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created']))     {$error['usuario'] 	  = 'sucess/Solicitud creada correctamente';}
-if (isset($_GET['edited']))      {$error['usuario'] 	  = 'sucess/Solicitud editada correctamente';}
-if (isset($_GET['deleted']))     {$error['usuario'] 	  = 'sucess/Solicitud borrada correctamente';}
-if (isset($_GET['cloned']))      {$error['usuario'] 	  = 'sucess/Solicitud clonada correctamente';}
-if (isset($_GET['notslectjob'])) {$error['notslectjob']   = 'error/No ha seleccionado un trabajo a realizar';}
+if (isset($_GET['created'])){     $error['created']     = 'sucess/Solicitud creada correctamente';}
+if (isset($_GET['edited'])){      $error['edited']      = 'sucess/Solicitud editada correctamente';}
+if (isset($_GET['deleted'])){     $error['deleted']     = 'sucess/Solicitud borrada correctamente';}
+if (isset($_GET['cloned'])){      $error['cloned']      = 'sucess/Solicitud clonada correctamente';}
+if (isset($_GET['notslectjob'])){ $error['notslectjob'] = 'error/No ha seleccionado un trabajo a realizar';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['clone_idSolicitud']) ) { 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
@@ -1321,21 +1321,22 @@ foreach ($arrPermisos as $prod) {
 
 <?php echo alert_post_data(4,1,1, $_SESSION['sol_apli_basicos']['Carencias']); ?>
 
-<div class="col-sm-12" >
+<div class="col-sm-12" style="margin-bottom:30px">
+	<div class="btn-group pull-right" role="group" aria-label="...">
 
-	<?php 
-	$ubicacion = $location.'&view=true&crear_solicitud=true';
-	$dialogo   = '¿Desea generar una nueva solicitud?';?>
-	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width"><i class="fa fa-check-square-o" aria-hidden="true"></i> Generar Nueva Solicitud</a>
-									
-									
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<?php 
+		$ubicacion = $location.'&clear_all=true';
+		$dialogo   = '¿Realmente deseas eliminar todos los datos de la Solicitud en curso?';?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
+										
+		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-	<?php 
-	$ubicacion = $location.'&clear_all=true';
-	$dialogo   = '¿Realmente deseas eliminar todos los datos de la Solicitud en curso?';?>
-	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
-
+		<?php 
+		$ubicacion = $location.'&view=true&crear_solicitud=true';
+		$dialogo   = '¿Desea generar una nueva solicitud?';?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary"><i class="fa fa-check-square-o" aria-hidden="true"></i> Generar Nueva Solicitud</a>
+		
+	</div>
 	<div class="clearfix"></div>
 </div> 
 
@@ -1573,8 +1574,8 @@ foreach ($arrPermisos as $prod) {
 		</table>	
 	</div>
 	
-	<div class="row">
-		<div class="col-xs-12">
+	<div class="col-xs-12">
+		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
 			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['sol_apli_basicos']['Observaciones'];?></p>
 		</div>

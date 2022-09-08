@@ -25,8 +25,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if ( !empty($_POST['submit_idLevel']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'insert_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_licitacion_listado.php';
@@ -34,8 +34,8 @@ if ( !empty($_POST['submit_idLevel']) )  {
 //formulario para editar
 if ( !empty($_POST['submit_edit_idLevel']) )  { 
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'update_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_licitacion_listado.php';
@@ -43,8 +43,8 @@ if ( !empty($_POST['submit_edit_idLevel']) )  {
 //se borra un dato
 if ( !empty($_GET['del_idLevel']) )     {
 	//Agregamos nuevas direcciones
-	$location=$new_location;
-	$location.='&id='.$_GET['id'];
+	$location = $new_location;
+	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_item';
 	require_once 'A1XRXS_sys/xrxs_form/z_licitacion_listado.php';	
@@ -57,11 +57,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Contrato creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Contrato editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Contrato borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Contrato creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Contrato editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Contrato borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 // consulto los datos

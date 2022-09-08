@@ -69,7 +69,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idZona']) )                           $idZona                            = $_POST['idZona'];
 	if ( !empty($_POST['idGeocerca']) )                       $idGeocerca                        = $_POST['idGeocerca'];
 	
-
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -139,6 +138,17 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){       $Nombre     = EstandarizarInput($Nombre); }
+	if(isset($Marca) && $Marca != ''){         $Marca      = EstandarizarInput($Marca); }
+	if(isset($Modelo) && $Modelo != ''){       $Modelo     = EstandarizarInput($Modelo); }
+	if(isset($Num_serie) && $Num_serie != ''){ $Num_serie  = EstandarizarInput($Num_serie); }
+	if(isset($Patente) && $Patente != ''){     $Patente    = EstandarizarInput($Patente); }
+	if(isset($Password) && $Password != ''){   $Password   = EstandarizarInput($Password); }
+	if(isset($Motivo) && $Motivo != ''){       $Motivo     = EstandarizarInput($Motivo); }
+	
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){        $error['Nombre']    = 'error/Edita Nombre, contiene palabras no permitidas'; }	
@@ -189,71 +199,67 @@ require_once '0_validate_user_1.php';
 				$Password = genera_password(6,'alfanumerico');
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                                            $a  = "'".$idSistema."'" ;                        }else{$a  ="''";}
-				if(isset($idEstado) && $idEstado != ''){                                              $a .= ",'".$idEstado."'" ;                        }else{$a .=",''";}
-				if(isset($idTipo) && $idTipo != ''){                                                  $a .= ",'".$idTipo."'" ;                          }else{$a .=",''";}
-				if(isset($idZona) && $idZona != ''){                                                  $a .= ",'".$idZona."'" ;                          }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){                                                  $a .= ",'".$Nombre."'" ;                          }else{$a .=",''";}
-				if(isset($Marca) && $Marca != ''){                                                    $a .= ",'".$Marca."'" ;                           }else{$a .=",''";}
-				if(isset($Modelo) && $Modelo != ''){                                                  $a .= ",'".$Modelo."'" ;                          }else{$a .=",''";}
-				if(isset($Num_serie) && $Num_serie != ''){                                            $a .= ",'".$Num_serie."'" ;                       }else{$a .=",''";}
-				if(isset($AnoFab) && $AnoFab != ''){                                                  $a .= ",'".$AnoFab."'" ;                          }else{$a .=",''";}
-				if(isset($Patente) && $Patente != ''){                                                $a .= ",'".$Patente."'" ;                         }else{$a .=",''";}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){                                      $a .= ",'".$idOpciones_1."'" ;                    }else{$a .=",''";}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){                                      $a .= ",'".$idOpciones_2."'" ;                    }else{$a .=",''";}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){                                      $a .= ",'".$idOpciones_3."'" ;                    }else{$a .=",''";}
-				if(isset($idOpciones_4) && $idOpciones_4 != ''){                                      $a .= ",'".$idOpciones_4."'" ;                    }else{$a .=",''";}
-				if(isset($idOpciones_5) && $idOpciones_5 != ''){                                      $a .= ",'".$idOpciones_5."'" ;                    }else{$a .=",''";}
-				if(isset($idOpciones_6) && $idOpciones_6 != ''){                                      $a .= ",'".$idOpciones_6."'" ;                    }else{$a .=",''";}
-				if(isset($idOpciones_7) && $idOpciones_7 != ''){                                      $a .= ",'".$idOpciones_7."'" ;                    }else{$a .=",''";}
-				if(isset($idOpciones_8) && $idOpciones_8 != ''){                                      $a .= ",'".$idOpciones_8."'" ;                    }else{$a .=",''";}
-				if(isset($idOpciones_9) && $idOpciones_9 != ''){                                      $a .= ",'".$idOpciones_9."'" ;                    }else{$a .=",''";}
-				if(isset($idOpciones_10) && $idOpciones_10 != ''){                                    $a .= ",'".$idOpciones_10."'" ;                   }else{$a .=",''";}
-				if(isset($idTelemetria) && $idTelemetria != ''){                                      $a .= ",'".$idTelemetria."'" ;                    }else{$a .=",''";}
-				if(isset($idBodega) && $idBodega != ''){                                              $a .= ",'".$idBodega."'" ;                        }else{$a .=",''";}
-				if(isset($idRuta) && $idRuta != ''){                                                  $a .= ",'".$idRuta."'" ;                          }else{$a .=",''";}
-				if(isset($idTrabajador) && $idTrabajador != ''){                                      $a .= ",'".$idTrabajador."'" ;                    }else{$a .=",''";}
-				if(isset($Password) && $Password != ''){                                              $a .= ",'".$Password."'" ;                        }else{$a .=",''";}
-				if(isset($dispositivo) && $dispositivo != ''){                                        $a .= ",'".$dispositivo."'" ;                     }else{$a .=",''";}
-				if(isset($IMEI) && $IMEI != ''){                                                      $a .= ",'".$IMEI."'" ;                            }else{$a .=",''";}
-				if(isset($GSM) && $GSM != ''){                                                        $a .= ",'".$GSM."'" ;                             }else{$a .=",''";}
-				if(isset($GeoLatitud) && $GeoLatitud != ''){                                          $a .= ",'".$GeoLatitud."'" ;                      }else{$a .=",''";}
-				if(isset($GeoLongitud) && $GeoLongitud != ''){                                        $a .= ",'".$GeoLongitud."'" ;                     }else{$a .=",''";}
-				if(isset($Capacidad) && $Capacidad != ''){                                            $a .= ",'".$Capacidad."'" ;                       }else{$a .=",''";}
-				if(isset($MCubicos) && $MCubicos != ''){                                              $a .= ",'".$MCubicos."'" ;                        }else{$a .=",''";}
-				if(isset($idTipoCarga) && $idTipoCarga != ''){                                        $a .= ",'".$idTipoCarga."'" ;                     }else{$a .=",''";}
-				if(isset($doc_fecha_mantencion) && $doc_fecha_mantencion != ''){                      $a .= ",'".$doc_fecha_mantencion."'" ;            }else{$a .=",''";}
-				if(isset($doc_fecha_padron) && $doc_fecha_padron != ''){                              $a .= ",'".$doc_fecha_padron."'" ;                }else{$a .=",''";}
-				if(isset($doc_fecha_permiso_circulacion) && $doc_fecha_permiso_circulacion != ''){    $a .= ",'".$doc_fecha_permiso_circulacion."'" ;   }else{$a .=",''";}
-				if(isset($doc_fecha_resolucion_sanitaria) && $doc_fecha_resolucion_sanitaria != ''){  $a .= ",'".$doc_fecha_resolucion_sanitaria."'" ;  }else{$a .=",''";}
-				if(isset($doc_fecha_revision_tecnica) && $doc_fecha_revision_tecnica != ''){          $a .= ",'".$doc_fecha_revision_tecnica."'" ;      }else{$a .=",''";}
-				if(isset($doc_fecha_seguro_carga) && $doc_fecha_seguro_carga != ''){                  $a .= ",'".$doc_fecha_seguro_carga."'" ;          }else{$a .=",''";}
-				if(isset($doc_fecha_soap) && $doc_fecha_soap != ''){                                  $a .= ",'".$doc_fecha_soap."'" ;                  }else{$a .=",''";}
-				if(isset($doc_fecha_cert_trans_personas) && $doc_fecha_cert_trans_personas != ''){    $a .= ",'".$doc_fecha_cert_trans_personas."'" ;   }else{$a .=",''";}
-				if(isset($idTransporte) && $idTransporte != ''){                                      $a .= ",'".$idTransporte."'" ;                    }else{$a .=",''";}
-				if(isset($idProceso) && $idProceso != ''){                                            $a .= ",'".$idProceso."'" ;                       }else{$a .=",''";}
-				if(isset($Motivo) && $Motivo != ''){                                                  $a .= ",'".$Motivo."'" ;                          }else{$a .=",''";}
-				if(isset($LimiteVelocidad) && $LimiteVelocidad != ''){                                $a .= ",'".$LimiteVelocidad."'" ;                 }else{$a .=",''";}
-				if(isset($CapacidadPersonas) && $CapacidadPersonas != ''){                            $a .= ",'".$CapacidadPersonas."'" ;               }else{$a .=",''";}
-				if(isset($AlertLimiteVelocidad) && $AlertLimiteVelocidad != ''){                      $a .= ",'".$AlertLimiteVelocidad."'" ;            }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){                                            $SIS_data  = "'".$idSistema."'" ;                        }else{$SIS_data  ="''";}
+				if(isset($idEstado) && $idEstado != ''){                                              $SIS_data .= ",'".$idEstado."'" ;                        }else{$SIS_data .=",''";}
+				if(isset($idTipo) && $idTipo != ''){                                                  $SIS_data .= ",'".$idTipo."'" ;                          }else{$SIS_data .=",''";}
+				if(isset($idZona) && $idZona != ''){                                                  $SIS_data .= ",'".$idZona."'" ;                          }else{$SIS_data .=",''";}
+				if(isset($Nombre) && $Nombre != ''){                                                  $SIS_data .= ",'".$Nombre."'" ;                          }else{$SIS_data .=",''";}
+				if(isset($Marca) && $Marca != ''){                                                    $SIS_data .= ",'".$Marca."'" ;                           }else{$SIS_data .=",''";}
+				if(isset($Modelo) && $Modelo != ''){                                                  $SIS_data .= ",'".$Modelo."'" ;                          }else{$SIS_data .=",''";}
+				if(isset($Num_serie) && $Num_serie != ''){                                            $SIS_data .= ",'".$Num_serie."'" ;                       }else{$SIS_data .=",''";}
+				if(isset($AnoFab) && $AnoFab != ''){                                                  $SIS_data .= ",'".$AnoFab."'" ;                          }else{$SIS_data .=",''";}
+				if(isset($Patente) && $Patente != ''){                                                $SIS_data .= ",'".$Patente."'" ;                         }else{$SIS_data .=",''";}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){                                      $SIS_data .= ",'".$idOpciones_1."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){                                      $SIS_data .= ",'".$idOpciones_2."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){                                      $SIS_data .= ",'".$idOpciones_3."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($idOpciones_4) && $idOpciones_4 != ''){                                      $SIS_data .= ",'".$idOpciones_4."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($idOpciones_5) && $idOpciones_5 != ''){                                      $SIS_data .= ",'".$idOpciones_5."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($idOpciones_6) && $idOpciones_6 != ''){                                      $SIS_data .= ",'".$idOpciones_6."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($idOpciones_7) && $idOpciones_7 != ''){                                      $SIS_data .= ",'".$idOpciones_7."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($idOpciones_8) && $idOpciones_8 != ''){                                      $SIS_data .= ",'".$idOpciones_8."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($idOpciones_9) && $idOpciones_9 != ''){                                      $SIS_data .= ",'".$idOpciones_9."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($idOpciones_10) && $idOpciones_10 != ''){                                    $SIS_data .= ",'".$idOpciones_10."'" ;                   }else{$SIS_data .=",''";}
+				if(isset($idTelemetria) && $idTelemetria != ''){                                      $SIS_data .= ",'".$idTelemetria."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($idBodega) && $idBodega != ''){                                              $SIS_data .= ",'".$idBodega."'" ;                        }else{$SIS_data .=",''";}
+				if(isset($idRuta) && $idRuta != ''){                                                  $SIS_data .= ",'".$idRuta."'" ;                          }else{$SIS_data .=",''";}
+				if(isset($idTrabajador) && $idTrabajador != ''){                                      $SIS_data .= ",'".$idTrabajador."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($Password) && $Password != ''){                                              $SIS_data .= ",'".$Password."'" ;                        }else{$SIS_data .=",''";}
+				if(isset($dispositivo) && $dispositivo != ''){                                        $SIS_data .= ",'".$dispositivo."'" ;                     }else{$SIS_data .=",''";}
+				if(isset($IMEI) && $IMEI != ''){                                                      $SIS_data .= ",'".$IMEI."'" ;                            }else{$SIS_data .=",''";}
+				if(isset($GSM) && $GSM != ''){                                                        $SIS_data .= ",'".$GSM."'" ;                             }else{$SIS_data .=",''";}
+				if(isset($GeoLatitud) && $GeoLatitud != ''){                                          $SIS_data .= ",'".$GeoLatitud."'" ;                      }else{$SIS_data .=",''";}
+				if(isset($GeoLongitud) && $GeoLongitud != ''){                                        $SIS_data .= ",'".$GeoLongitud."'" ;                     }else{$SIS_data .=",''";}
+				if(isset($Capacidad) && $Capacidad != ''){                                            $SIS_data .= ",'".$Capacidad."'" ;                       }else{$SIS_data .=",''";}
+				if(isset($MCubicos) && $MCubicos != ''){                                              $SIS_data .= ",'".$MCubicos."'" ;                        }else{$SIS_data .=",''";}
+				if(isset($idTipoCarga) && $idTipoCarga != ''){                                        $SIS_data .= ",'".$idTipoCarga."'" ;                     }else{$SIS_data .=",''";}
+				if(isset($doc_fecha_mantencion) && $doc_fecha_mantencion != ''){                      $SIS_data .= ",'".$doc_fecha_mantencion."'" ;            }else{$SIS_data .=",''";}
+				if(isset($doc_fecha_padron) && $doc_fecha_padron != ''){                              $SIS_data .= ",'".$doc_fecha_padron."'" ;                }else{$SIS_data .=",''";}
+				if(isset($doc_fecha_permiso_circulacion) && $doc_fecha_permiso_circulacion != ''){    $SIS_data .= ",'".$doc_fecha_permiso_circulacion."'" ;   }else{$SIS_data .=",''";}
+				if(isset($doc_fecha_resolucion_sanitaria) && $doc_fecha_resolucion_sanitaria != ''){  $SIS_data .= ",'".$doc_fecha_resolucion_sanitaria."'" ;  }else{$SIS_data .=",''";}
+				if(isset($doc_fecha_revision_tecnica) && $doc_fecha_revision_tecnica != ''){          $SIS_data .= ",'".$doc_fecha_revision_tecnica."'" ;      }else{$SIS_data .=",''";}
+				if(isset($doc_fecha_seguro_carga) && $doc_fecha_seguro_carga != ''){                  $SIS_data .= ",'".$doc_fecha_seguro_carga."'" ;          }else{$SIS_data .=",''";}
+				if(isset($doc_fecha_soap) && $doc_fecha_soap != ''){                                  $SIS_data .= ",'".$doc_fecha_soap."'" ;                  }else{$SIS_data .=",''";}
+				if(isset($doc_fecha_cert_trans_personas) && $doc_fecha_cert_trans_personas != ''){    $SIS_data .= ",'".$doc_fecha_cert_trans_personas."'" ;   }else{$SIS_data .=",''";}
+				if(isset($idTransporte) && $idTransporte != ''){                                      $SIS_data .= ",'".$idTransporte."'" ;                    }else{$SIS_data .=",''";}
+				if(isset($idProceso) && $idProceso != ''){                                            $SIS_data .= ",'".$idProceso."'" ;                       }else{$SIS_data .=",''";}
+				if(isset($Motivo) && $Motivo != ''){                                                  $SIS_data .= ",'".$Motivo."'" ;                          }else{$SIS_data .=",''";}
+				if(isset($LimiteVelocidad) && $LimiteVelocidad != ''){                                $SIS_data .= ",'".$LimiteVelocidad."'" ;                 }else{$SIS_data .=",''";}
+				if(isset($CapacidadPersonas) && $CapacidadPersonas != ''){                            $SIS_data .= ",'".$CapacidadPersonas."'" ;               }else{$SIS_data .=",''";}
+				if(isset($AlertLimiteVelocidad) && $AlertLimiteVelocidad != ''){                      $SIS_data .= ",'".$AlertLimiteVelocidad."'" ;            }else{$SIS_data .=",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `vehiculos_listado` (idSistema, idEstado, idTipo, idZona, Nombre, Marca, Modelo, Num_serie,
+				$SIS_columns = 'idSistema, idEstado, idTipo, idZona, Nombre, Marca, Modelo, Num_serie,
 				AnoFab, Patente, idOpciones_1, idOpciones_2, idOpciones_3, idOpciones_4, idOpciones_5,idOpciones_6, idOpciones_7,
 				idOpciones_8, idOpciones_9, idOpciones_10, idTelemetria, idBodega, idRuta, idTrabajador,Password,
 				dispositivo, IMEI, GSM, GeoLatitud, GeoLongitud,Capacidad, MCubicos, idTipoCarga, doc_fecha_mantencion, 
 				doc_fecha_padron, doc_fecha_permiso_circulacion, doc_fecha_resolucion_sanitaria, doc_fecha_revision_tecnica, 
 				doc_fecha_seguro_carga, doc_fecha_soap,doc_fecha_cert_trans_personas,idTransporte, idProceso, Motivo, 
-				LimiteVelocidad, CapacidadPersonas, AlertLimiteVelocidad ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				LimiteVelocidad, CapacidadPersonas, AlertLimiteVelocidad';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
+				
 					// elimino la tabla si es que existe
 					$query  = "DROP TABLE IF EXISTS `vehiculos_listado_tablarelacionada_".$ultimo_id."`";
 					$result = mysqli_query($dbConn, $query);
@@ -280,7 +286,7 @@ require_once '0_validate_user_1.php';
 				
 					//Si ejecuto correctamente la consulta
 					if($result){
-							
+						//redirijo	
 						header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 						die;
 						
@@ -295,17 +301,6 @@ require_once '0_validate_user_1.php';
 						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 					}
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
 			}
 	
@@ -345,58 +340,58 @@ require_once '0_validate_user_1.php';
 				if(!isset($idTipoCarga)){$idTipoCarga=1;}
 				
 				//Filtros
-				$a = "idVehiculo='".$idVehiculo."'" ;
-				if(isset($idSistema) && $idSistema != ''){                                            $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                                              $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idTipo) && $idTipo != ''){                                                  $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idZona) && $idZona != ''){                                                  $a .= ",idZona='".$idZona."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                                                  $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Marca) && $Marca != ''){                                                    $a .= ",Marca='".$Marca."'" ;}
-				if(isset($Modelo) && $Modelo != ''){                                                  $a .= ",Modelo='".$Modelo."'" ;}
-				if(isset($Num_serie) && $Num_serie != ''){                                            $a .= ",Num_serie='".$Num_serie."'" ;}
-				if(isset($AnoFab) && $AnoFab != ''){                                                  $a .= ",AnoFab='".$AnoFab."'" ;}
-				if(isset($Patente) && $Patente != ''){                                                $a .= ",Patente='".$Patente."'" ;}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){                                      $a .= ",idOpciones_1='".$idOpciones_1."'" ;}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){                                      $a .= ",idOpciones_2='".$idOpciones_2."'" ;}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){                                      $a .= ",idOpciones_3='".$idOpciones_3."'" ;}
-				if(isset($idOpciones_4) && $idOpciones_4 != ''){                                      $a .= ",idOpciones_4='".$idOpciones_4."'" ;}
-				if(isset($idOpciones_5) && $idOpciones_5 != ''){                                      $a .= ",idOpciones_5='".$idOpciones_5."'" ;}
-				if(isset($idOpciones_6) && $idOpciones_6 != ''){                                      $a .= ",idOpciones_6='".$idOpciones_6."'" ;}
-				if(isset($idOpciones_7) && $idOpciones_7 != ''){                                      $a .= ",idOpciones_7='".$idOpciones_7."'" ;}
-				if(isset($idOpciones_8) && $idOpciones_8 != ''){                                      $a .= ",idOpciones_8='".$idOpciones_8."'" ;}
-				if(isset($idOpciones_9) && $idOpciones_9 != ''){                                      $a .= ",idOpciones_9='".$idOpciones_9."'" ;}
-				if(isset($idOpciones_10) && $idOpciones_10 != ''){                                    $a .= ",idOpciones_10='".$idOpciones_10."'" ;}
-				if(isset($idTelemetria) && $idTelemetria != ''){                                      $a .= ",idTelemetria='".$idTelemetria."'" ;}
-				if(isset($idBodega) && $idBodega != ''){                                              $a .= ",idBodega='".$idBodega."'" ;}
-				if(isset($idRuta) && $idRuta != ''){                                                  $a .= ",idRuta='".$idRuta."'" ;}
-				if(isset($idTrabajador) && $idTrabajador != ''){                                      $a .= ",idTrabajador='".$idTrabajador."'" ;}
-				if(isset($Password) && $Password != ''){                                              $a .= ",Password='".$Password."'" ;}
-				if(isset($dispositivo) && $dispositivo != ''){                                        $a .= ",dispositivo='".$dispositivo."'" ;}
-				if(isset($IMEI) && $IMEI != ''){                                                      $a .= ",IMEI='".$IMEI."'" ;}
-				if(isset($GSM) && $GSM != ''){                                                        $a .= ",GSM='".$GSM."'" ;}
-				if(isset($GeoLatitud) && $GeoLatitud != ''){                                          $a .= ",GeoLatitud='".$GeoLatitud."'" ;}
-				if(isset($GeoLongitud) && $GeoLongitud != ''){                                        $a .= ",GeoLongitud='".$GeoLongitud."'" ;}
-				if(isset($Capacidad) && $Capacidad != ''){                                            $a .= ",Capacidad='".$Capacidad."'" ;}
-				if(isset($MCubicos) && $MCubicos != ''){                                              $a .= ",MCubicos='".$MCubicos."'" ;}
-				if(isset($idTipoCarga) && $idTipoCarga != ''){                                        $a .= ",idTipoCarga='".$idTipoCarga."'" ;}
-				if(isset($doc_fecha_mantencion) && $doc_fecha_mantencion != ''){                      $a .= ",doc_fecha_mantencion='".$doc_fecha_mantencion."'" ;}
-				if(isset($doc_fecha_padron) && $doc_fecha_padron != ''){                              $a .= ",doc_fecha_padron='".$doc_fecha_padron."'" ;}
-				if(isset($doc_fecha_permiso_circulacion) && $doc_fecha_permiso_circulacion != ''){    $a .= ",doc_fecha_permiso_circulacion='".$doc_fecha_permiso_circulacion."'" ;}
-				if(isset($doc_fecha_resolucion_sanitaria) && $doc_fecha_resolucion_sanitaria != ''){  $a .= ",doc_fecha_resolucion_sanitaria='".$doc_fecha_resolucion_sanitaria."'" ;}
-				if(isset($doc_fecha_revision_tecnica) && $doc_fecha_revision_tecnica != ''){          $a .= ",doc_fecha_revision_tecnica='".$doc_fecha_revision_tecnica."'" ;}
-				if(isset($doc_fecha_seguro_carga) && $doc_fecha_seguro_carga != ''){                  $a .= ",doc_fecha_seguro_carga='".$doc_fecha_seguro_carga."'" ;}
-				if(isset($doc_fecha_soap) && $doc_fecha_soap != ''){                                  $a .= ",doc_fecha_soap='".$doc_fecha_soap."'" ;}
-				if(isset($doc_fecha_cert_trans_personas) && $doc_fecha_cert_trans_personas != ''){    $a .= ",doc_fecha_cert_trans_personas='".$doc_fecha_cert_trans_personas."'" ;}
-				if(isset($idTransporte) && $idTransporte != ''){                                      $a .= ",idTransporte='".$idTransporte."'" ;}
-				if(isset($idProceso) && $idProceso != ''){                                            $a .= ",idProceso='".$idProceso."'" ;}
-				if(isset($Motivo) && $Motivo != ''){                                                  $a .= ",Motivo='".$Motivo."'" ;}
-				if(isset($LimiteVelocidad) && $LimiteVelocidad != ''){                                $a .= ",LimiteVelocidad='".$LimiteVelocidad."'" ;}
-				if(isset($CapacidadPersonas) && $CapacidadPersonas != ''){                            $a .= ",CapacidadPersonas='".$CapacidadPersonas."'" ;}
-				if(isset($AlertLimiteVelocidad) && $AlertLimiteVelocidad != ''){                      $a .= ",AlertLimiteVelocidad='".$AlertLimiteVelocidad."'" ;}
+				$SIS_data = "idVehiculo='".$idVehiculo."'" ;
+				if(isset($idSistema) && $idSistema != ''){                                            $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idEstado) && $idEstado != ''){                                              $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idTipo) && $idTipo != ''){                                                  $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($idZona) && $idZona != ''){                                                  $SIS_data .= ",idZona='".$idZona."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                                                  $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($Marca) && $Marca != ''){                                                    $SIS_data .= ",Marca='".$Marca."'" ;}
+				if(isset($Modelo) && $Modelo != ''){                                                  $SIS_data .= ",Modelo='".$Modelo."'" ;}
+				if(isset($Num_serie) && $Num_serie != ''){                                            $SIS_data .= ",Num_serie='".$Num_serie."'" ;}
+				if(isset($AnoFab) && $AnoFab != ''){                                                  $SIS_data .= ",AnoFab='".$AnoFab."'" ;}
+				if(isset($Patente) && $Patente != ''){                                                $SIS_data .= ",Patente='".$Patente."'" ;}
+				if(isset($idOpciones_1) && $idOpciones_1 != ''){                                      $SIS_data .= ",idOpciones_1='".$idOpciones_1."'" ;}
+				if(isset($idOpciones_2) && $idOpciones_2 != ''){                                      $SIS_data .= ",idOpciones_2='".$idOpciones_2."'" ;}
+				if(isset($idOpciones_3) && $idOpciones_3 != ''){                                      $SIS_data .= ",idOpciones_3='".$idOpciones_3."'" ;}
+				if(isset($idOpciones_4) && $idOpciones_4 != ''){                                      $SIS_data .= ",idOpciones_4='".$idOpciones_4."'" ;}
+				if(isset($idOpciones_5) && $idOpciones_5 != ''){                                      $SIS_data .= ",idOpciones_5='".$idOpciones_5."'" ;}
+				if(isset($idOpciones_6) && $idOpciones_6 != ''){                                      $SIS_data .= ",idOpciones_6='".$idOpciones_6."'" ;}
+				if(isset($idOpciones_7) && $idOpciones_7 != ''){                                      $SIS_data .= ",idOpciones_7='".$idOpciones_7."'" ;}
+				if(isset($idOpciones_8) && $idOpciones_8 != ''){                                      $SIS_data .= ",idOpciones_8='".$idOpciones_8."'" ;}
+				if(isset($idOpciones_9) && $idOpciones_9 != ''){                                      $SIS_data .= ",idOpciones_9='".$idOpciones_9."'" ;}
+				if(isset($idOpciones_10) && $idOpciones_10 != ''){                                    $SIS_data .= ",idOpciones_10='".$idOpciones_10."'" ;}
+				if(isset($idTelemetria) && $idTelemetria != ''){                                      $SIS_data .= ",idTelemetria='".$idTelemetria."'" ;}
+				if(isset($idBodega) && $idBodega != ''){                                              $SIS_data .= ",idBodega='".$idBodega."'" ;}
+				if(isset($idRuta) && $idRuta != ''){                                                  $SIS_data .= ",idRuta='".$idRuta."'" ;}
+				if(isset($idTrabajador) && $idTrabajador != ''){                                      $SIS_data .= ",idTrabajador='".$idTrabajador."'" ;}
+				if(isset($Password) && $Password != ''){                                              $SIS_data .= ",Password='".$Password."'" ;}
+				if(isset($dispositivo) && $dispositivo != ''){                                        $SIS_data .= ",dispositivo='".$dispositivo."'" ;}
+				if(isset($IMEI) && $IMEI != ''){                                                      $SIS_data .= ",IMEI='".$IMEI."'" ;}
+				if(isset($GSM) && $GSM != ''){                                                        $SIS_data .= ",GSM='".$GSM."'" ;}
+				if(isset($GeoLatitud) && $GeoLatitud != ''){                                          $SIS_data .= ",GeoLatitud='".$GeoLatitud."'" ;}
+				if(isset($GeoLongitud) && $GeoLongitud != ''){                                        $SIS_data .= ",GeoLongitud='".$GeoLongitud."'" ;}
+				if(isset($Capacidad) && $Capacidad != ''){                                            $SIS_data .= ",Capacidad='".$Capacidad."'" ;}
+				if(isset($MCubicos) && $MCubicos != ''){                                              $SIS_data .= ",MCubicos='".$MCubicos."'" ;}
+				if(isset($idTipoCarga) && $idTipoCarga != ''){                                        $SIS_data .= ",idTipoCarga='".$idTipoCarga."'" ;}
+				if(isset($doc_fecha_mantencion) && $doc_fecha_mantencion != ''){                      $SIS_data .= ",doc_fecha_mantencion='".$doc_fecha_mantencion."'" ;}
+				if(isset($doc_fecha_padron) && $doc_fecha_padron != ''){                              $SIS_data .= ",doc_fecha_padron='".$doc_fecha_padron."'" ;}
+				if(isset($doc_fecha_permiso_circulacion) && $doc_fecha_permiso_circulacion != ''){    $SIS_data .= ",doc_fecha_permiso_circulacion='".$doc_fecha_permiso_circulacion."'" ;}
+				if(isset($doc_fecha_resolucion_sanitaria) && $doc_fecha_resolucion_sanitaria != ''){  $SIS_data .= ",doc_fecha_resolucion_sanitaria='".$doc_fecha_resolucion_sanitaria."'" ;}
+				if(isset($doc_fecha_revision_tecnica) && $doc_fecha_revision_tecnica != ''){          $SIS_data .= ",doc_fecha_revision_tecnica='".$doc_fecha_revision_tecnica."'" ;}
+				if(isset($doc_fecha_seguro_carga) && $doc_fecha_seguro_carga != ''){                  $SIS_data .= ",doc_fecha_seguro_carga='".$doc_fecha_seguro_carga."'" ;}
+				if(isset($doc_fecha_soap) && $doc_fecha_soap != ''){                                  $SIS_data .= ",doc_fecha_soap='".$doc_fecha_soap."'" ;}
+				if(isset($doc_fecha_cert_trans_personas) && $doc_fecha_cert_trans_personas != ''){    $SIS_data .= ",doc_fecha_cert_trans_personas='".$doc_fecha_cert_trans_personas."'" ;}
+				if(isset($idTransporte) && $idTransporte != ''){                                      $SIS_data .= ",idTransporte='".$idTransporte."'" ;}
+				if(isset($idProceso) && $idProceso != ''){                                            $SIS_data .= ",idProceso='".$idProceso."'" ;}
+				if(isset($Motivo) && $Motivo != ''){                                                  $SIS_data .= ",Motivo='".$Motivo."'" ;}
+				if(isset($LimiteVelocidad) && $LimiteVelocidad != ''){                                $SIS_data .= ",LimiteVelocidad='".$LimiteVelocidad."'" ;}
+				if(isset($CapacidadPersonas) && $CapacidadPersonas != ''){                            $SIS_data .= ",CapacidadPersonas='".$CapacidadPersonas."'" ;}
+				if(isset($AlertLimiteVelocidad) && $AlertLimiteVelocidad != ''){                      $SIS_data .= ",AlertLimiteVelocidad='".$AlertLimiteVelocidad."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -582,8 +577,8 @@ require_once '0_validate_user_1.php';
 			$idEstado    = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -685,11 +680,11 @@ require_once '0_validate_user_1.php';
 							imagedestroy($imgBase);
 				
 							//Filtro para idSistema
-							$a = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
+							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -722,8 +717,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "Direccion_img=''" ;
-			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "Direccion_img=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -756,11 +751,11 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idVehiculo='".$idVehiculo."'" ;
+				$SIS_data = "idVehiculo='".$idVehiculo."'" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'apoderados_listado_hijos', 'idHijos = "'.$idHijos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'apoderados_listado_hijos', 'idHijos = "'.$idHijos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -781,11 +776,11 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idVehiculo='0'" ;
+				$SIS_data = "idVehiculo='0'" ;
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'apoderados_listado_hijos', 'idHijos = "'.$_GET['del_pasajero'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'apoderados_listado_hijos', 'idHijos = "'.$_GET['del_pasajero'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -842,53 +837,29 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "doc_mantencion='".$sufijo.$_FILES['doc_mantencion']['name']."'" ;
-							if(isset($doc_fecha_mantencion) && $doc_fecha_mantencion != ''){   $a .= ",doc_fecha_mantencion='".$doc_fecha_mantencion."'" ;}
+							$SIS_data = "doc_mantencion='".$sufijo.$_FILES['doc_mantencion']['name']."'" ;
+							if(isset($doc_fecha_mantencion) && $doc_fecha_mantencion != ''){   $SIS_data .= ",doc_fecha_mantencion='".$doc_fecha_mantencion."'" ;}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							//Si ejecuto correctamente la consulta
-							if($resultado==true){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
-							
+							$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							
 							//Inserto el registro de las mantenciones
 							//filtros
-							$a = "'".$sufijo.$_FILES['doc_mantencion']['name']."'" ;
-							if(isset($idVehiculo) && $idVehiculo != ''){                       $a .= ",'".$idVehiculo."'" ;            }else{$a .= ",''";}
-							if(isset($doc_fecha_mantencion) && $doc_fecha_mantencion != ''){   $a .= ",'".$doc_fecha_mantencion."'" ;  }else{$a .= ",''";}
-							if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){                 $a .= ",'".$Fecha_ingreso."'" ;         }else{$a .= ",''";}
+							$SIS_data = "'".$sufijo.$_FILES['doc_mantencion']['name']."'" ;
+							if(isset($idVehiculo) && $idVehiculo != ''){                       $SIS_data .= ",'".$idVehiculo."'" ;            }else{$SIS_data .= ",''";}
+							if(isset($doc_fecha_mantencion) && $doc_fecha_mantencion != ''){   $SIS_data .= ",'".$doc_fecha_mantencion."'" ;  }else{$SIS_data .= ",''";}
+							if(isset($Fecha_ingreso) && $Fecha_ingreso != ''){                 $SIS_data .= ",'".$Fecha_ingreso."'" ;         }else{$SIS_data .= ",''";}
 					
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `vehiculos_mantenciones` (doc_mantencion, idVehiculo, doc_fecha_mantencion, Fecha_ingreso) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
+							$SIS_columns = 'doc_mantencion, idVehiculo, doc_fecha_mantencion, Fecha_ingreso';
+							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_mantenciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 							//Si ejecuto correctamente la consulta
-							if($resultado){
-								
+							if($ultimo_id!=0){
+								//redirijo
 								header( 'Location: '.$location );
 								die;
-								
-							//si da error, guardar en el log de errores una copia
-							}else{
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
 							}
 							
 						} else {
@@ -949,8 +920,8 @@ require_once '0_validate_user_1.php';
 				if(isset($rowVehiculo['doc_mantencion'])&&isset($rowMantencion['doc_mantencion'])&&$rowVehiculo['doc_mantencion']==$rowMantencion['doc_mantencion']){
 					/*******************************************************/
 					//se actualizan los datos
-					$a = "doc_mantencion='', doc_fecha_mantencion=''" ;
-					$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$SIS_data = "doc_mantencion='', doc_fecha_mantencion=''" ;
+					$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				
 				/*************************************************/
@@ -1029,12 +1000,12 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "doc_padron='".$sufijo.$_FILES['doc_padron']['name']."'" ;
-							if(isset($doc_fecha_padron) && $doc_fecha_padron != ''){   $a .= ",doc_fecha_padron='".$doc_fecha_padron."'" ;}
+							$SIS_data = "doc_padron='".$sufijo.$_FILES['doc_padron']['name']."'" ;
+							if(isset($doc_fecha_padron) && $doc_fecha_padron != ''){   $SIS_data .= ",doc_fecha_padron='".$doc_fecha_padron."'" ;}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -1066,8 +1037,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "doc_padron='', doc_fecha_padron=''" ;
-			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_padron'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "doc_padron='', doc_fecha_padron=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_padron'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1138,12 +1109,12 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "doc_permiso_circulacion='".$sufijo.$_FILES['doc_permiso_circulacion']['name']."'" ;
-							if(isset($doc_fecha_permiso_circulacion) && $doc_fecha_permiso_circulacion != ''){   $a .= ",doc_fecha_permiso_circulacion='".$doc_fecha_permiso_circulacion."'" ;}
+							$SIS_data = "doc_permiso_circulacion='".$sufijo.$_FILES['doc_permiso_circulacion']['name']."'" ;
+							if(isset($doc_fecha_permiso_circulacion) && $doc_fecha_permiso_circulacion != ''){   $SIS_data .= ",doc_fecha_permiso_circulacion='".$doc_fecha_permiso_circulacion."'" ;}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -1176,8 +1147,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "doc_permiso_circulacion='', doc_fecha_permiso_circulacion=''" ;
-			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_permiso_circulacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "doc_permiso_circulacion='', doc_fecha_permiso_circulacion=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_permiso_circulacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1246,12 +1217,12 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "doc_resolucion_sanitaria='".$sufijo.$_FILES['doc_resolucion_sanitaria']['name']."'" ;
-							if(isset($doc_fecha_resolucion_sanitaria) && $doc_fecha_resolucion_sanitaria != ''){   $a .= ",doc_fecha_resolucion_sanitaria='".$doc_fecha_resolucion_sanitaria."'" ;}
+							$SIS_data = "doc_resolucion_sanitaria='".$sufijo.$_FILES['doc_resolucion_sanitaria']['name']."'" ;
+							if(isset($doc_fecha_resolucion_sanitaria) && $doc_fecha_resolucion_sanitaria != ''){   $SIS_data .= ",doc_fecha_resolucion_sanitaria='".$doc_fecha_resolucion_sanitaria."'" ;}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -1283,8 +1254,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "doc_resolucion_sanitaria='', doc_fecha_resolucion_sanitaria=''" ;
-			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_resolucion_sanitaria'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "doc_resolucion_sanitaria='', doc_fecha_resolucion_sanitaria=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_resolucion_sanitaria'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1353,12 +1324,12 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "doc_revision_tecnica='".$sufijo.$_FILES['doc_revision_tecnica']['name']."'" ;
-							if(isset($doc_fecha_revision_tecnica) && $doc_fecha_revision_tecnica != ''){   $a .= ",doc_fecha_revision_tecnica='".$doc_fecha_revision_tecnica."'" ;}
+							$SIS_data = "doc_revision_tecnica='".$sufijo.$_FILES['doc_revision_tecnica']['name']."'" ;
+							if(isset($doc_fecha_revision_tecnica) && $doc_fecha_revision_tecnica != ''){   $SIS_data .= ",doc_fecha_revision_tecnica='".$doc_fecha_revision_tecnica."'" ;}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -1392,8 +1363,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "doc_revision_tecnica='', doc_fecha_revision_tecnica=''" ;
-			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_revision_tecnica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "doc_revision_tecnica='', doc_fecha_revision_tecnica=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_revision_tecnica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1464,12 +1435,12 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "doc_seguro_carga='".$sufijo.$_FILES['doc_seguro_carga']['name']."'" ;
-							if(isset($doc_fecha_seguro_carga) && $doc_fecha_seguro_carga != ''){   $a .= ",doc_fecha_seguro_carga='".$doc_fecha_seguro_carga."'" ;}
+							$SIS_data = "doc_seguro_carga='".$sufijo.$_FILES['doc_seguro_carga']['name']."'" ;
+							if(isset($doc_fecha_seguro_carga) && $doc_fecha_seguro_carga != ''){   $SIS_data .= ",doc_fecha_seguro_carga='".$doc_fecha_seguro_carga."'" ;}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -1501,8 +1472,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "doc_seguro_carga='', doc_fecha_seguro_carga=''" ;
-			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_seguro_carga'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "doc_seguro_carga='', doc_fecha_seguro_carga=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_seguro_carga'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1571,12 +1542,12 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "doc_soap='".$sufijo.$_FILES['doc_soap']['name']."'" ;
-							if(isset($doc_fecha_soap) && $doc_fecha_soap != ''){   $a .= ",doc_fecha_soap='".$doc_fecha_soap."'" ;}
+							$SIS_data = "doc_soap='".$sufijo.$_FILES['doc_soap']['name']."'" ;
+							if(isset($doc_fecha_soap) && $doc_fecha_soap != ''){   $SIS_data .= ",doc_fecha_soap='".$doc_fecha_soap."'" ;}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -1609,8 +1580,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "doc_soap='', doc_fecha_soap=''" ;
-			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_soap'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "doc_soap='', doc_fecha_soap=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_soap'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1679,12 +1650,12 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "doc_cert_trans_personas='".$sufijo.$_FILES['doc_cert_trans_personas']['name']."'" ;
-							if(isset($doc_fecha_cert_trans_personas) && $doc_fecha_cert_trans_personas != ''){   $a .= ",doc_fecha_cert_trans_personas='".$doc_fecha_cert_trans_personas."'" ;}
+							$SIS_data = "doc_cert_trans_personas='".$sufijo.$_FILES['doc_cert_trans_personas']['name']."'" ;
+							if(isset($doc_fecha_cert_trans_personas) && $doc_fecha_cert_trans_personas != ''){   $SIS_data .= ",doc_fecha_cert_trans_personas='".$doc_fecha_cert_trans_personas."'" ;}
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -1717,8 +1688,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "doc_cert_trans_personas='', doc_fecha_cert_trans_personas=''" ;
-			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_cert_trans_personas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "doc_cert_trans_personas='', doc_fecha_cert_trans_personas=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_cert_trans_personas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -1765,31 +1736,18 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idVehiculo) && $idVehiculo != ''){          $a  = "'".$idVehiculo."'" ;       }else{$a  ="''";}
-				if(isset($idColegio) && $idColegio != ''){            $a .= ",'".$idColegio."'" ;       }else{$a .=",''";}
+				if(isset($idVehiculo) && $idVehiculo != ''){  $SIS_data  = "'".$idVehiculo."'" ;       }else{$SIS_data  = "''";}
+				if(isset($idColegio) && $idColegio != ''){    $SIS_data .= ",'".$idColegio."'" ;       }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `vehiculos_listado_colegios` (idVehiculo, idColegio ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				$SIS_columns = 'idVehiculo, idColegio';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_listado_colegios', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
+				//Si ejecuto correctamente la consulta
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
 			}
 	
@@ -1866,31 +1824,18 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idVehiculo) && $idVehiculo != ''){  $a  = "'".$idVehiculo."'" ; }else{$a  ="''";}
-				if(isset($idZona) && $idZona != ''){          $a .= ",'".$idZona."'" ;    }else{$a .=",''";}
+				if(isset($idVehiculo) && $idVehiculo != ''){  $SIS_data  = "'".$idVehiculo."'" ; }else{$SIS_data  = "''";}
+				if(isset($idZona) && $idZona != ''){          $SIS_data .= ",'".$idZona."'" ;    }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `vehiculos_listado_geocercas` (idVehiculo, idZona ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				$SIS_columns = 'idVehiculo, idZona';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_listado_geocercas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
+				//Si ejecuto correctamente la consulta
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
 			}
 	
@@ -1989,11 +1934,11 @@ require_once '0_validate_user_1.php';
 						if ($move_result){
 					
 							//Filtro para idSistema
-							$a = "doc_ficha_tecnica='".$sufijo.$_FILES['doc_ficha_tecnica']['name']."'" ;
+							$SIS_data = "doc_ficha_tecnica='".$sufijo.$_FILES['doc_ficha_tecnica']['name']."'" ;
 							
 							/*******************************************************/
 							//se actualizan los datos
-							$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
 								
@@ -2025,8 +1970,8 @@ require_once '0_validate_user_1.php';
 			
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "doc_ficha_tecnica=''" ;
-			$resultado = db_update_data (false, $a, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_ficha'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "doc_ficha_tecnica=''" ;
+			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_ficha'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				

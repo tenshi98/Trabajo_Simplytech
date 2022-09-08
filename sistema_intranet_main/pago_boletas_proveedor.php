@@ -44,10 +44,10 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['pay']))  {$error['usuario'] 	  = 'sucess/Pago Realizado correctamente';}
+if (isset($_GET['pay'])){ $error['pay'] = 'sucess/Pago Realizado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};?>						
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+if(isset($error)&&$error!=''){echo notifications_list($error);}					
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['next']) ) {  
 
 $location .= '?submit_filter=true';

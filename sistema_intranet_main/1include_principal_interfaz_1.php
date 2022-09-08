@@ -98,45 +98,18 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 /*                                                Consultas                                                      */
 /*****************************************************************************************************************/
 //Se ven las mantenciones programadas
-$query = "SELECT Fecha, Descripcion, Hora_ini, Hora_fin
-FROM `core_mantenciones`
-ORDER BY idMantencion
-LIMIT 1 ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$Mantenciones = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Fecha, Descripcion, Hora_ini, Hora_fin';
+$SIS_join  = '';
+$SIS_where = 'idMantencion!=0 ORDER BY idMantencion DESC';
+$Mantenciones = db_select_data (false, $SIS_query, 'core_mantenciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'Mantenciones');
+
 /************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$query = "SELECT idOpcionesTel,idOpcionesGen_1, idOpcionesGen_2, idOpcionesGen_4, idOpcionesGen_6,
-idOpcionesGen_9
+$SIS_query = 'idOpcionesTel,idOpcionesGen_1, idOpcionesGen_2, idOpcionesGen_4, idOpcionesGen_6, idOpcionesGen_9';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
-FROM core_sistemas
-WHERE idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."' "; 
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}	
-$n_permisos = mysqli_fetch_assoc($resultado);
 /*****************************************************************************************************************/
 /*                                                Subconsultas                                                   */
 /*****************************************************************************************************************/
@@ -290,31 +263,14 @@ if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1) {
 				
 /************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$query = "SELECT
-core_ubicacion_ciudad.Nombre AS Ciudad, 
+$SIS_query = 'core_ubicacion_ciudad.Nombre AS Ciudad, 
 core_ubicacion_comunas.Nombre AS Comuna, 
-core_ubicacion_comunas.Wheater AS Wheater
-".$subquery."
-
-FROM core_sistemas
+core_ubicacion_comunas.Wheater AS Wheater'.$subquery;
+$SIS_join  = '
 LEFT JOIN core_ubicacion_ciudad    ON core_ubicacion_ciudad.idCiudad    = core_sistemas.idCiudad
-LEFT JOIN core_ubicacion_comunas   ON core_ubicacion_comunas.idComuna   = core_sistemas.idComuna
-
-WHERE core_sistemas.idSistema='".$_SESSION['usuario']['basic_data']['idSistema']."' "; 
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$subconsulta = mysqli_fetch_assoc($resultado);
+LEFT JOIN core_ubicacion_comunas   ON core_ubicacion_comunas.idComuna   = core_sistemas.idComuna';
+$SIS_where = 'core_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$subconsulta = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'subconsulta');
 
 /*****************************************************************************************************************/
 /*                                                Modelado                                                       */

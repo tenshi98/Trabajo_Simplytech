@@ -37,11 +37,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/VideoConferencia creada correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/VideoConferencia editada correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/VideoConferencia borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/VideoConferencia creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/VideoConferencia editada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/VideoConferencia borrada correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos del producto
 $query = "SELECT Nombre, idEstado, idTipo, Fecha, HoraInicio, HoraTermino

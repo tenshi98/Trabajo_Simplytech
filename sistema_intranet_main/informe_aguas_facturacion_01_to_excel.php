@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -27,10 +26,8 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 //obtengo los datos de la empresa
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
-
-// Se trae un listado con todos los productos
-$arrFacturacion = array();
-$query = "SELECT 
+/*******************************************************/
+$SIS_query = '
 aguas_facturacion_listado_detalle.idFacturacionDetalle,
 
 aguas_facturacion_listado_detalle.ClienteNombre,
@@ -86,39 +83,25 @@ aguas_facturacion_listado_detalle.montoPago,
 usuarios_listado.Nombre AS UsuarioPago,
 							
 aguas_clientes_facturable.Nombre AS Facturable,
-aguas_facturacion_listado_detalle.SII_NDoc
-
-FROM `aguas_facturacion_listado_detalle`
+aguas_facturacion_listado_detalle.SII_NDoc';
+$SIS_join  = '
 LEFT JOIN `aguas_facturacion_listado_detalle_estado`     ON aguas_facturacion_listado_detalle_estado.idEstado        = aguas_facturacion_listado_detalle.idEstado
 LEFT JOIN `aguas_facturacion_listado_detalle_tipo_pago`  ON aguas_facturacion_listado_detalle_tipo_pago.idTipoPago   = aguas_facturacion_listado_detalle.idTipoPago
 LEFT JOIN `usuarios_listado`                             ON usuarios_listado.idUsuario                               = aguas_facturacion_listado_detalle.idUsuarioPago
-LEFT JOIN `aguas_clientes_facturable`                    ON aguas_clientes_facturable.idFacturable                   = aguas_facturacion_listado_detalle.SII_idFacturable
+LEFT JOIN `aguas_clientes_facturable`                    ON aguas_clientes_facturable.idFacturable                   = aguas_facturacion_listado_detalle.SII_idFacturable';
+$SIS_where = 'aguas_facturacion_listado_detalle.idMes = '.$_GET['idMes'].' AND aguas_facturacion_listado_detalle.Ano = '.$_GET['Ano'].' AND aguas_facturacion_listado_detalle.idSistema = '.$_GET['idSistema'];
+$SIS_order = 'aguas_facturacion_listado_detalle.ClienteIdentificador ASC';
+$arrFacturacion = array();
+$arrFacturacion = db_select_array (false, $SIS_query, 'aguas_facturacion_listado_detalle', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFacturacion');
 
-WHERE aguas_facturacion_listado_detalle.idMes = ".$_GET['idMes']." 
-AND aguas_facturacion_listado_detalle.Ano = ".$_GET['Ano']." 
-AND aguas_facturacion_listado_detalle.idSistema = ".$_GET['idSistema']."
-ORDER BY aguas_facturacion_listado_detalle.ClienteIdentificador";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrFacturacion,$row );
-}
-
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
 // Set document properties
-$objPHPExcel->getProperties()->setCreator($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
 							 ->setLastModifiedBy($rowEmpresa['Nombre'])
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
@@ -128,7 +111,7 @@ $objPHPExcel->getProperties()->setCreator($rowEmpresa['Nombre'])
         
             
 //Titulo columnas
-$objPHPExcel->setActiveSheetIndex(0)
+$spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A1', 'Nombre Cliente')
             ->setCellValue('B1', 'Direccion')
             ->setCellValue('C1', 'Identificador')
@@ -190,35 +173,33 @@ $TotalPagado    = 0;
 //arreglo
 foreach ($arrFacturacion as $fact) { 
 	
-	if($fact['DetalleVisitaCorte']!=0){                 $DetalleVisitaCorte       = $fact['DetalleVisitaCorte'];      }else{$DetalleVisitaCorte = "";}
-	if($fact['DetalleCorte1Fecha']!='0000-00-00'){      $DetalleCorte1Fecha       = $fact['DetalleCorte1Fecha'];      }else{$DetalleCorte1Fecha = "";}
-	if($fact['DetalleCorte1Valor']!=0){                 $DetalleCorte1Valor       = $fact['DetalleCorte1Valor'];      }else{$DetalleCorte1Valor = "";}
-	if($fact['DetalleCorte2Fecha']!='0000-00-00'){      $DetalleCorte2Fecha       = $fact['DetalleCorte2Fecha'];      }else{$DetalleCorte2Fecha = "";}
-	if($fact['DetalleCorte2Valor']!=0){                 $DetalleCorte2Valor       = $fact['DetalleCorte2Valor'];      }else{$DetalleCorte2Valor = "";}
-	if($fact['DetalleReposicion1Fecha']!='0000-00-00'){ $DetalleReposicion1Fecha  = $fact['DetalleReposicion1Fecha']; }else{$DetalleReposicion1Fecha = "";}
-	if($fact['DetalleReposicion1Valor']!=0){            $DetalleReposicion1Valor  = $fact['DetalleReposicion1Valor']; }else{$DetalleReposicion1Valor = "";}
-	if($fact['DetalleReposicion2Fecha']!='0000-00-00'){ $DetalleReposicion2Fecha  = $fact['DetalleReposicion2Fecha']; }else{$DetalleReposicion2Fecha = "";}
-	if($fact['DetalleReposicion2Valor']!=0){            $DetalleReposicion2Valor  = $fact['DetalleReposicion2Valor']; }else{$DetalleReposicion2Valor = "";}
-	if($fact['DetalleInteresDeuda']!=0){                $DetalleInteresDeuda      = $fact['DetalleInteresDeuda'];     }else{$DetalleInteresDeuda = "";}
-	if($fact['DetalleSaldoFavor']!=0){                  $DetalleSaldoFavor        = $fact['DetalleSaldoFavor'];       }else{$DetalleSaldoFavor = "";}
-	if($fact['DetalleSaldoAnterior']!=0){               $DetalleSaldoAnterior     = $fact['DetalleSaldoAnterior'];    }else{$DetalleSaldoAnterior = "";}
+	if($fact['DetalleVisitaCorte']!=0){                  $DetalleVisitaCorte       = $fact['DetalleVisitaCorte'];                                                  }else{$DetalleVisitaCorte       = "";}
+	if($fact['DetalleCorte1Fecha']!='0000-00-00'){       $DetalleCorte1Fecha       = $fact['DetalleCorte1Fecha'];                                                  }else{$DetalleCorte1Fecha       = "";}
+	if($fact['DetalleCorte1Valor']!=0){                  $DetalleCorte1Valor       = $fact['DetalleCorte1Valor'];                                                  }else{$DetalleCorte1Valor       = "";}
+	if($fact['DetalleCorte2Fecha']!='0000-00-00'){       $DetalleCorte2Fecha       = $fact['DetalleCorte2Fecha'];                                                  }else{$DetalleCorte2Fecha       = "";}
+	if($fact['DetalleCorte2Valor']!=0){                  $DetalleCorte2Valor       = $fact['DetalleCorte2Valor'];                                                  }else{$DetalleCorte2Valor       = "";}
+	if($fact['DetalleReposicion1Fecha']!='0000-00-00'){  $DetalleReposicion1Fecha  = $fact['DetalleReposicion1Fecha'];                                             }else{$DetalleReposicion1Fecha  = "";}
+	if($fact['DetalleReposicion1Valor']!=0){             $DetalleReposicion1Valor  = $fact['DetalleReposicion1Valor'];                                             }else{$DetalleReposicion1Valor  = "";}
+	if($fact['DetalleReposicion2Fecha']!='0000-00-00'){  $DetalleReposicion2Fecha  = $fact['DetalleReposicion2Fecha'];                                             }else{$DetalleReposicion2Fecha  = "";}
+	if($fact['DetalleReposicion2Valor']!=0){             $DetalleReposicion2Valor  = $fact['DetalleReposicion2Valor'];                                             }else{$DetalleReposicion2Valor  = "";}
+	if($fact['DetalleInteresDeuda']!=0){                 $DetalleInteresDeuda      = $fact['DetalleInteresDeuda'];                                                 }else{$DetalleInteresDeuda      = "";}
+	if($fact['DetalleSaldoFavor']!=0){                   $DetalleSaldoFavor        = $fact['DetalleSaldoFavor'];                                                   }else{$DetalleSaldoFavor        = "";}
+	if($fact['DetalleSaldoAnterior']!=0){                $DetalleSaldoAnterior     = $fact['DetalleSaldoAnterior'];                                                }else{$DetalleSaldoAnterior     = "";}
+	if($fact['DetalleOtrosCargos1Fecha']!='0000-00-00'){ $DetalleOtrosCargos1      = $fact['DetalleOtrosCargos1Texto'].' ('.$fact['DetalleOtrosCargos1Fecha'].')'; }else{$DetalleOtrosCargos1      = "";}
+	if($fact['DetalleOtrosCargos2Fecha']!='0000-00-00'){ $DetalleOtrosCargos2      = $fact['DetalleOtrosCargos2Texto'].' ('.$fact['DetalleOtrosCargos2Fecha'].')'; }else{$DetalleOtrosCargos2      = "";}
+	if($fact['DetalleOtrosCargos3Fecha']!='0000-00-00'){ $DetalleOtrosCargos3      = $fact['DetalleOtrosCargos3Texto'].' ('.$fact['DetalleOtrosCargos3Fecha'].')'; }else{$DetalleOtrosCargos3      = "";}
+	if($fact['DetalleOtrosCargos4Fecha']!='0000-00-00'){ $DetalleOtrosCargos4      = $fact['DetalleOtrosCargos4Texto'].' ('.$fact['DetalleOtrosCargos4Fecha'].')'; }else{$DetalleOtrosCargos4      = "";}
+	if($fact['DetalleOtrosCargos5Fecha']!='0000-00-00'){ $DetalleOtrosCargos5      = $fact['DetalleOtrosCargos5Texto'].' ('.$fact['DetalleOtrosCargos5Fecha'].')'; }else{$DetalleOtrosCargos5      = "";}
+	if($fact['DetalleOtrosCargos1Valor']!=0){            $DetalleOtrosCargos1Valor = $fact['DetalleOtrosCargos1Valor'];                                            }else{$DetalleOtrosCargos1Valor = "";}
+	if($fact['DetalleOtrosCargos2Valor']!=0){            $DetalleOtrosCargos2Valor = $fact['DetalleOtrosCargos2Valor'];                                            }else{$DetalleOtrosCargos2Valor = "";}
+	if($fact['DetalleOtrosCargos3Valor']!=0){            $DetalleOtrosCargos3Valor = $fact['DetalleOtrosCargos3Valor'];                                            }else{$DetalleOtrosCargos3Valor = "";}
+	if($fact['DetalleOtrosCargos4Valor']!=0){            $DetalleOtrosCargos4Valor = $fact['DetalleOtrosCargos4Valor'];                                            }else{$DetalleOtrosCargos4Valor = "";}
+	if($fact['DetalleOtrosCargos5Valor']!=0){            $DetalleOtrosCargos5Valor = $fact['DetalleOtrosCargos5Valor'];                                            }else{$DetalleOtrosCargos5Valor = "";}
+	if($fact['fechaPago']!='0000-00-00'){                $fechaPago                = $fact['fechaPago'];                                                           }else{$fechaPago                = "";}
+	if($fact['montoPago']!=0){                           $montoPago                = $fact['montoPago'];                                                           }else{$montoPago                = "";}
+	if($fact['SII_NDoc']!=0){                            $SII_NDoc                 = $fact['SII_NDoc'];                                                            }else{$SII_NDoc                 = "";}
 	
-	if($fact['DetalleOtrosCargos1Fecha']!='0000-00-00'){ $DetalleOtrosCargos1  = $fact['DetalleOtrosCargos1Texto'].' ('.$fact['DetalleOtrosCargos1Fecha'].')'; }else{$DetalleOtrosCargos1 = "";}
-	if($fact['DetalleOtrosCargos2Fecha']!='0000-00-00'){ $DetalleOtrosCargos2  = $fact['DetalleOtrosCargos2Texto'].' ('.$fact['DetalleOtrosCargos2Fecha'].')'; }else{$DetalleOtrosCargos2 = "";}
-	if($fact['DetalleOtrosCargos3Fecha']!='0000-00-00'){ $DetalleOtrosCargos3  = $fact['DetalleOtrosCargos3Texto'].' ('.$fact['DetalleOtrosCargos3Fecha'].')'; }else{$DetalleOtrosCargos3 = "";}
-	if($fact['DetalleOtrosCargos4Fecha']!='0000-00-00'){ $DetalleOtrosCargos4  = $fact['DetalleOtrosCargos4Texto'].' ('.$fact['DetalleOtrosCargos4Fecha'].')'; }else{$DetalleOtrosCargos4 = "";}
-	if($fact['DetalleOtrosCargos5Fecha']!='0000-00-00'){ $DetalleOtrosCargos5  = $fact['DetalleOtrosCargos5Texto'].' ('.$fact['DetalleOtrosCargos5Fecha'].')'; }else{$DetalleOtrosCargos5 = "";}
-	if($fact['DetalleOtrosCargos1Valor']!=0){               $DetalleOtrosCargos1Valor     = $fact['DetalleOtrosCargos1Valor'];    }else{$DetalleOtrosCargos1Valor = "";}
-	if($fact['DetalleOtrosCargos2Valor']!=0){               $DetalleOtrosCargos2Valor     = $fact['DetalleOtrosCargos2Valor'];    }else{$DetalleOtrosCargos2Valor = "";}
-	if($fact['DetalleOtrosCargos3Valor']!=0){               $DetalleOtrosCargos3Valor     = $fact['DetalleOtrosCargos3Valor'];    }else{$DetalleOtrosCargos3Valor = "";}
-	if($fact['DetalleOtrosCargos4Valor']!=0){               $DetalleOtrosCargos4Valor     = $fact['DetalleOtrosCargos4Valor'];    }else{$DetalleOtrosCargos4Valor = "";}
-	if($fact['DetalleOtrosCargos5Valor']!=0){               $DetalleOtrosCargos5Valor     = $fact['DetalleOtrosCargos5Valor'];    }else{$DetalleOtrosCargos5Valor = "";}
-	
-	if($fact['fechaPago']!='0000-00-00'){ $fechaPago  = $fact['fechaPago']; }else{$fechaPago = "";}
-	if($fact['montoPago']!=0){            $montoPago  = $fact['montoPago']; }else{$montoPago = "";}
-	if($fact['SII_NDoc']!=0){             $SII_NDoc   = $fact['SII_NDoc'];  }else{$SII_NDoc  = "";}
-	
-	$objPHPExcel->setActiveSheetIndex(0)
+	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, $fact['ClienteNombre'])
 				->setCellValue('B'.$nn, $fact['ClienteDireccion'])
 				->setCellValue('C'.$nn, $fact['ClienteIdentificador'])
@@ -271,33 +252,33 @@ foreach ($arrFacturacion as $fact) {
 				->setCellValue('AT'.$nn, $SII_NDoc)
 				->setCellValue('AU'.$nn, $fact['idFacturacionDetalle']);
 								
-								
 	$nn++;
 }
 
 
-
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Facturacion');
-
+$spreadsheet->getActiveSheet()->setTitle('Facturacion');
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Facturacion fecha '.Fecha_estandar($arrFacturacion[0]['Fecha']).'.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Facturacion fecha '.Fecha_estandar($arrFacturacion[0]['Fecha']);
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;
+

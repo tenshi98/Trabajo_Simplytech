@@ -48,11 +48,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Equipo creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Equipo editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Equipo borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Sensor Activacion creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sensor Activacion editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sensor Activacion borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['modAct']) ) { 
 //numero sensores equipo
@@ -322,21 +322,15 @@ $arrSensores = db_select_array (false, 'idSensores,Nombre', 'telemetria_listado_
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 
-$arrUnimed = array();
-$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
-
 $arrEstado = array();
 $arrEstado = db_select_array (false, 'idEstado,Nombre', 'core_estados', '', '', 'idEstado ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEstado');
 
 $arrGruposRev = array();
 $arrGruposRev = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos_uso', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGruposRev');
 
-
-
 //Recorro
 $arrFinalSensores  = array();
 $arrFinalGrupos    = array();
-$arrFinalUnimed    = array();
 $arrFinalEstado    = array();
 $arrFinalGruposRev = array();
 
@@ -387,6 +381,7 @@ $arrFinalGruposRev[0] = 'S/C';
 						<li class=""><a href="<?php echo 'telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
+						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 						
 					</ul>

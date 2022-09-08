@@ -13,27 +13,12 @@ $AnoActual  = ano_actual();
 $diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
-//arreglo con los meses
-$meses=array(1=>"Enero", 
-				"Febrero", 
-				"Marzo", 
-				"Abril", 
-				"Mayo", 
-				"Junio", 
-				"Julio",
-				"Agosto", 
-				"Septiembre", 
-				"Octubre", 
-				"Noviembre", 
-				"Diciembre"
-			);
-
 //filtros para las consultas
-$z ="WHERE idTipo=".$idTipo;//Solo ingresos - egresos
-$z.=" AND idDocumentos=2";//solo facturas
-$z.=" AND idEstado=1";//solo facturas No pagadas
-$z.=" AND Pago_mes=".$Mes;//el mes actual
-$z.=" AND Pago_ano=".$Ano;//el año actual
+$SIS_where ="idTipo=".$idTipo;      //Solo ingresos - egresos
+$SIS_where.=" AND idDocumentos=2";  //solo facturas
+$SIS_where.=" AND idEstado=1";      //solo facturas No pagadas
+$SIS_where.=" AND Pago_mes=".$Mes;  //el mes actual
+$SIS_where.=" AND Pago_ano=".$Ano;  //el año actual
 
 $z1=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $z2=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
@@ -42,108 +27,36 @@ $z4=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_
 
 /******************************/
 // Se trae un listado con todas las facturas no pagadas del mes
+$SIS_query = 'idFacturacion, Pago_dia AS Dia, N_Doc AS NumDoc';
+$SIS_join  = '';
+$SIS_where.= $z1;
+$SIS_order = 'Pago_dia ASC';
 $arrFacturas_1 = array();
-$query = "SELECT  
-idFacturacion, 
-Pago_dia AS Dia, 
-N_Doc AS NumDoc
-FROM `bodegas_arriendos_facturacion`
-".$z.$z1."
-ORDER BY Pago_dia ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrFacturas_1,$row );
-}
+$arrFacturas_1 = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFacturas_1');
 /******************************/
 // Se trae un listado con todas las facturas no pagadas del mes
+$SIS_query = 'idFacturacion, Pago_dia AS Dia, N_Doc AS NumDoc';
+$SIS_join  = '';
+$SIS_where.= $z2;
+$SIS_order = 'Pago_dia ASC';
 $arrFacturas_2 = array();
-$query = "SELECT  
-idFacturacion, 
-Pago_dia AS Dia, 
-N_Doc AS NumDoc
-FROM `bodegas_insumos_facturacion`
-".$z.$z2."
-ORDER BY Pago_dia ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrFacturas_2,$row );
-}
+$arrFacturas_2 = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFacturas_2');
 /******************************/
 // Se trae un listado con todas las facturas no pagadas del mes
+$SIS_query = 'idFacturacion, Pago_dia AS Dia, N_Doc AS NumDoc';
+$SIS_join  = '';
+$SIS_where.= $z3;
+$SIS_order = 'Pago_dia ASC';
 $arrFacturas_3 = array();
-$query = "SELECT  
-idFacturacion, 
-Pago_dia AS Dia, 
-N_Doc AS NumDoc
-FROM `bodegas_productos_facturacion`
-".$z.$z3."
-ORDER BY Pago_dia ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrFacturas_3,$row );
-}
+$arrFacturas_3 = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFacturas_3');
 /******************************/
 // Se trae un listado con todas las facturas no pagadas del mes
+$SIS_query = 'idFacturacion, Pago_dia AS Dia, N_Doc AS NumDoc';
+$SIS_join  = '';
+$SIS_where.= $z4;
+$SIS_order = 'Pago_dia ASC';
 $arrFacturas_4 = array();
-$query = "SELECT  
-idFacturacion, 
-Pago_dia AS Dia, 
-N_Doc AS NumDoc
-FROM `bodegas_servicios_facturacion`
-".$z.$z4."
-ORDER BY Pago_dia ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrFacturas_4,$row );
-}
+$arrFacturas_4 = db_select_array (false, $SIS_query, 'bodegas_servicios_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFacturas_4');
 
 ?>
 
@@ -176,7 +89,7 @@ array_push( $arrFacturas_4,$row );
 							if (($Mes+1)==13) {$mes_adelante=1; $Ano_b=$Ano_b+1;}else{$mes_adelante=$Mes+1; }
 							?>
 							<td class="fc-header-left"><a href="<?php echo $original.'?idTipo='.$idTipo.'&Mes='.$mes_atras.'&Ano='.$Ano_a ?>" class="btn btn-default">‹</a></td>
-							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo $meses[$Mes]." ".$Ano?></h2></span></td>
+							<td class="fc-header-center"><span class="fc-header-title"><h2><?php echo numero_a_mes($Mes)." ".$Ano?></h2></span></td>
 							<td class="fc-header-right"><a href="<?php echo $original.'?idTipo='.$idTipo.'&Mes='.$mes_adelante.'&Ano='.$Ano_b ?>" class="btn btn-default">›</a></td>
 						</tr>
 					</tbody>

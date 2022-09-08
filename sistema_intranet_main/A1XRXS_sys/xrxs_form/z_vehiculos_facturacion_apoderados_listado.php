@@ -33,8 +33,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idApoderado']) )           $idApoderado            = $_POST['idApoderado'];
 	if ( !empty($_POST['montoPactado']) )          $montoPactado           = $_POST['montoPactado'];
 	
-
-
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -69,6 +67,11 @@ require_once '0_validate_user_1.php';
 		}
 	}
 /*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+
+/*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
 	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
@@ -78,7 +81,6 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-
 /*******************************************************************************************************************/		
 		case 'create_new':
 			//Se elimina la restriccion del sql 5.7
@@ -313,79 +315,54 @@ require_once '0_validate_user_1.php';
 				
 				/************************************************************************************************************************/
 				//Se insertan los datos principales
-				if(isset($SIS_idSistema) && $SIS_idSistema != ''){    $a  = "'".$SIS_idSistema."'" ;    }else{$a  ="''";}
-				if(isset($SIS_idUsuario) && $SIS_idUsuario != ''){    $a .= ",'".$SIS_idUsuario."'" ;   }else{$a .=",''";}
+				if(isset($SIS_idSistema) && $SIS_idSistema != ''){    $SIS_data  = "'".$SIS_idSistema."'" ;    }else{$SIS_data  = "''";}
+				if(isset($SIS_idUsuario) && $SIS_idUsuario != ''){    $SIS_data .= ",'".$SIS_idUsuario."'" ;   }else{$SIS_data .= ",''";}
 				if(isset($SIS_Fecha) && $SIS_Fecha!= ''){  
-					$a .= ",'".$SIS_Fecha."'" ;  
-					$a .= ",'".fecha2NMes($SIS_Fecha)."'" ;
-					$a .= ",'".fecha2Ano($SIS_Fecha)."'" ;
+					$SIS_data .= ",'".$SIS_Fecha."'" ;  
+					$SIS_data .= ",'".fecha2NMes($SIS_Fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($SIS_Fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($SIS_Observaciones) && $SIS_Observaciones != ''){    $a .= ",'".$SIS_Observaciones."'" ;   }else{$a .=",''";}
-				if(isset($SIS_fCreacion) && $SIS_fCreacion != ''){            $a .= ",'".$SIS_fCreacion."'" ;       }else{$a .=",''";}
+				if(isset($SIS_Observaciones) && $SIS_Observaciones != ''){    $SIS_data .= ",'".$SIS_Observaciones."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($SIS_fCreacion) && $SIS_fCreacion != ''){            $SIS_data .= ",'".$SIS_fCreacion."'" ;       }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `vehiculos_facturacion_apoderados_listado` (idSistema, idUsuario, Fecha, idMes, Ano, Observaciones, fCreacion) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idUsuario, Fecha, idMes, Ano, Observaciones, fCreacion';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_facturacion_apoderados_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
 					/*********************************************************************/		
 					//Se guardan los datos de los productos	
 					if(isset($_SESSION['vehiculos_apoderados_detalle'])){		
 						foreach ($_SESSION['vehiculos_apoderados_detalle'] as $key => $apo){
 							//Genero la consulta
-							if(isset($ultimo_id) && $ultimo_id != ''){            $a  = "'".$ultimo_id."'" ;        }else{$a  ="''";}
-							if(isset($SIS_idSistema) && $SIS_idSistema != ''){    $a .= ",'".$SIS_idSistema."'" ;   }else{$a .=",''";}
-							if(isset($SIS_idUsuario) && $SIS_idUsuario != ''){    $a .= ",'".$SIS_idUsuario."'" ;   }else{$a .=",''";}
+							if(isset($ultimo_id) && $ultimo_id != ''){            $SIS_data  = "'".$ultimo_id."'" ;        }else{$SIS_data  = "''";}
+							if(isset($SIS_idSistema) && $SIS_idSistema != ''){    $SIS_data .= ",'".$SIS_idSistema."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($SIS_idUsuario) && $SIS_idUsuario != ''){    $SIS_data .= ",'".$SIS_idUsuario."'" ;   }else{$SIS_data .= ",''";}
 							if(isset($SIS_Fecha) && $SIS_Fecha!= ''){  
-								$a .= ",'".$SIS_Fecha."'" ;  
-								$a .= ",'".fecha2NMes($SIS_Fecha)."'" ;
-								$a .= ",'".fecha2Ano($SIS_Fecha)."'" ;
+								$SIS_data .= ",'".$SIS_Fecha."'" ;  
+								$SIS_data .= ",'".fecha2NMes($SIS_Fecha)."'" ;
+								$SIS_data .= ",'".fecha2Ano($SIS_Fecha)."'" ;
 							}else{
-								$a .= ",''";
-								$a .= ",''";
-								$a .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($SIS_fCreacion) && $SIS_fCreacion != ''){              $a .= ",'".$SIS_fCreacion."'" ;        }else{$a .=",''";}
-							if(isset($apo['idApoderado']) && $apo['idApoderado'] != ''){    $a .= ",'".$apo['idApoderado']."'" ;   }else{$a .=",''";}
-							if(isset($apo['idPlan']) && $apo['idPlan'] != ''){              $a .= ",'".$apo['idPlan']."'" ;        }else{$a .=",''";}
-							if(isset($apo['MontoPactado']) && $apo['MontoPactado'] != ''){  $a .= ",'".$apo['MontoPactado']."'" ;  }else{$a .=",''";}
-							$a .= ",'1'";//Estado No Pagado
+							if(isset($SIS_fCreacion) && $SIS_fCreacion != ''){              $SIS_data .= ",'".$SIS_fCreacion."'" ;        }else{$SIS_data .= ",''";}
+							if(isset($apo['idApoderado']) && $apo['idApoderado'] != ''){    $SIS_data .= ",'".$apo['idApoderado']."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($apo['idPlan']) && $apo['idPlan'] != ''){              $SIS_data .= ",'".$apo['idPlan']."'" ;        }else{$SIS_data .= ",''";}
+							if(isset($apo['MontoPactado']) && $apo['MontoPactado'] != ''){  $SIS_data .= ",'".$apo['MontoPactado']."'" ;  }else{$SIS_data .= ",''";}
+							$SIS_data .= ",'1'";//Estado No Pagado
 						
-							//Guardo los datos
-							$query  = "INSERT INTO `vehiculos_facturacion_apoderados_listado_detalle` (idFacturacion, idSistema, idUsuario, Fecha, idMes, Ano, fCreacion,
-							idApoderado, idPlan, MontoPactado, idEstadoPago) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							// inserto los datos de registro en la db
+							$SIS_columns = 'idFacturacion, idSistema, idUsuario, Fecha, idMes, Ano, fCreacion,
+							idApoderado, idPlan, MontoPactado, idEstadoPago';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_facturacion_apoderados_listado_detalle', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}	
 				}
@@ -412,70 +389,58 @@ require_once '0_validate_user_1.php';
 				
 				/****************************************************************************************************/
 				//Se Guarda el dato con el pago realizado
-				if(isset($idTipoPago) && $idTipoPago != ''){                      $a  = "'".$idTipoPago."'" ;             }else{$a  ="''";}
-				if(isset($nDocPago) && $nDocPago != ''){                          $a .= ",'".$nDocPago."'" ;              }else{$a .=",''";}
+				if(isset($idTipoPago) && $idTipoPago != ''){                      $SIS_data  = "'".$idTipoPago."'" ;             }else{$SIS_data  = "''";}
+				if(isset($nDocPago) && $nDocPago != ''){                          $SIS_data .= ",'".$nDocPago."'" ;              }else{$SIS_data .= ",''";}
 				if(isset($Pagofecha) && $Pagofecha != ''){                        
-					$a .= ",'".$Pagofecha."'" ;
-					$a .= ",'".fecha2NdiaMes($Pagofecha)."'" ; 
-					$a .= ",'".fecha2NMes($Pagofecha)."'" ; 
-					$a .= ",'".fecha2Ano($Pagofecha)."'" ;             
+					$SIS_data .= ",'".$Pagofecha."'" ;
+					$SIS_data .= ",'".fecha2NdiaMes($Pagofecha)."'" ; 
+					$SIS_data .= ",'".fecha2NMes($Pagofecha)."'" ; 
+					$SIS_data .= ",'".fecha2Ano($Pagofecha)."'" ;             
 				}else{
-					$a .=",''";
-					$a .=",''";
-					$a .=",''";
-					$a .=",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($montoPago) && $montoPago != ''){                        $a .= ",'".$montoPago."'" ;             }else{$a .=",''";}
-				if(isset($idUsuarioPago) && $idUsuarioPago != ''){                $a .= ",'".$idUsuarioPago."'" ;         }else{$a .=",''";}
-				if(isset($idApoderado) && $idApoderado != ''){                    $a .= ",'".$idApoderado."'" ;           }else{$a .=",''";}
-				if(isset($idFacturacionDetalle) && $idFacturacionDetalle != ''){  $a .= ",'".$idFacturacionDetalle."'" ;  }else{$a .=",''";}
-													
+				if(isset($montoPago) && $montoPago != ''){                        $SIS_data .= ",'".$montoPago."'" ;             }else{$SIS_data .= ",''";}
+				if(isset($idUsuarioPago) && $idUsuarioPago != ''){                $SIS_data .= ",'".$idUsuarioPago."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idApoderado) && $idApoderado != ''){                    $SIS_data .= ",'".$idApoderado."'" ;           }else{$SIS_data .= ",''";}
+				if(isset($idFacturacionDetalle) && $idFacturacionDetalle != ''){  $SIS_data .= ",'".$idFacturacionDetalle."'" ;  }else{$SIS_data .= ",''";}
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `vehiculos_facturacion_apoderados_pago` (idTipoPago, nDocPago, fechaPago, DiaPago, idMesPago, AnoPago, montoPago, idUsuarioPago,
-				idApoderado, idFacturacionDetalle ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idTipoPago, nDocPago, fechaPago, DiaPago, idMesPago, AnoPago, montoPago, idUsuarioPago,
+				idApoderado, idFacturacionDetalle';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_facturacion_apoderados_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
+				if($ultimo_id!=0){
 					/****************************************************************************************************/
 					//actualizo el pago actual
-					$a = "idEstadoPago='2'" ;
-					if(isset($idTipoPago) && $idTipoPago != ''){        $a .= ",idDocPago='".$idTipoPago."'" ;}
-					if(isset($nDocPago) && $nDocPago != ''){            $a .= ",nDocPago='".$nDocPago."'" ;}
+					$SIS_data = "idEstadoPago='2'" ;
+					if(isset($idTipoPago) && $idTipoPago != ''){        $SIS_data .= ",idDocPago='".$idTipoPago."'" ;}
+					if(isset($nDocPago) && $nDocPago != ''){            $SIS_data .= ",nDocPago='".$nDocPago."'" ;}
 					if(isset($Pagofecha) && $Pagofecha != ''){          
-						$a .= ",Pagofecha='".$Pagofecha."'" ;
-						$a .= ",PagoDia='".fecha2NdiaMes($Pagofecha)."'" ; 
-						$a .= ",PagoidMes='".fecha2NMes($Pagofecha)."'" ; 
-						$a .= ",PagoAno='".fecha2Ano($Pagofecha)."'" ;
+						$SIS_data .= ",Pagofecha='".$Pagofecha."'" ;
+						$SIS_data .= ",PagoDia='".fecha2NdiaMes($Pagofecha)."'" ; 
+						$SIS_data .= ",PagoidMes='".fecha2NMes($Pagofecha)."'" ; 
+						$SIS_data .= ",PagoAno='".fecha2Ano($Pagofecha)."'" ;
 					}
-					if(isset($montoPago) && $montoPago != ''){          $a .= ",montoPago='".$montoPago."'" ;}
-					if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $a .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
-					if(isset($ultimo_id) && $ultimo_id != ''){          $a .= ",idPago='".$ultimo_id."'" ;}
+					if(isset($montoPago) && $montoPago != ''){          $SIS_data .= ",montoPago='".$montoPago."'" ;}
+					if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $SIS_data .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
+					if(isset($ultimo_id) && $ultimo_id != ''){          $SIS_data .= ",idPago='".$ultimo_id."'" ;}
 					
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'vehiculos_facturacion_apoderados_listado_detalle', 'idFacturacionDetalle = "'.$idFacturacionDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'vehiculos_facturacion_apoderados_listado_detalle', 'idFacturacionDetalle = "'.$idFacturacionDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 					/****************************************************************************************************/
 					//actualizo todos los pagos y los dejo con pagos en 0
-					$a = "idEstadoPago='3'" ;
-					if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $a .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
-					if(isset($ultimo_id) && $ultimo_id != ''){          $a .= ",idPago='".$ultimo_id."'" ;}
+					$SIS_data = "idEstadoPago='3'" ;
+					if(isset($idUsuarioPago) && $idUsuarioPago != ''){  $SIS_data .= ",idUsuarioPago='".$idUsuarioPago."'" ;}
+					if(isset($ultimo_id) && $ultimo_id != ''){          $SIS_data .= ",idPago='".$ultimo_id."'" ;}
 					
 					/*******************************************************/
 					//se actualizan los datos
-					$resultado = db_update_data (false, $a, 'vehiculos_facturacion_listado_detalle', 'idApoderado = "'.$idApoderado.'" AND idEstadoPago="1"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$resultado = db_update_data (false, $SIS_data, 'vehiculos_facturacion_listado_detalle', 'idApoderado = "'.$idApoderado.'" AND idEstadoPago="1"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
 						

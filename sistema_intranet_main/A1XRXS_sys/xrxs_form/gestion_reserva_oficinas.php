@@ -30,7 +30,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['CantidadAsistentes']) )   $CantidadAsistentes    = $_POST['CantidadAsistentes'];
 	if ( !empty($_POST['idOficina']) )            $idOficina             = $_POST['idOficina'];
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -60,6 +59,12 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Solicitante) && $Solicitante != ''){     $Solicitante   = EstandarizarInput($Solicitante); }
+	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -101,51 +106,37 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){   $a  = "'".$idSistema."'" ;   }else{$a  ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){   $a .= ",'".$idUsuario."'" ;  }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){     $a .= ",'".$idEstado."'" ;   }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){   $SIS_data  = "'".$idSistema."'" ;   }else{$SIS_data  ="''";}
+				if(isset($idUsuario) && $idUsuario != ''){   $SIS_data .= ",'".$idUsuario."'" ;  }else{$SIS_data .=",''";}
+				if(isset($idEstado) && $idEstado != ''){     $SIS_data .= ",'".$idEstado."'" ;   }else{$SIS_data .=",''";}
 				if(isset($Fecha) && $Fecha != ''){  
-					$a .= ",'".$Fecha."'" ;  
-					$a .= ",'".fecha2NdiaMes($Fecha)."'" ;
-					$a .= ",'".fecha2NMes($Fecha)."'" ;
-					$a .= ",'".fecha2Ano($Fecha)."'" ;
+					$SIS_data .= ",'".$Fecha."'" ;  
+					$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'" ;
+					$SIS_data .= ",'".fecha2NMes($Fecha)."'" ;
+					$SIS_data .= ",'".fecha2Ano($Fecha)."'" ;
 				}else{
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
-					$a .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($Hora_Inicio) && $Hora_Inicio != ''){                  $a .= ",'".$Hora_Inicio."'" ;          }else{$a .=",''";}
-				if(isset($Hora_Termino) && $Hora_Termino != ''){                $a .= ",'".$Hora_Termino."'" ;         }else{$a .=",''";}
-				if(isset($Solicitante) && $Solicitante != ''){                  $a .= ",'".$Solicitante."'" ;          }else{$a .=",''";}
-				if(isset($Observaciones) && $Observaciones != ''){              $a .= ",'".$Observaciones."'" ;        }else{$a .=",''";}
-				if(isset($idServicioCafeteria) && $idServicioCafeteria != ''){  $a .= ",'".$idServicioCafeteria."'" ;  }else{$a .=",''";}
-				if(isset($CantidadAsistentes) && $CantidadAsistentes != ''){    $a .= ",'".$CantidadAsistentes."'" ;   }else{$a .=",''";}
-				if(isset($idOficina) && $idOficina != ''){                      $a .= ",'".$idOficina."'" ;            }else{$a .=",''";}
+				if(isset($Hora_Inicio) && $Hora_Inicio != ''){                  $SIS_data .= ",'".$Hora_Inicio."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Hora_Termino) && $Hora_Termino != ''){                $SIS_data .= ",'".$Hora_Termino."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($Solicitante) && $Solicitante != ''){                  $SIS_data .= ",'".$Solicitante."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($Observaciones) && $Observaciones != ''){              $SIS_data .= ",'".$Observaciones."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($idServicioCafeteria) && $idServicioCafeteria != ''){  $SIS_data .= ",'".$idServicioCafeteria."'" ;  }else{$SIS_data .= ",''";}
+				if(isset($CantidadAsistentes) && $CantidadAsistentes != ''){    $SIS_data .= ",'".$CantidadAsistentes."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($idOficina) && $idOficina != ''){                      $SIS_data .= ",'".$idOficina."'" ;            }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `gestion_reserva_oficinas` (idSistema, idUsuario, idEstado, Fecha, 
-				Dia, Mes, Ano, Hora_Inicio, Hora_Termino, Solicitante, Observaciones, idServicioCafeteria,
-				CantidadAsistentes, idOficina ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idUsuario, idEstado, Fecha, Dia, Mes, Ano, Hora_Inicio, Hora_Termino, Solicitante, Observaciones, idServicioCafeteria, CantidadAsistentes, idOficina';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'gestion_reserva_oficinas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-				
 				}
 				
 			}
@@ -161,27 +152,27 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idReserva='".$idReserva."'" ;
-				if(isset($idSistema) && $idSistema != ''){  $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){  $a .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($idEstado) && $idEstado != ''){    $a .= ",idEstado='".$idEstado."'" ;}
+				$SIS_data = "idReserva='".$idReserva."'" ;
+				if(isset($idSistema) && $idSistema != ''){  $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){  $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
+				if(isset($idEstado) && $idEstado != ''){    $SIS_data .= ",idEstado='".$idEstado."'" ;}
 				if(isset($Fecha) && $Fecha != ''){  
-					$a .= ",Fecha='".$Fecha."'" ;  
-					$a .= ",Dia='".fecha2NdiaMes($Fecha)."'" ;
-					$a .= ",Mes='".fecha2NMes($Fecha)."'" ;
-					$a .= ",Ano='".fecha2Ano($Fecha)."'" ;
+					$SIS_data .= ",Fecha='".$Fecha."'" ;  
+					$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'" ;
+					$SIS_data .= ",Mes='".fecha2NMes($Fecha)."'" ;
+					$SIS_data .= ",Ano='".fecha2Ano($Fecha)."'" ;
 				}
-				if(isset($Hora_Inicio) && $Hora_Inicio != ''){                  $a .= ",Hora_Inicio='".$Hora_Inicio."'" ;}
-				if(isset($Hora_Termino) && $Hora_Termino != ''){                $a .= ",Hora_Termino='".$Hora_Termino."'" ;}
-				if(isset($Solicitante) && $Solicitante != ''){                  $a .= ",Solicitante='".$Solicitante."'" ;}
-				if(isset($Observaciones) && $Observaciones != ''){              $a .= ",Observaciones='".$Observaciones."'" ;}
-				if(isset($idServicioCafeteria) && $idServicioCafeteria != ''){  $a .= ",idServicioCafeteria='".$idServicioCafeteria."'" ;}
-				if(isset($CantidadAsistentes) && $CantidadAsistentes != ''){    $a .= ",CantidadAsistentes='".$CantidadAsistentes."'" ;}
-				if(isset($idOficina) && $idOficina != ''){                      $a .= ",idOficina='".$idOficina."'" ;}
+				if(isset($Hora_Inicio) && $Hora_Inicio != ''){                  $SIS_data .= ",Hora_Inicio='".$Hora_Inicio."'" ;}
+				if(isset($Hora_Termino) && $Hora_Termino != ''){                $SIS_data .= ",Hora_Termino='".$Hora_Termino."'" ;}
+				if(isset($Solicitante) && $Solicitante != ''){                  $SIS_data .= ",Solicitante='".$Solicitante."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){              $SIS_data .= ",Observaciones='".$Observaciones."'" ;}
+				if(isset($idServicioCafeteria) && $idServicioCafeteria != ''){  $SIS_data .= ",idServicioCafeteria='".$idServicioCafeteria."'" ;}
+				if(isset($CantidadAsistentes) && $CantidadAsistentes != ''){    $SIS_data .= ",CantidadAsistentes='".$CantidadAsistentes."'" ;}
+				if(isset($idOficina) && $idOficina != ''){                      $SIS_data .= ",idOficina='".$idOficina."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'gestion_reserva_oficinas', 'idReserva = "'.$idReserva.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'gestion_reserva_oficinas', 'idReserva = "'.$idReserva.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					

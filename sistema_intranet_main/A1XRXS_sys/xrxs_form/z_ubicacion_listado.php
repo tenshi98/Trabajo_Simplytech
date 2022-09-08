@@ -20,10 +20,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idEstado']) )           $idEstado            = $_POST['idEstado'];
 	if ( !empty($_POST['idCliente']) )          $idCliente           = $_POST['idCliente'];
 	
-	
 	if ( !empty($_POST['lvl']) )                 $lvl                  = $_POST['lvl'];
-	
-	
 	
 	//formulariopara el itemizado
 	//Traspaso de valores input a variables
@@ -34,7 +31,6 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idLevel_4']) )      $idLevel[4]      = $_POST['idLevel_4'];
 	if ( !empty($_POST['idLevel_5']) )      $idLevel[5]      = $_POST['idLevel_5'];
 
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -60,9 +56,13 @@ require_once '0_validate_user_1.php';
 			case 'idLevel_4':           if(empty($idLevel[4])){           $error['idLevel_4']             = 'error/No ha ingresado el idLevel_4';}break;
 			case 'idLevel_5':           if(empty($idLevel[5])){           $error['idLevel_5']             = 'error/No ha ingresado el idLevel_5';}break;
 			
-
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Nombre) && $Nombre != ''){ $Nombre = EstandarizarInput($Nombre); }
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -94,39 +94,21 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){         $a = "'".$idSistema."'" ;       }else{$a ="''";}
-				if(isset($Nombre) && $Nombre != ''){               $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){           $a .= ",'".$idEstado."'" ;      }else{$a .=",''";}
-				if(isset($idCliente) && $idCliente != ''){         $a .= ",'".$idCliente."'" ;     }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){         $SIS_data  = "'".$idSistema."'" ;      }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){               $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){           $SIS_data .= ",'".$idEstado."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente != ''){         $SIS_data .= ",'".$idCliente."'" ;     }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ubicacion_listado` (idSistema, Nombre,idEstado, idCliente) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, Nombre,idEstado, idCliente';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ubicacion_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
-				
-				
 			}
 		
 	
@@ -152,39 +134,21 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){         $a = "'".$idSistema."'" ;       }else{$a ="''";}
-				if(isset($Nombre) && $Nombre != ''){               $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
-				if(isset($idEstado) && $idEstado != ''){           $a .= ",'".$idEstado."'" ;      }else{$a .=",''";}
-				if(isset($idCliente) && $idCliente != ''){         $a .= ",'".$idCliente."'" ;     }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){         $SIS_data  = "'".$idSistema."'" ;      }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre != ''){               $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado != ''){           $SIS_data .= ",'".$idEstado."'" ;      }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente != ''){         $SIS_data .= ",'".$idCliente."'" ;     }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ubicacion_listado` (idSistema, Nombre,idEstado, idCliente) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, Nombre,idEstado, idCliente';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ubicacion_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-						
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-				
-				
-				
 			}
 		
 	
@@ -210,15 +174,15 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idUbicacion='".$idUbicacion."'" ;
-				if(isset($idSistema) && $idSistema != ''){          $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idEstado) && $idEstado != ''){            $a .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idCliente) && $idCliente != ''){          $a .= ",idCliente='".$idCliente."'" ;}
+				$SIS_data = "idUbicacion='".$idUbicacion."'" ;
+				if(isset($idSistema) && $idSistema != ''){          $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($Nombre) && $Nombre != ''){                $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idEstado) && $idEstado != ''){            $SIS_data .= ",idEstado='".$idEstado."'" ;}
+				if(isset($idCliente) && $idCliente != ''){          $SIS_data .= ",idCliente='".$idCliente."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ubicacion_listado', 'idUbicacion = "'.$idUbicacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ubicacion_listado', 'idUbicacion = "'.$idUbicacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -308,47 +272,31 @@ require_once '0_validate_user_1.php';
 			if ( empty($error) ) {
 				
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){       $a = "'".$idSistema."'" ;        }else{$a ="''";}
-				if(isset($idUbicacion) && $idUbicacion != ''){   $a .= ",'".$idUbicacion."'" ;    }else{$a .=",''";}
-				if(isset($Nombre) && $Nombre != ''){             $a .= ",'".$Nombre."'" ;         }else{$a .=",''";}
-				if(isset($idCliente) && $idCliente != ''){       $a .= ",'".$idCliente."'" ;      }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data  = "'".$idSistema."'" ;       }else{$SIS_data  = "''";}
+				if(isset($idUbicacion) && $idUbicacion != ''){   $SIS_data .= ",'".$idUbicacion."'" ;    }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre != ''){             $SIS_data .= ",'".$Nombre."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente != ''){       $SIS_data .= ",'".$idCliente."'" ;      }else{$SIS_data .= ",''";}
 				
 				$xbla = '';
 				for ($i = 2; $i <= $lvl; $i++) {
 					//Ubico correctamente el puntero
 					$point = $i - 1;
 					//Valor a insertar
-					if(isset($idLevel[$point]) && $idLevel[$point] != ''){   $a .= ",'".$idLevel[$point]."'" ;   }else{$a .=",''";}
+					if(isset($idLevel[$point]) && $idLevel[$point] != ''){   $SIS_data .= ",'".$idLevel[$point]."'" ;   }else{$SIS_data .=",''";}
 					//donde insertar
 					$xbla .= ',idLevel_'.$point;
 				}
-			
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `ubicacion_listado_level_".$lvl."` (idSistema,idUbicacion, Nombre, idCliente
-				".$xbla." ) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema,idUbicacion, Nombre, idCliente'.$xbla;
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ubicacion_listado_level_'.$lvl, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if($resultado){
-					
+				if($ultimo_id!=0){
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
-				//si da error, guardar en el log de errores una copia
-				}else{
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
 				}
-			
-				
-				
 			}
 	
 		break;
@@ -361,15 +309,15 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el Nombre	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idLevel_".$lvl."='".$idLevel[$lvl]."'" ;
-				if(isset($idSistema) && $idSistema != ''){       $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUbicacion) && $idUbicacion != ''){   $a .= ",idUbicacion='".$idUbicacion."'" ;}
-				if(isset($Nombre) && $Nombre != ''){             $a .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idCliente) && $idCliente != ''){       $a .= ",idCliente='".$idCliente."'" ;}
+				$SIS_data = "idLevel_".$lvl."='".$idLevel[$lvl]."'" ;
+				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUbicacion) && $idUbicacion != ''){   $SIS_data .= ",idUbicacion='".$idUbicacion."'" ;}
+				if(isset($Nombre) && $Nombre != ''){             $SIS_data .= ",Nombre='".$Nombre."'" ;}
+				if(isset($idCliente) && $idCliente != ''){       $SIS_data .= ",idCliente='".$idCliente."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'ubicacion_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'ubicacion_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -441,8 +389,8 @@ require_once '0_validate_user_1.php';
 			$idEstado     = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'ubicacion_listado', 'idUbicacion = "'.$idUbicacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'ubicacion_listado', 'idUbicacion = "'.$idUbicacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				
@@ -462,8 +410,8 @@ require_once '0_validate_user_1.php';
 			$idEstado     = $_GET['estado'];
 			/*******************************************************/
 			//se actualizan los datos
-			$a = "idEstado='".$idEstado."'" ;
-			$resultado = db_update_data (false, $a, 'ubicacion_listado', 'idUbicacion = "'.$idUbicacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$SIS_data = "idEstado='".$idEstado."'" ;
+			$resultado = db_update_data (false, $SIS_data, 'ubicacion_listado', 'idUbicacion = "'.$idUbicacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 				

@@ -1,11 +1,10 @@
 <?php session_start();
-date_default_timezone_set('Europe/London');
-
-if (PHP_SAPI == 'cli')
-	die('This example should only be run from a Web Browser');
-
-/** Include PHPExcel */
-require_once '../LIBS_php/PHPExcel/PHPExcel.php';
+/**********************************************************************************************************************************/
+/*                                                     Se llama la libreria                                                       */
+/**********************************************************************************************************************************/
+require '../LIBS_php/PhpOffice/vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 /**********************************************************************************************************************************/
 /*                                           Se define la variable de seguridad                                                   */
 /**********************************************************************************************************************************/
@@ -199,23 +198,6 @@ function crear_data($cantsens, $filtro, $idTelemetria, $f_inicio, $f_termino, $d
 	return $arrTemp;
 	
 }
-
-/*******************************************************************/
-/*******************************************************************/
-// Create new PHPExcel object
-$objPHPExcel = new PHPExcel();
-
-// Set document properties
-$objPHPExcel->getProperties()->setCreator("Office 2007")
-							 ->setLastModifiedBy("Office 2007")
-							 ->setTitle("Office 2007")
-							 ->setSubject("Office 2007")
-							 ->setDescription("Document for Office 2007")
-							 ->setKeywords("office 2007")
-							 ->setCategory("office 2007 result file");
-
-
-
 /*******************************************************/
 //Inicia variable
 $SIS_where  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
@@ -247,50 +229,46 @@ $SIS_order = 'telemetria_listado.idTelemetria ASC';
 $arrEquipos = array();
 $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
 
+/**********************************************************************************************************************************/
+/*                                                          Ejecucion                                                             */
+/**********************************************************************************************************************************/
+// Create new Spreadsheet object
+$spreadsheet = new Spreadsheet();
 
+// Set document properties
+$spreadsheet->getProperties()->setCreator("Office 2007")
+							 ->setLastModifiedBy("Office 2007")
+							 ->setTitle("Office 2007")
+							 ->setSubject("Office 2007")
+							 ->setDescription("Document for Office 2007")
+							 ->setKeywords("office 2007")
+							 ->setCategory("office 2007 result file");
 
-	/*********************************************/
-	$sheet = 0;
-	foreach ($arrEquipos as $equipo) {
-		//Variable temporal
-		$arrTemporal = array();
-		//Se crea nueva hoja
-		$objPHPExcel->createSheet();
-		//Llamo a la funcion
-		$arrTemporal = crear_data($equipo['cantSensores'], $subf, $equipo['idTelemetria'], $_GET['f_inicio'], $_GET['f_termino'], $_GET['desde'], $_GET['hasta'] , $dbConn);
-	
+/*********************************************/
+$sheet = 0;
+foreach ($arrEquipos as $equipo) {
+	//Variable temporal
+	$arrTemporal = array();
+	//Se crea nueva hoja
+	$spreadsheet->createSheet();
+	//Llamo a la funcion
+	$arrTemporal = crear_data($equipo['cantSensores'], $subf, $equipo['idTelemetria'], $_GET['f_inicio'], $_GET['f_termino'], $_GET['desde'], $_GET['hasta'] , $dbConn);
 		
-		/***********************************************************/
-		//Grupos de los sensores
-		$yy = 1;
-		for ($i = 1; $i <= $equipo['cantSensores']; $i++) { 
-			$grupo = '';
-			foreach ($arrGrupo as $sen) { 
-				if($arrTemporal[0]['SensoresGrupo_'.$i]==$sen['idGrupo']){
-					$grupo = $sen['Nombre'];
-				}
+	/***********************************************************/
+	//Grupos de los sensores
+	$yy = 1;
+	for ($i = 1; $i <= $equipo['cantSensores']; $i++) { 
+		$grupo = '';
+		foreach ($arrGrupo as $sen) { 
+			if($arrTemporal[0]['SensoresGrupo_'.$i]==$sen['idGrupo']){
+				$grupo = $sen['Nombre'];
 			}
-			if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
-				if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-					//Si se ven detalles
-					if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-						$objPHPExcel->setActiveSheetIndex($sheet)
-									->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
-									$yy++;
-									$yy++;
-									$yy++;
-									$yy++;
-					//Si no se ven detalles	
-					}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-						$objPHPExcel->setActiveSheetIndex($sheet)
-									->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
-									$yy++;
-					}
-				}
-			}else{
+		}
+		if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
+			if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 				//Si se ven detalles
 				if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-					$objPHPExcel->setActiveSheetIndex($sheet)
+					$spreadsheet->setActiveSheetIndex($sheet)
 								->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
 								$yy++;
 								$yy++;
@@ -298,55 +276,47 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 								$yy++;
 				//Si no se ven detalles	
 				}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-					$objPHPExcel->setActiveSheetIndex($sheet)
+					$spreadsheet->setActiveSheetIndex($sheet)
 								->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
 								$yy++;
 				}
 			}
-								
-		}
+		}else{
+			//Si se ven detalles
+			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
+				$spreadsheet->setActiveSheetIndex($sheet)
+							->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
+							$yy++;
+							$yy++;
+							$yy++;
+							$yy++;
+			//Si no se ven detalles	
+			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
+				$spreadsheet->setActiveSheetIndex($sheet)
+							->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
+							$yy++;
+			}
+		}						
+	}
  
 		 
-		/***********************************************************/
-		//Titulo columnas
-		$objPHPExcel->setActiveSheetIndex($sheet)
-					->setCellValue('A2', 'Equipo')
-					->setCellValue('B2', 'Fecha');
+	/***********************************************************/
+	//Titulo columnas
+	$spreadsheet->setActiveSheetIndex($sheet)
+				->setCellValue('A2', 'Equipo')
+				->setCellValue('B2', 'Fecha');
 	
-		$yy = 1;			
-		for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
-			if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
-				if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-					//Si se ven detalles
-					if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-						$yy1 = $yy;
-						$yy2 = $yy + 1;
-						$yy3 = $yy + 2;
-						$yy4 = $yy + 3;
-						$objPHPExcel->setActiveSheetIndex($sheet)
-									->setCellValue($arrData[$yy1].'2', 'Promedio' )
-									->setCellValue($arrData[$yy2].'2', 'Maximo' )
-									->setCellValue($arrData[$yy3].'2', 'Minimo' )
-									->setCellValue($arrData[$yy4].'2', 'Dev. Std.' );
-									$yy++;
-									$yy++;
-									$yy++;
-									$yy++;
-					//Si no se ven detalles	
-					}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-						$objPHPExcel->setActiveSheetIndex($sheet)
-									->setCellValue($arrData[$yy].'2', 'Promedio');
-									$yy++;
-					}
-				}
-			}else{
+	$yy = 1;			
+	for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
+		if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
+			if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 				//Si se ven detalles
 				if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
 					$yy1 = $yy;
 					$yy2 = $yy + 1;
 					$yy3 = $yy + 2;
 					$yy4 = $yy + 3;
-					$objPHPExcel->setActiveSheetIndex($sheet)
+					$spreadsheet->setActiveSheetIndex($sheet)
 								->setCellValue($arrData[$yy1].'2', 'Promedio' )
 								->setCellValue($arrData[$yy2].'2', 'Maximo' )
 								->setCellValue($arrData[$yy3].'2', 'Minimo' )
@@ -357,74 +327,70 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 								$yy++;
 				//Si no se ven detalles	
 				}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-					$objPHPExcel->setActiveSheetIndex($sheet)
+					$spreadsheet->setActiveSheetIndex($sheet)
 								->setCellValue($arrData[$yy].'2', 'Promedio');
 								$yy++;
 				}
 			}
+		}else{
+			//Si se ven detalles
+			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
+				$yy1 = $yy;
+				$yy2 = $yy + 1;
+				$yy3 = $yy + 2;
+				$yy4 = $yy + 3;
+				$spreadsheet->setActiveSheetIndex($sheet)
+							->setCellValue($arrData[$yy1].'2', 'Promedio' )
+							->setCellValue($arrData[$yy2].'2', 'Maximo' )
+							->setCellValue($arrData[$yy3].'2', 'Minimo' )
+							->setCellValue($arrData[$yy4].'2', 'Dev. Std.' );
+							$yy++;
+							$yy++;
+							$yy++;
+							$yy++;
+			//Si no se ven detalles	
+			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
+				$spreadsheet->setActiveSheetIndex($sheet)
+							->setCellValue($arrData[$yy].'2', 'Promedio');
+							$yy++;
+			}
 		}
-	
-
-
-		 
-		/***********************************************************/
-		//Datos
-		$nn=3;
-		foreach ($arrTemporal as $rutas) {
-			//Verifico la existencia de datos
-			$cuenta_xx = 0;
-			/*for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
-				if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
-					if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){			
-						if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){
-							//nada
-						}else{
-							$cuenta_xx++;
-						}
-					}
-				}	
-			}	*/		
-			//Si no existen datos imprimo
-			if($cuenta_xx==0){
-													
-				$objPHPExcel->setActiveSheetIndex($sheet)
-							->setCellValue('A'.$nn, $equipo['NombreEquipo'])
-							->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']));
-				$yy = 1;
-				for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
-					if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
-						if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-							//Si se ven detalles
-							if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
-								$yy1 = $yy;
-								$yy2 = $yy + 1;
-								$yy3 = $yy + 2;
-								$yy4 = $yy + 3;
-								$objPHPExcel->setActiveSheetIndex($sheet)
-											->setCellValue($arrData[$yy1].$nn, Cantidades($rutas['MedProm_'.$i], 2) )
-											->setCellValue($arrData[$yy2].$nn, Cantidades($rutas['MedMax_'.$i], 2) )
-											->setCellValue($arrData[$yy3].$nn, Cantidades($rutas['MedMin_'.$i], 2) )
-											->setCellValue($arrData[$yy4].$nn, Cantidades($rutas['MedDesStan_'.$i], 2) );
-											$yy++;
-											$yy++;
-											$yy++;
-											$yy++;
-										
-							//Si no se ven detalles	
-							}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-								$objPHPExcel->setActiveSheetIndex($sheet)
-											->setCellValue($arrData[$yy].$nn, Cantidades($rutas['MedProm_'.$i], 2));
-											$yy++;
-							}
-						}
+	}
+	 
+	/***********************************************************/
+	//Datos
+	$nn=3;
+	foreach ($arrTemporal as $rutas) {
+		//Verifico la existencia de datos
+		$cuenta_xx = 0;
+		/*for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
+			if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
+				if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){			
+					if(isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]<99900){
+						//nada
 					}else{
+						$cuenta_xx++;
+					}
+				}
+			}	
+		}	*/		
+		//Si no existen datos imprimo
+		if($cuenta_xx==0){
+													
+			$spreadsheet->setActiveSheetIndex($sheet)
+						->setCellValue('A'.$nn, $equipo['NombreEquipo'])
+						->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']));
+			$yy = 1;
+			for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
+				if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
+					if($arrTemporal[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 						//Si se ven detalles
 						if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
 							$yy1 = $yy;
 							$yy2 = $yy + 1;
 							$yy3 = $yy + 2;
 							$yy4 = $yy + 3;
-							$objPHPExcel->setActiveSheetIndex($sheet)
+							$spreadsheet->setActiveSheetIndex($sheet)
 										->setCellValue($arrData[$yy1].$nn, Cantidades($rutas['MedProm_'.$i], 2) )
 										->setCellValue($arrData[$yy2].$nn, Cantidades($rutas['MedMax_'.$i], 2) )
 										->setCellValue($arrData[$yy3].$nn, Cantidades($rutas['MedMin_'.$i], 2) )
@@ -433,52 +399,77 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 										$yy++;
 										$yy++;
 										$yy++;
+										
 						//Si no se ven detalles	
 						}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-							$objPHPExcel->setActiveSheetIndex($sheet)
+							$spreadsheet->setActiveSheetIndex($sheet)
 										->setCellValue($arrData[$yy].$nn, Cantidades($rutas['MedProm_'.$i], 2));
 										$yy++;
 						}
-					} 								
-				}
+					}
+				}else{
+					//Si se ven detalles
+					if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
+						$yy1 = $yy;
+						$yy2 = $yy + 1;
+						$yy3 = $yy + 2;
+						$yy4 = $yy + 3;
+						$spreadsheet->setActiveSheetIndex($sheet)
+									->setCellValue($arrData[$yy1].$nn, Cantidades($rutas['MedProm_'.$i], 2) )
+									->setCellValue($arrData[$yy2].$nn, Cantidades($rutas['MedMax_'.$i], 2) )
+									->setCellValue($arrData[$yy3].$nn, Cantidades($rutas['MedMin_'.$i], 2) )
+									->setCellValue($arrData[$yy4].$nn, Cantidades($rutas['MedDesStan_'.$i], 2) );
+									$yy++;
+									$yy++;
+									$yy++;
+									$yy++;
+					//Si no se ven detalles	
+					}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
+						$spreadsheet->setActiveSheetIndex($sheet)
+									->setCellValue($arrData[$yy].$nn, Cantidades($rutas['MedProm_'.$i], 2));
+									$yy++;
+					}
+				} 								
 			}
-		
-				   
-		 $nn++;           
+		}
+			   
+		$nn++;           
 		   
-		}
-
-		/***********************************************************/
-		// Rename worksheet
-		$super_titulo = 'Hoja 1';
-		if(isset($equipo['NombreEquipo'])&&$equipo['NombreEquipo']!=''){
-			$super_titulo = cortar($equipo['NombreEquipo'], 25);
-		}
-		$objPHPExcel->getActiveSheet($sheet)->setTitle($super_titulo);
-		
-		$sheet++;
 	}
+
+	/***********************************************************/
+	// Rename worksheet
+	$super_titulo = 'Hoja 1';
+	if(isset($equipo['NombreEquipo'])&&$equipo['NombreEquipo']!=''){
+		$super_titulo = cortar($equipo['NombreEquipo'], 25);
+	}
+	$spreadsheet->getActiveSheet($sheet)->setTitle($super_titulo);
+		
+	$sheet++;
+}
 
 
 	
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
-$objPHPExcel->setActiveSheetIndex(0);
+$spreadsheet->setActiveSheetIndex(0);
 
-
-// Redirect output to a client’s web browser (Excel5)
-header('Content-Type: application/vnd.ms-excel');
-header('Content-Disposition: attachment;filename="Max – Min Camara.xls"');
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Max – Min Camara';
+// Redirect output to a client’s web browser (Xlsx)
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
-header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
-header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
-header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
-header ('Pragma: public'); // HTTP/1.0
+header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+header('Pragma: public'); // HTTP/1.0
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-$objWriter->save('php://output');
+$writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+$writer->save('php://output');
 exit;

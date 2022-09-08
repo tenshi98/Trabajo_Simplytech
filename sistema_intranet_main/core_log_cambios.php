@@ -46,11 +46,11 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Log Creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Log Modificado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Log borrado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Log Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Log Modificado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Log borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  if ( ! empty($_GET['id']) ) { 
 // consulto los datos

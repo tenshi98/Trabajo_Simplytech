@@ -51,7 +51,6 @@ require_once '0_validate_user_1.php';
 		}
 	}
 	
-	
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -86,6 +85,15 @@ require_once '0_validate_user_1.php';
 			
 		}
 	}
+/*******************************************************************************************************************/
+/*                                          Verificacion de datos erroneos                                         */
+/*******************************************************************************************************************/	
+	if(isset($Ano) && $Ano != ''){                       $Ano            = EstandarizarInput($Ano); }
+	if(isset($Nombre) && $Nombre != ''){                 $Nombre         = EstandarizarInput($Nombre); }
+	if(isset($Observaciones) && $Observaciones != ''){   $Observaciones  = EstandarizarInput($Observaciones); }
+	if(isset($ConsumoMedidor) && $ConsumoMedidor != ''){ $ConsumoMedidor = EstandarizarInput($ConsumoMedidor); }
+	if(isset($Consumo) && $Consumo != ''){               $Consumo        = EstandarizarInput($Consumo); }
+	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/	
@@ -464,105 +472,78 @@ require_once '0_validate_user_1.php';
 				$consumoGeneral  = $_SESSION['rem_basicos']['consumoGeneral'];
 				
 				//Creo el registro en la tabla madre
-				if(isset($idSistema) && $idSistema != ''){   $a  = "'".$idSistema."'" ;   }else{$a  ="''";}
-				if(isset($idUsuario) && $idUsuario != ''){   $a .= ",'".$idUsuario."'" ;  }else{$a .=",''";}
+				if(isset($idSistema) && $idSistema != ''){   $SIS_data  = "'".$idSistema."'" ;   }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario != ''){   $SIS_data .= ",'".$idUsuario."'" ;  }else{$SIS_data .= ",''";}
 				if(isset($Fecha) && $Fecha != ''){                  
-					$a .= ",'".$Fecha."'" ; 
-					$a .= ",'".fecha2NdiaMes($Fecha)."'" ; 
-					$a .= ",'".fecha2NMes($Fecha)."'" ; 
-					$a .= ",'".fecha2Ano($Fecha)."'" ;         
+					$SIS_data .= ",'".$Fecha."'" ; 
+					$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'" ; 
+					$SIS_data .= ",'".fecha2NMes($Fecha)."'" ; 
+					$SIS_data .= ",'".fecha2Ano($Fecha)."'" ;         
 				}else{
-					$a .=",''";
-					$a .=",''";
-					$a .=",''";
-					$a .=",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
+					$SIS_data .= ",''";
 				}
-				if(isset($Nombre) && $Nombre != ''){               $a .= ",'".$Nombre."'" ;        }else{$a .=",''";}
-				if(isset($Observaciones) && $Observaciones != ''){ $a .= ",'".$Observaciones."'" ; }else{$a .=",''";}
-				$a .=",'".fecha_actual()."'";
-				$a .=",'2'";
-				$a .= ",'".$idTipoMedicion."'" ;
-				$a .= ",'".$idMarcadores."'" ;
-				$a .= ",'".$Consumo."'" ;
-
+				if(isset($Nombre) && $Nombre != ''){               $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
+				if(isset($Observaciones) && $Observaciones != ''){ $SIS_data .= ",'".$Observaciones."'" ; }else{$SIS_data .= ",''";}
+				$SIS_data .=",'".fecha_actual()."'";
+				$SIS_data .=",'2'";
+				$SIS_data .= ",'".$idTipoMedicion."'" ;
+				$SIS_data .= ",'".$idMarcadores."'" ;
+				$SIS_data .= ",'".$Consumo."'" ;
+				
 				// inserto los datos de registro en la db
-				$query  = "INSERT INTO `aguas_mediciones_datos` (idSistema, idUsuario, Fecha, Dia, idMes, 
-				Ano, Nombre, Observaciones, fCreacion, idTipo, idTipoMedicion, idMarcadoresUsado,
-				ConsumoMedidor) 
-				VALUES (".$a.")";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
+				$SIS_columns = 'idSistema, idUsuario, Fecha, Dia, idMes, Ano, Nombre, Observaciones, fCreacion, idTipo, idTipoMedicion, idMarcadoresUsado, ConsumoMedidor';
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_mediciones_datos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
 				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-					
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-				}else{
-					//recibo el último id generado por mi sesion
-					$ultimo_id = mysqli_insert_id($dbConn);
-					
+				if($ultimo_id!=0){
 					
 					if (isset($_SESSION['rem_clientes'])){
 
 						//Ejecuto el resto del codigo
 						foreach ($_SESSION['rem_clientes'] as $key => $client){	
 						
-							if(isset($idSistema) && $idSistema != ''){    $a  = "'".$idSistema."'" ;     }else{$a  ="''";}
-							if(isset($idUsuario) && $idUsuario != ''){    $a .= ",'".$idUsuario."'" ;    }else{$a .=",''";}
-							$a .= ",'".$ultimo_id."'" ;       
+							if(isset($idSistema) && $idSistema != ''){    $SIS_data  = "'".$idSistema."'" ;     }else{$SIS_data  = "''";}
+							if(isset($idUsuario) && $idUsuario != ''){    $SIS_data .= ",'".$idUsuario."'" ;    }else{$SIS_data .= ",''";}
+							$SIS_data .= ",'".$ultimo_id."'" ;       
 							if(isset($Fecha) && $Fecha != ''){                  
-								$a .= ",'".$Fecha."'" ; 
-								$a .= ",'".fecha2NdiaMes($Fecha)."'" ; 
-								$a .= ",'".fecha2NMes($Fecha)."'" ; 
-								$a .= ",'".fecha2Ano($Fecha)."'" ;           
+								$SIS_data .= ",'".$Fecha."'" ; 
+								$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'" ; 
+								$SIS_data .= ",'".fecha2NMes($Fecha)."'" ; 
+								$SIS_data .= ",'".fecha2Ano($Fecha)."'" ;           
 							}else{
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
-								$a .=",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
+								$SIS_data .= ",''";
 							}
-							if(isset($client['idCliente']) && $client['idCliente'] != ''){             $a .= ",'".$client['idCliente']."'" ;      }else{$a .=",''";}
-							if(isset($client['idMarcadores']) && $client['idMarcadores'] != ''){       $a .= ",'".$client['idMarcadores']."'" ;   }else{$a .=",''";}
-							if(isset($client['idRemarcadores']) && $client['idRemarcadores'] != ''){   $a .= ",'".$client['idRemarcadores']."'" ; }else{$a .=",''";}
-							if(isset($client['Consumo']) && $client['Consumo'] != ''){                 $a .= ",'".$client['Consumo']."'" ;        }else{$a .=",''";}
-							$a .=",''";                        //TipoMIU
-							$a .=",''";                        //MIU
-							$a .=",''";                        //Contador
-							$a .= ",'1'" ;                     //idFacturado
-							$a .= ",'0'" ;                     //idFacturacion
-							$a .=",'".fecha_actual()."'";      //fCreacion
-							$a .= ",'1'" ;                     //idTipoFacturacion
-							$a .= ",'1'" ;                     //idTipoLectura
-							$a .= ",'".$idTipoMedicion."'" ;   //idTipoMedicion
-							$a .= ",'".$idMarcadores."'" ;     //idMarcadoresUsado
-							$a .= ",'".$Consumo."'" ;          //ConsumoMedidor
-							$a .= ",'".$consumoGeneral."'" ;   //ConsumoGeneral
-							$a .= ",'".$NClientes."'" ;        //CantRemarcadores
-										
+							if(isset($client['idCliente']) && $client['idCliente'] != ''){             $SIS_data .= ",'".$client['idCliente']."'" ;      }else{$SIS_data .= ",''";}
+							if(isset($client['idMarcadores']) && $client['idMarcadores'] != ''){       $SIS_data .= ",'".$client['idMarcadores']."'" ;   }else{$SIS_data .= ",''";}
+							if(isset($client['idRemarcadores']) && $client['idRemarcadores'] != ''){   $SIS_data .= ",'".$client['idRemarcadores']."'" ; }else{$SIS_data .= ",''";}
+							if(isset($client['Consumo']) && $client['Consumo'] != ''){                 $SIS_data .= ",'".$client['Consumo']."'" ;        }else{$SIS_data .= ",''";}
+							$SIS_data .= ",''";                       //TipoMIU
+							$SIS_data .= ",''";                       //MIU
+							$SIS_data .= ",''";                       //Contador
+							$SIS_data .= ",'1'" ;                     //idFacturado
+							$SIS_data .= ",'0'" ;                     //idFacturacion
+							$SIS_data .= ",'".fecha_actual()."'";     //fCreacion
+							$SIS_data .= ",'1'" ;                     //idTipoFacturacion
+							$SIS_data .= ",'1'" ;                     //idTipoLectura
+							$SIS_data .= ",'".$idTipoMedicion."'" ;   //idTipoMedicion
+							$SIS_data .= ",'".$idMarcadores."'" ;     //idMarcadoresUsado
+							$SIS_data .= ",'".$Consumo."'" ;          //ConsumoMedidor
+							$SIS_data .= ",'".$consumoGeneral."'" ;   //ConsumoGeneral
+							$SIS_data .= ",'".$NClientes."'" ;        //CantRemarcadores
+							
 							// inserto los datos de registro en la db
-							$query  = "INSERT INTO `aguas_mediciones_datos_detalle` (idSistema, idUsuario, idDatos, Fecha, 
+							$SIS_columns = 'idSistema, idUsuario, idDatos, Fecha, 
 							Dia, idMes, Ano, idCliente, idMarcadores, idRemarcadores, Consumo, TipoMIU, MIU, Contador, 
 							idFacturado, idFacturacion, fCreacion, idTipoFacturacion,idTipoLectura, idTipoMedicion,
-							idMarcadoresUsado, ConsumoMedidor, ConsumoGeneral, CantRemarcadores) 
-							VALUES (".$a.")";
-							//Consulta
-							$resultado = mysqli_query ($dbConn, $query);
-							//Si ejecuto correctamente la consulta
-							if(!$resultado){
-								//Genero numero aleatorio
-								$vardata = genera_password(8,'alfanumerico');
-								
-								//Guardo el error en una variable temporal
-								$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-								$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-								
-							}
+							idMarcadoresUsado, ConsumoMedidor, ConsumoGeneral, CantRemarcadores';
+							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'aguas_mediciones_datos_detalle', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+							
 						}
 					}
 				}
@@ -594,26 +575,26 @@ require_once '0_validate_user_1.php';
 				$rowCliente = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Filtros
-				$a = "idDatos='".$idDatos."'" ;
-				if(isset($idSistema) && $idSistema != ''){    $a .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){    $a .= ",idUsuario='".$idUsuario."'" ;}
+				$SIS_data = "idDatos='".$idDatos."'" ;
+				if(isset($idSistema) && $idSistema != ''){    $SIS_data .= ",idSistema='".$idSistema."'" ;}
+				if(isset($idUsuario) && $idUsuario != ''){    $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
 				if(isset($Fecha) && $Fecha != ''){                               
-					$a .= ",Fecha='".$Fecha."'" ; 
-					$a .= ",Dia='".fecha2NdiaMes($Fecha)."'" ; 
-					$a .= ",idMes='".fecha2NMes($Fecha)."'" ; 
-					$a .= ",Ano='".fecha2Ano($Fecha)."'" ;  
-					$a .= ",Nombre='Facturación mes ".fecha2NombreMes($Fecha)." ".fecha2Ano($Fecha)." Cliente ".$rowCliente['ClienteNombre']."'" ;
+					$SIS_data .= ",Fecha='".$Fecha."'" ; 
+					$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'" ; 
+					$SIS_data .= ",idMes='".fecha2NMes($Fecha)."'" ; 
+					$SIS_data .= ",Ano='".fecha2Ano($Fecha)."'" ;  
+					$SIS_data .= ",Nombre='Facturación mes ".fecha2NombreMes($Fecha)." ".fecha2Ano($Fecha)." Cliente ".$rowCliente['ClienteNombre']."'" ;
 				}
-				if(isset($Observaciones) && $Observaciones != ''){            $a .= ",Observaciones='".$Observaciones."'" ;}
-				if(isset($fCreacion) && $fCreacion != ''){                    $a .= ",fCreacion='".$fCreacion."'" ;}
-				if(isset($idTipo) && $idTipo != ''){                          $a .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idTipoMedicion) && $idTipoMedicion != ''){          $a .= ",idTipoMedicion='".$idTipoMedicion."'" ;}
-				if(isset($idMarcadoresUsado) && $idMarcadoresUsado != ''){    $a .= ",idMarcadoresUsado='".$idMarcadoresUsado."'" ;}
-				if(isset($ConsumoMedidor) && $ConsumoMedidor != ''){          $a .= ",ConsumoMedidor='".$ConsumoMedidor."'" ;}
+				if(isset($Observaciones) && $Observaciones != ''){            $SIS_data .= ",Observaciones='".$Observaciones."'" ;}
+				if(isset($fCreacion) && $fCreacion != ''){                    $SIS_data .= ",fCreacion='".$fCreacion."'" ;}
+				if(isset($idTipo) && $idTipo != ''){                          $SIS_data .= ",idTipo='".$idTipo."'" ;}
+				if(isset($idTipoMedicion) && $idTipoMedicion != ''){          $SIS_data .= ",idTipoMedicion='".$idTipoMedicion."'" ;}
+				if(isset($idMarcadoresUsado) && $idMarcadoresUsado != ''){    $SIS_data .= ",idMarcadoresUsado='".$idMarcadoresUsado."'" ;}
+				if(isset($ConsumoMedidor) && $ConsumoMedidor != ''){          $SIS_data .= ",ConsumoMedidor='".$ConsumoMedidor."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'aguas_mediciones_datos', 'idDatos = "'.$idDatos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'aguas_mediciones_datos', 'idDatos = "'.$idDatos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo
@@ -634,12 +615,12 @@ require_once '0_validate_user_1.php';
 			// si no hay errores ejecuto el codigo	
 			if ( empty($error) ) {
 				//Filtros
-				$a = "idDatosDetalle='".$idDatosDetalle."'" ;
-				if(isset($Consumo) && $Consumo != ''){    $a .= ",Consumo='".$Consumo."'" ;}
+				$SIS_data = "idDatosDetalle='".$idDatosDetalle."'" ;
+				if(isset($Consumo) && $Consumo != ''){    $SIS_data .= ",Consumo='".$Consumo."'" ;}
 				
 				/*******************************************************/
 				//se actualizan los datos
-				$resultado = db_update_data (false, $a, 'aguas_mediciones_datos_detalle', 'idDatosDetalle = "'.$idDatosDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_update_data (false, $SIS_data, 'aguas_mediciones_datos_detalle', 'idDatosDetalle = "'.$idDatosDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					//redirijo

@@ -37,12 +37,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-//Listado de errores no manejables
-if (isset($_GET['created'])) {$error['usuario'] 	  = 'sucess/Trabajador creado correctamente';}
-if (isset($_GET['edited']))  {$error['usuario'] 	  = 'sucess/Trabajador editado correctamente';}
-if (isset($_GET['deleted'])) {$error['usuario'] 	  = 'sucess/Trabajador borrado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);};
+if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
 $query = "SELECT Nombre,ApellidoPat,ApellidoMat,Fono,Rut,idCiudad,idComuna,Direccion,idSistema,
@@ -126,7 +122,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_select('Sexo','idSexo', $x6, 2, 'idSexo', 'Nombre', 'core_sexo', 0, '', $dbConn);
 					$Form_Inputs->form_date('F Nacimiento','FNacimiento', $x7, 1);
 					$Form_Inputs->form_input_phone('Fono', 'Fono', $x8, 1);
-					$Form_Inputs->form_select_depend1('Ciudad','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Region','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x10, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
 											 $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');

@@ -25,8 +25,22 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		
 		<!-- WEB FONT -->
-		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+		<?php
+		//verifica la capa de desarrollo
+		$whitelist = array( 'localhost', '127.0.0.1', '::1' );
+		////////////////////////////////////////////////////////////////////////////////
+		//si estoy en ambiente de desarrollo
+		if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
+			echo '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIB_assets/lib/font-awesome/css/font-awesome.min.css">';
+			//echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
+			
+		////////////////////////////////////////////////////////////////////////////////
+		//si estoy en ambiente de produccion	
+		}else{
+			echo '<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">';
+			echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
+		}
+		?>
 		
 		<!-- CSS Base -->
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
