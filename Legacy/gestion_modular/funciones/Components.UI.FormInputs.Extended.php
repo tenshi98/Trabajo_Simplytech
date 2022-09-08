@@ -406,8 +406,12 @@ class Form_Inputs extends Basic_Form_Inputs{
 			$subquery .= ',SensoresActivo_'.$i;
 		}
 		// Se trae un listado de todos los registros
+		$SIS_query = 'idTelemetria, cantSensores'.$subquery;
+		$SIS_join  = '';
+		$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+		$SIS_order = 'idTelemetria ASC';
 		$arrSelect = array();
-		$arrSelect = db_select_array (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', '', 'idTelemetria ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
+		$arrSelect = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
 		// Se trae un listado de todos los registros
 		$arrGrupos = array();
 		$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
@@ -416,6 +420,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 		foreach ($arrGrupos as $sen) { 
 			$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
 		}
+		
 		
 		/******************************/
 		//se dibuja
@@ -433,33 +438,47 @@ class Form_Inputs extends Basic_Form_Inputs{
 		$input .= 'document.getElementById("'.$idChanged.'").onchange = function() {cambia_'.$idChanged.'()};';
 					
 		foreach ($arrSelect as $select) {
-			$input .= 'let id_data_'.$select['idTelemetria'].'=new Array(""';
+			$id_data = 'let id_data_'.$select['idTelemetria'].'=new Array(""';
+			$data    = 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
+			//se arma arreglo temporal
+			$arrTempGrupos = array();
+			//recorro
 			for ($i = 1; $i <= $select['cantSensores']; $i++) {
 				//solo sensores activos
 				if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-					$input .= ',"'.$i.'"';
-				}
-			}	
-			$input .= ')
-			';
-		}
-		foreach ($arrSelect as $select) {
-			$input .= 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
-			for ($i = 1; $i <= $select['cantSensores']; $i++) {
-				//solo sensores activos
-				if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-					//verifico si existe
-					if(isset($arrFinalGrupos[$select['SensoresGrupo_'.$i]])){
-						$grupo = $arrFinalGrupos[$select['SensoresGrupo_'.$i]].' - ';
+					//si el arreglo temporal existe
+					if(isset($arrTempGrupos[$select['SensoresGrupo_'.$i]])&&$arrTempGrupos[$select['SensoresGrupo_'.$i]]==1){
+						//nada	
 					}else{
-						$grupo = '';
+						/***************************/
+						//id_data
+						$id_data .= ',"'.$i.'"';
+						
+						/***************************/
+						//data
+						if(isset($arrFinalGrupos[$select['SensoresGrupo_'.$i]])){
+							$grupo = $arrFinalGrupos[$select['SensoresGrupo_'.$i]].' - ';
+						}else{
+							$grupo = '';
+						}
+						$data .= ',"'.$grupo.str_replace('"', '',$select['SensoresNombre_'.$i]).'"';
+						
+						/***************************/
+						//genero valor
+						$arrTempGrupos[$select['SensoresGrupo_'.$i]] = 1;	
 					}
-					$input .= ',"'.$grupo.str_replace('"', '',$select['SensoresNombre_'.$i]).'"';
 				}
 			}	
-			$input .= ')
+			$id_data .= ')
+			';	
+			$data .= ')
 			';
+			/***************************/
+			//guardo dentro del input
+			$input .= $id_data;
+			$input .= $data;
 		}
+		
 	
 		$input .= '
 		function cambia_'.$idChanged.'(){
@@ -510,8 +529,12 @@ class Form_Inputs extends Basic_Form_Inputs{
 			$subquery .= ',SensoresActivo_'.$i;
 		}
 		// Se trae un listado de todos los registros
+		$SIS_query = 'idTelemetria, cantSensores'.$subquery;
+		$SIS_join  = '';
+		$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+		$SIS_order = 'idTelemetria ASC';
 		$arrSelect = array();
-		$arrSelect = db_select_array (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', '', 'idTelemetria ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
+		$arrSelect = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
 		// Se trae un listado de todos los registros
 		$arrGrupos = array();
 		$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
@@ -520,6 +543,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 		foreach ($arrGrupos as $sen) { 
 			$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
 		}
+		
 		
 		/******************************/
 		//se dibuja
@@ -537,40 +561,59 @@ class Form_Inputs extends Basic_Form_Inputs{
 		$input .= 'document.getElementById("'.$idChanged.'").onchange = function() {cambia_'.$idChanged.'()};';
 					
 		foreach ($arrSelect as $select) {
-			$input .= 'let id_data_'.$select['idTelemetria'].'=new Array(""';
-			$valorx = 0;
+			$id_data = 'let id_data_'.$select['idTelemetria'].'=new Array(""';
+			$data    = 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
+			$valorx  = 0;
+			//se arma arreglo temporal
+			$arrTempGrupos = array();
+			//recorro
 			for ($i = 1; $i <= $select['cantSensores']; $i++) {
 				//solo sensores activos
 				if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-					//verifico que el grupo no este ingresado
-					if($valorx != $select['SensoresGrupo_'.$i]){
-						$valorx = $select['SensoresGrupo_'.$i];
-						$input .= ',"'.$valorx.'"';
+					//si el arreglo temporal existe
+					if(isset($arrTempGrupos[$select['SensoresGrupo_'.$i]])&&$arrTempGrupos[$select['SensoresGrupo_'.$i]]==1){
+						//nada	
+					}else{
+						//ejecuto
+						//verifico que el grupo no este ingresado
+						if($valorx != $select['SensoresGrupo_'.$i]){
+							
+							/***************************/
+							//guardo valor
+							$valorx = $select['SensoresGrupo_'.$i];
+							//genero valor
+							$arrTempGrupos[$select['SensoresGrupo_'.$i]] = 1;
+							
+							if($valorx!=0){
+								/***************************/
+								//id_data
+								$id_data .= ',"'.$valorx.'"';
+								
+								/***************************/
+								//data
+								if(isset($arrFinalGrupos[$select['SensoresGrupo_'.$i]])){
+									$grupo = $arrFinalGrupos[$select['SensoresGrupo_'.$i]];
+								}else{
+									$grupo = '';
+								}
+								$data .= ',"'.$grupo.'"';
+							}
+						}	
 					}
 				}
 			}	
-			$input .= ')
+			$id_data .= ')
+			';	
+			$data .= ')
 			';
+			
+			/***************************/
+			//guardo dentro del input
+			$input .= $id_data;
+			$input .= $data;
+			
 		}
-		foreach ($arrSelect as $select) {
-			$input .= 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
-			$valorx = 0;
-			for ($i = 1; $i <= $select['cantSensores']; $i++) {
-				//solo sensores activos
-				if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
-					//verifico que el grupo no este ingresado
-					if($valorx != $select['SensoresGrupo_'.$i]){
-						if(isset($arrFinalGrupos[$select['SensoresGrupo_'.$i]])){
-							$grupo = $arrFinalGrupos[$select['SensoresGrupo_'.$i]];
-						}
-						$input .= ',"'.$grupo.'"';
-						$valorx = $select['SensoresGrupo_'.$i];
-					}
-				}
-			}	
-			$input .= ')
-			';
-		}
+		
 	
 		$input .= '
 		function cambia_'.$idChanged.'(){

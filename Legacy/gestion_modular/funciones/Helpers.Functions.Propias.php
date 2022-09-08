@@ -10,6 +10,7 @@ if( ! defined('XMBCXRXSKGC')) {
 /*                                                   Requires                                                      */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
+require_once '../A2XRXS_gears/xrxs_funciones/Helpers.Functions.Arduino.php';                    //Funciones para la generacion de codigo para las placas arduino
 require_once '../A2XRXS_gears/xrxs_funciones/Helpers.Functions.Common.Data.php';                //Funciones comunes de manejo de datos
 require_once '../A2XRXS_gears/xrxs_funciones/Helpers.Functions.Common.Notifications.php';       //Funciones notificaciones por pantalla
 require_once '../A2XRXS_gears/xrxs_funciones/Helpers.Functions.Convertions.php';                //Conversiones de datos
@@ -334,6 +335,7 @@ function TituloMenu( $Nombre ) {
 					"31 - ", "32 - ", "33 - ", "34 - ", "35 - ", "36 - ", "37 - ", "38 - ", "39 - ", "40 - ",
 					"21 - ", "22 - ", "23 - ", "24 - ", "25 - ", "26 - ", "27 - ", "28 - ", "29 - ", "30 - ",
 					"11 - ", "12 - ", "13 - ", "14 - ", "15 - ", "16 - ", "17 - ", "18 - ", "19 - ", "20 - ",
+					"01 - ", "02 - ", "03 - ", "04 - ", "05 - ", "06 - ", "07 - ", "08 - ", "09 - ",
 					"1 - ", "2 - ", "3 - ", "4 - ", "5 - ", "6 - ", "7 - ", "8 - ", "9 - ", "10 - ");
 	
 	$newText = str_replace($xdata, "", $Nombre);
