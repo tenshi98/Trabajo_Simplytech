@@ -1,24 +1,18 @@
 <?php
 /*****************************************************************************************************************/
-/*                                               Transacciones                                                   */
+/*                                              Conexion Externa                                                 */
 /*****************************************************************************************************************/
-//Nueva conexcion a otra base de datos
+//Nueva conexion a otra base de datos
 //verifica la capa de desarrollo
 $whitelist = array( 'localhost', '127.0.0.1', '::1' );
 ////////////////////////////////////////////////////////////////////////////////
 //si estoy en ambiente de desarrollo
 if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
-	$CON_Server    = 'localhost';
-	$CON_Usuario   = 'root';
-	$CON_Password  = '';
 	$CON_Base      = 'power_engine_main';
 ////////////////////////////////////////////////////////////////////////////////
 //si estoy en ambiente de produccion	
 }else{
-	$CON_Server    = 'localhost';
-	$CON_Usuario   = 'crosstech_admin';
-	$CON_Password  = '&-VSda,#rFvT';
-	$CON_Base      = 'crosstech_pe_clientes';
+	$CON_Base      = 'crosstec_pe_clientes';
 }	
 			
 //Funcion para conectarse
@@ -29,27 +23,201 @@ function conectarDB ($servidor, $usuario, $password, $base_datos) {
 }	
 			
 //verifico si existen datos
-if($CON_Server!=''&&$CON_Usuario!=''&&$CON_Base!=''){
+if($CON_Base!=''){
 	//ejecuto conexion
-	$dbConn_2 = conectarDB($CON_Server, $CON_Usuario, $CON_Password, $CON_Base);
+	$dbConn_2 = conectarDB(DB_SERVER, DB_USER, DB_PASS, $CON_Base);
+}
+/*****************************************************************************************************************/
+/*                                                  Consultas                                                    */
+/*****************************************************************************************************************/
+/************************************************************************************/
+/*                                     Tab 1                                        */
+/************************************************************************************/
+//Datos
+$w         = " WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$subquery  = '';
+$subquery .= ",(SELECT COUNT(idAgenda) FROM principal_agenda_telefonica ".$w." AND idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."' OR idUsuario=9999 LIMIT 1) AS CuentaContactos";
+$subquery .= ",(SELECT COUNT(idSoftware) FROM soporte_software_listado LIMIT 1) AS CuentaProgramas";
+$subquery .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado ".$w." AND Mes=".mes_actual()." AND Ano=".ano_actual()." AND idUsuario = 9999 LIMIT 1) AS CEvComunes";
+$subquery .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado ".$w." AND Mes=".mes_actual()." AND Ano=".ano_actual()." AND idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."' LIMIT 1) AS CEvPropios";
+
+/************************************************************************************/
+//consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
+$SIS_query = 'core_ubicacion_ciudad.Nombre AS Ciudad, 
+core_ubicacion_comunas.Nombre AS Comuna, 
+core_ubicacion_comunas.Wheater AS Wheater'.$subquery;
+$SIS_join  = '
+LEFT JOIN core_ubicacion_ciudad    ON core_ubicacion_ciudad.idCiudad    = core_sistemas.idCiudad
+LEFT JOIN core_ubicacion_comunas   ON core_ubicacion_comunas.idComuna   = core_sistemas.idComuna';
+$SIS_where = 'core_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$subconsulta = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'subconsulta');
+
+$CContactos = 0;
+$CProgramas = 0;
+$CEvComunes = 0;
+$CEvPropios = 0;
+if(isset($subconsulta['CuentaContactos'])&&$subconsulta['CuentaContactos']!=''){$CContactos = $subconsulta['CuentaContactos'];}
+if(isset($subconsulta['CuentaProgramas'])&&$subconsulta['CuentaProgramas']!=''){$CProgramas = $subconsulta['CuentaProgramas'];}
+if(isset($subconsulta['CEvComunes'])&&$subconsulta['CEvComunes']!=''){$CEvComunes = $subconsulta['CEvComunes'];}
+if(isset($subconsulta['CEvPropios'])&&$subconsulta['CEvPropios']!=''){$CEvPropios = $subconsulta['CEvPropios'];}
+
+/************************************************************************************/
+/*                                     Tab 2                                        */
+/************************************************************************************/
+//Se consulta
+$SIS_query = '
+telemetria_listado.idTelemetria, 
+telemetria_listado.idSistema,
+telemetria_listado.Nombre, 
+telemetria_listado.LastUpdateFecha,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.idTab,
+telemetria_listado.id_Geo,
+
+telemetria_listado.TiempoFueraLinea,
+telemetria_listado.GeoErrores,
+telemetria_listado.GeoLatitud, 
+telemetria_listado.GeoLongitud,
+telemetria_listado.NDetenciones, 
+telemetria_listado.NErrores,
+
+core_sistemas.Nombre AS Sistema';
+$SIS_where = 'telemetria_listado.idEstado = 1 ';  //solo equipos activos
+$SIS_where.= ' AND core_sistemas.idEstado = 1 ';  //solo sistemas activos
+
+$SIS_join  = 'LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema = telemetria_listado.idSistema';
+$SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC';
+$arrEquipo = array();
+$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn_2, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
+
+/************************************************************************************/
+/*                                     Tab 3                                        */
+/************************************************************************************/
+//Se consulta el calendario
+//Se definen las variables
+if(isset($_GET["Mes"])){   $Mes = $_GET["Mes"];   } else { $Mes  = mes_actual(); }
+if(isset($_GET["Ano"])){   $Ano = $_GET["Ano"];   } else { $Ano  = ano_actual(); }
+$diaActual = dia_actual();
+
+//calculo de los dias del mes, cuando inicia y cuando termina
+$diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
+$ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
+
+//Traigo los eventos guardados en la base de datos
+$SIS_query = 'idCalendario, Titulo, Dia, idUsuario';
+$SIS_join  = '';
+$SIS_where = '(idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'].' OR idUsuario=9999) AND Ano='.$Ano.' AND Mes='.$Mes.' AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'Fecha ASC';
+$arrEventos = array();
+$arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEventos');
+
+/************************************************************************************/
+/*                                     Tab 4                                        */
+/************************************************************************************/
+// Se trae un listado con todos los elementos
+$SIS_query = '
+idEstado,
+Nombre AS Estado,
+idEstado AS ID,
+(SELECT COUNT(idTareas) FROM tareas_pendientes_listado WHERE idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado = ID) AS Cuenta';
+$SIS_join  = '';
+$SIS_where = 'idEstado!=0';
+$SIS_order = 'idEstado ASC';
+$arrTareas = array();
+$arrTareas = db_select_array (false, $SIS_query, 'core_tareas_pendientes_estados', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTareas');
+
+/**********************************************************/
+// Se trae un listado con todos los elementos
+$SIS_query = '
+tareas_pendientes_listado.idTareas,
+tareas_pendientes_listado.idTareas AS ID,
+tareas_pendientes_listado.f_creacion,
+tareas_pendientes_listado.Nombre,
+tareas_pendientes_listado.idPrioridad,
+tareas_pendientes_listado.idEstado,
+core_tareas_pendientes_tipos.Nombre AS Tipo,
+tareas_pendientes_listado_responsable.idUsuario,
+usuarios_listado.Nombre AS UsuarioNombre,
+usuarios_listado.Nombre AS UsuarioIMG,
+(SELECT COUNT(idTrabajoTareas) FROM tareas_pendientes_listado_tareas WHERE idTareas = ID AND idEstadoTarea=1) AS CuentaPendiente,
+(SELECT COUNT(idTrabajoTareas) FROM tareas_pendientes_listado_tareas WHERE idTareas = ID AND (idEstadoTarea=2 OR idEstadoTarea=3)) AS CuentaTerminada';
+$SIS_join  = '
+LEFT JOIN `core_tareas_pendientes_tipos`            ON core_tareas_pendientes_tipos.idTipo             = tareas_pendientes_listado.idTipo
+LEFT JOIN `tareas_pendientes_listado_responsable`   ON tareas_pendientes_listado_responsable.idTareas  = tareas_pendientes_listado.idTareas
+LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario                      = tareas_pendientes_listado_responsable.idUsuario';
+$SIS_where = 'tareas_pendientes_listado.idTareas!=0';
+$SIS_where.= ' AND tareas_pendientes_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where.= ' AND (tareas_pendientes_listado.idEstado=1 OR tareas_pendientes_listado.idEstado=2)';	
+$SIS_order = 'tareas_pendientes_listado.idEstado ASC, tareas_pendientes_listado.idPrioridad ASC, tareas_pendientes_listado.idTareas ASC';
+$arrTareasPend = array();
+$arrTareasPend = db_select_array (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTareas');
+
+$arrTareasTemp = array();
+$arrRespTemp   = array();
+//filtro		
+filtrar($arrTareasPend, 'idTareas');  
+//recorro
+foreach($arrTareasPend as $idTareas=>$tareas){
+	//Datos principales
+	$arrTareasTemp[$tareas[0]['idEstado']][$tareas[0]['idPrioridad']][$idTareas]['idTareas']   = $idTareas;
+	$arrTareasTemp[$tareas[0]['idEstado']][$tareas[0]['idPrioridad']][$idTareas]['f_creacion'] = $tareas[0]['f_creacion'];
+	$arrTareasTemp[$tareas[0]['idEstado']][$tareas[0]['idPrioridad']][$idTareas]['Nombre']     = $tareas[0]['Nombre'];
+	$arrTareasTemp[$tareas[0]['idEstado']][$tareas[0]['idPrioridad']][$idTareas]['Tipo']       = $tareas[0]['Tipo'];
+	$arrTareasTemp[$tareas[0]['idEstado']][$tareas[0]['idPrioridad']][$idTareas]['Pendiente']  = $tareas[0]['CuentaPendiente'];
+	$arrTareasTemp[$tareas[0]['idEstado']][$tareas[0]['idPrioridad']][$idTareas]['Terminada']  = $tareas[0]['CuentaTerminada'];
+	//Responsables
+	foreach ($tareas as $tarea) {
+		$arrRespTemp[$idTareas][$tarea['idUsuario']]['UsuarioID']     = $tarea['idUsuario'];
+		$arrRespTemp[$idTareas][$tarea['idUsuario']]['UsuarioNombre'] = $tarea['UsuarioNombre'];
+		$arrRespTemp[$idTareas][$tarea['idUsuario']]['UsuarioIMG']    = $tarea['UsuarioIMG'];
+	}
 }
 
 
-//Tipo de usuario
-$idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
-$idSistema      = $_SESSION['usuario']['basic_data']['idSistema'];
-$idUsuario      = $_SESSION['usuario']['basic_data']['idUsuario'];
+/*********************************************************/
+//Variables
+$Color[1] = 'color-gray';//Pendiente
+$Color[2] = 'color-blue';//En Ejecucion
+$Color[3] = 'color-green';//Finalizado
+$Color[4] = 'color-yellow';//Vencido
+$Color[5] = 'color-red';//Cancelado
 
+$Icon[1] = 'fa fa-commenting-o';//Pendiente
+$Icon[2] = 'fa fa-commenting-o';//En Ejecucion
+$Icon[3] = 'fa fa-commenting-o';//Finalizado
+$Icon[4] = 'fa fa-commenting-o';//Vencido
+$Icon[5] = 'fa fa-commenting-o';//Cancelado
+
+$Prioridad[1]['Nombre'] = 'Baja';     //Baja
+$Prioridad[2]['Nombre'] = 'Media';    //Media
+$Prioridad[3]['Nombre'] = 'Alta';     //Alta
+$Prioridad[4]['Nombre'] = 'Muy Alta'; //Muy Alta
+
+$Prioridad[1]['Color'] = 'bs-callout-default';//Baja
+$Prioridad[2]['Color'] = 'bs-callout-success';//Media
+$Prioridad[3]['Color'] = 'bs-callout-primary';//Alta
+$Prioridad[4]['Color'] = 'bs-callout-danger';//Muy Alta
+
+$Prioridad[1]['Label'] = 'label label-default';//Baja
+$Prioridad[2]['Label'] = 'label label-success';//Media
+$Prioridad[3]['Label'] = 'label label-primary';//Alta
+$Prioridad[4]['Label'] = 'label label-danger';//Muy Alta
+
+$Estado[1]['Nombre'] = 'Pendiente';//Pendiente
+$Estado[2]['Nombre'] = 'En Ejecucion';//En Ejecucion
+
+/*********************************************************/
 //variable de numero de permiso
 $x_nperm = 0;
 
-//permisos a las transacciones
-$x_nperm++; $trans[$x_nperm] = "telemetria_gestion_equipos.php";                  //01 - Acceso a la transaccion de administracion de gestion de equipos (todos los sensores)
+//Verifico permisos de acceso
+$x_nperm++; $trans[$x_nperm] = "tareas_pendientes_listado.php";  //53 - Ejecucion de tickets
 
 //Genero los permisos
 for ($i = 1; $i <= $x_nperm; $i++) {
 	//Seteo la variable a 0
-	$prm_x[$i] = 0;
+	$prm_x[$i]['Val']  = 0;
+	$prm_x[$i]['Link'] = '';
 	//recorro los permisos
 	if(isset($_SESSION['usuario']['menu'])){
 		foreach($_SESSION['usuario']['menu'] as $menu=>$productos) {
@@ -58,804 +226,53 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 				$str = str_replace("?pagina=1", "", $producto['TransaccionURL']);
 				//le asigno el valor 1 en caso de que exista
 				if($trans[$i]==$str){
-					$prm_x[$i] = 1;
+					$prm_x[$i]['Val']  = 1;
+					$prm_x[$i]['Link'] = $producto['TransaccionURL'];
 				}
 			}
 		}
 	}
 }
-/*****************************************************************************************************************/
-/*                                                Subconsultas                                                   */
-/*****************************************************************************************************************/
-//Variables
-$subquery       = '';
-//Filtro
-$z  = " AND idSistema=".$idSistema;
-//Ventas
-$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion  WHERE idEstado=1  AND (idTipo=2 OR idTipo=12) ".$z." LIMIT 1) AS CountFactArriendoVent";
-$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_insumos_facturacion    WHERE idEstado=1  AND (idTipo=2 OR idTipo=12) ".$z." LIMIT 1) AS CountFactInsumoVent";
-$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_productos_facturacion  WHERE idEstado=1  AND (idTipo=2 OR idTipo=12) ".$z." LIMIT 1) AS CountFactProductoVent";
-$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_servicios_facturacion  WHERE idEstado=1  AND (idTipo=2 OR idTipo=12) ".$z." LIMIT 1) AS CountFactServicioVent";
-//Compras		
-$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion  WHERE idEstado=1  AND (idTipo=1 OR idTipo=10) ".$z." LIMIT 1) AS CountFactArriendo";
-$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_insumos_facturacion    WHERE idEstado=1  AND (idTipo=1 OR idTipo=10) ".$z." LIMIT 1) AS CountFactInsumo";
-$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_productos_facturacion  WHERE idEstado=1  AND (idTipo=1 OR idTipo=10) ".$z." LIMIT 1) AS CountFactProducto";
-$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_servicios_facturacion  WHERE idEstado=1  AND (idTipo=1 OR idTipo=10) ".$z." LIMIT 1) AS CountFactServicio";
-//Solicitudes
-$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_productos  WHERE idOcompra=0 ".$z." LIMIT 1) AS CuentaSolProd";
-$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_insumos    WHERE idOcompra=0 ".$z." LIMIT 1) AS CuentaSolIns";
-$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_arriendos  WHERE idOcompra=0 ".$z." LIMIT 1) AS CuentaSolArr";
-$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_servicios  WHERE idOcompra=0 ".$z." LIMIT 1) AS CuentaSolServ";
-$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_otros      WHERE idOcompra=0 ".$z." LIMIT 1) AS CuentaSolOtro";
-//OC sin aprobar
-$subquery .= ",(SELECT COUNT(idOcompra) FROM ocompra_listado WHERE idEstado=1 ".$z." LIMIT 1) AS CuentaOC";
-//Calendario Mes
-$subquery .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado WHERE Mes=".mes_actual()." AND Ano=".ano_actual()." ".$z." LIMIT 1) AS CuentaEventos";
-//Notificacion
-$subquery .= ",(SELECT COUNT(idNoti) FROM principal_notificaciones_ver WHERE idEstado='1' AND idUsuario=".$idUsuario." ".$z." LIMIT 1) AS Notificacion";
-//Tickets Abiertos
-$subquery .= ",(SELECT COUNT(idTicket) FROM crosstech_gestion_tickets WHERE idEstado='1' ".$z." LIMIT 1) AS TicketsAbiertos";
-
-
-/************************************************************************************/
-//consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$subconsulta = db_select_data (false, 'idSistema '.$subquery, 'core_sistemas', '', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), '1include_principal_interfaz_7');
-
-/*************************************************************************************************/
-/*************************************************************************************************/
-//Solo compras o ventas
-$z1 = " (bodegas_arriendos_facturacion.idTipo=1   OR bodegas_arriendos_facturacion.idTipo=2   OR bodegas_arriendos_facturacion.idTipo=10   OR bodegas_arriendos_facturacion.idTipo=11   OR bodegas_arriendos_facturacion.idTipo=12   OR bodegas_arriendos_facturacion.idTipo=13)"; //solo compras o ventas
-$z2 = " (bodegas_insumos_facturacion.idTipo=1     OR bodegas_insumos_facturacion.idTipo=2     OR bodegas_insumos_facturacion.idTipo=10     OR bodegas_insumos_facturacion.idTipo=11     OR bodegas_insumos_facturacion.idTipo=12     OR bodegas_insumos_facturacion.idTipo=13)";   //solo compras o ventas
-$z3 = " (bodegas_productos_facturacion.idTipo=1   OR bodegas_productos_facturacion.idTipo=2   OR bodegas_productos_facturacion.idTipo=10   OR bodegas_productos_facturacion.idTipo=11   OR bodegas_productos_facturacion.idTipo=12   OR bodegas_productos_facturacion.idTipo=13)"; //solo compras o ventas
-$z4 = " (bodegas_servicios_facturacion.idTipo=1   OR bodegas_servicios_facturacion.idTipo=2   OR bodegas_servicios_facturacion.idTipo=10   OR bodegas_servicios_facturacion.idTipo=11   OR bodegas_servicios_facturacion.idTipo=12   OR bodegas_servicios_facturacion.idTipo=13)"; //solo compras o ventas
-$z5 = " (boleta_honorarios_facturacion.idFacturacion!=0)";      //siempre pasa
-$z6 = " (rrhh_sueldos_facturacion_trabajadores.idFactTrab!=0)"; //siempre pasa
-
-//se crean cadenas
-$z1.=" AND bodegas_arriendos_facturacion.Creacion_ano='".ano_actual()."'";
-$z2.=" AND bodegas_insumos_facturacion.Creacion_ano='".ano_actual()."'";
-$z3.=" AND bodegas_productos_facturacion.Creacion_ano='".ano_actual()."'";
-$z4.=" AND bodegas_servicios_facturacion.Creacion_ano='".ano_actual()."'";
-$z5.=" AND boleta_honorarios_facturacion.Creacion_ano='".ano_actual()."'";
-$z6.=" AND rrhh_sueldos_facturacion_trabajadores.Creacion_ano='".ano_actual()."'";
-
-//se agrupan
-$z1.=" GROUP BY idTipo, Creacion_mes";
-$z2.=" GROUP BY idTipo, Creacion_mes";
-$z3.=" GROUP BY idTipo, Creacion_mes";
-$z4.=" GROUP BY idTipo, Creacion_mes";
-$z5.=" GROUP BY idTipo, Creacion_mes";
-$z6.=" GROUP BY Creacion_mes";
-					
-/*************************************************************************************************/
-$SIS_query_1 = 'idTipo, Creacion_mes, SUM(ValorTotal) AS ValorTotal';
-$SIS_query_2 = 'Creacion_mes, SUM(TotalAPagar) AS ValorTotal';
-//Bodega de Arriendos
-$arrTemporal_1 = array();
-$arrTemporal_1 = db_select_array (false, $SIS_query_1, 'bodegas_arriendos_facturacion', '', $z1, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
-//Bodega de Insumos
-$arrTemporal_2 = array();
-$arrTemporal_2 = db_select_array (false, $SIS_query_1, 'bodegas_insumos_facturacion', '', $z2, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
-//Bodega de Productos
-$arrTemporal_3 = array();
-$arrTemporal_3 = db_select_array (false, $SIS_query_1, 'bodegas_productos_facturacion', '', $z3, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
-//Bodega de Servicios
-$arrTemporal_4 = array();
-$arrTemporal_4 = db_select_array (false, $SIS_query_1, 'bodegas_servicios_facturacion', '', $z4, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
-//Boleta de honorarios
-$arrTemporal_5 = array();
-$arrTemporal_5 = db_select_array (false, $SIS_query_1, 'boleta_honorarios_facturacion', '', $z5, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
-//Bodega de Servicios
-$arrTemporal_6 = array();
-$arrTemporal_6 = db_select_array (false, $SIS_query_2, 'rrhh_sueldos_facturacion_trabajadores', '', $z6, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
-
-/***********************************************************/
-
-/***********************************************************/
-//Productos con bajo stock
-$tabla_producto    = 'productos_listado';
-$bodega_existencia = 'bodegas_productos_facturacion_existencias';
-
-$SIS_query    = $tabla_producto.'.StockLimite,'.$tabla_producto.'.Nombre AS NombreProd,(SELECT SUM(Cantidad_ing) FROM '.$bodega_existencia.' WHERE idProducto = '.$tabla_producto.'.idProducto AND idSistema = '.$idSistema.' ) AS stock_entrada,(SELECT SUM(Cantidad_eg)  FROM '.$bodega_existencia.' WHERE idProducto = '.$tabla_producto.'.idProducto AND idSistema = '.$idSistema.' ) AS stock_salida';
-$SIS_where    = $tabla_producto.'.StockLimite >0';
-$SIS_orderby  = $tabla_producto.'.StockLimite DESC, '.$tabla_producto.'.Nombre ASC';
-$arrProductos = array();
-$arrProductos = db_select_array (false, $SIS_query, $tabla_producto, '', $SIS_where, $SIS_orderby, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
-
-//Cantidad Clientes
-$t_clientes = db_select_nrows (false, 'idCliente', 'clientes_listado', '', 'idEstado=1 AND idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 't_clientes');
-		
-//Nuevos Clientes
-$n_fecha    = restarDias(fecha_actual(),60);
-$n_clientes = db_select_nrows (false, 'idCliente', 'clientes_listado', '', 'idEstado=1 AND idSistema='.$idSistema.' AND fNacimiento>="'.$n_fecha.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_clientes');
-
-$Prospec_abierto = db_select_nrows (false, 'idProspecto', 'prospectos_listado', '', 'idEstado=1 AND idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'Prospecto_abierto');
-$Prospec_cerrado = db_select_nrows (false, 'idProspecto', 'prospectos_listado', '', 'idEstado=2 AND idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'Prospecto_cerrado');
-
-//Listado con los clientes
-$arrClientes = array();
-$arrClientes = db_select_array (false, 'Contrato_idPeriodo, Contrato_Fecha_Ini, Contrato_Fecha_Term, Contrato_Valor_Mensual,idTab_1, idTab_2, idTab_3, idTab_4, idTab_5, idTab_6, idTab_7, idTab_8', 'clientes_listado', '', 'idEstado=1 AND idSistema='.$idSistema, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrClientes');
-
-//Listado con los prospectos
-$arrProspecto = array();
-$arrProspecto = db_select_array (false, 'idTab_1, idTab_2, idTab_3, idTab_4, idTab_5, idTab_6, idTab_7, idTab_8', 'prospectos_listado', '', 'idEstado=1 AND idSistema='.$idSistema, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProspecto');
-
-//Listado con los tabs
-$arrTabs = array();
-$arrTabs = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'idTab ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTabs');
-		
-//Solo compras o ventas
-$z1 = " (bodegas_arriendos_facturacion.idTipo=2 OR bodegas_arriendos_facturacion.idTipo=12 OR bodegas_arriendos_facturacion.idTipo=13)"; //solo ventas
-$z2 = " (bodegas_insumos_facturacion.idTipo=2   OR bodegas_insumos_facturacion.idTipo=12   OR bodegas_insumos_facturacion.idTipo=13)";   //solo ventas
-$z3 = " (bodegas_productos_facturacion.idTipo=2 OR bodegas_productos_facturacion.idTipo=12 OR bodegas_productos_facturacion.idTipo=13)"; //solo ventas
-$z4 = " (bodegas_servicios_facturacion.idTipo=2 OR bodegas_servicios_facturacion.idTipo=12 OR bodegas_servicios_facturacion.idTipo=13)"; //solo ventas
-
-//se crean cadenas
-$z1.=" AND bodegas_arriendos_facturacion.Creacion_ano='".ano_actual()."'";
-$z2.=" AND bodegas_insumos_facturacion.Creacion_ano='".ano_actual()."'";
-$z3.=" AND bodegas_productos_facturacion.Creacion_ano='".ano_actual()."'";
-$z4.=" AND bodegas_servicios_facturacion.Creacion_ano='".ano_actual()."'";
-
-//se agrupan
-$z1.=" GROUP BY bodegas_arriendos_facturacion.idCliente";
-$z2.=" GROUP BY bodegas_insumos_facturacion.idCliente";
-$z3.=" GROUP BY bodegas_productos_facturacion.idCliente";
-$z4.=" GROUP BY bodegas_servicios_facturacion.idCliente";
-								
-/*************************************************************************************************/
-$SIS_query_1 = 'clientes_listado.idCliente AS ID, clientes_listado.Nombre AS Cliente, SUM(ValorTotal) AS Total';
-//Bodega de Arriendos
-$arrTemporal_b_1 = array();
-$arrTemporal_b_1 = db_select_array (false, 'bodegas_arriendos_facturacion.idTipo, '.$SIS_query_1, 'bodegas_arriendos_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_arriendos_facturacion.idCliente', $z1, 'Total ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
-//Bodega de Insumos
-$arrTemporal_b_2 = array();
-$arrTemporal_b_2 = db_select_array (false, 'bodegas_insumos_facturacion.idTipo, '.$SIS_query_1, 'bodegas_insumos_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_insumos_facturacion.idCliente', $z2, 'Total ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
-//Bodega de Productos
-$arrTemporal_b_3 = array();
-$arrTemporal_b_3 = db_select_array (false, 'bodegas_productos_facturacion.idTipo, '.$SIS_query_1, 'bodegas_productos_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_productos_facturacion.idCliente', $z3, 'Total ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
-//Bodega de Servicios
-$arrTemporal_b_4 = array();
-$arrTemporal_b_4 = db_select_array (false, 'bodegas_servicios_facturacion.idTipo, '.$SIS_query_1, 'bodegas_servicios_facturacion', 'LEFT JOIN clientes_listado ON clientes_listado.idCliente = bodegas_servicios_facturacion.idCliente', $z4, 'Total ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
-//etapas
-$arrEtapa = array();
-$arrEtapa = db_select_array (false, 'prospectos_etapa.idEtapa,prospectos_etapa.Nombre AS Etapa,COUNT(prospectos_listado.idEtapa) AS Cuenta', 'prospectos_listado', 'LEFT JOIN prospectos_etapa ON prospectos_etapa.idEtapa = prospectos_listado.idEtapa', 'prospectos_listado.idProspecto!=0 GROUP BY prospectos_listado.idEtapa', 'Etapa ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal');
-														
-/*****************************************************************************************************************/
-/*                                                Modelado                                                       */
-/*****************************************************************************************************************/
-	
-/***********************************************************/
-//variable
-$nprod_bajostock = 0;
-//se recorre
-foreach ($arrProductos as $productos) { 
-	$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
-	if ($productos['StockLimite']>$stock_actual){
-		$nprod_bajostock++;
-	} 
-} 
-
-/*************************************************************************************************/
-//Variables
-$arrIngresos = array();
-$arrEgresos  = array();
-$arrGastos   = array();
-//reseteo
-for ($i = 1; $i <= 12; $i++) {
-    $arrIngresos[$i]  = 0;
-    $arrEgresos[$i]   = 0;
-    $arrGastos[$i]    = 0;
-}
-/********************************************/
-//recorro los datos
-foreach ($arrTemporal_1 as $trab) {
-	$idTipo = $trab['idTipo'];
-	$mes    = $trab['Creacion_mes'];
-	$Valor  = $trab['ValorTotal'];
-	switch ($idTipo) {
-		case 1: $arrEgresos[$mes]   = $arrEgresos[$mes]  + $Valor; break;//Compra
-		case 2: $arrIngresos[$mes]  = $arrIngresos[$mes] + $Valor; break;//Venta
-		case 10: $arrEgresos[$mes]  = $arrEgresos[$mes]  + $Valor; break;//Nota Debito Proveedor
-		case 11: $arrEgresos[$mes]  = $arrEgresos[$mes]  - $Valor; break;//Nota Credito Proveedor
-		case 12: $arrIngresos[$mes] = $arrIngresos[$mes] + $Valor; break;//Nota Debito Cliente
-		case 13: $arrIngresos[$mes] = $arrIngresos[$mes] - $Valor; break;//Nota Credito Cliente
-	}
-}
-/********************************************/
-//recorro los datos
-foreach ($arrTemporal_2 as $trab) {
-	$idTipo = $trab['idTipo'];
-	$mes    = $trab['Creacion_mes'];
-	$Valor  = $trab['ValorTotal'];
-	switch ($idTipo) {
-		case 1: $arrEgresos[$mes]   = $arrEgresos[$mes]  + $Valor; break;//Compra
-		case 2: $arrIngresos[$mes]  = $arrIngresos[$mes] + $Valor; break;//Venta
-		case 10: $arrEgresos[$mes]  = $arrEgresos[$mes]  + $Valor; break;//Nota Debito Proveedor
-		case 11: $arrEgresos[$mes]  = $arrEgresos[$mes]  - $Valor; break;//Nota Credito Proveedor
-		case 12: $arrIngresos[$mes] = $arrIngresos[$mes] + $Valor; break;//Nota Debito Cliente
-		case 13: $arrIngresos[$mes] = $arrIngresos[$mes] - $Valor; break;//Nota Credito Cliente
-	}
-}
-/********************************************/
-//recorro los datos
-foreach ($arrTemporal_3 as $trab) {
-	$idTipo = $trab['idTipo'];
-	$mes    = $trab['Creacion_mes'];
-	$Valor  = $trab['ValorTotal'];
-	switch ($idTipo) {
-		case 1: $arrEgresos[$mes]   = $arrEgresos[$mes]  + $Valor; break;//Compra
-		case 2: $arrIngresos[$mes]  = $arrIngresos[$mes] + $Valor; break;//Venta
-		case 10: $arrEgresos[$mes]  = $arrEgresos[$mes]  + $Valor; break;//Nota Debito Proveedor
-		case 11: $arrEgresos[$mes]  = $arrEgresos[$mes]  - $Valor; break;//Nota Credito Proveedor
-		case 12: $arrIngresos[$mes] = $arrIngresos[$mes] + $Valor; break;//Nota Debito Cliente
-		case 13: $arrIngresos[$mes] = $arrIngresos[$mes] - $Valor; break;//Nota Credito Cliente
-	}
-}
-/********************************************/
-//recorro los datos
-foreach ($arrTemporal_4 as $trab) {
-	$idTipo = $trab['idTipo'];
-	$mes    = $trab['Creacion_mes'];
-	$Valor  = $trab['ValorTotal'];
-	switch ($idTipo) {
-		case 1: $arrEgresos[$mes]   = $arrEgresos[$mes]  + $Valor; break;//Compra
-		case 2: $arrIngresos[$mes]  = $arrIngresos[$mes] + $Valor; break;//Venta
-		case 10: $arrEgresos[$mes]  = $arrEgresos[$mes]  + $Valor; break;//Nota Debito Proveedor
-		case 11: $arrEgresos[$mes]  = $arrEgresos[$mes]  - $Valor; break;//Nota Credito Proveedor
-		case 12: $arrIngresos[$mes] = $arrIngresos[$mes] + $Valor; break;//Nota Debito Cliente
-		case 13: $arrIngresos[$mes] = $arrIngresos[$mes] - $Valor; break;//Nota Credito Cliente
-	}
-}
-/********************************************/
-//recorro los datos
-foreach ($arrTemporal_5 as $trab) {
-	$mes    = $trab['Creacion_mes'];
-	$Valor  = $trab['ValorTotal'];
-	$arrGastos[$mes]  = $arrGastos[$mes]  + $Valor;
-}
-/********************************************/
-//recorro los datos
-foreach ($arrTemporal_6 as $trab) {
-	$mes    = $trab['Creacion_mes'];
-	$Valor  = $trab['ValorTotal'];
-	$arrGastos[$mes]  = $arrGastos[$mes]  + $Valor;
-}
-/********************************************/
-//recorro
-$arrTabsSorter = array();
-foreach ($arrTabs as $tab) { 
-	$arrTabsSorter[$tab['idTab']]['Nombre']          = $tab['Nombre'];
-	$arrTabsSorter[$tab['idTab']]['CuentaCliente']   = 0;
-	$arrTabsSorter[$tab['idTab']]['CuentaProspecto'] = 0;
-}	
-
-//variables
-$total_tab_cliente   = 0;
-$total_tab_prospecto = 0;
-$arrPorcClienT       = array();
-$arrPorcProsp        = array();
-foreach ($arrClientes as $data) {
-	if(isset($data['idTab_1'])&&$data['idTab_1']==2&&isset($arrTabsSorter[1]['Nombre'])){ $arrTabsSorter[1]['CuentaCliente']++; $total_tab_cliente++;}
-	if(isset($data['idTab_2'])&&$data['idTab_2']==2&&isset($arrTabsSorter[2]['Nombre'])){ $arrTabsSorter[2]['CuentaCliente']++; $total_tab_cliente++;}
-	if(isset($data['idTab_3'])&&$data['idTab_3']==2&&isset($arrTabsSorter[3]['Nombre'])){ $arrTabsSorter[3]['CuentaCliente']++; $total_tab_cliente++;}
-	if(isset($data['idTab_4'])&&$data['idTab_4']==2&&isset($arrTabsSorter[4]['Nombre'])){ $arrTabsSorter[4]['CuentaCliente']++; $total_tab_cliente++;}
-	if(isset($data['idTab_5'])&&$data['idTab_5']==2&&isset($arrTabsSorter[5]['Nombre'])){ $arrTabsSorter[5]['CuentaCliente']++; $total_tab_cliente++;}
-	if(isset($data['idTab_6'])&&$data['idTab_6']==2&&isset($arrTabsSorter[6]['Nombre'])){ $arrTabsSorter[6]['CuentaCliente']++; $total_tab_cliente++;}
-	if(isset($data['idTab_7'])&&$data['idTab_7']==2&&isset($arrTabsSorter[7]['Nombre'])){ $arrTabsSorter[7]['CuentaCliente']++; $total_tab_cliente++;}
-	if(isset($data['idTab_8'])&&$data['idTab_8']==2&&isset($arrTabsSorter[8]['Nombre'])){ $arrTabsSorter[8]['CuentaCliente']++; $total_tab_cliente++;}
-}
-foreach ($arrProspecto as $data) {
-	if(isset($data['idTab_1'])&&$data['idTab_1']==2&&isset($arrTabsSorter[1]['Nombre'])){ $arrTabsSorter[1]['CuentaProspecto']++; $total_tab_prospecto++;}
-	if(isset($data['idTab_2'])&&$data['idTab_2']==2&&isset($arrTabsSorter[2]['Nombre'])){ $arrTabsSorter[2]['CuentaProspecto']++; $total_tab_prospecto++;}
-	if(isset($data['idTab_3'])&&$data['idTab_3']==2&&isset($arrTabsSorter[3]['Nombre'])){ $arrTabsSorter[3]['CuentaProspecto']++; $total_tab_prospecto++;}
-	if(isset($data['idTab_4'])&&$data['idTab_4']==2&&isset($arrTabsSorter[4]['Nombre'])){ $arrTabsSorter[4]['CuentaProspecto']++; $total_tab_prospecto++;}
-	if(isset($data['idTab_5'])&&$data['idTab_5']==2&&isset($arrTabsSorter[5]['Nombre'])){ $arrTabsSorter[5]['CuentaProspecto']++; $total_tab_prospecto++;}
-	if(isset($data['idTab_6'])&&$data['idTab_6']==2&&isset($arrTabsSorter[6]['Nombre'])){ $arrTabsSorter[6]['CuentaProspecto']++; $total_tab_prospecto++;}
-	if(isset($data['idTab_7'])&&$data['idTab_7']==2&&isset($arrTabsSorter[7]['Nombre'])){ $arrTabsSorter[7]['CuentaProspecto']++; $total_tab_prospecto++;}
-	if(isset($data['idTab_8'])&&$data['idTab_8']==2&&isset($arrTabsSorter[8]['Nombre'])){ $arrTabsSorter[8]['CuentaProspecto']++; $total_tab_prospecto++;}
-}
-		
-		
-//calculo de porcentajes clientes
-if($total_tab_cliente!=0){
-	if(isset($arrTabsSorter[1]['Nombre'])&&$arrTabsSorter[1]['Nombre']!=''){ $arrPorcClienT[1] = Cantidades(($arrTabsSorter[1]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[2]['Nombre'])&&$arrTabsSorter[2]['Nombre']!=''){ $arrPorcClienT[2] = Cantidades(($arrTabsSorter[2]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[3]['Nombre'])&&$arrTabsSorter[3]['Nombre']!=''){ $arrPorcClienT[3] = Cantidades(($arrTabsSorter[3]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[4]['Nombre'])&&$arrTabsSorter[4]['Nombre']!=''){ $arrPorcClienT[4] = Cantidades(($arrTabsSorter[4]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[5]['Nombre'])&&$arrTabsSorter[5]['Nombre']!=''){ $arrPorcClienT[5] = Cantidades(($arrTabsSorter[5]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[6]['Nombre'])&&$arrTabsSorter[6]['Nombre']!=''){ $arrPorcClienT[6] = Cantidades(($arrTabsSorter[6]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[7]['Nombre'])&&$arrTabsSorter[7]['Nombre']!=''){ $arrPorcClienT[7] = Cantidades(($arrTabsSorter[7]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-	if(isset($arrTabsSorter[8]['Nombre'])&&$arrTabsSorter[8]['Nombre']!=''){ $arrPorcClienT[8] = Cantidades(($arrTabsSorter[8]['CuentaCliente']/$total_tab_cliente)*100, 0);}
-}else{
-	$arrPorcClienT[1] = 0;
-	$arrPorcClienT[2] = 0;
-	$arrPorcClienT[3] = 0;
-	$arrPorcClienT[4] = 0;
-	$arrPorcClienT[5] = 0;
-	$arrPorcClienT[6] = 0;
-	$arrPorcClienT[7] = 0;
-	$arrPorcClienT[8] = 0;
-}
-															
-//calculo de porcentajes prospectos
-if($total_tab_prospecto!=0){
-	if(isset($arrTabsSorter[1]['Nombre'])&&$arrTabsSorter[1]['Nombre']!=''){ $arrPorcProsp[1] = Cantidades(($arrTabsSorter[1]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[2]['Nombre'])&&$arrTabsSorter[2]['Nombre']!=''){ $arrPorcProsp[2] = Cantidades(($arrTabsSorter[2]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[3]['Nombre'])&&$arrTabsSorter[3]['Nombre']!=''){ $arrPorcProsp[3] = Cantidades(($arrTabsSorter[3]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[4]['Nombre'])&&$arrTabsSorter[4]['Nombre']!=''){ $arrPorcProsp[4] = Cantidades(($arrTabsSorter[4]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[5]['Nombre'])&&$arrTabsSorter[5]['Nombre']!=''){ $arrPorcProsp[5] = Cantidades(($arrTabsSorter[5]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[6]['Nombre'])&&$arrTabsSorter[6]['Nombre']!=''){ $arrPorcProsp[6] = Cantidades(($arrTabsSorter[6]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[7]['Nombre'])&&$arrTabsSorter[7]['Nombre']!=''){ $arrPorcProsp[7] = Cantidades(($arrTabsSorter[7]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-	if(isset($arrTabsSorter[8]['Nombre'])&&$arrTabsSorter[8]['Nombre']!=''){ $arrPorcProsp[8] = Cantidades(($arrTabsSorter[8]['CuentaProspecto']/$total_tab_prospecto)*100, 0);}
-}else{
-	$arrPorcProsp[1] = 0;
-	$arrPorcProsp[2] = 0;
-	$arrPorcProsp[3] = 0;
-	$arrPorcProsp[4] = 0;
-	$arrPorcProsp[5] = 0;
-	$arrPorcProsp[6] = 0;
-	$arrPorcProsp[7] = 0;
-	$arrPorcProsp[8] = 0;
-}
-
-//se recorre
-$arrTemp = array();
-foreach ($arrTemporal_b_1 as $trab) {
-	$idTipo   = $trab['idTipo'];
-	$ID       = $trab['ID'];
-	$Valor    = $trab['Total'];
-	$Cliente  = $trab['Cliente'];
-	//si existe
-	if(isset($arrTemp[$ID]['Total'])){
-		//si es nota de credito
-		if($idTipo==13){
-			$arrTemp[$ID]['Total'] = $arrTemp[$ID]['Total'] - $Valor;
-		//para venta y nota de debito	
-		}else{
-			$arrTemp[$ID]['Total'] = $arrTemp[$ID]['Total'] + $Valor;
-		}
-	//si no existe se crea	
-	}else{
-		//si es nota de credito
-		if($idTipo==13){
-			$arrTemp[$ID]['Total'] = ($Valor*-1);
-		//para venta y nota de debito	
-		}else{
-			$arrTemp[$ID]['Total'] = $Valor;
-		}
-	}
-	//nombre cliente
-	$arrTemp[$ID]['Nombre'] = $Cliente;
-}
-foreach ($arrTemporal_b_2 as $trab) {
-	$idTipo   = $trab['idTipo'];
-	$ID       = $trab['ID'];
-	$Valor    = $trab['Total'];
-	$Cliente  = $trab['Cliente'];
-	//si existe
-	if(isset($arrTemp[$ID]['Total'])){
-		//si es nota de credito
-		if($idTipo==13){
-			$arrTemp[$ID]['Total'] = $arrTemp[$ID]['Total'] - $Valor;
-		//para venta y nota de debito	
-		}else{
-			$arrTemp[$ID]['Total'] = $arrTemp[$ID]['Total'] + $Valor;
-		}
-	//si no existe se crea	
-	}else{
-		//si es nota de credito
-		if($idTipo==13){
-			$arrTemp[$ID]['Total'] = ($Valor*-1);
-		//para venta y nota de debito	
-		}else{
-			$arrTemp[$ID]['Total'] = $Valor;
-		}
-	}
-	//nombre cliente
-	$arrTemp[$ID]['Nombre'] = $Cliente;
-}
-foreach ($arrTemporal_b_3 as $trab) {
-	$idTipo   = $trab['idTipo'];
-	$ID       = $trab['ID'];
-	$Valor    = $trab['Total'];
-	$Cliente  = $trab['Cliente'];
-	//si existe
-	if(isset($arrTemp[$ID]['Total'])){
-		//si es nota de credito
-		if($idTipo==13){
-			$arrTemp[$ID]['Total'] = $arrTemp[$ID]['Total'] - $Valor;
-		//para venta y nota de debito	
-		}else{
-			$arrTemp[$ID]['Total'] = $arrTemp[$ID]['Total'] + $Valor;
-		}
-	//si no existe se crea	
-	}else{
-		//si es nota de credito
-		if($idTipo==13){
-			$arrTemp[$ID]['Total'] = ($Valor*-1);
-		//para venta y nota de debito	
-		}else{
-			$arrTemp[$ID]['Total'] = $Valor;
-		}
-	}
-	//nombre cliente
-	$arrTemp[$ID]['Nombre'] = $Cliente;
-}
-foreach ($arrTemporal_b_4 as $trab) {
-	$idTipo   = $trab['idTipo'];
-	$ID       = $trab['ID'];
-	$Valor    = $trab['Total'];
-	$Cliente  = $trab['Cliente'];
-	//si existe
-	if(isset($arrTemp[$ID]['Total'])){
-		//si es nota de credito
-		if($idTipo==13){
-			$arrTemp[$ID]['Total'] = $arrTemp[$ID]['Total'] - $Valor;
-		//para venta y nota de debito	
-		}else{
-			$arrTemp[$ID]['Total'] = $arrTemp[$ID]['Total'] + $Valor;
-		}
-	//si no existe se crea	
-	}else{
-		//si es nota de credito
-		if($idTipo==13){
-			$arrTemp[$ID]['Total'] = ($Valor*-1);
-		//para venta y nota de debito	
-		}else{
-			$arrTemp[$ID]['Total'] = $Valor;
-		}
-	}
-	//nombre cliente
-	$arrTemp[$ID]['Nombre'] = $Cliente;
-}		
-/*****************************************************************************************************************/
-/*                                               Resultados                                                       */
-/*****************************************************************************************************************/
-	
-/******************************************/
-//Operación
-$totalCalendario       = $subconsulta['CuentaEventos'];					
-$totalNotificaciones   = $subconsulta['Notificacion'];	
-$totalTicketsAbiertos  = $subconsulta['TicketsAbiertos'];
-
-/******************************************/
-//VENTAS
-$totalFactVenta       = $subconsulta['CountFactArriendoVent'] + $subconsulta['CountFactInsumoVent'] + $subconsulta['CountFactProductoVent'] + $subconsulta['CountFactServicioVent'];
-
-/******************************************/		
-//COMPRAS
-$totalFactCompra       = $subconsulta['CountFactArriendo'] + $subconsulta['CountFactInsumo'] + $subconsulta['CountFactProducto'] + $subconsulta['CountFactServicio'];					
-$totalStockMin         = $nprod_bajostock;					
-$totalOCSinApro        = $subconsulta['CuentaOC'];					
-$totalSolSinOC         = $subconsulta['CuentaSolProd'] + $subconsulta['CuentaSolIns'] + $subconsulta['CuentaSolArr'] + $subconsulta['CuentaSolServ'] + $subconsulta['CuentaSolOtro'];					
-	
-/******************************************/
-//CRM
-//Primera linea
-if(isset($t_clientes)&&$t_clientes!=''){ $total_clientes  = $t_clientes; }else{$total_clientes  = 0;}
-if(isset($n_clientes)&&$n_clientes!=''){ $nuevos_clientes = $n_clientes; }else{$nuevos_clientes = 0;}
-if($total_clientes!=0){
-	$porc_apertura = Cantidades(($nuevos_clientes / $total_clientes)*100, 0).'%';
-}else{
-	$porc_apertura = '0%';
-}
-//segunda linea
-if(isset($Prospec_abierto)&&$Prospec_abierto!=''){ $Prospecto_abierto  = $Prospec_abierto; }else{$Prospecto_abierto  = 0;}
-if(isset($Prospec_cerrado)&&$Prospec_cerrado!=''){ $Prospecto_cerrado  = $Prospec_cerrado; }else{$Prospecto_cerrado  = 0;}
-$Prospecto_total = $Prospecto_abierto + $Prospecto_cerrado;
-if($Prospecto_total!=0){
-	$clientes_cerrados = Cantidades(($Prospecto_cerrado/$Prospecto_total)*100, 0).'%';
-}else{
-	$clientes_cerrados = '0%';
-}
 
 
 
-//se suma el ingreso
-$ing_mens_contrato = 0;
-$dia_actual        = fecha_actual();
-foreach ($arrClientes as $trab) {
-	//verifico que este dentro del periodo
-	if($trab['Contrato_Fecha_Ini']<$dia_actual){
-		//si es auto renobable
-		if($trab['Contrato_idPeriodo']==1){
-			$ing_mens_contrato = $ing_mens_contrato + $trab['Contrato_Valor_Mensual'];
-		//si no es auto renobable	
-		}elseif($trab['Contrato_idPeriodo']==2 && $trab['Contrato_Fecha_Term']>$dia_actual){
-			$ing_mens_contrato = $ing_mens_contrato + $trab['Contrato_Valor_Mensual'];
-		}
-	}
-}
-$ing_mens_contrato = valores($ing_mens_contrato, 0);
-		
-/******************************************/		
-		
-			
-											
 ?>
 
 <div class="row">
+	
 	<div class="col-sm-12">
-		<?php
-		/***************************************************************/
-		echo '
-		<div class="panel-heading">
-			<h3 class="supertittle text-primary">Operación</h3>
-		</div>';
-			
-		echo '
-		<div class="col-sm-12">';
-			//verifico si existen datos
-			if($CON_Server!=''&&$CON_Usuario!=''&&$CON_Base!=''){
-				//Detalle por Equipos
-				echo widget_Equipos_external($dbConn_2);
-			}
-			
-			echo '<div class="row">';	
-				echo widget_Ficha_1('bg-purple', 'fa-calendar', 100, 'Calendario Mes', $totalCalendario.' Pendientes', 'principal_calendario_alt.php?pagina=1', 'Ver Pendientes', 1,2);
-				echo widget_Ficha_1('bg-black', 'fa-envelope-o', 100, 'Notificaciones', $totalNotificaciones.' Pendientes', 'principal_notificaciones_alt.php?pagina=1', 'Ver Pendientes', 1,2);
-				echo widget_Ficha_1('bg-red', 'fa-handshake-o', 100, 'Tickets', $totalTicketsAbiertos.' Pendientes', 'crosstech_gestion_tickets_abiertos.php?pagina=1', 'Ver Pendientes', 1,2);
-			echo '</div>';
-		echo '</div>';
-		
-		echo '<div class="clearfix"></div>';
-
-		/***************************************************************/
-		echo '
-		<div class="panel-heading">
-			<h3 class="supertittle text-primary">VENTAS</h3>
-		</div>';
-		
-		echo '<div class="row">';
-			echo widget_Ficha_1('bg-aqua', 'fa-usd', 100, 'Cuentas por cobrar', $totalFactVenta.' Pendientes', 'principal_facturas_alt.php?pagina=1&idTipo=2', 'Ver Pendientes', 1, 2);
-		echo '</div>';	
-
-		echo '<div class="">'; 
-		
-		/***************************************************************/
-		//variables
-		$Temp_1  = "";
-		$arrData = array();
-		//recorro los meses
-		for ($i = 1; $i <= 12; $i++) {
-			//se establece la fecha
-			if($i<10){ $nmes = '0'.$i; }else{ $nmes = $i; }
-			$Temp_1 .= "'".ano_actual()."/".$nmes."',";
-			//se establecen los valores
-			if(isset($arrIngresos[$i])&&$arrIngresos[$i]!=''){$s_ing = $arrIngresos[$i]; }else{$s_ing = '0';}
-			if(isset($arrEgresos[$i])&&$arrEgresos[$i]!=''){  $s_eg = $arrEgresos[$i];   }else{$s_eg  = 0;}
-			if(isset($arrGastos[$i])&&$arrGastos[$i]!=''){    $s_gas = $arrGastos[$i];   }else{$s_gas = 0;}
-			$s_egre = $s_eg  + $s_gas;
-			if($s_egre==0){$s_egre = '0';}
-			
-			//verifico si existe
-			if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){
-				$arrData[1]['Value'] .= ", ".$s_ing;
-			//si no lo crea
-			}else{
-				$arrData[1]['Value'] = $s_ing;
-			}
-			//verifico si existe
-			if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){
-				$arrData[2]['Value'] .= ", ".$s_egre;
-			//si no lo crea
-			}else{
-				$arrData[2]['Value'] = $s_egre;
-			}
-		}
-		$arrData[1]['Name'] = "'Ingresos'";
-		$arrData[2]['Name'] = "'Egresos'";
-
-
-		
-		
-		/***************************************************************/
-		//se crean los datos
-		$Graphics_xData       = 'var xData = [';
-		$Graphics_yData       = 'var yData = [';
-		$Graphics_names       = 'var names = [';
-		$Graphics_info        = 'var grf_info = [';
-		$Graphics_markerColor = 'var markerColor = [';
-		$Graphics_markerLine  = 'var markerLine = [';
-		//Se crean los datos
-		for ($x = 1; $x <= 2; $x++) {
-			//las fechas
-			$Graphics_xData       .='['.$Temp_1.'],';
-			//los valores
-			$Graphics_yData       .='['.$arrData[$x]['Value'].'],';
-			//los nombres
-			$Graphics_names       .= $arrData[$x]['Name'].',';
-			//si se despliega la informacion
-			$Graphics_info        .= "'',";
-			//color de la barra
-			$Graphics_markerColor .= "'',";
-			//color del borde de la barra
-			$Graphics_markerLine  .= "'',";
-		}
-		$Graphics_xData       .= '];';
-		$Graphics_yData       .= '];';
-		$Graphics_names       .= '];';
-		$Graphics_info        .= '];';
-		$Graphics_markerColor .= '];';
-		$Graphics_markerLine  .= '];';
-			
-		echo GraphBarr_1('graphBarra_1', 'Flujo Economico', 'Meses', 'Pesos', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0); 
+		<div class="cover profile">
+			<?php include '1include_principal_interfaz_7_portada.php'; ?>
+		</div>	
+		<div class="box profile_content" style="margin-top:0px;">
+			<header>
+		<ul class="nav nav-tabs pull-left">
+			<li class="active"><a href="#Menu_tab_1" data-toggle="tab"><i class="fa fa-fw fa-bars" aria-hidden="true"></i> Resumen</a></li>
+			<li class=""><a href="#Menu_tab_2" data-toggle="tab"><i class="fa fa-fw fa-bars" aria-hidden="true"></i> Operacional</a></li>
+			<li class=""><a href="#Menu_tab_3" data-toggle="tab"><i class="fa fa-fw fa-bars" aria-hidden="true"></i> Calendario</a></li>
+			<li class=""><a href="#Menu_tab_4" data-toggle="tab"><i class="fa fa-fw fa-bars" aria-hidden="true"></i> Tareas</a></li>
 				
-		
-		echo '</div>';
-		
-		
-		/***************************************************************/
-		echo '
-		<div class="panel-heading">
-			<h3 class="supertittle text-primary">COMPRAS</h3>
-		</div>';
-		
-		echo '<div class="row">';
-			echo widget_Ficha_1('bg-aqua', 'fa-usd', 100, 'Cuentas por pagar', $totalFactCompra.' Pendientes', 'principal_facturas_alt.php?pagina=1&idTipo=1', 'Ver Pendientes', 1,2);
-			echo widget_Ficha_1('bg-green', 'fa-dropbox', 100, 'Alerta Stock Minimo', $totalStockMin.' Criticos', 'informe_bodega_productos_03.php', 'Ver Stock', 1,2);
-			echo widget_Ficha_1('bg-yellow', 'fa-list-alt', 100, 'OC Sin Aprobar', $totalOCSinApro.' Pendientes', 'ocompra_listado_sin_aprobar.php?pagina=1', 'Ver Pendientes', 2,1);
-			echo widget_Ficha_1('bg-red', 'fa-list-alt', 100, 'Solicitudes Sin OC', $totalSolSinOC.' Pendientes', 'ocompra_generacion.php?idSistema=&submit=Filtrar', 'Ver Pendientes', 2,1);
-		echo '</div>';																					
-		
-		/***************************************************************/
-		echo '
-		<div class="panel-heading">
-			<h3 class="supertittle text-primary">CRM</h3>
-		</div>';
-		
-		/***************************************************************/
-		//clientes cerrados
-		echo '<div class="row">';
-			echo widget_Ficha_2('box-blue', '', $total_clientes, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);    
-			echo widget_Ficha_2('box-blue', '', $nuevos_clientes, 4, 'Nuevos Clientes', '', '', '', '', 1, 2);    
-			echo widget_Ficha_2('box-blue', '', $porc_apertura, 4, '% Apertura', '', '', '', '', 1, 2);    
-			
-			echo widget_Ficha_2('box-blue', '', $Prospecto_cerrado.'<span style="font-size: 15px;">Cerrado</span>/'.$Prospecto_total.'<span style="font-size: 15px;">Total</span>', 4, 'Prospectos', '', '', '', '', 1, 2);    
-			echo widget_Ficha_2('box-blue', '', $clientes_cerrados, 4, 'Clientes Cerrados', '', '', '', '', 1, 2);    
-			echo widget_Ficha_2('box-blue', '', $ing_mens_contrato, 4, 'Ingreso Mensual Contrato', '', '', '', '', 1, 2);    
-		echo '</div>';
-						
+		</ul>
+				
 					
-		/*******************************************/
-												
-		?>
-		
-		<div class="row">
-			<div class="col-sm-6">
-				<?php
-				//se crean los datos
-				$Graphics_values = 'var allValues = [';
-				$Graphics_labels = 'var allLabels = [';
-				//Se crean los datos
-				for ($x = 1; $x <= 8; $x++) {
-					if(isset($arrPorcClienT[$x])&&$arrPorcClienT[$x]!=0){
-						//los valores
-						$Graphics_values .= $arrPorcClienT[$x].',';
-						//los nombres
-						$Graphics_labels .= '"'.$arrTabsSorter[$x]['Nombre'].'",';
-					}
-				}
-				$Graphics_values .= '];';
-				$Graphics_labels .= '];';
-				$Graphics_width  = 400;
-				$Graphics_height = 400;
-				
-				echo GraphPie_1('graphPie_1', 'Unidad Negocio Clientes', $Graphics_values,$Graphics_labels,$Graphics_width,$Graphics_height, 2,1);
-				
-				?>
-			</div>
-			<div class="col-sm-6">
-				<?php
-				//se crean los datos
-				$Graphics_values = 'var allValues = [';
-				$Graphics_labels = 'var allLabels = [';
-				//Se crean los datos
-				for ($x = 1; $x <= 8; $x++) {
-					if(isset($arrPorcProsp[$x])&&$arrPorcProsp[$x]!=0){
-						//los valores
-						$Graphics_values .= $arrPorcProsp[$x].',';
-						//los nombres
-						$Graphics_labels .= '"'.$arrTabsSorter[$x]['Nombre'].'",';
-					}
-				}
-				$Graphics_values .= '];';
-				$Graphics_labels .= '];';
-				$Graphics_width  = 400;
-				$Graphics_height = 400;
-				
-				echo GraphPie_1('graphPie_2', 'Unidad Negocio Prospectos', $Graphics_values,$Graphics_labels,$Graphics_width,$Graphics_height, 2,1);
-				
-				?>
-			</div>
-			<div class="col-sm-12">
-				<?php
-				//se crean los datos
-				$Graphics_xData       = 'var xData = [[';
-				$Graphics_yData       = 'var yData = [[';
-				$Graphics_names       = 'var names = [';
-				$Graphics_info        = 'var grf_info = [';
-				$Graphics_markerColor = 'var markerColor = [';
-				$Graphics_markerLine  = 'var markerLine = [';
-				//Se crean los datos
-				foreach ($arrTemp as $temp) {
-					//verifico la existencia
-					if(isset($temp['Nombre'])&&$temp['Nombre']!=''){
-						$Nombre = $temp['Nombre'];
-					}else{
-						$Nombre = 'Sin Nombre';
-					}
-					//las fechas
-					$Graphics_xData       .= $temp['Total'].',';
-					//los valores
-					$Graphics_yData       .= '"'.$Nombre.'",';
-				}
-				//los nombres
-				$Graphics_names       .= '"Normal",';
-				//si se despliega la informacion
-				$Graphics_info        .= "'',";
-				//color de la barra
-				$Graphics_markerColor .= "'',";
-				//color del borde de la barra
-				$Graphics_markerLine  .= "'',";
-				$Graphics_xData       .= ']];';
-				$Graphics_yData       .= ']];';
-				$Graphics_names       .= '];';
-				$Graphics_info        .= '];';
-				$Graphics_markerColor .= '];';
-				$Graphics_markerLine  .= '];';
-				
-		
-				echo GraphBarrLat_1('graphBarraLat_1', 'Clientes/Ingresos(Anual)', 'Pesos', 'Clientes', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 6); 
-				
-				
-				?>
-			</div>
+	</header>
 			
-			<div class="col-sm-12">
+			<div id="div-3" class="tab-content">
+				
 				<?php
-				//arreglo de la etapa
-				$arrFinalEtapa = array();
-				foreach ($arrEtapa as $temp) {
-					$arrFinalEtapa[$temp['idEtapa']]['Cuenta'] = $temp['Cuenta'];
-					$arrFinalEtapa[$temp['idEtapa']]['Nombre'] = $temp['Etapa'];
-				}
-				//valores
-				$nom_1 = $arrFinalEtapa[1]['Nombre'];
-				$nom_2 = $arrFinalEtapa[2]['Nombre'];
-				$nom_3 = $arrFinalEtapa[3]['Nombre'];
-				$nom_4 = $arrFinalEtapa[4]['Nombre'];
-				$nom_5 = $arrFinalEtapa[5]['Nombre'];
-				$nom_6 = $arrFinalEtapa[6]['Nombre'];
-				$nom_7 = $arrFinalEtapa[7]['Nombre'];
-				
-				$val_1 = $arrFinalEtapa[7]['Cuenta'] + $arrFinalEtapa[6]['Cuenta'] + $arrFinalEtapa[5]['Cuenta'] + $arrFinalEtapa[4]['Cuenta'] + $arrFinalEtapa[3]['Cuenta'] + $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
-				$val_2 = $arrFinalEtapa[6]['Cuenta'] + $arrFinalEtapa[5]['Cuenta'] + $arrFinalEtapa[4]['Cuenta'] + $arrFinalEtapa[3]['Cuenta'] + $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
-				$val_3 = $arrFinalEtapa[5]['Cuenta'] + $arrFinalEtapa[4]['Cuenta'] + $arrFinalEtapa[3]['Cuenta'] + $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
-				$val_4 = $arrFinalEtapa[4]['Cuenta'] + $arrFinalEtapa[3]['Cuenta'] + $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
-				$val_5 = $arrFinalEtapa[3]['Cuenta'] + $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
-				$val_6 = $arrFinalEtapa[2]['Cuenta'] + $arrFinalEtapa[1]['Cuenta'];
-				$val_7 = $arrFinalEtapa[1]['Cuenta'];
-				
-				//se crean los datos
-				$Graphics_xData       = 'var xData = [';
-				$Graphics_yData       = 'var yData = [';
-				//las fechas
-				$Graphics_xData       .= $val_1.','.$val_2.','.$val_3.','.$val_4.','.$val_5.','.$val_6.','.$val_7.',';
-				//los valores
-				$Graphics_yData       .= '"'.$nom_1.'","'.$nom_2.'","'.$nom_3.'","'.$nom_4.'","'.$nom_5.'","'.$nom_6.'","'.$nom_7.'",';
-				$Graphics_xData       .= '];';
-				$Graphics_yData       .= '];';
-				$Graphics_width  = 600;
-				$Graphics_height = 500;
-				
-				echo GraphEmbudo_1('graphEmbudo_1', 'Embudo de Ventas', $Graphics_xData, $Graphics_yData, $Graphics_width, $Graphics_height, 1);
+				//contenido en tabs
+				include '1include_principal_interfaz_7_tab_1.php';
+				include '1include_principal_interfaz_7_tab_2.php';
+				include '1include_principal_interfaz_7_tab_3.php';
+				include '1include_principal_interfaz_7_tab_4.php';
 				
 				?>
-			</div>			
-
-			
+				
+				
+				
+			</div>	
 		</div>
-		
 	</div>
+
+
 </div>
