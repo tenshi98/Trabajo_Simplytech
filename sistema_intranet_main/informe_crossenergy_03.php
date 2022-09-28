@@ -25,104 +25,119 @@ require_once 'core/Web.Header.Main.php';
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['submit_filter']) ) { 
 
-//numero sensores equipo
-$N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre, cantSensores';
-$subquery_2 = 'idTabla';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery_1 .= ',SensoresGrupo_'.$i;
-	$subquery_1 .= ',SensoresMedActual_'.$i;
-	$subquery_1 .= ',SensoresActivo_'.$i;
-	$subquery_2 .= ',SUM(Sensor_'.$i.') AS Med_'.$i;
-}
+//filtro
+$SIS_where = 'idTelemetria = '.$_GET['idTelemetria'].' AND (FechaSistema BETWEEN "'.$_GET['f_inicio'].'" AND "'.$_GET['f_termino'].'") AND HoraSistema > "'.$_GET['h_inicio'].'" AND HoraSistema < "'.$_GET['h_termino'].'" GROUP BY TimeStamp';
 
-//Obtengo los datos
-$rowdata = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+//verifico el numero de datos antes de hacer la consulta
+$ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_crossenergy_hora', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
+			
+//si el dato es superior a 10.000
+if(isset($ndata_1)&&$ndata_1>=10001){
+	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
+}else{
+	
+	//numero sensores equipo
+	$N_Maximo_Sensores = 20;
+	$subquery_1 = 'Nombre, cantSensores';
+	$subquery_2 = 'idTabla';
+	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+		$subquery_1 .= ',SensoresGrupo_'.$i;
+		$subquery_1 .= ',SensoresMedActual_'.$i;
+		$subquery_1 .= ',SensoresActivo_'.$i;
+		$subquery_2 .= ',SUM(Sensor_'.$i.') AS Med_'.$i;
+	}
 
-//Temporales
-$Subquery    = '';
-$Subquery_2  = '';
-//recorro los sensores
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-	//Si el sensor esta activo
-	if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
-		//para la subconsulta
-		if($rowdata['SensoresGrupo_'.$i]==$_GET['idGrupo']){
-			$Subquery .= ',Sensor_'.$i;
-			//si viene vacio
-			if(isset($Subquery_2)&&$Subquery_2!=''){
-				$Subquery_2 .= ' + Sensor_'.$i;
-			}else{
-				$Subquery_2 .= ', SUM(Sensor_'.$i;
+	//Obtengo los datos
+	$rowdata = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+	//Temporales
+	$Subquery    = '';
+	$Subquery_2  = '';
+	//recorro los sensores
+	for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+		//Si el sensor esta activo
+		if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
+			//para la subconsulta
+			if($rowdata['SensoresGrupo_'.$i]==$_GET['idGrupo']){
+				$Subquery .= ',Sensor_'.$i;
+				//si viene vacio
+				if(isset($Subquery_2)&&$Subquery_2!=''){
+					$Subquery_2 .= ' + Sensor_'.$i;
+				}else{
+					$Subquery_2 .= ', SUM(Sensor_'.$i;
+				}
 			}
 		}
 	}
-}
-//cierro subquery
-$Subquery_2 .= ') AS Total';
+	//cierro subquery
+	$Subquery_2 .= ') AS Total';
 
-/*****************************************/
-$SIS_query = 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2;
-$SIS_join  = '';
-$SIS_where = 'idTelemetria = '.$_GET['idTelemetria'].' AND (FechaSistema BETWEEN "'.$_GET['f_inicio'].'" AND "'.$_GET['f_termino'].'") AND HoraSistema > "'.$_GET['h_inicio'].'" AND HoraSistema < "'.$_GET['h_termino'].'" GROUP BY TimeStamp';
-$SIS_order = 'Total DESC LIMIT 52';
-$arrGraficos = array();
-$arrGraficos = db_select_array (false, $SIS_query, 'telemetria_listado_crossenergy_hora', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGraficos');
+	/*****************************************/
+	$SIS_query = 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2;
+	$SIS_join  = '';
+	$SIS_where = 'idTelemetria = '.$_GET['idTelemetria'].' AND (FechaSistema BETWEEN "'.$_GET['f_inicio'].'" AND "'.$_GET['f_termino'].'") AND HoraSistema > "'.$_GET['h_inicio'].'" AND HoraSistema < "'.$_GET['h_termino'].'" GROUP BY TimeStamp';
+	$SIS_order = 'Total DESC LIMIT 52';
+	$arrGraficos = array();
+	$arrGraficos = db_select_array (false, $SIS_query, 'telemetria_listado_crossenergy_hora', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGraficos');
 
-//Ordenamiento de grafico
-asort($arrGraficos);
+	//Ordenamiento de grafico
+	asort($arrGraficos);
 
-/****************************************************************/				
-//Variables
-$Temp_1      = '';
-$Temp_1b     = '';
-$arrData_1   = array();
+	/****************************************************************/				
+	//Variables
+	$Temp_1      = '';
+	$Temp_1b     = '';
+	$arrData_1   = array();
 
-/******************************************************/
-//recorro
-$counterz = 1;
-foreach ($arrGraficos as $data) {
-		
-	//variables							
-	$Temp_1 .= "'".$data['FechaSistema']." ".$data['HoraSistema']."',";
-	$Temp_1b .= "'".$counterz."',";
-	//verifico si existe
-	if(isset($arrData_1['Value'])&&$arrData_1['Value']!=''){
-		$arrData_1['Value'] .= ", ".floatval(number_format($data['Total'], 2, '.', ''));
-	//si no lo crea
-	}else{
-		$arrData_1['Value'] = floatval(number_format($data['Total'], 2, '.', ''));
+	/******************************************************/
+	//recorro
+	$counterz = 1;
+	foreach ($arrGraficos as $data) {
+			
+		//variables							
+		$Temp_1 .= "'".$data['FechaSistema']." ".$data['HoraSistema']."',";
+		$Temp_1b .= "'".$counterz."',";
+		//verifico si existe
+		if(isset($arrData_1['Value'])&&$arrData_1['Value']!=''){
+			$arrData_1['Value'] .= ", ".floatval(number_format($data['Total'], 2, '.', ''));
+		//si no lo crea
+		}else{
+			$arrData_1['Value'] = floatval(number_format($data['Total'], 2, '.', ''));
+		}
+		$counterz++;
 	}
-	$counterz++;
-}
 
-//nombres
-$arrData_1['Name'] = "'Potencia hora punta'";
+	//nombres
+	$arrData_1['Name'] = "'Potencia hora punta'";
 
-//variables
-$Graphics_xData       = 'var xData = [['.$Temp_1b.'],];';
-$Graphics_yData       = 'var yData = [['.$arrData_1['Value'].'],];';
-$Graphics_names       = 'var names = ['.$arrData_1['Name'].',];';
-$Graphics_info        = "var grf_info = [[".$Temp_1."],];";
-$Graphics_markerColor = "var markerColor = [''];";
-$Graphics_markerLine  = "var markerLine = [''];";
+	//variables
+	$Graphics_xData       = 'var xData = [['.$Temp_1b.'],];';
+	$Graphics_yData       = 'var yData = [['.$arrData_1['Value'].'],];';
+	$Graphics_names       = 'var names = ['.$arrData_1['Name'].',];';
+	$Graphics_info        = "var grf_info = [[".$Temp_1."],];";
+	$Graphics_markerColor = "var markerColor = [''];";
+	$Graphics_markerLine  = "var markerLine = [''];";
 
-?>
+	?>
 
-<div class="col-sm-12">
-	<div class="box">
-		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Estado del Equipo <?php echo $rowdata['Nombre']; ?></h5>
-		</header>
-		<div class="table-responsive" id="grf">	
-			<?php 
-				$Titulo = 'Potencia hora punta (Periodo: '.$_GET['f_inicio'].' al '.$_GET['f_termino'].' / Horario: '.$_GET['h_inicio'].'-'.$_GET['h_termino'].')';
-				echo GraphBarr_1('graphBarra_1', $Titulo, 'Fecha', 'kW', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0); 
-			?>				
+	<div class="col-sm-12">
+		<div class="box">
+			<header>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
+				<h5>Estado del Equipo <?php echo $rowdata['Nombre']; ?></h5>
+			</header>
+			<div class="table-responsive" id="grf">	
+				<?php 
+					$Titulo = 'Potencia hora punta (Periodo: '.$_GET['f_inicio'].' al '.$_GET['f_termino'].' / Horario: '.$_GET['h_inicio'].'-'.$_GET['h_termino'].')';
+					echo GraphBarr_1('graphBarra_1', $Titulo, 'Fecha', 'kW', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0); 
+				?>				
+			</div>
 		</div>
 	</div>
-</div>
+	
+	<?php
+}
+?>
 
 <div class="clearfix"></div>
 <div class="col-sm-12" style="margin-bottom:30px">

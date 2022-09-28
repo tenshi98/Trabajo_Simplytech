@@ -155,12 +155,7 @@ if ( ! empty($_GET['addFile']) ) { ?>
 
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['modBase']) ) { 
-$z = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	 
-//Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
-}
 ?>
 
 <div class="col-sm-8 fcenter">
@@ -386,12 +381,8 @@ if (isset($_SESSION['desc_cuotas_listado'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
-$z = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	 
-//Verifico el tipo de usuario que esta ingresando
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
-} ?>
+?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">

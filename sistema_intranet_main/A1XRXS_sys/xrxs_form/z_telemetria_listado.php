@@ -3,7 +3,7 @@
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
 if( ! defined('XMBCXRXSKGC')) {
-    die('No tienes acceso a esta carpeta o archivo.');
+    die('No tienes acceso a esta carpeta o archivo (Access Code 1009-279).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
@@ -94,6 +94,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['idGrupoPotencia']) )                   $idGrupoPotencia                    = $_POST['idGrupoPotencia'];
 	if ( !empty($_POST['idGrupoConsumoMesHabil']) )            $idGrupoConsumoMesHabil             = $_POST['idGrupoConsumoMesHabil'];
 	if ( !empty($_POST['idGrupoConsumoMesCurso']) )            $idGrupoConsumoMesCurso             = $_POST['idGrupoConsumoMesCurso'];
+	if ( !empty($_POST['idGrupoEstanque']) )                   $idGrupoEstanque                    = $_POST['idGrupoEstanque'];
 	if ( !empty($_POST['CrossCrane_tiempo_revision']) )        $CrossCrane_tiempo_revision         = $_POST['CrossCrane_tiempo_revision'];
 	if ( !empty($_POST['CrossCrane_grupo_amperaje']) )         $CrossCrane_grupo_amperaje          = $_POST['CrossCrane_grupo_amperaje'];
 	if ( !empty($_POST['CrossCrane_grupo_elevacion']) )        $CrossCrane_grupo_elevacion         = $_POST['CrossCrane_grupo_elevacion'];
@@ -209,6 +210,7 @@ require_once '0_validate_user_1.php';
 			case 'idGrupoPotencia':                   if(empty($idGrupoPotencia)){                   $error['idGrupoPotencia']               = 'error/No ha seleccionado el grupo de Potencia';}break;
 			case 'idGrupoConsumoMesHabil':            if(empty($idGrupoConsumoMesHabil)){            $error['idGrupoConsumoMesHabil']        = 'error/No ha seleccionado el grupo de Consumo Mes Habil';}break;
 			case 'idGrupoConsumoMesCurso':            if(empty($idGrupoConsumoMesCurso)){            $error['idGrupoConsumoMesCurso']        = 'error/No ha seleccionado el grupo de Consumo Mes Curso';}break;
+			case 'idGrupoEstanque':                   if(empty($idGrupoEstanque)){                   $error['idGrupoEstanque']               = 'error/No ha seleccionado el grupo de Estanque combustible';}break;
 			case 'CrossCrane_tiempo_revision':        if(empty($CrossCrane_tiempo_revision)){        $error['CrossCrane_tiempo_revision']    = 'error/No ha ingresado el tiempo de revision';}break;
 			case 'CrossCrane_grupo_amperaje':         if(empty($CrossCrane_grupo_amperaje)){         $error['CrossCrane_grupo_amperaje']     = 'error/No ha seleccionado el grupo de alimentacion';}break;
 			case 'CrossCrane_grupo_elevacion':        if(empty($CrossCrane_grupo_elevacion)){        $error['CrossCrane_grupo_elevacion']    = 'error/No ha seleccionado el grupo de elevacion';}break;
@@ -362,6 +364,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idGrupoPotencia) && $idGrupoPotencia != ''){                              $SIS_data .= ",'".$idGrupoPotencia."'" ;                   }else{$SIS_data .= ",''";}
 				if(isset($idGrupoConsumoMesHabil) && $idGrupoConsumoMesHabil != ''){                $SIS_data .= ",'".$idGrupoConsumoMesHabil."'" ;            }else{$SIS_data .= ",''";}
 				if(isset($idGrupoConsumoMesCurso) && $idGrupoConsumoMesCurso != ''){                $SIS_data .= ",'".$idGrupoConsumoMesCurso."'" ;            }else{$SIS_data .= ",''";}
+				if(isset($idGrupoEstanque) && $idGrupoEstanque != ''){                              $SIS_data .= ",'".$idGrupoEstanque."'" ;                   }else{$SIS_data .= ",''";}
 				if(isset($CrossCrane_tiempo_revision) && $CrossCrane_tiempo_revision != ''){        $SIS_data .= ",'".$CrossCrane_tiempo_revision."'" ;        }else{$SIS_data .= ",''";}
 				if(isset($CrossCrane_grupo_amperaje) && $CrossCrane_grupo_amperaje != ''){          $SIS_data .= ",'".$CrossCrane_grupo_amperaje."'" ;         }else{$SIS_data .= ",''";}
 				if(isset($CrossCrane_grupo_elevacion) && $CrossCrane_grupo_elevacion != ''){        $SIS_data .= ",'".$CrossCrane_grupo_elevacion."'" ;        }else{$SIS_data .= ",''";}
@@ -382,7 +385,7 @@ require_once '0_validate_user_1.php';
 				TiempoDetencion,Direccion_img,idZona,IP_Client,SensorActivacionID,SensorActivacionValor,
 				Jornada_inicio,Jornada_termino,Colacion_inicio,Colacion_termino,Microparada,Capacidad,idUsoPredio,idTipo,Marca,Modelo,Patente,Num_serie,
 				AnoFab,CapacidadPersonas,CapacidadKilos,MCubicos,idTab,idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,
-				idGrupoPotencia,idGrupoConsumoMesHabil,idGrupoConsumoMesCurso,CrossCrane_tiempo_revision,
+				idGrupoPotencia,idGrupoConsumoMesHabil,idGrupoConsumoMesCurso,idGrupoEstanque,CrossCrane_tiempo_revision,
 				CrossCrane_grupo_amperaje,CrossCrane_grupo_elevacion,CrossCrane_grupo_giro,
 				CrossCrane_grupo_carro,CrossCrane_grupo_voltaje,CrossCrane_grupo_motor_subida,
 				CrossCrane_grupo_motor_bajada';
@@ -553,6 +556,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idGrupoPotencia)&& $idGrupoPotencia != '' ){                                    $SIS_data .= ",idGrupoPotencia='".$idGrupoPotencia."'" ;}
 				if(isset($idGrupoConsumoMesHabil)&& $idGrupoConsumoMesHabil != '' ){                      $SIS_data .= ",idGrupoConsumoMesHabil='".$idGrupoConsumoMesHabil."'" ;}
 				if(isset($idGrupoConsumoMesCurso)&& $idGrupoConsumoMesCurso != '' ){                      $SIS_data .= ",idGrupoConsumoMesCurso='".$idGrupoConsumoMesCurso."'" ;}
+				if(isset($idGrupoEstanque)&& $idGrupoEstanque != '' ){                                    $SIS_data .= ",idGrupoEstanque='".$idGrupoEstanque."'" ;}
 				if(isset($CrossCrane_tiempo_revision)&& $CrossCrane_tiempo_revision != '' ){              $SIS_data .= ",CrossCrane_tiempo_revision='".$CrossCrane_tiempo_revision."'" ;}
 				if(isset($CrossCrane_grupo_amperaje)&& $CrossCrane_grupo_amperaje != '' ){                $SIS_data .= ",CrossCrane_grupo_amperaje='".$CrossCrane_grupo_amperaje."'" ;}
 				if(isset($CrossCrane_grupo_elevacion)&& $CrossCrane_grupo_elevacion != '' ){              $SIS_data .= ",CrossCrane_grupo_elevacion='".$CrossCrane_grupo_elevacion."'" ;}
@@ -910,7 +914,7 @@ require_once '0_validate_user_1.php';
 				Jornada_termino,Colacion_inicio,Colacion_termino,Microparada,Capacidad,idUsoPredio,idTipo,
 				Marca,Modelo,Patente,Num_serie,AnoFab,CapacidadPersonas,CapacidadKilos,MCubicos,idTab,
 				idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia,idGrupoConsumoMesHabil,
-				idGrupoConsumoMesCurso,CrossCrane_tiempo_revision,CrossCrane_grupo_amperaje,
+				idGrupoConsumoMesCurso,idGrupoEstanque,CrossCrane_tiempo_revision,CrossCrane_grupo_amperaje,
 				CrossCrane_grupo_elevacion,CrossCrane_grupo_giro,CrossCrane_grupo_carro,
 				CrossCrane_grupo_voltaje,CrossCrane_grupo_motor_subida,CrossCrane_grupo_motor_bajada'.$qry;
 				$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelemetria = '.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -967,6 +971,7 @@ require_once '0_validate_user_1.php';
 				if(isset($rowdata['idGrupoPotencia']) && $rowdata['idGrupoPotencia'] != ''){                              $SIS_data .= ",'".$rowdata['idGrupoPotencia']."'" ;                 }else{$SIS_data .= ",''";}
 				if(isset($rowdata['idGrupoConsumoMesHabil']) && $rowdata['idGrupoConsumoMesHabil'] != ''){                $SIS_data .= ",'".$rowdata['idGrupoConsumoMesHabil']."'" ;          }else{$SIS_data .= ",''";}
 				if(isset($rowdata['idGrupoConsumoMesCurso']) && $rowdata['idGrupoConsumoMesCurso'] != ''){                $SIS_data .= ",'".$rowdata['idGrupoConsumoMesCurso']."'" ;          }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idGrupoEstanque']) && $rowdata['idGrupoEstanque'] != ''){                              $SIS_data .= ",'".$rowdata['idGrupoEstanque']."'" ;                 }else{$SIS_data .= ",''";}
 				if(isset($rowdata['CrossCrane_tiempo_revision']) && $rowdata['CrossCrane_tiempo_revision'] != ''){        $SIS_data .= ",'".$rowdata['CrossCrane_tiempo_revision']."'" ;      }else{$SIS_data .= ",''";}
 				if(isset($rowdata['CrossCrane_grupo_amperaje']) && $rowdata['CrossCrane_grupo_amperaje'] != ''){          $SIS_data .= ",'".$rowdata['CrossCrane_grupo_amperaje']."'" ;       }else{$SIS_data .= ",''";}
 				if(isset($rowdata['CrossCrane_grupo_elevacion']) && $rowdata['CrossCrane_grupo_elevacion'] != ''){        $SIS_data .= ",'".$rowdata['CrossCrane_grupo_elevacion']."'" ;      }else{$SIS_data .= ",''";}
@@ -1041,7 +1046,7 @@ require_once '0_validate_user_1.php';
 				SensorActivacionValor,Jornada_inicio,Jornada_termino,Colacion_inicio,Colacion_termino,
 				Microparada,Capacidad,idUsoPredio,idTipo,Marca,Modelo,Patente,Num_serie,AnoFab,CapacidadPersonas,
 				CapacidadKilos,MCubicos,idTab,idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia,idGrupoConsumoMesHabil,
-				idGrupoConsumoMesCurso,CrossCrane_tiempo_revision,CrossCrane_grupo_amperaje,CrossCrane_grupo_elevacion,
+				idGrupoConsumoMesCurso,idGrupoEstanque,CrossCrane_tiempo_revision,CrossCrane_grupo_amperaje,CrossCrane_grupo_elevacion,
 				CrossCrane_grupo_giro,CrossCrane_grupo_carro,CrossCrane_grupo_voltaje,CrossCrane_grupo_motor_subida,
 				CrossCrane_grupo_motor_bajada,GeoErrores,LastUpdateFecha,LastUpdateHora,Sim_Num_Tel,
 				Sim_Num_Serie,Sim_marca,Sim_modelo,Sim_Compania,IdentificadorEmpresa,NErrores,NAlertas,

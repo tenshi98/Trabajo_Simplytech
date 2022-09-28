@@ -108,7 +108,8 @@ grupo_9.Nombre AS Grupo_Vmonofasico,
 grupo_10.Nombre AS Grupo_VTrifasico,
 grupo_11.Nombre AS Grupo_Potencia,
 grupo_12.Nombre AS Grupo_ConsumoMesHabil,
-grupo_13.Nombre AS Grupo_ConsumoMesCurso';
+grupo_13.Nombre AS Grupo_ConsumoMesCurso,
+grupo_14.Nombre AS Grupo_Estanque';
 $SIS_join  = '
 LEFT JOIN `core_sistemas`                        ON core_sistemas.idSistema                            = telemetria_listado.idSistema
 LEFT JOIN `core_sistemas_opciones`        opc2   ON opc2.idOpciones                                    = telemetria_listado.id_Geo
@@ -141,6 +142,7 @@ LEFT JOIN `telemetria_listado_grupos`  grupo_10  ON grupo_10.idGrupo            
 LEFT JOIN `telemetria_listado_grupos`  grupo_11  ON grupo_11.idGrupo                                   = telemetria_listado.idGrupoPotencia
 LEFT JOIN `telemetria_listado_grupos`  grupo_12  ON grupo_12.idGrupo                                   = telemetria_listado.idGrupoConsumoMesHabil
 LEFT JOIN `telemetria_listado_grupos`  grupo_13  ON grupo_13.idGrupo                                   = telemetria_listado.idGrupoConsumoMesCurso
+LEFT JOIN `telemetria_listado_grupos`  grupo_14  ON grupo_14.idGrupo                                   = telemetria_listado.idGrupoEstanque
 LEFT JOIN `core_telemetria_ubicaciones`          ON core_telemetria_ubicaciones.idUbicacion            = telemetria_listado.idUbicacion';
 $SIS_where = 'telemetria_listado.idTelemetria ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
@@ -417,6 +419,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 							<?php if(isset($rowdata['Grupo_Potencia'])&&$rowdata['Grupo_Potencia']!=0){ ?>                   <strong>CrossEnergy - Grupo Potencia: </strong><?php echo $rowdata['Grupo_Potencia']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_ConsumoMesHabil'])&&$rowdata['Grupo_ConsumoMesHabil']!=0){ ?>     <strong>CrossEnergy - Grupo Consumo Mes Habil: </strong><?php echo $rowdata['Grupo_ConsumoMesHabil']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_ConsumoMesCurso'])&&$rowdata['Grupo_ConsumoMesCurso']!=0){ ?>     <strong>CrossEnergy - Grupo Consumo Mes Curso: </strong><?php echo $rowdata['Grupo_ConsumoMesCurso']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Grupo_Estanque'])&&$rowdata['Grupo_Estanque']!=0){ ?>                   <strong>CrossEnergy - Grupo Estanque Combustible: </strong><?php echo $rowdata['Grupo_Estanque']; ?><br/><?php } ?>
 							
 							<?php if($rowdata['id_Geo']==2){ ?>
 								<br/>

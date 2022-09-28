@@ -67,7 +67,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		}
 	}
 	foreach($arrSubgrupos as $categoria=>$sub){
-		$SIS_where .= ' OR idGrupo='.$sub['idGrupo'];	
+		//verifico si existe
+		if(isset($sub['idGrupo'])&&$sub['idGrupo']!=''){
+			$SIS_where .= ' OR idGrupo='.$sub['idGrupo'];
+		}	
 	}
 	
 	//consulto grupos
