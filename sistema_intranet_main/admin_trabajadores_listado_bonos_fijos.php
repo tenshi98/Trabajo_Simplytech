@@ -65,24 +65,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 // consulto los datos
-$query = "SELECT idBonoFijo,Monto
-FROM `trabajadores_listado_bonos_fijos`
-WHERE idBono = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
- ?>
+$SIS_query = 'idBonoFijo,Monto';
+$SIS_join  = '';
+$SIS_where = 'idBono = '.$_GET['edit'];
+$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado_bonos_fijos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-sm-8 fcenter">
 	<div class="box dark">	
@@ -157,54 +145,24 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
 // consulto los datos
-$query = "SELECT Nombre, ApellidoPat, ApellidoMat
-FROM `trabajadores_listado`
-WHERE idTrabajador = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre, ApellidoPat, ApellidoMat';
+$SIS_join  = '';
+$SIS_where = 'idTrabajador = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 // consulto los datos
-$arrBonos = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_listado_bonos_fijos.idBono,
 sistema_bonos_fijos.Nombre AS Bono,
-trabajadores_listado_bonos_fijos.Monto
-FROM `trabajadores_listado_bonos_fijos`
-LEFT JOIN `sistema_bonos_fijos`   ON sistema_bonos_fijos.idBonoFijo     = trabajadores_listado_bonos_fijos.idBonoFijo
-WHERE trabajadores_listado_bonos_fijos.idTrabajador = ".$_GET['id']."
-ORDER BY sistema_bonos_fijos.Nombre  ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBonos,$row );
-}
-
-
+trabajadores_listado_bonos_fijos.Monto';
+$SIS_join  = 'LEFT JOIN `sistema_bonos_fijos` ON sistema_bonos_fijos.idBonoFijo = trabajadores_listado_bonos_fijos.idBonoFijo';
+$SIS_where = 'trabajadores_listado_bonos_fijos.idTrabajador = '.$_GET['id'];
+$SIS_order = 'sistema_bonos_fijos.Nombre ASC';
+$arrBonos = array();
+$arrBonos = db_select_array (false, $SIS_query, 'trabajadores_listado_bonos_fijos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBonos');
 
 ?>
+
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Bonos Fijos Asignados');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">

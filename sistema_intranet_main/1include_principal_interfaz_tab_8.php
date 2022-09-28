@@ -4,9 +4,8 @@
 $temp = $prm_x[42] + $prm_x[43];				
 if($temp!=0) {
 	
-//Se traen todas las facturaciones impagas		
-$arrFacturaciones = array();
-$query = "SELECT 
+//Se traen todas las facturaciones impagas	
+$SIS_query = '
 apoderados_listado.idApoderado AS IDD,
 apoderados_listado.Nombre AS ApoderadoNombre,
 apoderados_listado.ApellidoPat AS ApoderadoApellidoPat,
@@ -14,33 +13,15 @@ apoderados_listado.ApellidoMat AS ApoderadoApellidoMat,
 sistema_planes_transporte.Nombre AS PlanNombre,
 sistema_planes_transporte.Valor_Mensual AS PlanValor_Mensual,
 (SELECT COUNT(idFacturacionDetalle) FROM `vehiculos_facturacion_apoderados_listado_detalle` WHERE idApoderado=IDD AND idEstadoPago=1 AND idMes=".mes_actual()." AND Ano=".ano_actual()." ) AS CuentaActual,
-(SELECT COUNT(idFacturacionDetalle) FROM `vehiculos_facturacion_apoderados_listado_detalle` WHERE idApoderado=IDD AND idEstadoPago=1 AND idMes!=".mes_actual()." AND Ano!=".ano_actual()." ) AS CuentaRetraso
-
-FROM `apoderados_listado`
-LEFT JOIN `sistema_planes_transporte`  ON sistema_planes_transporte.idPlan   = apoderados_listado.idPlan
-
-WHERE apoderados_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']."
-AND apoderados_listado.idEstado=1
-ORDER BY apoderados_listado.ApellidoPat ASC
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrFacturaciones,$row );
-}
+(SELECT COUNT(idFacturacionDetalle) FROM `vehiculos_facturacion_apoderados_listado_detalle` WHERE idApoderado=IDD AND idEstadoPago=1 AND idMes!=".mes_actual()." AND Ano!=".ano_actual()." ) AS CuentaRetraso';
+$SIS_join  = 'LEFT JOIN `sistema_planes_transporte`  ON sistema_planes_transporte.idPlan   = apoderados_listado.idPlan';
+$SIS_where = 'apoderados_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND apoderados_listado.idEstado=1';
+$SIS_order = 'apoderados_listado.ApellidoPat ASC';
+$arrFacturaciones = array();
+$arrFacturaciones = db_select_array (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFacturaciones');
 
 ?>
+
 <div class="tab-pane fade" id="Menu_tab_8">
 	<div class="col-sm-12">
 		<div class="box">	

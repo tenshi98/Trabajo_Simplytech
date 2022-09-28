@@ -55,30 +55,17 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Trabajador borrado cor
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT Nombre, ApellidoPat, ApellidoMat, Direccion_img
-FROM `trabajadores_listado`
-WHERE idTrabajador = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre, ApellidoPat, ApellidoMat, Direccion_img';
+$SIS_join  = '';
+$SIS_where = 'idTrabajador = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Foto');?>
 </div>
 <div class="clearfix"></div>
-
 
 <div class="col-sm-12">
 	<div class="box">
@@ -142,8 +129,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<?php widget_validator(); ?>
 				<?php }?> 
 				
-				
-				
 			</div>
 		</div>	
 	</div>
@@ -154,7 +139,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/

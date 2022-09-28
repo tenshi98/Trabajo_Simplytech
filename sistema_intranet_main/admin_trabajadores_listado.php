@@ -114,7 +114,7 @@ alert_post_data(2,1,2, $Alert_Text);
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 trabajadores_listado.Direccion_img,
 
 trabajadores_listado.Nombre,
@@ -177,9 +177,8 @@ centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5,
 
 core_bancos.Nombre AS Pago_Banco,
 core_tipo_cuenta.Nombre AS Pago_TipoCuenta,
-trabajadores_listado.N_Cuenta AS Pago_N_Cuenta
-
-FROM `trabajadores_listado`
+trabajadores_listado.N_Cuenta AS Pago_N_Cuenta';
+$SIS_join  = '
 LEFT JOIN `core_estados`                     ON core_estados.idEstado                               = trabajadores_listado.idEstado
 LEFT JOIN `trabajadores_listado_tipos`       ON trabajadores_listado_tipos.idTipo                   = trabajadores_listado.idTipo
 LEFT JOIN `core_sistemas`                    ON core_sistemas.idSistema                             = trabajadores_listado.idSistema
@@ -201,126 +200,57 @@ LEFT JOIN `centrocosto_listado_level_3`      ON centrocosto_listado_level_3.idLe
 LEFT JOIN `centrocosto_listado_level_4`      ON centrocosto_listado_level_4.idLevel_4               = trabajadores_listado.idLevel_4
 LEFT JOIN `centrocosto_listado_level_5`      ON centrocosto_listado_level_5.idLevel_5               = trabajadores_listado.idLevel_5
 LEFT JOIN `core_bancos`                      ON core_bancos.idBanco                                 = trabajadores_listado.idBanco
-LEFT JOIN `core_tipo_cuenta`                 ON core_tipo_cuenta.idTipoCuenta                       = trabajadores_listado.idTipoCuenta
+LEFT JOIN `core_tipo_cuenta`                 ON core_tipo_cuenta.idTipoCuenta                       = trabajadores_listado.idTipoCuenta';
+$SIS_where = 'trabajadores_listado.idTrabajador = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-WHERE trabajadores_listado.idTrabajador = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+/************************************************************/
 // Se trae un listado con todas las cargas familiares
+$SIS_query = 'Nombre, ApellidoPat, ApellidoMat';
+$SIS_join  = '';
+$SIS_where = 'idTrabajador = '.$_GET['id'];
+$SIS_order = 'idCarga ASC';
 $arrCargas = array();
-$query = "SELECT  Nombre, ApellidoPat, ApellidoMat
-FROM `trabajadores_listado_cargas`
-WHERE idTrabajador = ".$_GET['id']."
-ORDER BY idCarga ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrCargas,$row );
-}
+$arrCargas = db_select_array (false, $SIS_query, 'trabajadores_listado_cargas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCargas');
 
+/************************************************************/
 // consulto los datos
-$arrBonos = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_listado_bonos_fijos.idBono,
 sistema_bonos_fijos.Nombre AS Bono,
-trabajadores_listado_bonos_fijos.Monto
-FROM `trabajadores_listado_bonos_fijos`
-LEFT JOIN `sistema_bonos_fijos`   ON sistema_bonos_fijos.idBonoFijo     = trabajadores_listado_bonos_fijos.idBonoFijo
-WHERE trabajadores_listado_bonos_fijos.idTrabajador = ".$_GET['id']."
-ORDER BY sistema_bonos_fijos.Nombre  ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrBonos,$row );
-}
+trabajadores_listado_bonos_fijos.Monto';
+$SIS_join  = 'LEFT JOIN `sistema_bonos_fijos` ON sistema_bonos_fijos.idBonoFijo = trabajadores_listado_bonos_fijos.idBonoFijo';
+$SIS_where = 'trabajadores_listado_bonos_fijos.idTrabajador = '.$_GET['id'];
+$SIS_order = 'sistema_bonos_fijos.Nombre ASC';
+$arrBonos = array();
+$arrBonos = db_select_array (false, $SIS_query, 'trabajadores_listado_bonos_fijos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBonos');
 
+/************************************************************/
 // consulto los datos
+$SIS_query = 'idAnexo,Documento, Fecha_ingreso';
+$SIS_join  = '';
+$SIS_where = 'idTrabajador = '.$_GET['id'];
+$SIS_order = 'Fecha_ingreso DESC';
 $arrAnexos = array();
-$query = "SELECT  idAnexo,Documento, Fecha_ingreso
-FROM `trabajadores_listado_anexos`
-WHERE idTrabajador = ".$_GET['id']."
-ORDER BY Fecha_ingreso DESC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrAnexos,$row );
-}
+$arrAnexos = db_select_array (false, $SIS_query, 'trabajadores_listado_anexos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAnexos');
+
 /************************************************************/
 // Se trae un listado con todos los descuentos del trabajador
-$arrDescuentos = array();
-$query = "SELECT 
+$SIS_query = '
 trabajadores_listado_descuentos_fijos.idDescuento,
 sistema_descuentos_fijos.Nombre AS Descuento,
 trabajadores_listado_descuentos_fijos.Monto,
-sistema_afp.Nombre AS AFP
-FROM `trabajadores_listado_descuentos_fijos`
+sistema_afp.Nombre AS AFP';
+$SIS_join  = '
 LEFT JOIN `sistema_descuentos_fijos`   ON sistema_descuentos_fijos.idDescuentoFijo     = trabajadores_listado_descuentos_fijos.idDescuentoFijo
-LEFT JOIN `sistema_afp`                ON sistema_afp.idAFP                            = trabajadores_listado_descuentos_fijos.idAFP
-WHERE trabajadores_listado_descuentos_fijos.idTrabajador = ".$_GET['id']."
-ORDER BY sistema_descuentos_fijos.Nombre  ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrDescuentos,$row );
-}
+LEFT JOIN `sistema_afp`                ON sistema_afp.idAFP                            = trabajadores_listado_descuentos_fijos.idAFP';
+$SIS_where = 'trabajadores_listado_descuentos_fijos.idTrabajador = '.$_GET['id'];
+$SIS_order = 'sistema_descuentos_fijos.Nombre ASC';
+$arrDescuentos = array();
+$arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descuentos_fijos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrDescuentos');
+
 ?>
+
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Resumen');?>
 </div>

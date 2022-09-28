@@ -5,8 +5,7 @@ $temp = $prm_x[50];
 if($temp!=0) {
 	
 // Se trae un listado con todos los elementos
-$arrReserva = array();
-$query = "SELECT 
+$SIS_query = '
 gestion_reserva_oficinas.idReserva,
 gestion_reserva_oficinas.Fecha,
 gestion_reserva_oficinas.Dia,
@@ -16,32 +15,13 @@ gestion_reserva_oficinas.Hora_Inicio,
 gestion_reserva_oficinas.Hora_Termino,
 gestion_reserva_oficinas.idEstado,
 gestion_reserva_oficinas.idOficina,
-oficinas_listado.Nombre AS Oficina
+oficinas_listado.Nombre AS Oficina';
+$SIS_join  = 'LEFT JOIN `oficinas_listado` ON oficinas_listado.idOficina = gestion_reserva_oficinas.idOficina';
+$SIS_where = 'gestion_reserva_oficinas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND gestion_reserva_oficinas.Mes='.mes_actual().' AND gestion_reserva_oficinas.Ano='.ano_actual();
+$SIS_order = 0;
+$arrReserva = array();
+$arrReserva = db_select_array (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrReserva');
 
-FROM `gestion_reserva_oficinas`
-LEFT JOIN `oficinas_listado`         ON oficinas_listado.idOficina          = gestion_reserva_oficinas.idOficina
-	
-WHERE gestion_reserva_oficinas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']."
-AND gestion_reserva_oficinas.Mes=".mes_actual()."   
-AND gestion_reserva_oficinas.Ano=".ano_actual()." 
-
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrReserva,$row );
-}
 //se filtra por oficina
 filtrar($arrReserva, 'idOficina');  
 

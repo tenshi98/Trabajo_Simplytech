@@ -62,23 +62,10 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['edit']) ) { 
 // consulto los datos
-$query = "SELECT idUsuario, idSistema
-FROM `sistema_aprobador_oc`
-WHERE idAprobador = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
+$SIS_query = 'idUsuario, idSistema';
+$SIS_join  = '';
+$SIS_where = 'idAprobador = '.$_GET['edit'];
+$rowdata   = db_select_data (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Verifico el tipo de usuario que esta ingresando
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
@@ -175,49 +162,20 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
 // consulto los datos
-$query = "SELECT Nombre
-FROM `core_sistemas`
-WHERE idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'core_sistemas.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 // consulto los datos
-$arrAprobador = array();
-$query = "SELECT 
+$SIS_query = '
 sistema_aprobador_oc.idAprobador,
-usuarios_listado.Nombre AS nombre_usuario
-FROM `sistema_aprobador_oc`
-LEFT JOIN `usuarios_listado`   ON usuarios_listado.idUsuario     = sistema_aprobador_oc.idUsuario
-WHERE sistema_aprobador_oc.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
-ORDER BY usuarios_listado.Nombre ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrAprobador,$row );
-}
+usuarios_listado.Nombre AS nombre_usuario';
+$SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = sistema_aprobador_oc.idUsuario';
+$SIS_where = 'sistema_aprobador_oc.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'usuarios_listado.Nombre ASC';
+$arrAprobador = array();
+$arrAprobador = db_select_array (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAprobador');
 
 /******************************************************/
 //Accesos a bodegas de productos
@@ -251,11 +209,9 @@ $trans_35 = "cross_shipping_consolidacion.php";
 $trans_36 = "cross_shipping_consolidacion_aprobar.php";
 $trans_37 = "cross_shipping_consolidacion_aprobar_auto.php";
 
-
-
+/************************************/
 //realizo la consulta
-$query = "SELECT
-
+$SIS_query = '
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_1."'  AND visualizacion!=9999 LIMIT 1) AS tran_1,
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_2."'  AND visualizacion!=9999 LIMIT 1) AS tran_2,
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_3."'  AND visualizacion!=9999 LIMIT 1) AS tran_3,
@@ -282,24 +238,10 @@ $query = "SELECT
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_36."'  AND visualizacion!=9999 LIMIT 1) AS tran_36,
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_37."'  AND visualizacion!=9999 LIMIT 1) AS tran_37,
 
-idUsuario
-
-FROM usuarios_listado
-WHERE usuarios_listado.idUsuario='1' "; 
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata_x = mysqli_fetch_assoc ($resultado);
+idUsuario';
+$SIS_join  = '';
+$SIS_where = 'usuarios_listado.idUsuario=1';
+$rowdata_x = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata_x');
 
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
@@ -319,7 +261,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$Count_Variedades   = $rowdata_x['tran_31'] + $rowdata_x['tran_32'] + $rowdata_x['tran_33'] + $rowdata_x['tran_34'];
 	$Count_Shipping     = $rowdata_x['tran_35'] + $rowdata_x['tran_36'] + $rowdata_x['tran_37'];
 }
+
 ?>
+
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Aprobador OC');?>
 	<div class="col-md-6 col-sm-6 col-xs-12">

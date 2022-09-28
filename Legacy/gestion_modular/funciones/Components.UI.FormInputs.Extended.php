@@ -3,7 +3,7 @@
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
 if( ! defined('XMBCXRXSKGC')) {
-    die('No tienes acceso a esta carpeta o archivo.');
+    die('No tienes acceso a esta carpeta o archivo (Access Code 1005-001).');
 }
 /*******************************************************************************************************************/
 /*                                                                                                                 */
@@ -98,68 +98,47 @@ class Form_Inputs extends Basic_Form_Inputs{
 		
 		//se trae un listado con todas las categorias
 		$arrSelect = array();
-		$query = "SELECT  
-		".$data1." AS idData, 
-		".$data2." AS Nombre
-		FROM `".$table."` 
-		".$filtro." 
-		ORDER BY Nombre";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if($resultado){
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrSelect,$row );
-			}
-			mysqli_free_result($resultado);
+		$arrSelect = db_select_array (false, $data1.' AS idData, '.$data2.' AS Nombre', $table, '', $filtro, 'Nombre ASC', $dbConn, 'form_checkbox_active', basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
+			
+		//si hay resultados
+		if($arrSelect!=false){
 			
 			$input = '<div class="form-group" id="div_'.$name.'">
 						<label for="text2" class="control-label col-sm-4">'.$placeholder.'</label>
 						<div class="col-sm-8 field">
-						<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.' >
-						<option value="" selected>Seleccione una Opcion</option>';
-						
-			$w1 = '';
-			$w2 = '';
-			if($value==9998){
-				$w1 = 'selected="selected"';
-			}elseif($value==9999){
-				$w2 = 'selected="selected"';
-			}			
-			$input .= '<option value="9998" '.$w1.' >Todos</option>';
-			$input .= '<option value="9999" '.$w2.'>Solo Superadministradores</option>';
-										
-
-			
-			
-						
-						foreach ( $arrSelect as $select ) {
-							$w = '';
-							if($value==$select['idData']){
-								$w .= 'selected="selected"';
-							} 	
-			$input .= '<option value="'.$select['idData'].'" '.$w.' >'.$select['Nombre'].'</option>';
-						 } 
-			$input .= '</select>
+							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.' >
+								<option value="" selected>Seleccione una Opcion</option>';
+								$w1 = '';
+								$w2 = '';
+								if($value==9998){
+									$w1 = 'selected="selected"';
+								}elseif($value==9999){
+									$w2 = 'selected="selected"';
+								}			
+								$input .= '<option value="9998" '.$w1.' >Todos</option>';
+								$input .= '<option value="9999" '.$w2.'>Solo Superadministradores</option>';
+							
+								foreach ( $arrSelect as $select ) {
+									$w = '';
+									if($value==$select['idData']){ $w .= 'selected="selected"'; } 	
+									$input .= '<option value="'.$select['idData'].'" '.$w.' >'.$select['Nombre'].'</option>';
+								} 
+							$input .= '
+							</select>
 						</div>
 					</div>';
 					
 			echo $input;
 			
-		//si da error, guardar en el log de errores una copia
-		}else{
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-			
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-			
+		//si no hay datos
+		}elseif(empty($arrSelect) OR $arrSelect==''){
 			//Devuelvo mensaje
-			echo '<p>Error en la consulta, consulte con el administrador</p>';			
+			alert_post_data(4,1,1, 'No hay datos en <strong>'.$placeholder.'</strong>, consulte con el administrador');	
+		//si existe un error
+		}elseif($arrSelect==false){
+			//Devuelvo mensaje
+			alert_post_data(4,1,1, 'Hay un error en la consulta <strong>'.$placeholder.'</strong>, consulte con el administrador');	
 		}
-
 		
 	}
 	/*******************************************************************************************************************/
@@ -187,20 +166,10 @@ class Form_Inputs extends Basic_Form_Inputs{
 
 		//se trae un listado con todas las categorias
 		$arrSelect = array();
-		$query = "SELECT  
-		".$data1." AS idData 
-		".$data_required."
-		FROM `".$table."`  
-		".$filtro."
-		ORDER BY ".$order_by;
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
+		$arrSelect = db_select_array (false, $data1.' AS idData '.$data_required, $table, '', $filtro, $order_by, $dbConn, 'form_checkbox_active', basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
+		
 		//Si ejecuto correctamente la consulta
-		if($resultado){
-			while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrSelect,$row );
-			}
-			mysqli_free_result($resultado);
+		if($arrSelect!=false){	
 			
 			$input = '<div class="form-group" id="div_'.$name.'">
 						<label for="text2" class="control-label col-sm-4" id="label_'.$name.'">'.$placeholder.'</label>
@@ -236,21 +205,15 @@ class Form_Inputs extends Basic_Form_Inputs{
 			
 			echo $input;
 			
-		//si da error, guardar en el log de errores una copia
-		}else{
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-			
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-			
+		//si no hay datos
+		}elseif(empty($arrSelect) OR $arrSelect==''){
 			//Devuelvo mensaje
-			echo '<p>Error en la consulta, consulte con el administrador</p>';			
+			alert_post_data(4,1,1, 'No hay datos en <strong>'.$placeholder.'</strong>, consulte con el administrador');	
+		//si existe un error
+		}elseif($arrSelect==false){
+			//Devuelvo mensaje
+			alert_post_data(4,1,1, 'Hay un error en la consulta <strong>'.$placeholder.'</strong>, consulte con el administrador');	
 		}
-
-		
 	}
 	/*******************************************************************************************************************/
 	public function form_input_validate($placeholder,$name, $value, $required, $aValidar){

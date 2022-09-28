@@ -1,30 +1,15 @@
 <?php
 /**************************************************************************/
 if($idTipoUsuario==1 OR $idTipoUsuario==2) { 
-//Se ve el acceso al log de modificaciones
-$arrLog = array();
-$query = "SELECT Fecha, Descripcion
-FROM `core_log_cambios`
-ORDER BY Fecha DESC, idLog DESC
-LIMIT 20 ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrLog,$row );
-}	
 	
-	
+	//Se ve el acceso al log de modificaciones
+	$SIS_query = 'Fecha, Descripcion';
+	$SIS_join  = '';
+	$SIS_where = '';
+	$SIS_order = 'Fecha DESC, idLog DESC LIMIT 20';
+	$arrLog = array();
+	$arrLog = db_select_array (false, $SIS_query, 'core_log_cambios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrLog');
+
 	echo '
 	<div class="tab-pane fade" id="Menu_tab_99">
 						

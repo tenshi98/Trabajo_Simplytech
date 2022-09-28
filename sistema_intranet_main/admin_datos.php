@@ -30,7 +30,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correc
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT
+$SIS_query = '
 core_sistemas.Nombre,  
 core_sistemas.Rut, 
 core_ubicacion_ciudad.Nombre AS Ciudad, 
@@ -59,31 +59,16 @@ core_sistemas.Social_instagram,
 core_sistemas.Social_linkedin,
 core_sistemas.Social_rss,
 core_sistemas.Social_youtube,
-core_sistemas.Social_tumblr
-
-FROM `core_sistemas`
+core_sistemas.Social_tumblr';
+$SIS_join  = '
 LEFT JOIN `core_theme_colors`                  ON core_theme_colors.idTheme            = core_sistemas.Config_idTheme
 LEFT JOIN `core_ubicacion_ciudad`              ON core_ubicacion_ciudad.idCiudad       = core_sistemas.idCiudad
 LEFT JOIN `core_ubicacion_comunas`             ON core_ubicacion_comunas.idComuna      = core_sistemas.idComuna
 LEFT JOIN `bodegas_productos_listado`          ON bodegas_productos_listado.idBodega   = core_sistemas.OT_idBodegaProd
 LEFT JOIN `bodegas_insumos_listado`            ON bodegas_insumos_listado.idBodega     = core_sistemas.OT_idBodegaIns
-LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                 = core_sistemas.Social_idUso
-
-WHERE core_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                 = core_sistemas.Social_idUso';
+$SIS_where = 'core_sistemas.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /******************************************************/
 //Accesos a bodegas de productos
@@ -118,10 +103,9 @@ $trans_36 = "cross_shipping_consolidacion_aprobar.php";
 $trans_37 = "cross_shipping_consolidacion_aprobar_auto.php";
 
 
-
+/************************************/
 //realizo la consulta
-$query = "SELECT
-
+$SIS_query = '
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_1."'  AND visualizacion!=9999 LIMIT 1) AS tran_1,
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_2."'  AND visualizacion!=9999 LIMIT 1) AS tran_2,
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_3."'  AND visualizacion!=9999 LIMIT 1) AS tran_3,
@@ -148,24 +132,10 @@ $query = "SELECT
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_36."'  AND visualizacion!=9999 LIMIT 1) AS tran_36,
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_37."'  AND visualizacion!=9999 LIMIT 1) AS tran_37,
 
-idUsuario
-
-FROM usuarios_listado
-WHERE usuarios_listado.idUsuario='1' "; 
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata_x = mysqli_fetch_assoc ($resultado);
+idUsuario';
+$SIS_join  = '';
+$SIS_where = 'usuarios_listado.idUsuario=1';
+$rowdata_x = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata_x');
 
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
@@ -185,7 +155,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$Count_Variedades   = $rowdata_x['tran_31'] + $rowdata_x['tran_32'] + $rowdata_x['tran_33'] + $rowdata_x['tran_34'];
 	$Count_Shipping     = $rowdata_x['tran_35'] + $rowdata_x['tran_36'] + $rowdata_x['tran_37'];
 }
-
 
 ?>
 

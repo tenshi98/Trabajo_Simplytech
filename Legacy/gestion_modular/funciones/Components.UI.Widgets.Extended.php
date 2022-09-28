@@ -3,7 +3,7 @@
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
 if( ! defined('XMBCXRXSKGC')) {
-    die('No tienes acceso a esta carpeta o archivo.');
+    die('No tienes acceso a esta carpeta o archivo (Access Code 1005-003).');
 }
 /*******************************************************************************************************************/
 /*                                                                                                                 */
@@ -3013,61 +3013,45 @@ function widget_Doc_relacionados($idOcompra,
 								$idTipoUsuario, $idSistema,
 								$dbConn){
 	//Variables
-	$z1="WHERE bodegas_insumos_facturacion.idFacturacion!=0";  
-	$z2="WHERE bodegas_productos_facturacion.idFacturacion!=0";          
-	$z3="WHERE bodegas_arriendos_facturacion.idFacturacion!=0";        
-	$z4="WHERE bodegas_servicios_facturacion.idFacturacion!=0";        
+	$z1 = "bodegas_insumos_facturacion.idFacturacion!=0";  
+	$z2 = "bodegas_productos_facturacion.idFacturacion!=0";          
+	$z3 = "bodegas_arriendos_facturacion.idFacturacion!=0";        
+	$z4 = "bodegas_servicios_facturacion.idFacturacion!=0";        
 	//verifico que sea un administrador
 	if($idTipoUsuario==1){
-		$z0="WHERE ocompra_listado.idSistema>=0";	
-		$z1.=" AND bodegas_insumos_facturacion.idSistema>=0";
-		$z2.=" AND bodegas_productos_facturacion.idSistema>=0";
-		$z3.=" AND bodegas_arriendos_facturacion.idSistema>=0";
-		$z4.=" AND bodegas_servicios_facturacion.idSistema>=0";		
+		$z0 = "ocompra_listado.idSistema>=0";	
+		$z1.= " AND bodegas_insumos_facturacion.idSistema>=0";
+		$z2.= " AND bodegas_productos_facturacion.idSistema>=0";
+		$z3.= " AND bodegas_arriendos_facturacion.idSistema>=0";
+		$z4.= " AND bodegas_servicios_facturacion.idSistema>=0";		
 	}else{
-		$z0="WHERE ocompra_listado.idSistema=".$idSistema;	
-		$z1.=" AND bodegas_insumos_facturacion.idSistema=".$idSistema;	
-		$z2.=" AND bodegas_productos_facturacion.idSistema=".$idSistema;	
-		$z3.=" AND bodegas_arriendos_facturacion.idSistema=".$idSistema;	
-		$z4.=" AND bodegas_servicios_facturacion.idSistema=".$idSistema;	
+		$z0 = "ocompra_listado.idSistema=".$idSistema;	
+		$z1.= " AND bodegas_insumos_facturacion.idSistema=".$idSistema;	
+		$z2.= " AND bodegas_productos_facturacion.idSistema=".$idSistema;	
+		$z3.= " AND bodegas_arriendos_facturacion.idSistema=".$idSistema;	
+		$z4.= " AND bodegas_servicios_facturacion.idSistema=".$idSistema;	
 	}
 	//filtro por ordenes
-	$z0.=" AND ocompra_listado.idOcompra=".$idOcompra;
-	$z1.=" AND ocompra_listado.idOcompra=".$idOcompra;
-	$z2.=" AND ocompra_listado.idOcompra=".$idOcompra;
-	$z3.=" AND ocompra_listado.idOcompra=".$idOcompra;
-	$z4.=" AND ocompra_listado.idOcompra=".$idOcompra;
+	$z0.= " AND ocompra_listado.idOcompra=".$idOcompra;
+	$z1.= " AND ocompra_listado.idOcompra=".$idOcompra;
+	$z2.= " AND ocompra_listado.idOcompra=".$idOcompra;
+	$z3.= " AND ocompra_listado.idOcompra=".$idOcompra;
+	$z4.= " AND ocompra_listado.idOcompra=".$idOcompra;
 	/******************************************************/
 	//consulta
-	$arrOrdenes = array();
-	$query = "SELECT 
+	$SIS_query = '
 	ocompra_listado.idOcompra,
 	ocompra_listado.Creacion_fecha,
-	proveedor_listado.Nombre AS NombreProveedor
-	FROM `ocompra_listado`
-	LEFT JOIN `proveedor_listado`     ON proveedor_listado.idProveedor      = ocompra_listado.idProveedor
-	".$z0."
-	ORDER BY ocompra_listado.idOcompra DESC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-					
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrOrdenes,$row );
-	}
+	proveedor_listado.Nombre AS NombreProveedor';
+	$SIS_join  = 'LEFT JOIN `proveedor_listado`  ON proveedor_listado.idProveedor = ocompra_listado.idProveedor';
+	$SIS_where = $z0;
+	$SIS_order = 'ocompra_listado.idOcompra DESC';
+	$arrOrdenes = array();
+	$arrOrdenes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOrdenes');
+
 	/******************************************************/
 	// Se trae un listado con todos los elementos
-	$arrInsumos = array();
-	$query = "SELECT 
+	$SIS_query = '
 	bodegas_insumos_facturacion.idFacturacion,
 	bodegas_insumos_facturacion.Creacion_fecha,
 	bodegas_insumos_facturacion.F_Pago,
@@ -3076,36 +3060,21 @@ function widget_Doc_relacionados($idOcompra,
 	core_sistemas.Nombre AS Sistema,
 	core_documentos_mercantiles.Nombre_abrev AS Documento,
 	proveedor_listado.Nombre AS Proveedor,
-	core_estado_facturacion.Nombre AS Estado
-
-	FROM `bodegas_insumos_facturacion`
+	core_estado_facturacion.Nombre AS Estado';
+	$SIS_join  = '
 	LEFT JOIN `core_sistemas`                 ON core_sistemas.idSistema                    = bodegas_insumos_facturacion.idSistema
 	LEFT JOIN `core_documentos_mercantiles`   ON core_documentos_mercantiles.idDocumentos   = bodegas_insumos_facturacion.idDocumentos
 	LEFT JOIN `proveedor_listado`             ON proveedor_listado.idProveedor              = bodegas_insumos_facturacion.idProveedor
 	LEFT JOIN `ocompra_listado`               ON ocompra_listado.idOcompra                  = bodegas_insumos_facturacion.idOcompra
-	LEFT JOIN `core_estado_facturacion`       ON core_estado_facturacion.idEstado           = bodegas_insumos_facturacion.idEstado
-	".$z1."
-	ORDER BY bodegas_insumos_facturacion.F_Pago ASC, proveedor_listado.Nombre ASC, bodegas_insumos_facturacion.N_Doc ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-					
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrInsumos,$row );
-	}
+	LEFT JOIN `core_estado_facturacion`       ON core_estado_facturacion.idEstado           = bodegas_insumos_facturacion.idEstado';
+	$SIS_where = $z1;
+	$SIS_order = 'bodegas_insumos_facturacion.F_Pago ASC, proveedor_listado.Nombre ASC, bodegas_insumos_facturacion.N_Doc ASC';
+	$arrInsumos = array();
+	$arrInsumos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
+
 	/******************************************************/
 	// Se trae un listado con todos los elementos
-	$arrProductos = array();
-	$query = "SELECT 
+	$SIS_query = '
 	bodegas_productos_facturacion.idFacturacion,
 	bodegas_productos_facturacion.Creacion_fecha,
 	bodegas_productos_facturacion.F_Pago,
@@ -3114,36 +3083,21 @@ function widget_Doc_relacionados($idOcompra,
 	core_sistemas.Nombre AS Sistema,
 	core_documentos_mercantiles.Nombre_abrev AS Documento,
 	proveedor_listado.Nombre AS Proveedor,
-	core_estado_facturacion.Nombre AS Estado
-
-	FROM `bodegas_productos_facturacion`
+	core_estado_facturacion.Nombre AS Estado';
+	$SIS_join  = '
 	LEFT JOIN `core_sistemas`                ON core_sistemas.idSistema                   = bodegas_productos_facturacion.idSistema
 	LEFT JOIN `core_documentos_mercantiles`  ON core_documentos_mercantiles.idDocumentos  = bodegas_productos_facturacion.idDocumentos
 	LEFT JOIN `proveedor_listado`            ON proveedor_listado.idProveedor             = bodegas_productos_facturacion.idProveedor
 	LEFT JOIN `ocompra_listado`              ON ocompra_listado.idOcompra                 = bodegas_productos_facturacion.idOcompra
-	LEFT JOIN `core_estado_facturacion`      ON core_estado_facturacion.idEstado          = bodegas_productos_facturacion.idEstado
-	".$z2."
-	ORDER BY bodegas_productos_facturacion.F_Pago ASC, proveedor_listado.Nombre ASC, bodegas_productos_facturacion.N_Doc ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-					
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrProductos,$row );
-	}
+	LEFT JOIN `core_estado_facturacion`      ON core_estado_facturacion.idEstado          = bodegas_productos_facturacion.idEstado';
+	$SIS_where = $z2;
+	$SIS_order = 'bodegas_productos_facturacion.F_Pago ASC, proveedor_listado.Nombre ASC, bodegas_productos_facturacion.N_Doc ASC';
+	$arrProductos = array();
+	$arrProductos = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
+
 	/******************************************************/
 	// Se trae un listado con todos los elementos
-	$arrArriendos = array();
-	$query = "SELECT 
+	$SIS_query = '
 	bodegas_arriendos_facturacion.idFacturacion,
 	bodegas_arriendos_facturacion.Creacion_fecha,
 	bodegas_arriendos_facturacion.F_Pago,
@@ -3152,36 +3106,21 @@ function widget_Doc_relacionados($idOcompra,
 	core_sistemas.Nombre AS Sistema,
 	core_documentos_mercantiles.Nombre_abrev AS Documento,
 	proveedor_listado.Nombre AS Proveedor,
-	core_estado_facturacion.Nombre AS Estado
-
-	FROM `bodegas_arriendos_facturacion`
+	core_estado_facturacion.Nombre AS Estado';
+	$SIS_join  = '
 	LEFT JOIN `core_sistemas`                 ON core_sistemas.idSistema                    = bodegas_arriendos_facturacion.idSistema
 	LEFT JOIN `core_documentos_mercantiles`   ON core_documentos_mercantiles.idDocumentos   = bodegas_arriendos_facturacion.idDocumentos
 	LEFT JOIN `proveedor_listado`             ON proveedor_listado.idProveedor              = bodegas_arriendos_facturacion.idProveedor
 	LEFT JOIN `ocompra_listado`               ON ocompra_listado.idOcompra                  = bodegas_arriendos_facturacion.idOcompra
-	LEFT JOIN `core_estado_facturacion`       ON core_estado_facturacion.idEstado           = bodegas_arriendos_facturacion.idEstado
-	".$z3."
-	ORDER BY bodegas_arriendos_facturacion.F_Pago ASC, proveedor_listado.Nombre ASC, bodegas_arriendos_facturacion.N_Doc ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-					
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrArriendos,$row );
-	}
+	LEFT JOIN `core_estado_facturacion`       ON core_estado_facturacion.idEstado           = bodegas_arriendos_facturacion.idEstado';
+	$SIS_where = $z3;
+	$SIS_order = 'bodegas_arriendos_facturacion.F_Pago ASC, proveedor_listado.Nombre ASC, bodegas_arriendos_facturacion.N_Doc ASC';
+	$arrArriendos = array();
+	$arrArriendos = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArriendos');
+
 	/******************************************************/
 	// Se trae un listado con todos los elementos
-	$arrServicios = array();
-	$query = "SELECT 
+	$SIS_query = '
 	bodegas_servicios_facturacion.idFacturacion,
 	bodegas_servicios_facturacion.Creacion_fecha,
 	bodegas_servicios_facturacion.F_Pago,
@@ -3190,32 +3129,18 @@ function widget_Doc_relacionados($idOcompra,
 	core_sistemas.Nombre AS Sistema,
 	core_documentos_mercantiles.Nombre_abrev AS Documento,
 	proveedor_listado.Nombre AS Proveedor,
-	core_estado_facturacion.Nombre AS Estado
-
-	FROM `bodegas_servicios_facturacion`
+	core_estado_facturacion.Nombre AS Estado';
+	$SIS_join  = '
 	LEFT JOIN `core_sistemas`                 ON core_sistemas.idSistema                    = bodegas_servicios_facturacion.idSistema
 	LEFT JOIN `core_documentos_mercantiles`   ON core_documentos_mercantiles.idDocumentos   = bodegas_servicios_facturacion.idDocumentos
 	LEFT JOIN `proveedor_listado`             ON proveedor_listado.idProveedor              = bodegas_servicios_facturacion.idProveedor
 	LEFT JOIN `ocompra_listado`               ON ocompra_listado.idOcompra                  = bodegas_servicios_facturacion.idOcompra
-	LEFT JOIN `core_estado_facturacion`       ON core_estado_facturacion.idEstado           = bodegas_servicios_facturacion.idEstado
-	".$z4."
-	ORDER BY bodegas_servicios_facturacion.F_Pago ASC, proveedor_listado.Nombre ASC, bodegas_servicios_facturacion.N_Doc ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-					
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrServicios,$row );
-	}
+	LEFT JOIN `core_estado_facturacion`       ON core_estado_facturacion.idEstado           = bodegas_servicios_facturacion.idEstado';
+	$SIS_where = $z4;
+	$SIS_order = 'bodegas_servicios_facturacion.F_Pago ASC, proveedor_listado.Nombre ASC, bodegas_servicios_facturacion.N_Doc ASC';
+	$arrServicios = array();
+	$arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturacion', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrServicios');
+
 	
 	$html = '';
 	/******************************************************/
@@ -7114,14 +7039,20 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			//busco el tipo de equipo
 			$Nombre_equipo = $data['Identificador'];
 			$NumSerie      = $data['NumSerie'];
-			$buscado       = 'elv';
-			$s_pos         = strpos($NumSerie, $buscado);
-
+			$buscado_1     = 'elv';
+			$buscado_2     = 'gen';
+			$s_pos_1       = strpos($NumSerie, $buscado_1);
+			$s_pos_2       = strpos($NumSerie, $buscado_2);
+			
 			// Nótese el uso de ===. Puesto que == simple no funcionará como se espera
 			// porque la posición de 'elv-' está en el 1° (primer) caracter.
-			if ($s_pos === false) {
-				$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']    = '<a href="view_crosscrane_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
-			} else {
+			if ($s_pos_1 === false) {
+				if ($s_pos_2 === false) {
+					$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']    = '<a href="view_crosscrane_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
+				}else{
+					$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']    = '<a href="view_generador_data.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Datos Generador" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-battery-full" aria-hidden="true"></i></a>';
+				}
+			}else{
 				$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']    = '<a href="view_crosscrane_estado_elev.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
 			}
 			
@@ -7131,11 +7062,11 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			$arrGruas[$xdanger][$data['idTelemetria']]['informe_activaciones']  = '<li><a href="view_telemetria_uso.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" class="iframe" style="white-space: normal;" ><i class="fa fa-clock-o" aria-hidden="true"></i> Uso Grua</a></li>';
 			$arrGruas[$xdanger][$data['idTelemetria']]['AlarmasPersonalizadas'] = '<li><a href="view_alertas_personalizadas.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas Personalizadas</a></li>';
 			//si tiene un generador
-			if(isset($data['idGenerador'])&&$data['idGenerador']==1){
+			/*if(isset($data['idGenerador'])&&$data['idGenerador']==1){
 				$arrGruas[$xdanger][$data['idTelemetria']]['Generador'] = '<li><a href="view_generador_data.php?view='.simpleEncode($data['idTelGenerador'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-battery-full" aria-hidden="true"></i> Datos Generador</a></li>';
 			}else{
 				$arrGruas[$xdanger][$data['idTelemetria']]['Generador'] = '';
-			}
+			}*/
 			//si utiliza carpeta ftp
 			if(isset($data['idUsoFTP'])&&$data['idUsoFTP']==1&&isset($data['FTP_Carpeta'])&&$data['FTP_Carpeta']!=''){
 				$arrGruas[$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '<li><a href="view_telemetria_data_files.php?view='.simpleEncode($data['FTP_Carpeta'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-video-camera" aria-hidden="true"></i> Camara</a></li>';
@@ -7256,7 +7187,6 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 														<ul class="dropdown-menu" style="right: 0;float: right;">
 															'.$grua['informe_activaciones'].'
 															'.$grua['AlarmasPersonalizadas'].'
-															'.$grua['Generador'].'
 															'.$grua['CarpetaFTP'].'
 														</ul>
 													</div>
@@ -7297,7 +7227,6 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 														<ul class="dropdown-menu" style="right: 0;float: right;">
 															'.$grua['informe_activaciones'].'
 															'.$grua['AlarmasPersonalizadas'].'
-															'.$grua['Generador'].'
 															'.$grua['CarpetaFTP'].'
 														</ul>
 													</div>
@@ -7338,7 +7267,6 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 														<ul class="dropdown-menu" style="right: 0;float: right;">
 															'.$grua['informe_activaciones'].'
 															'.$grua['AlarmasPersonalizadas'].'
-															'.$grua['Generador'].'
 															'.$grua['CarpetaFTP'].'
 														</ul>
 													</div>
@@ -9823,8 +9751,10 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 			//busco el tipo de equipo
 			$Nombre_equipo = $data['Identificador'];
 			$NumSerie      = $data['NumSerie'];
-			$buscado       = 'elv';
-			$s_pos         = strpos($NumSerie, $buscado);
+			$buscado_1     = 'elv';
+			$buscado_2     = 'gen';
+			$s_pos_1       = strpos($NumSerie, $buscado_1);
+			$s_pos_2       = strpos($NumSerie, $buscado_2);
 			
 			/****************************************************/
 			//Si esta en Planta
@@ -9837,10 +9767,14 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 			/****************************************************/
 			// Nótese el uso de ===. Puesto que == simple no funcionará como se espera
 			// porque la posición de 'elv-' está en el 1° (primer) caracter.
-			if ($s_pos === false) {
-				$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['crosscrane_estado']    = '<a href="view_crosscrane_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).$show_map.'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
-			} else {
-				$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['crosscrane_estado']    = '<a href="view_crosscrane_estado_elev.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).$show_map.'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
+			if ($s_pos_1 === false) {
+				if ($s_pos_2 === false) {
+					$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['crosscrane_estado'] = '<a href="view_crosscrane_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).$show_map.'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
+				}else{
+					$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['crosscrane_estado'] = '<a href="view_generador_data.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).$show_map.'" title="Datos Generador" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-battery-full" aria-hidden="true"></i></a>';
+				}
+			}else{
+				$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['crosscrane_estado'] = '<a href="view_crosscrane_estado_elev.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).$show_map.'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
 			}
 			
 			/****************************************************/
@@ -9849,11 +9783,11 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 			$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['informe_activaciones']  = '<li><a href="view_telemetria_uso.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" class="iframe" style="white-space: normal;" ><i class="fa fa-clock-o" aria-hidden="true"></i> Uso Grua</a></li>';
 			$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['AlarmasPersonalizadas'] = '<li><a href="view_alertas_personalizadas.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas Personalizadas</a></li>';
 			//si tiene un generador
-			if(isset($data['idGenerador'])&&$data['idGenerador']==1&&isset($data['idTelGenerador'])&&$data['idTelGenerador']!=''&&$data['idTelGenerador']!=0){
+			/*if(isset($data['idGenerador'])&&$data['idGenerador']==1&&isset($data['idTelGenerador'])&&$data['idTelGenerador']!=''&&$data['idTelGenerador']!=0){
 				$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['Generador'] = '<li><a href="view_generador_data.php?view='.simpleEncode($data['idTelGenerador'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-battery-full" aria-hidden="true"></i> Datos Generador</a></li>';
 			}else{
 				$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['Generador'] = '';
-			}
+			}*/
 			//si utiliza carpeta ftp
 			if(isset($data['idUsoFTP'])&&$data['idUsoFTP']==1&&isset($data['FTP_Carpeta'])&&$data['FTP_Carpeta']!=''){
 				$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '<li><a href="view_telemetria_data_files.php?view='.simpleEncode($data['FTP_Carpeta'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-video-camera" aria-hidden="true"></i> Camara</a></li>';
@@ -9991,7 +9925,6 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 																			<ul class="dropdown-menu" style="right: 0;float: right;">
 																				'.$grua['informe_activaciones'].'
 																				'.$grua['AlarmasPersonalizadas'].'
-																				'.$grua['Generador'].'
 																				'.$grua['CarpetaFTP'].'
 																			</ul>
 																		</div>
@@ -10032,7 +9965,6 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 																			<ul class="dropdown-menu" style="right: 0;float: right;">
 																				'.$grua['informe_activaciones'].'
 																				'.$grua['AlarmasPersonalizadas'].'
-																				'.$grua['Generador'].'
 																				'.$grua['CarpetaFTP'].'
 																			</ul>
 																		</div>
@@ -10073,7 +10005,6 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 																			<ul class="dropdown-menu" style="right: 0;float: right;">
 																				'.$grua['informe_activaciones'].'
 																				'.$grua['AlarmasPersonalizadas'].'
-																				'.$grua['Generador'].'
 																				'.$grua['CarpetaFTP'].'
 																			</ul>
 																		</div>
@@ -10150,7 +10081,6 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 																			<ul class="dropdown-menu" style="right: 0;float: right;">
 																				'.$grua['informe_activaciones'].'
 																				'.$grua['AlarmasPersonalizadas'].'
-																				'.$grua['Generador'].'
 																				'.$grua['CarpetaFTP'].'
 																			</ul>
 																		</div>
@@ -10191,7 +10121,6 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 																			<ul class="dropdown-menu" style="right: 0;float: right;">
 																				'.$grua['informe_activaciones'].'
 																				'.$grua['AlarmasPersonalizadas'].'
-																				'.$grua['Generador'].'
 																				'.$grua['CarpetaFTP'].'
 																			</ul>
 																		</div>
@@ -10232,7 +10161,6 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 																			<ul class="dropdown-menu" style="right: 0;float: right;">
 																				'.$grua['informe_activaciones'].'
 																				'.$grua['AlarmasPersonalizadas'].'
-																				'.$grua['Generador'].'
 																				'.$grua['CarpetaFTP'].'
 																			</ul>
 																		</div>

@@ -3,7 +3,7 @@
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
 if( ! defined('XMBCXRXSKGC')) {
-    die('No tienes acceso a esta carpeta o archivo.');
+    die('No tienes acceso a esta carpeta o archivo (Access Code 1006-002).');
 }
 /*******************************************************************************************************************/
 /*                                                                                                                 */
@@ -40,28 +40,28 @@ require_once '../A2XRXS_gears/xrxs_funciones/Helpers.Functions.Server.Web.php'; 
 /* Toma dos input y calcula valores*/
 function prod_print_value($tabla1, $input_1, $input_result_1, $input_result_2, $dbConn) {
     
-    $arrProductos = array();
-	$query = "SELECT 
-	".$tabla1.".idProducto AS IdAlgo,
+    /******************************************************/
+	$SIS_query = 
+    $tabla1.'.idProducto AS idAlgo,
 	sistema_productos_uml.Nombre AS Unimed,
-	proveedor_listado.Nombre AS Proveedor
-	FROM `".$tabla1."`
-	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml      = ".$tabla1.".idUml
-	LEFT JOIN `proveedor_listado`       ON proveedor_listado.idProveedor    = ".$tabla1.".idProveedor
-	ORDER BY sistema_productos_uml.Nombre ASC";
-	$resultado = mysqli_query($dbConn, $query);
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrProductos,$row );
-	}
+	proveedor_listado.Nombre AS Proveedor';
+	$SIS_join  = '
+	LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml   = '.$tabla1.'.idUml
+	LEFT JOIN `proveedor_listado`     ON proveedor_listado.idProveedor = '.$tabla1.'.idProveedor';
+	$SIS_where = '';
+	$SIS_order = 'sistema_productos_uml.Nombre ASC';
+	$arrProductos = array();
+	$arrProductos = db_select_array (false, $SIS_query, $tabla1, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 	
+	/******************************************************/
 	$cadena = '';			
 	$cadena .= '<script>';
 	foreach ($arrProductos as $prod) {
-		$cadena .= 'let id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
+		$cadena .= 'let id_data_'.$prod['idAlgo'].'= "'.$prod['Unimed'].'";';	
 	}
 	foreach ($arrProductos as $prod) {
 		if(isset($prod['Proveedor'])&&$prod['Proveedor']!=''){$prov=$prod['Proveedor'];}else{$prov='Sin proveedor';}
-		$cadena .= 'let id_prov_'.$prod['IdAlgo'].'= "'.$prov.'";';	
+		$cadena .= 'let id_prov_'.$prod['idAlgo'].'= "'.$prov.'";';	
 	}
 	$cadena .= '</script>';
 				
@@ -85,28 +85,28 @@ function prod_print_value($tabla1, $input_1, $input_result_1, $input_result_2, $
 /* Toma dos input y calcula valores*/
 function sell_print_value($tabla1, $input_1, $input_result_1, $input_result_2, $dbConn) {
     
-    $arrProductos = array();
-	$query = "SELECT 
-	".$tabla1.".idProducto AS IdAlgo,
+    /******************************************************/
+	$SIS_query = 
+    $tabla1.'.idProducto AS idAlgo,
 	sistema_productos_uml.Nombre AS Unimed,
-	clientes_listado.Nombre AS Cliente
-	FROM `".$tabla1."`
-	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = ".$tabla1.".idUml
-	LEFT JOIN `clientes_listado`        ON clientes_listado.idCliente    = ".$tabla1.".idCliente
-	ORDER BY sistema_productos_uml.Nombre";
-	$resultado = mysqli_query($dbConn, $query);
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrProductos,$row );
-	}
+	clientes_listado.Nombre AS Cliente';
+	$SIS_join  = '
+	LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = '.$tabla1.'.idUml
+	LEFT JOIN `clientes_listado`      ON clientes_listado.idCliente  = '.$tabla1.'.idCliente';
+	$SIS_where = '';
+	$SIS_order = 'sistema_productos_uml.Nombre ASC';
+	$arrProductos = array();
+	$arrProductos = db_select_array (false, $SIS_query, $tabla1, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 	
+	/******************************************************/
 	$cadena = '';			
 	$cadena .= '<script>';
 	foreach ($arrProductos as $prod) {
-		$cadena .= 'let id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
+		$cadena .= 'let id_data_'.$prod['idAlgo'].'= "'.$prod['Unimed'].'";';	
 	}
 	foreach ($arrProductos as $prod) {
 		if(isset($prod['Cliente'])&&$prod['Cliente']!=''){$prov=$prod['Cliente'];}else{$prov='Sin cliente';}
-		$cadena .= 'let id_prov_'.$prod['IdAlgo'].'= "'.$prov.'";';	
+		$cadena .= 'let id_prov_'.$prod['idAlgo'].'= "'.$prov.'";';	
 	}
 	$cadena .= '</script>';
 				
@@ -130,22 +130,21 @@ function sell_print_value($tabla1, $input_1, $input_result_1, $input_result_2, $
 /* Toma dos input y calcula valores*/
 function venta_print_value($tabla1, $input_1, $input_result_1, $dbConn) {
     
-    $arrProductos = array();
-	$query = "SELECT 
-	".$tabla1.".idProducto AS IdAlgo,
-	sistema_productos_uml.Nombre AS Unimed
-	FROM `".$tabla1."`
-	LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml      = ".$tabla1.".idUml
-	ORDER BY sistema_productos_uml.Nombre";
-	$resultado = mysqli_query($dbConn, $query);
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrProductos,$row );
-	}
+    /******************************************************/
+	$SIS_query = 
+    $tabla1.'.idProducto AS idAlgo,
+	sistema_productos_uml.Nombre AS Unimed';
+	$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = '.$tabla1.'.idUml';
+	$SIS_where = '';
+	$SIS_order = 'sistema_productos_uml.Nombre ASC';
+	$arrProductos = array();
+	$arrProductos = db_select_array (false, $SIS_query, $tabla1, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 	
+	/******************************************************/
 	$cadena = '';			
 	$cadena .= '<script>';
 	foreach ($arrProductos as $prod) {
-		$cadena .= 'let id_data_'.$prod['IdAlgo'].'= "'.$prod['Unimed'].'";';	
+		$cadena .= 'let id_data_'.$prod['idAlgo'].'= "'.$prod['Unimed'].'";';	
 	}
 	$cadena .= '</script>';
 				
@@ -206,35 +205,20 @@ function operacion_input($input_1, $input_2, $input_result_1, $input_result_2, $
 function prod_print_venta($idBodega, $dato, $tabla1, $tabla2, $input_select, $input_result_1, $input_result_2, 
 						  $input_result_3,$input_result_4, $dbConn) {
     
-   //Imprimo las variables
+	//Imprimo las variables
+	$SIS_query = 
+	$tabla1.'.idProducto,
+	'.$tabla1.'.'.$dato.' AS Valorizacion,
+	sistema_productos_uml.Nombre AS Unimed,		
+	(SELECT SUM(Cantidad_ing) AS ingreso FROM `'.$tabla2.'` WHERE idProducto = '.$tabla1.'.idProducto AND idBodega='.$idBodega.') AS ingreso,
+	(SELECT SUM(Cantidad_eg) AS egreso FROM `'.$tabla2.'` WHERE idProducto = '.$tabla1.'.idProducto AND idBodega='.$idBodega.') AS egreso';
+	$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = '.$tabla1.'.idUml';
+	$SIS_where = $tabla1.'.idEstado=1';
+	$SIS_order = 'sistema_productos_uml.Nombre ASC';
 	$arrTipo = array();
-	$query = "SELECT 
-	".$tabla1.".idProducto,
-	".$tabla1.".".$dato." AS Valorizacion,
-	sistema_productos_uml.Nombre AS Unimed,
+	$arrTipo = db_select_array (false, $SIS_query, $tabla1, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTipo');
 				
-		(SELECT 
-		SUM(Cantidad_ing) AS ingreso
-		FROM `".$tabla2."`
-		WHERE idProducto = ".$tabla1.".idProducto 
-		AND idBodega=".$idBodega.") AS ingreso,
-					
-		(SELECT 
-		SUM(Cantidad_eg) AS egreso
-		FROM `".$tabla2."`
-		WHERE idProducto = ".$tabla1.".idProducto 
-		AND idBodega=".$idBodega.") AS egreso
-					
-	FROM `".$tabla1."`
-	LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = ".$tabla1.".idUml
-	WHERE ".$tabla1.".idEstado=1
-	ORDER BY sistema_productos_uml.Nombre";
-	$resultado = mysqli_query($dbConn, $query);
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrTipo,$row );
-	}
-				
-	
+	/***********************************************/
 	$cadena = '';
 	
 	$cadena .= '<script>';
@@ -249,10 +233,7 @@ function prod_print_venta($idBodega, $dato, $tabla1, $tabla2, $input_select, $in
 		$cadena .= 'let existencia_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';	
 	}
 	$cadena .= '</script>';			
-							
 	
-				
-    
     $cadena .= '
     <script>
     document.getElementById("'.$input_select.'").onchange = function() {myFunction_'.$input_select.'()};
@@ -356,26 +337,20 @@ function checkbrute($usuario, $email, $IP_Client, $table, $dbConn) {
 	
 	//Consulto si el usuario ha tratado de ingresar en reiteradas ocaciones
 	if(isset($usuario)&&$usuario!=''&&$num_rows==0){
-		$query      = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE usuario = '".$usuario."' AND Time > '".$valid_attempts."'";
-		$resultado  = mysqli_query($dbConn, $query);
-		$rowSis     = mysqli_fetch_array($resultado);
-		$num_rows   = $num_rows + $rowSis['Acceso'];
+		$rowSis = db_select_nrows (false, 'idAcceso', $table, '', 'usuario = "'.$usuario.'" AND Time > "'.$valid_attempts.'"', $dbConn, 'rowSis', basename($_SERVER["REQUEST_URI"], ".php"), 'rowSis');
+		$num_rows   = $num_rows + $rowSis;
 	}
 
 	//Consulto si el ip ha tratado de ingresar en reiteradas ocaciones
 	if(isset($IP_Client)&&$IP_Client!=''&&$num_rows==0){
-		$query      = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE IP_Client = '".$IP_Client."' AND Time > '".$valid_attempts."'";
-		$resultado  = mysqli_query($dbConn, $query);
-		$rowSis     = mysqli_fetch_array($resultado);
-		$num_rows   = $num_rows + $rowSis['Acceso'];
+		$rowSis = db_select_nrows (false, 'idAcceso', $table, '', 'IP_Client = "'.$IP_Client.'" AND Time > "'.$valid_attempts.'"', $dbConn, 'rowSis', basename($_SERVER["REQUEST_URI"], ".php"), 'rowSis');
+		$num_rows   = $num_rows + $rowSis;
 	}
 	
 	//Consulto si el ip ha tratado de ingresar en reiteradas ocaciones
 	if(isset($email)&&$email!=''&&$num_rows==0){
-		$query      = "SELECT COUNT(idAcceso) AS Acceso FROM `".$table."` WHERE email = '".$email."' AND Time > '".$valid_attempts."'";
-		$resultado  = mysqli_query($dbConn, $query);
-		$rowSis     = mysqli_fetch_array($resultado);
-		$num_rows   = $num_rows + $rowSis['Acceso'];
+		$rowSis = db_select_nrows (false, 'idAcceso', $table, '', 'email = "'.$email.'" AND Time > "'.$valid_attempts.'"', $dbConn, 'rowSis', basename($_SERVER["REQUEST_URI"], ".php"), 'rowSis');
+		$num_rows   = $num_rows + $rowSis;
 	}
    
     // Si ha habido más de 5 intentos de inicio de sesión fallidos.
@@ -453,5 +428,66 @@ function inLocationPoint($arrZonas, $pointLocation, $GeoLatitud, $GeoLongitud){
 	}
 	//devuelvo
 	return $nx;
+}
+/*******************************************************************************************************************/
+//Funcion mostrar superficies
+function SuperficieDisponible($idUniMed, $SupDisp, $UniMed){
+	
+	/********************************************************/
+	//Definicion de errores
+	$errorn = 0;
+	//se definen las opciones disponibles
+	$tipos = array(1,4);
+	//verifico si el dato ingresado existe dentro de las opciones
+	if (!in_array($idUniMed, $tipos)) {
+		alert_post_data(4,1,1, 'La configuracion $idUniMed ('.$idUniMed.') entregada no esta dentro de las opciones');
+		$errorn++;
+	}
+	/********************************************************/
+	//Ejecucion si no hay errores
+	if($errorn==0){
+		
+		/********************************************/
+		//Si se envia valores
+		if(isset($SupDisp)&&$SupDisp!=0){
+			switch ($idUniMed) {
+				/********************************************/
+				//hectareas
+				case 1:
+					$S_1 = $SupDisp;
+					$S_2 = $SupDisp * 10000;
+					$U_1 = $UniMed;
+					$U_2 = 'm<sup>2</sup>';
+					
+					$data = Cantidades_decimales_justos($S_1).' '.$U_1;
+					$data.= ' / ';
+					$data.= Cantidades_decimales_justos($S_2).' '.$U_2;
+					
+					
+					break;
+				/********************************************/
+				//metro cuadrado
+				case 4:
+					$S_1 = $SupDisp / 10000;
+					$S_2 = $SupDisp;
+					$U_1 = 'hás';
+					$U_2 = $UniMed;
+					
+					$data = Cantidades_decimales_justos($S_1).' '.$U_1;
+					$data.= ' / ';
+					$data.= Cantidades_decimales_justos($S_2).' '.$U_2;
+					
+					break;
+			}
+		/********************************************/
+		//si no hay valor solo devuelve unidad medida
+		}else{
+			$data = $UniMed;
+		}	
+		
+		/********************************************/
+		//devuelvo
+		return $data;	
+	}
 }
 ?>

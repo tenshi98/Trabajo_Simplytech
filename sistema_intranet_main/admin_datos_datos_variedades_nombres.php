@@ -50,56 +50,25 @@ if (isset($_GET['edited'])){$error['edited'] = 'sucess/Permiso asignado correcta
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT Nombre
-FROM `core_sistemas`
-WHERE idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'core_sistemas.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Listado de productos
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 variedades_listado.idProducto,
 variedades_listado.Nombre,
 sistema_variedades_categorias.Nombre AS Categoria,
-(SELECT COUNT(idSisProd) FROM core_sistemas_variedades_listado WHERE idProducto = variedades_listado.idProducto AND idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']." LIMIT 1) AS contar,
-(SELECT idSisProd FROM core_sistemas_variedades_listado WHERE idProducto = variedades_listado.idProducto AND idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']." LIMIT 1) AS idpermiso
-FROM `core_sistemas_variedades_categorias`
+(SELECT COUNT(idSisProd) FROM core_sistemas_variedades_listado WHERE idProducto = variedades_listado.idProducto AND idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'].' LIMIT 1) AS contar,
+(SELECT idSisProd        FROM core_sistemas_variedades_listado WHERE idProducto = variedades_listado.idProducto AND idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'].' LIMIT 1) AS idpermiso';
+$SIS_join  = '
 LEFT JOIN `variedades_listado`             ON variedades_listado.idCategoria             = core_sistemas_variedades_categorias.idCategoria
-LEFT JOIN `sistema_variedades_categorias`  ON sistema_variedades_categorias.idCategoria  = variedades_listado.idCategoria
-
-WHERE 
-core_sistemas_variedades_categorias.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
-AND variedades_listado.idEstado = 1
-ORDER BY variedades_listado.Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
+LEFT JOIN `sistema_variedades_categorias`  ON sistema_variedades_categorias.idCategoria  = variedades_listado.idCategoria';
+$SIS_where = 'core_sistemas_variedades_categorias.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'].' AND variedades_listado.idEstado = 1';
+$SIS_order = 'variedades_listado.Nombre ASC';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'core_sistemas_variedades_categorias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
 /******************************************************/
 //Accesos a bodegas de productos
@@ -133,11 +102,9 @@ $trans_35 = "cross_shipping_consolidacion.php";
 $trans_36 = "cross_shipping_consolidacion_aprobar.php";
 $trans_37 = "cross_shipping_consolidacion_aprobar_auto.php";
 
-
-
+/************************************/
 //realizo la consulta
-$query = "SELECT
-
+$SIS_query = '
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_1."'  AND visualizacion!=9999 LIMIT 1) AS tran_1,
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_2."'  AND visualizacion!=9999 LIMIT 1) AS tran_2,
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_3."'  AND visualizacion!=9999 LIMIT 1) AS tran_3,
@@ -164,24 +131,10 @@ $query = "SELECT
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_36."'  AND visualizacion!=9999 LIMIT 1) AS tran_36,
 (SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_37."'  AND visualizacion!=9999 LIMIT 1) AS tran_37,
 
-idUsuario
-
-FROM usuarios_listado
-WHERE usuarios_listado.idUsuario='1' "; 
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata_x = mysqli_fetch_assoc ($resultado);
+idUsuario';
+$SIS_join  = '';
+$SIS_where = 'usuarios_listado.idUsuario=1';
+$rowdata_x = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata_x');
 
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
@@ -201,6 +154,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$Count_Variedades   = $rowdata_x['tran_31'] + $rowdata_x['tran_32'] + $rowdata_x['tran_33'] + $rowdata_x['tran_34'];
 	$Count_Shipping     = $rowdata_x['tran_35'] + $rowdata_x['tran_36'] + $rowdata_x['tran_37'];
 }
+
 ?>
 
 <div class="col-sm-12">

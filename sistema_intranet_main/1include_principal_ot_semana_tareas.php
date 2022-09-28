@@ -11,48 +11,31 @@ $diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7;
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
 //verifico el tipo de usuario
-$z = 'WHERE idOT!=0';	
-$z.=" AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-
+$SIS_where = 'idOT!=0';	
+$SIS_where.= " AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 //verifica las ot generadas dentro del mes y que esten programadas
 if(isset($_GET["estado"])&&$_GET["estado"]==1){
 	//dentro de la semana
-	$z.=' AND f_programacion_Semana='.semana_actual();
+	$SIS_where.=' AND f_programacion_Semana='.semana_actual();
 //verifica las ot que ya esten atrasadas	
 }elseif(isset($_GET["estado"])&&$_GET["estado"]==2){
 	//anterior a la semana
-	$z.=' AND f_programacion_Semana<'.semana_actual();
+	$SIS_where.=' AND f_programacion_Semana<'.semana_actual();
 }
 //dentro del año
-$z.=' AND f_programacion_Ano='.ano_actual();
+$SIS_where.=' AND f_programacion_Ano='.ano_actual();
 //con el estado de programadas
-$z.=' AND idEstado=1';
+$SIS_where.=' AND idEstado=1';
 
-	
 //Traigo los eventos guardados en la base de datos
+$SIS_query = 'idOT, f_programacion_Dia, f_programacion_Semana, f_programacion_Mes, idEstado';
+$SIS_join  = '';
+$SIS_order = 'f_programacion ASC';
 $arrOT = array();
-$query = "SELECT idOT, f_programacion_Dia, f_programacion_Semana, f_programacion_Mes, idEstado
-FROM `orden_trabajo_tareas_listado`
-".$z." 
-ORDER BY f_programacion ASC  ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrOT,$row );
-}
+$arrOT = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOT');
 
 ?>
+
 <style>
 .tooltip {
     position: initial!important;
