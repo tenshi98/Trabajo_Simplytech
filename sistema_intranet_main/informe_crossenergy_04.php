@@ -37,7 +37,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 }
 
 //Obtengo los datos
-$rowdata = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowdata = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Temporales
 $Subquery    = '';
@@ -61,48 +61,48 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 //cierro subquery
 $Subquery_2 .= ') AS Total';
 
+//valido fechas
+if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){   $f_inicio  = $_GET['f_inicio'];   }else{$f_inicio  = fecha_actual();}
+if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ $f_termino = $_GET['f_termino'];  }else{$f_termino = fecha_actual();}
 
+$Mes_01 = fecha2NMes($f_inicio) - 1;
+$Mes_02 = fecha2NMes($f_inicio) - 2;
+$Mes_03 = fecha2NMes($f_inicio) - 3;
+$Mes_04 = fecha2NMes($f_inicio) - 4;
+$Mes_05 = fecha2NMes($f_inicio) - 5;
+$Mes_06 = fecha2NMes($f_inicio) - 6;
+$Mes_07 = fecha2NMes($f_inicio) - 7;
+$Mes_08 = fecha2NMes($f_inicio) - 8;
+$Mes_09 = fecha2NMes($f_inicio) - 9;
+$Mes_10 = fecha2NMes($f_inicio) - 10;
+$Mes_11 = fecha2NMes($f_inicio) - 11;
+$Mes_12 = fecha2NMes($f_inicio) - 11;
 
+$Ano_01 = fecha2Ano($f_inicio);
+$Ano_02 = fecha2Ano($f_inicio);
+$Ano_03 = fecha2Ano($f_inicio);
+$Ano_04 = fecha2Ano($f_inicio);
+$Ano_05 = fecha2Ano($f_inicio);
+$Ano_06 = fecha2Ano($f_inicio);
+$Ano_07 = fecha2Ano($f_inicio);
+$Ano_08 = fecha2Ano($f_inicio);
+$Ano_09 = fecha2Ano($f_inicio);
+$Ano_10 = fecha2Ano($f_inicio);
+$Ano_11 = fecha2Ano($f_inicio);
+$Ano_12 = fecha2Ano($f_inicio);
 
-
-$Mes_01 = fecha2NMes($_GET['f_inicio']) - 1;
-$Mes_02 = fecha2NMes($_GET['f_inicio']) - 2;
-$Mes_03 = fecha2NMes($_GET['f_inicio']) - 3;
-$Mes_04 = fecha2NMes($_GET['f_inicio']) - 4;
-$Mes_05 = fecha2NMes($_GET['f_inicio']) - 5;
-$Mes_06 = fecha2NMes($_GET['f_inicio']) - 6;
-$Mes_07 = fecha2NMes($_GET['f_inicio']) - 7;
-$Mes_08 = fecha2NMes($_GET['f_inicio']) - 8;
-$Mes_09 = fecha2NMes($_GET['f_inicio']) - 9;
-$Mes_10 = fecha2NMes($_GET['f_inicio']) - 10;
-$Mes_11 = fecha2NMes($_GET['f_inicio']) - 11;
-$Mes_12 = fecha2NMes($_GET['f_inicio']) - 11;
-
-$Ano_01 = fecha2Ano($_GET['f_inicio']);
-$Ano_02 = fecha2Ano($_GET['f_inicio']);
-$Ano_03 = fecha2Ano($_GET['f_inicio']);
-$Ano_04 = fecha2Ano($_GET['f_inicio']);
-$Ano_05 = fecha2Ano($_GET['f_inicio']);
-$Ano_06 = fecha2Ano($_GET['f_inicio']);
-$Ano_07 = fecha2Ano($_GET['f_inicio']);
-$Ano_08 = fecha2Ano($_GET['f_inicio']);
-$Ano_09 = fecha2Ano($_GET['f_inicio']);
-$Ano_10 = fecha2Ano($_GET['f_inicio']);
-$Ano_11 = fecha2Ano($_GET['f_inicio']);
-$Ano_12 = fecha2Ano($_GET['f_inicio']);
-
-if($Mes_01 < 1){ $Mes_01 = (12 + fecha2NMes($_GET['f_inicio'])) - 1;  $Ano_01 = $Ano_01 - 1; }
-if($Mes_02 < 1){ $Mes_02 = (12 + fecha2NMes($_GET['f_inicio'])) - 2;  $Ano_02 = $Ano_02 - 1; }
-if($Mes_03 < 1){ $Mes_03 = (12 + fecha2NMes($_GET['f_inicio'])) - 3;  $Ano_03 = $Ano_03 - 1; }
-if($Mes_04 < 1){ $Mes_04 = (12 + fecha2NMes($_GET['f_inicio'])) - 4;  $Ano_04 = $Ano_04 - 1; }
-if($Mes_05 < 1){ $Mes_05 = (12 + fecha2NMes($_GET['f_inicio'])) - 5;  $Ano_05 = $Ano_05 - 1; }
-if($Mes_06 < 1){ $Mes_06 = (12 + fecha2NMes($_GET['f_inicio'])) - 6;  $Ano_06 = $Ano_06 - 1; }
-if($Mes_07 < 1){ $Mes_07 = (12 + fecha2NMes($_GET['f_inicio'])) - 7;  $Ano_07 = $Ano_07 - 1; }
-if($Mes_08 < 1){ $Mes_08 = (12 + fecha2NMes($_GET['f_inicio'])) - 8;  $Ano_08 = $Ano_08 - 1; }
-if($Mes_09 < 1){ $Mes_09 = (12 + fecha2NMes($_GET['f_inicio'])) - 9;  $Ano_09 = $Ano_09 - 1; }
-if($Mes_10 < 1){ $Mes_10 = (12 + fecha2NMes($_GET['f_inicio'])) - 10; $Ano_10 = $Ano_10 - 1; }
-if($Mes_11 < 1){ $Mes_11 = (12 + fecha2NMes($_GET['f_inicio'])) - 11; $Ano_11 = $Ano_11 - 1; }
-if($Mes_12 < 1){ $Mes_12 = (12 + fecha2NMes($_GET['f_inicio'])) - 12; $Ano_12 = $Ano_12 - 1; }
+if($Mes_01 < 1){ $Mes_01 = (12 + fecha2NMes($f_inicio)) - 1;  $Ano_01 = $Ano_01 - 1; }
+if($Mes_02 < 1){ $Mes_02 = (12 + fecha2NMes($f_inicio)) - 2;  $Ano_02 = $Ano_02 - 1; }
+if($Mes_03 < 1){ $Mes_03 = (12 + fecha2NMes($f_inicio)) - 3;  $Ano_03 = $Ano_03 - 1; }
+if($Mes_04 < 1){ $Mes_04 = (12 + fecha2NMes($f_inicio)) - 4;  $Ano_04 = $Ano_04 - 1; }
+if($Mes_05 < 1){ $Mes_05 = (12 + fecha2NMes($f_inicio)) - 5;  $Ano_05 = $Ano_05 - 1; }
+if($Mes_06 < 1){ $Mes_06 = (12 + fecha2NMes($f_inicio)) - 6;  $Ano_06 = $Ano_06 - 1; }
+if($Mes_07 < 1){ $Mes_07 = (12 + fecha2NMes($f_inicio)) - 7;  $Ano_07 = $Ano_07 - 1; }
+if($Mes_08 < 1){ $Mes_08 = (12 + fecha2NMes($f_inicio)) - 8;  $Ano_08 = $Ano_08 - 1; }
+if($Mes_09 < 1){ $Mes_09 = (12 + fecha2NMes($f_inicio)) - 9;  $Ano_09 = $Ano_09 - 1; }
+if($Mes_10 < 1){ $Mes_10 = (12 + fecha2NMes($f_inicio)) - 10; $Ano_10 = $Ano_10 - 1; }
+if($Mes_11 < 1){ $Mes_11 = (12 + fecha2NMes($f_inicio)) - 11; $Ano_11 = $Ano_11 - 1; }
+if($Mes_12 < 1){ $Mes_12 = (12 + fecha2NMes($f_inicio)) - 12; $Ano_12 = $Ano_12 - 1; }
 
 
 if($Mes_01<10){$Mesx_01 = '0'.$Mes_01;}else{$Mesx_01 = $Mes_01;}
@@ -147,7 +147,7 @@ $Fecha_Term_12 = Fecha_ultimo_dia_mes($Fecha_Ini_12);
 /*****************************************/
 $SIS_query = 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2;
 $SIS_join  = '';
-$SIS_where = 'idTelemetria = '.$_GET['idTelemetria'].' AND (TimeStamp BETWEEN "'.$_GET['f_inicio'].' '.$_GET['h_inicio'] .'" AND "'.$_GET['f_termino'].' '.$_GET['h_termino'].'")  GROUP BY TimeStamp';
+$SIS_where = 'idTelemetria = '.$_GET['idTelemetria'].' AND (TimeStamp BETWEEN "'.$f_inicio.' '.$_GET['h_inicio'] .'" AND "'.$f_termino.' '.$_GET['h_termino'].'")  GROUP BY TimeStamp';
 $SIS_order = 'Total DESC LIMIT 2';
 $arrDemanda_0 = array();
 $arrDemanda_0 = db_select_array (false, $SIS_query, 'telemetria_listado_crossenergy_hora', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrDemanda');
@@ -216,121 +216,13 @@ foreach ($arrDemanda_0 as $data) {
 }
 //recorro
 $xx = 0;
-foreach ($arrDemanda_1 as $data) {
+foreach ($arrDemanda_12 as $data) {
 	if($xx==0){
-		$Temp_1 .= "'".$Ano_01." - ".$Mes_01."',";
+		$Temp_1 .= "'".$Ano_12." - ".$Mes_12."',";
 		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
 		$xx++;
 	}else{
-		$Temp_2 .= "'".$Ano_01." - ".$Mes_01."',";
-		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
-}
-//recorro
-$xx = 0;
-foreach ($arrDemanda_2 as $data) {
-	if($xx==0){
-		$Temp_1 .= "'".$Ano_02." ".$Mes_02."',";
-		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-		$xx++;
-	}else{
-		$Temp_2 .= "'".$Ano_02." ".$Mes_02."',";
-		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
-}
-//recorro
-$xx = 0;
-foreach ($arrDemanda_3 as $data) {
-	if($xx==0){
-		$Temp_1 .= "'".$Ano_03." ".$Mes_03."',";
-		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-		$xx++;
-	}else{
-		$Temp_2 .= "'".$Ano_03." ".$Mes_03."',";
-		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
-}
-//recorro
-$xx = 0;
-foreach ($arrDemanda_4 as $data) {
-	if($xx==0){
-		$Temp_1 .= "'".$Ano_04." ".$Mes_04."',";
-		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-		$xx++;
-	}else{
-		$Temp_2 .= "'".$Ano_04." ".$Mes_04."',";
-		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
-}
-//recorro
-$xx = 0;
-foreach ($arrDemanda_5 as $data) {
-	if($xx==0){
-		$Temp_1 .= "'".$Ano_05." ".$Mes_05."',";
-		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-		$xx++;
-	}else{
-		$Temp_2 .= "'".$Ano_05." ".$Mes_05."',";
-		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
-}
-//recorro
-$xx = 0;
-foreach ($arrDemanda_6 as $data) {
-	if($xx==0){
-		$Temp_1 .= "'".$Ano_06." ".$Mes_06."',";
-		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-		$xx++;
-	}else{
-		$Temp_2 .= "'".$Ano_06." ".$Mes_06."',";
-		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
-}
-//recorro
-$xx = 0;
-foreach ($arrDemanda_7 as $data) {
-	if($xx==0){
-		$Temp_1 .= "'".$Ano_07." ".$Mes_07."',";
-		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-		$xx++;
-	}else{
-		$Temp_2 .= "'".$Ano_07." ".$Mes_07."',";
-		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
-}
-//recorro
-$xx = 0;
-foreach ($arrDemanda_8 as $data) {
-	if($xx==0){
-		$Temp_1 .= "'".$Ano_08." ".$Mes_08."',";
-		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-		$xx++;
-	}else{
-		$Temp_2 .= "'".$Ano_08." ".$Mes_08."',";
-		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
-}
-//recorro
-$xx = 0;
-foreach ($arrDemanda_9 as $data) {
-	if($xx==0){
-		$Temp_1 .= "'".$Ano_09." ".$Mes_09."',";
-		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-		$xx++;
-	}else{
-		$Temp_2 .= "'".$Ano_09." ".$Mes_09."',";
-		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
-}
-//recorro
-$xx = 0;
-foreach ($arrDemanda_10 as $data) {
-	if($xx==0){
-		$Temp_1 .= "'".$Ano_10." ".$Mes_10."',";
-		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-		$xx++;
-	}else{
-		$Temp_2 .= "'".$Ano_10." ".$Mes_10."',";
+		$Temp_2 .= "'".$Ano_12." - ".$Mes_12."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
 	}	
 }
@@ -338,23 +230,131 @@ foreach ($arrDemanda_10 as $data) {
 $xx = 0;
 foreach ($arrDemanda_11 as $data) {
 	if($xx==0){
-		$Temp_1 .= "'".$Ano_11." ".$Mes_11."',";
+		$Temp_1 .= "'".$Ano_11." - ".$Mes_11."',";
 		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
 		$xx++;
 	}else{
-		$Temp_2 .= "'".$Ano_11." ".$Mes_11."',";
+		$Temp_2 .= "'".$Ano_11." - ".$Mes_11."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
 	}	
 }
 //recorro
 $xx = 0;
-foreach ($arrDemanda_12 as $data) {
+foreach ($arrDemanda_10 as $data) {
 	if($xx==0){
-		$Temp_1 .= "'".$Ano_12." ".$Mes_12."',";
+		$Temp_1 .= "'".$Ano_10." - ".$Mes_10."',";
 		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
 		$xx++;
 	}else{
-		$Temp_2 .= "'".$Ano_12." ".$Mes_12."',";
+		$Temp_2 .= "'".$Ano_10." - ".$Mes_10."',";
+		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+	}	
+}
+//recorro
+$xx = 0;
+foreach ($arrDemanda_9 as $data) {
+	if($xx==0){
+		$Temp_1 .= "'".$Ano_09." - ".$Mes_09."',";
+		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+		$xx++;
+	}else{
+		$Temp_2 .= "'".$Ano_09." - ".$Mes_09."',";
+		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+	}	
+}
+//recorro
+$xx = 0;
+foreach ($arrDemanda_8 as $data) {
+	if($xx==0){
+		$Temp_1 .= "'".$Ano_08." - ".$Mes_08."',";
+		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+		$xx++;
+	}else{
+		$Temp_2 .= "'".$Ano_08." - ".$Mes_08."',";
+		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+	}	
+}
+//recorro
+$xx = 0;
+foreach ($arrDemanda_7 as $data) {
+	if($xx==0){
+		$Temp_1 .= "'".$Ano_07." - ".$Mes_07."',";
+		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+		$xx++;
+	}else{
+		$Temp_2 .= "'".$Ano_07." - ".$Mes_07."',";
+		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+	}	
+}
+//recorro
+$xx = 0;
+foreach ($arrDemanda_6 as $data) {
+	if($xx==0){
+		$Temp_1 .= "'".$Ano_06." - ".$Mes_06."',";
+		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+		$xx++;
+	}else{
+		$Temp_2 .= "'".$Ano_06." - ".$Mes_06."',";
+		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+	}	
+}
+//recorro
+$xx = 0;
+foreach ($arrDemanda_5 as $data) {
+	if($xx==0){
+		$Temp_1 .= "'".$Ano_05." - ".$Mes_05."',";
+		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+		$xx++;
+	}else{
+		$Temp_2 .= "'".$Ano_05." - ".$Mes_05."',";
+		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+	}	
+}
+//recorro
+$xx = 0;
+foreach ($arrDemanda_4 as $data) {
+	if($xx==0){
+		$Temp_1 .= "'".$Ano_04." - ".$Mes_04."',";
+		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+		$xx++;
+	}else{
+		$Temp_2 .= "'".$Ano_04." - ".$Mes_04."',";
+		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+	}	
+}
+//recorro
+$xx = 0;
+foreach ($arrDemanda_3 as $data) {
+	if($xx==0){
+		$Temp_1 .= "'".$Ano_03." - ".$Mes_03."',";
+		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+		$xx++;
+	}else{
+		$Temp_2 .= "'".$Ano_03." - ".$Mes_03."',";
+		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+	}	
+}
+//recorro
+$xx = 0;
+foreach ($arrDemanda_2 as $data) {
+	if($xx==0){
+		$Temp_1 .= "'".$Ano_02." - ".$Mes_02."',";
+		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+		$xx++;
+	}else{
+		$Temp_2 .= "'".$Ano_02." - ".$Mes_02."',";
+		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+	}	
+}
+//recorro
+$xx = 0;
+foreach ($arrDemanda_1 as $data) {
+	if($xx==0){
+		$Temp_1 .= "'".$Ano_01." - ".$Mes_01."',";
+		$Data_1 .= floatval(number_format($data['Total'], 2, '.', '')).',';
+		$xx++;
+	}else{
+		$Temp_2 .= "'".$Ano_01." - ".$Mes_01."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
 	}	
 }
@@ -391,7 +391,7 @@ $Graphics_markerLine_1  = "var markerLine = [''];";
 		</header>
 		<div class="table-responsive" id="grf">	
 			<?php 
-				$Titulo = 'Demanda de suministro (Periodo: '.$_GET['f_inicio'].' al '.$_GET['f_termino'].' / Horario: '.$_GET['h_inicio'].'-'.$_GET['h_termino'].')';
+				$Titulo = 'Demanda de suministro (Periodo: '.$_GET['h_inicio'].'-'.$f_inicio.' al '.$_GET['h_termino'].'-'.$f_termino.')';
 				echo GraphBarr_1('graphBarra_1', $Titulo, 'Fecha', 'kW', $Graphics_xData_0, $Graphics_yData_0, $Graphics_names_0, $Graphics_info_0, $Graphics_markerColor_0, $Graphics_markerLine_0,1, 0); 
 			?>	
 			<?php 

@@ -117,7 +117,7 @@ $arrTelemetria = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_
 /*********************************************************/	
 //Se consultan datos
 $arrGrupos = array();
-$arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 				
 $arrFinalGrupos = array();
 foreach ($arrGrupos as $sen) { 

@@ -1128,7 +1128,7 @@ require_once '0_validate_user_1.php';
 					
 				// inserto los datos de registro en la db
 				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
-				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
 				
 			}
 			//Si es una maquina la que esta tratando de entrar
@@ -1147,7 +1147,7 @@ require_once '0_validate_user_1.php';
 					
 				// inserto los datos de registro en la db
 				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
-				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
 				
 			}
 					
@@ -1704,7 +1704,7 @@ require_once '0_validate_user_1.php';
 					
 				// inserto los datos de registro en la db
 				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
-				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
 				
 			}
 			//Si es una maquina la que esta tratando de entrar
@@ -1723,7 +1723,7 @@ require_once '0_validate_user_1.php';
 					
 				// inserto los datos de registro en la db
 				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
-				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
 				
 			}
 			
@@ -1787,7 +1787,7 @@ require_once '0_validate_user_1.php';
 					
 					// inserto los datos de registro en la db
 					$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
-					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
 					
 				}
 			
@@ -1795,99 +1795,6 @@ require_once '0_validate_user_1.php';
 					
 			}
 
-		break;	
-/*******************************************************************************************************************/
-		//Agrega un permiso al usuario
-		case 'equipo_tel_add':	
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			//variables
-			$id_usuario     = $_GET['id'];
-			$idTelemetria   = $_GET['equipo_tel_add'];
-			
-			/*******************************************************************/
-			//variables
-			$ndata_1 = 0;
-			//Se verifica si el dato existe
-			if(isset($idTelemetria)&&$idTelemetria!=''&&isset($id_usuario)&&$id_usuario!=''){
-				$ndata_1 = db_select_nrows (false, 'idTelemetria', 'usuarios_equipos_telemetria', '', "idTelemetria='".$idTelemetria."' AND idUsuario='".$id_usuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			}
-			//generacion de errores
-			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso al equipo ya fue otorgado';}
-			/*******************************************************************/
-	
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				//filtros
-				if(isset($id_usuario) && $id_usuario != ''){     $SIS_data  = "'".$id_usuario."'" ;     }else{$SIS_data  = "''";}
-				if(isset($idTelemetria) && $idTelemetria != ''){ $SIS_data .= ",'".$idTelemetria."'" ;  }else{$SIS_data .= ",''";}
-				
-				// inserto los datos de registro en la db
-				$SIS_columns = 'idUsuario, idTelemetria';
-				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_equipos_telemetria', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-				//Si ejecuto correctamente la consulta
-				if($ultimo_id!=0){
-					//redirijo
-					header( 'Location: '.$location.'&edited=true' );
-					die;
-				}
-			
-			}
-			
-			
-		break;	
-/*******************************************************************************************************************/
-		//borra un permiso del usuario
-		case 'equipo_tel_del':	
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			//Variable
-			$errorn = 0;
-			
-			//verifico si se envia un entero
-			if((!validarNumero($_GET['equipo_tel_del']) OR !validaEntero($_GET['equipo_tel_del']))&&$_GET['equipo_tel_del']!=''){
-				$indice = simpleDecode($_GET['equipo_tel_del'], fecha_actual());
-			}else{
-				$indice = $_GET['equipo_tel_del'];
-				//guardo el log
-				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
-			}
-			
-			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
-				$errorn++;
-			}
-			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
-				$errorn++;
-			}
-			
-			if($errorn==0){
-				//se borran los datos
-				$resultado = db_delete_data (false, 'usuarios_equipos_telemetria', 'idEquipoTelPermiso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				//Si ejecuto correctamente la consulta
-				if($resultado==true){
-					
-					//redirijo
-					header( 'Location: '.$location.'&edited=true' );
-					die;
-					
-				}
-			}else{
-				//se valida hackeo
-				require_once '0_hacking_1.php';
-			}
-			
-			
-			
 		break;	
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
@@ -2298,8 +2205,6 @@ require_once '0_validate_user_1.php';
 				require_once '0_hacking_1.php';
 			}
 			
-			
-			
 
 		break;	
 		
@@ -2686,55 +2591,11 @@ require_once '0_validate_user_1.php';
 			
 			
 		
-		break;	
-		
+		break;		
 /*******************************************************************************************************************/
-		//se dan permisos al usuario
-		case 'prm_add_all_tel':
-		
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+		//Agrega un permiso al usuario
+		case 'equipo_tel_add':	
 			
-			//Verifico permisos a las transacciones
-			$SIS_query    = 'telemetria_listado.idTelemetria, (SELECT COUNT(idTelemetria) FROM usuarios_equipos_telemetria WHERE idTelemetria = telemetria_listado.idTelemetria AND idUsuario = '.$_GET['idUsuario'].' LIMIT 1) AS contar';
-			$SIS_join     = '';
-			$SIS_where    = 'telemetria_listado.idSistema = '.$_GET['idSistema'].' AND telemetria_listado.idEstado=1';
-			$SIS_order    = 'telemetria_listado.idSistema ASC, telemetria_listado.Nombre ASC';
-			$arrContratos = array();
-			$arrContratos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
-			/****************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
-				/************************************************************************************/
-				//Se entregan los permisos relacionados a la caja
-				foreach ($arrContratos as $cont) {
-					//Si no se ha entregado el permiso
-					if ( $cont['contar']!='1' ) {
-						//filtros
-						if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){        $SIS_data  = "'".$_GET['idUsuario']."'" ;      }else{$SIS_data  = "''";}
-						if(isset($cont['idTelemetria']) && $cont['idTelemetria'] != ''){  $SIS_data .= ",'".$cont['idTelemetria']."'" ;  }else{$SIS_data .= ",''";}
-						
-						// inserto los datos de registro en la db
-						$SIS_columns = 'idUsuario, idTelemetria';
-						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_equipos_telemetria', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
-					}
-				}
-				
-				
-				//redirijo
-				header( 'Location: '.$location.'&created=true' );
-				die;
-								
-			}
-
-		break;
-/*******************************************************************************************************************/
-		//se dan permisos al usuario
-		case 'prm_del_all_tel':	
-		
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
@@ -2742,10 +2603,10 @@ require_once '0_validate_user_1.php';
 			$errorn = 0;
 			
 			//verifico si se envia un entero
-			if((!validarNumero($_GET['idUsuario']) OR !validaEntero($_GET['idUsuario']))&&$_GET['idUsuario']!=''){
-				$indice = simpleDecode($_GET['idUsuario'], fecha_actual());
+			if((!validarNumero($_GET['equipo_tel_add']) OR !validaEntero($_GET['equipo_tel_add']))&&$_GET['equipo_tel_add']!=''){
+				$indice = simpleDecode($_GET['equipo_tel_add'], fecha_actual());
 			}else{
-				$indice = $_GET['idUsuario'];
+				$indice = $_GET['equipo_tel_add'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 				
@@ -2762,10 +2623,226 @@ require_once '0_validate_user_1.php';
 				$errorn++;
 			}
 			
+			/***************************************************************/
 			if($errorn==0){
-				/***************************************************************************************/
+				//variables
+				$id_usuario     = $_GET['id'];
+				$idTelemetria   = $indice;
+				
+				/*******************************************************************/
+				//variables
+				$ndata_1 = 0;
+				//Se verifica si el dato existe
+				if(isset($idTelemetria)&&$idTelemetria!=''&&isset($id_usuario)&&$id_usuario!=''){
+					$ndata_1 = db_select_nrows (false, 'idTelemetria', 'usuarios_equipos_telemetria', '', "idTelemetria='".$idTelemetria."' AND idUsuario='".$id_usuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				}
+				//generacion de errores
+				if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso al equipo ya fue otorgado';}
+				/*******************************************************************/
+		
+				// si no hay errores ejecuto el codigo	
+				if ( empty($error) ) {
+					//filtros
+					if(isset($id_usuario) && $id_usuario != ''){     $SIS_data  = "'".$id_usuario."'" ;     }else{$SIS_data  = "''";}
+					if(isset($idTelemetria) && $idTelemetria != ''){ $SIS_data .= ",'".$idTelemetria."'" ;  }else{$SIS_data .= ",''";}
+					
+					// inserto los datos de registro en la db
+					$SIS_columns = 'idUsuario, idTelemetria';
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_equipos_telemetria', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					
+					//Si ejecuto correctamente la consulta
+					if($ultimo_id!=0){
+						//redirijo
+						header( 'Location: '.$location.'&edited=true' );
+						die;
+					}
+				
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+		break;	
+/*******************************************************************************************************************/
+		//borra un permiso del usuario
+		case 'equipo_tel_del':	
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//Variable
+			$errorn = 0;
+			
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['equipo_tel_del']) OR !validaEntero($_GET['equipo_tel_del']))&&$_GET['equipo_tel_del']!=''){
+				$indice = simpleDecode($_GET['equipo_tel_del'], fecha_actual());
+			}else{
+				$indice = $_GET['equipo_tel_del'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			/***************************************************************/
+			if($errorn==0){
 				//se borran los datos
-				$resultado = db_delete_data (false, 'usuarios_equipos_telemetria', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_delete_data (false, 'usuarios_equipos_telemetria', 'idEquipoTelPermiso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					
+					//redirijo
+					header( 'Location: '.$location.'&edited=true' );
+					die;
+					
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+			
+		break;
+		
+/*******************************************************************************************************************/
+		//se dan permisos al usuario
+		case 'prm_add_all_tel':
+			
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//Variable
+			$errorn = 0;
+			
+			/*********************************************************************************/
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['idUsuario']) OR !validaEntero($_GET['idUsuario']))&&$_GET['idUsuario']!=''){
+				$indice_1 = simpleDecode($_GET['idUsuario'], fecha_actual());
+			}else{
+				$indice_1 = $_GET['idUsuario'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice_1)&&$indice_1!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice_1 ('.$indice_1.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice_1)&&$indice_1!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice_1 ('.$indice_1.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			/*********************************************************************************/
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['idSistema']) OR !validaEntero($_GET['idSistema']))&&$_GET['idSistema']!=''){
+				$indice_2 = simpleDecode($_GET['idSistema'], fecha_actual());
+			}else{
+				$indice_2 = $_GET['idSistema'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice_2)&&$indice_2!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice_2 ('.$indice_2.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice_2)&&$indice_2!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice_2 ('.$indice_2.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			/*********************************************************************************/
+			if($errorn==0){
+				
+				//Verifico permisos a las transacciones
+				$SIS_query    = 'telemetria_listado.idTelemetria, (SELECT COUNT(idTelemetria) FROM usuarios_equipos_telemetria WHERE idTelemetria = telemetria_listado.idTelemetria AND idUsuario = '.$indice_1.' LIMIT 1) AS contar';
+				$SIS_join     = '';
+				$SIS_where    = 'telemetria_listado.idSistema = '.$indice_2.' AND telemetria_listado.idEstado=1';
+				$SIS_order    = 'telemetria_listado.idSistema ASC, telemetria_listado.Nombre ASC';
+				$arrPermisos = array();
+				$arrPermisos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				
+				/************************************************************************************/
+				//Se entregan los permisos relacionados a los equipos
+				foreach ($arrPermisos as $perm) {
+					//Si no se ha entregado el permiso
+					if ( $perm['contar']!='1' ) {
+						//filtros
+						$SIS_data  = "'".$indice_1."'" ;//idUsuario
+						if(isset($perm['idTelemetria']) && $perm['idTelemetria'] != ''){  $SIS_data .= ",'".$perm['idTelemetria']."'" ;  }else{$SIS_data .= ",''";}
+						
+						// inserto los datos de registro en la db
+						$SIS_columns = 'idUsuario, idTelemetria';
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_equipos_telemetria', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						
+					}
+				}
+				
+				
+				//redirijo
+				header( 'Location: '.$location.'&created=true' );
+				die;
+				
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}	
+			
+
+		break;
+/*******************************************************************************************************************/
+		//se dan permisos al usuario
+		case 'prm_del_all_tel':	
+		
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+			
+			//Variable
+			$errorn = 0;
+			
+			/*********************************************************************************/
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['idUsuario']) OR !validaEntero($_GET['idUsuario']))&&$_GET['idUsuario']!=''){
+				$indice_1 = simpleDecode($_GET['idUsuario'], fecha_actual());
+			}else{
+				$indice_1 = $_GET['idUsuario'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+				
+			}
+			
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice_1)&&$indice_1!=''){ 
+				$error['validarNumero'] = 'error/El valor ingresado en $indice_1 ('.$indice_1.') en la opcion DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice_1)&&$indice_1!=''){ 
+				$error['validaEntero'] = 'error/El valor ingresado en $indice_1 ('.$indice_1.') en la opcion DEL  no es un numero entero';
+				$errorn++;
+			}
+			
+			/*********************************************************************************/
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'usuarios_equipos_telemetria', 'idUsuario = "'.$indice_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
 					
@@ -2779,8 +2856,6 @@ require_once '0_validate_user_1.php';
 				require_once '0_hacking_1.php';
 			}
 			
-			
-		
 		break;	
 /*******************************************************************************************************************/		
 		case 'login_alt': 

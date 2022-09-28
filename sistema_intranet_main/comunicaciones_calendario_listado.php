@@ -66,7 +66,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $SIS_query = 'Fecha, Titulo, Cuerpo, idSistema,idOpciones';
 $SIS_join  = '';
 $SIS_where = 'idCalendario = '.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
  
@@ -122,7 +122,7 @@ usuarios_listado.Nombre AS Autor,
 principal_calendario_listado.idUsuario';
 $SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = principal_calendario_listado.idUsuario';
 $SIS_where = 'principal_calendario_listado.idCalendario = '.$_GET['view'];
-$row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
+$row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 	 
 ?>
  
@@ -246,7 +246,7 @@ $SIS_join  = '';
 $SIS_where = '(idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'].' OR idUsuario=9999) AND Ano='.$Ano.' AND Mes='.$Mes.' AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_order = 'Fecha ASC';
 $arrEventos = array();
-$arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEventos');
+$arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEventos');
 
 ?>
 

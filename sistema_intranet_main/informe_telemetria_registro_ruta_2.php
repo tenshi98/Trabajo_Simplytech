@@ -65,7 +65,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_where = 'cross_predios_listado.idSistema='.$rowEquipo['idSistema'];
 	$SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
 	$arrPredios = array();
-	$arrPredios = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPredios');
+	$arrPredios = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPredios');
 	
 	//Se filtra por zona
 	filtrar($arrPredios, 'idZona');

@@ -100,7 +100,7 @@ if ( ! empty($_GET['edit_cambio_estado']) ) {
 $SIS_query = 'idEstado';
 $SIS_join  = '';
 $SIS_where = 'idTareas ='.simpleDecode($_GET['view'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Filtro
 switch ($_GET['edit_cambio_estado']) {
@@ -152,7 +152,7 @@ switch ($_GET['edit_cambio_estado']) {
 $SIS_query = 'idEstadoTarea,Observacion';
 $SIS_join  = '';
 $SIS_where = 'idTrabajoTareas ='.simpleDecode($_GET['edit_trabajo_tarea'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado_tareas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 	 
 ?>
 
@@ -246,7 +246,7 @@ $SIS_join  = '';
 $SIS_where = 'idTareas ='.simpleDecode($_GET['view'], fecha_actual());
 $SIS_order = 'idUsuario ASC';
 $arrRepresentantes = array();
-$arrRepresentantes = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_responsable', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRepresentantes');
+$arrRepresentantes = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_responsable', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrRepresentantes');
 //Recorro
 if($arrRepresentantes!=false && !empty($arrRepresentantes) && $arrRepresentantes!='') {
 	foreach ($arrRepresentantes as $trab) {
@@ -460,7 +460,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 $SIS_query = 'idPrioridad, idTipo, Nombre, Observaciones';
 $SIS_join  = '';
 $SIS_where = 'idTareas ='.simpleDecode($_GET['view'], fecha_actual());
-$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 	 
 ?>
 
@@ -531,7 +531,7 @@ LEFT JOIN `core_tareas_pendientes_prioridad` ON core_tareas_pendientes_prioridad
 LEFT JOIN `core_tareas_pendientes_tipos`     ON core_tareas_pendientes_tipos.idTipo          = tareas_pendientes_listado.idTipo
 LEFT JOIN `usuarios_listado`         cancel  ON cancel.idUsuario                             = tareas_pendientes_listado.idUsuarioCierre';
 $SIS_where = 'tareas_pendientes_listado.idTareas ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /***************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
@@ -542,7 +542,7 @@ $SIS_join  = 'LEFT JOIN `usuarios_listado` ON usuarios_listado.idUsuario = tarea
 $SIS_where = 'tareas_pendientes_listado_responsable.idTareas ='.$X_Puntero;
 $SIS_order = 'usuarios_listado.Nombre ASC';
 $arrRepresentantes = array();
-$arrRepresentantes = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_responsable', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRepresentantes');
+$arrRepresentantes = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_responsable', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrRepresentantes');
 
 /***************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
@@ -559,7 +559,7 @@ LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuari
 $SIS_where = 'tareas_pendientes_listado_tareas.idTareas ='.$X_Puntero;
 $SIS_order = 'core_tareas_pendientes_estados_tareas.Nombre ASC, usuarios_listado.Nombre ASC, tareas_pendientes_listado_tareas.Observacion ASC';
 $arrTareas = array();
-$arrTareas = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_tareas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTareas');
+$arrTareas = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_tareas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTareas');
 
 /***************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
@@ -568,7 +568,7 @@ $SIS_join  = '';
 $SIS_where = 'idTareas ='.$X_Puntero;
 $SIS_order = 'NombreArchivo ASC';
 $arrArchivos = array();
-$arrArchivos = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_tareas_adjuntos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivos');
+$arrArchivos = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_tareas_adjuntos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArchivos');
 	 
 /***************************************************/
 //Se traen a todos los trabajadores relacionados a las ot
@@ -584,7 +584,7 @@ LEFT JOIN `usuarios_listado`      ON usuarios_listado.idUsuario  = tareas_pendie
 $SIS_where = 'tareas_pendientes_listado_historial.idTareas ='.$X_Puntero;
 $SIS_order = 'tareas_pendientes_listado_historial.idHistorial ASC';
 $arrHistorial = array();
-$arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
+$arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
 	 
 ?>
  
