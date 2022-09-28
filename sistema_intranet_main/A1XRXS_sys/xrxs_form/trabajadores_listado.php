@@ -6,7 +6,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
 if( ! defined('XMBCXRXSKGC')) {
-    die('No tienes acceso a esta carpeta o archivo.');
+    die('No tienes acceso a esta carpeta o archivo (Access Code 1009-196).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */

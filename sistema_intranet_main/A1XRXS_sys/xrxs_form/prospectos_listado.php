@@ -3,7 +3,7 @@
 /*                                              Bloque de seguridProspectoad                                                */
 /*******************************************************************************************************************/
 if( ! defined('XMBCXRXSKGC')) {
-    die('No tienes acceso a esta carpeta o archivo.');
+    die('No tienes acceso a esta carpeta o archivo (Access Code 1009-104).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
