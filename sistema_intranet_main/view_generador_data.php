@@ -45,7 +45,8 @@ require_once 'core/Web.Header.Views.php';
 /**************************************************************/
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre, cantSensores, FechaInsGen,idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia';
+$subquery_1 = 'Nombre, cantSensores, FechaInsGen,SensorActivacionID,
+idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia,idGrupoEstanque';
 
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery_1 .= ',SensoresNombre_'.$i;
@@ -59,10 +60,11 @@ $rowdata  = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTel
 
 /**************************************************************/
 //Grupo Sensores
-if(isset($rowdata['idGrupoVmonofasico'])&&$rowdata['idGrupoVmonofasico']!=''){ $idGrupoVmonofasico = $rowdata['idGrupoVmonofasico']; }else{$idGrupoVmonofasico  = 87;}
-if(isset($rowdata['idGrupoVTrifasico'])&&$rowdata['idGrupoVTrifasico']!=''){   $idGrupoVTrifasico  = $rowdata['idGrupoVTrifasico'];  }else{$idGrupoVTrifasico   = 106;}
-if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''){       $idGrupoPotencia    = $rowdata['idGrupoPotencia'];    }else{$idGrupoPotencia     = 99;}
-if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''){       $idGrupoAmperaje    = $rowdata['idGrupoPotencia'];    }else{$idGrupoAmperaje     = 99;}
+if(isset($rowdata['idGrupoVmonofasico'])&&$rowdata['idGrupoVmonofasico']!=''&&$rowdata['idGrupoVmonofasico']!=0){ $idGrupoVmonofasico = $rowdata['idGrupoVmonofasico']; }else{$idGrupoVmonofasico  = 87;}
+if(isset($rowdata['idGrupoVTrifasico'])&&$rowdata['idGrupoVTrifasico']!=''&&$rowdata['idGrupoVTrifasico']!=0){    $idGrupoVTrifasico  = $rowdata['idGrupoVTrifasico'];  }else{$idGrupoVTrifasico   = 106;}
+if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''&&$rowdata['idGrupoPotencia']!=0){          $idGrupoPotencia    = $rowdata['idGrupoPotencia'];    }else{$idGrupoPotencia     = 99;}
+if(isset($rowdata['idGrupoDespliegue'])&&$rowdata['idGrupoDespliegue']!=''&&$rowdata['idGrupoDespliegue']!=0){    $idGrupoDespliegue  = $rowdata['idGrupoDespliegue'];  }else{$idGrupoDespliegue   = 99;}
+if(isset($rowdata['idGrupoEstanque'])&&$rowdata['idGrupoEstanque']!=''&&$rowdata['idGrupoEstanque']!=0){          $idGrupoEstanque    = $rowdata['idGrupoEstanque'];    }else{$idGrupoEstanque   = 99;}
 $idVista             = 1; //1 = Vmonofasico - 2 = VTrifasico 
 
 //Para el grafico
@@ -84,21 +86,26 @@ $Uso_FechaTermino  = fecha_actual();
 $TempValue_1 = 0;
 $TempValue_2 = 0;
 $TempValue_3 = 0;
+$TempValue_4 = 0;
 
 $TempCount_1 = 0;
 $TempCount_2 = 0;
 $TempCount_3 = 0;
+$TempCount_4 = 0;
 
 $Subquery_1    = '';
 $Subquery_2    = '';
 $Subquery_3    = '';
+$Subquery_4    = '';
 
 $arrSensores_1 = array();
 $arrSensores_2 = array();
 $arrSensores_3 = array();
+$arrSensores_4 = array();
 $CountSub_1    = 1;
 $CountSub_2    = 1;
 $CountSub_3    = 1;
+$CountSub_4    = 1;
 
 //recorro los sensores
 for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
@@ -117,6 +124,10 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 			$TempValue_3 = $TempValue_3 + $rowdata['SensoresMedActual_'.$i];
 			$TempCount_3++;
 		}
+		if($rowdata['SensoresGrupo_'.$i]==$idGrupoEstanque){
+			$TempValue_4 = $TempValue_4 + $rowdata['SensoresMedActual_'.$i];
+			$TempCount_4++;
+		}
 
 		//para la subconsulta
 		if($rowdata['SensoresGrupo_'.$i]==$idGrupoVmonofasico){
@@ -129,24 +140,30 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 			$arrSensores_2[$CountSub_2]['Nombre'] = $rowdata['SensoresNombre_'.$i];
 			$CountSub_2++;
 		}
-		if($rowdata['SensoresGrupo_'.$i]==$idGrupoAmperaje){
+		if($rowdata['SensoresGrupo_'.$i]==$idGrupoDespliegue){
 			$Subquery_3 .= ',Sensor_'.$i.' AS SAmperaje_'.$CountSub_3;
 			$arrSensores_3[$CountSub_3]['Nombre'] = $rowdata['SensoresNombre_'.$i];
 			$CountSub_3++;
+		}
+		if($rowdata['SensoresGrupo_'.$i]==$idGrupoEstanque){
+			$Subquery_4 .= ',Sensor_'.$i.' AS SEstanque_'.$CountSub_4;
+			$arrSensores_4[$CountSub_4]['Nombre'] = $rowdata['SensoresNombre_'.$i];
+			$CountSub_4++;
 		}
 	}
 }
 /****************************************************************/	
 //Saco promedios
-if($TempCount_1!=0){  $Vmonofasico     = $TempValue_1/$TempCount_1;}else{$Vmonofasico     = 0;}
-if($TempCount_2!=0){  $VTrifasico      = $TempValue_2/$TempCount_2;}else{$VTrifasico      = 0;}
-if($TempCount_3!=0){  $Potencia        = $TempValue_3/$TempCount_3;}else{$Potencia        = 0;}
+if($TempCount_1!=0){  $Vmonofasico = $TempValue_1/$TempCount_1;}else{$Vmonofasico  = 0;}
+if($TempCount_2!=0){  $VTrifasico  = $TempValue_2/$TempCount_2;}else{$VTrifasico   = 0;}
+if($TempCount_3!=0){  $Potencia    = $TempValue_3/$TempCount_3;}else{$Potencia     = 0;}
+if($TempCount_4!=0){  $Estanque    = $TempValue_4/$TempCount_4;}else{$Estanque     = 0;}
 /****************************************************************/	
 //Consulto mediciones
 if($idVista==1){
-	$SIS_query = 'HoraSistema'.$Subquery_1.$Subquery_3;
+	$SIS_query = 'HoraSistema'.$Subquery_1.$Subquery_3.$Subquery_4;
 }elseif($idVista==2){
-	$SIS_query = 'HoraSistema'.$Subquery_2.$Subquery_3;
+	$SIS_query = 'HoraSistema'.$Subquery_2.$Subquery_3.$Subquery_4;
 }
 $SIS_join  = '';
 $SIS_where = '(TimeStamp BETWEEN "'.$Grafico_FechaInicio.' '.$Grafico_HoraInicio .'" AND "'.$Grafico_FechaTermino.' '.$Grafico_HoraTermino.'")';
@@ -154,15 +171,20 @@ $SIS_order = 'FechaSistema ASC, HoraSistema ASC';
 $arrGraficos = array();
 $arrGraficos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$X_Puntero, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGraficos');
 
-
-
-
-
+/*******************************************************/
+/*******************************************************/
+$SIS_query = 'SUM(Horas_'.$rowdata['SensorActivacionID'].') AS Sum_Horas';
+$SIS_where = "idTelemetria='.$X_Puntero.' AND Fecha BETWEEN '".$Uso_FechaInicio."' AND '".$Uso_FechaTermino."'";
+//Obtengo los datos
+$rowUso  = db_select_data (false, $SIS_query, 'telemetria_listado_historial_uso', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+	
+	
 /****************************************************************/				
 //Variables
 $Temp_1     = '';
 $arrData_1  = array();//Voltaje
 $arrData_2  = array();//Amperaje
+$arrData_3  = array();//Nivel Estanque
 
 //se arman datos
 //Si existen
@@ -214,6 +236,19 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 			}
 			//Nombre
 			$arrData_2[$x]['Name'] = "'".$arrSensores_3[$x]['Nombre']."'";	
+		}
+		
+		/***************************************/
+		for ($x = 1; $x <= $CountSub_4; $x++) {
+			//verifico si existe
+			if(isset($arrData_3[$x]['Value'])&&$arrData_3[$x]['Value']!=''){
+				$arrData_3[$x]['Value'] .= ", ".$data['SEstanque_'.$x];
+			//si no lo crea
+			}else{
+				$arrData_3[$x]['Value'] = $data['SEstanque_'.$x];
+			}
+			//Nombre
+			$arrData_3[$x]['Name'] = "'".$arrSensores_4[$x]['Nombre']."'";	
 		}
 
 	}
@@ -304,15 +339,55 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	$Graphics_texts_2      .= '];';
 	$Graphics_lineColors_2 .= '];';
 	$Graphics_lineDash_2   .= '];';
-	$Graphics_lineWidth_2  .= '];';  			
+	$Graphics_lineWidth_2  .= '];';  	 
+	/*******************************************************/
+	/*******************************************************/
+	//variables
+	$Graphics_xData_3       = 'var xData = [';
+	$Graphics_yData_3       = 'var yData = [';
+	$Graphics_names_3       = 'var names = [';
+	$Graphics_types_3       = 'var types = [';
+	$Graphics_texts_3       = 'var texts = [';
+	$Graphics_lineColors_3  = 'var lineColors = [';
+	$Graphics_lineDash_3    = 'var lineDash = [';
+	$Graphics_lineWidth_3   = 'var lineWidth = [';
+	//Se crean los datos
+	for ($x = 1; $x <= $CountSub_3; $x++) {
+		if(isset($arrData_3[$x]['Value'])&&$arrData_3[$x]['Value']!=''){
+			//las fechas
+			$Graphics_xData_3      .='['.$Temp_1.'],';
+			//los valores
+			$Graphics_yData_3      .='['.$arrData_3[$x]['Value'].'],';
+			//los nombres
+			$Graphics_names_3      .= $arrData_3[$x]['Name'].',';
+			//los tipos
+			$Graphics_types_3      .= "'lines',";
+			//si lleva texto en las burbujas
+			$Graphics_texts_3      .= "[],";
+			//los colores de linea
+			$Graphics_lineColors_3 .= "'',";
+			//los tipos de linea
+			$Graphics_lineDash_3   .= "'',";
+			//los anchos de la linea
+			$Graphics_lineWidth_3  .= "'',";
+		}
+	}
+	$Graphics_xData_3      .= '];';
+	$Graphics_yData_3      .= '];';
+	$Graphics_names_3      .= '];';
+	$Graphics_types_3      .= '];';
+	$Graphics_texts_3      .= '];';
+	$Graphics_lineColors_3 .= '];';
+	$Graphics_lineDash_3   .= '];';
+	$Graphics_lineWidth_3  .= '];'; 			
+			
 	
-	
-	$SIS_query = 'SUM(Horas_1) AS Sum_Horas_1, SUM(Horas_2) AS Sum_Horas_2';
-	$SIS_where = "idTelemetria='.$X_Puntero.' AND Fecha BETWEEN '".$Uso_FechaInicio."' AND '".$Uso_FechaTermino."'";
-	//Obtengo los datos
-	$rowUso  = db_select_data (false, $SIS_query, 'telemetria_listado_historial_uso', '', 'Fecha =', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
-	
-	
+//Si no hay datos
+}else{
+	echo '<div class="col-sm-12" style="margin-top:10px;">';
+		alert_post_data(4,2,2, 'No existen datos para el grafico entre las '.$Grafico_HoraInicio.' y las '.$Grafico_HoraTermino);
+	echo '</div>';
+}
 ?>
 
 
@@ -328,11 +403,17 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 				<div class="row">
 					<div class="col-sm-12">
 						<?php 
+						//se arman datos
+						//Si existen
+						if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGraficos!=''){
 							//$Titulo = 'Potencia hora punta (Periodo: '.$Grafico_FechaInicio.' al '.$Grafico_FechaTermino.')';
 							$Titulo = 'Voltaje';
 							echo GraphLinear_1('graphLinear_1', $Titulo, 'Fecha', 'Voltaje',  $Graphics_xData_1, $Graphics_yData_1, $Graphics_names_1, $Graphics_types_1, $Graphics_texts_1, $Graphics_lineColors_1, $Graphics_lineDash_1, $Graphics_lineWidth_1, 0); 
 							$Titulo = 'Amperaje';
 							echo GraphLinear_1('graphLinear_2', $Titulo, 'Fecha', 'Amperaje', $Graphics_xData_2, $Graphics_yData_2, $Graphics_names_2, $Graphics_types_2, $Graphics_texts_2, $Graphics_lineColors_2, $Graphics_lineDash_2, $Graphics_lineWidth_2, 0); 
+							$Titulo = 'Nivel Estanque';
+							echo GraphLinear_1('graphLinear_3', $Titulo, 'Fecha', 'Nivel',    $Graphics_xData_3, $Graphics_yData_3, $Graphics_names_3, $Graphics_types_3, $Graphics_texts_3, $Graphics_lineColors_3, $Graphics_lineDash_3, $Graphics_lineWidth_3, 0); 
+						}
 						?>
 					</div>
 				</div>
@@ -381,12 +462,12 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 					<div class="col-sm-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
-								<h3 class="box-title">Horas de uso entregando energía</h3>
+								<h3 class="box-title">Nivel Estanque</h3>
 							</div>
 							<div class="box-body">
 								<div class="value">
 									<span><i class="fa fa-bolt" aria-hidden="true"></i></span>
-									<span><?php echo gmdate("H:i:s",$rowUso['Sum_Horas_1']).' Horas'; ?></span>
+									<span><?php echo Cantidades($Estanque, 2).' '; ?></span>
 								</div>
 							</div>
 						</div>
@@ -397,20 +478,20 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 					<div class="col-sm-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
-								<h3 class="box-title">Horas total de uso</h3>
+								<h3 class="box-title">Horas de uso entregando energía</h3>
 							</div>
 							<div class="box-body">
 								<div class="value">
 									<span><i class="fa fa-bolt" aria-hidden="true"></i></span>
-									<span><?php echo gmdate("H:i:s",$rowUso['Sum_Horas_2']).' Horas'; ?></span>
+									<span><?php echo gmdate("H:i:s",$rowUso['Sum_Horas']).' Horas'; ?></span>
 								</div>
 							</div>
 						</div>
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-						
-
+					
+					
 					
 				</div>
 				
@@ -419,14 +500,11 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 		</div>	
 	</div>
 </div>
-<?php
-//Si no hay datos
-}else{
-	echo '<div class="col-sm-12" style="margin-top:10px;">';
-		alert_post_data(4,2,2, 'No existen datos entre las '.$Grafico_HoraInicio.' y las '.$Grafico_HoraTermino);
-	echo '</div>';
-}
-?>
+
+
+
+	
+	
 
 <?php 
 //si se entrega la opcion de mostrar boton volver

@@ -77,7 +77,7 @@ $Informes_HoraTermino    = hora_actual();
 
 //Para redirigir a los informes
 $Informes_2_FechaInicio    = restarDias(fecha_actual(),1);
-$Informes_2_HoraInicio     = fecha_actual();
+$Informes_2_HoraInicio     = hora_actual();
 $Informes_2_FechaTermino   = fecha_actual();
 $Informes_2_HoraTermino    = hora_actual();
 

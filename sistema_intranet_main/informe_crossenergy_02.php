@@ -91,6 +91,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$count          = 0;
 	$Temp_1         = '';
 	$arrData        = array();
+	$arrDataTotal   = array();
 	$xcount         = 0;
 	$unidadMed      = '';
 
@@ -110,6 +111,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
 						//Numero de sensor
 						$xcount++;
+						/*******************************/
 						//verifico si existe
 						if(isset($arrData[$xcount]['Value'])&&$arrData[$xcount]['Value']!=''){
 							$arrData[$xcount]['Value'] .= ", ".$fac['SensorValue_'.$x];
@@ -117,7 +119,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						}else{
 							$arrData[$xcount]['Value'] = $fac['SensorValue_'.$x];
 						}
+						/*******************************/
+						//verifico si existe
+						if(isset($arrDataTotal[$xcount]['Value'])&&$arrDataTotal[$xcount]['Value']!=''){
+							$arrDataTotal[$xcount]['Value'] = $arrDataTotal[$xcount]['Value'] + $fac['SensorValue_'.$x];
+						//si no lo crea
+						}else{
+							$arrDataTotal[$xcount]['Value'] = $fac['SensorValue_'.$x];
+						}
 						
+						/*******************************/
 						//Tabla
 						$m_table .= '<td>';
 						$m_table .= cantidades($fac['SensorValue_'.$x], 2);
@@ -137,11 +148,21 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}
 			}
 		}
+		/*******************************/
 		//cierro tabla
 		$m_table .= '</tr>';
 		//contador										
 		$count++;	
-	}   
+	}
+	/*******************************/
+	//Totales
+	$m_table .= '<tr style="background-color: #d0d0d0;"><td colspan="2"><strong>Total</strong></td>';
+	for ($x = 1; $x <= $xcount; $x++) {
+		$m_table .= '<td><strong>'.cantidades($arrDataTotal[$x]['Value'], 2).'</strong></td>';
+	}
+	$m_table .= '</tr>';
+	
+	/******************************************/  
 	//variables
 	$Graphics_xData       = 'var xData = [';
 	$Graphics_yData       = 'var yData = [';
@@ -202,6 +223,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	<div class="col-sm-12">
 		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Resumen Hora', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']);?>
 		<div class="col-md-6 col-sm-6 col-xs-12 clearfix">
+			<?php
+			$search2 = '&submit_filter=Filtrar';
+			if(isset($_GET['idGrafico'])&&$_GET['idGrafico']!=''){         $search2.= '&idGrafico='.$_GET['inform_trans'];}
+			if(isset($_GET['inform_trans'])&&$_GET['inform_trans']!=''){   $search2.= '&inform_trans='.$_GET['inform_trans'];}
+			if(isset($_GET['inform_tittle'])&&$_GET['inform_tittle']!=''){ $search2.= '&inform_tittle='.$_GET['inform_trans'];}
+			if(isset($_GET['inform_unimed'])&&$_GET['inform_unimed']!=''){ $search2.= '&inform_unimed='.$_GET['inform_trans'];}
+			?>
+			<a target="new" href="<?php echo 'informe_crossenergy_01.php?bla=bla'.$search.$search2 ; ?>" class="btn btn-sm btn-metis-1 pull-right margin_width"><i class="fa fa-area-chart" aria-hidden="true"></i> Ir a Resumen Dia</a>
+			
+			
 			<a target="new" href="<?php echo 'informe_crossenergy_02_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 		
 			<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>	

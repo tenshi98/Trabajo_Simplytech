@@ -288,8 +288,8 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 						</td>
 						<td style="background-color:#DDD">
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">	
-								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_del_all=true'.'&idUsuario='.$_GET['id'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema']; ?>" title="Quitar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">OFF</a>
-								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_add_all=true'.'&idUsuario='.$_GET['id'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema']; ?>" title="Asignar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">ON</a>
+								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_del_all=true'.'&idUsuario='.simpleEncode($_GET['id'], fecha_actual()).'&idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual()); ?>" title="Quitar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">OFF</a>
+								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_add_all=true'.'&idUsuario='.simpleEncode($_GET['id'], fecha_actual()).'&idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual()); ?>" title="Asignar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">ON</a>
 							</div>	
 						</td>
 					</tr>
@@ -306,7 +306,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 									<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
 								<?php } else {?>
 									<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
-									<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&equipo_tel_add='.$equipos['idTelemetria']; ?>">ON</a>
+									<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&equipo_tel_add='.simpleEncode($equipos['idTelemetria'], fecha_actual()); ?>">ON</a>
 								<?php }?>    
 							</div> 
 						</td>

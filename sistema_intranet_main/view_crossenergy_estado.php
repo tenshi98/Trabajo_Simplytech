@@ -49,13 +49,16 @@ $s_ano = ano_actual();
 if($s_mes==0){$s_mes = 12;$s_ano = ano_actual()-1;}
 if($s_mes<10){$Mesx = '0'.$s_mes;}else{$Mesx = $s_mes;}
 
+$mes_actual = mes_actual();
+if($mes_actual<10){$mes_actual = '0'.$mes_actual;}
+
 $Habil_FechaInicio    = $s_ano.'-'.$Mesx.'-01';
 $Habil_HoraInicio     = '00:00:01';
 $Habil_FechaTermino   = Fecha_ultimo_dia_mes($Habil_FechaInicio);
 $Habil_HoraTermino    = '23:59:59';
 
 //Para el mes en curso
-$Curso_FechaInicio    = ano_actual().'-'.mes_actual().'-01';
+$Curso_FechaInicio    = ano_actual().'-'.$mes_actual.'-01';
 $Curso_HoraInicio     = hora_actual();
 $Curso_FechaTermino   = fecha_actual();
 $Curso_HoraTermino    = hora_actual();
@@ -74,12 +77,12 @@ $Informes_HoraTermino    = hora_actual();
 
 //Para redirigir a los informes
 $Informes_2_FechaInicio    = restarDias(fecha_actual(),1);
-$Informes_2_HoraInicio     = fecha_actual();
+$Informes_2_HoraInicio     = hora_actual();
 $Informes_2_FechaTermino   = fecha_actual();
 $Informes_2_HoraTermino    = hora_actual();
 
 //Para Demanda
-$Demanda_FechaInicio    = ano_actual().'-'.mes_actual().'-01';
+$Demanda_FechaInicio    = ano_actual().'-'.$mes_actual.'-01';
 $Demanda_HoraInicio     = hora_actual();
 $Demanda_FechaTermino   = fecha_actual();
 $Demanda_HoraTermino    = hora_actual();
@@ -91,6 +94,7 @@ idGrupoConsumoMesHabil,idGrupoConsumoMesCurso';
 $subquery_2 = 'idTabla';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery_1 .= ',SensoresGrupo_'.$i;
+	$subquery_1 .= ',SensoresUniMed_'.$i;
 	$subquery_1 .= ',SensoresNombre_'.$i;
 	$subquery_1 .= ',SensoresMedActual_'.$i;
 	$subquery_1 .= ',SensoresActivo_'.$i;
@@ -161,6 +165,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 		if($rowdata['SensoresGrupo_'.$i]==$idGrupoDespliegue){
 			$Subquery .= ',Sensor_'.$i.' AS SSens_'.$CountSub;
 			$arrSensores[$CountSub]['Nombre'] = $rowdata['SensoresNombre_'.$i];
+			$arrSensores[$CountSub]['UniMed'] = $rowdata['SensoresUniMed_'.$i];
 			$CountSub++;
 		}
 		//para la subconsulta
@@ -184,7 +189,7 @@ $arrGraficos  = db_select_array (false, 'HoraSistema'.$Subquery, 'telemetria_lis
 //Potencia Observada
 $SIS_query    = 'COUNT(FechaSistema) AS Cuenta'.$Subquery_2;
 $SIS_join     = '';
-$SIS_where    = '(TimeStamp BETWEEN "'.$Grafico_FechaInicio.' '.$Grafico_HoraInicio .'" AND "'.$Grafico_FechaTermino.' '.$Grafico_HoraTermino.'")';
+$SIS_where    = 'idTelemetria = '.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Informes_FechaInicio.' '.$Informes_HoraInicio .'" AND "'.$Informes_FechaTermino.' '.$Informes_HoraTermino.'")';
 $rowPotencia  = db_select_data (false, $SIS_query, 'telemetria_listado_crossenergy_hora', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowPotencia');
 
 
@@ -214,9 +219,11 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 //cierro subquery
 if($Subquery_2!=''){
 	$Subquery_2 .= ') AS Total';
-	$SIS_order = 'Total DESC LIMIT 52';
+	$SIS_order_1 = 'Total DESC LIMIT 52';
+	$SIS_order_2 = 'Total DESC LIMIT 2';
 }else{
-	$SIS_order = 'FechaSistema DESC LIMIT 52';
+	$SIS_order_1 = 'FechaSistema DESC LIMIT 52';
+	$SIS_order_2 = 'FechaSistema DESC LIMIT 2';
 }
 
 
@@ -224,10 +231,10 @@ if($Subquery_2!=''){
 
 //Se hace consulta de los graficos
 $arrPotencia = array();
-$arrPotencia = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2, 'telemetria_listado_crossenergy_hora', '', 'idTelemetria = '.$X_Puntero.' AND (FechaSistema BETWEEN "'.$rowSistema['CrossEnergy_PeriodoInicio'].'" AND "'.$rowSistema['CrossEnergy_PeriodoTermino'].'") AND HoraSistema > "'.$rowSistema['CrossEnergy_HorarioInicio'].'" AND HoraSistema < "'.$rowSistema['CrossEnergy_HorarioTermino'].'" GROUP BY TimeStamp', $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPotencia');
+$arrPotencia = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2, 'telemetria_listado_crossenergy_hora', '', 'idTelemetria = '.$X_Puntero.' AND (FechaSistema BETWEEN "'.$rowSistema['CrossEnergy_PeriodoInicio'].'" AND "'.$rowSistema['CrossEnergy_PeriodoTermino'].'") AND HoraSistema > "'.$rowSistema['CrossEnergy_HorarioInicio'].'" AND HoraSistema < "'.$rowSistema['CrossEnergy_HorarioTermino'].'" GROUP BY TimeStamp', $SIS_order_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPotencia');
 
 $arrDemanda = array();
-$arrDemanda = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2, 'telemetria_listado_crossenergy_hora', '', 'idTelemetria = '.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Demanda_FechaInicio.' '.$Demanda_HoraInicio .'" AND "'.$Demanda_FechaTermino.' '.$Demanda_HoraTermino.'")  GROUP BY TimeStamp', $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDemanda');
+$arrDemanda = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2, 'telemetria_listado_crossenergy_hora', '', 'idTelemetria = '.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Demanda_FechaInicio.' '.$Demanda_HoraInicio .'" AND "'.$Demanda_FechaTermino.' '.$Demanda_HoraTermino.'")  GROUP BY TimeStamp', $SIS_order_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDemanda');
 
 //Datos para los informes
 $Informes_3_FechaInicio    = $rowSistema['CrossEnergy_PeriodoInicio'];
@@ -275,6 +282,7 @@ $x_seg = 300000;//5 minutos
 /****************************************************************/				
 //Variables
 $Temp_1   = '';
+$Temp_2   = '';
 $arrData  = array();
 
 //se arman datos
@@ -296,7 +304,10 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 			}
 			//Nombre
 			$arrData[$x]['Name'] = "'".$arrSensores[$x]['Nombre']."'";
-						
+			//unidad medida
+			if(isset($arrSensores[$x]['UniMed'])&&$arrSensores[$x]['UniMed']!=''){
+				$Temp_2 = $arrSensores[$x]['UniMed'];
+			}		
 		}
 	}
 
@@ -341,7 +352,14 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	$Graphics_lineDash   .= '];';
 	$Graphics_lineWidth  .= '];';  
 				
-	
+	/************************************/
+	//Ubtengo la unidad de medida
+	$SIS_query = 'Nombre';
+	$SIS_join  = '';
+	$SIS_where = 'idUniMed='.$Temp_2;
+	$rowUniMed = db_select_data (false, $SIS_query, 'telemetria_listado_unidad_medida', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowUniMed');
+
+
 ?>
 <script>
 	window.setTimeout(function () {
@@ -363,7 +381,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<?php 
 							//$Titulo = 'Potencia hora punta (Periodo: '.$Grafico_FechaInicio.' al '.$Grafico_FechaTermino.')';
 							$Titulo = '';
-							echo GraphLinear_1('graphLinear_1', $Titulo, 'Fecha', 'Voltaje', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+							echo GraphLinear_1('graphLinear_1', $Titulo, 'Fecha', $rowUniMed['Nombre'], $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
 						?>
 					</div>
 				</div>

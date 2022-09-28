@@ -89,6 +89,7 @@ if(isset($idZona)&&$idZona!=''&&$idZona!=9999){
 	switch ($idZona) {
 		case 1: $SIS_where .= " AND telemetria_listado.NumSerie LIKE 'gr%'"; break;
 		case 2: $SIS_where .= " AND telemetria_listado.NumSerie LIKE 'elv%'"; break;
+		case 3: $SIS_where .= " AND telemetria_listado.NumSerie LIKE 'gen%'"; break;
 	}
 }
 //Filtro por el tipo de usuario
@@ -292,15 +293,22 @@ foreach ($arrEquipo as $data) {
 	//busco el tipo de equipo
 	$Nombre_equipo = $data['Identificador'];
 	$NumSerie      = $data['NumSerie'];
-	$buscado       = 'elv';
-	$s_pos         = strpos($NumSerie, $buscado);
-
+	$buscado_1     = 'elv';
+	$buscado_2     = 'gen';
+	$s_pos_1       = strpos($NumSerie, $buscado_1);
+	$s_pos_2       = strpos($NumSerie, $buscado_2);
+			
+			
 	// Nótese el uso de ===. Puesto que == simple no funcionará como se espera
 	// porque la posición de 'elv-' está en el 1° (primer) caracter.
-	if ($s_pos === false) {
-		$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']    = '<a href="view_crosscrane_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
-	} else {
-		$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado']    = '<a href="view_crosscrane_estado_elev.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
+	if ($s_pos_1 === false) {
+		if ($s_pos_2 === false) {
+			$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado'] = '<a href="view_crosscrane_estado.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
+		}else{
+			$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado'] = '<a href="view_generador_data.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Datos Generador" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-battery-full" aria-hidden="true"></i></a>';
+		}
+	}else{
+		$arrGruas[$xdanger][$data['idTelemetria']]['crosscrane_estado'] = '<a href="view_crosscrane_estado_elev.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
 	}
 			
 	/****************************************************/
@@ -309,11 +317,11 @@ foreach ($arrEquipo as $data) {
 	$arrGruas[$xdanger][$data['idTelemetria']]['informe_activaciones']  = '<li><a href="view_telemetria_uso.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" class="iframe" style="white-space: normal;" ><i class="fa fa-clock-o" aria-hidden="true"></i> Uso Grua</a></li>';
 	$arrGruas[$xdanger][$data['idTelemetria']]['AlarmasPersonalizadas'] = '<li><a href="view_alertas_personalizadas.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas Personalizadas</a></li>';
 	//si tiene un generador
-	if(isset($data['idGenerador'])&&$data['idGenerador']==1){
+	/*if(isset($data['idGenerador'])&&$data['idGenerador']==1){
 		$arrGruas[$xdanger][$data['idTelemetria']]['Generador'] = '<li><a href="view_generador_data.php?view='.simpleEncode($data['idTelGenerador'], fecha_actual()).'"  class="iframe" style="white-space: normal;"><i class="fa fa-battery-full" aria-hidden="true"></i> Datos Generador</a></li>';
 	}else{
 		$arrGruas[$xdanger][$data['idTelemetria']]['Generador'] = '';
-	}
+	}*/
 	//si utiliza carpeta ftp
 	if(isset($data['idUsoFTP'])&&$data['idUsoFTP']==1&&isset($data['FTP_Carpeta'])&&$data['FTP_Carpeta']!=''){
 		$arrGruas[$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '<li><a href="view_telemetria_data_files.php?view='.simpleEncode($data['FTP_Carpeta'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-video-camera" aria-hidden="true"></i> Camara</a></li>';
@@ -421,7 +429,6 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_F
 						<ul class="dropdown-menu" style="right: 0;float: right;">
 							<?php echo $grua['informe_activaciones']; ?>
 							<?php echo $grua['AlarmasPersonalizadas']; ?>
-							<?php echo $grua['Generador']; ?>
 							<?php echo $grua['CarpetaFTP']; ?>
 						</ul>
 					</div>
@@ -457,7 +464,6 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_F
 						<ul class="dropdown-menu" style="right: 0;float: right;">
 							<?php echo $grua['informe_activaciones']; ?>
 							<?php echo $grua['AlarmasPersonalizadas']; ?>
-							<?php echo $grua['Generador']; ?>
 							<?php echo $grua['CarpetaFTP']; ?>
 						</ul>
 					</div>
@@ -493,7 +499,6 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) { $Count_F
 						<ul class="dropdown-menu" style="right: 0;float: right;">
 							<?php echo $grua['informe_activaciones']; ?>
 							<?php echo $grua['AlarmasPersonalizadas']; ?>
-							<?php echo $grua['Generador']; ?>
 							<?php echo $grua['CarpetaFTP']; ?>
 						</ul>
 					</div>
