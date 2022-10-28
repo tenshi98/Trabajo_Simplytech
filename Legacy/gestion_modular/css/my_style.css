@@ -1003,7 +1003,7 @@ span.badge-red{background: #e74c3c none repeat scroll 0 0 !important;}
 .circle-tile .circle-tile-heading.circle_red:hover {background-color:#e43725}
 .circle-tile .circle-tile-heading.circle_purple:hover {background-color:#7f3d9b}
 .circle-tile .circle-tile-content {padding-top:50px}
-.circle-tile .circle-tile-content .circle-tile-description {text-transform:uppercase}
+.circle-tile .circle-tile-content .circle-tile-description {font-size: 12px;}
 .circle-tile .circle-tile-content .circle-tile-number {padding:5px 0 15px;font-size:26px;font-weight:700;line-height:1}
 .circle-tile .circle-tile-content .circle-tile-footer {display:block;padding:5px;color:rgba(255,255,255,.5);background-color:rgba(0,0,0,.1);transition:all ease-in-out .3s}
 .circle-tile .circle-tile-content .circle-tile-footer:hover {text-decoration:none;color:rgba(255,255,255,.5);background-color:rgba(0,0,0,.2)}		
