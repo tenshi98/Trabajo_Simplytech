@@ -922,7 +922,6 @@ require_once '0_validate_user_1.php';
 				/*******************************************************************/
 				//Datos ingresados
 				if(isset($idEstado) && $idEstado != ''){           $SIS_data  = "'".$idEstado."'" ;         }else{$SIS_data  = "''";}
-				//if(isset($Identificador) && $Identificador != ''){ $SIS_data .= ",'".$Identificador."'" ;   }else{$SIS_data .= ",''";}
 				if(isset($Nombre) && $Nombre != ''){               $SIS_data .= ",'".$Nombre."'" ;          }else{$SIS_data .= ",''";}
 				
 				//Datos copiados
@@ -982,29 +981,29 @@ require_once '0_validate_user_1.php';
 				if(isset($rowdata['CrossCrane_grupo_motor_bajada']) && $rowdata['CrossCrane_grupo_motor_bajada'] != ''){  $SIS_data .= ",'".$rowdata['CrossCrane_grupo_motor_bajada']."'" ;   }else{$SIS_data .= ",''";}
 				
 				//datos en bruto
-				$SIS_data .= ",'0'" ; //GeoErrores
-				$SIS_data .= ",'0'" ; //LastUpdateFecha
-				$SIS_data .= ",'0'" ; //LastUpdateHora
-				$SIS_data .= ",''" ;  //Sim_Num_Tel
-				$SIS_data .= ",''" ;  //Sim_Num_Serie
-				$SIS_data .= ",''" ;  //Sim_marca
-				$SIS_data .= ",''" ;  //Sim_modelo
-				$SIS_data .= ",''" ;  //Sim_Compania
-				$SIS_data .= ",''" ;  //IdentificadorEmpresa
-				$SIS_data .= ",'0'" ; //NErrores
-				$SIS_data .= ",'0'" ; //NAlertas
-				$SIS_data .= ",'2'" ; //idUsoFTP
-				$SIS_data .= ",''" ;  //FTP_Carpeta
-				$SIS_data .= ",'1'" ; //idBackup SI
-				$SIS_data .= ",'200000'" ; //NregBackup 200000
-				$SIS_data .= ",'2'" ; //idUbicacion
-				$SIS_data .= ",''" ;  //Estado
-				$SIS_data .= ",'2'" ; //idAlertaTemprana
+				$SIS_data .= ",'0'" ;        //GeoErrores
+				$SIS_data .= ",'0'" ;        //LastUpdateFecha
+				$SIS_data .= ",'0'" ;        //LastUpdateHora
+				$SIS_data .= ",''" ;         //Sim_Num_Tel
+				$SIS_data .= ",''" ;         //Sim_Num_Serie
+				$SIS_data .= ",''" ;         //Sim_marca
+				$SIS_data .= ",''" ;         //Sim_modelo
+				$SIS_data .= ",''" ;         //Sim_Compania
+				$SIS_data .= ",''" ;         //IdentificadorEmpresa
+				$SIS_data .= ",'0'" ;        //NErrores
+				$SIS_data .= ",'0'" ;        //NAlertas
+				$SIS_data .= ",'2'" ;        //idUsoFTP
+				$SIS_data .= ",''" ;         //FTP_Carpeta
+				$SIS_data .= ",'1'" ;        //idBackup SI
+				$SIS_data .= ",'200000'" ;   //NregBackup 200000
+				$SIS_data .= ",'2'" ;        //idUbicacion
+				$SIS_data .= ",''" ;         //Estado
+				$SIS_data .= ",'2'" ;        //idAlertaTemprana
 				$SIS_data .= ",'00:15:00'" ; //AlertaTemprCritica
 				$SIS_data .= ",'01:00:00'" ; //AlertaTemprNormal
-				$SIS_data .= ",'2'" ; //idGenerador
-				$SIS_data .= ",'0'" ; //NDetenciones
-				$SIS_data .= ",'1'" ; //idEstadoEncendido
+				$SIS_data .= ",'2'" ;        //idGenerador
+				$SIS_data .= ",'0'" ;        //NDetenciones
+				$SIS_data .= ",'1'" ;        //idEstadoEncendido
 				
 				//bucle
 				$qry = '';
@@ -1039,7 +1038,7 @@ require_once '0_validate_user_1.php';
 				}
 				
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idEstado,Identificador,Nombre,idSistema,
+				$SIS_columns = 'idEstado,Nombre,idSistema,
 				idCiudad,idComuna,Direccion,GeoLatitud,GeoLongitud,GeoVelocidad,GeoDireccion,GeoMovimiento,
 				GeoTiempoDetencion,id_Geo,id_Sensores,cantSensores,idDispositivo,idShield,
 				LimiteVelocidad,TiempoFueraLinea,TiempoDetencion,Direccion_img,idZona,SensorActivacionID,
