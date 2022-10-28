@@ -9,7 +9,7 @@
 .formLogin .formbox .leftPanel p {color: #fff;text-align: center;display: block;}
 .formLogin .formbox .leftPanel .imgLeft{width: 100%;}
 .formLogin .formbox .rightPanel ul{margin-top:20px;}
-.formLogin .formbox .rightPanel ul .active{padding-bottom: 4px;border-bottom: 1px solid #2c3e50;}
+.formLogin .formbox .rightPanel ul .active{padding-bottom: 4px;border-bottom: 1px solid #043380;}
 .formLogin .formbox .rightPanel .field{margin-bottom:5px;}
 .formLogin .formbox .rightPanel .textRegister{margin-top:15px;margin-bottom:15px;}
 </style>
