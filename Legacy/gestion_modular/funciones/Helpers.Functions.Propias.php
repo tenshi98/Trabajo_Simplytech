@@ -459,9 +459,9 @@ function SuperficieDisponible($idUniMed, $SupDisp, $UniMed){
 					$U_1 = $UniMed;
 					$U_2 = 'm<sup>2</sup>';
 					
-					$data = Cantidades_decimales_justos($S_1).' '.$U_1;
+					$data = Cantidades($S_1, 2).' '.$U_1;
 					$data.= ' / ';
-					$data.= Cantidades_decimales_justos($S_2).' '.$U_2;
+					$data.= Cantidades($S_2, 0).' '.$U_2;
 					
 					
 					break;
@@ -473,9 +473,9 @@ function SuperficieDisponible($idUniMed, $SupDisp, $UniMed){
 					$U_1 = 'hás';
 					$U_2 = $UniMed;
 					
-					$data = Cantidades_decimales_justos($S_1).' '.$U_1;
+					$data = Cantidades($S_1, 2).' '.$U_1;
 					$data.= ' / ';
-					$data.= Cantidades_decimales_justos($S_2).' '.$U_2;
+					$data.= Cantidades($S_2, 0).' '.$U_2;
 					
 					break;
 			}
