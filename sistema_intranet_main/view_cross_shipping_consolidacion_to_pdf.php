@@ -461,7 +461,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->AddPage('L');
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
-			$pdf->Output($pdf_file, 'I');
+			$pdf->Output(DeSanitizar($pdf_file), 'I');
 	
 			break;
 		/************************************************************************/
@@ -475,7 +475,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$dompdf->loadHtml($html);
 			$dompdf->setPaper($OpcDom);
 			$dompdf->render();
-			$dompdf->stream($pdf_file);
+			$dompdf->stream(DeSanitizar($pdf_file));
 			break;
 
 	}

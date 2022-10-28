@@ -83,8 +83,8 @@ $arrProductos = db_select_array (false, $SIS_query, 'aguas_analisis_aguas', $SIS
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-							 ->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+							 ->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
@@ -120,27 +120,27 @@ foreach ($arrProductos as $productos) {
 	if($productos['periodo_remuestreo']!='0000-00-00'){$var = fecha2Ano($productos['periodo_remuestreo']).fecha2NdiaMesCon0($productos['periodo_remuestreo']); }
 						
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $productos['codigoProceso'])
-				->setCellValue('B'.$nn, $productos['codigoArchivo'])
+				->setCellValue('A'.$nn, DeSanitizar($productos['codigoProceso']))
+				->setCellValue('B'.$nn, DeSanitizar($productos['codigoArchivo']))
 				->setCellValue('C'.$nn, cortarRut($productos['rut']))
 				->setCellValue('D'.$nn, fecha2Ano($productos['periodo']).fecha2NdiaMesCon0($productos['periodo']))
 				
-				->setCellValue('E'.$nn, $productos['codigo_servicio'])
-				->setCellValue('F'.$nn, $productos['codigo_sector'])
-				->setCellValue('G'.$nn, $productos['codigo_muestra'])
-				->setCellValue('H'.$nn, $productos['tipo_punto_muestreo'])
+				->setCellValue('E'.$nn, DeSanitizar($productos['codigo_servicio']))
+				->setCellValue('F'.$nn, DeSanitizar($productos['codigo_sector']))
+				->setCellValue('G'.$nn, DeSanitizar($productos['codigo_muestra']))
+				->setCellValue('H'.$nn, DeSanitizar($productos['tipo_punto_muestreo']))
 				
 				->setCellValue('I'.$nn, $productos['UTM_norte'])
 				->setCellValue('J'.$nn, $productos['UTM_este'])
-				->setCellValue('K'.$nn, $productos['tipo_muestra'])
+				->setCellValue('K'.$nn, DeSanitizar($productos['tipo_muestra']))
 				->setCellValue('L'.$nn, $var)
 				
 				->setCellValue('M'.$nn, $productos['fecha_muestra'])
-				->setCellValue('N'.$nn, $productos['codigo_parametro'])
-				->setCellValue('O'.$nn, $productos['signo'])
+				->setCellValue('N'.$nn, DeSanitizar($productos['codigo_parametro']))
+				->setCellValue('O'.$nn, DeSanitizar($productos['signo']))
 				->setCellValue('P'.$nn, $productos['valor'])
 				->setCellValue('Q'.$nn, $productos['rutLaboratorio'])
-				->setCellValue('R'.$nn, $productos['idLaboratorio']);				
+				->setCellValue('R'.$nn, DeSanitizar($productos['idLaboratorio']));				
 	$nn++;           
 	   
 } 
@@ -157,7 +157,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Informe Analisis';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
