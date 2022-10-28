@@ -52,6 +52,7 @@ require_once '0_validate_user_1.php';
 	if ( !empty($_POST['EfectoResidual']) )      $EfectoResidual         = $_POST['EfectoResidual'];
 	if ( !empty($_POST['EfectoRetroactivo']) )   $EfectoRetroactivo      = $_POST['EfectoRetroactivo'];
 	if ( !empty($_POST['CarenciaExportador']) )  $CarenciaExportador     = $_POST['CarenciaExportador'];
+	if ( !empty($_POST['AporteNutricional']) )   $AporteNutricional      = $_POST['AporteNutricional'];
 	
 	if ( !empty($_POST['medida']) )              $medida                 = $_POST['medida'];
 	if ( !empty($_POST['Number']) )              $Number                 = $_POST['Number'];
@@ -109,6 +110,7 @@ require_once '0_validate_user_1.php';
 			case 'EfectoResidual':       if(empty($EfectoResidual)){      $error['EfectoResidual']     = 'error/No ha ingresado la Carencia TESCO';}break;
 			case 'EfectoRetroactivo':    if(empty($EfectoRetroactivo)){   $error['EfectoRetroactivo']  = 'error/No ha ingresado el Tiempo Re-Ingreso';}break;
 			case 'CarenciaExportador':   if(empty($CarenciaExportador)){  $error['CarenciaExportador'] = 'error/No ha ingresado la Carencia Etiqueta';}break;
+			case 'AporteNutricional':    if(empty($AporteNutricional)){   $error['AporteNutricional']  = 'error/No ha ingresado el aporte nutricional';}break;
 			
 			
 			case 'medida':               if(empty($medida)){              $error['medida']             = 'error/No ha ingresado la medida';}break;
@@ -133,6 +135,7 @@ require_once '0_validate_user_1.php';
 	if(isset($EfectoResidual) && $EfectoResidual != ''){          $EfectoResidual      = EstandarizarInput($EfectoResidual); }
 	if(isset($EfectoRetroactivo) && $EfectoRetroactivo != ''){    $EfectoRetroactivo   = EstandarizarInput($EfectoRetroactivo); }
 	if(isset($CarenciaExportador) && $CarenciaExportador != ''){  $CarenciaExportador  = EstandarizarInput($CarenciaExportador); }
+	if(isset($AporteNutricional) && $AporteNutricional != ''){    $AporteNutricional   = EstandarizarInput($AporteNutricional); }
 	
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
@@ -147,6 +150,7 @@ require_once '0_validate_user_1.php';
 	if(isset($EfectoResidual)&&contar_palabras_censuradas($EfectoResidual)!=0){          $error['EfectoResidual']      = 'error/Edita Efecto Residual, contiene palabras no permitidas'; }	
 	if(isset($EfectoRetroactivo)&&contar_palabras_censuradas($EfectoRetroactivo)!=0){    $error['EfectoRetroactivo']   = 'error/Edita Efecto Retroactivo, contiene palabras no permitidas'; }	
 	if(isset($CarenciaExportador)&&contar_palabras_censuradas($CarenciaExportador)!=0){  $error['CarenciaExportador']  = 'error/Edita Carencia Exportador, contiene palabras no permitidas'; }	
+	if(isset($AporteNutricional)&&contar_palabras_censuradas($AporteNutricional)!=0){    $error['AporteNutricional']   = 'error/Edita Aporte Nutricional, contiene palabras no permitidas'; }	
 	
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -211,6 +215,7 @@ require_once '0_validate_user_1.php';
 				if(isset($EfectoResidual) && $EfectoResidual != ''){         $SIS_data .= ",'".$EfectoResidual."'" ;       }else{$SIS_data .= ",''";}
 				if(isset($EfectoRetroactivo) && $EfectoRetroactivo != ''){   $SIS_data .= ",'".$EfectoRetroactivo."'" ;    }else{$SIS_data .= ",''";}
 				if(isset($CarenciaExportador) && $CarenciaExportador != ''){ $SIS_data .= ",'".$CarenciaExportador."'" ;   }else{$SIS_data .= ",''";}
+				if(isset($AporteNutricional) && $AporteNutricional != ''){   $SIS_data .= ",'".$AporteNutricional."'" ;    }else{$SIS_data .= ",''";}
 				
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idTipo,idCategoria,idUml,idTipoProducto,idTipoReceta,Nombre,
@@ -218,7 +223,7 @@ require_once '0_validate_user_1.php';
 				FichaTecnica,HDS, idEstado, idSubTipo, idProveedorFijo, idTipoImagen, idCalidad,
 				idOpciones_1, idOpciones_2, idOpciones_3, idOpciones_4, idOpciones_5, idOpciones_6, idOpciones_7, 
 				idOpciones_8, idOpciones_9, IngredienteActivo, Carencia, DosisRecomendada, EfectoResidual,
-				EfectoRetroactivo, CarenciaExportador';
+				EfectoRetroactivo, CarenciaExportador, AporteNutricional';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'productos_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				//Si ejecuto correctamente la consulta
@@ -290,6 +295,7 @@ require_once '0_validate_user_1.php';
 				if(isset($EfectoResidual) && $EfectoResidual != ''){          $SIS_data .= ",EfectoResidual='".$EfectoResidual."'" ;}
 				if(isset($EfectoRetroactivo) && $EfectoRetroactivo != ''){    $SIS_data .= ",EfectoRetroactivo='".$EfectoRetroactivo."'" ;}
 				if(isset($CarenciaExportador) && $CarenciaExportador != ''){  $SIS_data .= ",CarenciaExportador='".$CarenciaExportador."'" ;}
+				if(isset($AporteNutricional) && $AporteNutricional != ''){    $SIS_data .= ",AporteNutricional='".$AporteNutricional."'" ;}
 											
 				/*******************************************************/
 				//se actualizan los datos
