@@ -353,6 +353,25 @@ if($HoraTermino<$timeBack){
 				$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
 				$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
 				
+				
+			/**********************/
+			//si es boolean	
+			}elseif($rowEquipo['SensoresUniMed_'.$i]==12){
+				//valido que este dentro del rango deseado
+				if($rowEquipo['SensoresMedActual_'.$i]<999){
+					//Humedad
+					if(isset($arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Bool'])&&$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Bool']!=''){
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Bool'] = $arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Bool'] + $rowEquipo['SensoresMedActual_'.$i];
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountBool']++;
+					}else{
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['Bool'] = $rowEquipo['SensoresMedActual_'.$i];
+						$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['CountBool'] = 1;
+					}
+				}
+				//estado (siempre pasa)
+				/*$arrTempGrupos[$rowEquipo['SensoresRevisionGrupo_'.$i]]['NErrores'] = 0;
+				$arrTempSensor[$rowEquipo['SensoresRevisionGrupo_'.$i]][$rowEquipo['SensoresGrupo_'.$i]]['NErrores'] = 0;
+				*/
 			}	
 		}
 	}
@@ -441,11 +460,26 @@ $widget = '
 												if(isset($gru['CountTActual'])&&$gru['CountTActual']!=0){ $TActual = Cantidades(($gru['TActual']/$gru['CountTActual']), 1); }else{ $TActual = 0; }
 												if(isset($gru['CountProm'])&&$gru['CountProm']!=0){       $Prom    = Cantidades(($gru['Prom']/$gru['CountProm']), 1);       }else{ $Prom    = 0; }
 												if(isset($gru['CountHum'])&&$gru['CountHum']!=0){         $Hum     = Cantidades(($gru['Hum']/$gru['CountHum']), 1);         }else{ $Hum     = 0; }
-												
+												if(isset($gru['CountBool'])&&$gru['CountBool']!=0){
+													$tempv  = $gru['Bool']/$gru['CountBool'];
+													$s_link = 'informe_telemetria_registro_sensores_20.php?f_inicio='.fecha_actual().'&f_termino='.fecha_actual().'&idTelemetria='.$idTelemetria.'&submit_filter=Filtrar';
+													//si esta abierto
+													if($tempv!=0){
+														$danger_color = 'warning';
+														$danger_icon .= '<a target="_blank" href="'.$s_link.'" title="Puertas Abiertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-sign-out" aria-hidden="true"></i></a>';
+													//si esta cerrado	
+													}else{
+														$danger_icon .= '<a target="_blank" href="'.$s_link.'" title="Puertas Cerradas" class="btn btn-success btn-sm tooltip"><i class="fa fa-sign-in" aria-hidden="true"></i></a>';
+													}
+												//si no hay puertas configuradas
+												}else{
+													$danger_icon .= '';
+												}	
+													
 												$widget .= '
 												<tr class="odd '.$danger_color.'">
 													<td></td>
-													<td><div class="btn-group" style="width: 35px;" >'.$danger_icon.'</div></td>
+													<td><div class="btn-group" style="width: 70px;" >'.$danger_icon.'</div></td>
 													<td>'.TituloMenu($gru['Nombre']).'</td>
 													<td>'.$TActual.' °C</td>
 													<td>'.$Tmax.' °C</td>
@@ -472,7 +506,7 @@ $widget = '
 						<div class="row" id="update_graphics">';
 							//si hay datos
 							if(isset($x_graph_count)&&$x_graph_count!=0){
-								$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$arrGruposUso[0]['idGrupo']].' últimas '.horas2decimales($_SESSION['usuario']['widget_CrossC']['timeBack']).' horas.';
+								$gr_tittle = 'Grafico '.$arrGruposUsoTemp[$arrGruposUso[0]['idGrupo']].' últimas '.horas2decimales($timeBack).' horas.';
 								$gr_unimed = '°C';
 								$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
 							//si no hay datos	

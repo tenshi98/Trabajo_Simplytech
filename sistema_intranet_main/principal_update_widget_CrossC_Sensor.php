@@ -106,13 +106,13 @@ foreach($arrMediciones as $cli) {
 	
 	//Guardo la fecha							
 	$Temp_1 .= "'".Fecha_estandar($cli['FechaSistema'])." - ".$cli['HoraSistema']."',";
-		
-	//variables
-	$arrDato = array();	
+	//Variables
+	$Mandatory = '';
 	//recorro los sensores
 	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 		//que pertenezca al grupo y grupo uso
 		if($rowEquipo['SensoresRevisionGrupo_'.$i]==$idGrupoUso&&$rowEquipo['SensoresGrupo_'.$i]==$idGrupo){
+			/**********************************************************************/
 			//Verifico si el sensor esta activo para guardar el dato
 			if(isset($rowEquipo['SensoresActivo_'.$i])&&$rowEquipo['SensoresActivo_'.$i]==1){
 				//Que el valor medido sea distinto de 999
@@ -128,6 +128,38 @@ foreach($arrMediciones as $cli) {
 						}
 						//titulo grafico
 						$arrData[$i]['Name'] = "'".$rowEquipo['SensoresNombre_'.$i]."'";
+						$Mandatory           = $i;
+					}
+				}
+			}
+			/**********************************************************************/
+			//Verifico la unidad de medida
+			if(isset($rowEquipo['SensoresUniMed_'.$i])&&$rowEquipo['SensoresUniMed_'.$i]==12){
+				//Verifico si el sensor esta activo para guardar el dato
+				if(isset($rowEquipo['SensoresActivo_'.$i])&&$rowEquipo['SensoresActivo_'.$i]==1){
+					//Que el valor medido sea distinto de 999
+					if(isset($cli['SensorValue_'.$i])&&$cli['SensorValue_'.$i]<99900){
+						//guardo dato de la tabla
+						switch ($cli['SensorValue_'.$i]) {
+							case 0: 
+								//si existe adjunta
+								if(isset($arrData[$Mandatory]['Text'])&&$arrData[$Mandatory]['Text']!=''){
+									$arrData[$Mandatory]['Text'] .= ", 'Cerrado'";
+								//si no lo crea
+								}else{
+									$arrData[$Mandatory]['Text'] = "'Cerrado'";
+								}
+								break;
+							case 1: 
+								//si existe adjunta
+								if(isset($arrData[$Mandatory]['Text'])&&$arrData[$Mandatory]['Text']!=''){
+									$arrData[$Mandatory]['Text'] .= ", 'Abierto'";
+								//si no lo crea
+								}else{
+									$arrData[$Mandatory]['Text'] = "'Abierto'";
+								} 
+								break;
+						}
 					}
 				}
 			}
@@ -157,7 +189,7 @@ for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
 		//los tipos
 		$Graphics_types      .= "'',";
 		//si lleva texto en las burbujas
-		$Graphics_texts      .= "[],";
+		$Graphics_texts      .='['.$arrData[$x]['Text'].'],';
 		//los colores de linea
 		$Graphics_lineColors .= "'',";
 		//los tipos de linea
@@ -184,7 +216,7 @@ $widget = '
 
 //si hay datos
 if(isset($x_graph_count)&&$x_graph_count!=0){
-	$gr_tittle = 'Grafico '.$arrGruposTemp[$idGrupo].' últimas '.horas2decimales($_SESSION['usuario']['widget_CrossC']['timeBack']).' horas.';
+	$gr_tittle = 'Grafico '.$arrGruposTemp[$idGrupo].' últimas '.horas2decimales($timeBack).' horas.';
 	$gr_unimed = '°C';
 	$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
 //si no hay datos	
