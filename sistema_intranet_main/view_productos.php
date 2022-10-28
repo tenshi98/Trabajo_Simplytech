@@ -53,6 +53,7 @@ productos_listado.DosisRecomendada,
 productos_listado.EfectoResidual, 
 productos_listado.EfectoRetroactivo,
 productos_listado.CarenciaExportador,
+productos_listado.AporteNutricional,
 sistema_productos_categorias.Nombre AS Categoria,
 sistema_productos_tipo.Nombre AS Tipo,
 core_tipo_producto.Nombre AS TipoProd,
@@ -195,6 +196,7 @@ foreach ($arrPromedioProd as $productos) {
 							<strong>Carencia ASOEX : </strong><?php echo $rowdata['Carencia']; ?><br/>
 							<strong>Carencia TESCO : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoResidual']); ?><br/>
 							<strong>Tiempo Re-Ingreso : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoRetroactivo']); ?><br/>
+							<strong>Aporte Nutricional : </strong><?php echo $rowdata['AporteNutricional']; ?><br/>
 							
 						</p>
 						
