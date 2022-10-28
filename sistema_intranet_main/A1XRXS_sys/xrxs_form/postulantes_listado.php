@@ -184,7 +184,7 @@ require_once '0_validate_user_1.php';
 				$ndata_2 = db_select_nrows (false, 'Rut', 'postulantes_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."' AND idPostulante!='".$idPostulante."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
-			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El trabajador que intenta ingresar ya existe en el sistema';}
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Postulante que intenta ingresar ya existe en el sistema';}
 			if($ndata_2 > 0) {$error['ndata_2'] = 'error/El Rut ya existe en el sistema';}
 			/*******************************************************************/
 			
