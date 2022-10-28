@@ -124,7 +124,7 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 					$Form_Inputs->form_input_number('Capacidad Nebulizador','Capacidad', $x1, 1);
 					
 					$Form_Inputs->form_tittle(3, 'CrossCrane Gruas');
-					$Form_Inputs->form_time('Hora Revision','CrossCrane_tiempo_revision', $x2, 2, 1);
+					$Form_Inputs->form_time('Hora Revision','CrossCrane_tiempo_revision', $x2, 1, 1);
 					$Form_Inputs->form_select('Grupo Alimentacion','CrossCrane_grupo_amperaje', $x3, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
 					$Form_Inputs->form_select('Grupo Elevacion','CrossCrane_grupo_elevacion', $x4, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
 					$Form_Inputs->form_select('Grupo Giro','CrossCrane_grupo_giro', $x5, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
