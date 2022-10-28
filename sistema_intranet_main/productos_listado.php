@@ -62,7 +62,7 @@ if ( ! empty($_GET['id']) ) {
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 productos_listado.Nombre,
 productos_listado.Descripcion,
 productos_listado.Marca,
@@ -81,6 +81,7 @@ productos_listado.DosisRecomendada,
 productos_listado.EfectoResidual, 
 productos_listado.EfectoRetroactivo,
 productos_listado.CarenciaExportador,
+productos_listado.AporteNutricional,
 sistema_productos_categorias.Nombre AS Categoria,
 sistema_productos_tipo.Nombre AS Tipo,
 core_tipo_producto.Nombre AS TipoProd,
@@ -93,9 +94,8 @@ core_maquinas_tipo.Nombre AS Tarea,
 proveedor_listado.Nombre AS ProveedorFijo,
 cross_quality_calidad_matriz.Nombre AS MatrizCalidad,
 ops1.Nombre AS SistemaMantenlubric,
-ops2.Nombre AS SistemaCROSS
-
-FROM `productos_listado`
+ops2.Nombre AS SistemaCROSS';
+$SIS_join  = '
 LEFT JOIN `sistema_productos_tipo`           ON sistema_productos_tipo.idTipo                    = productos_listado.idTipo
 LEFT JOIN `sistema_productos_categorias`     ON sistema_productos_categorias.idCategoria         = productos_listado.idCategoria
 LEFT JOIN `sistema_productos_uml`            ON sistema_productos_uml.idUml                      = productos_listado.idUml
@@ -105,52 +105,26 @@ LEFT JOIN `core_maquinas_tipo`               ON core_maquinas_tipo.idSubTipo    
 LEFT JOIN `proveedor_listado`                ON proveedor_listado.idProveedor                    = productos_listado.idProveedorFijo
 LEFT JOIN `cross_quality_calidad_matriz`     ON cross_quality_calidad_matriz.idMatriz            = productos_listado.idCalidad
 LEFT JOIN `core_sistemas_opciones` ops1      ON ops1.idOpciones                                  = productos_listado.idOpciones_1
-LEFT JOIN `core_sistemas_opciones` ops2      ON ops2.idOpciones                                  = productos_listado.idOpciones_2
+LEFT JOIN `core_sistemas_opciones` ops2      ON ops2.idOpciones                                  = productos_listado.idOpciones_2';
+$SIS_where = 'productos_listado.idProducto = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-WHERE productos_listado.idProducto = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
 
 //Se verifica el tipo de producto para traer su receta
 if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 	// Se trae un listado con productos de la receta
-	$arrRecetas = array();
-	$query = "SELECT 
+	$SIS_query = '
 	productos_listado.Nombre AS NombreProd,
 	productos_recetas.Cantidad,
-	sistema_productos_uml.Nombre AS UnidadMedida
-	FROM `productos_recetas`
+	sistema_productos_uml.Nombre AS UnidadMedida';
+	$SIS_join  = '
 	LEFT JOIN `productos_listado`        ON productos_listado.idProducto     = productos_recetas.idProductoRel
-	LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml      = productos_listado.idUml
-	WHERE productos_recetas.idProducto = ".$_GET['id'];
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
-	array_push( $arrRecetas,$row );
-	}
+	LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml      = productos_listado.idUml';
+	$SIS_where = 'productos_recetas.idProducto ='.$_GET['id'];
+	$SIS_order = 'productos_listado.Nombre ASC';
+	$arrRecetas = array();
+	$arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrRecetas');
+	
 }
 ?>
 <div class="col-sm-12">
@@ -221,6 +195,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 							<strong>Carencia ASOEX : </strong><?php echo $rowdata['Carencia']; ?><br/>
 							<strong>Carencia TESCO : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoResidual']); ?><br/>
 							<strong>Tiempo Re-Ingreso : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoRetroactivo']); ?><br/>
+							<strong>Aporte Nutricional : </strong><?php echo $rowdata['AporteNutricional']; ?><br/>
 							
 						</p>
 						

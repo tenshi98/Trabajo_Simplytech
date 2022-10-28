@@ -112,31 +112,28 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Receta borrada correct
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 if ( ! empty($_GET['newProd']) ) {  
+//Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'idProducto ASC';
+$arrPermisos = array();
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+//Listado de unidades
+$SIS_query = '
+productos_listado.idProducto,
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'idTipoProducto=1 AND idEstado=1';
+$SIS_order = 'sistema_productos_uml.Nombre ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
 //filtro
 $zx1 = "idProducto=0";
-//Se revisan los permisos a los productos
-$arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_productos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }	
 ?>
 
@@ -169,49 +166,25 @@ foreach ($arrPermisos as $prod) {
 				
 				$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 				
-				//Imprimo las variables
-				$arrTipo = array();
-				$query = "SELECT 
-				productos_listado.idProducto,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `productos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				WHERE idTipoProducto=1 AND idEstado=1
-				ORDER BY sistema_productos_uml.Nombre";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrTipo,$row );
-				}
-				
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
-				}
 				?>
-				</script>
 				
 				<script>
-				document.getElementById("idProductoRel").onchange = function() {myFunction()};
-
-				function myFunction() {
-					let Componente = document.getElementById("idProductoRel").value;
-					if (Componente != "") {
-						//escribo dentro del input
-						document.getElementById("escribeme").value = eval("id_data_" + Componente);
+					<?php
+					//Imprimo las variables
+					foreach ($arrTipo as $tipo) {
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 					}
-				}
+					?>	
+						
+					document.getElementById("idProductoRel").onchange = function() {myFunction()};
+
+					function myFunction() {
+						let Componente = document.getElementById("idProductoRel").value;
+						if (Componente != "") {
+							//escribo dentro del input
+							document.getElementById("escribeme").value = eval("id_data_" + Componente);
+						}
+					}
 				</script>
 			  
 				<div class="form-group">
@@ -229,53 +202,39 @@ foreach ($arrPermisos as $prod) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['edit']) ) {
 //Se traen los datos
-$query = "SELECT  
+$SIS_query = '
 productos_recetas.idProductoRel,
 productos_recetas.Cantidad,
-sistema_productos_uml.Nombre AS Unimed
-FROM `productos_recetas`
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = '
 LEFT JOIN `productos_listado`      ON productos_listado.idProducto   = productos_recetas.idProductoRel
-LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml    = productos_listado.idUml
-WHERE productos_recetas.idReceta='".$_GET['edit']."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml    = productos_listado.idUml';
+$SIS_where = 'productos_recetas.idReceta='.$_GET['edit'];
+$row_data = db_select_data (false, $SIS_query, 'productos_recetas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+
+//Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'idProducto ASC';
+$arrPermisos = array();
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+//Listado de unidades
+$SIS_query = '
+productos_listado.idProducto,
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'idTipoProducto=1 AND idEstado=1';
+$SIS_order = 'sistema_productos_uml.Nombre ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
 //filtro
 $zx1 = "idProducto=0";
-//Se revisan los permisos a los productos
-$arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_productos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
+//recorro
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }	
 ?>
 
@@ -308,49 +267,25 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_hidden('idReceta', $_GET['edit'], 2);
 				$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 				
-				//Imprimo las variables
-				$arrTipo = array();
-				$query = "SELECT 
-				productos_listado.idProducto,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `productos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				WHERE idTipoProducto=1 AND idEstado=1
-				ORDER BY sistema_productos_uml.Nombre";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrTipo,$row );
-				}
-				
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
-				}
 				?>
-				</script>
 				
 				<script>
-				document.getElementById("idProductoRel").onchange = function() {myFunction()};
-
-				function myFunction() {
-					let Componente = document.getElementById("idProductoRel").value;
-					if (Componente != "") {
-						//escribo dentro del input
-						document.getElementById("escribeme").value = eval("id_data_" + Componente);
+					<?php
+					//Imprimo las variables
+					foreach ($arrTipo as $tipo) {
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 					}
-				}
+					?>
+					
+					document.getElementById("idProductoRel").onchange = function() {myFunction()};
+
+					function myFunction() {
+						let Componente = document.getElementById("idProductoRel").value;
+						if (Componente != "") {
+							//escribo dentro del input
+							document.getElementById("escribeme").value = eval("id_data_" + Componente);
+						}
+					}
 				</script>
 			  
 				<div class="form-group">
@@ -367,48 +302,32 @@ foreach ($arrPermisos as $prod) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['editProd']) ) {
 //Se traen los datos
-$query = "SELECT  sistema_productos_uml.Nombre AS Unimed
-FROM `productos_listado`
-LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-WHERE productos_listado.idProducto='".$_SESSION['receta_productos'][$_GET['editProd']]['idProducto']."'";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$row_data = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'productos_listado.idProducto='.$_SESSION['receta_productos'][$_GET['editProd']]['idProducto'];
+$row_data = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+
+//Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 0;
+$arrPermisos = array();
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+//Listado de unidades de medida
+$SIS_query = '
+productos_listado.idProducto,
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'idTipoProducto=1 AND idEstado=1';
+$SIS_order = 'sistema_productos_uml.Nombre ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
 //filtro
 $zx1 = "idProducto=0";
-//Se revisan los permisos a los productos
-$arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_productos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
+//recorro
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto={$prod['idProducto']})";
 }	
@@ -440,51 +359,24 @@ foreach ($arrPermisos as $prod) {
 					</div>
 				</div>';
 				
-			
-				
-				//Imprimo las variables
-				$arrTipo = array();
-				$query = "SELECT 
-				productos_listado.idProducto,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `productos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				WHERE idTipoProducto=1 AND idEstado=1
-				ORDER BY sistema_productos_uml.Nombre";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrTipo,$row );
-				}
-				
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
-				}
 				?>
-				</script>
 				
 				<script>
-				document.getElementById("idProducto").onchange = function() {myFunction()};
-
-				function myFunction() {
-					let Componente = document.getElementById("idProducto").value;
-					if (Componente != "") {
-						//escribo dentro del input
-						document.getElementById("escribeme").value = eval("id_data_" + Componente);
+					<?php
+					//Imprimo las variables
+					foreach ($arrTipo as $tipo) {
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 					}
-				}
+					?>
+					document.getElementById("idProducto").onchange = function() {myFunction()};
+
+					function myFunction() {
+						let Componente = document.getElementById("idProducto").value;
+						if (Componente != "") {
+							//escribo dentro del input
+							document.getElementById("escribeme").value = eval("id_data_" + Componente);
+						}
+					}
 				</script>
 			  
 				<div class="form-group">
@@ -499,31 +391,29 @@ foreach ($arrPermisos as $prod) {
 </div>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
  } elseif ( ! empty($_GET['addProd']) ) {  
+//Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 0;
+$arrPermisos = array();
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+//Listado de unidades de medida
+$SIS_query = '
+productos_listado.idProducto,
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'idTipoProducto=1 AND idEstado=1';
+$SIS_order = 'sistema_productos_uml.Nombre ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
 //filtro
 $zx1 = "idProducto=0";
-//Se revisan los permisos a los productos
-$arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_productos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrPermisos,$row );
-}
+//recorro
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }	 
 ?>
 
@@ -554,51 +444,24 @@ foreach ($arrPermisos as $prod) {
 					</div>
 				</div>';
 				
-				
-				
-				//Imprimo las variables
-				$arrTipo = array();
-				$query = "SELECT 
-				productos_listado.idProducto,
-				sistema_productos_uml.Nombre AS Unimed
-				FROM `productos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				WHERE idTipoProducto=1 AND idEstado=1
-				ORDER BY sistema_productos_uml.Nombre";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
-				array_push( $arrTipo,$row );
-				}
-				
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
-				}
 				?>
-				</script>
 				
 				<script>
-				document.getElementById("idProducto").onchange = function() {myFunction()};
-
-				function myFunction() {
-					let Componente = document.getElementById("idProducto").value;
-					if (Componente != "") {
-						//escribo dentro del input
-						document.getElementById("escribeme").value = eval("id_data_" + Componente);
+					<?php
+					//Imprimo las variables
+					foreach ($arrTipo as $tipo) {
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
 					}
-				}
+					?>
+					document.getElementById("idProducto").onchange = function() {myFunction()};
+
+					function myFunction() {
+						let Componente = document.getElementById("idProducto").value;
+						if (Componente != "") {
+							//escribo dentro del input
+							document.getElementById("escribeme").value = eval("id_data_" + Componente);
+						}
+					}
 				</script>
 			  
 				<div class="form-group">
@@ -614,52 +477,24 @@ foreach ($arrPermisos as $prod) {
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }elseif ( ! empty($_GET['new2']) ) { 
 // Se traen todos los datos del producto
-$query = "SELECT 
+$SIS_query = '
 productos_listado.Nombre,
-sistema_productos_uml.Nombre AS Unidad
-FROM `productos_listado`
-LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = productos_listado.idUml
+sistema_productos_uml.Nombre AS Unidad';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'productos_listado.idProducto = '.$_SESSION['receta']['idProducto'];
+$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-WHERE productos_listado.idProducto = ".$_SESSION['receta']['idProducto'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
-	
 // Se trae un listado con todos los productos
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 productos_listado.idProducto, 
 productos_listado.Nombre,
-sistema_productos_uml.Nombre AS Unimed
-FROM `productos_listado` 
-LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}	
+sistema_productos_uml.Nombre AS Unimed';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'idTipoProducto=1 AND idEstado=1';
+$SIS_order = 'sistema_productos_uml.Nombre ASC';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
+
 ?>
 
 <div class="row">
@@ -804,58 +639,30 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 <?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 }else{
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 productos_listado.Nombre, 
 productos_listado.idTipoProducto,
 productos_listado.idTipoReceta,
 sistema_productos_uml.Nombre AS UnidadMedida,
 productos_listado.idOpciones_1, 
-productos_listado.idOpciones_2
-FROM `productos_listado`
-LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml      = productos_listado.idUml
-WHERE idProducto = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+productos_listado.idOpciones_2';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'idProducto = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 // Se trae un listado con productos de la receta
-$arrRecetas = array();
-$query = "SELECT 
+$SIS_query = ' 
 productos_recetas.idReceta,
 productos_listado.Nombre AS NombreProd,
 productos_recetas.Cantidad,
-sistema_productos_uml.Nombre AS UnidadMedida
-FROM `productos_recetas`
+sistema_productos_uml.Nombre AS UnidadMedida';
+$SIS_join  = '
 LEFT JOIN `productos_listado`        ON productos_listado.idProducto     = productos_recetas.idProductoRel
-LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml      = productos_listado.idUml
-WHERE productos_recetas.idProducto = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrRecetas,$row );
-}
+LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml      = productos_listado.idUml';
+$SIS_where = 'productos_recetas.idProducto = '.$_GET['id'];
+$SIS_order = 'productos_listado.Nombre ASC';
+$arrRecetas = array();
+$arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrRecetas');
 
 ?>
 

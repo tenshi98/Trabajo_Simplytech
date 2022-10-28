@@ -55,23 +55,11 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Archivo borrado correc
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos del producto
-$query = "SELECT Nombre,HDS, idTipoProducto, idTipoReceta,idOpciones_1, idOpciones_2
-FROM `productos_listado`
-WHERE idProducto = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre,HDS, idTipoProducto, idTipoReceta,idOpciones_1, idOpciones_2';
+$SIS_join  = '';
+$SIS_where = 'idProducto = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-sm-12">
@@ -145,8 +133,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<?php widget_validator(); ?>
 				<?php }?> 
 				
-				
-				
 			</div>
 		</div>	
 	</div>
@@ -157,7 +143,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/

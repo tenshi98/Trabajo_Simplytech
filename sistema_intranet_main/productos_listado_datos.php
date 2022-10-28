@@ -40,25 +40,14 @@ require_once 'core/Web.Header.Main.php';
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // Se traen todos los datos del producto
-$query = "SELECT Nombre,idTipo,idCategoria,Marca,idUml,idTipoProducto, Codigo,idTipoReceta,idOpciones_1
+$SIS_query = 'Nombre,idTipo,idCategoria,Marca,idUml,idTipoProducto, Codigo,idTipoReceta,idOpciones_1
 idOpciones_2,IngredienteActivo, Carencia, DosisRecomendada, EfectoResidual, EfectoRetroactivo,
-CarenciaExportador 
-FROM `productos_listado`
-WHERE idProducto = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+CarenciaExportador, AporteNutricional';
+$SIS_join  = '';
+$SIS_where = 'idProducto ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Datos Basicos');?>
@@ -112,11 +101,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					if(isset($idTipoReceta)) {        $x7  = $idTipoReceta;          }else{$x7  = $rowdata['idTipoReceta'];}
 					if(isset($Codigo)) {              $x8  = $Codigo;                }else{$x8  = $rowdata['Codigo'];}
 					if(isset($IngredienteActivo)) {   $x9  = $IngredienteActivo;     }else{$x9  = $rowdata['IngredienteActivo'];}
-					if(isset($Carencia)) {            $x10 = $Carencia;              }else{$x10 = $rowdata['Carencia'];}
-					if(isset($DosisRecomendada)) {    $x11 = $DosisRecomendada;      }else{$x11 = Cantidades_decimales_justos($rowdata['DosisRecomendada']);}
-					if(isset($EfectoResidual)) {      $x12 = $EfectoResidual;        }else{$x12 = Cantidades_decimales_justos($rowdata['EfectoResidual']);}
-					if(isset($EfectoRetroactivo)) {   $x13 = $EfectoRetroactivo;     }else{$x13 = Cantidades_decimales_justos($rowdata['EfectoRetroactivo']);}
-					if(isset($CarenciaExportador)) {  $x14 = $CarenciaExportador;    }else{$x14 = Cantidades_decimales_justos($rowdata['CarenciaExportador']);}
+					if(isset($DosisRecomendada)) {    $x10 = $DosisRecomendada;      }else{$x10 = Cantidades_decimales_justos($rowdata['DosisRecomendada']);}
+					if(isset($CarenciaExportador)) {  $x11 = $CarenciaExportador;    }else{$x11 = Cantidades_decimales_justos($rowdata['CarenciaExportador']);}
+					if(isset($Carencia)) {            $x12 = $Carencia;              }else{$x12 = $rowdata['Carencia'];}
+					if(isset($EfectoResidual)) {      $x13 = $EfectoResidual;        }else{$x13 = Cantidades_decimales_justos($rowdata['EfectoResidual']);}
+					if(isset($EfectoRetroactivo)) {   $x14 = $EfectoRetroactivo;     }else{$x14 = Cantidades_decimales_justos($rowdata['EfectoRetroactivo']);}
+					if(isset($AporteNutricional)) {   $x15 = $AporteNutricional;     }else{$x15 = $rowdata['AporteNutricional'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -129,12 +119,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_select('Tipo de Receta','idTipoReceta', $x7, 1, 'idTipoReceta', 'Nombre', 'core_tipo_receta', 0, '', $dbConn);
 					$Form_Inputs->form_input_text('Codigo', 'Codigo', $x8, 1);
 					$Form_Inputs->form_textarea('Ingredientes Activos','IngredienteActivo', $x9, 1);
-					//$Form_Inputs->form_ckeditor('Ingredientes Activos','IngredienteActivo', $x9, 1, 2);
-					$Form_Inputs->form_input_number_spinner('Dosis Recomendada','DosisRecomendada', $x11, 0, 99999, '0.01', 2, 1);
-					$Form_Inputs->form_input_number_spinner('Carencia Etiqueta','CarenciaExportador', $x14, 0, 500, 1, 0, 1);
-					$Form_Inputs->form_input_text('Carencia ASOEX', 'Carencia', $x10, 1);
-					$Form_Inputs->form_input_number_spinner('Carencia TESCO','EfectoResidual', $x12, 0, 500, 1, 0, 1);
-					$Form_Inputs->form_input_number_spinner('Tiempo Re-Ingreso','EfectoRetroactivo', $x13, 0, 500, 1, 0, 1);
+					$Form_Inputs->form_input_number_spinner('Dosis Recomendada','DosisRecomendada', $x10, 0, 99999, '0.01', 2, 1);
+					$Form_Inputs->form_input_number_spinner('Carencia Etiqueta','CarenciaExportador', $x11, 0, 500, 1, 0, 1);
+					$Form_Inputs->form_input_text('Carencia ASOEX', 'Carencia', $x12, 1);
+					$Form_Inputs->form_input_number_spinner('Carencia TESCO','EfectoResidual', $x13, 0, 500, 1, 0, 1);
+					$Form_Inputs->form_input_number_spinner('Tiempo Re-Ingreso','EfectoRetroactivo', $x14, 0, 500, 1, 0, 1);
+					$Form_Inputs->form_textarea('Aporte Nutricional','AporteNutricional', $x15, 1);
 					
 					
 					$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);

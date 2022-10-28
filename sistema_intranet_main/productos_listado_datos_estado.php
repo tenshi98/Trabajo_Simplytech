@@ -44,33 +44,20 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Estado cambiado correc
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 productos_listado.idProducto,
 productos_listado.Nombre,
 productos_listado.idTipoProducto,
 productos_listado.idTipoReceta,
 core_estados.Nombre AS estado,
 productos_listado.idOpciones_1, 
-productos_listado.idOpciones_2
-FROM `productos_listado`
-LEFT JOIN `core_estados`   ON core_estados.idEstado       = productos_listado.idEstado
-WHERE idProducto = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+productos_listado.idOpciones_2';
+$SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = productos_listado.idEstado';
+$SIS_where = 'idProducto = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
+
 <div class="col-sm-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Estado');?>
 </div>
