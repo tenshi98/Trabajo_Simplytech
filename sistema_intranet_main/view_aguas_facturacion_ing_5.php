@@ -16,8 +16,8 @@
 						RUT : <?php echo $_SESSION['Facturacion_basicos']['SistemaRut']?><br>
 						<?php echo $_SESSION['Facturacion_basicos']['SistemaRubro']?><br>
 						<?php echo $_SESSION['Facturacion_basicos']['SistemaDireccion'].' '.$_SESSION['Facturacion_basicos']['SistemaComuna'].' '.$_SESSION['Facturacion_basicos']['SistemaCiudad']; ?><br>
-						<?php echo $_SESSION['Facturacion_basicos']['SistemaFono1']?>
-						<?php echo $_SESSION['Facturacion_basicos']['SistemaFono2']?>
+						<?php echo formatPhone($_SESSION['Facturacion_basicos']['SistemaFono1']) ?>
+						<?php echo formatPhone($_SESSION['Facturacion_basicos']['SistemaFono2']) ?>
 					</address>
 				</div>
 						
@@ -375,11 +375,11 @@
 						
 							<p>
 								<div class="pull-left">Emergencias 24 horas </div>
-								<small class="pull-right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFonoEmergencias'] ?></small>
+								<small class="pull-right"><?php echo formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFonoEmergencias']) ?></small>
 								
 								<br/>
 								<div class="pull-left">Consultas Lunes a Viernes </div>
-								<small class="pull-right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFonoConsultas'] ?></small>
+								<small class="pull-right"><?php echo formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFonoConsultas']) ?></small>
 							</p>
 						</div>
 						

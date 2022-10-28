@@ -16,7 +16,7 @@
 			RUT : <?php echo $rowDatos['SistemaRut']?><br>
 			<?php echo $rowDatos['Rubro']?><br>
 			<?php echo $rowDatos['SistemaDireccion'].' '.$rowDatos['SistemaComuna'].' '.$rowDatos['SistemaCiudad']; ?><br>
-			<?php echo $rowDatos['SistemaFono']?>
+			<?php echo formatPhone($rowDatos['SistemaFono']); ?>
 			</address>
 		</div>
 			
@@ -373,11 +373,11 @@
 			
 				<p>
 				<div class="pull-left">Emergencias 24 horas </div>
-				<small class="pull-right"><?php echo $rowDatos['DetConsFonoEmergencias'] ?></small>
+				<small class="pull-right"><?php echo formatPhone($rowDatos['DetConsFonoEmergencias']); ?></small>
 				
 				<br/>
 				<div class="pull-left">Consultas Lunes a Viernes </div>
-				<small class="pull-right"><?php echo $rowDatos['DetConsFonoConsultas'] ?></small>
+				<small class="pull-right"><?php echo formatPhone($rowDatos['DetConsFonoConsultas']); ?></small>
 				</p>
 			</div>
 			

@@ -247,7 +247,7 @@ array_push( $arrGrupo,$row );
 						<strong>'.$rowMaquina['SistemaOrigen'].'</strong><br/>
 						'.$rowMaquina['SistemaOrigenCiudad'].', '.$rowMaquina['SistemaOrigenComuna'].'<br/>
 						'.$rowMaquina['SistemaOrigenDireccion'].'<br/>
-						Fono : '.$rowMaquina['SistemaOrigenFono'].'<br/>
+						Fono : '.formatPhone($rowMaquina['SistemaOrigenFono']).'<br/>
 						Rut: '.$rowMaquina['SistemaOrigenRut'].'<br/>
 						Email: '.$rowMaquina['SistemaOrigenEmail'].'<br/>
 					</address>

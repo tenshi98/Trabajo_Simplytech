@@ -315,7 +315,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					</tr>
 					<tr>
 						<td class="meta-head">Fono</td>
-						<td><?php echo $_SESSION['caja_eg_basicos']['Fono']; ?></td>
+						<td><?php echo formatPhone($_SESSION['caja_eg_basicos']['Fono']); ?></td>
 					</tr>
 				</tbody>
 			</table>

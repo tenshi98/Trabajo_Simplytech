@@ -365,7 +365,7 @@ array_push( $arrHistorial,$row );
 						Empresa: '.$row_data['SistemaOrigen'].'<br/>
 						Ciudad-Comuna: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
 						Direccion: '.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
+						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>

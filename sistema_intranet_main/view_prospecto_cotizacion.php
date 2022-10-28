@@ -197,7 +197,7 @@ foreach ($arrImpuestos as $impto) {
 				<strong><?php echo $row_data['SistemaOrigen']; ?></strong><br/>
 				<?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
 				<?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
-				Fono: <?php echo $row_data['SistemaOrigenFono']; ?><br/>
+				Fono: <?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
 				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
 				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
 			</address>
@@ -209,8 +209,8 @@ foreach ($arrImpuestos as $impto) {
 				<strong><?php echo $row_data['NombreProveedor']; ?></strong><br/>
 				<?php echo $row_data['CiudadProveedor'].', '.$row_data['ComunaProveedor']; ?><br/>
 				<?php echo $row_data['DireccionProveedor']; ?><br/>
-				Fono Fijo: <?php echo $row_data['Fono1Proveedor']; ?><br/>
-				Celular: <?php echo $row_data['Fono2Proveedor']; ?><br/>
+				Fono Fijo: <?php echo formatPhone($row_data['Fono1Proveedor']); ?><br/>
+				Celular: <?php echo formatPhone($row_data['Fono2Proveedor']); ?><br/>
 				Fax: <?php echo $row_data['FaxProveedor']; ?><br/>
 				Rut: <?php echo $row_data['RutProveedor']; ?><br/>
 				Email: <?php echo $row_data['EmailProveedor']; ?><br/>

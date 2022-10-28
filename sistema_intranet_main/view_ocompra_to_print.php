@@ -238,7 +238,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 								<strong>RUT : </strong>'.$row_data['RutProveedor'].'<br/>
 								<strong>Dirección : </strong>'.$row_data['DireccionProveedor'].', '.$row_data['ComunaProveedor'].' - '.$row_data['CiudadProveedor'].'<br/>
 								<strong>Email : </strong>'.$row_data['EmailProveedor'].'<br/>
-								<strong>Teléfono : </strong>'.$row_data['Fono1Proveedor'].' - '.$row_data['Fono2Proveedor'].'<br/>
+								<strong>Teléfono : </strong>'.formatPhone($row_data['Fono1Proveedor']).' - '.formatPhone($row_data['Fono2Proveedor']).'<br/>
 								<strong>Giro : </strong>'.$row_data['GiroProveedor'].'<br/>
 								<strong>Contacto : </strong>'.$row_data['PersonaContactoProveedor'].'<br/>
 								<strong>Forma de Pago : </strong>'.$row_data['FormaPagoProveedor'].'<br/>
@@ -398,7 +398,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 								<strong>Rut : </strong>'.$row_data['SistemaOrigenRut'].'<br/>
 								<strong>Giro : </strong>'.$row_data['SistemaOrigenRubro'].'<br/>
 								<strong>Dirección Comercial : </strong>'.$row_data['SistemaOrigenDireccion'].', '.$row_data['SistemaOrigenComuna'].', '.$row_data['SistemaOrigenCiudad'].'<br/>
-								<strong>Teléfono : </strong>'.$row_data['SistemaOrigenFono'].'<br/>
+								<strong>Teléfono : </strong>'.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 								<strong>E-mail : </strong>'.$row_data['SistemaOrigenEmail'].'<br/>
 							</td>
 						</tr>

@@ -233,7 +233,7 @@ $html .= '
 								Empresa: '.$row_data['SistemaOrigen'].'<br/>
 								Ciudad-Comuna: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
 								Direccion: '.$row_data['SistemaOrigenDireccion'].'<br/>
-								Fono: '.$row_data['SistemaOrigenFono'].'<br/>
+								Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 								Email: '.$row_data['SistemaOrigenEmail'].'
 							</td>
 							<td style="vertical-align: top;width:33%;">
@@ -624,7 +624,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
-			$pdf->Output($pdf_file, 'I');
+			$pdf->Output(DeSanitizar($pdf_file), 'I');
 	
 			break;
 		/************************************************************************/
@@ -638,7 +638,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$dompdf->loadHtml($html);
 			$dompdf->setPaper($OpcDom);
 			$dompdf->render();
-			$dompdf->stream($pdf_file);
+			$dompdf->stream(DeSanitizar($pdf_file));
 			break;
 
 	}

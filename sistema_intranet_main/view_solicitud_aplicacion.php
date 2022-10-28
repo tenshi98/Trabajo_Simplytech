@@ -251,7 +251,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				Empresa: <?php echo $row_data['SistemaOrigen']; ?><br/>
 				Ciudad-Comuna: <?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
 				Direccion: <?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
-				Fono: <?php echo $row_data['SistemaOrigenFono']; ?><br/>
+				Fono: <?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
 				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
 			</address>
 		</div>

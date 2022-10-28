@@ -109,8 +109,8 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
 							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['FNacimiento']); ?><br/>
-							<strong>Fono : </strong><?php echo $rowdata['Fono1']; ?><br/>
-							<strong>Fono : </strong><?php echo $rowdata['Fono2']; ?><br/>
+							<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
+							<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
 							<strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
 							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?><br/>

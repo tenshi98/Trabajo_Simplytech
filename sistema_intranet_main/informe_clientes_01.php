@@ -143,13 +143,13 @@ array_push( $arrClientes,$row );
 							<td><?php echo $cli['estado']; ?></td>
 							<td><?php echo $cli['Giro']; ?></td>
 							<td><?php echo $cli['Rubro']; ?></td>
-							<td><?php echo $cli['Fono1']; ?></td>
-							<td><?php echo $cli['Fono2']; ?></td>
+							<td><?php echo formatPhone($cli['Fono1']); ?></td>
+							<td><?php echo formatPhone($cli['Fono2']); ?></td>
 							<td><?php echo $cli['Fax']; ?></td>
 							<td><?php echo $cli['email']; ?></td>
 							<td><?php echo $cli['Web']; ?></td>
 							<td><?php echo $cli['PersonaContacto']; ?></td>
-							<td><?php echo $cli['PersonaContacto_Fono']; ?></td>
+							<td><?php echo formatPhone($cli['PersonaContacto_Fono']); ?></td>
 							<td><?php echo $cli['PersonaContacto_email']; ?></td>
 						</tr>
 					<?php } ?>                     

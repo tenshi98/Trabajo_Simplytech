@@ -133,7 +133,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 						Nombre: '.$row_data['SistemaOrigen'].'<br/>
 						Ubicacion: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
 						Direccion: '.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono Fijo: '.$row_data['SistemaOrigenFono'].'<br/>
+						Fono Fijo: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 						Email: '.$row_data['SistemaOrigenEmail'].'<br/>
 						Persona contacto:'.$row_data['SistemaContacto'].'<br/>

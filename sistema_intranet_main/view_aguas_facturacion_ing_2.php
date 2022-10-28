@@ -17,8 +17,8 @@
 								<?php echo 'R.U.T.: '.$_SESSION['Facturacion_basicos']['SistemaRut']?><br>
 								<?php echo $_SESSION['Facturacion_basicos']['SistemaRubro']?><br>
 								<?php echo $_SESSION['Facturacion_basicos']['SistemaDireccion'].' '.$_SESSION['Facturacion_basicos']['SistemaComuna'].' '.$_SESSION['Facturacion_basicos']['SistemaCiudad']; ?><br>
-								<?php echo 'Telefono 1: '.$_SESSION['Facturacion_basicos']['SistemaFono1']?><br>
-								<?php echo 'Telefono 2: '.$_SESSION['Facturacion_basicos']['SistemaFono2']?>
+								<?php echo 'Telefono 1: '.formatPhone($_SESSION['Facturacion_basicos']['SistemaFono1']) ?><br>
+								<?php echo 'Telefono 2: '.formatPhone($_SESSION['Facturacion_basicos']['SistemaFono2']) ?>
 							</p>
 						</div>
 					</div>
@@ -32,10 +32,10 @@
 							<p>
 								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteRut'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteRut']!=''){                     echo 'R.U.T.: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteRut'].'<br/>';} ?> 
 								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteGiro'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteGiro']!=''){                   echo 'Rubro: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteGiro'].'<br/>';} ?> 
-								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion']!=''){ echo 'Direccion: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion'].'<br/>';} ?> 
-								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna']!=''){       echo 'Comuna: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna'].'<br/>';} ?> 
-								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1']!=''){                 echo 'Telefono Fijo: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1'].'<br/>';} ?> 
-								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono2'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono2']!=''){                 echo 'Telefono Movil: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono2'].'<br/>';} ?>
+								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion']!=''){         echo 'Direccion: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteDireccion'].'<br/>';} ?> 
+								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna']!=''){   echo 'Comuna: '.$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombreComuna'].'<br/>';} ?> 
+								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1']!=''){                 echo 'Telefono Fijo: '.formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono1']).'<br/>';} ?> 
+								<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono2'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono2']!=''){                 echo 'Telefono Movil: '.formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFono2']).'<br/>';} ?>
 							</p>
 						</div>
 					</div>
@@ -358,11 +358,11 @@
 								
 									<p>
 										<div class="pull-left">Emergencias 24 horas </div>
-										<small class="pull-right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFonoEmergencias'] ?></small>
+										<small class="pull-right"><?php echo formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFonoEmergencias']) ?></small>
 										
 										<br/>
 										<div class="pull-left">Consultas Lunes a Viernes </div>
-										<small class="pull-right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFonoConsultas'] ?></small>
+										<small class="pull-right"><?php echo formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFonoConsultas']) ?></small>
 									</p>
 								</div>
 							</div>

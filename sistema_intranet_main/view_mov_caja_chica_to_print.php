@@ -152,7 +152,7 @@ $html = '
 						<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br/>
 						Rut: '.$row_data['TrabajadorRut'].'<br/>
 						Cargo: '.$row_data['TrabajadorCargo'].'<br/>
-						Fono: '.$row_data['TrabajadorFono'].'<br/>
+						Fono: '.formatPhone($row_data['TrabajadorFono']).'<br/>
 					</address>
 				</div>';
 				

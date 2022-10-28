@@ -216,7 +216,7 @@ foreach ($arrFlashpoint as $datos) {
 							<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
 							'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
 							'.$row_data['SistemaOrigenDireccion'].'<br/>
-							Fono : '.$row_data['SistemaOrigenFono'].'<br/>
+							Fono : '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 							Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 							Email: '.$row_data['SistemaOrigenEmail'].'<br/>
 						</address>
@@ -230,8 +230,8 @@ foreach ($arrFlashpoint as $datos) {
 							<strong>'.$row_data['LaboratorioNombre'].'</strong><br/>
 							'.$row_data['LaboratorioCiudad'].', '.$row_data['LaboratorioComuna'].'<br/>
 							'.$row_data['LaboratorioDireccion'].'<br/>
-							Fono 1 : '.$row_data['LaboratorioFono1'].'<br/>
-							Fono 2 : '.$row_data['LaboratorioFono2'].'<br/>
+							Fono 1 : '.formatPhone($row_data['LaboratorioFono1']).'<br/>
+							Fono 2 : '.formatPhone($row_data['LaboratorioFono2']).'<br/>
 							Rut: '.$row_data['LaboratorioRut'].'<br/>
 							Email: '.$row_data['LaboratorioEmail'].'<br/>
 							Persona Contacto: '.$row_data['LaboratorioContacto'].'<br/>

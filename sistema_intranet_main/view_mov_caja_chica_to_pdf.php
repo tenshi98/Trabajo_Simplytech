@@ -55,12 +55,12 @@ trabajadores_listado.Cargo AS TrabajadorCargo,
 trabajadores_listado.Fono AS TrabajadorFono,
 trabajadores_listado.Rut AS TrabajadorRut,
 caja_chica_facturacion.idFacturacionRelacionada,
-trabajadores_listado.Nombre AS TrabRelNombre,
-trabajadores_listado.ApellidoPat AS TrabRelApellidoPat,
-trabajadores_listado.ApellidoMat AS TrabRelApellidoMat,
-trabajadores_listado.Cargo AS TrabRelCargo,
-trabajadores_listado.Fono AS TrabRelFono,
-trabajadores_listado.Rut AS TrabRelRut,
+trab_rel.Nombre AS TrabRelNombre,
+trab_rel.ApellidoPat AS TrabRelApellidoPat,
+trab_rel.ApellidoMat AS TrabRelApellidoMat,
+trab_rel.Cargo AS TrabRelCargo,
+trab_rel.Fono AS TrabRelFono,
+trab_rel.Rut AS TrabRelRut,
 fact_rel.Valor AS RelValor';
 $SIS_join  = '
 LEFT JOIN `caja_chica_listado`                  ON caja_chica_listado.idCajaChica       = caja_chica_facturacion.idCajaChica
@@ -157,7 +157,7 @@ $html .= '
 										<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br/>
 										Rut: '.$row_data['TrabajadorRut'].'<br/>
 										Cargo: '.$row_data['TrabajadorCargo'].'<br/>
-										Fono: '.$row_data['TrabajadorFono'].'<br/>
+										Fono: '.formatPhone($row_data['TrabajadorFono']).'<br/>
 									</td>';
 									
 									break;
@@ -352,7 +352,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
-			$pdf->Output($pdf_file, 'I');
+			$pdf->Output(DeSanitizar($pdf_file), 'I');
 	
 			break;
 		/************************************************************************/
@@ -366,7 +366,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$dompdf->loadHtml($html);
 			$dompdf->setPaper($OpcDom);
 			$dompdf->render();
-			$dompdf->stream($pdf_file);
+			$dompdf->stream(DeSanitizar($pdf_file));
 			break;
 
 	}

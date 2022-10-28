@@ -203,8 +203,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 							<strong>Sexo : </strong><?php echo $rowdata['Sexo']; ?><br/>
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['FNacimiento']); ?><br/>
-							<strong>Fono1 : </strong><?php echo $rowdata['Fono1']; ?><br/>
-							<strong>Fono2 : </strong><?php echo $rowdata['Fono2']; ?><br/>
+							<strong>Fono1 : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
+							<strong>Fono2 : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
 							<strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
 							<strong>Estado Civil: </strong><?php echo $rowdata['EstadoCivil']; ?><br/>
 							<strong>Tipo de Licencia : </strong><?php echo $rowdata['LicenciaTipo']; ?><br/>

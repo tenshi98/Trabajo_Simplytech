@@ -145,7 +145,7 @@ $html .= '<div class="row">
 					<address>
 						<strong>'.$row_data['Trab_Nombre'].' '.$row_data['Trab_ApellidoPat'].' '.$row_data['Trab_ApellidoMat'].'</strong><br/>
 						Rut: '.$row_data['Trab_Rut'].'<br/>
-						Fono: '.$row_data['Trab_Fono'].'<br/>
+						Fono: '.formatPhone($row_data['Trab_Fono']).'<br/>
 						Cargo: '.$row_data['Trab_Cargo'].'<br/>
 						Tipo Cargo: '.$row_data['Trab_Tipo'].'<br/>
 						Centro de Costo: '.$row_data['CentroCosto'].'
@@ -158,7 +158,7 @@ $html .= '<div class="row">
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
 						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
 						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
+						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
@@ -190,7 +190,7 @@ $html .= '<div class="row">
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
 						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
 						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
+						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
@@ -202,8 +202,8 @@ $html .= '<div class="row">
 						<strong>'.$row_data['Cliente_Nombre'].'</strong><br/>
 						'.$row_data['Cliente_Ciudad'].', '.$row_data['Cliente_Comuna'].'<br/>
 						'.$row_data['Cliente_Direccion'].'<br/>
-						Fono Fijo: '.$row_data['Cliente_Fono1'].'<br/>
-						Celular: '.$row_data['Cliente_Fono2'].'<br/>
+						Fono Fijo: '.formatPhone($row_data['Cliente_Fono1']).'<br/>
+						Celular: '.formatPhone($row_data['Cliente_Fono2']).'<br/>
 						Fax: '.$row_data['Cliente_Fax'].'<br/>
 						Rut: '.$row_data['Cliente_Rut'].'<br/>
 						Email: '.$row_data['Cliente_Email'].'<br/>
@@ -239,8 +239,8 @@ $html .= '<div class="row">
 						<strong>'.$row_data['Proveedor_Nombre'].'</strong><br/>
 						'.$row_data['Proveedor_Ciudad'].', '.$row_data['Proveedor_Comuna'].'<br/>
 						'.$row_data['Proveedor_Direccion'].'<br/>
-						Fono Fijo: '.$row_data['Proveedor_Fono1'].'<br/>
-						Celular: '.$row_data['Proveedor_Fono2'].'<br/>
+						Fono Fijo: '.formatPhone($row_data['Proveedor_Fono1']).'<br/>
+						Celular: '.formatPhone($row_data['Proveedor_Fono2']).'<br/>
 						Fax: '.$row_data['Proveedor_Fax'].'<br/>
 						Rut: '.$row_data['Proveedor_Rut'].'<br/>
 						Email: '.$row_data['Proveedor_Email'].'<br/>
@@ -255,7 +255,7 @@ $html .= '<div class="row">
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
 						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
 						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
+						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>

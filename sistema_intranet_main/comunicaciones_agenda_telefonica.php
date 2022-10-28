@@ -297,7 +297,7 @@ $arrContactos = db_select_array (false, $SIS_query, 'principal_agenda_telefonica
 					<?php foreach ($arrContactos as $cont) { ?>
 					<tr class="odd">
 						<td><?php echo $cont['Nombre']; ?></td>
-						<td><?php echo $cont['Fono']; ?></td>
+						<td><?php echo formatPhone($cont['Fono']); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $cont['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >

@@ -107,7 +107,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 			<address>
 				<strong><?php echo $row_data['Nombre_trab'].' '.$row_data['ApellidoPat_trab'].' '.$row_data['ApellidoMat_trab']; ?></strong><br/>
 				Rut: <?php echo $row_data['Rut_trab']; ?><br/>
-				Fono: <?php echo $row_data['Fono_trab']; ?><br/>
+				Fono: <?php echo formatPhone($row_data['Fono_trab']); ?><br/>
 				Cargo: <?php echo $row_data['Cargo_trab']; ?><br/>
 				Tipo Cargo: <?php echo $row_data['Tipo_trab']; ?>
 			</address>
@@ -119,7 +119,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 				<strong><?php echo $row_data['SistemaOrigen']; ?></strong><br/>
 				<?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
 				<?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
-				Fono: <?php echo $row_data['SistemaOrigenFono']; ?><br/>
+				Fono: <?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
 				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
 				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
 			</address>

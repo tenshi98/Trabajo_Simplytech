@@ -113,8 +113,8 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'contratista_observacion
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
-								<strong>Telefono 1 : </strong><?php echo $rowdata['Fono1']; ?><br/>
-								<strong>Telefono 2 : </strong><?php echo $rowdata['Fono2']; ?><br/>
+								<strong>Telefono 1 : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
+								<strong>Telefono 2 : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
 								<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
 								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>

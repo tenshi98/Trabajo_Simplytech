@@ -402,7 +402,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					</tr>
 					<tr>
 						<td class="meta-head">Fono</td>
-						<td><?php echo $_SESSION['caja_rendida_basicos']['Trab_Fono']; ?></td>
+						<td><?php echo formatPhone($_SESSION['caja_rendida_basicos']['Trab_Fono']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Solicitado Por</td>

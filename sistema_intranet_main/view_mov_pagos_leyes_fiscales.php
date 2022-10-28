@@ -215,7 +215,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 				<strong>Nombre: </strong><?php echo $row_data['SistemaOrigen']; ?><br/>
 				<strong>Ubicacion: </strong><?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
 				<strong>Direccion: </strong><?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
-				<strong>Fono: </strong><?php echo $row_data['SistemaOrigenFono']; ?><br/>
+				<strong>Fono: </strong><?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
 				<strong>Rut: </strong><?php echo $row_data['SistemaOrigenRut']; ?><br/>
 				<strong>Email: </strong><?php echo $row_data['SistemaOrigenEmail']; ?><br/>
 			</address>

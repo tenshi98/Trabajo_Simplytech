@@ -382,7 +382,7 @@ switch ($rowCard['idCardType']) {
 				<tr><td><strong>Nombre</strong></td><td><strong>: <?php echo $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat']; ?></strong></td></tr>
 				<tr><td><strong>Rut</strong></td><td>: <?php echo $rowTrabajador['Rut']; ?></td></tr>
 				<tr><td><strong>Sexo</strong></td><td>: <?php echo $rowTrabajador['Sexo']; ?></td></tr>
-				<tr><td><strong>Fono</strong></td><td>: <?php echo $rowTrabajador['Fono']; ?></td></tr>
+				<tr><td><strong>Fono</strong></td><td>: <?php echo formatPhone($rowTrabajador['Fono']); ?></td></tr>
 				<tr><td><strong>Email</strong></td><td>: <?php echo $rowTrabajador['email']; ?></td></tr>
 			</table> 
 		</div>
@@ -409,7 +409,7 @@ switch ($rowCard['idCardType']) {
 				<tr><td><strong>Nombre</strong></td><td><strong>: <?php echo $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat']; ?></strong></td></tr>
 				<tr><td><strong>Rut</strong></td><td>: <?php echo $rowTrabajador['Rut']; ?></td></tr>
 				<tr><td><strong>Sexo</strong></td><td>: <?php echo $rowTrabajador['Sexo']; ?></td></tr>
-				<tr><td><strong>Fono</strong></td><td>: <?php echo $rowTrabajador['Fono']; ?></td></tr>
+				<tr><td><strong>Fono</strong></td><td>: <?php echo formatPhone($rowTrabajador['Fono']); ?></td></tr>
 				<tr><td><strong>Email</strong></td><td>: <?php echo $rowTrabajador['email']; ?></td></tr>
 			</table> 
 		</div>

@@ -87,8 +87,8 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 										
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 							<p class="text-muted word_break">
-								<strong>Telefono Fijo : </strong><?php echo $rowdata['Fono1']; ?><br/>
-								<strong>Telefono Movil : </strong><?php echo $rowdata['Fono2']; ?><br/>
+								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
+								<strong>Telefono Movil : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
 								<strong>Fax : </strong><?php echo $rowdata['Fax']; ?><br/>
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
 								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>

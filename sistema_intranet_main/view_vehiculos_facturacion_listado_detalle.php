@@ -143,8 +143,8 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
 								<?php 
 								if(isset($rowDatos['SistemaRut'])&&$rowDatos['SistemaRut']!=''){                 echo 'R.U.T.: '.$rowDatos['SistemaRut'].'<br/>';}
 								if(isset($rowDatos['SistemaDireccion'])&&$rowDatos['SistemaDireccion']!=''){     echo $rowDatos['SistemaDireccion'].' '.$rowDatos['SistemaComuna'].' '.$rowDatos['SistemaCiudad'].'<br/>';}
-								if(isset($rowDatos['SistemaFono1'])&&$rowDatos['SistemaFono1']!=''){             echo 'Telefono Fijo: '.$rowDatos['SistemaFono1'].'<br/>';}
-								if(isset($rowDatos['SistemaFono2'])&&$rowDatos['SistemaFono2']!=''){             echo 'Celular: '.$rowDatos['SistemaFono2'].'<br/>';}
+								if(isset($rowDatos['SistemaFono1'])&&$rowDatos['SistemaFono1']!=''){             echo 'Telefono Fijo: '.formatPhone($rowDatos['SistemaFono1']).'<br/>';}
+								if(isset($rowDatos['SistemaFono2'])&&$rowDatos['SistemaFono2']!=''){             echo 'Celular: '.formatPhone($rowDatos['SistemaFono2']).'<br/>';}
 								
 								?>
 							</p>
@@ -167,8 +167,8 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
 								<?php 
 								if(isset($rowDatos['ApoderadoRut'])&&$rowDatos['ApoderadoRut']!=''){                 echo 'R.U.T.: '.$rowDatos['ApoderadoRut'].'<br/>';}
 								if(isset($rowDatos['ApoderadoDireccion'])&&$rowDatos['ApoderadoDireccion']!=''){     echo $rowDatos['ApoderadoDireccion'].' '.$rowDatos['ApoderadoComuna'].' '.$rowDatos['ApoderadoCiudad'].'<br/>';}
-								if(isset($rowDatos['ApoderadoFono1'])&&$rowDatos['ApoderadoFono1']!=''){             echo 'Telefono Fijo: '.$rowDatos['ApoderadoFono1'].'<br/>';}
-								if(isset($rowDatos['ApoderadoFono2'])&&$rowDatos['ApoderadoFono2']!=''){             echo 'Celular: '.$rowDatos['ApoderadoFono2'].'<br/>';}
+								if(isset($rowDatos['ApoderadoFono1'])&&$rowDatos['ApoderadoFono1']!=''){             echo 'Telefono Fijo: '.formatPhone($rowDatos['ApoderadoFono1']).'<br/>';}
+								if(isset($rowDatos['ApoderadoFono2'])&&$rowDatos['ApoderadoFono2']!=''){             echo 'Celular: '.formatPhone($rowDatos['ApoderadoFono2']).'<br/>';}
 								
 								?>
 							</p>

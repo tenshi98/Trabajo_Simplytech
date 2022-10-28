@@ -305,7 +305,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 							<strong>Sexo : </strong><?php echo $rowdata['Sexo']; ?><br/>
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['FNacimiento']); ?><br/>
-							<strong>Fono : </strong><?php echo $rowdata['Fono']; ?><br/>
+							<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono']); ?><br/>
 							<strong>Email : </strong><?php echo $rowdata['email']; ?><br/>
 							<strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
 							<strong>Estado Civil: </strong><?php echo $rowdata['EstadoCivil']; ?><br/>
@@ -339,7 +339,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 						<p class="text-muted">
 							<strong>Persona de Contacto : </strong><?php echo $rowdata['ContactoPersona']; ?><br/>
-							<strong>Fono de Persona de Contacto : </strong><?php echo $rowdata['ContactoFono']; ?><br/>
+							<strong>Fono de Persona de Contacto : </strong><?php echo formatPhone($rowdata['ContactoFono']); ?><br/>
 						</p>	
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Laborales</h2>

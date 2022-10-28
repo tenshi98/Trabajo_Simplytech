@@ -99,7 +99,7 @@ $html .= '
 								<strong>Trabajador: </strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'<br/>
 								<strong>Rut: </strong>'.$row_data['TrabajadorRut'].'<br/>
 								<strong>Cargo: </strong>'.$row_data['TrabajadorCargo'].'<br/>
-								<strong>Fono: </strong>'.$row_data['TrabajadorFono'].'<br/>
+								<strong>Fono: </strong>'.formatPhone($row_data['TrabajadorFono']).'<br/>
 							</td>
 							<td style="vertical-align: top;width:50%;">
 								Detalle
@@ -241,7 +241,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
-			$pdf->Output($pdf_file, 'I');
+			$pdf->Output(DeSanitizar($pdf_file), 'I');
 	
 			break;
 		/************************************************************************/
@@ -255,7 +255,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$dompdf->loadHtml($html);
 			$dompdf->setPaper($OpcDom);
 			$dompdf->render();
-			$dompdf->stream($pdf_file);
+			$dompdf->stream(DeSanitizar($pdf_file));
 			break;
 
 	}

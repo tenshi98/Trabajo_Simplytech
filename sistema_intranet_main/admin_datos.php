@@ -223,8 +223,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 							<h2 class="text-primary">Datos de contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Nombre Contacto : </strong><?php echo $rowdata['Contacto_Nombre']; ?><br/>
-								<strong>Fono 1: </strong><?php echo $rowdata['Contacto_Fono1']; ?><br/>
-								<strong>Fono 2: </strong><?php echo $rowdata['Contacto_Fono2']; ?><br/>
+								<strong>Fono 1: </strong><?php echo formatPhone($rowdata['Contacto_Fono1']); ?><br/>
+								<strong>Fono 2: </strong><?php echo formatPhone($rowdata['Contacto_Fono2']); ?><br/>
 								<strong>Fax : </strong><?php echo $rowdata['Contacto_Fax']; ?><br/>
 								<strong>Web : </strong><?php echo $rowdata['Contacto_Web']; ?><br/>
 								<strong>Email : </strong><?php echo $rowdata['email_principal']; ?>

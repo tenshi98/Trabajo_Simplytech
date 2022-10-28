@@ -339,7 +339,7 @@ $arrCorreos = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_list',
 						<td><?php echo $comunas['Categoria']; ?></td>
 						<td><?php echo $comunas['NombreEmail']; ?></td>
 						<td><?php echo $comunas['Email']; ?></td>
-						<td><?php echo $comunas['Fono']; ?></td>
+						<td><?php echo formatPhone($comunas['Fono']); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $comunas['sistema']; ?></td><?php } ?>			
 						<td>
 							<div class="btn-group" style="width: 70px;" >

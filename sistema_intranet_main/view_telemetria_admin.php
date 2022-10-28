@@ -418,7 +418,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 							<p class="text-muted">
 								<strong>Nombre : </strong><?php echo $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat']; ?><br/>
-								<strong>Fono : </strong><?php echo $rowTrabajador['Fono']; ?><br/>
+								<strong>Fono : </strong><?php echo formatPhone($rowTrabajador['Fono']); ?><br/>
 								<strong>Rut : </strong><?php echo $rowTrabajador['Rut']; ?><br/>
 								<strong>Direccion : </strong><?php echo $rowTrabajador['Direccion'].', '.$rowTrabajador['nombre_comuna'].', '.$rowTrabajador['nombre_region']; ?><br/>
 								<strong>Observaciones : </strong><?php echo $rowTrabajador['Observaciones']; ?>

@@ -89,7 +89,7 @@ $html = '
 				<strong>Trabajador: </strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'<br/>
 				<strong>Rut: </strong>'.$row_data['TrabajadorRut'].'<br/>
 				<strong>Cargo: </strong>'.$row_data['TrabajadorCargo'].'<br/>
-				<strong>Fono: </strong>'.$row_data['TrabajadorFono'].'<br/>
+				<strong>Fono: </strong>'.formatPhone($row_data['TrabajadorFono']).'<br/>
 			</address>
 		</div>
 		<div class="col-sm-6 invoice-col">

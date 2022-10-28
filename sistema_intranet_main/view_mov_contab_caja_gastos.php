@@ -113,7 +113,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 				<strong>Trabajador: </strong><?php echo $row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat']; ?><br/>
 				<strong>Rut: </strong><?php echo $row_data['TrabajadorRut']; ?><br/>
 				<strong>Cargo: </strong><?php echo $row_data['TrabajadorCargo']; ?><br/>
-				<strong>Fono: </strong><?php echo $row_data['TrabajadorFono']; ?><br/>
+				<strong>Fono: </strong><?php echo formatPhone($row_data['TrabajadorFono']); ?><br/>
 			
 			</address>
 		</div>

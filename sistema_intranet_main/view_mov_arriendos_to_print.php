@@ -233,8 +233,8 @@ $html = '
 						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
 						'.$row_data['CiudadProveedor'].', '.$row_data['ComunaProveedor'].'<br/>
 						'.$row_data['DireccionProveedor'].'<br/>
-						Fono Fijo: '.$row_data['Fono1Proveedor'].'<br/>
-						Celular: '.$row_data['Fono2Proveedor'].'<br/>
+						Fono Fijo: '.formatPhone($row_data['Fono1Proveedor']).'<br/>
+						Celular: '.formatPhone($row_data['Fono2Proveedor']).'<br/>
 						Fax: '.$row_data['FaxProveedor'].'<br/>
 						Rut: '.$row_data['RutProveedor'].'<br/>
 						Email: '.$row_data['EmailProveedor'].'<br/>
@@ -249,7 +249,7 @@ $html = '
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
 						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
 						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
+						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
@@ -321,7 +321,7 @@ $html = '
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
 						'.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
 						'.$row_data['SistemaOrigenDireccion'].'<br/>
-						Fono: '.$row_data['SistemaOrigenFono'].'<br/>
+						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
@@ -333,8 +333,8 @@ $html = '
 						<strong>'.$row_data['NombreCliente'].'</strong><br/>
 						'.$row_data['CiudadCliente'].', '.$row_data['ComunaProveedor'].'<br/>
 						'.$row_data['DireccionCliente'].'<br/>
-						Fono Fijo: '.$row_data['Fono1Cliente'].'<br/>
-						Celular: '.$row_data['Fono2Cliente'].'<br/>
+						Fono Fijo: '.formatPhone($row_data['Fono1Cliente']).'<br/>
+						Celular: '.formatPhone($row_data['Fono2Cliente']).'<br/>
 						Fax: '.$row_data['FaxCliente'].'<br/>
 						Rut: '.$row_data['RutCliente'].'<br/>
 						Email: '.$row_data['EmailCliente'].'<br/>

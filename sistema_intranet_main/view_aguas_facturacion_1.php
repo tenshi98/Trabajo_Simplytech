@@ -16,7 +16,7 @@
 							<?php echo 'R.U.T.: '.$rowDatos['SistemaRut']?><br>
 							<?php echo $rowDatos['Rubro']?><br>
 							<?php echo $rowDatos['SistemaDireccion'].' '.$rowDatos['SistemaComuna'].' '.$rowDatos['SistemaCiudad']; ?><br>
-							<?php echo 'Telefono: '.$rowDatos['SistemaFono']?>
+							<?php echo 'Telefono: '.formatPhone($rowDatos['SistemaFono'])?>
 						</p>
 					</div>
 				</div>
@@ -32,8 +32,8 @@
 							<?php if(isset($rowDatos['ClienteGiro'])&&$rowDatos['ClienteGiro']!=''){                   echo 'Rubro: '.$rowDatos['ClienteGiro'].'<br/>';} ?> 
 							<?php if(isset($rowDatos['ClienteDireccionFact'])&&$rowDatos['ClienteDireccionFact']!=''){ echo 'Direccion: '.$rowDatos['ClienteDireccionFact'].'<br/>';} ?> 
 							<?php if(isset($rowDatos['ClienteComunaFact'])&&$rowDatos['ClienteComunaFact']!=''){       echo 'Comuna: '.$rowDatos['ClienteComunaFact'].'<br/>';} ?> 
-							<?php if(isset($rowDatos['ClienteFono1'])&&$rowDatos['ClienteFono1']!=''){                 echo 'Telefono Fijo: '.$rowDatos['ClienteFono1'].'<br/>';} ?> 
-							<?php if(isset($rowDatos['ClienteFono2'])&&$rowDatos['ClienteFono2']!=''){                 echo 'Telefono Movil: '.$rowDatos['ClienteFono2'].'<br/>';} ?>
+							<?php if(isset($rowDatos['ClienteFono1'])&&$rowDatos['ClienteFono1']!=''){                 echo 'Telefono Fijo: '.formatPhone($rowDatos['ClienteFono1']).'<br/>';} ?> 
+							<?php if(isset($rowDatos['ClienteFono2'])&&$rowDatos['ClienteFono2']!=''){                 echo 'Telefono Movil: '.formatPhone($rowDatos['ClienteFono2']).'<br/>';} ?>
 						</p>
 					</div>
 				</div>
@@ -318,11 +318,11 @@
 								
 								<p>
 									<div class="pull-left">Emergencias 24 horas </div>
-									<small class="pull-right"><?php echo $rowDatos['DetConsFonoEmergencias'] ?></small>
+									<small class="pull-right"><?php echo formatPhone($rowDatos['DetConsFonoEmergencias']); ?></small>
 										
 									<br/>
 									<div class="pull-left">Consultas Lunes a Viernes </div>
-									<small class="pull-right"><?php echo $rowDatos['DetConsFonoConsultas'] ?></small>
+									<small class="pull-right"><?php echo formatPhone($rowDatos['DetConsFonoConsultas']); ?></small>
 								</p>
 							</div>
 						</div>

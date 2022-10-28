@@ -377,7 +377,7 @@ $html ='
 					<tr><td><strong>Nombre</strong></td><td><strong>: '.$rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'].'</strong></td></tr>
 					<tr><td><strong>Rut</strong></td><td>: '.$rowTrabajador['Rut'].'</td></tr>
 					<tr><td><strong>Sexo</strong></td><td>: '.$rowTrabajador['Sexo'].'</td></tr>
-					<tr><td><strong>Fono</strong></td><td>: '.$rowTrabajador['Fono'].'</td></tr>
+					<tr><td><strong>Fono</strong></td><td>: '.formatPhone($rowTrabajador['Fono']).'</td></tr>
 					<tr><td><strong>Email</strong></td><td>: '.$rowTrabajador['email'].'</td></tr>
 				</table> 
 			</div>';
@@ -406,7 +406,7 @@ $html ='
 					<tr><td><strong>Nombre</strong></td><td><strong>: '.$rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'].'</strong></td></tr>
 					<tr><td><strong>Rut</strong></td><td>: '.$rowTrabajador['Rut'].'</td></tr>
 					<tr><td><strong>Sexo</strong></td><td>: '.$rowTrabajador['Sexo'].'</td></tr>
-					<tr><td><strong>Fono</strong></td><td>: '.$rowTrabajador['Fono'].'</td></tr>
+					<tr><td><strong>Fono</strong></td><td>: '.formatPhone($rowTrabajador['Fono']).'</td></tr>
 					<tr><td><strong>Email</strong></td><td>: '.$rowTrabajador['email'].'</td></tr>
 				</table> 
 			</div>';

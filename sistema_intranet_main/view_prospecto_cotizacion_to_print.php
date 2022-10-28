@@ -215,7 +215,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							<td width="50%" style="text-align: left; font-size: 16px;">
 								<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
 								<strong>Rut : </strong>'.$row_data['SistemaOrigenRut'].'<br/>
-								<strong>Teléfonos : </strong>'.$row_data['SistemaOrigenFono1'].' - '.$row_data['SistemaOrigenFono2'].'<br/>
+								<strong>Teléfonos : </strong>'.formatPhone($row_data['SistemaOrigenFono1']).' - '.formatPhone($row_data['SistemaOrigenFono2']).'<br/>
 								<strong>Dirección Comercial : </strong>'.$row_data['SistemaOrigenDireccion'].', '.$row_data['SistemaOrigenComuna'].', '.$row_data['SistemaOrigenCiudad'].'<br/>
 								<strong>E-mail : </strong>'.$row_data['SistemaOrigenEmail'].'<br/>
 								<strong>Web : </strong>'.$row_data['SistemaOrigenWeb'].'<br/>
@@ -232,7 +232,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 								<strong>Fecha : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 								<strong>Empresa : </strong>'.$row_data['NombreProspecto'].'<br/>
 								<strong>Dirección : </strong>'.$row_data['DireccionProspecto'].'<br/>
-								<strong>Fono : </strong>'.$row_data['Fono1Prospecto'].' - '.$row_data['Fono2Prospecto'].'<br/>
+								<strong>Fono : </strong>'.formatPhone($row_data['Fono1Prospecto']).' - '.formatPhone($row_data['Fono2Prospecto']).'<br/>
 								<strong>Giro : </strong>'.$row_data['GiroProspecto'].'<br/>
 								<strong>Solicita : </strong>'.$row_data['PersonaContactoProspecto'].'<br/>
 							</td>

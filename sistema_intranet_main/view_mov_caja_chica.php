@@ -196,7 +196,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 						<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br/>
 						Rut: '.$row_data['TrabajadorRut'].'<br/>
 						Cargo: '.$row_data['TrabajadorCargo'].'<br/>
-						Fono: '.$row_data['TrabajadorFono'].'<br/>
+						Fono: '.formatPhone($row_data['TrabajadorFono']).'<br/>
 					</address>
 				</div>';
 				
@@ -226,7 +226,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 						Trabajador: '.$row_data['TrabRelNombre'].' '.$row_data['TrabRelApellidoPat'].' '.$row_data['TrabRelApellidoMat'].'<br/>
 						Rut: '.$row_data['TrabRelRut'].'<br/>
 						Cargo: '.$row_data['TrabRelCargo'].'<br/>
-						Fono: '.$row_data['TrabRelFono'].'<br/>
+						Fono: '.formatPhone($row_data['TrabRelFono']).'<br/>
 					</address>
 				</div>';
 				

@@ -222,7 +222,7 @@ array_push( $arrArchivos,$row );
 							<strong>Nombre : </strong><?php echo $rowdata['SistemaOrigen']; ?><br/>
 							<strong>Ubicacion : </strong><?php echo $rowdata['SistemaOrigenCiudad'].', '.$rowdata['SistemaOrigenComuna']; ?><br/>
 							<strong>Direccion : </strong><?php echo $rowdata['SistemaOrigenDireccion']; ?><br/>
-							<strong>Fono Fijo : </strong><?php echo $rowdata['SistemaOrigenFono']; ?><br/>
+							<strong>Fono Fijo : </strong><?php echo formatPhone($rowdata['SistemaOrigenFono']); ?><br/>
 							<strong>Rut : </strong><?php echo $rowdata['SistemaOrigenRut']; ?><br/>
 							<strong>Email : </strong><?php echo $rowdata['SistemaOrigenEmail']; ?><br/>
 							<strong>Persona contacto : </strong><?php echo $rowdata['SistemaContacto']; ?><br/>

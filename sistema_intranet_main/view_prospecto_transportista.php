@@ -109,7 +109,7 @@ $arrEtapa = db_select_array (false, $SIS_query, 'prospectos_transportistas_etapa
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Prospecto</h2>
 						<p class="text-muted">
 							<strong>Nombre Prospecto: </strong><?php echo $rowdata['Nombre']; ?><br/>
-							<strong>Telefono : </strong><?php echo $rowdata['Fono']; ?><br/>
+							<strong>Telefono : </strong><?php echo formatPhone($rowdata['Fono']); ?><br/>
 							<strong>Email Prospecto: </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
 							<strong>Email Respuesta: </strong><a href="mailto:<?php echo $rowdata['email_noti']; ?>"><?php echo $rowdata['email_noti']; ?></a><br/>
 							<strong>Fecha de Registro : </strong><?php echo Fecha_estandar($rowdata['F_Ingreso']); ?><br/>

@@ -143,7 +143,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 				<strong><?php echo $row_data['SistemaOrigen']; ?></strong><br/>
 				<?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
 				<?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
-				Fono: <?php echo $row_data['SistemaOrigenFono']; ?><br/>
+				Fono: <?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
 				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
 				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
 			</address>

@@ -104,8 +104,8 @@ $arrDetalle = db_select_array (false, $SIS_query, 'vehiculos_facturacion_apodera
 								<?php 
 								if(isset($rowDatos['SistemaRut'])&&$rowDatos['SistemaRut']!=''){                 echo 'R.U.T.: '.$rowDatos['SistemaRut'].'<br/>';}
 								if(isset($rowDatos['SistemaDireccion'])&&$rowDatos['SistemaDireccion']!=''){     echo $rowDatos['SistemaDireccion'].' '.$rowDatos['SistemaComuna'].' '.$rowDatos['SistemaCiudad'].'<br/>';}
-								if(isset($rowDatos['SistemaFono1'])&&$rowDatos['SistemaFono1']!=''){             echo 'Telefono Fijo: '.$rowDatos['SistemaFono1'].'<br/>';}
-								if(isset($rowDatos['SistemaFono2'])&&$rowDatos['SistemaFono2']!=''){             echo 'Celular: '.$rowDatos['SistemaFono2'].'<br/>';}
+								if(isset($rowDatos['SistemaFono1'])&&$rowDatos['SistemaFono1']!=''){             echo 'Telefono Fijo: '.formatPhone($rowDatos['SistemaFono1']).'<br/>';}
+								if(isset($rowDatos['SistemaFono2'])&&$rowDatos['SistemaFono2']!=''){             echo 'Celular: '.formatPhone($rowDatos['SistemaFono2']).'<br/>';}
 								
 								?>
 							</p>

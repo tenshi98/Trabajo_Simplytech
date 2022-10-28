@@ -421,7 +421,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Personales</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
-							<strong>Fono : </strong><?php echo $rowdata['Fono']; ?><br/>
+							<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono']); ?><br/>
 							<strong>Email : </strong><?php echo $rowdata['email']; ?><br/>
 							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>

@@ -650,7 +650,7 @@ array_push( $arrFlashpoint,$row );
 					<tr class="odd"><td><?php echo $rowMaquina['MaquinaNombre']; ?></td>                     <td><?php echo $rowMaquina['SistemaOrigen']; ?></td></tr>
 					<tr class="odd"><td><?php echo 'Codigo: '.$rowMaquina['MaquinaCodigo']; ?></td>          <td><?php echo $rowMaquina['SistemaOrigenCiudad'].', '.$rowMaquina['SistemaOrigenComuna']; ?></td></tr>
 					<tr class="odd"><td><?php echo 'Modelo: '.$rowMaquina['MaquinaModelo']; ?></td>          <td><?php echo $rowMaquina['SistemaOrigenDireccion'] ?></td></tr>
-					<tr class="odd"><td><?php echo 'Serie: '.$rowMaquina['MaquinaSerie']; ?></td>            <td><?php echo 'Fono : '.$rowMaquina['SistemaOrigenFono']; ?></td></tr>
+					<tr class="odd"><td><?php echo 'Serie: '.$rowMaquina['MaquinaSerie']; ?></td>            <td><?php echo 'Fono : '.formatPhone($rowMaquina['SistemaOrigenFono']); ?></td></tr>
 					<tr class="odd"><td><?php echo 'Fabricante: '.$rowMaquina['MaquinaFabricante']; ?></td>  <td><?php echo 'Rut: '.$rowMaquina['SistemaOrigenRut']; ?></td></tr>
 					<tr class="odd">
 						<td>

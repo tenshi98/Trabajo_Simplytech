@@ -330,7 +330,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					</tr>
 					<tr>
 						<td class="meta-head">Fono</td>
-						<td><?php echo $_SESSION['contab_caja_gastos_basicos']['Fono']; ?></td>
+						<td><?php echo formatPhone($_SESSION['contab_caja_gastos_basicos']['Fono']); ?></td>
 					</tr>
 				</tbody>
 			</table>
