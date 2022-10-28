@@ -184,7 +184,7 @@ foreach ($arrCreativo as $prod) {
 	if(isset($prod['Total_4'])){$sub_2 = $sub_2 + $prod['Total_4'];}
 							
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $prod['Trabajador'])
+				->setCellValue('A'.$nn, DeSanitizar($prod['Trabajador']))
 				->setCellValue('B'.$nn, cantidades_excel($prod['Neto_1']))
 				->setCellValue('C'.$nn, cantidades_excel($prod['Neto_2']))
 				->setCellValue('D'.$nn, cantidades_excel($prod['Neto_3']))
@@ -233,7 +233,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Ventas por vendedor Resumen';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

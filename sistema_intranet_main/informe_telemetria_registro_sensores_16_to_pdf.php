@@ -132,7 +132,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			<tr class="odd">
 				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($fac['FechaSistema']).'</td>
 				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$fac['HoraSistema'].'</td>
-				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.cantidades($New_Dato, 2).' '.$rowUnimed['Nombre'].'</td>
+				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.cantidades($New_Dato, 2).' '.DeSanitizar($rowUnimed['Nombre']).'</td>
 			</tr>';
 		}else{
 			$m_table .= '
@@ -143,9 +143,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			foreach ($arrGrupos as $gru) {
 				if(isset($arrDato[$gru['idGrupo']]['Cuenta'])&&$arrDato[$gru['idGrupo']]['Cuenta']!=0){
 					$New_Dato = $arrDato[$gru['idGrupo']]['Valor']/$arrDato[$gru['idGrupo']]['Cuenta'];
-					$m_table .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.cantidades($New_Dato, 2).' '.$rowUnimed['Nombre'].'</td>';
+					$m_table .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.cantidades($New_Dato, 2).' '.DeSanitizar($rowUnimed['Nombre']).'</td>';
 				}else{
-					$m_table .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">0 '.$rowUnimed['Nombre'].'</td>';
+					$m_table .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">0 '.DeSanitizar($rowUnimed['Nombre']).'</td>';
 				}
 			}
 			$m_table .= '</tr>';
@@ -173,7 +173,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Fecha</th>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Hora</th>';
 				foreach ($arrGrupos as $gru) {
-					$html .='<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.$gru['Nombre'].'</th>';
+					$html .='<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.DeSanitizar($gru['Nombre']).'</th>';
 				}
 			
 			$html .='
@@ -191,16 +191,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	/**********************************************************************************************************************************/
 	//Config
 	$pdf_titulo     = 'Trazabilidad Planta';
-	$pdf_subtitulo  = $_SESSION['usuario']['basic_data']['RazonSocial'];
+	$pdf_subtitulo  = DeSanitizar($_SESSION['usuario']['basic_data']['RazonSocial']);
 	$pdf_subtitulo .= '
-	Informe del equipo '.$rowEquipo['NombreEquipo'].'
+	Informe del equipo '.DeSanitizar($rowEquipo['NombreEquipo']).'
 	';
 	if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
 		$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).'-'.$h_inicio.' hasta '.fecha_estandar($f_termino).'-'.$h_termino;
 	}elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
 		$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).' hasta '.fecha_estandar($f_termino);
 	}
-	$pdf_file       = 'Informe Trazabilidad Planta del equipo '.$rowEquipo['NombreEquipo'].'.pdf';
+	$pdf_file       = 'Informe Trazabilidad Planta del equipo '.DeSanitizar($rowEquipo['NombreEquipo']).'.pdf';
 	$OpcDom         = "'A4', 'landscape'";
 	$OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 	$OpcTcpPg       = "A4"; //Tipo de Hoja
@@ -273,7 +273,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
-				$pdf->Output($pdf_file, 'I');
+				$pdf->Output(DeSanitizar($pdf_file), 'I');
 		
 				break;
 			/************************************************************************/
@@ -287,7 +287,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$dompdf->loadHtml($html);
 				$dompdf->setPaper($OpcDom);
 				$dompdf->render();
-				$dompdf->stream($pdf_file);
+				$dompdf->stream(DeSanitizar($pdf_file));
 				break;
 
 		}

@@ -143,8 +143,8 @@ $arrEquipos2 = db_select_array (false, $SIS_query, 'telemetria_listado_errores',
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-							 ->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+							 ->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
@@ -176,13 +176,13 @@ $nn     = 3;
 foreach ($arrEquipos1 as $equip) {
 	
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $equip['Equipo'])
-				->setCellValue('B'.$nn, $equip['Descripcion'])
+				->setCellValue('A'.$nn, DeSanitizar($equip['Equipo']))
+				->setCellValue('B'.$nn, DeSanitizar($equip['Descripcion']))
 				->setCellValue('C'.$nn, fecha_estandar($equip['Fecha']))
-				->setCellValue('D'.$nn, $equip['Cuenta'])
+				->setCellValue('D'.$nn, DeSanitizar($equip['Cuenta']))
 				->setCellValue('E'.$nn, Cantidades($equip['Valor_min'], 2))
 				->setCellValue('F'.$nn, Cantidades($equip['Valor_max'], 2))
-				->setCellValue('G'.$nn, $equip['Unimed']);
+				->setCellValue('G'.$nn, DeSanitizar($equip['Unimed']));
 				
 	//Se suma 1
 	$nn++;
@@ -377,7 +377,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'CrossCrane - Alertas por Grua';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

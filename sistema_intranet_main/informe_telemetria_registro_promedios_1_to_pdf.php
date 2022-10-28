@@ -123,15 +123,15 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					//Si se ven detalles
 					if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
 						$html .= '
-							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedProm'], 2).' '.$rutas['Unimed'].'</td>
-							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedMin'], 2).' '.$rutas['Unimed'].'</td>
-							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedMax'], 2).' '.$rutas['Unimed'].'</td>
-							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedDesStan'], 2).' '.$rutas['Unimed'].'</td>
+							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedProm'], 2).' '.DeSanitizar($rutas['Unimed']).'</td>
+							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedMin'], 2).' '.DeSanitizar($rutas['Unimed']).'</td>
+							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedMax'], 2).' '.DeSanitizar($rutas['Unimed']).'</td>
+							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedDesStan'], 2).' '.DeSanitizar($rutas['Unimed']).'</td>
 						';		
 					//Si no se ven detalles	
 					}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 						$html .= '
-							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedProm'], 2).' '.$rutas['Unimed'].'</td>
+							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedProm'], 2).' '.DeSanitizar($rutas['Unimed']).'</td>
 						';
 					} 
 					$html .= '</tr>';	
@@ -146,8 +146,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	/**********************************************************************************************************************************/
 	//Config
 	$pdf_titulo     = 'Max – Min Sensor';
-	$pdf_subtitulo  = 'Max – Min Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'].' '.$rowEquipo['NombreEquipo'];
-	$pdf_file       = 'Max – Min Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'].' '.$rowEquipo['NombreEquipo'].'.pdf';
+	$pdf_subtitulo  = 'Max – Min Sensor N° '.$_GET['sensorn'].' '.DeSanitizar($arrEquipos[0]['SensorNombre']).' '.DeSanitizar($rowEquipo['NombreEquipo']);
+	$pdf_file       = 'Max – Min Sensor N° '.$_GET['sensorn'].' '.DeSanitizar($arrEquipos[0]['SensorNombre']).' '.DeSanitizar($rowEquipo['NombreEquipo']).'.pdf';
 	$OpcDom         = "'A4', 'landscape'";
 	$OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 	$OpcTcpPg       = "A4"; //Tipo de Hoja
@@ -212,7 +212,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
-				$pdf->Output($pdf_file, 'I');
+				$pdf->Output(DeSanitizar($pdf_file), 'I');
 		
 				break;
 			/************************************************************************/
@@ -226,7 +226,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$dompdf->loadHtml($html);
 				$dompdf->setPaper($OpcDom);
 				$dompdf->render();
-				$dompdf->stream($pdf_file);
+				$dompdf->stream(DeSanitizar($pdf_file));
 				break;
 
 		}

@@ -250,9 +250,9 @@ $Subtotal_2 = 0;
 foreach ($arrTemporal_1 as $tipo) {
 	
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $tipo['Tipo'])
-				->setCellValue('B'.$nn, $tipo['Empresa'])
-				->setCellValue('C'.$nn, $tipo['Documento'].' '.$tipo['N_DocPago'])
+				->setCellValue('A'.$nn, DeSanitizar($tipo['Tipo']))
+				->setCellValue('B'.$nn, DeSanitizar($tipo['Empresa']))
+				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
 				
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
@@ -293,9 +293,9 @@ $Subtotal_2 = 0;
 foreach ($arrTemporal_2 as $tipo) {
 	
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $tipo['Tipo'])
-				->setCellValue('B'.$nn, $tipo['Empresa'])
-				->setCellValue('C'.$nn, $tipo['Documento'].' '.$tipo['N_DocPago'])
+				->setCellValue('A'.$nn, DeSanitizar($tipo['Tipo']))
+				->setCellValue('B'.$nn, DeSanitizar($tipo['Empresa']))
+				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
 				
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
@@ -337,8 +337,8 @@ foreach ($arrTemporal_3 as $tipo) {
 	
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, 'Liquidacion Sueldo')
-				->setCellValue('B'.$nn, $tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat'])
-				->setCellValue('C'.$nn, $tipo['Documento'].' '.$tipo['N_DocPago'])
+				->setCellValue('B'.$nn, DeSanitizar($tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat']))
+				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
 				
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
@@ -380,8 +380,8 @@ foreach ($arrTemporal_4 as $tipo) {
 	
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, 'Boleta Honorario')
-				->setCellValue('B'.$nn, $tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat'])
-				->setCellValue('C'.$nn, $tipo['Documento'].' '.$tipo['N_DocPago'])
+				->setCellValue('B'.$nn, DeSanitizar($tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat']))
+				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
 				
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
@@ -423,8 +423,8 @@ foreach ($arrTemporal_5 as $tipo) {
 	
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, 'Rendiciones')
-				->setCellValue('B'.$nn, $tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat'])
-				->setCellValue('C'.$nn, $tipo['Documento'].' '.$tipo['N_DocPago'])
+				->setCellValue('B'.$nn, DeSanitizar($tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat']))
+				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
 				
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
@@ -467,7 +467,7 @@ foreach ($arrTemporal_6 as $tipo) {
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, 'Formulario 29')
 				->setCellValue('B'.$nn, 'SII')
-				->setCellValue('C'.$nn, $tipo['Documento'].' '.$tipo['N_DocPago'])
+				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
 				
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
@@ -510,7 +510,7 @@ foreach ($arrTemporal_7 as $tipo) {
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, 'Previred')
 				->setCellValue('B'.$nn, 'Previred')
-				->setCellValue('C'.$nn, $tipo['Documento'].' '.$tipo['N_DocPago'])
+				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
 				
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
@@ -564,7 +564,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Flujo de Caja';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

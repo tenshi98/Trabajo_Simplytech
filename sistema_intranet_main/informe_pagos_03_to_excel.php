@@ -112,8 +112,8 @@ $nn++;
 foreach ($arrTipo1 as $tipo) { 
 
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $tipo['Cliente'])
-				->setCellValue('B'.$nn, $tipo['Documento'])
+				->setCellValue('A'.$nn, DeSanitizar($tipo['Cliente']))
+				->setCellValue('B'.$nn, DeSanitizar($tipo['Documento']))
 				->setCellValue('C'.$nn, $tipo['N_Doc'])
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['Creacion_fecha']))
 				->setCellValue('E'.$nn, Fecha_estandar($tipo['Pago_fecha']))
@@ -129,8 +129,8 @@ $nn++;
 foreach ($arrTipo2 as $tipo) { 
 
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $tipo['Cliente'])
-				->setCellValue('B'.$nn, $tipo['Documento'])
+				->setCellValue('A'.$nn, DeSanitizar($tipo['Cliente']))
+				->setCellValue('B'.$nn, DeSanitizar($tipo['Documento']))
 				->setCellValue('C'.$nn, $tipo['N_Doc'])
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['Creacion_fecha']))
 				->setCellValue('E'.$nn, Fecha_estandar($tipo['Pago_fecha']))
@@ -146,8 +146,8 @@ $nn++;
 foreach ($arrTipo3 as $tipo) { 
 
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $tipo['Cliente'])
-				->setCellValue('B'.$nn, $tipo['Documento'])
+				->setCellValue('A'.$nn, DeSanitizar($tipo['Cliente']))
+				->setCellValue('B'.$nn, DeSanitizar($tipo['Documento']))
 				->setCellValue('C'.$nn, $tipo['N_Doc'])
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['Creacion_fecha']))
 				->setCellValue('E'.$nn, Fecha_estandar($tipo['Pago_fecha']))
@@ -163,8 +163,8 @@ $nn++;
 foreach ($arrTipo4 as $tipo) { 
 
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $tipo['Cliente'])
-				->setCellValue('B'.$nn, $tipo['Documento'])
+				->setCellValue('A'.$nn, DeSanitizar($tipo['Cliente']))
+				->setCellValue('B'.$nn, DeSanitizar($tipo['Documento']))
 				->setCellValue('C'.$nn, $tipo['N_Doc'])
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['Creacion_fecha']))
 				->setCellValue('E'.$nn, Fecha_estandar($tipo['Pago_fecha']))
@@ -186,7 +186,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Documentos Clientes con Pagos pendientes';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

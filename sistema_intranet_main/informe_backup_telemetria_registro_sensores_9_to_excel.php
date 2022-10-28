@@ -164,7 +164,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	//Grupos de los sensores
 	for ($i = 6; $i <= $arrTemporal[0]['cantSensores']; $i++) {
 		$spreadsheet->setActiveSheetIndex(0)
-					->setCellValue($arrData[$i].'1', $arrGru[$arrTemporal[0]['SensorGrupo_'.$i]]);
+					->setCellValue($arrData[$i].'1', DeSanitizar($arrGru[$arrTemporal[0]['SensorGrupo_'.$i]]));
 	}  
 	 
 	/***********************************************************/
@@ -181,7 +181,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 				
 	for ($i = 6; $i <= $arrTemporal[0]['cantSensores']; $i++) {
 		$spreadsheet->setActiveSheetIndex(0)
-					->setCellValue($arrData[$i].'2', $arrTemporal[0]['SensorNombre_'.$i].' ('.$arrUni[$arrTemporal[0]['SensorUniMed_'.$i]].')');
+					->setCellValue($arrData[$i].'2', DeSanitizar($arrTemporal[0]['SensorNombre_'.$i]).' ('.DeSanitizar($arrUni[$arrTemporal[0]['SensorUniMed_'.$i]]).')');
 	}   
 
 	/***********************************************************/
@@ -190,7 +190,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	foreach ($arrTemporal as $rutas) {
 							
 		$spreadsheet->setActiveSheetIndex(0)
-					->setCellValue('A'.$nn, $rutas['NombreEquipo'])
+					->setCellValue('A'.$nn, DeSanitizar($rutas['NombreEquipo']))
 					->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']))
 					->setCellValue('C'.$nn, $rutas['HoraSistema'])
 					->setCellValue('D'.$nn, $rutas['GeoLatitudEquipo'])
@@ -276,7 +276,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	// Rename worksheet
 	$super_titulo = 'Hoja 1';
 	if(isset($arrTemporal[0]['NombreEquipo'])&&$arrTemporal[0]['NombreEquipo']!=''){
-		$super_titulo = cortar($arrTemporal[0]['NombreEquipo'], 25);
+		$super_titulo = cortar(DeSanitizar($arrTemporal[0]['NombreEquipo']), 25);
 	}
 	$spreadsheet->getActiveSheet(0)->setTitle($super_titulo);
 		
@@ -316,7 +316,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		//Grupos de los sensores
 		for ($i = 6; $i <= $arrTemporal[0]['cantSensores']; $i++) {
 			$spreadsheet->setActiveSheetIndex($sheet)
-						->setCellValue($arrData[$i].'1', $arrGru[$arrTemporal[0]['SensorGrupo_'.$i]]);
+						->setCellValue($arrData[$i].'1', DeSanitizar($arrGru[$arrTemporal[0]['SensorGrupo_'.$i]]));
 		}  
 		 
 		/***********************************************************/
@@ -333,7 +333,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 					
 		for ($i = 6; $i <= $arrTemporal[0]['cantSensores']; $i++) {
 			$spreadsheet->setActiveSheetIndex($sheet)
-						->setCellValue($arrData[$i].'2', $arrTemporal[0]['SensorNombre_'.$i].' ('.$arrUni[$arrTemporal[0]['SensorUniMed_'.$i]].')');
+						->setCellValue($arrData[$i].'2', DeSanitizar($arrTemporal[0]['SensorNombre_'.$i]).' ('.DeSanitizar($arrUni[$arrTemporal[0]['SensorUniMed_'.$i]]).')');
 		}   
 
 		/***********************************************************/
@@ -342,7 +342,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		foreach ($arrTemporal as $rutas) {
 								
 			$spreadsheet->setActiveSheetIndex($sheet)
-						->setCellValue('A'.$nn, $rutas['NombreEquipo'])
+						->setCellValue('A'.$nn, DeSanitizar($rutas['NombreEquipo']))
 						->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']))
 						->setCellValue('C'.$nn, $rutas['HoraSistema'])
 						->setCellValue('D'.$nn, $rutas['GeoLatitudEquipo'])
@@ -427,7 +427,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		// Rename worksheet
 		$super_titulo = 'Hoja 1';
 		if(isset($arrTemporal[0]['NombreEquipo'])&&$arrTemporal[0]['NombreEquipo']!=''){
-			$super_titulo = cortar($arrTemporal[0]['NombreEquipo'], 25);
+			$super_titulo = cortar(DeSanitizar($arrTemporal[0]['NombreEquipo']), 25);
 		}
 		$spreadsheet->getActiveSheet($sheet)->setTitle($super_titulo);
 	
@@ -444,7 +444,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Exportar Datos archivo '.$_GET['num'];
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

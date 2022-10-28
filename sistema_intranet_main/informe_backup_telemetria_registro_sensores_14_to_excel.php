@@ -75,7 +75,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'Fecha')
 				->setCellValue('B1', 'Hora')
-				->setCellValue('C1', $arrEquipos[0]['Grupo'].'-'.$arrEquipos[0]['SensorNombre'])
+				->setCellValue('C1', DeSanitizar($arrEquipos[0]['Grupo'].'-'.$arrEquipos[0]['SensorNombre']))
 				->setCellValue('D1', 'Unidad Medida');
 
 	 
@@ -88,7 +88,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					->setCellValue('A'.$nn, $fac['FechaSistema'])
 					->setCellValue('B'.$nn, $fac['HoraSistema'])
 					->setCellValue('C'.$nn, $fac['SensorValue'])
-					->setCellValue('D'.$nn, $fac['SensoresUniMed']); 					
+					->setCellValue('D'.$nn, DeSanitizar($fac['SensoresUniMed'])); 					
 								
 			$nn++;
 		}				
@@ -105,7 +105,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$filename = 'Informe Trazabilidad Sensor del equipo '.$rowEquipo['NombreEquipo'];
 	// Redirect output to a client’s web browser (Xlsx)
 	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-	header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+	header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');

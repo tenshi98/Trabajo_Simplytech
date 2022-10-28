@@ -56,8 +56,8 @@ $arrConsumos = db_select_array (false, $SIS_query, 'aguas_facturacion_listado_de
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-							 ->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+							 ->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
@@ -79,8 +79,8 @@ $nn = 2;
 foreach ($arrConsumos as $fact) { 
 
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $fact['ClienteIdentificador'])
-				->setCellValue('B'.$nn, $fact['ClienteNombre'])
+				->setCellValue('A'.$nn, DeSanitizar($fact['ClienteIdentificador']))
+				->setCellValue('B'.$nn, DeSanitizar($fact['ClienteNombre']))
 				->setCellValue('C'.$nn, $fact['Ano'])
 				->setCellValue('D'.$nn, $fact['Mes'])
 				->setCellValue('E'.$nn, $fact['DetalleConsumoCantidad'])
@@ -102,7 +102,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Consumo Historico';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

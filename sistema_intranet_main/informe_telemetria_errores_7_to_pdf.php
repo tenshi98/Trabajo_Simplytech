@@ -84,7 +84,7 @@ $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unid
 
 $arrUnimedX = array();
 foreach ($arrUnimed as $sen) {
-	$arrUnimedX[$sen['idUniMed']] = $sen['Nombre'];
+	$arrUnimedX[$sen['idUniMed']] = DeSanitizar($sen['Nombre']);
 }
 /********************************************************************/
 //Se define el contenido del PDF
@@ -113,8 +113,8 @@ $html .= '
 							
 				$html .='
 				<tr>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['NombreEquipo'].'</td>
-					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['Descripcion'].'</td>
+					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($error['NombreEquipo']).'</td>
+					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($error['Descripcion']).'</td>
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($error['Fecha']).'</td>
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['Hora'].'</td>
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor']).$arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]].'</td>
@@ -200,7 +200,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
-			$pdf->Output($pdf_file, 'I');
+			$pdf->Output(DeSanitizar($pdf_file), 'I');
 	
 			break;
 		/************************************************************************/
@@ -214,7 +214,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$dompdf->loadHtml($html);
 			$dompdf->setPaper($OpcDom);
 			$dompdf->render();
-			$dompdf->stream($pdf_file);
+			$dompdf->stream(DeSanitizar($pdf_file));
 			break;
 
 	}

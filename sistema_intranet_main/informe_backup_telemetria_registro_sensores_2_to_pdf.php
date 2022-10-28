@@ -97,7 +97,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		<tbody>';
 			
 			foreach ($arrEquipos as $rutas) { 
-				if(isset($rutas['SensorValue'])&&$rutas['SensorValue']<99900){$xdata=Cantidades_decimales_justos($rutas['SensorValue']).' '.$rutas['Unimed'];}else{$xdata='Sin Datos';}
+				if(isset($rutas['SensorValue'])&&$rutas['SensorValue']<99900){$xdata=Cantidades_decimales_justos($rutas['SensorValue']).' '.DeSanitizar($rutas['Unimed']);}else{$xdata='Sin Datos';}
 				
 				$html .='<tr>
 							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($rutas['FechaSistema']).'</td>
@@ -105,8 +105,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				//Si se ven detalles
 				if(isset($idDetalle)&&$idDetalle==1){ 
 					$html .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$xdata.'</td>';       
-					$html .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($rutas['SensorMinMed']).' '.$rutas['Unimed'].'</td>';       
-					$html .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($rutas['SensorMaxMed']).' '.$rutas['Unimed'].'</td>';       
+					$html .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($rutas['SensorMinMed']).' '.DeSanitizar($rutas['Unimed']).'</td>';       
+					$html .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($rutas['SensorMaxMed']).' '.DeSanitizar($rutas['Unimed']).'</td>';       
 				//Si no se ven detalles	
 				}elseif(isset($idDetalle)&&$idDetalle==2){
 					$html .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$xdata.'</td>';       
@@ -123,8 +123,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	/**********************************************************************************************************************************/
 	//Config
 	$pdf_titulo     = 'Registro Sensores';
-	$pdf_subtitulo  = 'Informe Sensor '.$rowGrupo['Nombre'].' '.$arrEquipos[0]['SensorNombre'];
-	$pdf_file       = 'Registro Sensores del equipo '.$rowEquipo['NombreEquipo'].'.pdf';
+	$pdf_subtitulo  = 'Informe Sensor '.DeSanitizar($rowGrupo['Nombre']).' '.DeSanitizar($arrEquipos[0]['SensorNombre']);
+	$pdf_file       = 'Registro Sensores del equipo '.DeSanitizar($rowEquipo['NombreEquipo']).'.pdf';
 	$OpcDom         = "'A4', 'landscape'";
 	$OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 	$OpcTcpPg       = "A4"; //Tipo de Hoja
@@ -197,7 +197,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
-				$pdf->Output($pdf_file, 'I');
+				$pdf->Output(DeSanitizar($pdf_file), 'I');
 		
 				break;
 			/************************************************************************/
@@ -211,7 +211,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$dompdf->loadHtml($html);
 				$dompdf->setPaper($OpcDom);
 				$dompdf->render();
-				$dompdf->stream($pdf_file);
+				$dompdf->stream(DeSanitizar($pdf_file));
 				break;
 
 		}

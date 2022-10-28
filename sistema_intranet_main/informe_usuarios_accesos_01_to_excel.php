@@ -75,12 +75,12 @@ $nn=2;
 foreach ($arrAccesos as $acceso) { 
 						
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $acceso['Sistema'])
-				->setCellValue('B'.$nn, $acceso['Usuario'])
+				->setCellValue('A'.$nn, DeSanitizar($acceso['Sistema']))
+				->setCellValue('B'.$nn, DeSanitizar($acceso['Usuario']))
 				->setCellValue('C'.$nn, fecha_estandar($acceso['Fecha']))
 				->setCellValue('D'.$nn, $acceso['Hora'])
 				->setCellValue('E'.$nn, $acceso['IP_Client'])
-				->setCellValue('F'.$nn, $acceso['Agent_Transp']);
+				->setCellValue('F'.$nn, DeSanitizar($acceso['Agent_Transp']));
 	$nn++;           
    
 } 
@@ -98,7 +98,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Informe Accesos Usuarios';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

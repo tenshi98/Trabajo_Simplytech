@@ -118,8 +118,8 @@ $nn=2;
 foreach ($arrErrores as $error) { 
 				
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $error['NombreEquipo'])
-				->setCellValue('B'.$nn, $error['Descripcion'])
+				->setCellValue('A'.$nn, DeSanitizar($error['NombreEquipo']))
+				->setCellValue('B'.$nn, DeSanitizar($error['Descripcion']))
 				->setCellValue('C'.$nn, $error['Fecha'])
 				->setCellValue('D'.$nn, $error['Hora'])
 				->setCellValue('E'.$nn, $error['Valor'])
@@ -141,7 +141,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Informe de Alertas';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

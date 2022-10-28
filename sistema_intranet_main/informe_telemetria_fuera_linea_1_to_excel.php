@@ -84,7 +84,7 @@ $nn=2;
 foreach ($arrErrores as $error) { 
 						
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $error['NombreEquipo'])
+				->setCellValue('A'.$nn, DeSanitizar($error['NombreEquipo']))
 				->setCellValue('B'.$nn, fecha_estandar($error['Fecha_inicio']))
 				->setCellValue('C'.$nn, $error['Hora_inicio'])
 				->setCellValue('D'.$nn, fecha_estandar($error['Fecha_termino']))
@@ -107,7 +107,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Resumen de Fuera de Linea';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

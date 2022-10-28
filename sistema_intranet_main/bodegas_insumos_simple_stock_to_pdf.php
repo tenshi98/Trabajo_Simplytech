@@ -23,37 +23,23 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
 }
 /********************************************************************/
 //verifico que sea un administrador
-$arrProductos = array();
-$query = "SELECT
+$SIS_query = '
 insumos_listado.StockLimite,
 insumos_listado.Nombre AS NombreProd,
 sistema_productos_uml.Nombre AS UnidadMedida,
 SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS stock_entrada,
 SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS stock_salida,
-bodegas_insumos_listado.Nombre AS NombreBodega
+bodegas_insumos_listado.Nombre AS NombreBodega';
+$SIS_join  = '
+LEFT JOIN `insumos_listado`          ON insumos_listado.idProducto        = bodegas_insumos_facturacion_existencias.idProducto
+LEFT JOIN `sistema_productos_uml`    ON sistema_productos_uml.idUml       = insumos_listado.idUml
+LEFT JOIN `bodegas_insumos_listado`  ON bodegas_insumos_listado.idBodega  = bodegas_insumos_facturacion_existencias.idBodega';
+$SIS_where = 'bodegas_insumos_facturacion_existencias.idBodega='.$_GET['idBodega'];
+$SIS_where.= ' GROUP BY  bodegas_insumos_facturacion_existencias.idProducto';
+$SIS_order = 0;
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-FROM `bodegas_insumos_facturacion_existencias`
-LEFT JOIN `insumos_listado`    ON insumos_listado.idProducto    = bodegas_insumos_facturacion_existencias.idProducto
-LEFT JOIN `sistema_productos_uml`        ON sistema_productos_uml.idUml             = insumos_listado.idUml
-LEFT JOIN `bodegas_insumos_listado`    ON bodegas_insumos_listado.idBodega      = bodegas_insumos_facturacion_existencias.idBodega
-
-WHERE bodegas_insumos_facturacion_existencias.idBodega=".$_GET['idBodega']."
-GROUP BY bodegas_insumos_facturacion_existencias.idProducto";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-			
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
 /********************************************************************/
 //Se define el contenido del PDF
 $html = '
@@ -78,7 +64,7 @@ $html .= '
 
 			if ($stock_actual!=0&&$productos['NombreProd']!=''){					
 				$html .='<tr>
-						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$productos['NombreProd'].'</td>
+						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($productos['NombreProd']).'</td>
 						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center" width="160">'.Cantidades_decimales_justos($productos['StockLimite']).' '.$productos['UnidadMedida'].'</td>
 						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center" width="160">'.Cantidades_decimales_justos($stock_actual).' '.$productos['UnidadMedida'].'</td>
 					</tr>';
@@ -95,9 +81,9 @@ $html .='</tbody>
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/
 //Config
-$pdf_titulo     = 'Stock Bodega: '.$arrProductos[0]['NombreBodega'];
+$pdf_titulo     = 'Stock Bodega: '.DeSanitizar($arrProductos[0]['NombreBodega']);
 $pdf_subtitulo  = 'Stock al '.fecha_actual();
-$pdf_file       = 'Stock Bodega '.$arrProductos[0]['NombreBodega'].' al '.fecha_actual().'.pdf';
+$pdf_file       = 'Stock Bodega '.DeSanitizar($arrProductos[0]['NombreBodega']).' al '.fecha_actual().'.pdf';
 $OpcDom         = "'A4', 'landscape'";
 $OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 $OpcTcpPg       = "A4"; //Tipo de Hoja
@@ -162,7 +148,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
-			$pdf->Output($pdf_file, 'I');
+			$pdf->Output(DeSanitizar($pdf_file), 'I');
 	
 			break;
 		/************************************************************************/
@@ -176,7 +162,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$dompdf->loadHtml($html);
 			$dompdf->setPaper($OpcDom);
 			$dompdf->render();
-			$dompdf->stream($pdf_file);
+			$dompdf->stream(DeSanitizar($pdf_file));
 			break;
 
 	}

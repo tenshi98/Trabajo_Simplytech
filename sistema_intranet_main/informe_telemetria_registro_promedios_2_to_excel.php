@@ -106,23 +106,23 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		
 	//Titulo columnas
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A1', 'CONTROL Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'])
+				->setCellValue('A1', 'CONTROL Sensor N° '.$_GET['sensorn'].' '.DeSanitizar($arrEquipos[0]['SensorNombre']))
 				->setCellValue('A2', 'Nombre Equipo')
-				->setCellValue('B2', $rowEquipo['NombreEquipo'])
+				->setCellValue('B2', DeSanitizar($rowEquipo['NombreEquipo']))
 				->setCellValue('A3', 'Nombre Sensor')
-				->setCellValue('B3', $arrEquipos[0]['SensorNombre']);
+				->setCellValue('B3', DeSanitizar($arrEquipos[0]['SensorNombre']));
 	//Si se ven detalles
 	if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A5', 'Fecha')
-					->setCellValue('B5', $arrEquipos[0]['Unimed'].' Promedio')
-					->setCellValue('C5', $arrEquipos[0]['Unimed'].' Minimo')
-					->setCellValue('D5', $arrEquipos[0]['Unimed'].' Maximo')
+					->setCellValue('B5', DeSanitizar($arrEquipos[0]['Unimed']).' Promedio')
+					->setCellValue('C5', DeSanitizar($arrEquipos[0]['Unimed']).' Minimo')
+					->setCellValue('D5', DeSanitizar($arrEquipos[0]['Unimed']).' Maximo')
 					->setCellValue('E5', 'Dev. Std.');					
 	//Si no se ven detalles	
 	}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 		$spreadsheet->setActiveSheetIndex(0)
-					->setCellValue('B5', $arrEquipos[0]['Unimed'].' Promedio');								
+					->setCellValue('B5', DeSanitizar($arrEquipos[0]['Unimed']).' Promedio');								
 	}
 			 
 	$nn=6;
@@ -161,7 +161,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$filename = 'Max – Min Sensor N° '.$_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'].' '.$rowEquipo['NombreEquipo'];
 	// Redirect output to a client’s web browser (Xlsx)
 	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-	header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+	header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');

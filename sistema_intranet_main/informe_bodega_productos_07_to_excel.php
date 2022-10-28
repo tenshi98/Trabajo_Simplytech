@@ -395,7 +395,7 @@ foreach($arrExistencias as $empresa=>$datos) {
 				->setCellValue('N'.$nn, $Total);
 
 	// Rename worksheet
-	$spreadsheet->getActiveSheet()->setTitle(cortar('Ingresos de '.$empresa, 25));
+	$spreadsheet->getActiveSheet()->setTitle(cortar('Ingresos de '.DeSanitizar($empresa), 25));
 		
 	$sheet++;
 }
@@ -408,7 +408,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Bodega Productos - Traspasos por Categorias x Empresas';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

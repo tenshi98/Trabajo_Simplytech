@@ -173,7 +173,7 @@ $html .= '
 			if($Temperatura_N!=0 OR $Humedad_N!=0){
 				//Se escriben Datos
 				$html .='<tr>';
-					$html .='<td style="font-size: 10px;text-align:center;">'.$rowEquipo['Nombre'].'</td>';
+					$html .='<td style="font-size: 10px;text-align:center;">'.DeSanitizar($rowEquipo['Nombre']).'</td>';
 					$html .='<td style="font-size: 10px;text-align:center;">'.$fac['FechaSistema'].'</td>';
 					
 					if(isset($idOpciones)&&$idOpciones!=''&&$idOpciones!=0){ 
@@ -202,16 +202,16 @@ $html .='</tbody>
 /**********************************************************************************************************************************/
 //Config
 $pdf_titulo     = 'Informe Promedio Camara';
-$pdf_subtitulo  = $_SESSION['usuario']['basic_data']['RazonSocial'];
+$pdf_subtitulo  = DeSanitizar($_SESSION['usuario']['basic_data']['RazonSocial']);
 $pdf_subtitulo .= '
-Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['Nombre'].'
+Informe grupo '.DeSanitizar($rowGrupo['Nombre']).' del equipo '.DeSanitizar($rowEquipo['Nombre']).'
 ';
 if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
 	$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).'-'.$h_inicio.' hasta '.fecha_estandar($f_termino).'-'.$h_termino;
 }elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
 	$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).' hasta '.fecha_estandar($f_termino);
 }
-$pdf_file       = 'Informe Promedio Camara del equipo '.$rowEquipo['Nombre'].'.pdf';
+$pdf_file       = 'Informe Promedio Camara del equipo '.DeSanitizar($rowEquipo['Nombre']).'.pdf';
 $OpcDom         = "'A4', 'landscape'";
 $OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 $OpcTcpPg       = "A4"; //Tipo de Hoja
@@ -284,7 +284,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
-			$pdf->Output($pdf_file, 'I');
+			$pdf->Output(DeSanitizar($pdf_file), 'I');
 	
 			break;
 		/************************************************************************/
@@ -298,7 +298,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$dompdf->loadHtml($html);
 			$dompdf->setPaper($OpcDom);
 			$dompdf->render();
-			$dompdf->stream($pdf_file);
+			$dompdf->stream(DeSanitizar($pdf_file));
 			break;
 
 	}

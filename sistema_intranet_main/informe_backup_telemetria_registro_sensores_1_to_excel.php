@@ -78,7 +78,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								 ->setCategory("office 2007 result file");
 
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A1', 'Informe Sensor '.$rowGrupo['Nombre'].' '.$arrEquipos[0]['SensorNombre']);
+				->setCellValue('A1', 'Informe Sensor '.DeSanitizar($rowGrupo['Nombre']).' '.DeSanitizar($arrEquipos[0]['SensorNombre']));
 				
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A3', 'Fecha')
@@ -89,7 +89,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	  
 	$x = 4;
 	foreach ($arrEquipos as $rutas) { 
-		if(isset($rutas['SensorValue'])&&$rutas['SensorValue']<99900){$xdata=Cantidades_decimales_justos($rutas['SensorValue']).' '.$rutas['Unimed'];}else{$xdata='Sin Datos';}
+		if(isset($rutas['SensorValue'])&&$rutas['SensorValue']<99900){$xdata=Cantidades_decimales_justos($rutas['SensorValue']).' '.DeSanitizar($rutas['Unimed']);}else{$xdata='Sin Datos';}
 		
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$x, $rutas['FechaSistema'])
@@ -112,7 +112,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$filename = 'Registro Sensores del equipo '.$rowEquipo['NombreEquipo'];
 	// Redirect output to a client’s web browser (Xlsx)
 	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-	header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+	header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');

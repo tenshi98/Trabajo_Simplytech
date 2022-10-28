@@ -99,8 +99,8 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-							 ->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+							 ->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
@@ -160,16 +160,16 @@ foreach ($arrOTS as $temp) {
 	if(isset($temp['VariedadNombre'])&&$temp['VariedadNombre']!=''){ $VariedadNombre = $temp['VariedadNombre']; }else{$VariedadNombre = 'Todas las Variedades';}
 																			
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $temp['PredioNombre'])
-				->setCellValue('B'.$nn, $EspecieNombre)
-				->setCellValue('C'.$nn, $VariedadNombre)
-				->setCellValue('D'.$nn, $temp['NSolicitud'])
-				->setCellValue('E'.$nn, $temp['CuartelNombre'])
-				->setCellValue('F'.$nn, $temp['CuartelHectareas'])
-				->setCellValue('G'.$nn, $temp['CuartelPlantas'])
-				->setCellValue('H'.$nn, $temp['EstadoFenologico'])
-				->setCellValue('I'.$nn, $temp['EstadoSolicitud'])
-				->setCellValue('J'.$nn, $temp['EstadoEjecucion'])
+				->setCellValue('A'.$nn, DeSanitizar($temp['PredioNombre']))
+				->setCellValue('B'.$nn, DeSanitizar($EspecieNombre))
+				->setCellValue('C'.$nn, DeSanitizar($VariedadNombre))
+				->setCellValue('D'.$nn, DeSanitizar($temp['NSolicitud']))
+				->setCellValue('E'.$nn, DeSanitizar($temp['CuartelNombre']))
+				->setCellValue('F'.$nn, DeSanitizar($temp['CuartelHectareas']))
+				->setCellValue('G'.$nn, DeSanitizar($temp['CuartelPlantas']))
+				->setCellValue('H'.$nn, DeSanitizar($temp['EstadoFenologico']))
+				->setCellValue('I'.$nn, DeSanitizar($temp['EstadoSolicitud']))
+				->setCellValue('J'.$nn, DeSanitizar($temp['EstadoEjecucion']))
 				->setCellValue('K'.$nn, $temp['f_termino'])
 				->setCellValue('L'.$nn, $temp['f_termino_fin'])
 				->setCellValue('M'.$nn, cantidades_excel(Cantidades($temp['VelTractor'],1)))
@@ -196,7 +196,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Resumen Aplicación por estado de solicitud';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

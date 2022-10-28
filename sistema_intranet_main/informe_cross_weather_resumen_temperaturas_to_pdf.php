@@ -150,7 +150,7 @@ $html .='</tbody>
 /**********************************************************************************************************************************/
 //Config
 $pdf_titulo     = 'Informe Temperaturas';
-$pdf_subtitulo  = $_SESSION['usuario']['basic_data']['RazonSocial'];
+$pdf_subtitulo  = DeSanitizar($_SESSION['usuario']['basic_data']['RazonSocial']);
 $pdf_subtitulo .= '
 Desde '.fecha_estandar($f_inicio).' hasta '.fecha_estandar($f_termino).'
 ';
@@ -228,7 +228,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
-			$pdf->Output($pdf_file, 'I');
+			$pdf->Output(DeSanitizar($pdf_file), 'I');
 	
 			break;
 		/************************************************************************/
@@ -242,7 +242,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$dompdf->loadHtml($html);
 			$dompdf->setPaper($OpcDom);
 			$dompdf->render();
-			$dompdf->stream($pdf_file);
+			$dompdf->stream(DeSanitizar($pdf_file));
 			break;
 
 	}

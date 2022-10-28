@@ -52,8 +52,8 @@ $arrAsistencias = db_select_array (false, $SIS_query, 'trabajadores_listado', $S
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-			->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+			->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 			->setTitle("Office 2007")
 			->setSubject("Office 2007")
 			->setDescription("Document for Office 2007")
@@ -72,8 +72,8 @@ $nn=2;
 foreach ($arrAsistencias as $con) { 
 		
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $con['TrabajadorApellidoPat'].' '.$con['TrabajadorApellidoMat'].' '.$con['TrabajadorNombre'])
-				->setCellValue('B'.$nn, $con['TrabajadorRut'])
+				->setCellValue('A'.$nn, DeSanitizar($con['TrabajadorApellidoPat'].' '.$con['TrabajadorApellidoMat'].' '.$con['TrabajadorNombre']))
+				->setCellValue('B'.$nn, DeSanitizar($con['TrabajadorRut']))
 				->setCellValue('C'.$nn, fecha_estandar($_GET['Fecha']))
 				->setCellValue('D'.$nn, $con['Ingreso'])
 				->setCellValue('E'.$nn, $con['Egreso']);
@@ -96,7 +96,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Informe Asistencias';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

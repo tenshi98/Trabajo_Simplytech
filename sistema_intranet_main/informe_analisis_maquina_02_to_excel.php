@@ -128,8 +128,8 @@ $arrFlashpoint = db_select_array (false, 'idFlashPoint, Nombre', 'core_analisis_
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-							 ->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+							 ->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
@@ -146,37 +146,37 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('B3', 'Empresa');
 //Maquina y empresa
 $spreadsheet->setActiveSheetIndex(0)
-			->setCellValue('A4', $rowMaquina['MaquinaNombre'])
-            ->setCellValue('B4', $rowMaquina['SistemaOrigen'])
-			->setCellValue('A5', 'Codigo: '.$rowMaquina['MaquinaCodigo'])
-            ->setCellValue('B5', $rowMaquina['SistemaOrigenCiudad'].', '.$rowMaquina['SistemaOrigenComuna'])
-			->setCellValue('A6', 'Modelo: '.$rowMaquina['MaquinaModelo'])
-            ->setCellValue('B6', $rowMaquina['SistemaOrigenDireccion'])
-			->setCellValue('A7', 'Serie: '.$rowMaquina['MaquinaSerie'])
-            ->setCellValue('B7', 'Fono : '.$rowMaquina['SistemaOrigenFono'])
-			->setCellValue('A8', 'Fabricante: '.$rowMaquina['MaquinaFabricante'])
-            ->setCellValue('B8', 'Rut: '.$rowMaquina['SistemaOrigenRut']); 
+			->setCellValue('A4', DeSanitizar($rowMaquina['MaquinaNombre']))
+            ->setCellValue('B4', DeSanitizar($rowMaquina['SistemaOrigen']))
+			->setCellValue('A5', 'Codigo: '.DeSanitizar($rowMaquina['MaquinaCodigo']))
+            ->setCellValue('B5', DeSanitizar($rowMaquina['SistemaOrigenCiudad'].', '.$rowMaquina['SistemaOrigenComuna']))
+			->setCellValue('A6', 'Modelo: '.DeSanitizar($rowMaquina['MaquinaModelo']))
+            ->setCellValue('B6', DeSanitizar($rowMaquina['SistemaOrigenDireccion']))
+			->setCellValue('A7', 'Serie: '.DeSanitizar($rowMaquina['MaquinaSerie']))
+            ->setCellValue('B7', 'Fono : '.formatPhone($rowMaquina['SistemaOrigenFono']))
+			->setCellValue('A8', 'Fabricante: '.DeSanitizar($rowMaquina['MaquinaFabricante']))
+            ->setCellValue('B8', 'Rut: '.DeSanitizar($rowMaquina['SistemaOrigenRut'])); 
 /*******************************/
-$Ubicacion = 'Ubicacion: '.$rowMaquina['MaquinaUbicacion'];
+$Ubicacion = 'Ubicacion: '.DeSanitizar($rowMaquina['MaquinaUbicacion']);
 if(isset($rowMaquina['MaquinaUbicacion_lvl_1'])&&$rowMaquina['MaquinaUbicacion_lvl_1']!=''){ 
-	$Ubicacion .= ' - '.$rowMaquina['MaquinaUbicacion_lvl_1'];
+	$Ubicacion .= ' - '.DeSanitizar($rowMaquina['MaquinaUbicacion_lvl_1']);
 }
 if(isset($rowMaquina['MaquinaUbicacion_lvl_2'])&&$rowMaquina['MaquinaUbicacion_lvl_2']!=''){ 
-	$Ubicacion .= ' - '.$rowMaquina['MaquinaUbicacion_lvl_2'];
+	$Ubicacion .= ' - '.DeSanitizar($rowMaquina['MaquinaUbicacion_lvl_2']);
 }
 if(isset($rowMaquina['MaquinaUbicacion_lvl_3'])&&$rowMaquina['MaquinaUbicacion_lvl_3']!=''){ 
-	$Ubicacion .= ' - '.$rowMaquina['MaquinaUbicacion_lvl_3'];
+	$Ubicacion .= ' - '.DeSanitizar($rowMaquina['MaquinaUbicacion_lvl_3']);
 }
 if(isset($rowMaquina['MaquinaUbicacion_lvl_4'])&&$rowMaquina['MaquinaUbicacion_lvl_4']!=''){ 
-	$Ubicacion .= ' - '.$rowMaquina['MaquinaUbicacion_lvl_4'];
+	$Ubicacion .= ' - '.DeSanitizar($rowMaquina['MaquinaUbicacion_lvl_4']);
 }
 if(isset($rowMaquina['MaquinaUbicacion_lvl_5'])&&$rowMaquina['MaquinaUbicacion_lvl_5']!=''){ 
-	$Ubicacion .= ' - '.$rowMaquina['MaquinaUbicacion_lvl_5'];
+	$Ubicacion .= ' - '.DeSanitizar($rowMaquina['MaquinaUbicacion_lvl_5']);
 }
 
 $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A9', $Ubicacion)
-            ->setCellValue('B9', 'Email: '.$rowMaquina['SistemaOrigenEmail']); 
+            ->setCellValue('B9', 'Email: '.DeSanitizar($rowMaquina['SistemaOrigenEmail'])); 
 
 //variables
 $nn=11;
@@ -215,7 +215,7 @@ foreach ($arrGrupo as $grupo) {
 									->setCellValue('C'.$nn, Cantidades_decimales_justos($rowMaquina['PuntoMedAceptable_'.$i]))
 									->setCellValue('D'.$nn, Cantidades_decimales_justos($rowMaquina['PuntoMedAlerta_'.$i]))
 									->setCellValue('E'.$nn, Cantidades_decimales_justos($rowMaquina['PuntoMedCondenatorio_'.$i]))
-									->setCellValue('F'.$nn, $uniMed);
+									->setCellValue('F'.$nn, DeSanitizar($uniMed));
 									
 						//Suma de 1
 						$nn++;
@@ -258,7 +258,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Analisis Comparativo Maquina al '.fecha_actual();
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

@@ -66,8 +66,8 @@ array_push( $arrProductos,$row );
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-							 ->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+							 ->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setTitle('Office 2007')
 							 ->setSubject('Office 2007')
 							 ->setDescription('Document for Office 2007.')
@@ -89,11 +89,11 @@ foreach ($arrProductos as $productos) {
 	if ($productos['StockLimite']>$stock_actual){$delta = 'Stock Bajo';}else{$delta = '';}
 	if ($stock_actual!=0&&$productos['NombreProd']!=''){
 		$spreadsheet->setActiveSheetIndex(0)
-					->setCellValue('A'.$nn, "$delta")
-					->setCellValue('B'.$nn, $productos['NombreProd'])
+					->setCellValue('A'.$nn, DeSanitizar($delta))
+					->setCellValue('B'.$nn, DeSanitizar($productos['NombreProd']))
 					->setCellValue('C'.$nn, cantidades_excel($productos['StockLimite']))
 					->setCellValue('D'.$nn, cantidades_excel($stock_actual))
-					->setCellValue('E'.$nn, $productos['UnidadMedida']);
+					->setCellValue('E'.$nn, DeSanitizar($productos['UnidadMedida']));
 		$nn++;  
 	}         
    
@@ -102,14 +102,17 @@ foreach ($arrProductos as $productos) {
 
 
 // Rename worksheet
-$spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.$arrProductos[0]['NombreBodega'], 25));
+$spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.DeSanitizar($arrProductos[0]['NombreBodega']), 25));
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 
+/**************************************************************************/
+//Nombre del archivo
+$filename = 'Stock Bodega '.$arrProductos[0]['NombreBodega'].' al '.fecha_actual();
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="Stock Bodega '.$arrProductos[0]['NombreBodega'].' al '.fecha_actual().'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

@@ -270,7 +270,7 @@ foreach ($arrEquipos as $equipo) {
 				//Si se ven detalles
 				if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
 					$spreadsheet->setActiveSheetIndex($sheet)
-								->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
+								->setCellValue($arrData[$yy].'1', DeSanitizar($arrTemporal[0]['SensorNombre_'.$i]).' ('.DeSanitizar($grupo).')');
 								$yy++;
 								$yy++;
 								$yy++;
@@ -278,7 +278,7 @@ foreach ($arrEquipos as $equipo) {
 				//Si no se ven detalles	
 				}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 					$spreadsheet->setActiveSheetIndex($sheet)
-								->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
+								->setCellValue($arrData[$yy].'1', DeSanitizar($arrTemporal[0]['SensorNombre_'.$i]).' ('.DeSanitizar($grupo).')');
 								$yy++;
 				}
 			}
@@ -286,7 +286,7 @@ foreach ($arrEquipos as $equipo) {
 			//Si se ven detalles
 			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
 				$spreadsheet->setActiveSheetIndex($sheet)
-							->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
+							->setCellValue($arrData[$yy].'1', DeSanitizar($arrTemporal[0]['SensorNombre_'.$i]).' ('.DeSanitizar($grupo).')');
 							$yy++;
 							$yy++;
 							$yy++;
@@ -294,7 +294,7 @@ foreach ($arrEquipos as $equipo) {
 			//Si no se ven detalles	
 			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 				$spreadsheet->setActiveSheetIndex($sheet)
-							->setCellValue($arrData[$yy].'1', $arrTemporal[0]['SensorNombre_'.$i].' ('.$grupo.')');
+							->setCellValue($arrData[$yy].'1', DeSanitizar($arrTemporal[0]['SensorNombre_'.$i]).' ('.DeSanitizar($grupo).')');
 							$yy++;
 			}
 		}						
@@ -378,7 +378,7 @@ foreach ($arrEquipos as $equipo) {
 		if($cuenta_xx==0){
 													
 			$spreadsheet->setActiveSheetIndex($sheet)
-						->setCellValue('A'.$nn, $equipo['NombreEquipo'])
+						->setCellValue('A'.$nn, DeSanitizar($equipo['NombreEquipo']))
 						->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']));
 			$yy = 1;
 			for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
@@ -442,7 +442,7 @@ foreach ($arrEquipos as $equipo) {
 	// Rename worksheet
 	$super_titulo = 'Hoja 1';
 	if(isset($equipo['NombreEquipo'])&&$equipo['NombreEquipo']!=''){
-		$super_titulo = cortar($equipo['NombreEquipo'], 25);
+		$super_titulo = cortar(DeSanitizar($equipo['NombreEquipo']), 25);
 	}
 	$spreadsheet->getActiveSheet($sheet)->setTitle($super_titulo);
 		
@@ -460,7 +460,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Max – Min Camara';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

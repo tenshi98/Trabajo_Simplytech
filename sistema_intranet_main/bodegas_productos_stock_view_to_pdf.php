@@ -23,8 +23,7 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
 }
 /********************************************************************/
 // Se trae un listado con todos los datos
-$arrProductos = array();
-$query = "SELECT 
+$SIS_query = '
 bodegas_productos_facturacion_existencias.Creacion_fecha,
 bodegas_productos_facturacion_existencias.Cantidad_ing,
 bodegas_productos_facturacion_existencias.Cantidad_eg,
@@ -35,37 +34,23 @@ core_documentos_mercantiles.Nombre AS Documento,
 bodegas_productos_facturacion.N_Doc AS N_Doc,
 clientes_listado.Nombre AS Cliente,
 proveedor_listado.Nombre AS Proveedor,
-bodegas_productos_listado.Nombre AS NombreBodega
+bodegas_productos_listado.Nombre AS NombreBodega';
+$SIS_join  = '
+LEFT JOIN `bodegas_productos_facturacion_tipo` ON bodegas_productos_facturacion_tipo.idTipo    = bodegas_productos_facturacion_existencias.idTipo
+LEFT JOIN `productos_listado`                  ON productos_listado.idProducto                 = bodegas_productos_facturacion_existencias.idProducto
+LEFT JOIN `sistema_productos_uml`              ON sistema_productos_uml.idUml                  = productos_listado.idUml
+LEFT JOIN `bodegas_productos_facturacion`      ON bodegas_productos_facturacion.idFacturacion  = bodegas_productos_facturacion_existencias.idFacturacion
+LEFT JOIN `core_documentos_mercantiles`        ON core_documentos_mercantiles.idDocumentos     = bodegas_productos_facturacion.idDocumentos
+LEFT JOIN `proveedor_listado`                  ON proveedor_listado.idProveedor                = bodegas_productos_facturacion.idProveedor
+LEFT JOIN `clientes_listado`                   ON clientes_listado.idCliente                   = bodegas_productos_facturacion.idCliente
+LEFT JOIN `bodegas_productos_listado`          ON bodegas_productos_listado.idBodega           = bodegas_productos_facturacion_existencias.idBodega';
+$SIS_where = 'bodegas_productos_facturacion_existencias.idProducto='.$_GET['view'];
+$SIS_where.= ' AND bodegas_productos_facturacion_existencias.idBodega='.$_GET['idBodega'];
+$SIS_order = 'bodegas_productos_facturacion_existencias.Creacion_fecha DESC';
+$SIS_order.= ' LIMIT 100';
+$arrProductos = array();
+$arrProductos = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-FROM `bodegas_productos_facturacion_existencias`
-LEFT JOIN `bodegas_productos_facturacion_tipo`          ON bodegas_productos_facturacion_tipo.idTipo               = bodegas_productos_facturacion_existencias.idTipo
-LEFT JOIN `productos_listado`                           ON productos_listado.idProducto                            = bodegas_productos_facturacion_existencias.idProducto
-LEFT JOIN `sistema_productos_uml`                       ON sistema_productos_uml.idUml                             = productos_listado.idUml
-LEFT JOIN `bodegas_productos_facturacion`               ON bodegas_productos_facturacion.idFacturacion             = bodegas_productos_facturacion_existencias.idFacturacion
-LEFT JOIN `core_documentos_mercantiles`                 ON core_documentos_mercantiles.idDocumentos                = bodegas_productos_facturacion.idDocumentos
-LEFT JOIN `proveedor_listado`                           ON proveedor_listado.idProveedor                           = bodegas_productos_facturacion.idProveedor
-LEFT JOIN `clientes_listado`                            ON clientes_listado.idCliente                              = bodegas_productos_facturacion.idCliente
-LEFT JOIN `bodegas_productos_listado`                   ON bodegas_productos_listado.idBodega                      = bodegas_productos_facturacion_existencias.idBodega
-
-WHERE bodegas_productos_facturacion_existencias.idProducto=".$_GET['view']."  
-AND bodegas_productos_facturacion_existencias.idBodega=".$_GET['idBodega']."
-ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha DESC 
-LIMIT 100";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrProductos,$row );
-}
 /********************************************************************/
 //Se define el contenido del PDF
 $html = '
@@ -97,12 +82,12 @@ $html .= '
 			}
 								
 			$html .='<tr>
-						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$productos['TipoMovimiento'].'</td>
-						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$empresa.'</td>
-						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$productos['Documento'].' N° '.$productos['N_Doc'].'</td>
+						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($productos['TipoMovimiento']).'</td>
+						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($empresa).'</td>
+						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($productos['Documento']).' N° '.$productos['N_Doc'].'</td>
 						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Fecha_estandar($productos['Creacion_fecha']).'</td>
-						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida'].'</td>
-						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida'].'</td>
+						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($productos['Cantidad_ing']).' '.DeSanitizar($productos['UnidadMedida']).'</td>
+						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($productos['Cantidad_eg']).' '.DeSanitizar($productos['UnidadMedida']).'</td>
 					</tr>';
 		}
 							
@@ -114,9 +99,9 @@ $html .='</tbody>
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/
 //Config
-$pdf_titulo     = 'Movimientos Bodega: '.$arrProductos[0]['NombreBodega'].' (ultimos 100 registros)';
-$pdf_subtitulo  = 'Producto: '.$arrProductos[0]['NombreProducto'];
-$pdf_file       = 'Movimiento Producto '.$arrProductos[0]['NombreProducto'].' Bodega '.$arrProductos[0]['NombreBodega'].' ultimos 100 registros.pdf';
+$pdf_titulo     = 'Movimientos Bodega: '.DeSanitizar($arrProductos[0]['NombreBodega']).' (ultimos 100 registros)';
+$pdf_subtitulo  = 'Producto: '.DeSanitizar($arrProductos[0]['NombreProducto']);
+$pdf_file       = 'Movimiento Producto '.DeSanitizar($arrProductos[0]['NombreProducto']).' Bodega '.DeSanitizar($arrProductos[0]['NombreBodega']).' ultimos 100 registros.pdf';
 $OpcDom         = "'A4', 'landscape'";
 $OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 $OpcTcpPg       = "A4"; //Tipo de Hoja
@@ -181,7 +166,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
-			$pdf->Output($pdf_file, 'I');
+			$pdf->Output(DeSanitizar($pdf_file), 'I');
 	
 			break;
 		/************************************************************************/
@@ -195,7 +180,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$dompdf->loadHtml($html);
 			$dompdf->setPaper($OpcDom);
 			$dompdf->render();
-			$dompdf->stream($pdf_file);
+			$dompdf->stream(DeSanitizar($pdf_file));
 			break;
 
 	}

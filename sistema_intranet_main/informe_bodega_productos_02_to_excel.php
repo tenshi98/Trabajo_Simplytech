@@ -65,10 +65,10 @@ foreach ($arrProductos as $productos) {
 	$stock_actual = $productos['stock_entrada'] - $productos['stock_salida']; 
 	if ($productos['StockLimite']>$stock_actual){
 		$spreadsheet->setActiveSheetIndex(0)
-					->setCellValue('A'.$nn, $productos['NombreProd'])
+					->setCellValue('A'.$nn, DeSanitizar($productos['NombreProd']))
 					->setCellValue('B'.$nn, cantidades_excel($productos['StockLimite']))
 					->setCellValue('C'.$nn, cantidades_excel($stock_actual))
-					->setCellValue('D'.$nn, $productos['UnidadMedida']);
+					->setCellValue('D'.$nn, DeSanitizar($productos['UnidadMedida']));
 		$nn++;           
 	}  
 } 
@@ -76,7 +76,7 @@ foreach ($arrProductos as $productos) {
 
 
 // Rename worksheet
-$spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.$arrProductos[0]['NombreBodega'], 25));
+$spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.DeSanitizar($arrProductos[0]['NombreBodega']), 25));
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
@@ -86,7 +86,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Stock Critico Bodega '.$arrProductos[0]['NombreBodega'].' al '.fecha_actual();
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

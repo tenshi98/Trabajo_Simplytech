@@ -200,12 +200,12 @@ foreach ($arrFacturacion as $fact) {
 	if($fact['SII_NDoc']!=0){                            $SII_NDoc                 = $fact['SII_NDoc'];                                                            }else{$SII_NDoc                 = "";}
 	
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $fact['ClienteNombre'])
-				->setCellValue('B'.$nn, $fact['ClienteDireccion'])
-				->setCellValue('C'.$nn, $fact['ClienteIdentificador'])
-				->setCellValue('D'.$nn, $fact['ClienteNombreComuna'])
-				->setCellValue('E'.$nn, $fact['ClienteFechaVencimiento'])
-				->setCellValue('F'.$nn, $fact['ClienteEstado'])
+				->setCellValue('A'.$nn, DeSanitizar($fact['ClienteNombre']))
+				->setCellValue('B'.$nn, DeSanitizar($fact['ClienteDireccion']))
+				->setCellValue('C'.$nn, DeSanitizar($fact['ClienteIdentificador']))
+				->setCellValue('D'.$nn, DeSanitizar($fact['ClienteNombreComuna']))
+				->setCellValue('E'.$nn, DeSanitizar($fact['ClienteFechaVencimiento']))
+				->setCellValue('F'.$nn, DeSanitizar($fact['ClienteEstado']))
 				
 				->setCellValue('G'.$nn, $fact['Fecha'])
 				
@@ -267,7 +267,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Facturacion fecha '.Fecha_estandar($arrFacturacion[0]['Fecha']);
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

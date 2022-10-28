@@ -85,7 +85,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			<tr>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Fecha</th>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Hora</th>
-				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.$arrEquipos[0]['Grupo'].'-'.$arrEquipos[0]['SensorNombre'].'</th>
+				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.DeSanitizar($arrEquipos[0]['Grupo']).'-'.DeSanitizar($arrEquipos[0]['SensorNombre']).'</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -113,16 +113,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	/**********************************************************************************************************************************/
 	//Config
 	$pdf_titulo     = 'Trazabilidad Sensor';
-	$pdf_subtitulo  = $_SESSION['usuario']['basic_data']['RazonSocial'];
+	$pdf_subtitulo  = DeSanitizar($_SESSION['usuario']['basic_data']['RazonSocial']);
 	$pdf_subtitulo .= '
-	Informe Sensor '.$arrEquipos[0]['Grupo'].'-'.$arrEquipos[0]['SensorNombre'].' del equipo '.$rowEquipo['NombreEquipo'].'
+	Informe Sensor '.DeSanitizar($arrEquipos[0]['Grupo']).'-'.DeSanitizar($arrEquipos[0]['SensorNombre']).' del equipo '.DeSanitizar($rowEquipo['NombreEquipo']).'
 	';
 	if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
 		$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).'-'.$h_inicio.' hasta '.fecha_estandar($f_termino).'-'.$h_termino;
 	}elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
 		$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).' hasta '.fecha_estandar($f_termino);
 	}
-	$pdf_file       = 'Informe Trazabilidad Sensor del equipo '.$rowEquipo['NombreEquipo'].'.pdf';
+	$pdf_file       = 'Informe Trazabilidad Sensor del equipo '.DeSanitizar($rowEquipo['NombreEquipo']).'.pdf';
 	$OpcDom         = "'A4', 'landscape'";
 	$OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 	$OpcTcpPg       = "A4"; //Tipo de Hoja
@@ -195,7 +195,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
-				$pdf->Output($pdf_file, 'I');
+				$pdf->Output(DeSanitizar($pdf_file), 'I');
 		
 				break;
 			/************************************************************************/
@@ -209,7 +209,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$dompdf->loadHtml($html);
 				$dompdf->setPaper($OpcDom);
 				$dompdf->render();
-				$dompdf->stream($pdf_file);
+				$dompdf->stream(DeSanitizar($pdf_file));
 				break;
 
 		}

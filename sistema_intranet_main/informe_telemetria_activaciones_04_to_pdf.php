@@ -133,7 +133,7 @@ $html .= '
 						for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
 							if(isset($med['ValorMinimo_'.$i])){
 								$html .='<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">';
-									$html .='<strong>'.$arrNombres[$i]['SensorNombre'].'</strong><br/>';
+									$html .='<strong>'.DeSanitizar($arrNombres[$i]['SensorNombre']).'</strong><br/>';
 									$html .='Inicio: '.Cantidades_decimales_justos($med['ValorMinimo_'.$i]).' a las '.$med['HoraMinimo_'.$i].'<br/>';
 									$html .='Termino: '.Cantidades_decimales_justos($med['ValorMaximo_'.$i]).' a las '.$med['HoraMaximo_'.$i].'<br/>';
 								$html .='</td>';
@@ -150,7 +150,7 @@ $html .='</tbody>
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/
 //Config
-$pdf_titulo     = 'Amperaje del equipo '.$rowMaquina['Nombre'];
+$pdf_titulo     = 'Amperaje del equipo '.DeSanitizar($rowMaquina['Nombre']);
 $pdf_subtitulo  = '';
 $pdf_file       = 'Informe Amperaje.pdf';
 $OpcDom         = "'A4', 'landscape'";
@@ -217,7 +217,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
-			$pdf->Output($pdf_file, 'I');
+			$pdf->Output(DeSanitizar($pdf_file), 'I');
 	
 			break;
 		/************************************************************************/
@@ -231,7 +231,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$dompdf->loadHtml($html);
 			$dompdf->setPaper($OpcDom);
 			$dompdf->render();
-			$dompdf->stream($pdf_file);
+			$dompdf->stream(DeSanitizar($pdf_file));
 			break;
 
 	}

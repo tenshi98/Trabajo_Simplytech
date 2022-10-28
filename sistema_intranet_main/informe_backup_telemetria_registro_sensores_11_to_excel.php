@@ -99,7 +99,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					//Que el valor medido sea distinto de 999
 					if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
 						//Si es humedad
-						if($fac['SensoresUniMed_'.$x]==2){$Humedad = $Humedad + $fac['SensorValue_'.$x];$Humedad_N++;}
+						if($fac['SensoresUniMed_'.$x]==2){$Humedad     = $Humedad + $fac['SensorValue_'.$x];$Humedad_N++;}
 						//Si es temperatura
 						if($fac['SensoresUniMed_'.$x]==3){$Temperatura = $Temperatura + $fac['SensorValue_'.$x];$Temperatura_N++;}
 					}
@@ -135,7 +135,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$filename = 'Informe Trazabilidad del equipo '.$rowEquipo['NombreEquipo'];
 	// Redirect output to a client’s web browser (Xlsx)
 	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-	header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+	header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');

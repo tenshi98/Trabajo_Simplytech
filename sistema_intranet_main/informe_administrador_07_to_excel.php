@@ -124,8 +124,8 @@ foreach ($arrGrupos as $sen) {
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-							 ->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+							 ->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
@@ -156,15 +156,15 @@ foreach ($arrEquipos1 as $equip) {
 	if(isset($equip['Valor'])&&$equip['Valor']==99900){
 	
 		$spreadsheet->setActiveSheetIndex(0)
-					->setCellValue('A'.$nn, $equip['Sistema'])
-					->setCellValue('B'.$nn, $equip['EquipoNombre'])
-					->setCellValue('C'.$nn, $equip['EquipoId'])
-					->setCellValue('D'.$nn, $equip['EquipoTab'])
-					->setCellValue('E'.$nn, $arrFinalGrupos[$equip['SensoresGrupo_'.$equip['EquipoNSensor']]])
-					->setCellValue('F'.$nn, $equip['EquipoNSensor'])
-					->setCellValue('G'.$nn, $equip['SensoresNombre_'.$equip['EquipoNSensor']])
+					->setCellValue('A'.$nn, DeSanitizar($equip['Sistema']))
+					->setCellValue('B'.$nn, DeSanitizar($equip['EquipoNombre']))
+					->setCellValue('C'.$nn, DeSanitizar($equip['EquipoId']))
+					->setCellValue('D'.$nn, DeSanitizar($equip['EquipoTab']))
+					->setCellValue('E'.$nn, DeSanitizar($arrFinalGrupos[$equip['SensoresGrupo_'.$equip['EquipoNSensor']]]))
+					->setCellValue('F'.$nn, DeSanitizar($equip['EquipoNSensor']))
+					->setCellValue('G'.$nn, DeSanitizar($equip['SensoresNombre_'.$equip['EquipoNSensor']]))
 					->setCellValue('H'.$nn, $equip['Cuenta'])
-					->setCellValue('I'.$nn, $equip['Descripcion']);
+					->setCellValue('I'.$nn, DeSanitizar($equip['Descripcion']));
 					
 		//Se suma 1
 		$nn++;
@@ -227,15 +227,15 @@ foreach ($arrEquipos1 as $equip) {
 	if(isset($equip['Valor'])&&$equip['Valor']==99901){
 	
 		$spreadsheet->setActiveSheetIndex(1)
-					->setCellValue('A'.$nn, $equip['Sistema'])
-					->setCellValue('B'.$nn, $equip['EquipoNombre'])
-					->setCellValue('C'.$nn, $equip['EquipoId'])
-					->setCellValue('D'.$nn, $equip['EquipoTab'])
-					->setCellValue('E'.$nn, $arrFinalGrupos[$equip['SensoresGrupo_'.$equip['EquipoNSensor']]])
-					->setCellValue('F'.$nn, $equip['EquipoNSensor'])
-					->setCellValue('G'.$nn, $equip['SensoresNombre_'.$equip['EquipoNSensor']])
+					->setCellValue('A'.$nn, DeSanitizar($equip['Sistema']))
+					->setCellValue('B'.$nn, DeSanitizar($equip['EquipoNombre']))
+					->setCellValue('C'.$nn, DeSanitizar($equip['EquipoId']))
+					->setCellValue('D'.$nn, DeSanitizar($equip['EquipoTab']))
+					->setCellValue('E'.$nn, DeSanitizar($arrFinalGrupos[$equip['SensoresGrupo_'.$equip['EquipoNSensor']]]))
+					->setCellValue('F'.$nn, DeSanitizar($equip['EquipoNSensor']))
+					->setCellValue('G'.$nn, DeSanitizar($equip['SensoresNombre_'.$equip['EquipoNSensor']]))
 					->setCellValue('H'.$nn, $equip['Cuenta'])
-					->setCellValue('I'.$nn, $equip['Descripcion']);
+					->setCellValue('I'.$nn, DeSanitizar($equip['Descripcion']));
 					
 		//Se suma 1
 		$nn++;
@@ -296,9 +296,9 @@ foreach ($arrErrores as $error) {
 
 	
 	$spreadsheet->setActiveSheetIndex(2)
-				->setCellValue('A'.$nn, $error['Sistema'])
-				->setCellValue('B'.$nn, $error['EquipoNombre'])
-				->setCellValue('C'.$nn, $error['EquipoTab'])
+				->setCellValue('A'.$nn, DeSanitizar($error['Sistema']))
+				->setCellValue('B'.$nn, DeSanitizar($error['EquipoNombre']))
+				->setCellValue('C'.$nn, DeSanitizar($error['EquipoTab']))
 				->setCellValue('D'.$nn, $error['Fecha_inicio'])
 				->setCellValue('E'.$nn, $error['Hora_inicio'])
 				->setCellValue('F'.$nn, $error['Fecha_termino'])
@@ -375,9 +375,9 @@ foreach ($arrTelemetria as $tel) {
 	//comparacion
 	if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
 		$spreadsheet->setActiveSheetIndex(3)
-					->setCellValue('A'.$nn, $tel['Sistema'])
-					->setCellValue('B'.$nn, $tel['EquipoNombre'])
-					->setCellValue('C'.$nn, $tel['EquipoTab'])
+					->setCellValue('A'.$nn, DeSanitizar($tel['Sistema']))
+					->setCellValue('B'.$nn, DeSanitizar($tel['EquipoNombre']))
+					->setCellValue('C'.$nn, DeSanitizar($tel['EquipoTab']))
 					->setCellValue('D'.$nn, $tel['LastUpdateFecha'])
 					->setCellValue('E'.$nn, $tel['LastUpdateHora'])
 					->setCellValue('F'.$nn, $Tiempo);
@@ -424,7 +424,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Administrador - Alertas 999';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

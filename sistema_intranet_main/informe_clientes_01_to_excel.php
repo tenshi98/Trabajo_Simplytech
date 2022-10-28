@@ -114,26 +114,26 @@ $nn=2;
 foreach ($arrClientes as $productos) { 
 
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $productos['tipoCliente'])
-				->setCellValue('B'.$nn, $productos['Nombre'])
-				->setCellValue('C'.$nn, $productos['RazonSocial'])
+				->setCellValue('A'.$nn, DeSanitizar($productos['tipoCliente']))
+				->setCellValue('B'.$nn, DeSanitizar($productos['Nombre']))
+				->setCellValue('C'.$nn, DeSanitizar($productos['RazonSocial']))
 				->setCellValue('D'.$nn, $productos['Rut'])
 				->setCellValue('E'.$nn, fecha_estandar($productos['fNacimiento']))
-				->setCellValue('F'.$nn, $productos['nombre_region'])
-				->setCellValue('G'.$nn, $productos['nombre_comuna'])
-				->setCellValue('H'.$nn, $productos['Direccion'])
-				->setCellValue('I'.$nn, $productos['sistema'])
-				->setCellValue('J'.$nn, $productos['estado'])
-				->setCellValue('K'.$nn, $productos['Giro'])
-				->setCellValue('L'.$nn, $productos['Rubro'])
-				->setCellValue('M'.$nn, $productos['Fono1'])
-				->setCellValue('N'.$nn, $productos['Fono2'])
+				->setCellValue('F'.$nn, DeSanitizar($productos['nombre_region']))
+				->setCellValue('G'.$nn, DeSanitizar($productos['nombre_comuna']))
+				->setCellValue('H'.$nn, DeSanitizar($productos['Direccion']))
+				->setCellValue('I'.$nn, DeSanitizar($productos['sistema']))
+				->setCellValue('J'.$nn, DeSanitizar($productos['estado']))
+				->setCellValue('K'.$nn, DeSanitizar($productos['Giro']))
+				->setCellValue('L'.$nn, DeSanitizar($productos['Rubro']))
+				->setCellValue('M'.$nn, formatPhone($productos['Fono1']))
+				->setCellValue('N'.$nn, formatPhone($productos['Fono2']))
 				->setCellValue('O'.$nn, $productos['Fax'])
-				->setCellValue('P'.$nn, $productos['email'])
-				->setCellValue('Q'.$nn, $productos['Web'])
-				->setCellValue('R'.$nn, $productos['PersonaContacto'])
-				->setCellValue('S'.$nn, $productos['PersonaContacto_Fono'])
-				->setCellValue('T'.$nn, $productos['PersonaContacto_email']);
+				->setCellValue('P'.$nn, DeSanitizar($productos['email']))
+				->setCellValue('Q'.$nn, DeSanitizar($productos['Web']))
+				->setCellValue('R'.$nn, DeSanitizar($productos['PersonaContacto']))
+				->setCellValue('S'.$nn, formatPhone($productos['PersonaContacto_Fono']))
+				->setCellValue('T'.$nn, DeSanitizar($productos['PersonaContacto_email']));
 	$nn++;           
    
 } 
@@ -151,7 +151,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Datos Clientes';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

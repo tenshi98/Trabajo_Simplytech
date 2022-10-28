@@ -79,7 +79,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//guardo las unidades de medida
 	$Unimed = array();
 	foreach ($arrUnimed as $sen) { 
-		$Unimed[$sen['idUniMed']] = ' '.$sen['Nombre'];
+		$Unimed[$sen['idUniMed']] = ' '.DeSanitizar($sen['Nombre']);
 	}
 
 		
@@ -105,7 +105,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
 					if($arrEquipos[0]['SensoresGrupo_'.$i]==$idGrupo){
-						$html .='<th  style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';			
+						$html .='<th  style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.DeSanitizar($arrEquipos[0]['SensorNombre_'.$i]).'</th>';			
 					}
 				}
 			$html .='				
@@ -183,8 +183,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	/**********************************************************************************************************************************/
 	//Config
 	$pdf_titulo     = 'Registro Sensores';
-	$pdf_subtitulo  = 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo'];
-	$pdf_file       = 'Informe Trazabilidad del equipo '.$rowEquipo['NombreEquipo'].'.pdf';
+	$pdf_subtitulo  = 'Informe grupo '.DeSanitizar($rowGrupo['Nombre']).' del equipo '.DeSanitizar($rowEquipo['NombreEquipo']);
+	$pdf_file       = 'Informe Trazabilidad del equipo '.DeSanitizar($rowEquipo['NombreEquipo']).'.pdf';
 	$OpcDom         = "'A4', 'landscape'";
 	$OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 	$OpcTcpPg       = "A4"; //Tipo de Hoja
@@ -257,7 +257,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
-				$pdf->Output($pdf_file, 'I');
+				$pdf->Output(DeSanitizar($pdf_file), 'I');
 		
 				break;
 			/************************************************************************/
@@ -271,7 +271,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$dompdf->loadHtml($html);
 				$dompdf->setPaper($OpcDom);
 				$dompdf->render();
-				$dompdf->stream($pdf_file);
+				$dompdf->stream(DeSanitizar($pdf_file));
 				break;
 
 		}

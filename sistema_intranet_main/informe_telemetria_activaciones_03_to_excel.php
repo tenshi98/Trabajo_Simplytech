@@ -65,8 +65,8 @@ $arrConsulta = db_select_array (false, $SIS_query, 'telemetria_listado_historial
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-			->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+			->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 			->setTitle("Office 2007")
 			->setSubject("Office 2007")
 			->setDescription("Document for Office 2007")
@@ -194,9 +194,9 @@ foreach($arrConsulta as $categoria=>$permisos){
 			}
 			
 			$spreadsheet->setActiveSheetIndex(0)
-						->setCellValue('A'.$nn, $categoria)
-						->setCellValue('B'.$nn, $CodigoInterno)
-						->setCellValue('C'.$nn, $Direccion)
+						->setCellValue('A'.$nn, DeSanitizar($categoria))
+						->setCellValue('B'.$nn, DeSanitizar($CodigoInterno))
+						->setCellValue('C'.$nn, DeSanitizar($Direccion))
 						->setCellValue('D'.$nn, fecha_estandar($fecha))
 						->setCellValue('E'.$nn, $HoraInicio)
 						->setCellValue('F'.$nn, $HoraTermino)
@@ -297,9 +297,9 @@ foreach($arrConsulta as $categoria=>$permisos){
 	}	
 	
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $categoria)
-				->setCellValue('B'.$nn, $CodigoInterno)
-				->setCellValue('C'.$nn, $Direccion)
+				->setCellValue('A'.$nn, DeSanitizar($categoria))
+				->setCellValue('B'.$nn, DeSanitizar($CodigoInterno))
+				->setCellValue('C'.$nn, DeSanitizar($Direccion))
 				->setCellValue('D'.$nn, fecha_estandar($fecha))
 				->setCellValue('E'.$nn, $HoraInicio)
 				->setCellValue('F'.$nn, $HoraTermino)
@@ -325,7 +325,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Informe Activaciones';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

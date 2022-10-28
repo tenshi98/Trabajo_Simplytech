@@ -160,8 +160,8 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-							 ->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+							 ->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
@@ -280,8 +280,8 @@ foreach ($arrOTS as $ot) {
 	
 	/**************************************************************/
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $ot['NombrePredio'])
-				->setCellValue('B'.$nn, $ot['NSolicitud'])
+				->setCellValue('A'.$nn, DeSanitizar($ot['NombrePredio']))
+				->setCellValue('B'.$nn, DeSanitizar($ot['NSolicitud']))
 				->setCellValue('C'.$nn, fecha_estandar($ot['f_creacion']))
 				->setCellValue('D'.$nn, fecha_estandar($ot['f_programacion']).' '.$ot['horaProg'])
 				->setCellValue('E'.$nn, fecha_estandar($ot['f_programacion_fin']).' '.$ot['horaProg_fin'])
@@ -289,36 +289,36 @@ foreach ($arrOTS as $ot) {
 				->setCellValue('G'.$nn, fecha_estandar($ot['f_ejecucion_fin']).' '.$ot['horaEjecucion_fin'])
 				->setCellValue('H'.$nn, fecha_estandar($ot['f_termino']).' '.$ot['horaTermino'])
 				->setCellValue('I'.$nn, fecha_estandar($ot['f_termino_fin']).' '.$ot['horaTermino_fin'])
-				->setCellValue('J'.$nn, $ot['NombreUsuario'])
-				->setCellValue('K'.$nn, $VariedadCat)
-				->setCellValue('L'.$nn, $VariedadNombre)
-				->setCellValue('M'.$nn, $ot['CuartelNombre'])
-				->setCellValue('N'.$nn, $ot['CuartelPlantas'])
-				->setCellValue('O'.$nn, $ot['CuartelHectareas'])
-				->setCellValue('P'.$nn, $ot['CuartelAnoPlantacion'])
-				->setCellValue('Q'.$nn, $ot['EstadoFenNombre'])
-				->setCellValue('R'.$nn, $ot['CuartelEstadoProd'])
-				->setCellValue('S'.$nn, $ot['Estado'])
-				->setCellValue('T'.$nn, $ot['DosificadorRut'].' - '.$ot['DosificadorNombre'].' '.$ot['DosificadorApellidoPat'])
-				->setCellValue('U'.$nn, $ot['ConductorRut'].' - '.$ot['ConductorNombre'].' '.$ot['ConductorApellidoPat'])
-				->setCellValue('V'.$nn, $ot['Telem_Identificador'])
-				->setCellValue('W'.$nn, $ot['Telem_Capacidad'])
-				->setCellValue('X'.$nn, $ot['Telem_GeoVelocidadProm'])
-				->setCellValue('Y'.$nn, $sdata1)
-				->setCellValue('Z'.$nn, $sdata2)
-				->setCellValue('AA'.$nn, $sdata3)
+				->setCellValue('J'.$nn, DeSanitizar($ot['NombreUsuario']))
+				->setCellValue('K'.$nn, DeSanitizar($VariedadCat))
+				->setCellValue('L'.$nn, DeSanitizar($VariedadNombre))
+				->setCellValue('M'.$nn, DeSanitizar($ot['CuartelNombre']))
+				->setCellValue('N'.$nn, DeSanitizar($ot['CuartelPlantas']))
+				->setCellValue('O'.$nn, DeSanitizar($ot['CuartelHectareas']))
+				->setCellValue('P'.$nn, DeSanitizar($ot['CuartelAnoPlantacion']))
+				->setCellValue('Q'.$nn, DeSanitizar($ot['EstadoFenNombre']))
+				->setCellValue('R'.$nn, DeSanitizar($ot['CuartelEstadoProd']))
+				->setCellValue('S'.$nn, DeSanitizar($ot['Estado']))
+				->setCellValue('T'.$nn, DeSanitizar($ot['DosificadorRut'].' - '.$ot['DosificadorNombre'].' '.$ot['DosificadorApellidoPat']))
+				->setCellValue('U'.$nn, DeSanitizar($ot['ConductorRut'].' - '.$ot['ConductorNombre'].' '.$ot['ConductorApellidoPat']))
+				->setCellValue('V'.$nn, DeSanitizar($ot['Telem_Identificador']))
+				->setCellValue('W'.$nn, DeSanitizar($ot['Telem_Capacidad']))
+				->setCellValue('X'.$nn, DeSanitizar($ot['Telem_GeoVelocidadProm']))
+				->setCellValue('Y'.$nn, DeSanitizar($sdata1))
+				->setCellValue('Z'.$nn, DeSanitizar($sdata2))
+				->setCellValue('AA'.$nn, DeSanitizar($sdata3))
 				->setCellValue('AB'.$nn, $ot['Telem_Sensor_1_Prom'])
 				->setCellValue('AC'.$nn, $ot['Telem_Sensor_2_Prom'])
-				->setCellValue('AD'.$nn, $ot['Estado'])
-				->setCellValue('AE'.$nn, $ot['ProductoIngrediente'])
-				->setCellValue('AF'.$nn, $ot['ProductoNombre'])
-				->setCellValue('AG'.$nn, $ot['ProductoCategoria'])
-				->setCellValue('AH'.$nn, $ot['ProductoDosisRecomendada'])
-				->setCellValue('AI'.$nn, $ot['ProductoDosisAplicar'])
-				->setCellValue('AJ'.$nn, $ot['ProductoObjetivo'])
-				->setCellValue('AK'.$nn, $ot['ProductoCarenciaExportador'])
-				->setCellValue('AL'.$nn, $ot['ProductoEfectoResidual'])
-				->setCellValue('AM'.$nn, $ot['ProductoObjetivo']);
+				->setCellValue('AD'.$nn, DeSanitizar($ot['Estado']))
+				->setCellValue('AE'.$nn, DeSanitizar($ot['ProductoIngrediente']))
+				->setCellValue('AF'.$nn, DeSanitizar($ot['ProductoNombre']))
+				->setCellValue('AG'.$nn, DeSanitizar($ot['ProductoCategoria']))
+				->setCellValue('AH'.$nn, DeSanitizar($ot['ProductoDosisRecomendada']))
+				->setCellValue('AI'.$nn, DeSanitizar($ot['ProductoDosisAplicar']))
+				->setCellValue('AJ'.$nn, DeSanitizar($ot['ProductoObjetivo']))
+				->setCellValue('AK'.$nn, DeSanitizar($ot['ProductoCarenciaExportador']))
+				->setCellValue('AL'.$nn, DeSanitizar($ot['ProductoEfectoResidual']))
+				->setCellValue('AM'.$nn, DeSanitizar($ot['ProductoObjetivo']));
 				
 				
 				/*
@@ -361,7 +361,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Cross Checking - Exportar Datos';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

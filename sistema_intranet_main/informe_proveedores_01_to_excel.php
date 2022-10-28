@@ -118,27 +118,27 @@ foreach ($arrProveedores as $productos) {
 
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, $productos['tipoProveedor'])
-				->setCellValue('B'.$nn, $productos['Nombre'])
-				->setCellValue('C'.$nn, $productos['RazonSocial'])
+				->setCellValue('B'.$nn, DeSanitizar($productos['Nombre']))
+				->setCellValue('C'.$nn, DeSanitizar($productos['RazonSocial']))
 				->setCellValue('D'.$nn, $productos['Rut'])
 				->setCellValue('E'.$nn, fecha_estandar($cli['fNacimiento']))
-				->setCellValue('F'.$nn, $productos['Pais'])
-				->setCellValue('G'.$nn, $productos['nombre_region'])
-				->setCellValue('H'.$nn, $productos['nombre_comuna'])
-				->setCellValue('I'.$nn, $productos['Direccion'])
-				->setCellValue('J'.$nn, $productos['sistema'])
-				->setCellValue('K'.$nn, $productos['estado'])
-				->setCellValue('L'.$nn, $productos['Giro'])
-				->setCellValue('M'.$nn, $productos['Rubro'])
-				->setCellValue('N'.$nn, $productos['Fono1'])
-				->setCellValue('O'.$nn, $productos['Fono2'])
+				->setCellValue('F'.$nn, DeSanitizar($productos['Pais']))
+				->setCellValue('G'.$nn, DeSanitizar($productos['nombre_region']))
+				->setCellValue('H'.$nn, DeSanitizar($productos['nombre_comuna']))
+				->setCellValue('I'.$nn, DeSanitizar($productos['Direccion']))
+				->setCellValue('J'.$nn, DeSanitizar($productos['sistema']))
+				->setCellValue('K'.$nn, DeSanitizar($productos['estado']))
+				->setCellValue('L'.$nn, DeSanitizar($productos['Giro']))
+				->setCellValue('M'.$nn, DeSanitizar($productos['Rubro']))
+				->setCellValue('N'.$nn, formatPhone($productos['Fono1']))
+				->setCellValue('O'.$nn, formatPhone($productos['Fono2']))
 				->setCellValue('P'.$nn, $productos['Fax'])
-				->setCellValue('Q'.$nn, $productos['email'])
-				->setCellValue('R'.$nn, $productos['Web'])
-				->setCellValue('S'.$nn, $productos['PersonaContacto'])
-				->setCellValue('T'.$nn, $productos['PersonaContacto_Fono'])
-				->setCellValue('U'.$nn, $productos['PersonaContacto_email'])
-				->setCellValue('V'.$nn, $productos['FormaPago']);
+				->setCellValue('Q'.$nn, DeSanitizar($productos['email']))
+				->setCellValue('R'.$nn, DeSanitizar($productos['Web']))
+				->setCellValue('S'.$nn, DeSanitizar($productos['PersonaContacto']))
+				->setCellValue('T'.$nn, formatPhone($productos['PersonaContacto_Fono']))
+				->setCellValue('U'.$nn, DeSanitizar($productos['PersonaContacto_email']))
+				->setCellValue('V'.$nn, DeSanitizar($productos['FormaPago']));
 	$nn++;           
    
 } 
@@ -156,7 +156,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Datos Proveedores';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

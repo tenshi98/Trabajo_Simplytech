@@ -62,8 +62,8 @@ $arrProductos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-							 ->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+							 ->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
@@ -72,10 +72,10 @@ $spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
 			
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'Bodega: '.$arrProductos[0]['NombreBodega']);
+            ->setCellValue('A1', 'Bodega: '.DeSanitizar($arrProductos[0]['NombreBodega']));
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
-            ->setCellValue('A2', 'Producto: '.$arrProductos[0]['NombreProducto']);
+            ->setCellValue('A2', 'Producto: '.DeSanitizar($arrProductos[0]['NombreProducto']));
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A3', 'Ultimos 100 Registros');            
@@ -102,12 +102,12 @@ foreach ($arrProductos as $productos) {
 								
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, $productos['TipoMovimiento'])
-				->setCellValue('B'.$nn, $empresa)
-				->setCellValue('C'.$nn, $ndoc)
+				->setCellValue('B'.$nn, DeSanitizar($empresa))
+				->setCellValue('C'.$nn, DeSanitizar($ndoc))
 				->setCellValue('D'.$nn, Fecha_estandar($productos['Creacion_fecha']))
 				->setCellValue('E'.$nn, cantidades_excel($productos['Cantidad_ing']))
 				->setCellValue('F'.$nn, cantidades_excel($productos['Cantidad_eg']))
-				->setCellValue('G'.$nn, $productos['UnidadMedida']);
+				->setCellValue('G'.$nn, DeSanitizar($productos['UnidadMedida']));
 	$nn++;           
    
 } 
@@ -115,7 +115,7 @@ foreach ($arrProductos as $productos) {
 
 
 // Rename worksheet
-$spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.$arrProductos[0]['NombreBodega'], 25));
+$spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.DeSanitizar($arrProductos[0]['NombreBodega']), 25));
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
@@ -125,7 +125,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Movimiento Producto '.$arrProductos[0]['NombreProducto'].' Bodega '.$arrProductos[0]['NombreBodega'].' ultimos 100 registros';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

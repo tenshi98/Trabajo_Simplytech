@@ -173,26 +173,26 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'Fecha')
 				->setCellValue('B1', 'Hora')
-				->setCellValue('C1', $arrTitulo[1]['Nombre'])
-				->setCellValue('D1', $arrTitulo[2]['Nombre'])
-				->setCellValue('E1', $arrTitulo[3]['Nombre'])
-				->setCellValue('F1', $arrTitulo[4]['Nombre'])
-				->setCellValue('G1', $arrTitulo[5]['Nombre'])
-				->setCellValue('H1', $arrTitulo[6]['Nombre'])
-				->setCellValue('I1', $arrTitulo[7]['Nombre'])
-				->setCellValue('J1', $arrTitulo[8]['Nombre'])
-				->setCellValue('K1', $arrTitulo[9]['Nombre'])
-				->setCellValue('L1', $arrTitulo[10]['Nombre'])
-				->setCellValue('M1', $arrTitulo[11]['Nombre'])
-				->setCellValue('N1', $arrTitulo[12]['Nombre'])
-				->setCellValue('O1', $arrTitulo[13]['Nombre'])
-				->setCellValue('P1', $arrTitulo[14]['Nombre'])
-				->setCellValue('Q1', $arrTitulo[15]['Nombre'])
-				->setCellValue('R1', $arrTitulo[16]['Nombre'])
-				->setCellValue('S1', $arrTitulo[17]['Nombre'])
-				->setCellValue('T1', $arrTitulo[18]['Nombre'])
-				->setCellValue('U1', $arrTitulo[19]['Nombre'])
-				->setCellValue('V1', $arrTitulo[20]['Nombre']);
+				->setCellValue('C1', DeSanitizar($arrTitulo[1]['Nombre']))
+				->setCellValue('D1', DeSanitizar($arrTitulo[2]['Nombre']))
+				->setCellValue('E1', DeSanitizar($arrTitulo[3]['Nombre']))
+				->setCellValue('F1', DeSanitizar($arrTitulo[4]['Nombre']))
+				->setCellValue('G1', DeSanitizar($arrTitulo[5]['Nombre']))
+				->setCellValue('H1', DeSanitizar($arrTitulo[6]['Nombre']))
+				->setCellValue('I1', DeSanitizar($arrTitulo[7]['Nombre']))
+				->setCellValue('J1', DeSanitizar($arrTitulo[8]['Nombre']))
+				->setCellValue('K1', DeSanitizar($arrTitulo[9]['Nombre']))
+				->setCellValue('L1', DeSanitizar($arrTitulo[10]['Nombre']))
+				->setCellValue('M1', DeSanitizar($arrTitulo[11]['Nombre']))
+				->setCellValue('N1', DeSanitizar($arrTitulo[12]['Nombre']))
+				->setCellValue('O1', DeSanitizar($arrTitulo[13]['Nombre']))
+				->setCellValue('P1', DeSanitizar($arrTitulo[14]['Nombre']))
+				->setCellValue('Q1', DeSanitizar($arrTitulo[15]['Nombre']))
+				->setCellValue('R1', DeSanitizar($arrTitulo[16]['Nombre']))
+				->setCellValue('S1', DeSanitizar($arrTitulo[17]['Nombre']))
+				->setCellValue('T1', DeSanitizar($arrTitulo[18]['Nombre']))
+				->setCellValue('U1', DeSanitizar($arrTitulo[19]['Nombre']))
+				->setCellValue('V1', DeSanitizar($arrTitulo[20]['Nombre']));
 
 	$nn = 2; 
 	$nw = 1; 
@@ -201,26 +201,26 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, $arrData[$nw]['FechaSistema'])
 				->setCellValue('B'.$nn, $arrData[$nw]['HoraSistema'])
-				->setCellValue('C'.$nn, $arrData[$nw][1]['Dato'])
-				->setCellValue('D'.$nn, $arrData[$nw][2]['Dato'])
-				->setCellValue('E'.$nn, $arrData[$nw][3]['Dato'])
-				->setCellValue('F'.$nn, $arrData[$nw][4]['Dato'])
-				->setCellValue('G'.$nn, $arrData[$nw][5]['Dato'])
-				->setCellValue('H'.$nn, $arrData[$nw][6]['Dato'])
-				->setCellValue('I'.$nn, $arrData[$nw][7]['Dato'])
-				->setCellValue('J'.$nn, $arrData[$nw][8]['Dato'])
-				->setCellValue('K'.$nn, $arrData[$nw][9]['Dato'])
-				->setCellValue('L'.$nn, $arrData[$nw][10]['Dato'])
-				->setCellValue('M'.$nn, $arrData[$nw][11]['Dato'])
-				->setCellValue('N'.$nn, $arrData[$nw][12]['Dato'])
-				->setCellValue('O'.$nn, $arrData[$nw][13]['Dato'])
-				->setCellValue('P'.$nn, $arrData[$nw][14]['Dato'])
-				->setCellValue('Q'.$nn, $arrData[$nw][15]['Dato'])
-				->setCellValue('R'.$nn, $arrData[$nw][16]['Dato'])
-				->setCellValue('S'.$nn, $arrData[$nw][17]['Dato'])
-				->setCellValue('T'.$nn, $arrData[$nw][18]['Dato'])
-				->setCellValue('U'.$nn, $arrData[$nw][19]['Dato'])
-				->setCellValue('V'.$nn, $arrData[$nw][20]['Dato']); 					
+				->setCellValue('C'.$nn, DeSanitizar($arrData[$nw][1]['Dato']))
+				->setCellValue('D'.$nn, DeSanitizar($arrData[$nw][2]['Dato']))
+				->setCellValue('E'.$nn, DeSanitizar($arrData[$nw][3]['Dato']))
+				->setCellValue('F'.$nn, DeSanitizar($arrData[$nw][4]['Dato']))
+				->setCellValue('G'.$nn, DeSanitizar($arrData[$nw][5]['Dato']))
+				->setCellValue('H'.$nn, DeSanitizar($arrData[$nw][6]['Dato']))
+				->setCellValue('I'.$nn, DeSanitizar($arrData[$nw][7]['Dato']))
+				->setCellValue('J'.$nn, DeSanitizar($arrData[$nw][8]['Dato']))
+				->setCellValue('K'.$nn, DeSanitizar($arrData[$nw][9]['Dato']))
+				->setCellValue('L'.$nn, DeSanitizar($arrData[$nw][10]['Dato']))
+				->setCellValue('M'.$nn, DeSanitizar($arrData[$nw][11]['Dato']))
+				->setCellValue('N'.$nn, DeSanitizar($arrData[$nw][12]['Dato']))
+				->setCellValue('O'.$nn, DeSanitizar($arrData[$nw][13]['Dato']))
+				->setCellValue('P'.$nn, DeSanitizar($arrData[$nw][14]['Dato']))
+				->setCellValue('Q'.$nn, DeSanitizar($arrData[$nw][15]['Dato']))
+				->setCellValue('R'.$nn, DeSanitizar($arrData[$nw][16]['Dato']))
+				->setCellValue('S'.$nn, DeSanitizar($arrData[$nw][17]['Dato']))
+				->setCellValue('T'.$nn, DeSanitizar($arrData[$nw][18]['Dato']))
+				->setCellValue('U'.$nn, DeSanitizar($arrData[$nw][19]['Dato']))
+				->setCellValue('V'.$nn, DeSanitizar($arrData[$nw][20]['Dato'])); 					
 							
 		$nn++;
 		$nw++;					
@@ -238,7 +238,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$filename = 'Informe Trazabilidad Planta del equipo '.$rowEquipo['NombreEquipo'];
 	// Redirect output to a client’s web browser (Xlsx)
 	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-	header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+	header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 	header('Cache-Control: max-age=0');
 	// If you're serving to IE 9, then the following may be needed
 	header('Cache-Control: max-age=1');

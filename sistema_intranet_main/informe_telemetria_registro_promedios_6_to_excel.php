@@ -172,20 +172,20 @@ foreach ($arrTemporal as $fac) {
 			switch ($_GET['idOpciones']) {
 				case 1:
 					$spreadsheet->setActiveSheetIndex(0)
-								->setCellValue('A'.$nn, $rowEquipo['Nombre'])
+								->setCellValue('A'.$nn, DeSanitizar($rowEquipo['Nombre']))
 								->setCellValue('B'.$nn, $fac['FechaSistema'])
 								->setCellValue('C'.$nn, $New_Temperatura); 
 					break;
 				case 2:
 					$spreadsheet->setActiveSheetIndex(0)
-								->setCellValue('A'.$nn, $rowEquipo['Nombre'])
+								->setCellValue('A'.$nn, DeSanitizar($rowEquipo['Nombre']))
 								->setCellValue('B'.$nn, $fac['FechaSistema'])
 								->setCellValue('C'.$nn, $New_Humedad); 
 					break;
 			}
 		}else{
 			$spreadsheet->setActiveSheetIndex(0)
-						->setCellValue('A'.$nn, $rowEquipo['Nombre'])
+						->setCellValue('A'.$nn, DeSanitizar($rowEquipo['Nombre']))
 						->setCellValue('B'.$nn, $fac['FechaSistema'])
 						->setCellValue('C'.$nn, $New_Temperatura)
 						->setCellValue('D'.$nn, $New_Humedad); 
@@ -197,7 +197,7 @@ foreach ($arrTemporal as $fac) {
 	
 /***********************************************************/
 // Rename worksheet
-$spreadsheet->getActiveSheet(0)->setTitle(cortar($rowEquipo['Nombre'], 25));
+$spreadsheet->getActiveSheet(0)->setTitle(cortar(DeSanitizar($rowEquipo['Nombre']), 25));
 	
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
@@ -207,7 +207,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Informe Promedio Camara del equipo '.$rowEquipo['Nombre'];
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

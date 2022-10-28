@@ -156,8 +156,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion_est
 $spreadsheet = new Spreadsheet();
 
 // Set document properties
-$spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
-							 ->setLastModifiedBy($rowEmpresa['Nombre'])
+$spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
+							 ->setLastModifiedBy(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setTitle("Office 2007")
 							 ->setSubject("Office 2007")
 							 ->setDescription("Document for Office 2007")
@@ -211,40 +211,40 @@ $spreadsheet->setActiveSheetIndex(0)
 $nn=3;
 foreach ($arrTipo as $tipo) {
 	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $tipo['CTNNombreCompañia'])
-				->setCellValue('B'.$nn, $tipo['NInforme'])
+				->setCellValue('A'.$nn, DeSanitizar($tipo['CTNNombreCompañia']))
+				->setCellValue('B'.$nn, DeSanitizar($tipo['NInforme']))
 				->setCellValue('C'.$nn, $tipo['Creacion_fecha'])
 				->setCellValue('D'.$nn, $tipo['FechaInicioEmbarque'])
 				->setCellValue('E'.$nn, $tipo['HoraInicioCarga'])
 				->setCellValue('F'.$nn, $tipo['FechaTerminoEmbarque'])
 				->setCellValue('G'.$nn, $tipo['HoraTerminoCarga'])
-				->setCellValue('H'.$nn, $tipo['PlantaCodigo'].' - '.$tipo['PlantaNombre'])
-				->setCellValue('I'.$nn, $tipo['Especie'].' '.$tipo['Variedad'])
+				->setCellValue('H'.$nn, DeSanitizar($tipo['PlantaCodigo'].' - '.$tipo['PlantaNombre']))
+				->setCellValue('I'.$nn, DeSanitizar($tipo['Especie'].' '.$tipo['Variedad']))
 				->setCellValue('J'.$nn, $tipo['CantidadCajas'])
-				->setCellValue('K'.$nn, $tipo['InstructivoCodigo'].' - '.$tipo['InstructivoNombre'])
-				->setCellValue('L'.$nn, $tipo['NavieraCodigo'].' - '.$tipo['NavieraNombre'])
-				->setCellValue('M'.$nn, $tipo['EmbarqueCodigo'].' - '.$tipo['EmbarqueNombre'])
-				->setCellValue('N'.$nn, $tipo['MercadoCodigo'].' - '.$tipo['MercadoNombre'])
-				->setCellValue('O'.$nn, $tipo['PaisesNombre'])
-				->setCellValue('P'.$nn, $tipo['TransporteCodigo'].' - '.$tipo['TransporteNombre'])
-				->setCellValue('Q'.$nn, $tipo['ChoferNombreRut'])
-				->setCellValue('R'.$nn, $tipo['PatenteCamion'])
-				->setCellValue('S'.$nn, $tipo['PatenteCarro'])
-				->setCellValue('T'.$nn, $tipo['Condicion'])
-				->setCellValue('U'.$nn, $tipo['Sellado'])
+				->setCellValue('K'.$nn, DeSanitizar($tipo['InstructivoCodigo'].' - '.$tipo['InstructivoNombre']))
+				->setCellValue('L'.$nn, DeSanitizar($tipo['NavieraCodigo'].' - '.$tipo['NavieraNombre']))
+				->setCellValue('M'.$nn, DeSanitizar($tipo['EmbarqueCodigo'].' - '.$tipo['EmbarqueNombre']))
+				->setCellValue('N'.$nn, DeSanitizar($tipo['MercadoCodigo'].' - '.$tipo['MercadoNombre']))
+				->setCellValue('O'.$nn, DeSanitizar($tipo['PaisesNombre']))
+				->setCellValue('P'.$nn, DeSanitizar($tipo['TransporteCodigo'].' - '.$tipo['TransporteNombre']))
+				->setCellValue('Q'.$nn, DeSanitizar($tipo['ChoferNombreRut']))
+				->setCellValue('R'.$nn, DeSanitizar($tipo['PatenteCamion']))
+				->setCellValue('S'.$nn, DeSanitizar($tipo['PatenteCarro']))
+				->setCellValue('T'.$nn, DeSanitizar($tipo['Condicion']))
+				->setCellValue('U'.$nn, DeSanitizar($tipo['Sellado']))
 				->setCellValue('V'.$nn, cantidades_excel($tipo['TSetPoint']))
 				->setCellValue('W'.$nn, cantidades_excel($tipo['TVentilacion']))
 				->setCellValue('X'.$nn, cantidades_excel($tipo['TAmbiente']))
-				->setCellValue('Y'.$nn, $tipo['NumeroSello'])
-				->setCellValue('Z'.$nn, $tipo['InspectorNombre'].' '.$tipo['InspectorApellido'])
-				->setCellValue('AA'.$nn, $tipo['Estiba'])
-				->setCellValue('AB'.$nn, $tipo['EstibaUbicacion'])
-				->setCellValue('AC'.$nn, $tipo['Posicion'])
-				->setCellValue('AD'.$nn, $tipo['Envase'])
-				->setCellValue('AE'.$nn, $tipo['NPallet'])
+				->setCellValue('Y'.$nn, DeSanitizar($tipo['NumeroSello']))
+				->setCellValue('Z'.$nn, DeSanitizar($tipo['InspectorNombre'].' '.$tipo['InspectorApellido']))
+				->setCellValue('AA'.$nn, DeSanitizar($tipo['Estiba']))
+				->setCellValue('AB'.$nn, DeSanitizar($tipo['EstibaUbicacion']))
+				->setCellValue('AC'.$nn, DeSanitizar($tipo['Posicion']))
+				->setCellValue('AD'.$nn, DeSanitizar($tipo['Envase']))
+				->setCellValue('AE'.$nn, DeSanitizar($tipo['NPallet']))
 				->setCellValue('AF'.$nn, cantidades_excel($tipo['Temperatura']))
-				->setCellValue('AG'.$nn, $tipo['Termografo'])
-				->setCellValue('AH'.$nn, $tipo['NSerieSensor']);
+				->setCellValue('AG'.$nn, DeSanitizar($tipo['Termografo']))
+				->setCellValue('AH'.$nn, DeSanitizar($tipo['NSerieSensor']));
 
 	//Se suma 1
 	$nn++;
@@ -263,7 +263,7 @@ $spreadsheet->setActiveSheetIndex(0);
 $filename = 'Cross Shipping - Exportar Datos';
 // Redirect output to a client’s web browser (Xlsx)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+header('Content-Disposition: attachment;filename="'.DeSanitizar($filename).'.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');
