@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "aguas_facturacion_listado_archivos.php";
 $location = $original;
 /********************************************************************/
@@ -22,7 +22,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'upload';
 	require_once 'A1XRXS_sys/xrxs_form/aguas_facturacion_listado_archivos.php';
@@ -38,24 +38,24 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['filUp'])){ $error['filUp'] = 'sucess/Se han subido correctamente '.$_GET['filUp'].' archivos';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['modBase']) ) {?>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['modBase'])){?>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
-//cuadro para descargar	 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
+//cuadro para descargar
 $Alert_Text  = 'Todos los archivos deben tener como nombre el identificador del cliente (100101-100.pdf por ejemplo) sin espacios ni otros caracteres';
 alert_post_data(2,1,2, $Alert_Text);	 
 ?>
 
 		
- <div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir boletas escaneadas</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
         	
 				<?php 
@@ -73,15 +73,15 @@ alert_post_data(2,1,2, $Alert_Text);
 				
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

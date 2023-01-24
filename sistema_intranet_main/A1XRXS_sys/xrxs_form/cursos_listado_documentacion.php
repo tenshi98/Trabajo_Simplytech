@@ -2,22 +2,22 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-078).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idDocumentacion']) ) $idDocumentacion  = $_POST['idDocumentacion'];
-	if ( !empty($_POST['idCurso']) )         $idCurso          = $_POST['idCurso'];
-	if ( !empty($_POST['Semana']) )          $Semana           = $_POST['Semana'];
-	
+	if (!empty($_POST['idDocumentacion'])) $idDocumentacion  = $_POST['idDocumentacion'];
+	if (!empty($_POST['idCurso']))         $idCurso          = $_POST['idCurso'];
+	if (!empty($_POST['Semana']))          $Semana           = $_POST['Semana'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -32,7 +32,7 @@ require_once '0_validate_user_1.php';
 			case 'idDocumentacion': if(empty($idDocumentacion)){   $error['idDocumentacion']  = 'error/No ha ingresado el id';}break;
 			case 'idCurso':         if(empty($idCurso)){           $error['idCurso']          = 'error/No ha seleccionado el cliente';}break;
 			case 'Semana':          if(empty($Semana)){            $error['Semana']           = 'error/No ha ingresado la semana';}break;
-			
+
 		}
 	}
 
@@ -41,12 +41,12 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			/*$ndata_1 = 0;
@@ -57,24 +57,24 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
-				if ($_FILES["File_Curso"]["error"] > 0){ 
-					$error['File_Curso'] = 'error/'.uploadPHPError($_FILES["File_Curso"]["error"]); 
+				if ($_FILES["File_Curso"]["error"] > 0){
+					$error['File_Curso'] = 'error/'.uploadPHPError($_FILES["File_Curso"]["error"]);
 				} else {
 					//Se verifican las extensiones de los archivos
 					$permitidos = array(
-										"image/jpg", 
-										"image/png", 
-										"image/gif", 
+										"image/jpg",
+										"image/png",
+										"image/gif",
 										"image/jpeg",
 										"image/bmp",
 						
 										"application/msword",
 										"application/vnd.ms-word",
-										"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
+										"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 									
 										"application/msexcel",
 										"application/vnd.ms-excel",
@@ -84,9 +84,9 @@ require_once '0_validate_user_1.php';
 										"application/vnd.ms-powerpoint",
 										"application/vnd.openxmlformats-officedocument.presentationml.presentation",
 											
-										"audio/basic", 
-										"audio/mid", 
-										"audio/mpeg", 
+										"audio/basic",
+										"audio/mid",
+										"audio/mpeg",
 										"audio/x-wav",
 											
 										"application/pdf",
@@ -100,15 +100,15 @@ require_once '0_validate_user_1.php';
 										"text/richtext",
 										"application/rtf",
 											
-										"video/mpeg", 
-										"video/quicktime", 
-										"video/x-ms-asf", 
+										"video/mpeg",
+										"video/quicktime",
+										"video/x-ms-asf",
 										"video/x-msvideo",
 										"video/quicktime",
 											
 										"application/x-zip-compressed",
 										"application/zip",
-										"multipart/x-zip",			
+										"multipart/x-zip",
 										"application/x-7z-compressed",
 										"application/x-rar-compressed",
 										"application/gzip",
@@ -136,9 +136,9 @@ require_once '0_validate_user_1.php';
 								$File = $sufijo.$_FILES['File_Curso']['name'];
 								
 								//filtros
-								if(isset($idCurso) && $idCurso != ''){  $SIS_data  = "'".$idCurso."'" ;   }else{$SIS_data  = "''";}
-								if(isset($File) && $File != ''){        $SIS_data .= ",'".$File."'" ;     }else{$SIS_data .= ",''";}
-								if(isset($Semana) && $Semana != ''){    $SIS_data .= ",'".$Semana."'" ;   }else{$SIS_data .= ",''";}
+								if(isset($idCurso) && $idCurso!=''){  $SIS_data  = "'".$idCurso."'";   }else{$SIS_data  = "''";}
+								if(isset($File) && $File!=''){        $SIS_data .= ",'".$File."'";     }else{$SIS_data .= ",''";}
+								if(isset($Semana) && $Semana!=''){    $SIS_data .= ",'".$Semana."'";   }else{$SIS_data .= ",''";}
 								
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idCurso, File, Semana';
@@ -149,31 +149,31 @@ require_once '0_validate_user_1.php';
 									//redirijo
 									header( 'Location: '.$location );
 									die;
-								}				
+								}
 							} else {
-								$error['File_Curso']     = 'error/Ocurrio un error al mover el archivo'; 
+								$error['File_Curso']     = 'error/Ocurrio un error al mover el archivo';
 							}
 						} else {
-							$error['File_Curso']     = 'error/El archivo '.$_FILES['File_Curso']['name'].' ya existe'; 
+							$error['File_Curso']     = 'error/El archivo '.$_FILES['File_Curso']['name'].' ya existe';
 						}
 					} else {
-						$error['File_Curso']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+						$error['File_Curso']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 					}
 				}
-				
+
 			}
-	
+
 		break;
-	
+
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['delFile']) OR !validaEntero($_GET['delFile']))&&$_GET['delFile']!=''){
 				$indice = simpleDecode($_GET['delFile'], fecha_actual());
@@ -181,29 +181,29 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['delFile'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				// Se obtiene el nombre del archivo
 				$rowdata = db_select_data (false, 'File', 'cursos_listado_documentacion', '', "idDocumentacion = ".$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//se borran los datos
 				$resultado = db_delete_data (false, 'cursos_listado_documentacion', 'idDocumentacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//se elimina el archivo
 					if(isset($rowdata['File'])&&$rowdata['File']!=''){
 						try {
@@ -212,24 +212,23 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/'.$rowdata['File']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
 
-		break;							
-						
+		break;
+
 /*******************************************************************************************************************/
 	}
 ?>

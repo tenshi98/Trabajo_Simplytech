@@ -10,15 +10,15 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_backup_cross_telemetria_01.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
 $location .= "?submit_filter=Filtrar";
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){      $location .= "&idTelemetria=".$_GET['idTelemetria'];      $search .= "&idTelemetria=".$_GET['idTelemetria'];}
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $location .= "&idPredio=".$_GET['idPredio'];              $search .= "&idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){                  $location .= "&idZona=".$_GET['idZona'];                  $search .= "&idZona=".$_GET['idZona'];}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){      $location .= "&idTelemetria=".$_GET['idTelemetria'];      $search .= "&idTelemetria=".$_GET['idTelemetria'];}
+if(isset($_GET['idPredio']) && $_GET['idPredio']!=''){       $location .= "&idPredio=".$_GET['idPredio'];              $search .= "&idPredio=".$_GET['idPredio'];}
+if(isset($_GET['idZona']) && $_GET['idZona']!=''){           $location .= "&idZona=".$_GET['idZona'];                  $search .= "&idZona=".$_GET['idZona'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
 	$search .="&fecha_desde=".$_GET['fecha_desde'];
 	$search .="&fecha_hasta=".$_GET['fecha_hasta'];
@@ -32,15 +32,15 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){   $SIS_where .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){       $SIS_where .= " AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
+if(isset($_GET['idPredio']) && $_GET['idPredio']!=''){   $SIS_where .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
+if(isset($_GET['idZona']) && $_GET['idZona']!=''){$SIS_where .= " AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
 	$SIS_where.=" AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
@@ -82,12 +82,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	?>
 
 
-	<div class="col-sm-12">
-		<div class="box">	
-			<header>		
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen Mediciones</h5>
 			</header>
-			<div class="table-responsive">    
+			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<thead>
 						<tr role="row">
@@ -104,16 +104,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php foreach ($arrMediciones as $med) { ?>
-							<tr class="odd">		
-								<td><?php echo $med['PredioNombre']; ?></td>	
-								<td><?php echo $med['CuartelNombre']; ?></td>		
+							<tr class="odd">
+								<td><?php echo $med['PredioNombre']; ?></td>
+								<td><?php echo $med['CuartelNombre']; ?></td>
 								<td><?php echo $rowEquipo['EquipoNombre']; ?></td>
 										
-								<td><?php echo $med['CantidadMuestra']; ?></td>		
-								<td><?php echo $med['MedMin']; ?></td>		
-								<td><?php echo $med['MedMax']; ?></td>		
-								<td><?php echo $med['MedProm']; ?></td>		
-								<td><?php echo $med['MedDesStan']; ?></td>		
+								<td><?php echo $med['CantidadMuestra']; ?></td>
+								<td><?php echo $med['MedMin']; ?></td>
+								<td><?php echo $med['MedMax']; ?></td>
+								<td><?php echo $med['MedProm']; ?></td>
+								<td><?php echo $med['MedDesStan']; ?></td>
 								
 								<td>
 									<div class="btn-group" style="width: 70px;" >
@@ -131,7 +131,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									</div>
 								</td>
 							</tr>
-						<?php } ?>                    
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>
@@ -141,46 +141,46 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 <?php } ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 $y = "idEstado=1";
-$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Filtro de busqueda
 $w  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 } 
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTelemetria)) {           $x1  = $idTelemetria;           }else{$x1  = '';}
-				if(isset($idPredio)) {               $x2  = $idPredio;               }else{$x2  = '';}
-				if(isset($idZona)) {                 $x3  = $idZona;                 }else{$x3  = '';}
-				if(isset($fecha_desde)) {            $x4  = $fecha_desde;            }else{$x4  = '';}
-				if(isset($fecha_hasta)) {            $x5  = $fecha_hasta;            }else{$x5  = '';}
-				
+				if(isset($idTelemetria)){           $x1  = $idTelemetria;           }else{$x1  = '';}
+				if(isset($idPredio)){               $x2  = $idPredio;               }else{$x2  = '';}
+				if(isset($idZona)){                 $x3  = $idZona;                 }else{$x3  = '';}
+				if(isset($fecha_desde)){            $x4  = $fecha_desde;            }else{$x4  = '';}
+				if(isset($fecha_hasta)){            $x5  = $fecha_hasta;            }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
@@ -190,14 +190,14 @@ alert_post_data(2,1,1, $Alert_Text);
 				$Form_Inputs->form_date('Fecha Desde','fecha_desde', $x4, 1);
 				$Form_Inputs->form_date('Fecha Hasta','fecha_hasta', $x5, 1);
 						
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "admin_trabajadores_listado.php";
 $location = $original;
 $new_location = "admin_trabajadores_listado_laboral.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -43,12 +43,12 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Trabajador editado cor
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Trabajador borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = '
 Nombre,ApellidoPat,ApellidoMat,idTipo,Cargo,FechaContrato, F_Inicio_Contrato,
 F_Termino_Contrato,Observaciones,idTipoContrato,idTipoTrabajador,
-SueldoLiquido,SueldoDia,SueldoHora,idTipoContratoTrab,horas_pactadas,Gratificacion, 
+SueldoLiquido,SueldoDia,SueldoHora,idTipoContratoTrab,horas_pactadas,Gratificacion,
 idContratista,idCentroCosto,idLevel_1,idLevel_2,idLevel_3,idLevel_4,idLevel_5,
 idTipoTrabajo, PorcentajeTrabajoPesado,idBanco, idTipoCuenta, N_Cuenta,UbicacionTrabajo';
 $SIS_join  = '';
@@ -59,12 +59,12 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Laborales');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -80,7 +80,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_bonos_fijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Bonos Fijos Asignados</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_cargas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Cargas Familiares</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						
+
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Contrato</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_anexos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Anexos Contrato</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_licencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Licencia Conducir</a></li>
@@ -89,91 +89,91 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Antecedentes</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Carnet</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
-						
+
 					</ul>
-                </li>           
+                </li>
 			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
-			
-					<?php 
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+
+					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)) {                   $x1  = $idTipo;                    }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Cargo)) {                    $x2  = $Cargo;                     }else{$x2  = $rowdata['Cargo'];}
-					
-					if(isset($idContratista)) {            $x3  = $idContratista;             }else{$x3  = $rowdata['idContratista'];}
-					if(isset($idTipoTrabajador)) {         $x4  = $idTipoTrabajador;          }else{$x4  = $rowdata['idTipoTrabajador'];}
-					if(isset($idTipoContrato)) {           $x5  = $idTipoContrato;            }else{$x5  = $rowdata['idTipoContrato'];}
-					if(isset($idTipoContratoTrab)) {       $x6  = $idTipoContratoTrab;        }else{$x6  = $rowdata['idTipoContratoTrab'];}
-					if(isset($horas_pactadas)) {           $x7  = $horas_pactadas;            }else{$x7  = $rowdata['horas_pactadas'];}
-					if(isset($FechaContrato)) {            $x8  = $FechaContrato;             }else{$x8  = $rowdata['FechaContrato'];}
-					if(isset($F_Inicio_Contrato)) {        $x9  = $F_Inicio_Contrato;         }else{$x9  = $rowdata['F_Inicio_Contrato'];}
-					if(isset($F_Termino_Contrato)) {       $x10 = $F_Termino_Contrato;        }else{$x10 = $rowdata['F_Termino_Contrato'];}
-					if(isset($idTipoTrabajo)) {            $x11 = $idTipoTrabajo;             }else{$x11 = $rowdata['idTipoTrabajo'];}
-					if(isset($PorcentajeTrabajoPesado)) {  $x12 = $PorcentajeTrabajoPesado;   }else{$x12 = $rowdata['PorcentajeTrabajoPesado'];}
-					if(isset($UbicacionTrabajo)) {         $x13 = $UbicacionTrabajo;          }else{$x13 = $rowdata['UbicacionTrabajo'];}
-					
-					if(isset($SueldoLiquido)) {            $x14 = $SueldoLiquido;             }else{$x14 = $rowdata['SueldoLiquido'];}
-					if(isset($SueldoDia)) {                $x15 = $SueldoDia;                 }else{$x15 = $rowdata['SueldoDia'];}
-					if(isset($SueldoHora)) {               $x16 = $SueldoHora;                }else{$x16 = $rowdata['SueldoHora'];}
-					if(isset($Gratificacion)) {            $x17 = $Gratificacion;             }else{$x17 = $rowdata['Gratificacion'];}
-					
-					if(isset($idBanco)) {                  $x18 = $idBanco;                   }else{$x18 = $rowdata['idBanco'];}
-					if(isset($idTipoCuenta)) {             $x19 = $idTipoCuenta;              }else{$x19 = $rowdata['idTipoCuenta'];}
-					if(isset($N_Cuenta)) {                 $x20 = $N_Cuenta;                  }else{$x20 = $rowdata['N_Cuenta'];}
-					
-					if(isset($idCentroCosto)) {            $x21 = $idCentroCosto;             }else{$x21 = $rowdata['idCentroCosto'];}
-					if(isset($idLevel_1)) {                $x22 = $idLevel_1;                 }else{$x22 = $rowdata['idLevel_1'];}
-					if(isset($idLevel_2)) {                $x23 = $idLevel_2;                 }else{$x23 = $rowdata['idLevel_2'];}
-					if(isset($idLevel_3)) {                $x24 = $idLevel_3;                 }else{$x24 = $rowdata['idLevel_3'];}
-					if(isset($idLevel_4)) {                $x25 = $idLevel_4;                 }else{$x25 = $rowdata['idLevel_4'];}
-					if(isset($idLevel_5)) {                $x26 = $idLevel_5;                 }else{$x26 = $rowdata['idLevel_5'];}
-					
-					if(isset($Observaciones)) {            $x27 = $Observaciones;             }else{$x27 = $rowdata['Observaciones'];}
-					
+					if(isset($idTipo)){                   $x1  = $idTipo;                    }else{$x1  = $rowdata['idTipo'];}
+					if(isset($Cargo)){                    $x2  = $Cargo;                     }else{$x2  = $rowdata['Cargo'];}
+
+					if(isset($idContratista)){            $x3  = $idContratista;             }else{$x3  = $rowdata['idContratista'];}
+					if(isset($idTipoTrabajador)){         $x4  = $idTipoTrabajador;          }else{$x4  = $rowdata['idTipoTrabajador'];}
+					if(isset($idTipoContrato)){           $x5  = $idTipoContrato;            }else{$x5  = $rowdata['idTipoContrato'];}
+					if(isset($idTipoContratoTrab)){       $x6  = $idTipoContratoTrab;        }else{$x6  = $rowdata['idTipoContratoTrab'];}
+					if(isset($horas_pactadas)){           $x7  = $horas_pactadas;            }else{$x7  = $rowdata['horas_pactadas'];}
+					if(isset($FechaContrato)){            $x8  = $FechaContrato;             }else{$x8  = $rowdata['FechaContrato'];}
+					if(isset($F_Inicio_Contrato)){        $x9  = $F_Inicio_Contrato;         }else{$x9  = $rowdata['F_Inicio_Contrato'];}
+					if(isset($F_Termino_Contrato)){       $x10 = $F_Termino_Contrato;        }else{$x10 = $rowdata['F_Termino_Contrato'];}
+					if(isset($idTipoTrabajo)){            $x11 = $idTipoTrabajo;             }else{$x11 = $rowdata['idTipoTrabajo'];}
+					if(isset($PorcentajeTrabajoPesado)){  $x12 = $PorcentajeTrabajoPesado;   }else{$x12 = $rowdata['PorcentajeTrabajoPesado'];}
+					if(isset($UbicacionTrabajo)){         $x13 = $UbicacionTrabajo;          }else{$x13 = $rowdata['UbicacionTrabajo'];}
+
+					if(isset($SueldoLiquido)){            $x14 = $SueldoLiquido;             }else{$x14 = $rowdata['SueldoLiquido'];}
+					if(isset($SueldoDia)){                $x15 = $SueldoDia;                 }else{$x15 = $rowdata['SueldoDia'];}
+					if(isset($SueldoHora)){               $x16 = $SueldoHora;                }else{$x16 = $rowdata['SueldoHora'];}
+					if(isset($Gratificacion)){            $x17 = $Gratificacion;             }else{$x17 = $rowdata['Gratificacion'];}
+
+					if(isset($idBanco)){                  $x18 = $idBanco;                   }else{$x18 = $rowdata['idBanco'];}
+					if(isset($idTipoCuenta)){             $x19 = $idTipoCuenta;              }else{$x19 = $rowdata['idTipoCuenta'];}
+					if(isset($N_Cuenta)){                 $x20 = $N_Cuenta;                  }else{$x20 = $rowdata['N_Cuenta'];}
+
+					if(isset($idCentroCosto)){            $x21 = $idCentroCosto;             }else{$x21 = $rowdata['idCentroCosto'];}
+					if(isset($idLevel_1)){                $x22 = $idLevel_1;                 }else{$x22 = $rowdata['idLevel_1'];}
+					if(isset($idLevel_2)){                $x23 = $idLevel_2;                 }else{$x23 = $rowdata['idLevel_2'];}
+					if(isset($idLevel_3)){                $x24 = $idLevel_3;                 }else{$x24 = $rowdata['idLevel_3'];}
+					if(isset($idLevel_4)){                $x25 = $idLevel_4;                 }else{$x25 = $rowdata['idLevel_4'];}
+					if(isset($idLevel_5)){                $x26 = $idLevel_5;                 }else{$x26 = $rowdata['idLevel_5'];}
+
+					if(isset($Observaciones)){            $x27 = $Observaciones;             }else{$x27 = $rowdata['Observaciones'];}
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Datos Trabajador');
 					$Form_Inputs->form_select('Tipo Trabajador','idTipo', $x1, 2, 'idTipo', 'Nombre', 'trabajadores_listado_tipos', 0, '', $dbConn);
 					$Form_Inputs->form_input_text('Cargo', 'Cargo', $x2, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Datos Contrato');
 					$Form_Inputs->form_select_filter('Empresa Contratista','idContratista', $x3, 1, 'idContratista', 'Nombre', 'contratista_listado', $w, '', $dbConn);
 					$Form_Inputs->form_select('Tipo de Trabajador','idTipoTrabajador', $x4, 1, 'idTipoTrabajador', 'Nombre', 'core_tipos_trabajadores', 0, '', $dbConn);
 					$Form_Inputs->form_select('Tipo de Contrato','idTipoContrato', $x5, 1, 'idTipoContrato', 'Nombre', 'core_tipos_contrato', 0, '', $dbConn);
 					$Form_Inputs->form_select('Tipo de Sueldo','idTipoContratoTrab', $x6, 1, 'idTipoContratoTrab', 'Nombre', 'core_tipos_contrato_trabajador', 0, '', $dbConn);
-					$Form_Inputs->form_select_n_auto('Horas Pactadas','horas_pactadas', $x7, 1, 1, 45);	
+					$Form_Inputs->form_select_n_auto('Horas Pactadas','horas_pactadas', $x7, 1, 1, 45);
 					$Form_Inputs->form_date('Fecha Contrato','FechaContrato', $x8, 1);
 					$Form_Inputs->form_date('F Inicio Contrato','F_Inicio_Contrato', $x9, 1);
 					$Form_Inputs->form_date('F Termino Contrato','F_Termino_Contrato', $x10, 1);
 					$Form_Inputs->form_select('Tipo de Trabajo','idTipoTrabajo', $x11, 1, 'idTipoTrabajo', 'Nombre', 'core_tipos_trabajo', 0, '', $dbConn);
 					$Form_Inputs->form_input_number_spinner('Porcentaje Trabajo Pesado','PorcentajeTrabajoPesado', $x12, 0, 10, '0.1', 1, 2);
 					$Form_Inputs->form_input_text('Ubicacion Trabajo', 'UbicacionTrabajo', $x13, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Remuneraciones');
 					$Form_Inputs->form_values('Sueldo Liquido a Pago','SueldoLiquido', $x14, 1);
 					$Form_Inputs->form_values('Sueldo Liquido a Pago por dia','SueldoDia', $x15, 1);
 					$Form_Inputs->form_values('Sueldo Liquido a Pago por hora','SueldoHora', $x16, 1);
 					$Form_Inputs->form_values('Gratificacion','Gratificacion', $x17, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Forma de Pago');
 					$Form_Inputs->form_select_filter('Banco','idBanco', $x18, 1, 'idBanco', 'Nombre', 'core_bancos', 0, '', $dbConn);
 					$Form_Inputs->form_select('Tipo de cuenta deposito','idTipoCuenta', $x19, 1, 'idTipoCuenta', 'Nombre', 'core_tipo_cuenta', 0, '', $dbConn);
 					$Form_Inputs->form_input_text('Nro. Cta. Deposito', 'N_Cuenta', $x20, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Centro de Costo Asignado');
 					$Form_Inputs->form_select_depend5('Centro de Costo', 'idCentroCosto',  $x21,  2,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  $w,   0,
-													  'Nivel 1', 'idLevel_1',  $x22,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
+													  'Nivel 1', 'idLevel_1',  $x22,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0,
 													  'Nivel 2', 'idLevel_2',  $x23,  1,  'idLevel_2',  'Nombre',  'centrocosto_listado_level_2',  0,   0,
 													  'Nivel 3', 'idLevel_3',  $x24,  1,  'idLevel_3',  'Nombre',  'centrocosto_listado_level_3',  0,   0,
 													  'Nivel 4', 'idLevel_4',  $x25,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
 													  'Nivel 5', 'idLevel_5',  $x26,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
 													  $dbConn, 'form1');
-					
+
 					$Form_Inputs->form_ckeditor('Observaciones','Observaciones', $x27, 1, 2);
-					
+
 					$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
 					?>
 					<script>
@@ -182,170 +182,169 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						document.getElementById('div_SueldoDia').style.display = 'none';
 						document.getElementById('div_SueldoHora').style.display = 'none';
 						document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
-						
-						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
-									
+
+						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
+
 							let idTipoContratoTrab = $("#idTipoContratoTrab").val();
 							let idTipoTrabajo      = $("#idTipoTrabajo").val();
-							
+
 							/*************************************/
 							//Trabajador con sueldo mensual
-							if(idTipoContratoTrab == 1){ 
+							if(idTipoContratoTrab == 1){
 								document.getElementById('div_SueldoLiquido').style.display = 'block';
 								document.getElementById('div_SueldoDia').style.display = 'none';
-								document.getElementById('div_SueldoHora').style.display = 'none';			
-								
+								document.getElementById('div_SueldoHora').style.display = 'none';
+
 							//Trabajador con sueldo semanal
-							}else if(idTipoContratoTrab == 2){ 
+							}else if(idTipoContratoTrab == 2){
 								document.getElementById('div_SueldoLiquido').style.display = 'block';
 								document.getElementById('div_SueldoDia').style.display = 'none';
 								document.getElementById('div_SueldoHora').style.display = 'none';
-								
+
 							//Trabajador con sueldo diario (jornada semanal de 5 días)
-							}else if(idTipoContratoTrab == 3){ 
+							}else if(idTipoContratoTrab == 3){
 								document.getElementById('div_SueldoLiquido').style.display = 'none';
 								document.getElementById('div_SueldoDia').style.display = 'block';
 								document.getElementById('div_SueldoHora').style.display = 'none';
-							
+
 							//Trabajador con sueldo diario (jornada semanal de 6 días)
-							}else if(idTipoContratoTrab == 4){ 
+							}else if(idTipoContratoTrab == 4){
 								document.getElementById('div_SueldoLiquido').style.display = 'none';
 								document.getElementById('div_SueldoDia').style.display = 'block';
 								document.getElementById('div_SueldoHora').style.display = 'none';
-							
+
 							//Trabajador con sueldo por hora
-							}else if(idTipoContratoTrab == 5){ 
+							}else if(idTipoContratoTrab == 5){
 								document.getElementById('div_SueldoLiquido').style.display = 'none';
 								document.getElementById('div_SueldoDia').style.display = 'none';
 								document.getElementById('div_SueldoHora').style.display = 'block';
-							
+
 							//si no en ninguno
-							}else{ 
+							}else{
 								document.getElementById('div_SueldoLiquido').style.display = 'none';
 								document.getElementById('div_SueldoDia').style.display = 'none';
 								document.getElementById('div_SueldoHora').style.display = 'none';
-							
+
 							}
 							/*************************************/
 							//Trabajo normal
-							if(idTipoTrabajo == 1){ 
+							if(idTipoTrabajo == 1){
 								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
-								
+
 							//Trabajo pesado
-							}else if(idTipoTrabajo == 2){ 
-								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'block';			
-								
+							}else if(idTipoTrabajo == 2){
+								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'block';
+
 							//si no en ninguno
-							}else{ 
+							}else{
 								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
-							
+
 							}
-							
-									
-						}); 
-								
+
+						});
+
 						$("#idTipoContratoTrab").on("change", function(){ //se ejecuta al cambiar valor del select
 							let idTipoContratoTrab_sel = $(this).val(); //Asignamos el valor seleccionado
-							
+
 							//Trabajador con sueldo mensual
-							if(idTipoContratoTrab_sel == 1){ 
+							if(idTipoContratoTrab_sel == 1){
 								document.getElementById('div_SueldoLiquido').style.display = 'block';
 								document.getElementById('div_SueldoDia').style.display = 'none';
 								document.getElementById('div_SueldoHora').style.display = 'none';
 								//Reseteo los valores a 0
-								//document.getElementById('SueldoLiquido').value = "0";				
-								document.getElementById('SueldoDia').value = "0";				
-								document.getElementById('SueldoHora').value = "0";				
-								
+								//document.getElementById('SueldoLiquido').value = "0";
+								document.getElementById('SueldoDia').value = "0";
+								document.getElementById('SueldoHora').value = "0";
+
 							//Trabajador con sueldo semanal
-							}else if(idTipoContratoTrab_sel == 2){ 
+							}else if(idTipoContratoTrab_sel == 2){
 								document.getElementById('div_SueldoLiquido').style.display = 'block';
 								document.getElementById('div_SueldoDia').style.display = 'none';
 								document.getElementById('div_SueldoHora').style.display = 'none';
 								//Reseteo los valores a 0
-								//document.getElementById('SueldoLiquido').value = "0";				
-								document.getElementById('SueldoDia').value = "0";				
+								//document.getElementById('SueldoLiquido').value = "0";
+								document.getElementById('SueldoDia').value = "0";
 								document.getElementById('SueldoHora').value = "0";
-								
+
 							//Trabajador con sueldo diario (jornada semanal de 5 días)
-							}else if(idTipoContratoTrab_sel == 3){ 
+							}else if(idTipoContratoTrab_sel == 3){
 								document.getElementById('div_SueldoLiquido').style.display = 'none';
 								document.getElementById('div_SueldoDia').style.display = 'block';
 								document.getElementById('div_SueldoHora').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('SueldoLiquido').value = "0";				
-								//document.getElementById('SueldoDia').value = "0";				
+								document.getElementById('SueldoLiquido').value = "0";
+								//document.getElementById('SueldoDia').value = "0";
 								document.getElementById('SueldoHora').value = "0";
-							
+
 							//Trabajador con sueldo diario (jornada semanal de 6 días)
-							}else if(idTipoContratoTrab_sel == 4){ 
+							}else if(idTipoContratoTrab_sel == 4){
 								document.getElementById('div_SueldoLiquido').style.display = 'none';
 								document.getElementById('div_SueldoDia').style.display = 'block';
 								document.getElementById('div_SueldoHora').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('SueldoLiquido').value = "0";				
-								//document.getElementById('SueldoDia').value = "0";				
+								document.getElementById('SueldoLiquido').value = "0";
+								//document.getElementById('SueldoDia').value = "0";
 								document.getElementById('SueldoHora').value = "0";
-							
+
 							//Trabajador con sueldo por hora
-							}else if(idTipoContratoTrab_sel == 5){ 
+							}else if(idTipoContratoTrab_sel == 5){
 								document.getElementById('div_SueldoLiquido').style.display = 'none';
 								document.getElementById('div_SueldoDia').style.display = 'none';
 								document.getElementById('div_SueldoHora').style.display = 'block';
 								//Reseteo los valores a 0
-								document.getElementById('SueldoLiquido').value = "0";				
-								document.getElementById('SueldoDia').value = "0";				
+								document.getElementById('SueldoLiquido').value = "0";
+								document.getElementById('SueldoDia').value = "0";
 								//document.getElementById('SueldoHora').value = "0";
-							
+
 							//si no en ninguno
-							}else{ 
+							}else{
 								document.getElementById('div_SueldoLiquido').style.display = 'none';
 								document.getElementById('div_SueldoDia').style.display = 'none';
 								document.getElementById('div_SueldoHora').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('SueldoLiquido').value = "0";				
-								document.getElementById('SueldoDia').value = "0";				
+								document.getElementById('SueldoLiquido').value = "0";
+								document.getElementById('SueldoDia').value = "0";
 								document.getElementById('SueldoHora').value = "0";
-							
+
 							}
 						});
-						
+
 						$("#idTipoTrabajo").on("change", function(){ //se ejecuta al cambiar valor del select
 							let idTipoTrabajo_sel = $(this).val(); //Asignamos el valor seleccionado
-							
+
 							//Trabajo normal
-							if(idTipoTrabajo_sel == 1){ 
+							if(idTipoTrabajo_sel == 1){
 								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('PorcentajeTrabajoPesado').value = "0";				
-								
+								document.getElementById('PorcentajeTrabajoPesado').value = "0";
+
 							//Trabajo pesado
-							}else if(idTipoTrabajo_sel == 2){ 
+							}else if(idTipoTrabajo_sel == 2){
 								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'block';
-								
+
 							//si no en ninguno
-							}else{ 
+							}else{
 								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('PorcentajeTrabajoPesado').value = "0";				
-								
+								document.getElementById('PorcentajeTrabajoPesado').value = "0";
+
 							}
 						});
-					</script> 
+					</script>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

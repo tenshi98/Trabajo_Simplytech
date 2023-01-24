@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -109,10 +109,10 @@ foreach ($arrMediciones as $med) {
 	//Se obtiene la fecha
 	$Temp_1 .= "'".$med['HoraSistema']."',";
 		
-	if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$med['Sensor_1'];       }else{ $arrData[1]['Value'] = $med['Sensor_1']; }
-	if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$med['Sensor_2'];       }else{ $arrData[2]['Value'] = $med['Sensor_2']; }
-	if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){ $arrData[3]['Value'] .= ", ".$med['Sensor_3'];       }else{ $arrData[3]['Value'] = $med['Sensor_3']; }
-	if(isset($arrData[4]['Value'])&&$arrData[4]['Value']!=''){ $arrData[4]['Value'] .= ", ".$med['GeoVelocidad'];   }else{ $arrData[4]['Value'] = $med['GeoVelocidad']; }
+	if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){$arrData[1]['Value'] .= ", ".$med['Sensor_1'];       }else{ $arrData[1]['Value'] = $med['Sensor_1'];}
+	if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){$arrData[2]['Value'] .= ", ".$med['Sensor_2'];       }else{ $arrData[2]['Value'] = $med['Sensor_2'];}
+	if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){$arrData[3]['Value'] .= ", ".$med['Sensor_3'];       }else{ $arrData[3]['Value'] = $med['Sensor_3'];}
+	if(isset($arrData[4]['Value'])&&$arrData[4]['Value']!=''){$arrData[4]['Value'] .= ", ".$med['GeoVelocidad'];   }else{ $arrData[4]['Value'] = $med['GeoVelocidad'];}
 		
 }
 
@@ -133,10 +133,10 @@ document.getElementById("loading").style.display = "none";
 </script>
 
 
-<div class="col-sm-12" style="margin-top:15px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:15px;">
 	<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>	
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
 <section class="invoice">
 	
@@ -146,7 +146,7 @@ document.getElementById("loading").style.display = "none";
 				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['NSolicitud'], 7); ?>.
 				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino'])?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 
 	<div class="row invoice-info">
@@ -284,16 +284,16 @@ document.getElementById("loading").style.display = "none";
 </section>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-top:20px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 	<?php
 	$Alert_Text = 'Ver mapa';
-	$Alert_Text.= '<a href="view_solicitud_aplicacion_finalizada_view_mapa.php?idTelemetria='.simpleEncode($row_data['idTelemetria'], fecha_actual()).'&idSolicitud='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" class="btn btn-primary fright margin_width"><i class="fa fa-map-o" aria-hidden="true"></i> Ver mapas</a>';
+	$Alert_Text.= '<a href="view_solicitud_aplicacion_finalizada_view_mapa.php?idTelemetria='.simpleEncode($row_data['idTelemetria'], fecha_actual()).'&idSolicitud='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-map-o" aria-hidden="true"></i> Ver mapas</a>';
 	alert_post_data(4,2,2, $Alert_Text);
 	?>
 </div>
 	
 	
-<div class="col-sm-12" style="display: none;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none;">
 
 	<form method="post" id="make_pdf" action="view_solicitud_aplicacion_detalles_to_pdf.php">
 		<input type="hidden" name="img_adj" id="img_adj" />
@@ -305,7 +305,7 @@ document.getElementById("loading").style.display = "none";
 		
 	</form>
 
-	<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>		
+	<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>
 	<script>
 		var node = document.getElementById('charts');
 					
@@ -343,12 +343,12 @@ document.getElementById("loading").style.display = "none";
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -359,12 +359,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
  
 <?php

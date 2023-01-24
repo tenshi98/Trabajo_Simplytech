@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -125,33 +125,33 @@ $arrHistorial = db_select_array (false, 'pagos_leyes_sociales_historial.Creacion
 $arrArchivo = array();
 $arrArchivo = db_select_array (false, 'Nombre', 'pagos_leyes_sociales_archivos', '', 'idFactSocial='.$X_Puntero, 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
-if(isset($row_data['AFP_CC_Nombre'])&&$row_data['AFP_CC_Nombre']!=''){ 
+if(isset($row_data['AFP_CC_Nombre'])&&$row_data['AFP_CC_Nombre']!=''){
 	$AFP_CC = $row_data['AFP_CC_Nombre'];
-	if(isset($row_data['AFP_CC_Level_1'])&&$row_data['AFP_CC_Level_1']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_1']; }
-	if(isset($row_data['AFP_CC_Level_2'])&&$row_data['AFP_CC_Level_2']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_2']; }
-	if(isset($row_data['AFP_CC_Level_3'])&&$row_data['AFP_CC_Level_3']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_3']; }
-	if(isset($row_data['AFP_CC_Level_4'])&&$row_data['AFP_CC_Level_4']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_4']; }
-	if(isset($row_data['AFP_CC_Level_5'])&&$row_data['AFP_CC_Level_5']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_5']; }
+	if(isset($row_data['AFP_CC_Level_1'])&&$row_data['AFP_CC_Level_1']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_1'];}
+	if(isset($row_data['AFP_CC_Level_2'])&&$row_data['AFP_CC_Level_2']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_2'];}
+	if(isset($row_data['AFP_CC_Level_3'])&&$row_data['AFP_CC_Level_3']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_3'];}
+	if(isset($row_data['AFP_CC_Level_4'])&&$row_data['AFP_CC_Level_4']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_4'];}
+	if(isset($row_data['AFP_CC_Level_5'])&&$row_data['AFP_CC_Level_5']!=''){$AFP_CC .= ' - '.$row_data['AFP_CC_Level_5'];}
 }else{
 	$AFP_CC = '';
 }
-if(isset($row_data['SALUD_CC_Nombre'])&&$row_data['SALUD_CC_Nombre']!=''){ 
+if(isset($row_data['SALUD_CC_Nombre'])&&$row_data['SALUD_CC_Nombre']!=''){
 	$SALUD_CC = $row_data['SALUD_CC_Nombre'];
-	if(isset($row_data['SALUD_CC_Level_1'])&&$row_data['SALUD_CC_Level_1']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_1']; }
-	if(isset($row_data['SALUD_CC_Level_2'])&&$row_data['SALUD_CC_Level_2']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_2']; }
-	if(isset($row_data['SALUD_CC_Level_3'])&&$row_data['SALUD_CC_Level_3']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_3']; }
-	if(isset($row_data['SALUD_CC_Level_4'])&&$row_data['SALUD_CC_Level_4']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_4']; }
-	if(isset($row_data['SALUD_CC_Level_5'])&&$row_data['SALUD_CC_Level_5']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_5']; }
+	if(isset($row_data['SALUD_CC_Level_1'])&&$row_data['SALUD_CC_Level_1']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_1'];}
+	if(isset($row_data['SALUD_CC_Level_2'])&&$row_data['SALUD_CC_Level_2']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_2'];}
+	if(isset($row_data['SALUD_CC_Level_3'])&&$row_data['SALUD_CC_Level_3']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_3'];}
+	if(isset($row_data['SALUD_CC_Level_4'])&&$row_data['SALUD_CC_Level_4']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_4'];}
+	if(isset($row_data['SALUD_CC_Level_5'])&&$row_data['SALUD_CC_Level_5']!=''){$SALUD_CC .= ' - '.$row_data['SALUD_CC_Level_5'];}
 }else{
 	$SALUD_CC = '';
 }
-if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''){ 
+if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''){
 	$SEGURIDAD_CC = $row_data['SEGURIDAD_CC_Nombre'];
-	if(isset($row_data['SEGURIDAD_CC_Level_1'])&&$row_data['SEGURIDAD_CC_Level_1']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_1']; }
-	if(isset($row_data['SEGURIDAD_CC_Level_2'])&&$row_data['SEGURIDAD_CC_Level_2']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_2']; }
-	if(isset($row_data['SEGURIDAD_CC_Level_3'])&&$row_data['SEGURIDAD_CC_Level_3']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_3']; }
-	if(isset($row_data['SEGURIDAD_CC_Level_4'])&&$row_data['SEGURIDAD_CC_Level_4']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_4']; }
-	if(isset($row_data['SEGURIDAD_CC_Level_5'])&&$row_data['SEGURIDAD_CC_Level_5']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_5']; }
+	if(isset($row_data['SEGURIDAD_CC_Level_1'])&&$row_data['SEGURIDAD_CC_Level_1']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_1'];}
+	if(isset($row_data['SEGURIDAD_CC_Level_2'])&&$row_data['SEGURIDAD_CC_Level_2']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_2'];}
+	if(isset($row_data['SEGURIDAD_CC_Level_3'])&&$row_data['SEGURIDAD_CC_Level_3']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_3'];}
+	if(isset($row_data['SEGURIDAD_CC_Level_4'])&&$row_data['SEGURIDAD_CC_Level_4']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_4'];}
+	if(isset($row_data['SEGURIDAD_CC_Level_5'])&&$row_data['SEGURIDAD_CC_Level_5']!=''){$SEGURIDAD_CC .= ' - '.$row_data['SEGURIDAD_CC_Level_5'];}
 }else{
 	$SEGURIDAD_CC = '';
 }
@@ -166,7 +166,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 				<i class="fa fa-globe" aria-hidden="true"></i> Pago Previred.
 				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto'])?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">
@@ -235,7 +235,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							<td align="right"><?php echo valores($trab['AFC_Empleador'], 0); ?></td>
 							<td align="right"><?php echo valores($trab['AFC_Trabajador'], 0); ?></td>
 							<td align="right"><?php echo valores($trab['Total_AFP'], 0); ?></td>
-						</tr>		
+						</tr>	
 					<?php }  ?>
 					 
 					<tr class="invoice-total" bgcolor="#f1f1f1">
@@ -248,7 +248,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 						<td align="right"><strong><?php echo valores($row_data['AFP_Total_AFCTrabajador'], 0); ?></strong></td>
 						<td align="right"><strong><?php echo valores($row_data['AFP_Total_AFCEmpleador'], 0); ?></strong></td>
 						<td align="right"><strong><?php echo valores($row_data['AFP_MontoPago'], 0); ?></strong></td>
-					</tr>	
+					</tr>
 
 				</tbody>
 			</table>
@@ -283,7 +283,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							<td align="right"><?php echo valores($trab['Salud_Cotizacion'], 0); ?></td>
 							<td align="right"><?php echo valores($trab['Salud_Extra_Valor'], 0).' ('.$trab['Salud_Extra_Porcentaje'].'%)'; ?></td>
 							<td align="right"><?php echo valores($trab['Total_SALUD'], 0); ?></td>
-						</tr>		
+						</tr>	
 					<?php }  ?>
 					 
 					<tr class="invoice-total" bgcolor="#f1f1f1">
@@ -291,7 +291,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 						<td align="right"><strong><?php echo valores($row_data['SALUD_Total_CotizacionLegal'], 0); ?></strong></td>
 						<td align="right"><strong><?php echo valores($row_data['SALUD_Total_CotizacionAdicional'], 0); ?></strong></td>
 						<td align="right"><strong><?php echo valores($row_data['SALUD_MontoPago'], 0); ?></strong></td>
-					</tr>	
+					</tr>
 
 				</tbody>
 			</table>
@@ -324,14 +324,14 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							<td><?php echo $trab['MutualNombre'].' ('.$trab['MutualPorcentaje'].'%)'; ?></td>
 							<td align="right"><?php echo valores($trab['MutualValor'], 0); ?></td>
 							<td align="right"><?php echo valores($trab['Total_SEGURIDAD'], 0); ?></td>
-						</tr>		
+						</tr>	
 					<?php }  ?>
 					 
 					<tr class="invoice-total" bgcolor="#f1f1f1">
 						<td colspan="4" align="right"><strong>Total</strong></td>
 						<td align="right"><strong><?php echo valores($row_data['SEGURIDAD_Total_CotizacionLegal'], 0); ?></strong></td>
 						<td align="right"><strong><?php echo valores($row_data['SEGURIDAD_MontoPago'], 0); ?></strong></td>
-					</tr>	
+					</tr>
 
 				</tbody>
 			</table>
@@ -534,7 +534,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 	
 </section>
 
-<div class="col-xs-12" style="margin-bottom:15px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 	
 	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
@@ -546,13 +546,13 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 					<th width="160">Fecha</th>
 					<th>Usuario</th>
 					<th>Observacion</th>
-				</tr>			  
+				</tr>
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
 						<td><?php echo '<i class="'.$doc['FonAwesome'].'" aria-hidden="true"></i> '.$doc['Observacion']; ?></td>
-					</tr> 
+					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
@@ -563,7 +563,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 			<tbody>
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
-				</tr>		  
+				</tr>
 				<?php foreach ($arrArchivo as $producto){?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
@@ -583,12 +583,12 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
  
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -599,12 +599,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

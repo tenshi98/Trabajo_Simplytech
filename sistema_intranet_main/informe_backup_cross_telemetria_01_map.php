@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -25,8 +25,8 @@ require_once 'core/Web.Header.Views.php';
 $SIS_where = "backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){   $SIS_where .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){       $SIS_where .= " AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
+if(isset($_GET['idPredio']) && $_GET['idPredio']!=''){   $SIS_where .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
+if(isset($_GET['idZona']) && $_GET['idZona']!=''){$SIS_where .= " AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
 	$SIS_where.=" AND backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
@@ -65,7 +65,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Resumen Mediciones.
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">
@@ -76,7 +76,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 				Predio: <?php echo$arrMediciones[0]['PredioNombre']; ?><br/>
 				Cuartel: <?php echo$arrMediciones[0]['CuartelNombre']; ?><br/>
 			</address>
-		</div>					
+		</div>	
 	</div>
 	
 	<div class="row">
@@ -138,7 +138,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 							//se cierra la figura
 							if(isset($Longitud_x)&&$Longitud_x!=''){
 								echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
-							}	
+							}
 							?>
 						];
 							
@@ -162,10 +162,10 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
       
 </section>
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
+<?php if(isset($_GET['return'])&&$_GET['return']!=''){?>
 	<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+		<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
 	</div>
 <?php } ?>

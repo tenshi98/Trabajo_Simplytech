@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "crosstech_gestion_tickets_abiertos.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,12 +18,12 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){                   $location .= "&idCliente=".$_GET['idCliente'];                    $search .= "&idCliente=".$_GET['idCliente'];}
-if(isset($_GET['idArea']) && $_GET['idArea'] != ''){                         $location .= "&idArea=".$_GET['idArea'];                          $search .= "&idArea=".$_GET['idArea'];}
-if(isset($_GET['idTipoTicket']) && $_GET['idTipoTicket'] != ''){             $location .= "&idTipoTicket=".$_GET['idTipoTicket'];              $search .= "&idTipoTicket=".$_GET['idTipoTicket'];}
-if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){               $location .= "&idPrioridad=".$_GET['idPrioridad'];                $search .= "&idPrioridad=".$_GET['idPrioridad'];}
-if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){                         $location .= "&Titulo=".$_GET['Titulo'];                          $search .= "&Titulo=".$_GET['Titulo'];}
-if(isset($_GET['FechaCreacion']) && $_GET['FechaCreacion'] != ''){           $location .= "&FechaCreacion=".$_GET['FechaCreacion'];            $search .= "&FechaCreacion=".$_GET['FechaCreacion'];}
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){            $location .= "&idCliente=".$_GET['idCliente'];                    $search .= "&idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idArea']) && $_GET['idArea']!=''){                  $location .= "&idArea=".$_GET['idArea'];                          $search .= "&idArea=".$_GET['idArea'];}
+if(isset($_GET['idTipoTicket']) && $_GET['idTipoTicket']!=''){      $location .= "&idTipoTicket=".$_GET['idTipoTicket'];              $search .= "&idTipoTicket=".$_GET['idTipoTicket'];}
+if(isset($_GET['idPrioridad']) && $_GET['idPrioridad']!=''){        $location .= "&idPrioridad=".$_GET['idPrioridad'];                $search .= "&idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['Titulo']) && $_GET['Titulo']!=''){                  $location .= "&Titulo=".$_GET['Titulo'];                          $search .= "&Titulo=".$_GET['Titulo'];}
+if(isset($_GET['FechaCreacion']) && $_GET['FechaCreacion']!=''){    $location .= "&FechaCreacion=".$_GET['FechaCreacion'];            $search .= "&FechaCreacion=".$_GET['FechaCreacion'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -31,7 +31,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/z_crosstech_gestion_tickets.php';
@@ -49,8 +49,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ticket editado correct
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ticket borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -73,21 +73,21 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Cierre Ticket</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idEstado)) {                $x1  = $idEstado;                }else{$x1  = $rowdata['idEstado'];}
-				if(isset($DescripcionCierre)) {       $x2  = $DescripcionCierre;       }else{$x2  = $rowdata['DescripcionCierre'];}
-				if(isset($DescripcionCancelacion)) {  $x3  = $DescripcionCancelacion;  }else{$x3  = $rowdata['DescripcionCancelacion'];}
-				
+				if(isset($idEstado)){                $x1  = $idEstado;                }else{$x1  = $rowdata['idEstado'];}
+				if(isset($DescripcionCierre)){       $x2  = $DescripcionCierre;       }else{$x2  = $rowdata['DescripcionCierre'];}
+				if(isset($DescripcionCancelacion)){  $x3  = $DescripcionCancelacion;  }else{$x3  = $rowdata['DescripcionCancelacion'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Estado Ticket','idEstado', $x1, 1, 'idEstado', 'Nombre', 'core_estado_ticket', 'idEstado!=1', '', $dbConn);
@@ -128,31 +128,25 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){$num_pag = $_GET["pagina"];	
-} else {$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -189,19 +183,19 @@ $SIS_where.= " AND crosstech_gestion_tickets.idSistema=".$_SESSION['usuario']['b
 					
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){                  $SIS_where .= " AND crosstech_gestion_tickets.idCliente=".$_GET['idCliente'];}
-if(isset($_GET['idArea']) && $_GET['idArea'] != ''){                        $SIS_where .= " AND crosstech_gestion_tickets.idArea=".$_GET['idArea'];}
-if(isset($_GET['idTipoTicket']) && $_GET['idTipoTicket'] != ''){            $SIS_where .= " AND crosstech_gestion_tickets.idTipoTicket=".$_GET['idTipoTicket'];}
-if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){              $SIS_where .= " AND crosstech_gestion_tickets.idPrioridad=".$_GET['idPrioridad'];}
-if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){                        $SIS_where .= " AND crosstech_gestion_tickets.Titulo='%".$_GET['Titulo']."%'";}
-if(isset($_GET['FechaCreacion']) && $_GET['FechaCreacion'] != ''){          $SIS_where .= " AND crosstech_gestion_tickets.FechaCreacion='".$_GET['FechaCreacion']."'";}
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){           $SIS_where .= " AND crosstech_gestion_tickets.idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idArea']) && $_GET['idArea']!=''){                 $SIS_where .= " AND crosstech_gestion_tickets.idArea=".$_GET['idArea'];}
+if(isset($_GET['idTipoTicket']) && $_GET['idTipoTicket']!=''){     $SIS_where .= " AND crosstech_gestion_tickets.idTipoTicket=".$_GET['idTipoTicket'];}
+if(isset($_GET['idPrioridad']) && $_GET['idPrioridad']!=''){       $SIS_where .= " AND crosstech_gestion_tickets.idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['Titulo']) && $_GET['Titulo']!=''){                 $SIS_where .= " AND crosstech_gestion_tickets.Titulo  LIKE '%".EstandarizarInput($_GET['Titulo'])."%'";}
+if(isset($_GET['FechaCreacion']) && $_GET['FechaCreacion']!=''){   $SIS_where .= " AND crosstech_gestion_tickets.FechaCreacion='".$_GET['FechaCreacion']."'";}
 $SIS_where.= " crosstech_gestion_tickets.idTicket";
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idTicket', 'crosstech_gestion_tickets', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 crosstech_gestion_tickets.idTicket,
@@ -229,30 +223,30 @@ $arrUsers = db_select_array (false, $SIS_query, 'crosstech_gestion_tickets', $SI
 $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {          $x1  = $idCliente;            }else{$x1  = '';}
-				if(isset($idArea)) {             $x2  = $idArea;               }else{$x2  = '';}
-				if(isset($idTipoTicket)) {       $x3  = $idTipoTicket;         }else{$x3  = '';}
-				if(isset($idPrioridad)) {        $x4  = $idPrioridad;          }else{$x4  = '';}
-				if(isset($Titulo)) {             $x5  = $Titulo;               }else{$x5  = '';}
-				if(isset($FechaCreacion)) {      $x6  = $FechaCreacion;        }else{$x6  = '';}
-				
+				if(isset($idCliente)){          $x1  = $idCliente;            }else{$x1  = '';}
+				if(isset($idArea)){             $x2  = $idArea;               }else{$x2  = '';}
+				if(isset($idTipoTicket)){       $x3  = $idTipoTicket;         }else{$x3  = '';}
+				if(isset($idPrioridad)){        $x4  = $idPrioridad;          }else{$x4  = '';}
+				if(isset($Titulo)){             $x5  = $Titulo;               }else{$x5  = '';}
+				if(isset($FechaCreacion)){      $x6  = $FechaCreacion;        }else{$x6  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente Creador','idCliente', $x1, 1, 'idCliente', 'Nombre', 'clientes_listado', $clientfil, '', $dbConn);
@@ -262,25 +256,25 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x5, 1);
 				$Form_Inputs->form_date('Fecha Creacion','FechaCreacion', $x6, 1);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>  
-<div class="clearfix"></div>                  
+<div class="clearfix"></div>
                                  
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Tickets</h5>	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Tickets</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -352,16 +346,16 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrUsers as $usuarios) { ?>
-						<tr class="odd">			
-							<td><?php echo n_doc($usuarios['idTicket'], 8); ?></td>	
-							<td><?php echo $usuarios['Cliente']; ?></td>	
-							<td><?php echo $usuarios['EstadoTicket']; ?></td>	
-							<td><?php echo $usuarios['AreaTicket']; ?></td>	
-							<td><?php echo $usuarios['TipoTicket']; ?></td>	
-							<td><?php echo $usuarios['PrioridadTicket']; ?></td>	
-							<td><?php echo $usuarios['Titulo']; ?></td>	
-							<td><?php echo fecha_estandar($usuarios['FechaCreacion']); ?></td>			
+					<?php foreach ($arrUsers as $usuarios){ ?>
+						<tr class="odd">
+							<td><?php echo n_doc($usuarios['idTicket'], 8); ?></td>
+							<td><?php echo $usuarios['Cliente']; ?></td>
+							<td><?php echo $usuarios['EstadoTicket']; ?></td>
+							<td><?php echo $usuarios['AreaTicket']; ?></td>
+							<td><?php echo $usuarios['TipoTicket']; ?></td>
+							<td><?php echo $usuarios['PrioridadTicket']; ?></td>
+							<td><?php echo $usuarios['Titulo']; ?></td>
+							<td><?php echo fecha_estandar($usuarios['FechaCreacion']); ?></td>	
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
@@ -371,19 +365,19 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 										$ubicacion = $location.'&del='.simpleEncode($usuarios['idTicket'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el ticket N°'. n_doc($usuarios['idTicket'], 8).'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>								
+									<?php } ?>
 								</div>
-							</td>	
+							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div>   
+		</div>
 	</div>
 </div>
 	

@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -96,7 +96,7 @@ $rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', '', $SIS_w
 /*******************************************************/
 //se consulta
 //Variable temporal
-$arrTemporal = array();	
+$arrTemporal = array();
 //Llamo a la funcion
 $arrTemporal = crear_data($rowEquipo['cantSensores'], $subf, $_GET['idTelemetria'], $_GET['f_inicio'], $_GET['f_termino'], $_GET['desde'], $_GET['hasta'] , $dbConn);
 
@@ -155,9 +155,9 @@ foreach ($arrTemporal as $fac) {
 					->setCellValue('D'.$nn, $New_Humedad); 					
 							
 		$nn++;	
-	}				
+	}	
 }
-	
+
 /***********************************************************/
 // Rename worksheet
 $spreadsheet->getActiveSheet(0)->setTitle(cortar(DeSanitizar($rowEquipo['Nombre']), 25));

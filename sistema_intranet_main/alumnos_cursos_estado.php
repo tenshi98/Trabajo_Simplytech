@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "alumnos_cursos.php";
 $location = $original;
 $new_location = "alumnos_cursos_estado.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //Si el estado esta distinto de vacio
-if ( !empty($_GET['estado']) ) {
+if (!empty($_GET['estado'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -42,7 +42,7 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['edited'])){ $error['edited'] = 'sucess/Estado cambiado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = '
 alumnos_cursos.idCurso,
@@ -55,12 +55,12 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowdata['Nombre'], 'Editar Estado');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -73,10 +73,10 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_
 						<li class=""><a href="<?php echo 'alumnos_cursos_elearning.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Elearning Asignados</a></li>
 						<li class=""><a href="<?php echo 'alumnos_cursos_documentacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Documentos Relacionados</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div class="table-responsive"> 
+        <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -85,31 +85,31 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<tr class="odd">			
-						<td><?php echo 'Asignatura '.$rowdata['Estado']; ?></td>		
+					<tr class="odd">
+						<td><?php echo 'Asignatura '.$rowdata['Estado']; ?></td>
 						<td>
-							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">		 
-								<?php if ($rowlevel['level']>=2){?>    				
-									<?php if ( $rowdata['idEstado']==1 ) {?>   
+							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
+								<?php if ($rowlevel['level']>=2){?>
+									<?php if ( $rowdata['idEstado']==1 ){ ?>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idCurso'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 									<?php } else {?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idCurso'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>">ON</a>
-									<?php }?>    
-								<?php }?>  
-							</div>     
-						</td>	
-					</tr>                  
+									<?php } ?>
+								<?php } ?>
+							</div>
+						</td>
+					</tr>
 				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

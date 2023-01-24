@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "seg_vecinal_reportes_post_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,10 +18,10 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){    $location .= "&idCliente=".$_GET['idCliente'];    $search .= "&idCliente=".$_GET['idCliente'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){          $location .= "&idTipo=".$_GET['idTipo'];          $search .= "&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){            $location .= "&Fecha=".$_GET['Fecha'];            $search .= "&Fecha=".$_GET['Fecha'];}
-if(isset($_GET['Hora']) && $_GET['Hora'] != ''){              $location .= "&Hora=".$_GET['Hora'];              $search .= "&Hora=".$_GET['Hora'];}
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){    $location .= "&idCliente=".$_GET['idCliente'];    $search .= "&idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){   $location .= "&idTipo=".$_GET['idTipo'];          $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){     $location .= "&Fecha=".$_GET['Fecha'];            $search .= "&Fecha=".$_GET['Fecha'];}
+if(isset($_GET['Hora']) && $_GET['Hora']!=''){       $location .= "&Hora=".$_GET['Hora'];              $search .= "&Hora=".$_GET['Hora'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -29,25 +29,25 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //se borra un dato
-if ( !empty($_GET['validate']) )     {
+if (!empty($_GET['validate'])){
 	//Llamamos al formulario
 	$form_trabajo= 'validate';
-	require_once 'A1XRXS_sys/xrxs_form/seg_vecinal_reportes_post_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/seg_vecinal_reportes_post_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['disabled']) )     {
+if (!empty($_GET['disabled'])){
 	//Llamamos al formulario
 	$form_trabajo= 'disabled';
-	require_once 'A1XRXS_sys/xrxs_form/seg_vecinal_reportes_post_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/seg_vecinal_reportes_post_listado.php';
 }	
 //se borra un dato
-if ( !empty($_GET['banned']) )     {
+if (!empty($_GET['banned'])){
 	//Llamamos al formulario
 	$form_trabajo= 'banned';
-	require_once 'A1XRXS_sys/xrxs_form/seg_vecinal_reportes_post_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/seg_vecinal_reportes_post_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_infraction']) )  { 
+if (!empty($_POST['submit_infraction'])){
 	//Nueva ubicacion
 	$location .= '&idTipofil='.$_GET['idTipofil'];
 	$location .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
@@ -67,8 +67,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Evento Modificado corr
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evento borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['infract_post']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['infract_post'])){ 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 /******************************************************************************/
@@ -82,20 +82,20 @@ $ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 
 
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Infraccion</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {       $x1 = $Fecha;       }else{$x1 = '';}
-				if(isset($Descripcion)) { $x2 = $Descripcion; }else{$x2 = '';}
-				
+				if(isset($Fecha)){       $x1 = $Fecha;       }else{$x1 = '';}
+				if(isset($Descripcion)){ $x2 = $Descripcion; }else{$x2 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
@@ -105,18 +105,18 @@ $ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 				?>
 	 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_infraction">
-					<a href="<?php echo $ubicacion; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_infraction">
+					<a href="<?php echo $ubicacion; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['idEventoPeligro']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['idEventoPeligro'])){ 
 //Se filtra la tabla a revisar
 //peligro
 if(isset($_GET['idTipofil'])&&$_GET['idTipofil']==1){
@@ -208,7 +208,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrComentarios,$row );
 }
 
@@ -239,15 +239,15 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrReportes,$row );
 }	
 ?>
 
 
-<div class="col-sm-12" style="margin-bottom:30px">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 
-	<div class="btn-group fright margin_width">
+	<div class="btn-group pull-right margin_width">
 		<button type="button" class="btn btn-primary">Acciones</button>
 		<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<span class="caret"></span>
@@ -294,13 +294,13 @@ array_push( $arrReportes,$row );
 		
 		</ul>
 	</div>
-	<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	
 	<div class="clearfix"></div>
 </div>
 
  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -310,12 +310,12 @@ array_push( $arrReportes,$row );
 				<li class=""><a href="#reportes" data-toggle="tab"><i class="fa fa-flag" aria-hidden="true"></i> Reportes</a></li>
 			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
-						<div class="col-sm-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Principales</h2>
 							<p class="text-muted" style="white-space: initial;">
 								<strong>Vecino : </strong><?php echo $rowdata['Vecino']; ?><br/>
@@ -334,7 +334,7 @@ array_push( $arrReportes,$row );
 									<strong>Fecha : </strong><?php echo fecha_estandar($rowdata['Fecha']); ?><br/>
 									<strong>Hora : </strong><?php echo $rowdata['Hora']; ?><br/>
 									<strong>Descripcion Situacion : </strong><?php echo $rowdata['DescripcionSituacion']; ?><br/>
-								<?php } ?>		
+								<?php } ?>
 							</p>
 						</div>
 						<?php 
@@ -352,18 +352,18 @@ array_push( $arrReportes,$row );
 						}?>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<div class="col-sm-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-comment-o" aria-hidden="true"></i> Comentarios</h2>
 						</div>
-						<div class="clearfix"></div>	
+						<div class="clearfix"></div>
 						<div class="seg_chat">
 							<ul class="chat">
 								<?php foreach ($arrComentarios as $comment) { ?>
 									<li class="right clearfix">
 										<span class="chat-img pull-right">
-											<?php echo '<img alt="User Picture" class="img-circle" src="'.DB_SITE_REPO.'/LIB_assets/img/usr.png">'; ?>
+											<?php echo '<img alt="Imagen Referencia" class="img-circle" src="'.DB_SITE_REPO.'/LIB_assets/img/usr.png">'; ?>
 										</span>
 										<div class="chat-body clearfix">
 											<div class="header">
@@ -410,57 +410,48 @@ array_push( $arrReportes,$row );
 									</div>
 								</td>
 							</tr>
-						<?php } ?>                  
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>
 			
-		</div>	
+		</div>
 	</div>
 </div>	
 
 
 
 <div class="clearfix"></div>
-	<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-	<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //Variable de busqueda
 $SIS_where  = "seg_vecinal_reportes_post_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_where .= " AND seg_vecinal_reportes_post_listado.idRevisado=1"; //solo los no revisados
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){      $SIS_where .= " AND seg_vecinal_reportes_post_listado.idCliente='".$_GET['idCliente']."'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $SIS_where .= " AND seg_vecinal_reportes_post_listado.idTipo='".$_GET['idTipo']."'";}
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){              $SIS_where .= " AND seg_vecinal_reportes_post_listado.Fecha='".$_GET['Fecha']."'";}
-if(isset($_GET['Hora']) && $_GET['Hora'] != ''){                $SIS_where .= " AND seg_vecinal_reportes_post_listado.Hora='".$_GET['Hora']."'";}
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){      $SIS_where .= " AND seg_vecinal_reportes_post_listado.idCliente='".$_GET['idCliente']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){     $SIS_where .= " AND seg_vecinal_reportes_post_listado.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){       $SIS_where .= " AND seg_vecinal_reportes_post_listado.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['Hora']) && $_GET['Hora']!=''){         $SIS_where .= " AND seg_vecinal_reportes_post_listado.Hora='".$_GET['Hora']."'";}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idReportes', 'seg_vecinal_reportes_post_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 seg_vecinal_reportes_post_listado.idEventoPeligro,
@@ -490,28 +481,28 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default">Fecha Ascendente</li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>	 	
+		<?php } ?>
 	</ul>
 	
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {   $x1 = $idCliente;   }else{$x1  = '';}
-				if(isset($idTipo)) {      $x2 = $idTipo;      }else{$x2  = '';}
-				if(isset($Fecha)) {       $x3 = $Fecha;       }else{$x3  = '';}
-				if(isset($Hora)) {        $x4 = $Hora;        }else{$x4  = '';}
+				if(isset($idCliente)){   $x1 = $idCliente;   }else{$x1  = '';}
+				if(isset($idTipo)){      $x2 = $idTipo;      }else{$x2  = '';}
+				if(isset($Fecha)){       $x3 = $Fecha;       }else{$x3  = '';}
+				if(isset($Hora)){        $x4 = $Hora;        }else{$x4  = '';}
 						
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -520,23 +511,23 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs->form_date('Fecha','Fecha', $x3, 1);
 				$Form_Inputs->form_time('Hora','Hora', $x4, 1, 1);
 						
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                      
                          
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Reportes</h5>
@@ -546,7 +537,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive">    
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -579,11 +570,11 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//paginacion
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
@@ -591,8 +582,8 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>	
-<?php } ?>           
+<?php widget_modal(80, 95); ?>
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_backup_telemetria_registro_ruta.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,8 +22,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = '';
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
@@ -49,17 +49,17 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
 
-	?>	
+	?>
 
 
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ruta del equipo <?php echo $rowEquipo['NombreEquipo'];?></h5>	
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ruta del equipo <?php echo $rowEquipo['NombreEquipo'];?></h5>
 			</header>
 			<div class="table-responsive">
 				
-				<div class="col-sm-12">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row">
 						<?php
 						//Si no existe una ID se utiliza una por defecto
@@ -175,7 +175,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 											if (i < distance){
 												marker.setPosition(new google.maps.LatLng(lat, lng));
 												setTimeout(moveMarker, delay);
-											}else{   
+											}else{ 
 												if(targetx==0){
 													marker.setPosition(dest);
 													target++;
@@ -201,7 +201,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						<?php } ?>
 					</div>
 				</div>
-			</div>	
+			</div>
 		</div>
 	</div>
 
@@ -211,19 +211,19 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //filtros
 $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $z .= " AND telemetria_listado.id_Geo=1";                                                //Geolocalizacion activa
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
@@ -232,25 +232,25 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text); 
-?>		
+?>	
 	
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Filtro de busqueda</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Filtro de busqueda</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
                
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;     }else{$x1  = '';}
-				if(isset($h_inicio)) {      $x2  = $h_inicio;     }else{$x2  = '';}
-				if(isset($f_termino)) {     $x3  = $f_termino;    }else{$x3  = '';}
-				if(isset($h_termino)) {     $x4  = $h_termino;    }else{$x4  = '';}
-				if(isset($idTelemetria)) {  $x5  = $idTelemetria; }else{$x5  = '';}
-				
+				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
+				if(isset($h_inicio)){      $x2  = $h_inicio;     }else{$x2  = '';}
+				if(isset($f_termino)){     $x3  = $f_termino;    }else{$x3  = '';}
+				if(isset($h_termino)){     $x4  = $h_termino;    }else{$x4  = '';}
+				if(isset($idTelemetria)){  $x5  = $idTelemetria; }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
@@ -259,17 +259,17 @@ alert_post_data(2,1,1, $Alert_Text);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
-				?>        
+				?>
 	   
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>

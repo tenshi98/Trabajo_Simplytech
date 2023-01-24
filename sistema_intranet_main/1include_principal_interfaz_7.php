@@ -10,7 +10,7 @@ $whitelist = array( 'localhost', '127.0.0.1', '::1' );
 if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 	$CON_Base      = 'power_engine_main';
 ////////////////////////////////////////////////////////////////////////////////
-//si estoy en ambiente de produccion	
+//si estoy en ambiente de produccion
 }else{
 	$CON_Base      = 'crosstec_pe_clientes';
 }	
@@ -19,7 +19,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 function conectarDB ($servidor, $usuario, $password, $base_datos) {
 	$db_con = mysqli_connect($servidor, $usuario, $password, $base_datos);
 	$db_con->set_charset("utf8");
-	return $db_con; 
+	return $db_con;
 }	
 			
 //verifico si existen datos
@@ -43,14 +43,14 @@ $subquery .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado ".$
 
 /************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$SIS_query = 'core_ubicacion_ciudad.Nombre AS Ciudad, 
-core_ubicacion_comunas.Nombre AS Comuna, 
+$SIS_query = 'core_ubicacion_ciudad.Nombre AS Ciudad,
+core_ubicacion_comunas.Nombre AS Comuna,
 core_ubicacion_comunas.Wheater AS Wheater'.$subquery;
 $SIS_join  = '
 LEFT JOIN core_ubicacion_ciudad    ON core_ubicacion_ciudad.idCiudad    = core_sistemas.idCiudad
 LEFT JOIN core_ubicacion_comunas   ON core_ubicacion_comunas.idComuna   = core_sistemas.idComuna';
 $SIS_where = 'core_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$subconsulta = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'subconsulta');
+$subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'subconsulta');
 
 $CContactos = 0;
 $CProgramas = 0;
@@ -66,9 +66,9 @@ if(isset($subconsulta['CEvPropios'])&&$subconsulta['CEvPropios']!=''){$CEvPropio
 /************************************************************************************/
 //Se consulta
 $SIS_query = '
-telemetria_listado.idTelemetria, 
+telemetria_listado.idTelemetria,
 telemetria_listado.idSistema,
-telemetria_listado.Nombre, 
+telemetria_listado.Nombre,
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
 telemetria_listado.idTab,
@@ -76,9 +76,9 @@ telemetria_listado.id_Geo,
 
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.GeoErrores,
-telemetria_listado.GeoLatitud, 
+telemetria_listado.GeoLatitud,
 telemetria_listado.GeoLongitud,
-telemetria_listado.NDetenciones, 
+telemetria_listado.NDetenciones,
 telemetria_listado.NErrores,
 
 core_sistemas.Nombre AS Sistema';
@@ -95,12 +95,12 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 /************************************************************************************/
 //Se consulta el calendario
 //Se definen las variables
-if(isset($_GET["Mes"])){   $Mes = $_GET["Mes"];   } else { $Mes  = mes_actual(); }
-if(isset($_GET["Ano"])){   $Ano = $_GET["Ano"];   } else { $Ano  = ano_actual(); }
+if(isset($_GET['Mes'])){   $Mes = $_GET['Mes'];   } else { $Mes  = mes_actual();}
+if(isset($_GET['Ano'])){   $Ano = $_GET['Ano'];   } else { $Ano  = ano_actual();}
 $diaActual = dia_actual();
 
 //calculo de los dias del mes, cuando inicia y cuando termina
-$diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
+$diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7;
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
 //Traigo los eventos guardados en la base de datos
@@ -154,8 +154,8 @@ $arrTareasPend = db_select_array (false, $SIS_query, 'tareas_pendientes_listado'
 
 $arrTareasTemp = array();
 $arrRespTemp   = array();
-//filtro		
-filtrar($arrTareasPend, 'idTareas');  
+//filtro
+filtrar($arrTareasPend, 'idTareas');
 //recorro
 foreach($arrTareasPend as $idTareas=>$tareas){
 	//Datos principales
@@ -179,7 +179,7 @@ foreach($arrTareasPend as $idTareas=>$tareas){
 $Color[1] = 'color-gray';//Pendiente
 $Color[2] = 'color-blue';//En Ejecucion
 $Color[3] = 'color-green';//Finalizado
-$Color[4] = 'color-yellow';//Vencido
+$Color[4] = 'color-yellow'; //Vencido
 $Color[5] = 'color-red';//Cancelado
 
 $Icon[1] = 'fa fa-commenting-o';//Pendiente
@@ -240,10 +240,10 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 
 <div class="row">
 	
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="cover profile">
 			<?php include '1include_principal_interfaz_7_portada.php'; ?>
-		</div>	
+		</div>
 		<div class="box profile_content" style="margin-top:0px;">
 			<header>
 		<ul class="nav nav-tabs pull-left">
@@ -257,7 +257,7 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 					
 	</header>
 			
-			<div id="div-3" class="tab-content">
+			<div class="tab-content">
 				
 				<?php
 				//contenido en tabs
@@ -270,7 +270,7 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 				
 				
 				
-			</div>	
+			</div>
 		</div>
 	</div>
 

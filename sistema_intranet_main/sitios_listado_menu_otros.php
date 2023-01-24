@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "sitios_listado.php";
 $location = $original;
 $new_location = "sitios_listado_menu_otros.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/sitios_listado_menu_otros.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -41,13 +41,13 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/sitios_listado_menu_otros.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/sitios_listado_menu_otros.php';	
+	require_once 'A1XRXS_sys/xrxs_form/sitios_listado_menu_otros.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -62,8 +62,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Menu editado correctam
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Menu borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['edit']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['edit'])){
 // consulto los datos
 $SIS_query = 'idPosicion,Nombre,Link,idNewTab,idPopup,idEstado';
 $SIS_join  = '';
@@ -72,24 +72,24 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_menu_otros', $SIS_
 
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Menu</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Menu</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 				<?php 
 				//se dibujan los inputs
-				if(isset($idPosicion)) {  $x1 = $idPosicion;  }else{$x1 = $rowdata['idPosicion'];}
-				if(isset($Nombre)) {      $x2 = $Nombre;      }else{$x2 = $rowdata['Nombre'];}
-				if(isset($Link)) {        $x3 = $Link;        }else{$x3 = $rowdata['Link'];}
-				if(isset($idNewTab)) {    $x4 = $idNewTab;    }else{$x4 = $rowdata['idNewTab'];}
-				if(isset($idPopup)) {     $x5 = $idPopup;     }else{$x5 = $rowdata['idPopup'];}
-				if(isset($idEstado)) {    $x6 = $idEstado;    }else{$x6 = $rowdata['idEstado'];}
-				
+				if(isset($idPosicion)){  $x1 = $idPosicion;  }else{$x1 = $rowdata['idPosicion'];}
+				if(isset($Nombre)){      $x2 = $Nombre;      }else{$x2 = $rowdata['Nombre'];}
+				if(isset($Link)){        $x3 = $Link;        }else{$x3 = $rowdata['Link'];}
+				if(isset($idNewTab)){    $x4 = $idNewTab;    }else{$x4 = $rowdata['idNewTab'];}
+				if(isset($idPopup)){     $x5 = $idPopup;     }else{$x5 = $rowdata['idPopup'];}
+				if(isset($idEstado)){    $x6 = $idEstado;    }else{$x6 = $rowdata['idEstado'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Posicion','idPosicion', $x1, 2, 1, 100 );
@@ -99,10 +99,10 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_menu_otros', $SIS_
 				$Form_Inputs->form_input_text('Link', 'Link', $x3, 2);
 				
 				$Form_Inputs->form_post_data(2, 'Abrir el enlace en una nueva pestaña.' );
-				$Form_Inputs->form_select('Uso de tabs','idNewTab', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Uso de tabs','idNewTab', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					
 				$Form_Inputs->form_post_data(2, 'Abrir ventana en una ventana emergente.' );
-				$Form_Inputs->form_select('Uso Popup','idPopup', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Uso Popup','idPopup', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				
 				$Form_Inputs->form_post_data(2, 'Usar o no usar este menu.' );
 				$Form_Inputs->form_select('Estado','idEstado', $x6, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
@@ -110,39 +110,39 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_menu_otros', $SIS_
 				$Form_Inputs->form_input_hidden('idMenuOtros', $_GET['edit'], 2);
 				?>
 				
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Menu</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Menu</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
 				<?php 
 				//se dibujan los inputs
-				if(isset($idPosicion)) {  $x1 = $idPosicion;  }else{$x1 = '';}
-				if(isset($Nombre)) {      $x2 = $Nombre;      }else{$x2 = '';}
-				if(isset($Link)) {        $x3 = $Link;        }else{$x3 = '';}
-				if(isset($idNewTab)) {    $x4 = $idNewTab;    }else{$x4 = '';}
-				if(isset($idPopup)) {     $x5 = $idPopup;     }else{$x5 = '';}
-				if(isset($idEstado)) {    $x6 = $idEstado;    }else{$x6 = '';}
-				
+				if(isset($idPosicion)){  $x1 = $idPosicion;  }else{$x1 = '';}
+				if(isset($Nombre)){      $x2 = $Nombre;      }else{$x2 = '';}
+				if(isset($Link)){        $x3 = $Link;        }else{$x3 = '';}
+				if(isset($idNewTab)){    $x4 = $idNewTab;    }else{$x4 = '';}
+				if(isset($idPopup)){     $x5 = $idPopup;     }else{$x5 = '';}
+				if(isset($idEstado)){    $x6 = $idEstado;    }else{$x6 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Posicion','idPosicion', $x1, 2, 1, 100 );
@@ -152,10 +152,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_text('Link', 'Link', $x3, 2);
 				
 				$Form_Inputs->form_post_data(2, 'Abrir el enlace en una nueva pestaña.' );
-				$Form_Inputs->form_select('Uso de tabs','idNewTab', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Uso de tabs','idNewTab', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					
 				$Form_Inputs->form_post_data(2, 'Abrir ventana en una ventana emergente.' );
-				$Form_Inputs->form_select('Uso Popup','idPopup', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Uso Popup','idPopup', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				
 				$Form_Inputs->form_post_data(2, 'Usar o no usar este menu.' );
 				$Form_Inputs->form_select('Estado','idEstado', $x6, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
@@ -166,17 +166,17 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				
 				?>
 
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
 $SIS_query = 'Nombre,Config_Menu,Config_MenuOtros,Config_Carousel,Config_Links_Rel';
@@ -187,8 +187,8 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 /**********************************/
 //Permisos a sistemas
 $SIS_query = '
-sitios_listado_menu_otros.idMenuOtros, 
-sitios_listado_menu_otros.Nombre, 
+sitios_listado_menu_otros.idMenuOtros,
+sitios_listado_menu_otros.Nombre,
 sitios_listado_menu_otros.Link,
 sitios_listado_menu_otros.idEstado,
 sitios_listado_menu_otros.idPosicion,
@@ -206,15 +206,15 @@ $arrMenuDesplegable = db_select_array (false, $SIS_query, 'sitios_listado_menu_o
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Elementos Menu Desplegable');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Menu</a><?php }?>
-	</div>	
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Menu</a><?php }?>
+	</div>
 </div>
-<div class="clearfix"></div>   
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -231,8 +231,8 @@ $arrMenuDesplegable = db_select_array (false, $SIS_query, 'sitios_listado_menu_o
 						
 						<li class=""><a href="<?php echo 'sitios_listado_body.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Body</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -249,11 +249,11 @@ $arrMenuDesplegable = db_select_array (false, $SIS_query, 'sitios_listado_menu_o
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<?php foreach ($arrMenuDesplegable as $menu) { ?>
-						<tr class="odd">		
+						<tr class="odd">
 							<td><?php echo $menu['idPosicion']; ?></td>
 							<td><?php echo $menu['Nombre']; ?></td>
 							<td><?php echo $menu['Link']; ?></td>
-							<td><label class="label <?php if(isset($menu['idEstado'])&&$menu['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $menu['Estado']; ?></label></td>	
+							<td><label class="label <?php if(isset($menu['idEstado'])&&$menu['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $menu['Estado']; ?></label></td>
 							<td><?php echo $menu['NewTab']; ?></td>
 							<td><?php echo $menu['Popup']; ?></td>
 							<td>
@@ -263,20 +263,20 @@ $arrMenuDesplegable = db_select_array (false, $SIS_query, 'sitios_listado_menu_o
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($menu['idMenuOtros'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el menu '.$menu['Nombre'].'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>								
+									<?php } ?>
 								</div>
-							</td>	
+							</td>
 						</tr>
-					<?php } ?>                   
+					<?php } ?>
 				</tbody>
 			</table>
-		</div> 	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

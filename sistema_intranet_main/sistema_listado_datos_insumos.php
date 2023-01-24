@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "sistema_listado.php";
 $location = $original;
 $new_location = "sistema_listado_datos_insumos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_GET['sis_ins_add']) )  { 
+if (!empty($_GET['sis_ins_add'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -32,13 +32,13 @@ if ( !empty($_GET['sis_ins_add']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';
 }
 //se borra un dato
-if ( !empty($_GET['sis_ins_del']) )     {
+if (!empty($_GET['sis_ins_del'])){
 	//nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'sis_ins_del';
-	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';	
+	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -51,7 +51,7 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Permiso asignado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $query = "SELECT Nombre
 FROM `core_sistemas`
@@ -95,7 +95,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 }
 
@@ -202,12 +202,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Insumos Usados');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -242,8 +242,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 							<li class=""><a href="<?php echo 'sistema_listado_datos_cross_aprobadas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Cross Shipping Correos Aprobados</a></li>
 						<?php } ?>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -261,30 +261,30 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					<tr class="odd">
 						<td><?php echo '<strong>Insumo: </strong>'.$productos['Nombre']; ?></td>
 						<td>
-							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">	
-								<?php if ( isset($productos['contar'])&&$productos['contar']!='0' ) {?>    
+							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
+								<?php if ( isset($productos['contar'])&&$productos['contar']!='0' ) { ?>
 									<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&sis_ins_del='.$productos['idpermiso']; ?>">OFF</a>
 									<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
 								<?php } else {?>
 									<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 									<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&sis_ins_add='.$productos['idProducto']; ?>">ON</a>
-								<?php }?>    
-							</div> 
+								<?php } ?>
+							</div>
 						</td>
 					</tr>
-					<?php } ?>  
+					<?php } ?>
                  
 				</tbody>
 			</table>
 			
 
-		</div>		
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

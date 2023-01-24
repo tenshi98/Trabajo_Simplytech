@@ -57,19 +57,19 @@ $z  = " idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
 $SIS_query = '
-core_ubicacion_ciudad.Nombre AS Ciudad, 
-core_ubicacion_comunas.Nombre AS Comuna, 
+core_ubicacion_ciudad.Nombre AS Ciudad,
+core_ubicacion_comunas.Nombre AS Comuna,
 core_ubicacion_comunas.Wheater AS Wheater'.$subquery;
 $SIS_join  = '
 LEFT JOIN core_ubicacion_ciudad    ON core_ubicacion_ciudad.idCiudad    = core_sistemas.idCiudad
 LEFT JOIN core_ubicacion_comunas   ON core_ubicacion_comunas.idComuna   = core_sistemas.idComuna';
 $SIS_where = 'core_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$subconsulta = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'subconsulta');
+$subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'subconsulta');
 									
 ?>
 
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<?php
 		/***************************************************************/
 		echo '
@@ -86,7 +86,7 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $S
 			echo widget_Ficha_1('bg-red', 'fa-comment-o', 100, 'Reportes', $subconsulta['Count_6'].' Post', 'seg_vecinal_reportes_post_listado.php?pagina=1', 'Ver Pendientes', 2,1);
 			echo widget_Ficha_1('bg-ocean_boat_blue', 'fa-asterisk', 100, 'Seguridad', $subconsulta['Count_7'].' Bloqueos de IP', 'seg_vecinal_lista_bloqueo.php?pagina=1', 'Ver Pendientes', 2,1);
 			echo widget_Ficha_1('bg-pastel_blue', 'fa-user-secret', 100, 'Seguridad', $subconsulta['Count_8'].' Intentos de Hackeo', 'seg_vecinal_intento_hackeo.php?pagina=1', 'Ver Pendientes', 2,1);
-		echo '</div>';																					
+		echo '</div>';						
 														
 		?>
 	

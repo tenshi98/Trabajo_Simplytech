@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "pago_masivo_cliente.php";
 $location = $original;     
 //Verifico los permisos del usuario sobre la transaccion
@@ -20,52 +20,52 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
 /************************************************************/
 //formulario para borrar
-if ( !empty($_GET['del_insumo_ex']) )  { 
+if (!empty($_GET['del_insumo_ex'])){
 	//Se agregan ubicaciones
 	$location .= '?submit_filter=true';
-	if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){ $location .= '&idDocumentos='.$_GET['idDocumentos'];}
-	if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){               $location .= '&N_Doc='.$_GET['N_Doc'];}			
-	if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){   $location .= '&idCliente='.$_GET['idCliente'];}
+	if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){$location .= '&idDocumentos='.$_GET['idDocumentos'];}
+	if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){       $location .= '&N_Doc='.$_GET['N_Doc'];}
+	if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){  $location .= '&idCliente='.$_GET['idCliente'];}
 	//Llamamos al formulario
 	$form_trabajo= 'del_insumo_ex';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_clientes.php';
 }
 //formulario para borrar
-if ( !empty($_GET['del_producto_ex']) )  { 
+if (!empty($_GET['del_producto_ex'])){
 	//Se agregan ubicaciones
 	$location .= '?submit_filter=true';
-	if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){ $location .= '&idDocumentos='.$_GET['idDocumentos'];}
-	if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){               $location .= '&N_Doc='.$_GET['N_Doc'];}			
-	if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $location .= '&idCliente='.$_GET['idCliente'];}
+	if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){$location .= '&idDocumentos='.$_GET['idDocumentos'];}
+	if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){       $location .= '&N_Doc='.$_GET['N_Doc'];}
+	if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $location .= '&idCliente='.$_GET['idCliente'];}
 	//Llamamos al formulario
 	$form_trabajo= 'del_producto_ex';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_clientes.php';
 }
 //formulario para borrar
-if ( !empty($_GET['del_arriendo_ex']) )  { 
+if (!empty($_GET['del_arriendo_ex'])){
 	//Se agregan ubicaciones
 	$location .= '?submit_filter=true';
-	if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){ $location .= '&idDocumentos='.$_GET['idDocumentos'];}
-	if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){               $location .= '&N_Doc='.$_GET['N_Doc'];}			
-	if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $location .= '&idCliente='.$_GET['idCliente'];}
+	if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){$location .= '&idDocumentos='.$_GET['idDocumentos'];}
+	if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){       $location .= '&N_Doc='.$_GET['N_Doc'];}
+	if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $location .= '&idCliente='.$_GET['idCliente'];}
 	//Llamamos al formulario
 	$form_trabajo= 'del_arriendo_ex';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_clientes.php';
 }
 //formulario para borrar
-if ( !empty($_GET['del_servicio_ex']) )  { 
+if (!empty($_GET['del_servicio_ex'])){
 	//Se agregan ubicaciones
 	$location .= '?submit_filter=true';
-	if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){ $location .= '&idDocumentos='.$_GET['idDocumentos'];}
-	if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){               $location .= '&N_Doc='.$_GET['N_Doc'];}			
-	if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $location .= '&idCliente='.$_GET['idCliente'];}
+	if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){$location .= '&idDocumentos='.$_GET['idDocumentos'];}
+	if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){       $location .= '&N_Doc='.$_GET['N_Doc'];}
+	if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $location .= '&idCliente='.$_GET['idCliente'];}
 	//Llamamos al formulario
 	$form_trabajo= 'del_servicio_ex';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_clientes.php';
 }
 /************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_form']) )  { 
+if (!empty($_POST['submit_form'])){
 	//Llamamos al formulario
 	$form_trabajo= 'pago_general';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_clientes.php';
@@ -80,14 +80,14 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['pay'])){ $error['pay'] = 'sucess/Pago Realizado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);}					
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['next']) ) {  
+if(isset($error)&&$error!=''){echo notifications_list($error);}		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['next'])){  
 
 $location .= '?submit_filter=true';
-if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){ $location .= '&idDocumentos='.$_GET['idDocumentos'];}
-if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){               $location .= '&N_Doc='.$_GET['N_Doc'];}			
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){   $location .= '&idCliente='.$_GET['idCliente'];}
+if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){$location .= '&idDocumentos='.$_GET['idDocumentos'];}
+if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){       $location .= '&N_Doc='.$_GET['N_Doc'];}
+if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){  $location .= '&idCliente='.$_GET['idCliente'];}
 
 /******************************************************************/
 //Se verifica el saldo de los pagos anticipados
@@ -137,8 +137,8 @@ if(isset($_SESSION['pago_clientes_insumos'])){
 			if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']==''){
 				$Data_Pendientes++;
 			}
-		}		
-	}				
+		}
+	}	
 }
 
 if(isset($_SESSION['pago_clientes_productos'])){
@@ -157,8 +157,8 @@ if(isset($_SESSION['pago_clientes_productos'])){
 			if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']==''){
 				$Data_Pendientes++;
 			}
-		}				
-	}				
+		}	
+	}	
 }
 
 if(isset($_SESSION['pago_clientes_arriendo'])){
@@ -177,8 +177,8 @@ if(isset($_SESSION['pago_clientes_arriendo'])){
 			if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']==''){
 				$Data_Pendientes++;
 			}
-		}				
-	}				
+		}	
+	}	
 }
 
 if(isset($_SESSION['pago_clientes_servicio'])){
@@ -197,14 +197,14 @@ if(isset($_SESSION['pago_clientes_servicio'])){
 			if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']==''){
 				$Data_Pendientes++;
 			}
-		}				
-	}				
+		}	
+	}	
 }
 
 $Form_Inputs = new Inputs();							
 ?>
 
-<?php if(isset($row_data['Cliente'])&&$row_data['Cliente']!=''){ ?>
+<?php if(isset($row_data['Cliente'])&&$row_data['Cliente']!=''){?>
 	<div class="row inbox"> 
 		<div class="col-lg-12">
 			<h3>
@@ -246,7 +246,7 @@ $Form_Inputs = new Inputs();
 								<th>Fac Asoc</th>
 								<th>Opc</th>
 							</tr>
-						</thead>			  
+						</thead>
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php 
 						$Total = 0;
@@ -261,7 +261,7 @@ $Form_Inputs = new Inputs();
 						if(isset($_SESSION['pago_clientes_insumos'])){ ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="11"><strong>FACTURAS DE INSUMOS</strong></td>
-							</tr> 
+							</tr>
 							<?php foreach ($_SESSION['pago_clientes_insumos'] as $key => $tipo){
 								$Registro_total++; ?>
 								<tr class="odd">
@@ -272,7 +272,7 @@ $Form_Inputs = new Inputs();
 												$ubicacion = $location.'&del_insumo_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php } ?>	
+											<?php } ?>
 										</div>
 									</td>
 									<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -297,7 +297,7 @@ $Form_Inputs = new Inputs();
 										<td align="right">
 											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
 												<a onclick="delDoc(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php }else{ ?>	
+											<?php }else{ ?>
 												<a onclick="addDoc(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</td>
@@ -324,7 +324,7 @@ $Form_Inputs = new Inputs();
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
 												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
 													<a onclick="delpago(1, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-												<?php }else{ ?>	
+												<?php }else{ ?>
 													<a onclick="addpago(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 												<?php } ?>
 											<?php } ?>
@@ -338,7 +338,7 @@ $Form_Inputs = new Inputs();
 						if(isset($_SESSION['pago_clientes_productos'])){ ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="11"><strong>FACTURAS DE PRODUCTOS</strong></td>
-							</tr> 
+							</tr>
 							<?php 
 							foreach ($_SESSION['pago_clientes_productos'] as $key => $tipo){ 
 								$Registro_total++; ?>
@@ -350,7 +350,7 @@ $Form_Inputs = new Inputs();
 												$ubicacion = $location.'&del_producto_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php } ?>	
+											<?php } ?>
 										</div>
 									</td>
 									<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -375,7 +375,7 @@ $Form_Inputs = new Inputs();
 										<td align="right">
 											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
 												<a onclick="delDoc(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php }else{ ?>	
+											<?php }else{ ?>
 												<a onclick="addDoc(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</td>
@@ -402,7 +402,7 @@ $Form_Inputs = new Inputs();
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
 												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
 													<a onclick="delpago(2, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-												<?php }else{ ?>	
+												<?php }else{ ?>
 													<a onclick="addpago(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 												<?php } ?>
 											<?php } ?>
@@ -416,7 +416,7 @@ $Form_Inputs = new Inputs();
 						if(isset($_SESSION['pago_clientes_arriendo'])){ ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="11"><strong>FACTURAS DE ARRIENDOS</strong></td>
-							</tr> 
+							</tr>
 							<?php 
 							foreach ($_SESSION['pago_clientes_arriendo'] as $key => $tipo){ 
 								$Registro_total++; ?>
@@ -428,7 +428,7 @@ $Form_Inputs = new Inputs();
 												$ubicacion = $location.'&del_arriendo_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php } ?>	
+											<?php } ?>
 										</div>
 									</td>
 									<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -453,7 +453,7 @@ $Form_Inputs = new Inputs();
 										<td align="right">
 											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
 												<a onclick="delDoc(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php }else{ ?>	
+											<?php }else{ ?>
 												<a onclick="addDoc(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</td>
@@ -480,7 +480,7 @@ $Form_Inputs = new Inputs();
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
 												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
 													<a onclick="delpago(3, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-												<?php }else{ ?>	
+												<?php }else{ ?>
 													<a onclick="addpago(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 												<?php } ?>
 											<?php } ?>
@@ -494,7 +494,7 @@ $Form_Inputs = new Inputs();
 						if(isset($_SESSION['pago_clientes_servicio'])){ ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="11"><strong>FACTURAS DE SERVICIOS</strong></td>
-							</tr> 
+							</tr>
 							<?php 
 							foreach ($_SESSION['pago_clientes_servicio'] as $key => $tipo){ 
 								$Registro_total++; ?>
@@ -506,7 +506,7 @@ $Form_Inputs = new Inputs();
 												$ubicacion = $location.'&del_servicio_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php } ?>	
+											<?php } ?>
 										</div>
 									</td>
 									<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
@@ -531,7 +531,7 @@ $Form_Inputs = new Inputs();
 										<td align="right">
 											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
 												<a onclick="delDoc(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php }else{ ?>	
+											<?php }else{ ?>
 												<a onclick="addDoc(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</td>
@@ -558,7 +558,7 @@ $Form_Inputs = new Inputs();
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
 												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
 													<a onclick="delpago(4, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-												<?php }else{ ?>	
+												<?php }else{ ?>
 													<a onclick="addpago(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 												<?php } ?>
 											<?php } ?>
@@ -570,7 +570,7 @@ $Form_Inputs = new Inputs();
 						} 
 						
 						
-						?> 
+						?>
 						
 						
 						
@@ -584,12 +584,12 @@ $Form_Inputs = new Inputs();
 								<td style="background-color: #E5E5E5;" align="right"><strong><?php echo valores($TotalGeneral, 0); ?></strong></td>
 								<td style="background-color: #E5E5E5;"></td>
 								<td style="background-color: #E5E5E5;"></td>
-							</tr>                   
+							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
-		</div>  
+		</div> 
 <?php widget_modal(80, 95); ?>
 
 <script>
@@ -758,19 +758,19 @@ $Form_Inputs = new Inputs();
 </script>
 
 								
-<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda==0&&$TotalGeneral==0&&$TotalNCUtilizado==$NCCancelado&&$TotalNCUtilizado!=0){ ?>								
+<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda==0&&$TotalGeneral==0&&$TotalNCUtilizado==$NCCancelado&&$TotalNCUtilizado!=0){ ?>							
 	<div class="col-md-7">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Anulacion Documento</h5>
 			</header>
-			<div id="div-1" class="body">
+			<div class="body">
 				<form class="form-horizontal" method="post" name="form1" id="form1">
 					
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($F_Pago)) {     $x3  = $F_Pago;   }else{$x3  = '';}
+					if(isset($F_Pago)){     $x3  = $F_Pago;   }else{$x3  = '';}
 				
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -781,15 +781,15 @@ $Form_Inputs = new Inputs();
 					?>
 						
 					<div class="form-group">
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf283; Cerrar Factura" name="submit_form"> 
-					</div>	  
-				</form> 			
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Cerrar Factura" name="submit_form"> 
+					</div>
+				</form>			
 			</div>
 		</div>
 	</div> 
 <?php }else{ ?>
 	
-	<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda!=0&&$TotalGeneral!=0){ ?>		
+	<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda!=0&&$TotalGeneral!=0){ ?>	
 		<div class="col-md-7">
 
 			<div class="box">
@@ -797,15 +797,15 @@ $Form_Inputs = new Inputs();
 					<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 					<h5>Ingresar Pago Facturas</h5>
 				</header>
-				<div id="div-1" class="body">
+				<div class="body">
 					<form class="form-horizontal" method="post" name="form1" id="form1">
 					
 						<?php 
 						//Se verifican si existen los datos
-						if(isset($idDocPago)) {         $x1  = $idDocPago;          }else{$x1  = '';}
-						if(isset($N_DocPago)) {         $x2  = $N_DocPago;          }else{$x2  = '';}
-						if(isset($F_Pago)) {            $x3  = $F_Pago;             }else{$x3  = '';}
-				
+						if(isset($idDocPago)){         $x1  = $idDocPago;          }else{$x1  = '';}
+						if(isset($N_DocPago)){         $x2  = $N_DocPago;          }else{$x2  = '';}
+						if(isset($F_Pago)){            $x3  = $F_Pago;             }else{$x3  = '';}
+
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
@@ -813,8 +813,8 @@ $Form_Inputs = new Inputs();
 						$Form_Inputs->form_date('F Vencimiento','F_Pago', $x3, 2);
 
 						echo '<div class="form-group" id="div_">
-							<label class="control-label col-sm-4" id="label_">Valor a Pagar</label>
-							<div class="col-sm-8">
+							<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Valor a Pagar</label>
+							<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 								<input type="text" placeholder="Valor de la Factura" class="form-control"  name="escribeme" id="escribeme" disabled value="'.Valores($TotalGeneral, 0).'">
 							</div>
 						</div>';
@@ -827,10 +827,10 @@ $Form_Inputs = new Inputs();
 						
 						<div class="form-group">
 							<input type="submit" id="submitCadastroHidden" style="display: none;" name="submit_form">
-							<input type="button" id="submitBtn" data-toggle="modal" data-target="#confirm-submit"  class="btn btn-primary fright margin_width fa-input" value="&#xf283; Ingresar Pago" name="submit2">
+							<input type="button" id="submitBtn" data-toggle="modal" data-target="#confirm-submit"  class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Ingresar Pago" name="submit2">
 						</div>
 							  
-					</form> 
+					</form>
 							
 				</div>
 			</div>
@@ -876,7 +876,7 @@ $Form_Inputs = new Inputs();
 
 			</script>
 			
-		</div> 
+		</div>
 	<?php }elseif(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda==0&&$TotalGeneral==0){ ?>
 		<div class="col-md-7">
 			<div class="box">
@@ -884,13 +884,13 @@ $Form_Inputs = new Inputs();
 					<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 					<h5>Ingresar Pago Facturas</h5>
 				</header>
-				<div id="div-1" class="body">
+				<div class="body">
 					<form class="form-horizontal" method="post" name="form1" id="form1">
 						
 						<?php 
 						//Se verifican si existen los datos
-						if(isset($F_Pago)) {     $x3  = $F_Pago;   }else{$x3  = '';}
-					
+						if(isset($F_Pago)){     $x3  = $F_Pago;   }else{$x3  = '';}
+
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_date('Fecha de Pago','F_Pago', $x3, 2);
@@ -900,25 +900,25 @@ $Form_Inputs = new Inputs();
 						?>
 							
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf283; Cerrar Factura" name="submit_form"> 
-						</div>	  
-					</form> 			
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Cerrar Factura" name="submit_form"> 
+						</div>
+					</form>			
 				</div>
 			</div>
-		</div>							
+		</div>			
 	<?php } ?>
-<?php } ?>	
+<?php } ?>
 	
 	
 	</div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['submit_filter']) ) {  
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['submit_filter'])){
 //Titulo con el cliente		
 if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){				
 	$query = "SELECT Nombre
@@ -949,8 +949,8 @@ unset($_SESSION['pago_clientes_servicio']);
 //Verifico el tipo de usuario que esta ingresando
 $z1=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $z2=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$z3=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$z4=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];			
+$z3=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z4=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		
 
 /**********************************************************************************************/
 //datos de la obra
@@ -1048,7 +1048,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTipo1,$row );
 }
 /*************************************************************/
@@ -1118,7 +1118,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTipo2,$row );
 }
 /*************************************************************/
@@ -1188,7 +1188,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTipo3,$row );
 }
 /*************************************************************/
@@ -1258,13 +1258,13 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTipo4,$row );
 }	
 
 ?> 
 
-<?php if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){ ?>	
+<?php if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){?>
 	<div class="row inbox"> 
 		<div class="col-lg-12">
 			<h2><strong>cliente : </strong><?php echo $rowCliente['Nombre']; ?></h2>
@@ -1274,9 +1274,9 @@ array_push( $arrTipo4,$row );
 <?php } ?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-	<a style="display: none;" id="acep_1" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary fright margin_width" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
-	<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+	<a style="display: none;" id="acep_1" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary pull-right margin_form_btn" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
+	<a href="<?php echo $original; ?>" class="btn btn-danger pull-right margin_form_btn" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 	<div class="clearfix"></div>
 </div>
 
@@ -1300,7 +1300,7 @@ array_push( $arrTipo4,$row );
 								<th>Total a Pagar</th>
 								<th width="10">Acciones</th>
 							</tr>
-						</thead>			  
+						</thead>
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php 
 						$Total = 0;
@@ -1310,7 +1310,7 @@ array_push( $arrTipo4,$row );
 						if ($arrTipo1!=false && !empty($arrTipo1) && $arrTipo1!='') {  ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="9"><strong>FACTURAS DE INSUMOS</strong></td>
-							</tr> 
+							</tr>
 							<?php foreach ($arrTipo1 as $tipo){ ?>
 								<tr class="odd">
 									<td>
@@ -1348,7 +1348,7 @@ array_push( $arrTipo4,$row );
 						if ($arrTipo2!=false && !empty($arrTipo2) && $arrTipo2!='') {  ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="9"><strong>FACTURAS DE PRODUCTOS</strong></td>
-							</tr> 
+							</tr>
 							<?php foreach ($arrTipo2 as $tipo){ ?>
 								<tr class="odd">
 									<td>
@@ -1386,7 +1386,7 @@ array_push( $arrTipo4,$row );
 						if ($arrTipo3!=false && !empty($arrTipo3) && $arrTipo3!='') {  ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="9"><strong>FACTURAS DE ARRIENDOS</strong></td>
-							</tr> 
+							</tr>
 							<?php foreach ($arrTipo3 as $tipo){ ?>
 								<tr class="odd">
 									<td>
@@ -1424,7 +1424,7 @@ array_push( $arrTipo4,$row );
 						if ($arrTipo4!=false && !empty($arrTipo4) && $arrTipo4!='') {  ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="9"><strong>FACTURAS DE SERVICIOS</strong></td>
-							</tr> 
+							</tr>
 							<?php foreach ($arrTipo4 as $tipo){ ?>
 								<tr class="odd">
 									<td>
@@ -1460,7 +1460,7 @@ array_push( $arrTipo4,$row );
 						} 
 						
 						
-						?> 
+						?>
 						
 						
 						
@@ -1471,12 +1471,12 @@ array_push( $arrTipo4,$row );
 								<td align="right"><strong id="final_val_3"></strong></td>
 								<td align="right"><strong id="final_val_4"></strong></td>
 								<td></td>
-							</tr>                   
+							</tr>
 						</tbody>
 					</table>
 				</div>
 			</div>
-		</div>  
+		</div> 
 		<?php widget_modal(80, 95); ?>
 		
 <script>
@@ -1632,46 +1632,46 @@ array_push( $arrTipo4,$row );
 
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a style="display: none;" id="acep_2" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary fright margin_width"><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
-<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a style="display: none;" id="acep_2" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando 
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {     $x1  = $idCliente;    }else{$x1  = '';}
-				if(isset($idDocumentos)) {  $x2  = $idDocumentos; }else{$x2  = '';}
-				if(isset($N_Doc)) {         $x3  = $N_Doc;        }else{$x3  = '';}
-				
+				if(isset($idCliente)){     $x1  = $idCliente;    }else{$x1  = '';}
+				if(isset($idDocumentos)){  $x2  = $idDocumentos; }else{$x2  = '';}
+				if(isset($N_Doc)){         $x3  = $N_Doc;        }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Rut,Nombre', 'clientes_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Documento de Pago','idDocumentos', $x2, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 'idDocumentos!=1 AND idDocumentos!=3 AND idDocumentos!=4', '', $dbConn);
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_Doc', $x3, 1);
 					
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

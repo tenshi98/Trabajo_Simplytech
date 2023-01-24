@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -21,19 +21,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['viewMuestra']) ) { ?>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['viewMuestra'])){ ?>
 		
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  {  
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else { 
 /************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -177,18 +177,18 @@ $zz .= '&view='.$_GET['view'];
 			?>
 		</div>
 		<div class="clearfix" style="margin-bottom:15px;"></div>
-	<?php } ?> 
+	<?php } ?>
 <?php } ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> Control Proceso Preembarque - T° y Estiba de Contenedores <?php if(isset($rowConso['idEstado'])&&$rowConso['idEstado']!=2){echo '('.$rowConso['Estado'].')';} ?></div>
 
 		<div id="customer">
 			
-			<table id="meta" class="fleft" style="width:100%" >
+			<table id="meta" class="pull-left" style="width:100%" >
 				<tbody>
 					<tr>
 						<td class="meta-head" colspan="3"><strong>DATOS MAESTROS</strong></td>
@@ -259,7 +259,7 @@ $zz .= '&view='.$_GET['view'];
 						<td><?php if(isset($rowConso['TransporteNombre'])&&$rowConso['TransporteNombre']!=''){if(isset($rowConso['TransporteCodigo'])&&$rowConso['TransporteCodigo']!=''&&$rowConso['TransporteCodigo']!='.'){echo $rowConso['TransporteCodigo'].' - ';};echo $rowConso['TransporteNombre'];}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">Conductor</td>
 						<td><?php if(isset($rowConso['ChoferNombreRut'])&&$rowConso['ChoferNombreRut']!=''){echo $rowConso['ChoferNombreRut'];}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">Patente Camion</td>
 						<td><?php if(isset($rowConso['PatenteCamion'])&&$rowConso['PatenteCamion']!=''){echo $rowConso['PatenteCamion'];}else{echo 'Sin Datos';}?></td>
@@ -275,19 +275,19 @@ $zz .= '&view='.$_GET['view'];
 						<td><?php if(isset($rowConso['Condicion'])&&$rowConso['Condicion']!=''){echo $rowConso['Condicion'];}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">Sellado Piso</td>
 						<td><?php if(isset($rowConso['Sellado'])&&$rowConso['Sellado']!=''){echo $rowConso['Sellado'];}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">T°Set Point</td>
 						<td><?php if(isset($rowConso['TSetPoint'])&&$rowConso['TSetPoint']!=''){echo Cantidades_decimales_justos($rowConso['TSetPoint']);}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">T° Ventilacion</td>
 						<td><?php if(isset($rowConso['TSetPoint'])&&$rowConso['TSetPoint']!=''){echo Cantidades_decimales_justos($rowConso['TVentilacion']);}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">T° Ambiente</td>
 						<td><?php if(isset($rowConso['TAmbiente'])&&$rowConso['TAmbiente']!=''){echo Cantidades_decimales_justos($rowConso['TAmbiente']);}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">Numero de sello</td>
 						<td><?php if(isset($rowConso['NumeroSello'])&&$rowConso['NumeroSello']!=''){echo $rowConso['NumeroSello'];}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">Inspector</td>
 						<td colspan="3"><?php if(isset($rowConso['InspectorNombre'])&&$rowConso['InspectorNombre']!=''){echo $rowConso['InspectorNombre'].' '.$rowConso['InspectorApellido'];}else{echo 'Sin Datos';}?></td>
@@ -342,7 +342,7 @@ $zz .= '&view='.$_GET['view'];
 												<td class="item-name"><?php echo Cantidades_decimales_justos($estiba['Temperatura']);?></td>
 												<td class="item-name"><?php echo $estiba['Termografo'];?></td>
 												<td class="item-name"><?php echo $estiba['NSerieSensor'];?></td>
-											</tr> 
+											</tr>
 										<?php } ?>
 
 										
@@ -351,7 +351,7 @@ $zz .= '&view='.$_GET['view'];
 										
 									</tbody>
 								</table>
-							<?php echo '			
+							<?php echo '
 							</div>
 						</div>
 					</div>
@@ -381,7 +381,7 @@ $zz .= '&view='.$_GET['view'];
             
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td>Archivos Adjuntos</td>
-            </tr>		  
+            </tr>
             
 			<?php 
 			filtrar($arrArchivos, 'Tipo');  
@@ -410,12 +410,12 @@ $zz .= '&view='.$_GET['view'];
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -426,15 +426,15 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
-<?php } ?> 
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

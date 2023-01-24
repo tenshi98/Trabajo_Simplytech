@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "admin_usuarios_listado.php";
 $location = $original;
 $new_location = "admin_usuarios_listado_datos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -39,21 +39,21 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$SIS_query = 'Nombre, Fono, email, Rut, fNacimiento, idCiudad, idComuna, Direccion, Direccion_img';
+$SIS_query = 'Nombre,Fono, email, Rut, fNacimiento, idCiudad, idComuna, Direccion, Direccion_img';
 $SIS_join  = '';
 $SIS_where = 'idUsuario ='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Datos Personales');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -62,22 +62,22 @@ $rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SI
 				<li class=""><a href="<?php echo 'admin_usuarios_listado_permisos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Permisos</a></li>
 				<li class=""><a href="<?php echo 'admin_usuarios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 				<li class=""><a href="<?php echo 'admin_usuarios_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
-			</ul>	
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Nombre)) {         $x1  = $Nombre;         }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Fono)) {           $x2  = $Fono;           }else{$x2  = $rowdata['Fono'];}
-					if(isset($email)) {          $x3  = $email;          }else{$x3  = $rowdata['email'];}
-					if(isset($Rut)) {            $x4  = $Rut;            }else{$x4  = $rowdata['Rut'];}
-					if(isset($fNacimiento)) {    $x5  = $fNacimiento;    }else{$x5  = $rowdata['fNacimiento'];}
-					if(isset($idCiudad)) {       $x6  = $idCiudad;       }else{$x6  = $rowdata['idCiudad'];}
-					if(isset($idComuna)) {       $x7  = $idComuna;       }else{$x7  = $rowdata['idComuna'];}
-					if(isset($Direccion)) {      $x8  = $Direccion;      }else{$x8  = $rowdata['Direccion'];}
+					if(isset($Nombre)){         $x1  = $Nombre;         }else{$x1  = $rowdata['Nombre'];}
+					if(isset($Fono)){           $x2  = $Fono;           }else{$x2  = $rowdata['Fono'];}
+					if(isset($email)){          $x3  = $email;          }else{$x3  = $rowdata['email'];}
+					if(isset($Rut)){            $x4  = $Rut;            }else{$x4  = $rowdata['Rut'];}
+					if(isset($fNacimiento)){    $x5  = $fNacimiento;    }else{$x5  = $rowdata['fNacimiento'];}
+					if(isset($idCiudad)){       $x6  = $idCiudad;       }else{$x6  = $rowdata['idCiudad'];}
+					if(isset($idComuna)){       $x7  = $idComuna;       }else{$x7  = $rowdata['idComuna'];}
+					if(isset($Direccion)){      $x8  = $Direccion;      }else{$x8  = $rowdata['Direccion'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -87,8 +87,8 @@ $rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SI
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);
 					$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x5, 1);
 					$Form_Inputs->form_select_depend1('Region','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										     'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
-										     $dbConn, 'form1');	
+										     'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
+										     $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map');
 					
 					
@@ -96,19 +96,19 @@ $rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SI
 					$Form_Inputs->form_input_hidden('idUsuario', $_GET['id'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

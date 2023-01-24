@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.NoSessions.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -88,17 +88,17 @@ $arrData[$x] = "BH"; $x++;
 $arrData[$x] = "BI"; $x++; 
 
 //obtengo los datos de la empresa
-$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, 'arrEquipos1', basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, 'arrEquipos1', basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /**********************************************************/
 $SIS_where_1 = "telemetria_listado_errores.idSistema=".$_GET['idSistema'];
 $SIS_where_2 = "telemetria_listado_errores.idSistema=".$_GET['idSistema'];
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){ 
 	$SIS_where_1.=" AND telemetria_listado_errores.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
-}elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
+}elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
 	$SIS_where_1.=" AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  
 	$SIS_where_1.= " AND telemetria_listado_errores.idTelemetria=".$_GET['idTelemetria'];
 	$SIS_where_2.= " AND telemetria_listado_errores.idTelemetria=".$_GET['idTelemetria'];
 }
@@ -106,10 +106,10 @@ if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){
 $SIS_where_1.= " AND (telemetria_listado_errores.idUniMed=4 OR telemetria_listado_errores.idUniMed=5 OR telemetria_listado_errores.idUniMed=10)";
 $SIS_where_2.= " AND (telemetria_listado_errores.idUniMed=4 OR telemetria_listado_errores.idUniMed=5 OR telemetria_listado_errores.idUniMed=10)";
 //Agrupo
-$SIS_where_1.= " GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Descripcion, telemetria_listado_errores.Fecha, telemetria_listado_errores.idUniMed";
-$SIS_where_2.= " GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Fecha";
+$SIS_where_1.= " GROUP BY telemetria_listado.Nombre,telemetria_listado_errores.Descripcion, telemetria_listado_errores.Fecha, telemetria_listado_errores.idUniMed";
+$SIS_where_2.= " GROUP BY telemetria_listado.Nombre,telemetria_listado_errores.Fecha";
 
-/*********************************************************/									
+/*********************************************************/					
 $SIS_query = '
 COUNT(telemetria_listado_errores.idErrores) AS Cuenta,
 telemetria_listado.Nombre AS Equipo,
@@ -125,7 +125,7 @@ $SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Descripc
 $arrEquipos1 = array();
 $arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, 'arrEquipos1', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos1');
 
-/*********************************************************/	
+/*********************************************************/
 $SIS_query = '
 COUNT(telemetria_listado_errores.idErrores) AS Cuenta,
 telemetria_listado.Nombre AS Equipo,
@@ -153,7 +153,7 @@ $spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
 
 /**********************************************************************************/
 /*                                    Pagina 1                                    */ 
-/**********************************************************************************/           
+/**********************************************************************************/          
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A1', 'Recuento Total de alertas fuera de rango');
@@ -219,7 +219,7 @@ $spreadsheet->getActiveSheet(0)->getStyle('A1:G'.$nn)->applyFromArray(
 
 /**********************************************************************************/
 /*                                    Pagina 2                                    */ 
-/**********************************************************************************/   			
+/**********************************************************************************/  			
 //Se crea nueva hoja
 $spreadsheet->createSheet();
 
@@ -286,7 +286,7 @@ foreach($arrEquipos2 as $equipo=>$dias){
 	$spreadsheet->setActiveSheetIndex(1)
 				->setCellValue('B'.$nn, $TotalErrores);
 	//Promedios
-	if($ndias!=0){$ss_to = $TotalErrores/$ndias;}else{$ss_to = 0;}			
+	if($ndias!=0){$ss_to = $TotalErrores/$ndias;}else{$ss_to = 0;}
 	$spreadsheet->setActiveSheetIndex(1)
 				->setCellValue('C'.$nn, cantidades($ss_to, 2));			
 									
@@ -294,14 +294,14 @@ foreach($arrEquipos2 as $equipo=>$dias){
 	for ($i = 1; $i <= $ndias; $i++) {
 		$spreadsheet->setActiveSheetIndex(1)
 					->setCellValue($arrData[$i].$nn, $DiaActual[$i]['valor']);
-	}					
+	}		
 
 			
 	//Se suma 1
 	$nn++;
 	//Guardo la columna donde estan los promedios
 	$nColumnProm  = $i;
-}				
+}	
 				                       
 //seteo el nombre de la hoja
 $spreadsheet->getActiveSheet(1)->setTitle('Recuento Total por Dia');
@@ -368,7 +368,7 @@ $spreadsheet->getActiveSheet(1)->addChart($chart);
 
 */
 
-/**********************************************************************************/  
+/**********************************************************************************/ 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 

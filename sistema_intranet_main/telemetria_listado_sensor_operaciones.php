@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_listado.php";
 $location = $original;
 $new_location = "telemetria_listado_sensor_operaciones.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_definicion_operacional.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -41,13 +41,13 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_definicion_operacional.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_definicion_operacional.php';	
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_definicion_operacional.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -62,8 +62,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Definicion Operacional
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Definicion Operacional borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['edit']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['edit'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 //numero sensores equipo
@@ -79,10 +79,10 @@ $rowdata = db_select_data (false, 'cantSensores'.$subquery, 'telemetria_listado'
 
 //Se consultan datos
 $arrGrupos = array();
-$arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
-				
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre,nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+
 $arrFinalGrupos = array();
-foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen['Nombre']; $arrFinalGrupos[$sen['idGrupo']]['nColumnas'] = $sen['nColumnas']; $arrFinalGrupos[$sen['idGrupo']]['idGrupo'] = $sen['idGrupo']; }
+foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen['Nombre']; $arrFinalGrupos[$sen['idGrupo']]['nColumnas'] = $sen['nColumnas']; $arrFinalGrupos[$sen['idGrupo']]['idGrupo'] = $sen['idGrupo'];}
 
 
 //los datos guardados
@@ -90,32 +90,31 @@ $rowdata_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMa
 
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Definicion Operacional</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Definicion Operacional</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
-				if(isset($idFuncion)) {       $x1  = $idFuncion;      }else{$x1  = $rowdata_i['idFuncion'];}
-				if(isset($ValorActivo)) {     $x2  = $ValorActivo;    }else{$x2  = Cantidades_decimales_justos($rowdata_i['ValorActivo']);}
-				if(isset($RangoMinimo)) {     $x3  = $RangoMinimo;    }else{$x3  = Cantidades_decimales_justos($rowdata_i['RangoMinimo']);}
-				if(isset($RangoMaximo)) {     $x4  = $RangoMaximo;    }else{$x4  = Cantidades_decimales_justos($rowdata_i['RangoMaximo']);}
-				
+				if(isset($idFuncion)){       $x1  = $idFuncion;      }else{$x1  = $rowdata_i['idFuncion'];}
+				if(isset($ValorActivo)){     $x2  = $ValorActivo;    }else{$x2  = Cantidades_decimales_justos($rowdata_i['ValorActivo']);}
+				if(isset($RangoMinimo)){     $x3  = $RangoMinimo;    }else{$x3  = Cantidades_decimales_justos($rowdata_i['RangoMinimo']);}
+				if(isset($RangoMaximo)){     $x4  = $RangoMaximo;    }else{$x4  = Cantidades_decimales_justos($rowdata_i['RangoMaximo']);}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				
-				
+
 				$input = '<div class="form-group" id="div_sensorn" >
-								<label for="text2" class="control-label col-sm-4">Sensor Activo</label>
-								<div class="col-sm-8 field">
+								<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor Activo</label>
+								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 									<select name="N_Sensor" id="N_Sensor" class="form-control" required="">';
 										$input .= '<option value="" selected>Seleccione una Opcion</option>';
-										
+
 										for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 											//solo sensores activos
 											if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
@@ -124,87 +123,87 @@ $rowdata_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMa
 												$input .= '<option value="'.$i.'" '.$selected.'>'.$grupo.$rowdata['SensoresNombre_'.$i].'</option>';
 											}
 										}
-					
+
 									$input .= '
 									</select>
 								</div>
 							</div>';
-					
-				echo $input;		
-				
-				$Form_Inputs->form_select('Funcion','idFuncion', $x1, 2, 'idFuncion', 'Nombre', 'core_telemetria_funciones', 0, '', $dbConn);		
+
+				echo $input;
+
+				$Form_Inputs->form_select('Funcion','idFuncion', $x1, 2, 'idFuncion', 'Nombre', 'core_telemetria_funciones', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Valor Supervisado','ValorActivo', $x2, 1);
 				$Form_Inputs->form_input_number('Rango Valor Minimo','RangoMinimo', $x3, 1);
 				$Form_Inputs->form_input_number('Rango Valor Maximo','RangoMaximo', $x4, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idDefinicion', $_GET['edit'], 2);
 				?>
-				
+
 				<script>
 					//oculto los div
 					document.getElementById('div_ValorActivo').style.display = 'none';
 					document.getElementById('div_RangoMinimo').style.display = 'none';
 					document.getElementById('div_RangoMaximo').style.display = 'none';
-						
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
-									
+
+					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
+
 						let idFuncion= $("#idFuncion").val();
-							
+
 						//Voltaje
-						if(idFuncion == 15){ 
+						if(idFuncion == 15){
 							document.getElementById('div_ValorActivo').style.display = 'none';
 							document.getElementById('div_RangoMinimo').style.display = 'block';
 							document.getElementById('div_RangoMaximo').style.display = 'block';
-								
+
 						//el resto
-						}else{ 
+						}else{
 							document.getElementById('div_ValorActivo').style.display = 'block';
 							document.getElementById('div_RangoMinimo').style.display = 'none';
 							document.getElementById('div_RangoMaximo').style.display = 'none';
-								
-						}		
-					}); 
-						
-					$("#idFuncion").on("change", function(){ //se ejecuta al cambiar valor del select
-						let idFuncion_sel = $(this).val(); //Asignamos el valor seleccionado
-						
-						//Voltaje
-						if(idFuncion_sel == 15){ 
-							document.getElementById('div_ValorActivo').style.display = 'none';
-							document.getElementById('div_RangoMinimo').style.display = 'block';
-							document.getElementById('div_RangoMaximo').style.display = 'block';
-							//Reseteo los valores a 0
-							document.getElementById('ValorActivo').value = "0";				
-								
-						//el resto
-						}else{ 
-							document.getElementById('div_ValorActivo').style.display = 'block';
-							document.getElementById('div_RangoMinimo').style.display = 'none';
-							document.getElementById('div_RangoMaximo').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('RangoMinimo').value = "0";				
-							document.getElementById('RangoMaximo').value = "0";				
-								
+
 						}
 					});
-					
+
+					$("#idFuncion").on("change", function(){ //se ejecuta al cambiar valor del select
+						let idFuncion_sel = $(this).val(); //Asignamos el valor seleccionado
+
+						//Voltaje
+						if(idFuncion_sel == 15){
+							document.getElementById('div_ValorActivo').style.display = 'none';
+							document.getElementById('div_RangoMinimo').style.display = 'block';
+							document.getElementById('div_RangoMaximo').style.display = 'block';
+							//Reseteo los valores a 0
+							document.getElementById('ValorActivo').value = "0";
+
+						//el resto
+						}else{
+							document.getElementById('div_ValorActivo').style.display = 'block';
+							document.getElementById('div_RangoMinimo').style.display = 'none';
+							document.getElementById('div_RangoMaximo').style.display = 'none';
+							//Reseteo los valores a 0
+							document.getElementById('RangoMinimo').value = "0";
+							document.getElementById('RangoMaximo').value = "0";
+
+						}
+					});
+
 				</script>
-				
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
- 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { 
+
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); 
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
 
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
@@ -219,41 +218,38 @@ $rowdata = db_select_data (false, 'cantSensores'.$subquery, 'telemetria_listado'
 
 //Se consultan datos
 $arrGrupos = array();
-$arrGrupos = db_select_array (false, 'idGrupo,Nombre, nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
-				
-$arrFinalGrupos = array();
-foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen['Nombre']; $arrFinalGrupos[$sen['idGrupo']]['nColumnas'] = $sen['nColumnas']; $arrFinalGrupos[$sen['idGrupo']]['idGrupo'] = $sen['idGrupo']; }
+$arrGrupos = db_select_array (false, 'idGrupo,Nombre,nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
 
-				
+$arrFinalGrupos = array();
+foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen['Nombre']; $arrFinalGrupos[$sen['idGrupo']]['nColumnas'] = $sen['nColumnas']; $arrFinalGrupos[$sen['idGrupo']]['idGrupo'] = $sen['idGrupo'];}
 
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Definicion Operacional</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Definicion Operacional</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($idFuncion)) {       $x1 = $idFuncion;      }else{$x1 = '';}
-				if(isset($ValorActivo)) {     $x2 = $ValorActivo;    }else{$x2 = '';}
-				if(isset($RangoMinimo)) {     $x3 = $RangoMinimo;    }else{$x3 = '';}
-				if(isset($RangoMaximo)) {     $x4 = $RangoMaximo;    }else{$x4 = '';}
-				
+				if(isset($idFuncion)){       $x1 = $idFuncion;      }else{$x1 = '';}
+				if(isset($ValorActivo)){     $x2 = $ValorActivo;    }else{$x2 = '';}
+				if(isset($RangoMinimo)){     $x3 = $RangoMinimo;    }else{$x3 = '';}
+				if(isset($RangoMaximo)){     $x4 = $RangoMaximo;    }else{$x4 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				
-				
+
 				$input = '<div class="form-group" id="div_sensorn" >
-								<label for="text2" class="control-label col-sm-4">Sensor Activo</label>
-								<div class="col-sm-8 field">
+								<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor Activo</label>
+								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 									<select name="N_Sensor" id="N_Sensor" class="form-control" required="">';
 										$input .= '<option value="" selected>Seleccione una Opcion</option>';
-										
+
 										for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 											//solo sensores activos
 											if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
@@ -261,66 +257,64 @@ foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen
 												$input .= '<option value="'.$i.'">'.$grupo.$rowdata['SensoresNombre_'.$i].'</option>';
 											}
 										}
-					
+
 									$input .= '
 									</select>
 								</div>
 							</div>';
-					
-				echo $input;		
-				
-				$Form_Inputs->form_select('Funcion','idFuncion', $x1, 2, 'idFuncion', 'Nombre', 'core_telemetria_funciones', 0, '', $dbConn);		
+
+				echo $input;
+
+				$Form_Inputs->form_select('Funcion','idFuncion', $x1, 2, 'idFuncion', 'Nombre', 'core_telemetria_funciones', 0, '', $dbConn);	
 				$Form_Inputs->form_input_number('Valor Supervisado','ValorActivo', $x2, 1);
 				$Form_Inputs->form_input_number('Rango Valor Minimo','RangoMinimo', $x3, 1);
 				$Form_Inputs->form_input_number('Rango Valor Maximo','RangoMaximo', $x4, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				?>
-				
+
 				<script>
 					//oculto los div
 					document.getElementById('div_ValorActivo').style.display = 'none';
 					document.getElementById('div_RangoMinimo').style.display = 'none';
 					document.getElementById('div_RangoMaximo').style.display = 'none';
-						
+
 					$("#idFuncion").on("change", function(){ //se ejecuta al cambiar valor del select
 						let idFuncion_sel = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//Voltaje
-						if(idFuncion_sel == 15){ 
+						if(idFuncion_sel == 15){
 							document.getElementById('div_ValorActivo').style.display = 'none';
 							document.getElementById('div_RangoMinimo').style.display = 'block';
 							document.getElementById('div_RangoMaximo').style.display = 'block';
 							//Reseteo los valores a 0
-							document.getElementById('ValorActivo').value = "0";				
-								
+							document.getElementById('ValorActivo').value = "0";
+
 						//el resto
-						}else{ 
+						}else{
 							document.getElementById('div_ValorActivo').style.display = 'block';
 							document.getElementById('div_RangoMinimo').style.display = 'none';
 							document.getElementById('div_RangoMaximo').style.display = 'none';
 							//Reseteo los valores a 0
-							document.getElementById('RangoMinimo').value = "0";				
-							document.getElementById('RangoMaximo').value = "0";				
-								
+							document.getElementById('RangoMinimo').value = "0";
+							document.getElementById('RangoMaximo').value = "0";
+
 						}
 					});
-					
+
 				</script>
 
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-
- 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
@@ -347,17 +341,15 @@ $arrOperaciones = array();
 $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_definicion_operacional', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOperaciones');
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Definicion Operacional');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Definicion Operacional</a><?php }?>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Definicion Operacional</a><?php }?>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-
-
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -386,9 +378,9 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
-						
+
 					</ul>
-                </li>           
+                </li>
 			</ul>
 		</header>
         <div class="table-responsive">
@@ -403,10 +395,10 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrOperaciones as $oper) { ?>
-					<tr class="odd">		
+					<tr class="odd">
 						<td><?php echo $rowdata['SensoresNombre_'.$oper['N_Sensor']]; ?></td>
 						<td>
-							<?php 
+							<?php
 							if(isset($oper['idFuncion'])&&$oper['idFuncion']!=15){
 								echo Cantidades_decimales_justos($oper['ValorActivo']);
 							}else{
@@ -421,20 +413,20 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($oper['idDefinicion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la definicion de '.$rowdata['SensoresNombre_'.$oper['N_Sensor']].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-				<?php } ?>                   
+				<?php } ?>
 				</tbody>
 			</table>
-		</div> 	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

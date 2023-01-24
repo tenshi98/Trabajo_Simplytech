@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -62,7 +62,7 @@ require_once 'core/Web.Header.Views.php';
 
 <div class="invoice">
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     		<div class="invoice-title">
     			<h2>
 					Liquidacion de Remuneraciones
@@ -72,7 +72,7 @@ require_once 'core/Web.Header.Views.php';
     		</div>
     		<hr>
     		<div class="row">
-    			<div class="col-sm-12">
+    			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     				<address>
 						<strong>Empresa:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SistemaNombre']; ?><br/>
 						<strong>Rut:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SistemaRut']; ?>
@@ -81,7 +81,7 @@ require_once 'core/Web.Header.Views.php';
     		</div>
     		<hr>
     		<div class="row">
-    			<div class="col-sm-6">
+    			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
     				<address>
 						<strong>Trabajador Sr(a):</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TrabajadorNombre']; ?><br/>
 						<strong>R.U.T.:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TrabajadorRut']; ?><br/>
@@ -90,7 +90,7 @@ require_once 'core/Web.Header.Views.php';
     					<strong>Centro de Costo:</strong><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['CentroCosto']; ?><br/>
     				</address>
     			</div>
-    			<div class="col-sm-6">
+    			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
     				<address>
 						<?php
 							if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['DiasPactados'])){echo '<strong>Dias Pactados</strong>: '.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['DiasPactados'].' Dias<br/>';}
@@ -124,16 +124,16 @@ require_once 'core/Web.Header.Views.php';
     								<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SueldoPagado'], 0); ?></td>
     							</tr>
     							
-    							<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Gratificacion'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Gratificacion']!=''){ ?>
+    							<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Gratificacion'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Gratificacion']!=''){?>
 									<tr>
 										<td colspan="3">Gratificacion</td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Gratificacion'], 0); ?></td>
 									</tr>
     							<?php } ?>
-    							<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalHorasExtras'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalHorasExtras']!=''){ ?>
+    							<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalHorasExtras'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalHorasExtras']!=''){?>
 									<tr>	
 										<td colspan="3">Horas Extras</td>
-										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalHorasExtras'], 0); ?></td>	
+										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalHorasExtras'], 0); ?></td>
 									</tr>
 									<?php
 									for ($x = 0; $x <= 31; $x++) {
@@ -148,18 +148,18 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								} ?>
-								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalCargasFamiliares'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalCargasFamiliares']!=''){ ?>
+								}?>
+								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalCargasFamiliares'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalCargasFamiliares']!=''){?>
 									<tr>
 										<td>Asignación Familiar</td>
 										<td colspan="2"><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Cargas_n'].' Cargas (Tramo '.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Cargas_tramo'].')'  ?></td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Cargas_valor'], 0); ?></td>
 									</tr>
     							<?php } ?>
-								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTurno'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTurno']!=''){ ?>
+								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTurno'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTurno']!=''){?>
 									<tr>	
 										<td colspan="3">Bonos por Turnos Imponibles</td>
-										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTurno'], 0); ?></td>	
+										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTurno'], 0); ?></td>
 									</tr>
 									<?php
 									for ($x = 0; $x <= 6; $x++) {
@@ -174,8 +174,8 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								} ?>
-								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoAfecto']!=''){ ?>
+								}?>
+								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoAfecto']!=''){?>
 									<tr>
 										<td colspan="3">Bonos Fijos Imponibles</td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoAfecto'], 0); ?></td>
@@ -193,11 +193,11 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								} ?>
-								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalAfecto']!=''){ ?>
+								}?>
+								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalAfecto']!=''){?>
 									<tr>	
 										<td colspan="3">Bonos Temporales Imponibles</td>
-										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalAfecto'], 0); ?></td>	
+										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalAfecto'], 0); ?></td>
 									</tr>
 									<?php
 									for ($x = 0; $x <= 100; $x++) {
@@ -212,13 +212,13 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								} ?>
+								}?>
 								
 								
-								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoNoAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoNoAfecto']!=''){ ?>
+								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoNoAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoNoAfecto']!=''){?>
 									<tr>	
 										<td colspan="3">Bonos Fijos No Imponibles</td>
-										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoNoAfecto'], 0); ?></td>	
+										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoNoAfecto'], 0); ?></td>
 									</tr>
 									<?php
 									for ($x = 0; $x <= 100; $x++) {
@@ -233,11 +233,11 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								} ?>
-								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalNoAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalNoAfecto']!=''){ ?>
+								}?>
+								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalNoAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalNoAfecto']!=''){?>
 									<tr>	
 										<td colspan="3">Bonos Temporales No Imponibles</td>
-										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalNoAfecto'], 0); ?></td>	
+										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalNoAfecto'], 0); ?></td>
 									</tr>
 									<?php
 									for ($x = 0; $x <= 100; $x++) {
@@ -252,7 +252,7 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								} ?>
+								}?>
     							<tr>
 									<td align="right" colspan="3"><strong>Total Imponible</strong></td>
 									<td align="right"><strong><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SueldoImponible'], 0); ?></strong></td>
@@ -269,13 +269,13 @@ require_once 'core/Web.Header.Views.php';
     							
     							
 								<tr class="active"><td class="text-center" colspan="4"><strong>Deberes</strong></td></tr>
-								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['AFP_Total'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['AFP_Total']!=''){ ?>
+								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['AFP_Total'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['AFP_Total']!=''){?>
 									<tr>
 										<td colspan="3"><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['AFP_Nombre'].' ('.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['AFP_Porcentaje'].'%)'; ?></td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['AFP_Total'], 0); ?></td>
 									</tr>
 								<?php }
-								if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_Total'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_Total']!=''){ ?>
+								if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_Total'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_Total']!=''){?>
 									<tr>
 										<td colspan="3"><?php echo $_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_Nombre'].' ('.$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_Porcentaje'].'%)'; ?></td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['Salud_Total'], 0); ?></td>
@@ -313,13 +313,13 @@ require_once 'core/Web.Header.Views.php';
 										</tr>
 									<?php }
 								}
-								if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SegCesantia_Trabajador'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SegCesantia_Trabajador']!=''){ ?>
+								if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SegCesantia_Trabajador'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SegCesantia_Trabajador']!=''){?>
 									<tr>
 										<td colspan="3">Seguro de Cesantia</td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SegCesantia_Trabajador'], 0); ?></td>
 									</tr>
 								<?php }
-								if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['ImpuestoRenta'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['ImpuestoRenta']!=''){ ?>
+								if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['ImpuestoRenta'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['ImpuestoRenta']!=''){?>
 									<tr>
 										<td colspan="3">Impuesto a la Renta (<?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['RentaAfecta'], 0); ?>)</td>
 										<td align="right"><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['ImpuestoRenta'], 0); ?></td>
@@ -385,12 +385,12 @@ require_once 'core/Web.Header.Views.php';
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -401,12 +401,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

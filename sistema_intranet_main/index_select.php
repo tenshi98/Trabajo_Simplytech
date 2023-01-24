@@ -25,14 +25,14 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Session.php';        
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "index_select.php";
 $location = $original;
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para recuperar la contraseña
-if ( !empty($_GET['ini']) )  { 
+if (!empty($_GET['ini'])){
 	$form_trabajo= 'select_sistema';
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
@@ -63,7 +63,7 @@ if ( !empty($_GET['ini']) )  {
 			//echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
 			
 		////////////////////////////////////////////////////////////////////////////////
-		//si estoy en ambiente de produccion	
+		//si estoy en ambiente de produccion
 		}else{
 			echo '<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">';
 			echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
@@ -116,7 +116,7 @@ if ( !empty($_GET['ini']) )  {
 		<?php
 		//Favicon Personalizado
 		$nombre_fichero = 'img/mifavicon.png';
-		if (file_exists($nombre_fichero)) { ?>
+		if (file_exists($nombre_fichero)){ ?>
 			<link rel="icon"             type="image/png"                    href="img/mifavicon.png" >
 			<link rel="shortcut icon"    type="image/x-icon"                 href="img/mifavicon.png" >
 			<link rel="apple-touch-icon" type="image/x-icon"                 href="img/mifavicon-57x57.png">
@@ -124,7 +124,7 @@ if ( !empty($_GET['ini']) )  {
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/mifavicon-114x114.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/mifavicon-144x144.png">
 		<?php 
-		//Favicon predefinido	
+		//Favicon predefinido
 		}else{ ?>
 			<link rel="icon"             type="image/png"                    href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/favicon.png" >
 			<link rel="shortcut icon"    type="image/x-icon"                 href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/favicon.png" >
@@ -147,20 +147,20 @@ if ( !empty($_GET['ini']) )  {
 	<body class="login">
 		<canvas id="canv" style="width: 100%;height: 100%;position: fixed;top: 0px;left: 0px;"></canvas>
 	  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Si el usuario es un super usuario
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	// Se trae un listado con todos los sistemas
 	$arrSistemas  = array();
 	$arrSistemas  = db_select_array (false, 
-	'core_sistemas.idSistema, 
+	'core_sistemas.idSistema,
 	core_sistemas.Nombre AS RazonSocial, 
 	core_interfaces.Nombre AS Interfaz', 
-	'core_sistemas', 
+	'core_sistemas',
 	'LEFT JOIN `core_interfaces`  ON core_interfaces.idInterfaz  = core_sistemas.idOpcionesGen_7', 
-	'core_sistemas.idEstado=1', 
-	'core_sistemas.Nombre ASC', 
+	'core_sistemas.idEstado=1',
+	'core_sistemas.Nombre ASC',
 	$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGraficos');
 					
 //Si el usuario es un usuario normal
@@ -171,10 +171,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	'usuarios_sistemas.idSistema,
 	core_sistemas.Nombre AS RazonSocial, 
 	core_interfaces.Nombre AS Interfaz', 
-	'usuarios_sistemas', 
+	'usuarios_sistemas',
 	'LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema LEFT JOIN `core_interfaces`  ON core_interfaces.idInterfaz  = core_sistemas.idOpcionesGen_7', 
 	'usuarios_sistemas.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'].' AND core_sistemas.idEstado=1', 
-	'core_sistemas.Nombre ASC', 
+	'core_sistemas.Nombre ASC',
 	$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGraficos');
 												
 }
@@ -186,7 +186,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 <div class="container">
 	
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			
 		<div class="box">
 			<header>
@@ -196,7 +196,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				
 	
 
-				<div class="col-sm-4">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<div class="usercard usercard-widget widget-user">
 						<div class="widget-user-header text-white" style="background: url('<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/photo1.jpg') center center;">
 							<h3 class="widget-user-username text-right">Bienvenido</h3>
@@ -204,9 +204,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						</div>
 						<div class="widget-user-image">
 							<?php if ($_SESSION['usuario']['basic_data']['Direccion_img']=='') { ?>
-							<img class="img-circle" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
+							<img class="img-circle" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 							<?php }else{  ?>
-								<img class="img-circle" alt="User Picture" src="upload/<?php echo $_SESSION['usuario']['basic_data']['Direccion_img']; ?>">
+								<img class="img-circle" alt="Imagen Referencia" src="upload/<?php echo $_SESSION['usuario']['basic_data']['Direccion_img']; ?>">
 							<?php }?>
 						</div>
 						<div class="usercard-footer">
@@ -215,11 +215,11 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 							</div>
 						</div>
 					</div>
-				</div> 
+				</div>
 				
-				<div class="clearfix"></div>        
+				<div class="clearfix"></div>
 
-				<div class="col-sm-12">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="box">
 						<header>
 							<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Sistemas Autorizados</h5>
@@ -233,7 +233,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 										<th width="10">Acciones</th>
 									</tr>
 									<?php echo widget_sherlock(1, 3, 'TableFiltered');?>
-								</thead>			  
+								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 									<?php foreach ($arrSistemas as $sis) { ?>
 										<tr class="odd">
@@ -245,14 +245,14 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 												</div>
 											</td>
 										</tr>
-									<?php } ?>                    
+									<?php } ?>
 								</tbody>
 							</table>
-						</div> 
+						</div>
 					</div>
 				</div>
 	
-			</div> 
+			</div>
 		</div>
 			
 	</div>
@@ -318,7 +318,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 			rot: Math.random() * 180,
 			a1: Math.random() * 10,
 			a2: Math.random() * 10,
-			a3: Math.random() * 10 });
+			a3: Math.random() * 10});
 
 		};
 
@@ -352,7 +352,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
     </script>
 
 <script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/js/bootstrap.min.js"></script>
-<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/screenfull/screenfull.js"></script> 
+<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/screenfull/screenfull.js"></script>
 <script src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/jquery-ui-1.10.3.min.js"></script>
 <script src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/main.min.js"></script>
 

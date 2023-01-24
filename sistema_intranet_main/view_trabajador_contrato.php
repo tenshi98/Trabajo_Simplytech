@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -94,7 +94,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 		//se ejecuta al cargar la página (OBLIGATORIO)
 		$(document).ready(function(){
 			generate();
-		}); 				
+		});				
 		function loadFile(url,callback){
 			PizZipUtils.getBinaryContent(url,callback);
 		}
@@ -138,30 +138,30 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 				
 				<?php
 				//se deben validar
-				if(isset($rowdata['Trabajador_FechaContrato'])&&$rowdata['Trabajador_FechaContrato']!=''){           $Trabajador_FechaContrato       = Fecha_estandar($rowdata['Trabajador_FechaContrato']);        }else{$Trabajador_FechaContrato       = 'Sin datos';}
-				if(isset($rowdata['Empleador_Nombre'])&&$rowdata['Empleador_Nombre']!=''){                           $Empleador_Nombre               = $rowdata['Empleador_Nombre'];                                }else{$Empleador_Nombre               = 'Sin datos';}
-				if(isset($rowdata['Empleador_Rut'])&&$rowdata['Empleador_Rut']!=''){                                 $Empleador_Rut                  = $rowdata['Empleador_Rut'];                                   }else{$Empleador_Rut                  = 'Sin datos';}
-				if(isset($rowdata['Empleador_RepresentanteNombre'])&&$rowdata['Empleador_RepresentanteNombre']!=''){ $Empleador_RepresentanteNombre  = $rowdata['Empleador_RepresentanteNombre'];                   }else{$Empleador_RepresentanteNombre  = 'Sin datos';}
-				if(isset($rowdata['Empleador_RepresentanteRut'])&&$rowdata['Empleador_RepresentanteRut']!=''){       $Empleador_RepresentanteRut     = $rowdata['Empleador_RepresentanteRut'];                      }else{$Empleador_RepresentanteRut     = 'Sin datos';}
-				if(isset($rowdata['Empleador_Direccion'])&&$rowdata['Empleador_Direccion']!=''){                     $Empleador_Direccion            = $rowdata['Empleador_Direccion'];                             }else{$Empleador_Direccion            = 'Sin datos';}
-				if(isset($rowdata['Empleador_comuna'])&&$rowdata['Empleador_comuna']!=''){                           $Empleador_Direccion           .= ', '.$rowdata['Empleador_comuna'];                           }
-				if(isset($rowdata['Empleador_region'])&&$rowdata['Empleador_region']!=''){                           $Empleador_Direccion           .= ', '.$rowdata['Empleador_region'];                           }
-				if(isset($rowdata['Trabajador_Nombre'])&&$rowdata['Trabajador_Nombre']!=''){                         $Trabajador_Nombre              = $rowdata['Trabajador_Nombre'];                               }else{$Trabajador_Nombre              = 'Sin datos';}
-				if(isset($rowdata['Trabajador_ApellidoPat'])&&$rowdata['Trabajador_ApellidoPat']!=''){               $Trabajador_Nombre             .= ' '.$rowdata['Trabajador_ApellidoPat'];                      }
-				if(isset($rowdata['Trabajador_ApellidoMat'])&&$rowdata['Trabajador_ApellidoMat']!=''){               $Trabajador_Nombre             .= ' '.$rowdata['Trabajador_ApellidoMat'];                      }
-				if(isset($rowdata['Trabajador_Rut'])&&$rowdata['Trabajador_Rut']!=''){                               $Trabajador_Rut                 = $rowdata['Trabajador_Rut'];                                  }else{$Trabajador_Rut                 = 'Sin datos';}
-				if(isset($rowdata['Trabajador_FechaNacimiento'])&&$rowdata['Trabajador_FechaNacimiento']!=''){       $Trabajador_FechaNacimiento     = Fecha_estandar($rowdata['Trabajador_FechaNacimiento']);      }else{$Trabajador_FechaNacimiento     = 'Sin datos';}
-				if(isset($rowdata['Trabajador_EstadoCivil'])&&$rowdata['Trabajador_EstadoCivil']!=''){               $Trabajador_EstadoCivil         = $rowdata['Trabajador_EstadoCivil'];                          }else{$Trabajador_EstadoCivil         = 'Sin datos';}
-				if(isset($rowdata['Trabajador_Direccion'])&&$rowdata['Trabajador_Direccion']!=''){                   $Trabajador_Direccion           = $rowdata['Trabajador_Direccion'];                            }else{$Trabajador_Direccion           = 'Sin datos';}
-				if(isset($rowdata['Trabajador_Comunas'])&&$rowdata['Trabajador_Comunas']!=''){                       $Trabajador_Direccion          .= ', '.$rowdata['Trabajador_Comunas'];                         }
-				if(isset($rowdata['Trabajador_Ciudad'])&&$rowdata['Trabajador_Ciudad']!=''){                         $Trabajador_Direccion          .= ', '.$rowdata['Trabajador_Ciudad'];                          }
-				if(isset($rowdata['Trabajador_Cargo'])&&$rowdata['Trabajador_Cargo']!=''){                           $Trabajador_Cargo               = $rowdata['Trabajador_Cargo'];                                }else{$Trabajador_Cargo               = 'Sin datos';}
-				if(isset($rowdata['Trabajador_Sueldo'])&&$rowdata['Trabajador_Sueldo']!=''){                         $Trabajador_Sueldo              = valores($rowdata['Trabajador_Sueldo'], 0);                   }else{$Trabajador_Sueldo              = 'Sin datos';}
-				if(isset($rowdata['Trabajador_Sueldo'])&&$rowdata['Trabajador_Sueldo']!=''){                         $Trabajador_SueldoPalabras      = numtoletras($rowdata['Trabajador_Sueldo']);                  }else{$Trabajador_SueldoPalabras      = 'Sin datos';}
-				if(isset($rowdata['Trabajador_AFP'])&&$rowdata['Trabajador_AFP']!=''){                               $Trabajador_AFP                 = $rowdata['Trabajador_AFP'];                                  }else{$Trabajador_AFP                 = 'Sin datos';}
-				if(isset($rowdata['Trabajador_Salud'])&&$rowdata['Trabajador_Salud']!=''){                           $Trabajador_Salud               = $rowdata['Trabajador_Salud'];                                }else{$Trabajador_Salud               = 'Sin datos';}
-				if(isset($rowdata['Trabajador_FechaIngreso'])&&$rowdata['Trabajador_FechaIngreso']!=''){             $Trabajador_FechaIngreso        = Fecha_estandar($rowdata['Trabajador_FechaIngreso']);         }else{$Trabajador_FechaIngreso        = 'Sin datos';}
-				if(isset($rowdata['Trabajador_UbicacionTrabajo'])&&$rowdata['Trabajador_UbicacionTrabajo']!=''){     $Trabajador_UbicacionTrabajo    = $rowdata['Trabajador_UbicacionTrabajo'];                     }else{$Trabajador_UbicacionTrabajo    = 'Sin datos';}
+				if(isset($rowdata['Trabajador_FechaContrato'])&&$rowdata['Trabajador_FechaContrato']!=''){   $Trabajador_FechaContrato       = Fecha_estandar($rowdata['Trabajador_FechaContrato']);        }else{$Trabajador_FechaContrato       = 'Sin datos';}
+				if(isset($rowdata['Empleador_Nombre'])&&$rowdata['Empleador_Nombre']!=''){                   $Empleador_Nombre               = $rowdata['Empleador_Nombre'];                                }else{$Empleador_Nombre               = 'Sin datos';}
+				if(isset($rowdata['Empleador_Rut'])&&$rowdata['Empleador_Rut']!=''){                         $Empleador_Rut                  = $rowdata['Empleador_Rut'];                                   }else{$Empleador_Rut                  = 'Sin datos';}
+				if(isset($rowdata['Empleador_RepresentanteNombre'])&&$rowdata['Empleador_RepresentanteNombre']!=''){$Empleador_RepresentanteNombre  = $rowdata['Empleador_RepresentanteNombre'];                   }else{$Empleador_RepresentanteNombre  = 'Sin datos';}
+				if(isset($rowdata['Empleador_RepresentanteRut'])&&$rowdata['Empleador_RepresentanteRut']!=''){      $Empleador_RepresentanteRut     = $rowdata['Empleador_RepresentanteRut'];                      }else{$Empleador_RepresentanteRut     = 'Sin datos';}
+				if(isset($rowdata['Empleador_Direccion'])&&$rowdata['Empleador_Direccion']!=''){             $Empleador_Direccion            = $rowdata['Empleador_Direccion'];                             }else{$Empleador_Direccion            = 'Sin datos';}
+				if(isset($rowdata['Empleador_comuna'])&&$rowdata['Empleador_comuna']!=''){                   $Empleador_Direccion           .= ', '.$rowdata['Empleador_comuna'];                           }
+				if(isset($rowdata['Empleador_region'])&&$rowdata['Empleador_region']!=''){                   $Empleador_Direccion           .= ', '.$rowdata['Empleador_region'];                           }
+				if(isset($rowdata['Trabajador_Nombre'])&&$rowdata['Trabajador_Nombre']!=''){                 $Trabajador_Nombre              = $rowdata['Trabajador_Nombre'];                               }else{$Trabajador_Nombre              = 'Sin datos';}
+				if(isset($rowdata['Trabajador_ApellidoPat'])&&$rowdata['Trabajador_ApellidoPat']!=''){       $Trabajador_Nombre             .= ' '.$rowdata['Trabajador_ApellidoPat'];                      }
+				if(isset($rowdata['Trabajador_ApellidoMat'])&&$rowdata['Trabajador_ApellidoMat']!=''){       $Trabajador_Nombre             .= ' '.$rowdata['Trabajador_ApellidoMat'];                      }
+				if(isset($rowdata['Trabajador_Rut'])&&$rowdata['Trabajador_Rut']!=''){                       $Trabajador_Rut                 = $rowdata['Trabajador_Rut'];                                  }else{$Trabajador_Rut                 = 'Sin datos';}
+				if(isset($rowdata['Trabajador_FechaNacimiento'])&&$rowdata['Trabajador_FechaNacimiento']!=''){      $Trabajador_FechaNacimiento     = Fecha_estandar($rowdata['Trabajador_FechaNacimiento']);      }else{$Trabajador_FechaNacimiento     = 'Sin datos';}
+				if(isset($rowdata['Trabajador_EstadoCivil'])&&$rowdata['Trabajador_EstadoCivil']!=''){       $Trabajador_EstadoCivil         = $rowdata['Trabajador_EstadoCivil'];                          }else{$Trabajador_EstadoCivil         = 'Sin datos';}
+				if(isset($rowdata['Trabajador_Direccion'])&&$rowdata['Trabajador_Direccion']!=''){           $Trabajador_Direccion           = $rowdata['Trabajador_Direccion'];                            }else{$Trabajador_Direccion           = 'Sin datos';}
+				if(isset($rowdata['Trabajador_Comunas'])&&$rowdata['Trabajador_Comunas']!=''){               $Trabajador_Direccion          .= ', '.$rowdata['Trabajador_Comunas'];                         }
+				if(isset($rowdata['Trabajador_Ciudad'])&&$rowdata['Trabajador_Ciudad']!=''){                 $Trabajador_Direccion          .= ', '.$rowdata['Trabajador_Ciudad'];                          }
+				if(isset($rowdata['Trabajador_Cargo'])&&$rowdata['Trabajador_Cargo']!=''){                   $Trabajador_Cargo               = $rowdata['Trabajador_Cargo'];                                }else{$Trabajador_Cargo               = 'Sin datos';}
+				if(isset($rowdata['Trabajador_Sueldo'])&&$rowdata['Trabajador_Sueldo']!=''){                 $Trabajador_Sueldo              = valores($rowdata['Trabajador_Sueldo'], 0);                   }else{$Trabajador_Sueldo              = 'Sin datos';}
+				if(isset($rowdata['Trabajador_Sueldo'])&&$rowdata['Trabajador_Sueldo']!=''){                 $Trabajador_SueldoPalabras      = numtoletras($rowdata['Trabajador_Sueldo']);                  }else{$Trabajador_SueldoPalabras      = 'Sin datos';}
+				if(isset($rowdata['Trabajador_AFP'])&&$rowdata['Trabajador_AFP']!=''){                       $Trabajador_AFP                 = $rowdata['Trabajador_AFP'];                                  }else{$Trabajador_AFP                 = 'Sin datos';}
+				if(isset($rowdata['Trabajador_Salud'])&&$rowdata['Trabajador_Salud']!=''){                   $Trabajador_Salud               = $rowdata['Trabajador_Salud'];                                }else{$Trabajador_Salud               = 'Sin datos';}
+				if(isset($rowdata['Trabajador_FechaIngreso'])&&$rowdata['Trabajador_FechaIngreso']!=''){     $Trabajador_FechaIngreso        = Fecha_estandar($rowdata['Trabajador_FechaIngreso']);         }else{$Trabajador_FechaIngreso        = 'Sin datos';}
+				if(isset($rowdata['Trabajador_UbicacionTrabajo'])&&$rowdata['Trabajador_UbicacionTrabajo']!=''){    $Trabajador_UbicacionTrabajo    = $rowdata['Trabajador_UbicacionTrabajo'];                     }else{$Trabajador_UbicacionTrabajo    = 'Sin datos';}
 				
 				?>
 				

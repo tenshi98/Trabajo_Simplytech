@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_gerencial_10.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -25,8 +25,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['details_mensual']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['details_mensual'])){ 
 //Solo compras pagadas totalmente
 $z1 = "WHERE bodegas_arriendos_facturacion.idTipo=2"; //solo ventas
 $z2 = "WHERE bodegas_insumos_facturacion.idTipo=2";   //solo ventas
@@ -40,7 +40,7 @@ $z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic
 //variable             
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 
-if(isset($_GET['details_mensual'])&&$_GET['details_mensual']!=''){ 
+if(isset($_GET['details_mensual'])&&$_GET['details_mensual']!=''){
 	$z1.=" AND bodegas_arriendos_facturacion.idTrabajador=".$_GET['details_mensual'];
 	$z2.=" AND bodegas_insumos_facturacion.idTrabajador=".$_GET['details_mensual'];
 	$z3.=" AND bodegas_productos_facturacion.idTrabajador=".$_GET['details_mensual'];
@@ -55,10 +55,10 @@ if(isset($Ano)&&$Ano!=''){
 	$location .="&Creacion_ano=".$Ano;
 	$search .="&Creacion_ano=".$Ano;
 }
-if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){ 
+if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){
 	$location .="&idTrabajador=".$_GET['idTrabajador'];
 	$search .="&idTrabajador=".$_GET['idTrabajador'];
-}			
+}
 		
 
 			
@@ -94,7 +94,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_1,$row );
 }
 /*************************************************************************************************/
@@ -127,7 +127,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_2,$row );
 }
 /*************************************************************************************************/
@@ -160,7 +160,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_3,$row );
 }
 /*************************************************************************************************/
@@ -193,7 +193,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_4,$row );
 }
 /*************************************************************************************************/
@@ -240,19 +240,19 @@ $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
 ?>
-<div class="col-sm-12 clearfix">		
+<div class="col-sm-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_10_to_excel_4.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 			
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
 				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>	
 
@@ -296,7 +296,7 @@ $Total_4 = 0;
 						chart.draw(data, options);
 					}
 
-				</script> 
+				</script>
 				<div id="chart_arr_1" style="height: 500px; width: 100%;"></div>
 
 			</div>
@@ -340,22 +340,22 @@ $Total_4 = 0;
 						chart.draw(data, options);
 					}
 
-				</script> 
+				</script>
 				<div id="chart_arr_2" style="height: 500px; width: 100%;"></div>
 
 			</div>
 			
-        </div>	
+        </div>
 	</div>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Ventas Vendedores por mes</h5>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -384,8 +384,8 @@ $Total_4 = 0;
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrCreativo as $datais) { ?>
 						<tr class="odd"><td align="left" colspan="12" style="background-color: #BFBFBF;"><strong><?php echo $datais[0]['Trabajador']; ?></strong></td></tr>
-						<?php foreach ($datais as $prod) { ?>
-							<?php if(isset($prod['Creacion_mes'])&&$prod['Creacion_mes']!=''&&$prod['Creacion_mes']!=0){ ?>
+						<?php foreach ($datais as $prod) {?>
+							<?php if(isset($prod['Creacion_mes'])&&$prod['Creacion_mes']!=''&&$prod['Creacion_mes']!=0){?>
 							<tr class="odd">
 								<td align="left"></td>
 								<td align="left"><?php echo numero_a_mes($prod['Creacion_mes']); ?></td>
@@ -458,15 +458,15 @@ $Total_4 = 0;
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 	
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} elseif ( ! empty($_GET['details_diario']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['details_diario'])){ 
 //Solo compras pagadas totalmente
 $z1 = "WHERE bodegas_arriendos_facturacion.idTipo=2"; //solo ventas
 $z2 = "WHERE bodegas_insumos_facturacion.idTipo=2";   //solo ventas
@@ -480,7 +480,7 @@ $z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic
 //variable 
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 
-if(isset($_GET['details_diario'])&&$_GET['details_diario']!=''){ 
+if(isset($_GET['details_diario'])&&$_GET['details_diario']!=''){
 	$z1.=" AND bodegas_arriendos_facturacion.idTrabajador=".$_GET['details_diario'];
 	$z2.=" AND bodegas_insumos_facturacion.idTrabajador=".$_GET['details_diario'];
 	$z3.=" AND bodegas_productos_facturacion.idTrabajador=".$_GET['details_diario'];
@@ -496,10 +496,10 @@ if(isset($Ano)&&$Ano!=''){
 	$search .="&Creacion_ano=".$Ano;
 }
 
-if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){ 
+if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){
 	$location .="&idTrabajador=".$_GET['idTrabajador'];
 	$search .="&idTrabajador=".$_GET['idTrabajador'];
-}			
+}
 		
 
 			
@@ -535,7 +535,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_1,$row );
 }
 /*************************************************************************************************/
@@ -568,7 +568,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_2,$row );
 }
 /*************************************************************************************************/
@@ -601,7 +601,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_3,$row );
 }
 /*************************************************************************************************/
@@ -634,7 +634,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_4,$row );
 }
 /*************************************************************************************************/
@@ -681,19 +681,19 @@ $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
 ?>
-<div class="col-sm-12 clearfix">		
+<div class="col-sm-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_10_to_excel_3.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
 				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>	
 
@@ -711,7 +711,7 @@ $Total_4 = 0;
 
 						data.addRows([
 							<?php foreach ($arrCreativo as $datais) { 
-								foreach ($datais as $prod) { 
+								foreach ($datais as $prod) {
 									if(isset($prod['Creacion_fecha'])&&$prod['Creacion_fecha']!='0000-00-00'){
 										// subtotales
 										$sub = 0;
@@ -737,7 +737,7 @@ $Total_4 = 0;
 						chart.draw(data, options);
 					}
 
-				</script> 
+				</script>
 				<div id="chart_arr_1" style="height: 500px; width: 100%;"></div>
 
 			</div>
@@ -781,22 +781,22 @@ $Total_4 = 0;
 						chart.draw(data, options);
 					}
 
-				</script> 
+				</script>
 				<div id="chart_arr_2" style="height: 500px; width: 100%;"></div>
 
 			</div>
 			
-        </div>	
+        </div>
 	</div>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Ventas Vendedores Por dia</h5>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -825,8 +825,8 @@ $Total_4 = 0;
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrCreativo as $datais) { ?>
 						<tr class="odd"><td align="left" colspan="12" style="background-color: #BFBFBF;"><strong><?php echo $datais[0]['Trabajador']; ?></strong></td></tr>
-						<?php foreach ($datais as $prod) { ?>
-							<?php if(isset($prod['Creacion_fecha'])&&$prod['Creacion_fecha']!='0000-00-00'){ ?>
+						<?php foreach ($datais as $prod) {?>
+							<?php if(isset($prod['Creacion_fecha'])&&$prod['Creacion_fecha']!='0000-00-00'){?>
 							<tr class="odd">
 								<td align="left"></td>
 								<td align="left"><?php echo Fecha_estandar($prod['Creacion_fecha']); ?></td>
@@ -898,14 +898,14 @@ $Total_4 = 0;
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}elseif ( ! empty($_GET['details_semanal']) ) { 
+}elseif(!empty($_GET['details_semanal'])){ 
 //Solo compras pagadas totalmente
 $z1 = "WHERE bodegas_arriendos_facturacion.idTipo=2"; //solo ventas
 $z2 = "WHERE bodegas_insumos_facturacion.idTipo=2";   //solo ventas
@@ -919,7 +919,7 @@ $z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic
 //variable 
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 
-if(isset($_GET['details_semanal'])&&$_GET['details_semanal']!=''){ 
+if(isset($_GET['details_semanal'])&&$_GET['details_semanal']!=''){
 	$z1.=" AND bodegas_arriendos_facturacion.idTrabajador=".$_GET['details_semanal'];
 	$z2.=" AND bodegas_insumos_facturacion.idTrabajador=".$_GET['details_semanal'];
 	$z3.=" AND bodegas_productos_facturacion.idTrabajador=".$_GET['details_semanal'];
@@ -934,10 +934,10 @@ if(isset($Ano)&&$Ano!=''){
 	$location .="&Creacion_ano=".$Ano;
 	$search .="&Creacion_ano=".$Ano;
 }
-if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){ 
+if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){
 	$location .="&idTrabajador=".$_GET['idTrabajador'];
 	$search .="&idTrabajador=".$_GET['idTrabajador'];
-}			
+}
 		
 
 			
@@ -973,7 +973,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_1,$row );
 }
 /*************************************************************************************************/
@@ -1006,7 +1006,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_2,$row );
 }
 /*************************************************************************************************/
@@ -1039,7 +1039,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_3,$row );
 }
 /*************************************************************************************************/
@@ -1072,7 +1072,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_4,$row );
 }
 /*************************************************************************************************/
@@ -1119,19 +1119,19 @@ $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
 ?>
-<div class="col-sm-12 clearfix">		
+<div class="col-sm-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_10_to_excel_2.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
 				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>	
 
@@ -1175,7 +1175,7 @@ $Total_4 = 0;
 						chart.draw(data, options);
 					}
 
-				</script> 
+				</script>
 				<div id="chart_arr_1" style="height: 500px; width: 100%;"></div>
 
 			</div>
@@ -1219,22 +1219,22 @@ $Total_4 = 0;
 						chart.draw(data, options);
 					}
 
-				</script> 
+				</script>
 				<div id="chart_arr_2" style="height: 500px; width: 100%;"></div>
 
 			</div>
 			
-        </div>	
+        </div>
 	</div>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Ventas Vendedores por semana</h5>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -1263,8 +1263,8 @@ $Total_4 = 0;
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrCreativo as $datais) { ?>
 						<tr class="odd"><td align="left" colspan="12" style="background-color: #BFBFBF;"><strong><?php echo $datais[0]['Trabajador']; ?></strong></td></tr>
-						<?php foreach ($datais as $prod) { ?>
-							<?php if(isset($prod['Creacion_Semana'])&&$prod['Creacion_Semana']!=''&&$prod['Creacion_Semana']!=0){ ?>
+						<?php foreach ($datais as $prod) {?>
+							<?php if(isset($prod['Creacion_Semana'])&&$prod['Creacion_Semana']!=''&&$prod['Creacion_Semana']!=0){?>
 							<tr class="odd">
 								<td align="left"></td>
 								<td align="left"><?php echo $prod['Creacion_Semana']; ?></td>
@@ -1337,21 +1337,21 @@ $Total_4 = 0;
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 	
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 
              
   
 
 //Se definen las variables
-if(isset($_GET["Ano"])){   $Ano = $_GET["Ano"];   } else { $Ano  = ano_actual(); }
+if(isset($_GET['Ano'])){   $Ano = $_GET['Ano'];   } else { $Ano  = ano_actual();}
 
 //Solo compras pagadas totalmente
 $z1 = "WHERE bodegas_arriendos_facturacion.idTipo=2"; //solo ventas
@@ -1403,7 +1403,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_1,$row );
 }
 /*************************************************************************************************/
@@ -1434,7 +1434,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_2,$row );
 }
 /*************************************************************************************************/
@@ -1465,7 +1465,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_3,$row );
 }
 /*************************************************************************************************/
@@ -1496,7 +1496,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_4,$row );
 }
 /*************************************************************************************************/
@@ -1539,11 +1539,11 @@ $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
 ?>
-<div class="col-sm-12 clearfix">		
+<div class="col-sm-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_10_to_excel_1.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="">	
 		<div id="calendar_content" class="body">
 			<div id="calendar" class="fc fc-ltr">
@@ -1551,9 +1551,9 @@ $Total_4 = 0;
 					<tbody>
 						<tr>
 							<?php
-							if(isset($_GET["Ano"])){
-								$Ano_a  = $_GET["Ano"] - 1;
-								$Ano_b  = $_GET["Ano"] + 1;	
+							if(isset($_GET['Ano'])){
+								$Ano_a  = $_GET['Ano'] - 1;
+								$Ano_b  = $_GET['Ano'] + 1;	
 							} else {
 								$Ano_a  = ano_actual() - 1;
 								$Ano_b  = ano_actual() + 1;
@@ -1570,15 +1570,15 @@ $Total_4 = 0;
 	</div>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
 				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>	
 
@@ -1595,7 +1595,7 @@ $Total_4 = 0;
 						data.addColumn('number', 'Valor');
 
 						data.addRows([
-							<?php foreach ($arrCreativo as $prod) { 
+							<?php foreach ($arrCreativo as $prod) {
 								// subtotales
 								$sub = 0;
 								if(isset($prod['Neto_1'])){$sub = $sub + $prod['Neto_1'];}
@@ -1620,7 +1620,7 @@ $Total_4 = 0;
 						chart.draw(data, options);
 					}
 
-				</script> 
+				</script>
 				<div id="chart_arr_1" style="height: 500px; width: 100%;"></div>
 
 			</div>
@@ -1637,7 +1637,7 @@ $Total_4 = 0;
 						data.addColumn('number', 'Valor');
 
 						data.addRows([
-							<?php foreach ($arrCreativo as $prod) { 
+							<?php foreach ($arrCreativo as $prod) {
 								// subtotales
 								$sub = 0;
 								if(isset($prod['Total_1'])){$sub = $sub + $prod['Total_1'];}
@@ -1662,22 +1662,22 @@ $Total_4 = 0;
 						chart.draw(data, options);
 					}
 
-				</script> 
+				</script>
 				<div id="chart_arr_2" style="height: 500px; width: 100%;"></div>
 				
 			</div>
 			
-        </div>	
+        </div>
 	</div>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Ventas por vendedor</h5>	
+			<h5>Ventas por vendedor</h5>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -1705,7 +1705,7 @@ $Total_4 = 0;
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrCreativo as $prod) { ?>
+					<?php foreach ($arrCreativo as $prod) {?>
 						<tr class="odd">
 							<td align="left"><?php echo $prod['Trabajador']; ?></td>
 							

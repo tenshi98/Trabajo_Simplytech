@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_aguas_gerencial_02.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -28,8 +28,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 // Se trae un listado con todos los elementos
 $arrFacturacion = array();
@@ -78,7 +78,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrFacturacion,$row );
 }
 
@@ -89,16 +89,16 @@ array_push( $arrFacturacion,$row );
 	$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 	$zz .= '&f_inicio='.$_GET['f_inicio'];
 	$zz .= '&f_termino='.$_GET['f_termino'];
-	?>			
+	?>		
 	<a target="new" href="<?php echo 'informe_aguas_gerencial_02_to_print.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-5 pull-right margin_width"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen</h5>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -176,7 +176,7 @@ array_push( $arrFacturacion,$row );
 						<td align="right" class="info"><strong><?php echo Valores($x6, 0); ?></strong></td>
 						<td align="right" class="info"><strong><?php echo Valores($x5 - $x6, 0); ?></strong></td>
 
-					</tr> 
+					</tr>
 					                 
 				</tbody>
 			</table>
@@ -265,7 +265,7 @@ array_push( $arrFacturacion,$row );
 					chart.draw(data, options);
 				}
 
-			</script> 
+			</script>
 			<div id="curve_chart_1" style="height: 500px"></div>
 			<div id="curve_chart_2" style="height: 500px"></div>
 			
@@ -274,43 +274,43 @@ array_push( $arrFacturacion,$row );
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {    $x1  = $f_inicio;   }else{$x1  = '';}
-				if(isset($f_termino)) {   $x2  = $f_termino;  }else{$x2  = '';}
-				
+				if(isset($f_inicio)){    $x1  = $f_inicio;   }else{$x1  = '';}
+				if(isset($f_termino)){   $x2  = $f_termino;  }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio Periodo','f_inicio', $x1, 2);
 				$Form_Inputs->form_date('Fecha Termino Periodo','f_termino', $x2, 2);
 						
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

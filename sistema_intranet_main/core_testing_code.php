@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_testing_code.php";
 $location = $original;
 /**********************************************************************************************************************************/
@@ -22,63 +22,58 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['test_proyecciones']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['test_proyecciones'])){
 //Libreria
 require_once '../LIBS_php/PHP_ML/vendor/autoload.php';
 //Funcion
-//use Phpml\Regression\LeastSquares;	
-	
+//use Phpml\Regression\LeastSquares;
 
 $arrContador     = array();
-$arrTemperatura  = array();	
-	
+$arrTemperatura  = array();
+
 $temp = 10;
 $n_Prediccion = 2;
-				
+
 for ($counter = 1; $counter <= 10; $counter++) {
 	$temp++;
     $arrContador[$counter][0]   = $counter;
 	//$arrTemperatura[$counter]   = str_replace(',', '.', cantidades($temp, 2));
 	$arrTemperatura[$counter]   = cantidades_google(cantidades($temp, 2));
-}				
-	
+}
+
 echo '<pre>';
 var_dump($arrTemperatura);
 echo '</pre>';
-					
+
 $regression = new Phpml\Regression\LeastSquares();
 $regression->train($arrContador, $arrTemperatura);
 //se guarda dato (60 datos por 5 horas + 36 datos por 3 horas a futuro)
 $Helada = $regression->predict([$n_Prediccion]);
 
 echo $Helada;
-?>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['test_logo'])){
 
-
-
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['test_logo']) ) { 
-	
 	//variables
 	$email     = 'tenshi98@gmail.com';
 	$Nombre    = 'test';
 	$usuario   = 'test';
 	$idSistema = 1;
-	
+
 	//logo de la compañia
 	$login_logo = DB_SITE_MAIN.'/img/login_logo.png';
 	$login_logo2 = 'img/login_logo.png';
-	
+
 	//solo si existe
-	if (file_exists($login_logo2)) {
+	if (file_exists($login_logo2)){
 		//envio de correo
 		try {
-								
+
 			//se consulta el correo
-			$rowusr = db_select_data (false, 'Nombre, email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas', '', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowusr');
-									
-			//Se crea el cuerpo	
+			$rowusr = db_select_data (false, 'Nombre,email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas','', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowusr');
+
+			//Se crea el cuerpo
 			$BodyMail  = '<div style="background-color: #D9D9D9; padding: 10px;">';
 			$BodyMail .= '<img src="'.$login_logo.'" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
 			$BodyMail .= '<h3 style="text-align: center;font-size: 30px;">';
@@ -91,43 +86,40 @@ echo $Helada;
 			$BodyMail .= '</p>';
 			$BodyMail .= '<a href="'.DB_SITE_MAIN.'" style="display:block;width:100%;text-align: center;font-size: 20px;text-decoration: none;color: #004AAD;"><strong>Empezar &#8594;</strong></a>';
 			$BodyMail .= '</div>';
-									
-			$rmail = tareas_envio_correo($rowusr['email_principal'], $rowusr['Nombre'], 
-										 $email, $Nombre, 
-										 '', '', 
-										 'Registro de Usuario', 
-										 $BodyMail,'', 
-										 '', 
-										 1, 
-										 $rowusr['Gmail_Usuario'], 
+
+			$rmail = tareas_envio_correo($rowusr['email_principal'], $rowusr['Nombre'],
+										 $email, $Nombre,
+										 '', '',
+										 'Registro de Usuario',
+										 $BodyMail,'',
+										 '',
+										 1,
+										 $rowusr['Gmail_Usuario'],
 										 $rowusr['Gmail_Password']);
 			//se guarda el log
 			log_response(1, $rmail, $email.' (Asunto:Registro de Usuario)');
-									 
+
 			echo "correo de test enviado";
 		} catch (Exception $e) {
 			echo "error de test:".$e->getMessage();
-		}	
+		}
 	}else{
 		echo "logo no existe (".$login_logo.")";
 	}
-	
-	?>
-	 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['test_fnx']) ) { 
-	
-	$rowData = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema=1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_fnx');
-	echo 'Nombre Sistema 1:'.$rowData['Nombre'].'<br/>'; 
-	$rowData = db_select_nrows (false, 'idSistema', 'core_sistemas', '', 'Nombre="Empresa 1"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_fnx');
-	echo 'numero Sistema 1:'.$rowData.'<br/>'; 
-	 
-	?>	 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['fact_repair']) ) { 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['test_fnx'])){
+
+	$rowData = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema=1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_fnx');
+	echo 'Nombre Sistema 1:'.$rowData['Nombre'].'<br/>';
+	$rowData = db_select_nrows (false, 'idSistema', 'core_sistemas','', 'Nombre="Empresa 1"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'test_fnx');
+	echo 'numero Sistema 1:'.$rowData.'<br/>';
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ }elseif(!empty($_GET['fact_repair'])){
 // Se trae un listado con todos los pagos
 $arrPagosClientes = array();
-$query = "SELECT 
+$query = "SELECT
 pagos_facturas_clientes.idPago,
 pagos_facturas_clientes.idTipo,
 pagos_facturas_clientes.idFacturacion,
@@ -162,7 +154,7 @@ LEFT JOIN `bodegas_servicios_facturacion`  NotaCredito_Serv  ON NotaCredito_Serv
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPagosClientes,$row );
 }
 
@@ -181,7 +173,7 @@ foreach ($arrPagosClientes as $pagos) {
 				//cambio el estado de la factura a eliminado
 				$query  = "UPDATE bodegas_insumos_facturacion SET idEstado = '3' WHERE idFacturacion = ".$pagos['idFacturacion'];
 				echo $query.';<br/><br/>';
-			//si no lo es	
+			//si no lo es
 			}elseif($pagos['Insumos_MontoFactura']!=$pagos['Insumos_MontoNotaCredito']&&$pagos['Insumos_MontoNotaCredito']!=0){
 				//actualizo el valor del pago
 				$nuevo_valor = $pagos['MontoPagado'] - $pagos['Insumos_MontoNotaCredito'];
@@ -199,7 +191,7 @@ foreach ($arrPagosClientes as $pagos) {
 				//cambio el estado de la factura a eliminado
 				$query  = "UPDATE bodegas_productos_facturacion SET idEstado = '3' WHERE idFacturacion = ".$pagos['idFacturacion'];
 				echo $query.';<br/><br/>';
-			//si no lo es	
+			//si no lo es
 			}elseif($pagos['Productos_MontoFactura']!=$pagos['Productos_MontoNotaCredito']&&$pagos['Productos_MontoNotaCredito']!=0){
 				//actualizo el valor del pago
 				$nuevo_valor = $pagos['MontoPagado'] - $pagos['Productos_MontoNotaCredito'];
@@ -217,7 +209,7 @@ foreach ($arrPagosClientes as $pagos) {
 				//cambio el estado de la factura a eliminado
 				$query  = "UPDATE bodegas_servicios_facturacion SET idEstado = '3' WHERE idFacturacion = ".$pagos['idFacturacion'];
 				echo $query.';<br/><br/>';
-			//si no lo es	
+			//si no lo es
 			}elseif($pagos['Servicios_MontoFactura']!=$pagos['Servicios_MontoNotaCredito']&&$pagos['Servicios_MontoNotaCredito']!=0){
 				//actualizo el valor del pago
 				$nuevo_valor = $pagos['MontoPagado'] - $pagos['Servicios_MontoNotaCredito'];
@@ -235,7 +227,7 @@ foreach ($arrPagosClientes as $pagos) {
 				//cambio el estado de la factura a eliminado
 				$query  = "UPDATE bodegas_arriendos_facturacion SET idEstado = '3' WHERE idFacturacion = ".$pagos['idFacturacion'];
 				echo $query.';<br/><br/>';
-			//si no lo es	
+			//si no lo es
 			}elseif($pagos['Arriendos_MontoFactura']!=$pagos['Arriendos_MontoNotaCredito']&&$pagos['Arriendos_MontoNotaCredito']!=0){
 				//actualizo el valor del pago
 				$nuevo_valor = $pagos['MontoPagado'] - $pagos['Arriendos_MontoNotaCredito'];
@@ -249,7 +241,7 @@ foreach ($arrPagosClientes as $pagos) {
 
 // Se trae un listado con todos los pagos
 $arrPagosProveedores = array();
-$query = "SELECT 
+$query = "SELECT
 pagos_facturas_proveedores.idPago,
 pagos_facturas_proveedores.idTipo,
 pagos_facturas_proveedores.idFacturacion,
@@ -284,7 +276,7 @@ LEFT JOIN `bodegas_servicios_facturacion`  NotaCredito_Serv  ON NotaCredito_Serv
 ";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPagosProveedores,$row );
 }
 
@@ -303,7 +295,7 @@ foreach ($arrPagosProveedores as $pagos) {
 				//cambio el estado de la factura a eliminado
 				$query  = "UPDATE bodegas_insumos_facturacion SET idEstado = '3' WHERE idFacturacion = ".$pagos['idFacturacion'];
 				echo $query.';<br/><br/>';
-			//si no lo es	
+			//si no lo es
 			}elseif($pagos['Insumos_MontoFactura']!=$pagos['Insumos_MontoNotaCredito']&&$pagos['Insumos_MontoNotaCredito']!=0){
 				//actualizo el valor del pago
 				$nuevo_valor = $pagos['MontoPagado'] - $pagos['Insumos_MontoNotaCredito'];
@@ -321,7 +313,7 @@ foreach ($arrPagosProveedores as $pagos) {
 				//cambio el estado de la factura a eliminado
 				$query  = "UPDATE bodegas_productos_facturacion SET idEstado = '3' WHERE idFacturacion = ".$pagos['idFacturacion'];
 				echo $query.';<br/><br/>';
-			//si no lo es	
+			//si no lo es
 			}elseif($pagos['Productos_MontoFactura']!=$pagos['Productos_MontoNotaCredito']&&$pagos['Productos_MontoNotaCredito']!=0){
 				//actualizo el valor del pago
 				$nuevo_valor = $pagos['MontoPagado'] - $pagos['Productos_MontoNotaCredito'];
@@ -339,7 +331,7 @@ foreach ($arrPagosProveedores as $pagos) {
 				//cambio el estado de la factura a eliminado
 				$query  = "UPDATE bodegas_servicios_facturacion SET idEstado = '3' WHERE idFacturacion = ".$pagos['idFacturacion'];
 				echo $query.';<br/><br/>';
-			//si no lo es	
+			//si no lo es
 			}elseif($pagos['Servicios_MontoFactura']!=$pagos['Servicios_MontoNotaCredito']&&$pagos['Servicios_MontoNotaCredito']!=0){
 				//actualizo el valor del pago
 				$nuevo_valor = $pagos['MontoPagado'] - $pagos['Servicios_MontoNotaCredito'];
@@ -357,7 +349,7 @@ foreach ($arrPagosProveedores as $pagos) {
 				//cambio el estado de la factura a eliminado
 				$query  = "UPDATE bodegas_arriendos_facturacion SET idEstado = '3' WHERE idFacturacion = ".$pagos['idFacturacion'];
 				echo $query.';<br/><br/>';
-			//si no lo es	
+			//si no lo es
 			}elseif($pagos['Arriendos_MontoFactura']!=$pagos['Arriendos_MontoNotaCredito']&&$pagos['Arriendos_MontoNotaCredito']!=0){
 				//actualizo el valor del pago
 				$nuevo_valor = $pagos['MontoPagado'] - $pagos['Arriendos_MontoNotaCredito'];
@@ -366,14 +358,9 @@ foreach ($arrPagosProveedores as $pagos) {
 			}
 			break;
 	}
-} 
-
-	 
-?>
-
-
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['test_cross']) ) { 
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['test_cross'])){
 $idPredio = 1;
 // consulto los datos
 $query = "SELECT Nombre
@@ -385,18 +372,18 @@ $resultado = mysqli_query ($dbConn, $query);
 if(!$resultado){
 	//Genero numero aleatorio
 	$vardata = genera_password(8,'alfanumerico');
-					
+
 	//Guardo el error en una variable temporal
 	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
 //Se traen las rutas
 $arrZonas = array();
-$query = "SELECT 
+$query = "SELECT
 cross_predios_listado_zonas.idZona,
 cross_predios_listado_zonas.Nombre,
 cross_predios_listado_zonas_ubicaciones.Latitud,
@@ -405,7 +392,7 @@ cross_predios_listado_zonas_ubicaciones.Longitud
 FROM `cross_predios_listado_zonas`
 LEFT JOIN `cross_predios_listado_zonas_ubicaciones` ON cross_predios_listado_zonas_ubicaciones.idZona = cross_predios_listado_zonas.idZona
 WHERE cross_predios_listado_zonas.idPredio = {$idPredio}
-ORDER BY cross_predios_listado_zonas.idZona ASC, 
+ORDER BY cross_predios_listado_zonas.idZona ASC,
 cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -413,28 +400,28 @@ $resultado = mysqli_query ($dbConn, $query);
 if(!$resultado){
 	//Genero numero aleatorio
 	$vardata = genera_password(8,'alfanumerico');
-					
+
 	//Guardo el error en una variable temporal
 	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrZonas,$row );
 }
 
 ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
-		<header>		
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
-			
-			<div class="col-sm-8">
+
+			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				<div class="row">
 					<?php
 					//Si no existe una ID se utiliza una por defecto
@@ -443,7 +430,7 @@ array_push( $arrZonas,$row );
 						alert_post_data(4,2,2, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle'];
-					
+
 						if(isset($_GET['Latitud'])&&isset($_GET['Longitud'])&&$_GET['Latitud']!=''&&$_GET['Longitud']!=''){
 							$Latitud = $_GET['Latitud'];
 							$Longitud = $_GET['Longitud'];
@@ -455,7 +442,7 @@ array_push( $arrZonas,$row );
 						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
-							
+
 							var map;
 							var marker;
 							/* ************************************************************************** */
@@ -468,7 +455,7 @@ array_push( $arrZonas,$row );
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								
+
 								marker = new google.maps.Marker({
 									draggable	: true,
 									position	: myLatlng,
@@ -477,38 +464,37 @@ array_push( $arrZonas,$row );
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
-								
+
 								google.maps.event.addListener(marker, 'dragend', function (event) {
 
 									document.getElementById("Latitud").value = event.latLng.lat();
 									document.getElementById("Longitud").value = event.latLng.lng();
-									
+
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
-									
 
 								});
-							
+
 								//RutasAlternativas();
 								dibuja_zona();
 
 							}
 							/* ************************************************************************** */
 							function dibuja_zona() {
-								
+
 								var polygons = [];
-								<?php 
+								<?php
 								//Se filtra por zona
 								filtrar($arrZonas, 'idZona');
 								//se recorre
 								foreach ($arrZonas as $todaszonas=>$zonas) {
-									
+
 									echo 'var path'.$todaszonas.' = [';
 
 									//Variables con la primera posicion
 									$Latitud_x = '';
 									$Longitud_x = '';
-									
+
 									foreach ($zonas as $puntos) {
 										echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
 										';
@@ -517,13 +503,13 @@ array_push( $arrZonas,$row );
 											$Longitud_x = $puntos['Longitud'];
 										}
 									}
-									
+
 									if(isset($Longitud_x)&&$Longitud_x!=''){
-										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}';
 									}
-									
+
 									echo '];';
-									
+
 									echo '
 									polygons.push(new google.maps.Polygon({
 										paths: path'.$todaszonas.',
@@ -535,7 +521,7 @@ array_push( $arrZonas,$row );
 									}));
 									polygons[polygons.length-1].setMap(map);
 									';
-										
+
 								}?>
 							}
 							/* ************************************************************************** */
@@ -545,12 +531,12 @@ array_push( $arrZonas,$row );
 					<?php } ?>
 				</div>
 			</div>
-		
-			<div class="col-sm-4">
+
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-				
-						<?php 
+
+						<?php
 						//Deteccion de Zona
 						$pointLocation = new subpointLocation();
 						$nx_zona = 0;
@@ -583,43 +569,41 @@ array_push( $arrZonas,$row );
 							}
 							//echo 'c_chek='.$c_chek.'<br/>';
 						}
-						
-						
+
 						/********************************************************/
 						//Inputs
-						if(isset($idTelemetria)) {   $x1  = $idTelemetria;  }elseif(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){    $x1  = $_GET['idTelemetria'];   }else{$x1  = '';}
-						if(isset($GeoVelocidad)) {   $x3  = $GeoVelocidad;  }elseif(isset($_GET['GeoVelocidad'])&&$_GET['GeoVelocidad']!=''){    $x3  = $_GET['GeoVelocidad'];   }else{$x3  = '';}
-						if(isset($GeoMovimiento)) {  $x4  = $GeoMovimiento; }elseif(isset($_GET['GeoMovimiento'])&&$_GET['GeoMovimiento']!=''){  $x4  = $_GET['GeoMovimiento'];  }else{$x4  = '';}
-						if(isset($Sensor_1)) {       $x5  = $Sensor_1;      }elseif(isset($_GET['Sensor_1'])&&$_GET['Sensor_1']!=''){            $x5  = $_GET['Sensor_1'];       }else{$x5  = '';}
-						if(isset($Sensor_2)) {       $x6  = $Sensor_2;      }elseif(isset($_GET['Sensor_2'])&&$_GET['Sensor_2']!=''){            $x6  = $_GET['Sensor_2'];       }else{$x6  = '';}
-						if(isset($Sensor_3)) {       $x7  = $Sensor_3;      }elseif(isset($_GET['Sensor_3'])&&$_GET['Sensor_3']!=''){            $x7  = $_GET['Sensor_3'];       }else{$x7  = '';}
-						if(isset($Sensor_4)) {       $x8  = $Sensor_4;      }elseif(isset($_GET['Sensor_4'])&&$_GET['Sensor_4']!=''){            $x8  = $_GET['Sensor_4'];       }else{$x8  = '';}
-						
+						if(isset($idTelemetria)){   $x1  = $idTelemetria;  }elseif(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){   $x1  = $_GET['idTelemetria'];   }else{$x1  = '';}
+						if(isset($GeoVelocidad)){   $x3  = $GeoVelocidad;  }elseif(isset($_GET['GeoVelocidad'])&&$_GET['GeoVelocidad']!=''){   $x3  = $_GET['GeoVelocidad'];   }else{$x3  = '';}
+						if(isset($GeoMovimiento)){  $x4  = $GeoMovimiento; }elseif(isset($_GET['GeoMovimiento'])&&$_GET['GeoMovimiento']!=''){ $x4  = $_GET['GeoMovimiento'];  }else{$x4  = '';}
+						if(isset($Sensor_1)){       $x5  = $Sensor_1;      }elseif(isset($_GET['Sensor_1'])&&$_GET['Sensor_1']!=''){    $x5  = $_GET['Sensor_1'];       }else{$x5  = '';}
+						if(isset($Sensor_2)){       $x6  = $Sensor_2;      }elseif(isset($_GET['Sensor_2'])&&$_GET['Sensor_2']!=''){    $x6  = $_GET['Sensor_2'];       }else{$x6  = '';}
+						if(isset($Sensor_3)){       $x7  = $Sensor_3;      }elseif(isset($_GET['Sensor_3'])&&$_GET['Sensor_3']!=''){    $x7  = $_GET['Sensor_3'];       }else{$x7  = '';}
+						if(isset($Sensor_4)){       $x8  = $Sensor_4;      }elseif(isset($_GET['Sensor_4'])&&$_GET['Sensor_4']!=''){    $x8  = $_GET['Sensor_4'];       }else{$x8  = '';}
+
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $Latitud);
 						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $Longitud);
-						
-						$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 0, '', $dbConn);	
+
+						$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 0, '', $dbConn);
 						$Form_Inputs->form_input_number('Velocidad','GeoVelocidad', $x3, 2);
 						$Form_Inputs->form_input_number('Distancia','GeoMovimiento', $x4, 2);
 						$Form_Inputs->form_input_number('Caudal Derecho','Sensor_1', $x5, 2);
 						$Form_Inputs->form_input_number('Caudal Izquierdo','Sensor_2', $x6, 2);
 						$Form_Inputs->form_input_number('nivel','Sensor_3', $x7, 2);
 						$Form_Inputs->form_input_number('otro','Sensor_4', $x8, 2);
-						
+
 						$Form_Inputs->form_input_hidden('FechaSistema', fecha_actual(), 2);
 						$Form_Inputs->form_input_hidden('HoraSistema', hora_actual(), 2);
 						$Form_Inputs->form_input_hidden('TimeStamp', fecha_actual().' '.hora_actual(), 2);
 						$Form_Inputs->form_input_hidden('GeoLatitud', $Latitud, 2);
 						$Form_Inputs->form_input_hidden('GeoLongitud', $Longitud, 2);
-						
+
 						//no borrar
 						$Form_Inputs->form_input_hidden('Latitud', 0, 2);
 						$Form_Inputs->form_input_hidden('Longitud', 0, 2);
 						$Form_Inputs->form_input_hidden('test_cross', 'true', 2);
-						
-								
+
 						/********************************************************/
 						//Guardo el dato en la tabla relacionada
 						if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!='') {
@@ -637,63 +621,59 @@ array_push( $arrZonas,$row );
 							$Sensor_2       = $_GET['Sensor_2'];
 							$Sensor_3       = $_GET['Sensor_3'];
 							$Sensor_4       = $_GET['Sensor_4'];
-							
-							
-							if(isset($idTelemetria) && $idTelemetria != ''){      $a  = "'".$idTelemetria."'" ;    }else{$a  ="''";}
-							if(isset($FechaSistema) && $FechaSistema != ''){      $a .= ",'".$FechaSistema."'" ;   }else{$a .=",''";}
-							if(isset($HoraSistema) && $HoraSistema != ''){        $a .= ",'".$HoraSistema."'" ;    }else{$a .=",''";}
-							if(isset($TimeStamp) && $TimeStamp != ''){            $a .= ",'".$TimeStamp."'" ;      }else{$a .=",''";}
-							if(isset($GeoLatitud) && $GeoLatitud != ''){          $a .= ",'".$GeoLatitud."'" ;     }else{$a .=",''";}
-							if(isset($GeoLongitud) && $GeoLongitud != ''){        $a .= ",'".$GeoLongitud."'" ;    }else{$a .=",''";}
-							if(isset($GeoVelocidad) && $GeoVelocidad != ''){      $a .= ",'".$GeoVelocidad."'" ;   }else{$a .=",''";}
-							if(isset($GeoMovimiento) && $GeoMovimiento != ''){    $a .= ",'".$GeoMovimiento."'" ;  }else{$a .=",''";}
-							if(isset($idZona) && $idZona != ''){                  $a .= ",'".$idZona."'" ;         }else{$a .=",''";}
-							if(isset($Sensor_1) && $Sensor_1 != ''){              $a .= ",'".$Sensor_1."'" ;       }else{$a .=",''";}
-							if(isset($Sensor_2) && $Sensor_2 != ''){              $a .= ",'".$Sensor_2."'" ;       }else{$a .=",''";}
-							if(isset($Sensor_3) && $Sensor_3 != ''){              $a .= ",'".$Sensor_3."'" ;       }else{$a .=",''";}
-							if(isset($Sensor_4) && $Sensor_4 != ''){              $a .= ",'".$Sensor_4."'" ;       }else{$a .=",''";}
-							
-							
+
+							if(isset($idTelemetria) && $idTelemetria!=''){      $a  = "'".$idTelemetria."'";    }else{$a  ="''";}
+							if(isset($FechaSistema) && $FechaSistema!=''){      $a .= ",'".$FechaSistema."'";   }else{$a .=",''";}
+							if(isset($HoraSistema) && $HoraSistema!=''){        $a .= ",'".$HoraSistema."'";    }else{$a .=",''";}
+							if(isset($TimeStamp) && $TimeStamp!=''){            $a .= ",'".$TimeStamp."'";      }else{$a .=",''";}
+							if(isset($GeoLatitud) && $GeoLatitud!=''){          $a .= ",'".$GeoLatitud."'";     }else{$a .=",''";}
+							if(isset($GeoLongitud) && $GeoLongitud!=''){        $a .= ",'".$GeoLongitud."'";    }else{$a .=",''";}
+							if(isset($GeoVelocidad) && $GeoVelocidad!=''){      $a .= ",'".$GeoVelocidad."'";   }else{$a .=",''";}
+							if(isset($GeoMovimiento) && $GeoMovimiento!=''){    $a .= ",'".$GeoMovimiento."'";  }else{$a .=",''";}
+							if(isset($idZona) && $idZona!=''){                  $a .= ",'".$idZona."'";         }else{$a .=",''";}
+							if(isset($Sensor_1) && $Sensor_1!=''){              $a .= ",'".$Sensor_1."'";       }else{$a .=",''";}
+							if(isset($Sensor_2) && $Sensor_2!=''){              $a .= ",'".$Sensor_2."'";       }else{$a .=",''";}
+							if(isset($Sensor_3) && $Sensor_3!=''){              $a .= ",'".$Sensor_3."'";       }else{$a .=",''";}
+							if(isset($Sensor_4) && $Sensor_4!=''){              $a .= ",'".$Sensor_4."'";       }else{$a .=",''";}
+
 							//query
 							$query  = "INSERT INTO `telemetria_listado_tablarelacionada_".$idTelemetria."` (
-							idTelemetria, FechaSistema, HoraSistema, TimeStamp, 
-							GeoLatitud, GeoLongitud, GeoVelocidad,GeoMovimiento, 
+							idTelemetria, FechaSistema, HoraSistema, TimeStamp,
+							GeoLatitud, GeoLongitud, GeoVelocidad,GeoMovimiento,
 							idZona, Sensor_1, Sensor_2,Sensor_3, Sensor_4
 							) VALUES (".$a.")";
 							//Consulta
 							$resultado = mysqli_query ($dbConn, $query);
-							
+
 						}
-						
+
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Punto" name="submit_punto"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Punto" name="submit_punto">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
-					
+
 				</div>
-				
+
 				<div style="margin-top:20px;">
-					
-						<?php echo 'nx_zona='.$nx_zona; ?>
-					
-				</div>	
+					<?php echo 'nx_zona='.$nx_zona; ?>
+				</div>
 			</div>
-			
-		</div>	
+
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['user_correction']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['user_correction'])){
 $arrUsuarios = array();
 $query = "SELECT idUsuario, idSistema
 FROM `usuarios_listado` ";
@@ -703,29 +683,26 @@ $resultado = mysqli_query ($dbConn, $query);
 if(!$resultado){
 	//Genero numero aleatorio
 	$vardata = genera_password(8,'alfanumerico');
-					
+
 	//Guardo el error en una variable temporal
 	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)) {
-array_push( $arrUsuarios,$row );
-}	
 
+}
+while ( $row = mysqli_fetch_assoc ($resultado)){
+array_push( $arrUsuarios,$row );
+}
 
 ?>
-	
+
 <pre>
 	<?php
 	foreach ($arrUsuarios as $user) {
-		
-		if(isset($user['idUsuario']) && $user['idUsuario'] != 0 && isset($user['idSistema']) && $user['idSistema'] != 0){    
-			$a  = "'".$user['idUsuario']."'" ;
-			$a .= ",'".$user['idSistema']."'" ;   
+		if(isset($user['idUsuario']) && $user['idUsuario'] != 0 && isset($user['idSistema']) && $user['idSistema'] != 0){
+			$a  = "'".$user['idUsuario']."'";
+			$a .= ",'".$user['idSistema']."'";
 		}
-				
 		// inserto los datos de registro en la db
 		echo $query  = "INSERT INTO `usuarios_sistemas` (idUsuario, idSistema) VALUES (".$a.");<br/>";
 	}
@@ -733,24 +710,24 @@ array_push( $arrUsuarios,$row );
 </pre>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
-</div>	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['test_cctv']) ) { ?>
+</div>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['test_cctv'])){ ?>
 
 <img name="main" id="main" border="0" width="640" height="480" src="https://victor:victor2019@190.47.221.128/cgi-bin/mjpg/video.cgi?channel=1&subtype=1">
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
-</div>	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  {?>
-	 
-<div class="col-sm-12">
+</div>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {?>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Funciones</h5>
@@ -762,9 +739,9 @@ array_push( $arrUsuarios,$row );
 						<th>Nombre</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					
+
 					<tr class="odd">
 						<td>Cross Checking - Entregar ubicaciones falsas equipo telemetria</td>
 						<td>
@@ -773,7 +750,7 @@ array_push( $arrUsuarios,$row );
 							</div>
 						</td>
 					</tr>
-					
+
 					<tr class="odd">
 						<td>Correccion sistemas usuarios</td>
 						<td>
@@ -782,7 +759,7 @@ array_push( $arrUsuarios,$row );
 							</div>
 						</td>
 					</tr>
-					
+
 					<tr class="odd">
 						<td>Camaras CCTV</td>
 						<td>
@@ -791,7 +768,7 @@ array_push( $arrUsuarios,$row );
 							</div>
 						</td>
 					</tr>
-					
+
 					<tr class="odd">
 						<td>Arreglar Facturaciones</td>
 						<td>
@@ -800,7 +777,7 @@ array_push( $arrUsuarios,$row );
 							</div>
 						</td>
 					</tr>
-					
+
 					<tr class="odd">
 						<td>Testeo funciones db_select_data</td>
 						<td>
@@ -809,7 +786,7 @@ array_push( $arrUsuarios,$row );
 							</div>
 						</td>
 					</tr>
-					
+
 					<tr class="odd">
 						<td>existencia logo y envio correo</td>
 						<td>
@@ -818,7 +795,7 @@ array_push( $arrUsuarios,$row );
 							</div>
 						</td>
 					</tr>
-				     
+
 					<tr class="odd">
 						<td>testeo proyecciones</td>
 						<td>
@@ -827,14 +804,13 @@ array_push( $arrUsuarios,$row );
 							</div>
 						</td>
 					</tr>
-					
-					             
+
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
-<?php } ?>  	 
+<?php } ?>
 
 <?php
 /**********************************************************************************************************************************/

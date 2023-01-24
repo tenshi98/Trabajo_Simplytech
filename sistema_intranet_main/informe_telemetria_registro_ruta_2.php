@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_telemetria_registro_ruta_2.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,8 +22,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = '';
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
@@ -79,9 +79,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$arrCuarteles[$todaszonas]['Nombre']    = $zonas[0]['Nombre'];
 		$arrCuarteles[$todaszonas]['Hectareas'] = $zonas[0]['Hectareas'];
 	}
-	/*****************************************/	
+	/*****************************************/
 	if ($arrEquipos!=false && !empty($arrEquipos) && $arrEquipos!='') {
-		/*****************************************/	
+		/*****************************************/
 		//Variable para almacenar los recorridos
 		$Temp_1     = '';
 		$Kilometros = 0;
@@ -110,10 +110,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			//Se obtiene la fecha
 			$Temp_1 .= "'".Fecha_estandar($med['FechaSistema'])." ".$med['HoraSistema']."',";
 			
-			if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$med['Sensor_1'];       }else{ $arrData[1]['Value'] = $med['Sensor_1']; }
-			if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$med['Sensor_2'];       }else{ $arrData[2]['Value'] = $med['Sensor_2']; }
-			if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){ $arrData[3]['Value'] .= ", ".$med['Sensor_3'];       }else{ $arrData[3]['Value'] = $med['Sensor_3']; }
-			if(isset($arrData[4]['Value'])&&$arrData[4]['Value']!=''){ $arrData[4]['Value'] .= ", ".$med['GeoVelocidad'];   }else{ $arrData[4]['Value'] = $med['GeoVelocidad']; }
+			if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){$arrData[1]['Value'] .= ", ".$med['Sensor_1'];       }else{ $arrData[1]['Value'] = $med['Sensor_1'];}
+			if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){$arrData[2]['Value'] .= ", ".$med['Sensor_2'];       }else{ $arrData[2]['Value'] = $med['Sensor_2'];}
+			if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){$arrData[3]['Value'] .= ", ".$med['Sensor_3'];       }else{ $arrData[3]['Value'] = $med['Sensor_3'];}
+			if(isset($arrData[4]['Value'])&&$arrData[4]['Value']!=''){$arrData[4]['Value'] .= ", ".$med['GeoVelocidad'];   }else{ $arrData[4]['Value'] = $med['GeoVelocidad'];}
 		//se busca el cuartel donde esta
 			$arrCuartel[$med['idZona']][$med['idSolicitud']]['Predio']     = $arrCuarteles[$med['idZona']]['Predio'];
 			$arrCuartel[$med['idZona']][$med['idSolicitud']]['Cuartel']    = $arrCuarteles[$med['idZona']]['Nombre'];
@@ -171,7 +171,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		</style>
 		
 		
-		<div class="col-sm-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
 				<header>
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -185,10 +185,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							echo 'desde '.fecha_estandar($_GET['f_inicio']).' hasta '.fecha_estandar($_GET['f_termino']);
 						}
 						?>
-					</h5>	
+					</h5>
 				</header>
 				<div class="table-responsive">
-					<div class="col-sm-12">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="row">
 							
 							<div class="col-sm-3">
@@ -252,10 +252,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							</div>
 							<div class="clearfix"></div>
 							
-							<div class="col-sm-12">
-								<div class="box">	
-									<header>		
-										<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Detalle</h5>	
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="box">
+									<header>
+										<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Detalle</h5>
 									</header>
 									<div class="table-responsive">
 										<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -274,12 +274,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												<?php 
 												foreach ($arrCuartel as $todosCuartel=>$zonas) {
 													foreach ($zonas as $med) { ?>
-														<tr class="odd">			
-															<td><?php if(isset($med['Predio'])&&$med['Predio']!=''){echo $med['Predio'];}else{echo 'Fuera de Predio';} ?></td>	
-															<td><?php if(isset($med['Cuartel'])&&$med['Cuartel']!=''){echo $med['Cuartel'];}else{echo 'Fuera de Cuartel';} ?></td>	
-															<td><?php if(isset($med['Hectarea'])&&$med['Hectarea']!=''){echo $med['Hectarea'];}else{echo 'N/A';} ?></td>	
-															<td><?php echo Cantidades($med['Kilometros'], 2).' Km'; ?></td>	
-															<td><?php echo Cantidades($med['LitrosAplicados'], 0).' L'; ?></td>	
+														<tr class="odd">
+															<td><?php if(isset($med['Predio'])&&$med['Predio']!=''){echo $med['Predio'];}else{echo 'Fuera de Predio';} ?></td>
+															<td><?php if(isset($med['Cuartel'])&&$med['Cuartel']!=''){echo $med['Cuartel'];}else{echo 'Fuera de Cuartel';} ?></td>
+															<td><?php if(isset($med['Hectarea'])&&$med['Hectarea']!=''){echo $med['Hectarea'];}else{echo 'N/A';} ?></td>
+															<td><?php echo Cantidades($med['Kilometros'], 2).' Km'; ?></td>
+															<td><?php echo Cantidades($med['LitrosAplicados'], 0).' L'; ?></td>
 															<td>
 																<?php 
 																if(isset($med['VelCount'])&&$med['VelCount']!=''){
@@ -288,23 +288,23 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 																	$VelProm = 0;
 																}
 																echo Cantidades($VelProm, 0).' Km/h'; ?>
-															</td>	
+															</td>
 															<td>
 																<?php 
 																if($med['TractorDerechoProm']>$med['TractorIzquierdoProm']){
-																	if($med['TractorIzquierdoProm']!=0){ $correccion = (($med['TractorDerechoProm'] - $med['TractorIzquierdoProm'])/$med['TractorIzquierdoProm'])*100;}else{$correccion = 0;}
+																	if($med['TractorIzquierdoProm']!=0){$correccion = (($med['TractorDerechoProm'] - $med['TractorIzquierdoProm'])/$med['TractorIzquierdoProm'])*100;}else{$correccion = 0;}
 																}else{
-																	if($med['TractorDerechoProm']!=0){ $correccion = (($med['TractorIzquierdoProm'] - $med['TractorDerechoProm'])/$med['TractorDerechoProm'])*100;}else{$correccion = 0;}
+																	if($med['TractorDerechoProm']!=0){$correccion = (($med['TractorIzquierdoProm'] - $med['TractorDerechoProm'])/$med['TractorDerechoProm'])*100;}else{$correccion = 0;}
 																}
 																echo Cantidades($correccion, 2).' %'; ?>
 															</td>
 															
 														</tr>
 													<?php } ?>
-												<?php } ?>                    
+												<?php } ?>
 											</tbody>
 										</table>
-									</div> 
+									</div>
 								</div>
 							</div>
 							<div class="clearfix"></div>
@@ -332,8 +332,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										<?php foreach ( $arrEquipos as $pos ) { 
 											if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){
 												echo "['".$pos['idTabla']."', ".$pos['GeoLatitud'].", ".$pos['GeoLongitud'].", ".$pos['Sensor_1'].", ".$pos['Sensor_2'].", ".$pos['idZona']."],"; 
-											} 
-										} ?>
+											}
+										}?>
 									];
 
 									/* ************************************************************************** */
@@ -353,8 +353,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										//Se llama a la ruta
 										RutasRealizadas();
 										//dibuja zonas
-										//map.setTilt(0); 
-										//dibuja zonas				
+										//map.setTilt(0);
+										//dibuja zonas
 										dibuja_zona();
 								
 									}
@@ -455,7 +455,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										$Longitud_z       = 0;
 										$Latitud_z_prom   = 0;
 										$Longitud_z_prom  = 0;
-										$zcounter         = 0; 
+										$zcounter         = 0;
 										$zcounter2        = 0;
 														
 										//se recorre
@@ -477,10 +477,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												$Longitud_x = '';
 																
 												foreach ($zonas as $puntos) {
-													if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){ ?>
+													if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){?>
 														{lat: <?php echo $puntos['Latitud'];?>, lng: <?php echo $puntos['Longitud'];?>},
 														<?php
-														if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){	
+														if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){
 															$Latitud_x  = $puntos['Latitud'];
 															$Longitud_x = $puntos['Longitud'];
 															//Calculos para centrar mapa
@@ -560,7 +560,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								$Alert_Text .= '<strong><span style="color:#FFE200;"><i class="fa fa-map-marker" aria-hidden="true"></i> Flujo desactivado - Dentro de cuartel</span></strong><br/>';
 								$Alert_Text .= '<strong><span style="color:#1E90FF;"><i class="fa fa-map-marker" aria-hidden="true"></i> Flujo desactivado - Fuera de cuartel</span></strong><br/>';
 								echo '<br/><div class="clearfix"></div>';
-								echo '<div class="col-sm-12">';
+								echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 									alert_post_data(2,1,1, $Alert_Text);
 								echo '</div>';
 								echo '<div class="clearfix"></div>';
@@ -642,7 +642,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					
 					
 					
-				</div>	
+				</div>
 			</div>
 		</div>
 	<?php }else{ 
@@ -655,19 +655,19 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //filtros
 $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $z .= " AND telemetria_listado.id_Geo=1";                                                //Geolocalizacion activa
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
@@ -676,26 +676,26 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
-?>	
+?>
 		
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Filtro de busqueda</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Filtro de busqueda</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
                
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;     }else{$x1  = '';}
-				if(isset($h_inicio)) {      $x2  = $h_inicio;     }else{$x2  = '';}
-				if(isset($f_termino)) {     $x3  = $f_termino;    }else{$x3  = '';}
-				if(isset($h_termino)) {     $x4  = $h_termino;    }else{$x4  = '';}
-				if(isset($idTelemetria)) {  $x5  = $idTelemetria; }else{$x5  = '';}
-				if(isset($idOpciones)) {    $x6  = $idOpciones;   }else{$x6  = '';}
-				
+				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
+				if(isset($h_inicio)){      $x2  = $h_inicio;     }else{$x2  = '';}
+				if(isset($f_termino)){     $x3  = $f_termino;    }else{$x3  = '';}
+				if(isset($h_termino)){     $x4  = $h_termino;    }else{$x4  = '';}
+				if(isset($idTelemetria)){  $x5  = $idTelemetria; }else{$x5  = '';}
+				if(isset($idOpciones)){    $x6  = $idOpciones;   }else{$x6  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
@@ -704,20 +704,20 @@ alert_post_data(2,1,1, $Alert_Text);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				//$Form_Inputs->form_post_data(1, '<strong>Solo aplicaciones: </strong>Esta opcion se utiliza para mostrar solo las rutas realizadas mientras estaba haciendo una aplicacion (Opcion Si), o toda la ruta que realizo, incluyendo cuando solo se estaba movilizando (Opcion No)');
-				//$Form_Inputs->form_select('Solo aplicaciones','idOpciones', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				//$Form_Inputs->form_select('Solo aplicaciones','idOpciones', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				
-				?>        
+				?>
 	   
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>

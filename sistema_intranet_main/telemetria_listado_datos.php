@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_listado.php";
 $location = $original;
 $new_location = "telemetria_listado_datos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -39,18 +39,18 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $rowdata = db_select_data (false, 'Nombre,NumSerie,IdentificadorEmpresa,Sim_Num_Tel,Sim_Num_Serie,Sim_Compania,Sim_marca,Sim_modelo,idSistema, id_Sensores, id_Geo', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -79,60 +79,58 @@ $rowdata = db_select_data (false, 'Nombre,NumSerie,IdentificadorEmpresa,Sim_Num_
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
-						
+
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
-			
-					<?php  
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+
+					<?php
 					//Se verifican si existen los datos
-					if(isset($Nombre)) {                 $x1 = $Nombre;                  }else{$x1 = $rowdata['Nombre'];}
-					if(isset($NumSerie)) {               $x2 = $NumSerie;                }else{$x2 = $rowdata['NumSerie'];}
-					if(isset($IdentificadorEmpresa)) {   $x3 = $IdentificadorEmpresa;    }else{$x3 = $rowdata['IdentificadorEmpresa'];}
-					if(isset($Sim_Num_Tel)) {            $x4 = $Sim_Num_Tel;             }else{$x4 = $rowdata['Sim_Num_Tel'];}
-					if(isset($Sim_Num_Serie)) {          $x5 = $Sim_Num_Serie;           }else{$x5 = $rowdata['Sim_Num_Serie'];}
-					if(isset($Sim_Compania)) {           $x6 = $Sim_Compania;            }else{$x6 = $rowdata['Sim_Compania'];}
-					if(isset($Sim_marca)) {              $x7 = $Sim_marca;               }else{$x7 = $rowdata['Sim_marca'];}
-					if(isset($Sim_modelo)) {             $x8 = $Sim_modelo;              }else{$x8 = $rowdata['Sim_modelo'];}
-					
+					if(isset($Nombre)){                 $x1 = $Nombre;                  }else{$x1 = $rowdata['Nombre'];}
+					if(isset($NumSerie)){               $x2 = $NumSerie;                }else{$x2 = $rowdata['NumSerie'];}
+					if(isset($IdentificadorEmpresa)){   $x3 = $IdentificadorEmpresa;    }else{$x3 = $rowdata['IdentificadorEmpresa'];}
+					if(isset($Sim_Num_Tel)){            $x4 = $Sim_Num_Tel;             }else{$x4 = $rowdata['Sim_Num_Tel'];}
+					if(isset($Sim_Num_Serie)){          $x5 = $Sim_Num_Serie;           }else{$x5 = $rowdata['Sim_Num_Serie'];}
+					if(isset($Sim_Compania)){           $x6 = $Sim_Compania;            }else{$x6 = $rowdata['Sim_Compania'];}
+					if(isset($Sim_marca)){              $x7 = $Sim_marca;               }else{$x7 = $rowdata['Sim_marca'];}
+					if(isset($Sim_modelo)){             $x8 = $Sim_modelo;              }else{$x8 = $rowdata['Sim_modelo'];}
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Equipo');
 					$Form_Inputs->form_input_text('Nombre del Equipo', 'Nombre', $x1, 2);
 					$Form_Inputs->form_input_icon('Numero de Serie', 'NumSerie', $x2, 1,'fa fa-barcode');
 					$Form_Inputs->form_input_icon('Identificador Empresa', 'IdentificadorEmpresa', $x3, 1,'fa fa-flag');
-					
+
 					$Form_Inputs->form_tittle(3, 'BAM');
 					$Form_Inputs->form_input_icon('SIM - Numero Telefonico', 'Sim_Num_Tel', $x4, 1,'fa fa-mobile');
 					$Form_Inputs->form_input_icon('SIM - Numero Serie', 'Sim_Num_Serie', $x5, 1,'fa fa-mobile');
 					$Form_Inputs->form_input_icon('SIM - Compañia', 'Sim_Compania', $x6, 1,'fa fa-mobile');
 					$Form_Inputs->form_input_icon('BAM - Marca', 'Sim_marca', $x7, 1,'fa fa-mobile');
 					$Form_Inputs->form_input_icon('BAM - Modelo', 'Sim_modelo', $x8, 1,'fa fa-mobile');
-					
-					
-					
+
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

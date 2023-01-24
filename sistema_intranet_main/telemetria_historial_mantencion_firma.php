@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_historial_mantencion.php";
 $location = $original;
 $new_location = "telemetria_historial_mantencion_firma.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_firma']) )  { 
+if (!empty($_POST['submit_firma'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -32,13 +32,13 @@ if ( !empty($_POST['submit_firma']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_historial_mantencion.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_firma']) )     {
+if (!empty($_GET['del_firma'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_firma';
-	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_historial_mantencion.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_historial_mantencion.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -52,7 +52,7 @@ if (isset($_GET['created'])){ $error['created'] = 'sucess/Firma creada correctam
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Firma borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $query = "SELECT 
 telemetria_historial_mantencion.idMantencion,
@@ -78,12 +78,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Mantencion', $rowdata['Servicio'], 'Editar Firma');?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -97,17 +97,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class="active"><a href="<?php echo 'telemetria_historial_mantencion_firma.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Firma</a></li>          
 					</ul>
                 </li>
-			</ul>	
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 				
 				<?php if(isset($rowdata['Path_Firma'])&&$rowdata['Path_Firma']!=''){?>
 			
 					<div class="col-sm-10 fcenter">
-						<img src="upload/<?php echo $rowdata['Path_Firma'] ?>" width="100%" class="img-thumbnail" > 
+						<img src="upload/<?php echo $rowdata['Path_Firma'] ?>" width="100%" class="img-thumbnail" >
 						<br/>
-						<a href="<?php echo $new_location.'&del_firma='.$rowdata['idMantencion']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
+						<a href="<?php echo $new_location.'&del_firma='.$rowdata['idMantencion']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 					</div>
 					<div class="clearfix"></div>
 				
@@ -115,29 +115,29 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
 					
-						<?php           
+						<?php 
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','Path_Firma', 1, '"jpg", "png", "gif", "jpeg"');
 						
 						$Form_Inputs->form_input_hidden('idMantencion', $_GET['id'], 2);
-						?> 
+						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf093; Subir Archivo" name="submit_firma"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf093; Subir Archivo" name="submit_firma"> 
 						</div>
 							  
-					</form> 
+					</form>
 					<?php widget_validator(); ?>
 				<?php }?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

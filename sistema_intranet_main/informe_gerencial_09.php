@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_gerencial_09.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -25,10 +25,10 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //Se definen las variables
-if(isset($_GET["Ano"])){   $Ano = $_GET["Ano"];   } else { $Ano  = ano_actual(); }
+if(isset($_GET['Ano'])){   $Ano = $_GET['Ano'];   } else { $Ano  = ano_actual();}
 
 
 /**********************************************************/
@@ -150,7 +150,7 @@ foreach ($arrTemporal_7 as $temp) {
 
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="">	
 		<div id="calendar_content" class="body">
 			<div id="calendar" class="fc fc-ltr">
@@ -158,9 +158,9 @@ foreach ($arrTemporal_7 as $temp) {
 					<tbody>
 						<tr>
 							<?php
-							if(isset($_GET["Ano"])){
-								$Ano_a  = $_GET["Ano"] - 1;
-								$Ano_b  = $_GET["Ano"] + 1;	
+							if(isset($_GET['Ano'])){
+								$Ano_a  = $_GET['Ano'] - 1;
+								$Ano_b  = $_GET['Ano'] + 1;	
 							} else {
 								$Ano_a  = ano_actual() - 1;
 								$Ano_b  = ano_actual() + 1;
@@ -183,7 +183,7 @@ foreach ($arrTemporal_7 as $temp) {
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>	
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -191,9 +191,9 @@ foreach ($arrTemporal_7 as $temp) {
 				<li class="active"><a href="#tab1" data-toggle="tab"><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="#tab2" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Egreso</a></li>
 				<li class=""><a href="#tab3" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Ingreso</a></li>
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="tab1">
 				<div class="wmd-panel">
@@ -237,11 +237,11 @@ foreach ($arrTemporal_7 as $temp) {
 
 								var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
 								chart.draw(data, options);
-							}	
-						</script> 
+							}
+						</script>
 						<div id="chart_div" style="height: 500px; width: 100%;"></div>
 						
-						<div class="col-sm-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="box">
 								<header>
 									<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen General</h5>
@@ -256,7 +256,7 @@ foreach ($arrTemporal_7 as $temp) {
 												<th>Total</th>
 												<th>Acumulado</th>
 											</tr>
-										</thead>				  
+										</thead>
 										<tbody role="alert" aria-live="polite" aria-relevant="all">
 											<?php
 											$Total_1  = $arrIngreso[1]['Pagado'] - $arrEgreso[1]['Pagado'];
@@ -317,7 +317,7 @@ foreach ($arrTemporal_7 as $temp) {
 								</div>
 		
 							</div>
-						</div>		
+						</div>
 						
 					</div>
 				</div>
@@ -368,7 +368,7 @@ foreach ($arrTemporal_7 as $temp) {
 								  var table_2 = new google.visualization.Table(document.getElementById('table_div_2'));
 								  table_2.draw(data, {showRowNumber: true, width: '100%', height: '100%'});	
 							}
-						</script> 
+						</script>
 						<div id="chart_div_2" style="height: 500px; width: 100%;"></div>
 						<div id="table_div_2" ></div>		
 							
@@ -421,7 +421,7 @@ foreach ($arrTemporal_7 as $temp) {
 								  table_3.draw(data, {showRowNumber: true, width: '100%', height: '100%'});		
 									
 							}
-						</script> 
+						</script>
 						<div id="chart_div_3" style="height: 500px; width: 100%;"></div>
 						<div id="table_div_3" ></div>	
 							
@@ -431,7 +431,7 @@ foreach ($arrTemporal_7 as $temp) {
 			
 
 			
-        </div>	
+        </div>
 	</div>
 </div>
 
@@ -439,36 +439,36 @@ foreach ($arrTemporal_7 as $temp) {
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { ?>
-<div class="col-sm-8 fcenter">
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {?>
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idSistema)) {   $x1  = $idSistema;      }else{$x1  = '';}
-				
+				if(isset($idSistema)){   $x1  = $idSistema;      }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter('Sistemas','idSistema', $x1, 2, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
-				?> 
+				$Form_Inputs->form_select_filter('Sistemas','idSistema', $x1, 2, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

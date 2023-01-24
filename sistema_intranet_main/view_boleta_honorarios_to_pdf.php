@@ -11,19 +11,19 @@ require_once 'core/Load.Utils.PDF.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -33,7 +33,7 @@ if (validarNumero($_GET['view'])){
 //Se buscan la imagen i el tipo de PDF
 if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSistema'], fecha_actual())!=0){
 	//Consulta
-	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema ='.simpleDecode($_GET['idSistema'], fecha_actual()), $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas','', 'idSistema ='.simpleDecode($_GET['idSistema'], fecha_actual()), $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 /********************************************************************/
 // consulto los datos
@@ -113,9 +113,9 @@ LEFT JOIN `core_ubicacion_comunas`   provcomuna     ON provcomuna.idComuna      
 $SIS_where = 'boleta_honorarios_facturacion.idFacturacion ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'boleta_honorarios_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-/*****************************************/		
+/*****************************************/
 // Se consulta
-$SIS_query = 'Nombre, vTotal';
+$SIS_query = 'Nombre,vTotal';
 $SIS_join  = '';
 $SIS_where = 'idFacturacion ='.$X_Puntero;
 $SIS_order = 'Nombre ASC';
@@ -145,7 +145,7 @@ $html .= '
 							<td style="vertical-align: top;">Boleta N°: '.n_doc($row_data['N_Doc'], 8).'</td>
 						</tr>
 						<tr>';
-						
+
 							//se verifica el tipo de movimiento
 							switch ($row_data['idTipo']) {
 								//Boleta Trabajadores
@@ -175,15 +175,15 @@ $html .= '
 										<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 										<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
 										
-										if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){ 
+										if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){
 											$html .= '<strong>Estado: </strong>'.$row_data['BoletaEstado'].'<br/>';
 										}
-										if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
+										if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){
 											$html .= '<strong>Dto de Pago : </strong>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br/>';
 										}
-										if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
+										if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){
 											$html .= '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
-										}	
+										}
 											
 										$html .= '</td>';
 
@@ -219,15 +219,15 @@ $html .= '
 										<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 										<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
 										
-										if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){ 
+										if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){
 											$html .= '<strong>Estado: </strong>'.$row_data['BoletaEstado'].'<br/>';
 										}
-										if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
+										if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){
 											$html .= '<strong>Dto de Pago : </strong>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br/>';
 										}
-										if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
+										if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){
 											$html .= '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
-										}	
+										}
 											
 										$html .= '
 									</td>';
@@ -263,15 +263,15 @@ $html .= '
 										<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 										<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
 										
-										if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){ 
+										if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){
 											$html .= '<strong>Estado: </strong>'.$row_data['BoletaEstado'].'<br/>';
 										}
-										if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
+										if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){
 											$html .= '<strong>Dto de Pago : </strong>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br/>';
 										}
-										if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
+										if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){
 											$html .= '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
-										}	
+										}
 											
 										$html .= '</td>';
 
@@ -408,7 +408,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 			// set some language-dependent strings (optional)
-			if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+			if (@file_exists(dirname(__FILE__).'/lang/eng.php')){
 				require_once(dirname(__FILE__).'/lang/eng.php');
 				$pdf->setLanguageArray($l);
 			}

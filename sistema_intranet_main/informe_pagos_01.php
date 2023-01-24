@@ -10,13 +10,13 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_pagos_01.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor=".$_GET['idProveedor'];}
-if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){                 $search .="&N_Doc=".$_GET['N_Doc'];}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){    $search .="&idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){         $search .="&N_Doc=".$_GET['N_Doc'];}
 if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
 	$search .="&f_creacion_inicio=".$_GET['f_creacion_inicio'];
 	$search .="&f_creacion_termino=".$_GET['f_creacion_termino'];
@@ -30,8 +30,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 
 //Variable de busqueda
@@ -40,29 +40,29 @@ $z2 = "bodegas_insumos_facturacion.idEstado=1";
 $z3 = "bodegas_productos_facturacion.idEstado=1";
 $z4 = "bodegas_servicios_facturacion.idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
-$z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico que sean solo compras
 $z1.=" AND (bodegas_arriendos_facturacion.idTipo=1 OR bodegas_arriendos_facturacion.idTipo=10)";
 $z2.=" AND (bodegas_insumos_facturacion.idTipo=1 OR bodegas_insumos_facturacion.idTipo=10)";
 $z3.=" AND (bodegas_productos_facturacion.idTipo=1 OR bodegas_productos_facturacion.idTipo=10)";
 $z4.=" AND (bodegas_servicios_facturacion.idTipo=1 OR bodegas_servicios_facturacion.idTipo=10)";	
 
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  
 	$z1.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['idProveedor'];
 	$z2.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];
 	$z3.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];
 	$z4.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['idProveedor'];
 }
-if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){ 
+if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){
 	$z1.=" AND bodegas_arriendos_facturacion.idDocumentos=".$_GET['idDocumentos'];
 	$z2.=" AND bodegas_insumos_facturacion.idDocumentos=".$_GET['idDocumentos'];
 	$z3.=" AND bodegas_productos_facturacion.idDocumentos=".$_GET['idDocumentos'];
 	$z4.=" AND bodegas_servicios_facturacion.idDocumentos=".$_GET['idDocumentos'];
 }
-if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){               
+if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){       
 	$z1.=" AND bodegas_arriendos_facturacion.N_Doc=".$_GET['N_Doc'];
 	$z2.=" AND bodegas_insumos_facturacion.N_Doc=".$_GET['N_Doc'];
 	$z3.=" AND bodegas_productos_facturacion.N_Doc=".$_GET['N_Doc'];
@@ -100,12 +100,12 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Documentos</h5>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -192,7 +192,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 						<td align="right"><?php echo Valores($Sub_MontoPagado, 0); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
 						<td></td>
-					</tr> 
+					</tr>
 					
 					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Productos</strong></td></tr>
 					<?php 
@@ -221,7 +221,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
+					<?php } ?>
 					<tr style="background-color:#DDD">
 						<td colspan="4">Subtotal</td>
 						<td align="right"><?php echo Valores($Sub_ValorTotal, 0); ?></td>
@@ -257,7 +257,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
+					<?php } ?>
 					<tr style="background-color:#DDD">
 						<td colspan="4">Subtotal</td>
 						<td align="right"><?php echo Valores($Sub_ValorTotal, 0); ?></td>
@@ -271,7 +271,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 						<td align="right"><?php echo Valores($Total_MontoPagado, 0); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
 						<td></td>
-					</tr> 
+					</tr>
 					
 					
 					                 
@@ -283,33 +283,33 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProveedor)) {          $x1  = $idProveedor;         }else{$x1  = '';}
-				if(isset($idDocumentos)) {         $x2  = $idDocumentos;        }else{$x2  = '';}
-				if(isset($N_Doc)) {                $x3  = $N_Doc;               }else{$x3  = '';}
-				if(isset($f_creacion_inicio)) {    $x4  = $f_creacion_inicio;   }else{$x4  = '';}
-				if(isset($f_creacion_termino)) {   $x5  = $f_creacion_termino;  }else{$x5  = '';}
-				
+				if(isset($idProveedor)){          $x1  = $idProveedor;         }else{$x1  = '';}
+				if(isset($idDocumentos)){         $x2  = $idDocumentos;        }else{$x2  = '';}
+				if(isset($N_Doc)){                $x3  = $N_Doc;               }else{$x3  = '';}
+				if(isset($f_creacion_inicio)){    $x4  = $f_creacion_inicio;   }else{$x4  = '';}
+				if(isset($f_creacion_termino)){   $x5  = $f_creacion_termino;  }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Emision');
@@ -319,14 +319,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_date('Fecha Creacion Desde','f_creacion_inicio', $x4, 1);
 				$Form_Inputs->form_date('Fecha Creacion Hasta','f_creacion_termino', $x5, 1);
 						
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

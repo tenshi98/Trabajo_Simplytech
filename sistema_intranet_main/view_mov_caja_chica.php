@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -90,7 +90,7 @@ LEFT JOIN `trabajadores_listado`     trab_apro  ON trab_apro.idTrabajador       
 $SIS_where = 'caja_chica_facturacion.idFacturacion ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-/*****************************************/				
+/*****************************************/
 // Se trae un listado con todos los productos utilizados
 $SIS_query = '
 sistema_documentos_pago.Nombre,
@@ -102,7 +102,7 @@ $SIS_order = 'sistema_documentos_pago.Nombre ASC';
 $arrDocumentos = array();
 $arrDocumentos = db_select_array (false, $SIS_query, 'caja_chica_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDocumentos');
 
-/*****************************************/	
+/*****************************************/
 // Se trae un listado con todos los productos utilizados
 $SIS_query = 'Item, Valor';
 $SIS_join  = '';
@@ -111,7 +111,7 @@ $SIS_order = 'Item ASC';
 $arrRendiciones = array();
 $arrRendiciones = db_select_array (false, $SIS_query, 'caja_chica_facturacion_rendiciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRendiciones');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con todos los archivos adjuntos
 $SIS_query = 'Nombre';
 $SIS_join  = '';
@@ -120,7 +120,7 @@ $SIS_order = 'Nombre ASC';
 $arrArchivo = array();
 $arrArchivo = db_select_array (false, $SIS_query, 'caja_chica_facturacion_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con el historial
 $SIS_query = '
 caja_chica_facturacion_historial.Creacion_fecha, 
@@ -145,7 +145,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['CajaTipo']?>.
 				<small class="pull-right">Numero Documento: <?php echo n_doc($X_Puntero, 8) ?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">
@@ -173,7 +173,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 				</div>';
 
 				break;
-				
+
 			//Egreso
 			case 2:
 				
@@ -201,7 +201,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 				</div>';
 				
 				break;
-				
+
 			//Rendicion 
 			case 3:
 				
@@ -248,7 +248,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 				<tbody>
 					<?php if ($arrRendiciones!=false && !empty($arrRendiciones) && $arrRendiciones!='') { ?>
 						<tr class="active"><td colspan="3"><strong>Rendiciones</strong></td></tr>
-						<?php foreach ($arrRendiciones as $prod) { ?>
+						<?php foreach ($arrRendiciones as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Item'];?></td>
 								<?php 
@@ -265,7 +265,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 					
 					<?php if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!='') { ?>
 						<tr class="active"><td colspan="3"><strong>Montos</strong></td></tr>
-						<?php foreach ($arrDocumentos as $prod) { ?>
+						<?php foreach ($arrDocumentos as $prod) {?>
 							<tr>
 								<td>
 									<?php 
@@ -287,7 +287,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 						<?php } ?>
 					<?php } ?>
 					
-					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){ ?>
+					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td align="right"><strong>Total</strong></td> 
 							<?php 
@@ -318,7 +318,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 	if($row_data['idTipo']==2){?>
 		<div class="row firma">
 			<div class="col-sm-6 fcont"><p>Firma Emisor</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div> 
+			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
 		</div>
 	<?php }
 	//Si es una rendicion
@@ -349,7 +349,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
       
 </section>
 
-<div class="col-xs-12" style="margin-bottom:15px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 	
 	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
@@ -361,13 +361,13 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 					<th width="160">Fecha</th>
 					<th>Usuario</th>
 					<th>Observacion</th>
-				</tr>			  
+				</tr>
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
 						<td><?php echo '<i class="'.$doc['FonAwesome'].'" aria-hidden="true"></i> '.$doc['Observacion']; ?></td>
-					</tr> 
+					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
@@ -378,7 +378,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 			<tbody>
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
-				</tr>		  
+				</tr>
 				<?php foreach ($arrArchivo as $producto){?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
@@ -398,12 +398,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
  
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -414,12 +414,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

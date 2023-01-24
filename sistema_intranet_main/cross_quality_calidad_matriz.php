@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "cross_quality_calidad_matriz.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,13 +18,13 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){      $location .= "&idEstado=".$_GET['idEstado'];      $search .= "&idEstado=".$_GET['idEstado'];}
-if(isset($_GET['cantPuntos']) && $_GET['cantPuntos'] != ''){  $location .= "&cantPuntos=".$_GET['cantPuntos'];  $search .= "&cantPuntos=".$_GET['cantPuntos'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){          $location .= "&Nombre=".$_GET['Nombre'];          $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['idNota_1']) && $_GET['idNota_1'] != ''){      $location .= "&idNota_1=".$_GET['idNota_1'];      $search .= "&idNota_1=".$_GET['idNota_1'];}
-if(isset($_GET['idNota_2']) && $_GET['idNota_2'] != ''){      $location .= "&idNota_2=".$_GET['idNota_2'];      $search .= "&idNota_2=".$_GET['idNota_2'];}
-if(isset($_GET['idNota_3']) && $_GET['idNota_3'] != ''){      $location .= "&idNota_3=".$_GET['idNota_3'];      $search .= "&idNota_3=".$_GET['idNota_3'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){          $location .= "&idTipo=".$_GET['idTipo'];          $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){      $location .= "&idEstado=".$_GET['idEstado'];      $search .= "&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['cantPuntos']) && $_GET['cantPuntos']!=''){  $location .= "&cantPuntos=".$_GET['cantPuntos'];  $search .= "&cantPuntos=".$_GET['cantPuntos'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){   $location .= "&Nombre=".$_GET['Nombre'];          $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['idNota_1']) && $_GET['idNota_1']!=''){      $location .= "&idNota_1=".$_GET['idNota_1'];      $search .= "&idNota_1=".$_GET['idNota_1'];}
+if(isset($_GET['idNota_2']) && $_GET['idNota_2']!=''){      $location .= "&idNota_2=".$_GET['idNota_2'];      $search .= "&idNota_2=".$_GET['idNota_2'];}
+if(isset($_GET['idNota_3']) && $_GET['idNota_3']!=''){      $location .= "&idNota_3=".$_GET['idNota_3'];      $search .= "&idNota_3=".$_GET['idNota_3'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){   $location .= "&idTipo=".$_GET['idTipo'];          $search .= "&idTipo=".$_GET['idTipo'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -32,19 +32,19 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert_matriz';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_calidad_matriz.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit_1']) )  { 
+if (!empty($_POST['submit_edit_1'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update_matriz';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_calidad_matriz.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit_2']) )  { 
+if (!empty($_POST['submit_edit_2'])){
 	//Ubicacion
 	$location .='&idMatriz='.$_GET['idMatriz'];
 	//Llamamos al formulario
@@ -52,13 +52,13 @@ if ( !empty($_POST['submit_edit_2']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_calidad_matriz.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_matriz';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_calidad_matriz.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_calidad_matriz.php';
 }
 //se clona la maquina
-if ( !empty($_POST['clone_Matriz']) )  { 
+if (!empty($_POST['clone_Matriz'])){
 	//Llamamos al formulario
 	$form_trabajo= 'clone_Matriz';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_calidad_matriz.php';
@@ -76,24 +76,24 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tipo Planilla editado 
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tipo Planilla borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['clone_idMatriz']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['clone_idMatriz'])){ 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);	
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Tipo Planilla <?php echo $_GET['nombre_matriz']; ?></h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {           $x1  = $Nombre;           }else{$x1  = '';}
+				if(isset($Nombre)){           $x1  = $Nombre;           }else{$x1  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -103,22 +103,22 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				
-				?>  
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c5; Clonar" name="clone_Matriz">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c5; Clonar" name="clone_Matriz">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	
 	
 	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['mod']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['mod'])){ 
 //Armo cadena
 $SIS_query  = 'PuntoNombre_'.$_GET['mod'].' AS Nombre';
 $SIS_query .= ',PuntoMedAceptable_'.$_GET['mod'].' AS Aceptable';
@@ -136,26 +136,26 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 	
 ?>
 	 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Parametros  del punto</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select('Parametro','PuntoidGrupo', $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'cross_quality_calidad_matriz_grupos', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Parametro','PuntoidGrupo', $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'cross_quality_calidad_matriz_grupos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'PuntoNombre', $rowdata['Nombre'], 1);
-				$Form_Inputs->form_select('Tipo','PuntoidTipo', $rowdata['Tipo'], 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Tipo','PuntoidTipo', $rowdata['Tipo'], 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_number('Aceptable','PuntoMedAceptable', Cantidades_decimales_justos($rowdata['Aceptable']), 1);
 				$Form_Inputs->form_input_number('Alerta','PuntoMedAlerta', Cantidades_decimales_justos($rowdata['Alerta']), 1);
 				$Form_Inputs->form_input_number('Condenatorio','PuntoMedCondenatorio', Cantidades_decimales_justos($rowdata['Condenatorio']), 1);
-				$Form_Inputs->form_select('Unidad de Medida','PuntoUniMed', $rowdata['UniMed'], 1, 'idUml', 'Nombre', 'sistema_cross_analisis_uml', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Unidad de Medida','PuntoUniMed', $rowdata['UniMed'], 1, 'idUml', 'Nombre', 'sistema_cross_analisis_uml', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar', $rowdata['Validar'], 1);
 				
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
@@ -169,16 +169,16 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 					document.getElementById('div_PuntoUniMed').style.display = 'none';
 					document.getElementById('div_Validar').style.display = 'none';
 					
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 								
 						let Sensores_val= $("#PuntoidTipo").val();
-						
+
 						//si es Medicion (Decimal) con parametros limitantes
-						if(Sensores_val == 1){ 
+						if(Sensores_val == 1){
 							document.getElementById('div_PuntoMedAceptable').style.display = '';
 							document.getElementById('div_PuntoMedAlerta').style.display = '';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
-							document.getElementById('div_PuntoUniMed').style.display = '';						
+							document.getElementById('div_PuntoUniMed').style.display = '';
 						//si es Medicion (Decimal) sin parametros limitantes
 						}else if(Sensores_val == 2){ 
 							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
@@ -188,13 +188,13 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 							//Reseteo los valores a 0
 							document.getElementById('PuntoMedAceptable').value = "0";
 							document.getElementById('PuntoMedAlerta').value = "0";
-							document.getElementById('PuntoMedCondenatorio').value = "0";	
+							document.getElementById('PuntoMedCondenatorio').value = "0";
 						//si es Medicion (Enteros) con parametros limitantes
 						}else if(Sensores_val == 3){ 
 							document.getElementById('div_PuntoMedAceptable').style.display = '';
 							document.getElementById('div_PuntoMedAlerta').style.display = '';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
-							document.getElementById('div_PuntoUniMed').style.display = '';						
+							document.getElementById('div_PuntoUniMed').style.display = '';
 						//si es Medicion (Enteros) sin parametros limitantes
 						}else if(Sensores_val == 4){ 
 							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
@@ -208,9 +208,9 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						//si es Texto Libre con Validacion
 						}else if(Sensores_val == 11){ 
 							document.getElementById('div_Validar').style.display = '';
-							document.getElementById('div_PuntoUniMed').style.display = 'none';	
+							document.getElementById('div_PuntoUniMed').style.display = 'none';
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
 							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
@@ -222,19 +222,19 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 							document.getElementById('PuntoMedCondenatorio').value = "0";
 							document.getElementById('PuntoUniMed').value = "0";
 							document.getElementById('Validar').value = "";
-							
-						}		
-					}); 
+
+						}
+					});
 							
 					$("#PuntoidTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si es Medicion (Decimal) con parametros limitantes
-						if(modelSelected1 == 1){ 
+						if(modelSelected1 == 1){
 							document.getElementById('div_PuntoMedAceptable').style.display = '';
 							document.getElementById('div_PuntoMedAlerta').style.display = '';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
-							document.getElementById('div_PuntoUniMed').style.display = '';						
+							document.getElementById('div_PuntoUniMed').style.display = '';
 						//si es Medicion (Decimal) sin parametros limitantes
 						}else if(modelSelected1 == 2){ 
 							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
@@ -244,13 +244,13 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 							//Reseteo los valores a 0
 							document.getElementById('PuntoMedAceptable').value = "0";
 							document.getElementById('PuntoMedAlerta').value = "0";
-							document.getElementById('PuntoMedCondenatorio').value = "0";	
+							document.getElementById('PuntoMedCondenatorio').value = "0";
 						//si es Medicion (Enteros) con parametros limitantes
 						}else if(modelSelected1 == 3){ 
 							document.getElementById('div_PuntoMedAceptable').style.display = '';
 							document.getElementById('div_PuntoMedAlerta').style.display = '';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
-							document.getElementById('div_PuntoUniMed').style.display = '';						
+							document.getElementById('div_PuntoUniMed').style.display = '';
 						//si es Medicion (Enteros) sin parametros limitantes
 						}else if(modelSelected1 == 4){ 
 							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
@@ -260,13 +260,13 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 							//Reseteo los valores a 0
 							document.getElementById('PuntoMedAceptable').value = "0";
 							document.getElementById('PuntoMedAlerta').value = "0";
-							document.getElementById('PuntoMedCondenatorio').value = "0";	
+							document.getElementById('PuntoMedCondenatorio').value = "0";
 						//si es Texto Libre con Validacion
 						}else if(modelSelected1 == 11){ 
 							document.getElementById('div_Validar').style.display = '';
 							document.getElementById('div_PuntoUniMed').style.display = 'none';
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
 							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
@@ -282,21 +282,21 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 					});
 							
 							
-				</script> 
+				</script>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_2">
-					<a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_2">
+					<a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
 	 	 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} elseif ( ! empty($_GET['idMatriz']) ) {    
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['idMatriz'])){    
 // consulto los datos
 $SIS_query = '
 Nombre,cantPuntos,
@@ -403,14 +403,14 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Puntos de Tipo Planilla</h5>		
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Puntos de Tipo Planilla</h5>
 		</header>
 		
 		
-        <div class="table-responsive">    
+        <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -427,16 +427,16 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) { 
 						//compruebo
-						if(isset($arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]])){ $unimed = $arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]]; }else{ $unimed = ''; }
-						if(isset($arrFinalTipos[$rowdata['PuntoidTipo_'.$i]])){     $tipo   = $arrFinalTipos[$rowdata['PuntoidTipo_'.$i]];     }else{ $tipo   = ''; }
-						if(isset($arrFinalGrupos[$rowdata['PuntoidGrupo_'.$i]])){   $grupo  = $arrFinalGrupos[$rowdata['PuntoidGrupo_'.$i]];   }else{ $grupo  = ''; }
+						if(isset($arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]])){ $unimed = $arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]];}else{ $unimed = '';}
+						if(isset($arrFinalTipos[$rowdata['PuntoidTipo_'.$i]])){     $tipo   = $arrFinalTipos[$rowdata['PuntoidTipo_'.$i]];     }else{ $tipo   = '';}
+						if(isset($arrFinalGrupos[$rowdata['PuntoidGrupo_'.$i]])){   $grupo  = $arrFinalGrupos[$rowdata['PuntoidGrupo_'.$i]];   }else{ $grupo  = '';}
 						?>
-						<tr class="odd">		
+						<tr class="odd">
 							<td><?php echo 'p'.$i ?></td>
-							<td><?php echo $grupo; ?></td>		
+							<td><?php echo $grupo; ?></td>
 							<td><?php echo $rowdata['PuntoNombre_'.$i]; ?></td>
-							<td><?php echo $tipo; ?></td>	
-							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAceptable_'.$i]).' '.$unimed;     }else{echo 'No Aplica';} ?></td>		
+							<td><?php echo $tipo; ?></td>
+							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAceptable_'.$i]).' '.$unimed;     }else{echo 'No Aplica';} ?></td>	
 							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAlerta_'.$i]).' '.$unimed;        }else{echo 'No Aplica';} ?></td>
 							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedCondenatorio_'.$i]).' '.$unimed;  }else{echo 'No Aplica';} ?></td>
 							<td>
@@ -445,7 +445,7 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -455,69 +455,69 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['idMatriz_2']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['idMatriz_2'])){ 
 // consulto los datos
-$SIS_query = 'Nombre, cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, idTipo, idSistema, Validar_1, Validar_2, Validar_3';
+$SIS_query = 'Nombre,cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, idTipo, idSistema, Validar_1, Validar_2, Validar_3';
 $SIS_join  = '';
 $SIS_where = 'idMatriz ='.$_GET['idMatriz_2'];
 $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Tipo Planilla</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {       $x1  = $Nombre;       }else{$x1  = $rowdata['Nombre'];}
-				if(isset($cantPuntos)) {   $x2  = $cantPuntos;   }else{$x2  = $rowdata['cantPuntos'];}
-				if(isset($idTipo)) {       $x3  = $idTipo;       }else{$x3  = $rowdata['idTipo'];}
-				if(isset($idEstado)) {     $x4  = $idEstado;     }else{$x4  = $rowdata['idEstado'];}
-				if(isset($idNota_1)) {     $x5  = $idNota_1;     }else{$x5  = $rowdata['idNota_1'];}
-				if(isset($idNotaTipo_1)) { $x6  = $idNotaTipo_1; }else{$x6  = $rowdata['idNotaTipo_1'];}
-				if(isset($Validar_1)) {    $x7  = $Validar_1;    }else{$x7  = $rowdata['Validar_1'];}
-				if(isset($idNota_2)) {     $x8  = $idNota_2;     }else{$x8  = $rowdata['idNota_2'];}
-				if(isset($idNotaTipo_2)) { $x9  = $idNotaTipo_2; }else{$x9  = $rowdata['idNotaTipo_2'];}
-				if(isset($Validar_2)) {    $x10 = $Validar_2;    }else{$x10 = $rowdata['Validar_2'];}
-				if(isset($idNota_3)) {     $x11 = $idNota_3;     }else{$x11 = $rowdata['idNota_3'];}
-				if(isset($idNotaTipo_3)) { $x12 = $idNotaTipo_3; }else{$x12 = $rowdata['idNotaTipo_3'];}
-				if(isset($Validar_3)) {    $x13 = $Validar_3;    }else{$x13 = $rowdata['Validar_3'];}
-				
+				if(isset($Nombre)){       $x1  = $Nombre;       }else{$x1  = $rowdata['Nombre'];}
+				if(isset($cantPuntos)){   $x2  = $cantPuntos;   }else{$x2  = $rowdata['cantPuntos'];}
+				if(isset($idTipo)){       $x3  = $idTipo;       }else{$x3  = $rowdata['idTipo'];}
+				if(isset($idEstado)){     $x4  = $idEstado;     }else{$x4  = $rowdata['idEstado'];}
+				if(isset($idNota_1)){     $x5  = $idNota_1;     }else{$x5  = $rowdata['idNota_1'];}
+				if(isset($idNotaTipo_1)){ $x6  = $idNotaTipo_1; }else{$x6  = $rowdata['idNotaTipo_1'];}
+				if(isset($Validar_1)){    $x7  = $Validar_1;    }else{$x7  = $rowdata['Validar_1'];}
+				if(isset($idNota_2)){     $x8  = $idNota_2;     }else{$x8  = $rowdata['idNota_2'];}
+				if(isset($idNotaTipo_2)){ $x9  = $idNotaTipo_2; }else{$x9  = $rowdata['idNotaTipo_2'];}
+				if(isset($Validar_2)){    $x10 = $Validar_2;    }else{$x10 = $rowdata['Validar_2'];}
+				if(isset($idNota_3)){     $x11 = $idNota_3;     }else{$x11 = $rowdata['idNota_3'];}
+				if(isset($idNotaTipo_3)){ $x12 = $idNotaTipo_3; }else{$x12 = $rowdata['idNotaTipo_3'];}
+				if(isset($Validar_3)){    $x13 = $Validar_3;    }else{$x13 = $rowdata['Validar_3'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 2, 1, 100);
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
-				$Form_Inputs->form_select('Estado','idEstado', $x4, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Estado','idEstado', $x4, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				
-				$Form_Inputs->form_select('Nota Calidad','idNota_1', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Tipo Nota Calidad','idNotaTipo_1', $x6, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);	
+				$Form_Inputs->form_select('Nota Calidad','idNota_1', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Nota Calidad','idNotaTipo_1', $x6, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_1', $x7, 1);
 				
-				$Form_Inputs->form_select('Nota Condicion','idNota_2', $x8, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Tipo Nota Condicion','idNotaTipo_2', $x9, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);	
+				$Form_Inputs->form_select('Nota Condicion','idNota_2', $x8, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Nota Condicion','idNotaTipo_2', $x9, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_2', $x10, 1);
 				
-				$Form_Inputs->form_select('Calificacion','idNota_3', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Tipo Calificacion','idNotaTipo_3', $x12, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);	
+				$Form_Inputs->form_select('Calificacion','idNota_3', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Calificacion','idNotaTipo_3', $x12, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_3', $x13, 1);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz_2'], 2);
-				?> 
+				?>
 				
 				<script>
 					document.getElementById('div_idNotaTipo_1').style.display = 'none';
@@ -527,7 +527,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 					document.getElementById('div_Validar_2').style.display = 'none';
 					document.getElementById('div_Validar_3').style.display = 'none';
 					
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 								
 						let Sensores_val_1 = $("#idNota_1").val();
 						let Sensores_val_2 = $("#idNota_2").val();
@@ -540,14 +540,14 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						/******************************************************************/
 						//si la opcion esta activa
 						if(Sensores_val_1 == 1){ 
-							document.getElementById('div_idNotaTipo_1').style.display = '';					
+							document.getElementById('div_idNotaTipo_1').style.display = '';				
 						//si la opcion esta inactiva
 						}else if(Sensores_val_1 == 2){ 
 							document.getElementById('div_idNotaTipo_1').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_1').selectedIndex = 0;
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_idNotaTipo_1').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_1').selectedIndex = 0;
@@ -555,14 +555,14 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						/******************************************************************/
 						//si la opcion esta activa
 						if(Sensores_val_2 == 1){ 
-							document.getElementById('div_idNotaTipo_2').style.display = '';					
+							document.getElementById('div_idNotaTipo_2').style.display = '';				
 						//si la opcion esta inactiva
 						}else if(Sensores_val_2 == 2){ 
 							document.getElementById('div_idNotaTipo_2').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_2').selectedIndex = 0;
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_idNotaTipo_2').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_2').selectedIndex = 0;
@@ -570,25 +570,25 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						/******************************************************************/
 						//si la opcion esta activa
 						if(Sensores_val_3 == 1){ 
-							document.getElementById('div_idNotaTipo_3').style.display = '';					
+							document.getElementById('div_idNotaTipo_3').style.display = '';				
 						//si la opcion esta inactiva
 						}else if(Sensores_val_3 == 2){ 
 							document.getElementById('div_idNotaTipo_3').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_3').selectedIndex = 0;	
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_idNotaTipo_3').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_3').selectedIndex = 0;
 						}
-						
+
 						/******************************************************************/
 						//Texto Libre con Validacion
 						if(Sensores_tipo_1 == 11){ 
-							document.getElementById('div_Validar_1').style.display = '';					
+							document.getElementById('div_Validar_1').style.display = '';				
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_Validar_1').style.display = 'none';
 							//Reseteo los valores a vacio
 							document.getElementById('Validar_1').value = "";
@@ -596,9 +596,9 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						/******************************************************************/
 						//Texto Libre con Validacion
 						if(Sensores_tipo_2 == 11){ 
-							document.getElementById('div_Validar_2').style.display = '';					
+							document.getElementById('div_Validar_2').style.display = '';				
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_Validar_2').style.display = 'none';
 							//Reseteo los valores a vacio
 							document.getElementById('Validar_2').value = "";
@@ -606,16 +606,16 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						/******************************************************************/
 						//Texto Libre con Validacion
 						if(Sensores_tipo_3 == 11){ 
-							document.getElementById('div_Validar_3').style.display = '';					
+							document.getElementById('div_Validar_3').style.display = '';				
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_Validar_3').style.display = 'none';
 							//Reseteo los valores a vacio
 							document.getElementById('Validar_3').value = "";
 						}
 						
 								
-					}); 
+					});
 					
 							
 					/******************************************************************/
@@ -624,14 +624,14 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						
 						//si la opcion esta activa
 						if(modelSelected_1 == 1){ 
-							document.getElementById('div_idNotaTipo_1').style.display = '';							
+							document.getElementById('div_idNotaTipo_1').style.display = '';
 						//si la opcion esta inactiva
 						}else if(modelSelected_1 == 2){ 
 							document.getElementById('div_idNotaTipo_1').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_1').selectedIndex = 0;
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_idNotaTipo_1').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_1').selectedIndex = 0;
@@ -643,14 +643,14 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						
 						//si la opcion esta activa
 						if(modelSelected_2 == 1){ 
-							document.getElementById('div_idNotaTipo_2').style.display = '';							
+							document.getElementById('div_idNotaTipo_2').style.display = '';
 						//si la opcion esta inactiva
 						}else if(modelSelected_2 == 2){ 
 							document.getElementById('div_idNotaTipo_2').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_2').selectedIndex = 0;	
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_idNotaTipo_2').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_2').selectedIndex = 0;
@@ -662,14 +662,14 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						
 						//si la opcion esta activa
 						if(modelSelected_3 == 1){ 
-							document.getElementById('div_idNotaTipo_3').style.display = '';							
+							document.getElementById('div_idNotaTipo_3').style.display = '';
 						//si la opcion esta inactiva
 						}else if(modelSelected_3 == 2){ 
 							document.getElementById('div_idNotaTipo_3').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_3').selectedIndex = 0;	
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_idNotaTipo_3').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_3').selectedIndex = 0;
@@ -681,9 +681,9 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						let Sensores_tipo_1 = $(this).val(); //Asignamos el valor seleccionado
 						//Texto Libre con Validacion
 						if(Sensores_tipo_1 == 11){ 
-							document.getElementById('div_Validar_1').style.display = '';					
+							document.getElementById('div_Validar_1').style.display = '';				
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_Validar_1').style.display = 'none';
 							//Reseteo los valores a vacio
 							document.getElementById('Validar_1').value = "";
@@ -694,9 +694,9 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						let Sensores_tipo_2 = $(this).val(); //Asignamos el valor seleccionado
 						//Texto Libre con Validacion
 						if(Sensores_tipo_2 == 11){ 
-							document.getElementById('div_Validar_2').style.display = '';					
+							document.getElementById('div_Validar_2').style.display = '';				
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_Validar_2').style.display = 'none';
 							//Reseteo los valores a vacio
 							document.getElementById('Validar_2').value = "";
@@ -707,9 +707,9 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 						let Sensores_tipo_3 = $(this).val(); //Asignamos el valor seleccionado
 						//Texto Libre con Validacion
 						if(Sensores_tipo_3 == 11){ 
-							document.getElementById('div_Validar_3').style.display = '';					
+							document.getElementById('div_Validar_3').style.display = '';				
 						//para el resto
-						} else { 
+						} else {
 							document.getElementById('div_Validar_3').style.display = 'none';
 							//Reseteo los valores a vacio
 							document.getElementById('Validar_3').value = "";
@@ -719,42 +719,42 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 				</script>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_1"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_1"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro  
 //verifico que sea un administrador
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Tipo Planilla</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;       }else{$x1  = '';}
-				if(isset($cantPuntos)) {  $x2  = $cantPuntos;   }else{$x2  = '';}
-				if(isset($idTipo)) {      $x3  = $idTipo;       }else{$x3  = '';}
-				
+				if(isset($Nombre)){      $x1  = $Nombre;       }else{$x1  = '';}
+				if(isset($cantPuntos)){  $x2  = $cantPuntos;   }else{$x2  = '';}
+				if(isset($idTipo)){      $x3  = $idTipo;       }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 2, 1, 100);
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 				
@@ -766,38 +766,29 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('idNota_2', 2, 2);
 				$Form_Inputs->form_input_hidden('idNota_3', 2, 2);
 				
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
                     
 		</div>
 	</div>
 </div> 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -826,25 +817,25 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $SIS_where = "cross_quality_calidad_matriz.idMatriz!=0";
 //verifico que sea un administrador
-$SIS_where.=" AND cross_quality_calidad_matriz.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.=" AND cross_quality_calidad_matriz.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){      $SIS_where .= " AND cross_quality_calidad_matriz.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['cantPuntos']) && $_GET['cantPuntos'] != ''){  $SIS_where .= " AND cross_quality_calidad_matriz.cantPuntos=".$_GET['cantPuntos'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){          $SIS_where .= " AND cross_quality_calidad_matriz.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idNota_1']) && $_GET['idNota_1'] != ''){      $SIS_where .= " AND cross_quality_calidad_matriz.idNota_1=".$_GET['idNota_1'];}
-if(isset($_GET['idNota_2']) && $_GET['idNota_2'] != ''){      $SIS_where .= " AND cross_quality_calidad_matriz.idNota_2=".$_GET['idNota_2'];}
-if(isset($_GET['idNota_3']) && $_GET['idNota_3'] != ''){      $SIS_where .= " AND cross_quality_calidad_matriz.idNota_3=".$_GET['idNota_3'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){          $SIS_where .= " AND cross_quality_calidad_matriz.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){      $SIS_where .= " AND cross_quality_calidad_matriz.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['cantPuntos']) && $_GET['cantPuntos']!=''){  $SIS_where .= " AND cross_quality_calidad_matriz.cantPuntos=".$_GET['cantPuntos'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){   $SIS_where .= " AND cross_quality_calidad_matriz.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['idNota_1']) && $_GET['idNota_1']!=''){      $SIS_where .= " AND cross_quality_calidad_matriz.idNota_1=".$_GET['idNota_1'];}
+if(isset($_GET['idNota_2']) && $_GET['idNota_2']!=''){      $SIS_where .= " AND cross_quality_calidad_matriz.idNota_2=".$_GET['idNota_2'];}
+if(isset($_GET['idNota_3']) && $_GET['idNota_3']!=''){      $SIS_where .= " AND cross_quality_calidad_matriz.idNota_3=".$_GET['idNota_3'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){   $SIS_where .= " AND cross_quality_calidad_matriz.idTipo=".$_GET['idTipo'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idMatriz', 'cross_quality_calidad_matriz', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 cross_quality_calidad_matriz.idMatriz, 
-cross_quality_calidad_matriz.Nombre, 
+cross_quality_calidad_matriz.Nombre,
 cross_quality_calidad_matriz.cantPuntos,
 core_estados.Nombre AS Estado,
 ops1.Nombre AS Opciones_1,
@@ -866,59 +857,59 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>	 	
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Tipo Planilla</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Tipo Planilla</a><?php } ?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {     $x1  = $Nombre;      }else{$x1  = '';}
-				if(isset($cantPuntos)) { $x2  = $cantPuntos;  }else{$x2  = '';}
-				if(isset($idTipo)) {     $x3  = $idTipo;      }else{$x3  = '';}
-				if(isset($idNota_1)) {   $x4  = $idNota_1;    }else{$x4  = '';}
-				if(isset($idNota_2)) {   $x5  = $idNota_2;    }else{$x5  = '';}
-				if(isset($idNota_3)) {   $x6  = $idNota_3;    }else{$x6  = '';}
-				
+				if(isset($Nombre)){     $x1  = $Nombre;      }else{$x1  = '';}
+				if(isset($cantPuntos)){ $x2  = $cantPuntos;  }else{$x2  = '';}
+				if(isset($idTipo)){     $x3  = $idTipo;      }else{$x3  = '';}
+				if(isset($idNota_1)){   $x4  = $idNota_1;    }else{$x4  = '';}
+				if(isset($idNota_2)){   $x5  = $idNota_2;    }else{$x5  = '';}
+				if(isset($idNota_3)){   $x6  = $idNota_3;    }else{$x6  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1); 
 				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 1, 1, 100);
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
-				$Form_Inputs->form_select('Nota Calidad','idNota_1', $x4, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Nota Condicion','idNota_2', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Calificacion','idNota_3', $x6, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Nota Calidad','idNota_1', $x4, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select('Nota Condicion','idNota_2', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select('Calificacion','idNota_3', $x6, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                      
                          
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Tipos Planillas</h5>
@@ -987,14 +978,14 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrMatriz as $maq) { ?>
-						<tr class="odd">			
+						<tr class="odd">
 							<td><?php echo $maq['Nombre']; ?></td>
 							<td><?php echo $maq['Planilla']; ?></td>
 							<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $maq['Estado']; ?></label></td>
-							<td><?php echo $maq['cantPuntos']; ?></td>		
-							<td><?php echo $maq['Opciones_1']; ?></td>		
-							<td><?php echo $maq['Opciones_2']; ?></td>		
-							<td><?php echo $maq['Opciones_3']; ?></td>		
+							<td><?php echo $maq['cantPuntos']; ?></td>
+							<td><?php echo $maq['Opciones_1']; ?></td>
+							<td><?php echo $maq['Opciones_2']; ?></td>
+							<td><?php echo $maq['Opciones_3']; ?></td>
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $maq['RazonSocial']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 140px;" >
@@ -1005,19 +996,19 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 										$ubicacion = $location.'&del='.simpleEncode($maq['idMatriz'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>								
+									<?php } ?>
 								</div>
-							</td>	
+							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div> 
+		</div>
 	</div>
 </div>
 

@@ -13,7 +13,7 @@ require_once 'core/Load.Utils.Error.php';
 header('HTTP/1.1 403 Forbidden');
 require_once 'core/Web.Header.Error.php';
 
-error_reporting(0); 
+error_reporting(0);
 $post_query = '';
 if(isset($_POST)){foreach($_POST as $key=>$value) $post_query .= $key."=".$value."&";}
 

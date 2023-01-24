@@ -81,17 +81,17 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTipos,$row );
 }
 //Variable Ubicacion
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_mantencion_ejecucion.php";
 $location = $original;
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
-if(isset($_GET['Identificador']) && $_GET['Identificador'] != ''){  $location .= "&Identificador=".$_GET['Identificador'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $location .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Identificador']) && $_GET['Identificador']!=''){  $location .= "&Identificador=".$_GET['Identificador'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre=".$_GET['Nombre'];}
 
 ?>
 
@@ -106,7 +106,7 @@ if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $location .=
 					<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $rowdata['Tel_Equipo'].' ('.$rowdata['Tel_Identificador'].')'; ?>.
 					<small class="pull-right"> <?php echo $rowdata['Matriz_Nombre'] ?></small>
 				</h2>
-			</div>   
+			</div>
 		</div>
 		
 		<div class="row invoice-info">
@@ -144,13 +144,13 @@ if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $location .=
 						<?php 
 						$pass_points = 0;
 						for ($i = 1; $i <= $rowdata['Matriz_Puntos']; $i++) { ?>
-							<tr class="odd">		
+							<tr class="odd">
 								<td><?php echo $rowdata['Tel_Sensor_Nombre_'.$rowdata['Matriz_Sensor_Numero_'.$i]]; ?></td>
 								<td><?php echo $rowdata['Matriz_Punto_'.$i]; ?></td>
-								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$rowdata['Tel_Sensor_Tipo_'.$i]]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>	
-								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>	
-								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['SensorFuncion'];}} ?></td>	
-								<td align="center"><?php echo $rowdata['Matriz_Sensor_Valor_'.$i]; ?></td>	
+								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$rowdata['Tel_Sensor_Tipo_'.$i]]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>
+								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>
+								<td><?php foreach ($arrTipos as $tipo) { if($rowdata['Matriz_Sensor_Tipo_'.$i]==$tipo['idSensores']){ echo $tipo['SensorFuncion'];}} ?></td>
+								<td align="center"><?php echo $rowdata['Matriz_Sensor_Valor_'.$i]; ?></td>
 								<td align="center"><?php echo Cantidades_decimales_justos($rowdata['Tel_Sensor_Valor_'.$i]); ?></td>
 								<td align="center">
 									<?php

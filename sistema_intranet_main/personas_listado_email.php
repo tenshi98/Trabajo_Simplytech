@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "personas_listado.php";
 $location = $original;
 $new_location = "personas_listado_email.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/personas_listado_email.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -41,13 +41,13 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/personas_listado_email.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/personas_listado_email.php';	
+	require_once 'A1XRXS_sys/xrxs_form/personas_listado_email.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -57,13 +57,13 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Email creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Email editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Email borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Email creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Email editado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Email borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['edit']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['edit'])){
 // consulto los datos
 $SIS_query = 'Email,Comentario';
 $SIS_join  = '';
@@ -72,20 +72,20 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado_email', $SIS_joi
 
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Email</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Email</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 				<?php  
 				//Se verifican si existen los datos
-				if(isset($Email)) {          $x1 = $Email;         }else{$x1 = $rowdata['Email'];}
-				if(isset($Comentario)) {     $x2 = $Comentario;    }else{$x2 = $rowdata['Comentario'];}
-				
+				if(isset($Email)){          $x1 = $Email;         }else{$x1 = $rowdata['Email'];}
+				if(isset($Comentario)){     $x2 = $Comentario;    }else{$x2 = $rowdata['Comentario'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_icon('Email', 'Email', $x1, 2,'fa fa-envelope-o');
@@ -95,35 +95,35 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado_email', $SIS_joi
 				
 				?>
 				
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Email</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Email</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Email)) {          $x1 = $Email;         }else{$x1 = '';}
-				if(isset($Comentario)) {     $x2 = $Comentario;    }else{$x2 = '';}
-				
+				if(isset($Email)){          $x1 = $Email;         }else{$x1 = '';}
+				if(isset($Comentario)){     $x2 = $Comentario;    }else{$x2 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_icon('Email', 'Email', $x1, 2,'fa fa-envelope-o');
@@ -133,22 +133,22 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				?>
 
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
-$SIS_query = 'Nombre, ApellidoPaterno, ApellidoMaterno';
+$SIS_query = 'Nombre,ApellidoPaterno, ApellidoMaterno';
 $SIS_join  = '';
 $SIS_where = 'idPersona = '.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
@@ -163,15 +163,15 @@ $arrMails = db_select_array (false, $SIS_query, 'personas_listado_email', $SIS_j
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno'], 'Emails');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Email</a><?php }?>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Email</a><?php }?>
 	</div>
 </div>
-<div class="clearfix"></div>   
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -186,8 +186,8 @@ $arrMails = db_select_array (false, $SIS_query, 'personas_listado_email', $SIS_j
 						<li class=""><a href="<?php echo 'personas_listado_relaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Relaciones</a></li>
 						<li class=""><a href="<?php echo 'personas_listado_vehiculos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-car" aria-hidden="true"></i> Vehiculos</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -200,9 +200,9 @@ $arrMails = db_select_array (false, $SIS_query, 'personas_listado_email', $SIS_j
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrMails as $mails) { ?>
-					<tr class="odd">		
+					<tr class="odd">
 						<td><?php echo $mails['Email']; ?></td>
-						<td><?php echo cortar($mails['Comentario'], 70); ?></td>		
+						<td><?php echo cortar($mails['Comentario'], 70); ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$mails['idEmail']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -210,20 +210,20 @@ $arrMails = db_select_array (false, $SIS_query, 'personas_listado_email', $SIS_j
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($mails['idEmail'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el email '.$mails['Email'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-				<?php } ?>                   
+				<?php } ?>
 				</tbody>
 			</table>
-		</div> 	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_rrhh_03.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,8 +22,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = 'trabajadores_asistencias_predios.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
@@ -85,11 +85,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	
 ?>
-	<div class="col-sm-12 clearfix">		
+	<div class="col-sm-12 clearfix">
 		<a target="new" href="<?php echo 'informe_rrhh_03_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	</div>
 	
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Asistencia</h5>
@@ -106,7 +106,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<th>Estado</th>
 							<th width="10">Acciones</th>
 						</tr>
-					</thead>				  
+					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
 					filtrar($arrAsistencias, 'idTrabajador');  
@@ -119,8 +119,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								<td><?php echo fecha_estandar($con['PredioFecha']); ?></td>
 								<td><?php echo $con['PredioHora']; ?></td>
 								<td><?php echo $con['PredioIP']; ?></td>
-								<td><?php if(isset($con['PredioNombre'])&&$con['PredioNombre']!=''){   echo $con['PredioNombre'];  }else{echo 'Fuera del Predio';} ?></td>
-								<td><?php if(isset($con['PredioCuartel'])&&$con['PredioCuartel']!=''){ echo $con['PredioCuartel']; }else{echo 'Fuera del Cuartel';} ?></td>
+								<td><?php if(isset($con['PredioNombre'])&&$con['PredioNombre']!=''){  echo $con['PredioNombre'];  }else{echo 'Fuera del Predio';} ?></td>
+								<td><?php if(isset($con['PredioCuartel'])&&$con['PredioCuartel']!=''){echo $con['PredioCuartel'];}else{echo 'Fuera del Cuartel';} ?></td>
 								<td><?php echo $con['Estado']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
@@ -140,38 +140,38 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	<?php widget_modal(80, 95); ?>
 
-<?php } ?>  
+<?php } ?>
 
  
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;        }else{$x1  = '';}
-				if(isset($h_inicio)) {      $x2  = $h_inicio;        }else{$x2  = '';}
-				if(isset($f_termino)) {     $x3  = $f_termino;       }else{$x3  = '';}
-				if(isset($h_termino)) {     $x4  = $h_termino;       }else{$x4  = '';}
-				if(isset($idEstado)) {      $x5  = $idEstado;        }else{$x5  = '';}
-				if(isset($idTrabajador)) {  $x6  = $idTrabajador;    }else{$x6  = '';}
-				if(isset($idOpciones)) {    $x7  = $idOpciones;      }else{$x7  = '';}
-				
+				if(isset($f_inicio)){      $x1  = $f_inicio;        }else{$x1  = '';}
+				if(isset($h_inicio)){      $x2  = $h_inicio;        }else{$x2  = '';}
+				if(isset($f_termino)){     $x3  = $f_termino;       }else{$x3  = '';}
+				if(isset($h_termino)){     $x4  = $h_termino;       }else{$x4  = '';}
+				if(isset($idEstado)){      $x5  = $idEstado;        }else{$x5  = '';}
+				if(isset($idTrabajador)){  $x6  = $idTrabajador;    }else{$x6  = '';}
+				if(isset($idOpciones)){    $x7  = $idOpciones;      }else{$x7  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
@@ -182,14 +182,14 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x6, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
 				$Form_Inputs->form_select('Dentro de Predio','idOpciones', $x7, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 						
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

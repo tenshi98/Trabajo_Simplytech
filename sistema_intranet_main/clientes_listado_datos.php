@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "clientes_listado.php";
 $location = $original;
 $new_location = "clientes_listado_datos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$location.='&id='.$_GET['id'];
 	$form_trabajo= 'update';
@@ -42,9 +42,9 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Cliente editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Cliente borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$query = "SELECT idTipo, Nombre, fNacimiento, idCiudad, idComuna, Direccion, idSistema, Rut
+$query = "SELECT idTipo, Nombre,fNacimiento, idCiudad, idComuna, Direccion, idSistema, Rut
 FROM `clientes_listado`
 WHERE idCliente = ".$_GET['id'];
 //Consulta
@@ -62,12 +62,12 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -87,23 +87,23 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						<li class=""><a href="<?php echo 'clientes_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 						<li class=""><a href="<?php echo 'clientes_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($idTipo)) {           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Nombre)) {           $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
-					if(isset($Rut)) {              $x3  = $Rut;               }else{$x3  = $rowdata['Rut'];}
-					if(isset($fNacimiento)) {      $x4  = $fNacimiento;       }else{$x4  = $rowdata['fNacimiento'];}
-					if(isset($idCiudad)) {         $x5  = $idCiudad;          }else{$x5  = $rowdata['idCiudad'];}
-					if(isset($idComuna)) {         $x6  = $idComuna;          }else{$x6  = $rowdata['idComuna'];}
-					if(isset($Direccion)) {        $x7  = $Direccion;         }else{$x7  = $rowdata['Direccion'];}
-					if(isset($new_folder)) {       $x8  = $new_folder;        }else{$x8  = '';}
+					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
+					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
+					if(isset($Rut)){              $x3  = $Rut;               }else{$x3  = $rowdata['Rut'];}
+					if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = $rowdata['fNacimiento'];}
+					if(isset($idCiudad)){         $x5  = $idCiudad;          }else{$x5  = $rowdata['idCiudad'];}
+					if(isset($idComuna)){         $x6  = $idComuna;          }else{$x6  = $rowdata['idComuna'];}
+					if(isset($Direccion)){        $x7  = $Direccion;         }else{$x7  = $rowdata['Direccion'];}
+					if(isset($new_folder)){       $x8  = $new_folder;        }else{$x8  = '';}
 					
 
 					//se dibujan los inputs
@@ -121,7 +121,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					} 
 					$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
 					$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-											'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+											'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
 					
@@ -135,19 +135,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 		
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

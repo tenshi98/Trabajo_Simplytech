@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                      Consulta                                                                  */
 /**********************************************************************************************************************************/
@@ -31,15 +31,15 @@ if(isset($_SESSION['usuario']['zona']['id_Geo'])&&$_SESSION['usuario']['zona']['
 $z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
 //solo los equipos que tengan el seguimiento activado
 $z .= " AND telemetria_listado.id_Geo = ".$id_Geo;
-//Filtro el sistema al cual pertenece	
+//Filtro el sistema al cual pertenece
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-	$z .= " AND telemetria_listado.idSistema = ".$idSistema;	
+	$z .= " AND telemetria_listado.idSistema = ".$idSistema;
 }
 //Verifico el tipo de usuario que esta ingresando y el id
 $join = "";	
 if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
 }
 //filtro la zona
 if(isset($idZona)&&$idZona!=''&&$idZona!=9999){
@@ -59,10 +59,10 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 //Listar los equipos
 $arrEquipo = array();
 $query = "SELECT 
-telemetria_listado.Nombre, 
+telemetria_listado.Nombre,
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.GeoLatitud, 
+telemetria_listado.GeoLatitud,
 telemetria_listado.GeoLongitud,
 telemetria_listado.cantSensores, 
 telemetria_listado.id_Sensores
@@ -83,7 +83,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 		
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrEquipo,$row );
 }
 
@@ -134,7 +134,7 @@ foreach ($arrUnimed as $data) {
 					$GPS .= $data['GeoLatitud'];
 					$GPS .= ", ".$data['GeoLongitud'];
 					$GPS .= ", '".$explanation."'";
-				$GPS .= "], ";					
+				$GPS .= "], ";
 			}
 		$GPS .= '];';
 		

@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -189,7 +189,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('A1', 'Fecha')
 				->setCellValue('B1', 'Hora');
 
-	$count = 0;            
+	$count = 0;           
 	foreach ($arrEquipos as $fac) {
 		//columna inicial
 		$yy = 3;
@@ -240,7 +240,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					}
 				}
 			}
-		}									
+		}
 		//avanzo fila
 		$nn++;				
 	}

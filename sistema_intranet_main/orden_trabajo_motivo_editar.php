@@ -10,103 +10,103 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "orden_trabajo_motivo_editar.php";
 $location = $original;
 //Se agregan ubicaciones
 $location .='?view='.$_GET['view'];
-if(isset($_GET['ter']) && $_GET['ter'] != ''){    $location .= "&ter=".$_GET['ter']; 	}
+if(isset($_GET['ter']) && $_GET['ter']!=''){    $location .= "&ter=".$_GET['ter']; 	}
 
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //se modifican los datos basicos
-if ( !empty($_POST['submit_editBase']) )  { 
+if (!empty($_POST['submit_editBase'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_ot_list';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 //se modifican los datos basicos
-if ( !empty($_POST['submit_editObs']) )  { 
+if (!empty($_POST['submit_editObs'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_ot_list';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 /*************************************************************************/
 //se agrega un trabajo
-if ( !empty($_POST['submit_trab']) )  { 
+if (!empty($_POST['submit_trab'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_addTrab';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 //se agrega un trabajo
-if ( !empty($_POST['submit_edittrab']) )  { 
+if (!empty($_POST['submit_edittrab'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_editTrab';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 //se borra un trabajo
-if ( !empty($_GET['del_trab']) )     {
+if (!empty($_GET['del_trab'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_delTrab';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 /*************************************************************************/
 //se agrega un insumo
-if ( !empty($_POST['submit_ins']) )     {
+if (!empty($_POST['submit_ins'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_addIns';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 //se agrega un insumo
-if ( !empty($_POST['submit_editins']) )     {
+if (!empty($_POST['submit_editins'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_editIns';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 //se elimina un insumo
-if ( !empty($_GET['del_ins']) )     {
+if (!empty($_GET['del_ins'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_delIns';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 /*************************************************************************/
 //se agrega un producto
-if ( !empty($_POST['submit_prod']) )     {
+if (!empty($_POST['submit_prod'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_addProd';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 //se agrega un producto
-if ( !empty($_POST['submit_editprod']) )     {
+if (!empty($_POST['submit_editprod'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_editProd';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 //se elimina un producto
-if ( !empty($_GET['del_prod']) )     {
+if (!empty($_GET['del_prod'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_delProd';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 /*************************************************************************/
 //se agrega un subcomponente
-if ( !empty($_POST['submit_tarea']) )  { 
+if (!empty($_POST['submit_tarea'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_addTarea';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 //se agrega un subcomponente
-if ( !empty($_POST['submit_edittarea']) )  { 
+if (!empty($_POST['submit_edittarea'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_editTarea';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 //se elimina un subcomponente
-if ( !empty($_GET['del_tarea']) )     {
+if (!empty($_GET['del_tarea'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_delTarea';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo_motivo.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -132,8 +132,8 @@ if (isset($_GET['deltarea'])){  $error['deltarea']   = 'sucess/Tarea borrada cor
 
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['addTarea']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['addTarea'])){ 
 //Se traen los datos de la ot
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
@@ -142,7 +142,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 }else{
 	//Se revisan los permisos a los contratos
 	$SIS_query = 'idLicitacion';
@@ -159,45 +159,45 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	}
 }
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Tarea</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idLicitacion)) {     $x0  = $idLicitacion;     }else{$x0  = '';}
-				if(isset($idLevel_1)) {        $x1  = $idLevel_1;        }else{$x1  = '';}
-				if(isset($idLevel_2)) {        $x2  = $idLevel_2;        }else{$x2  = '';}
-				if(isset($idLevel_3)) {        $x3  = $idLevel_3;        }else{$x3  = '';}
-				if(isset($idLevel_4)) {        $x4  = $idLevel_4;        }else{$x4  = '';}
-				if(isset($idLevel_5)) {        $x5  = $idLevel_5;        }else{$x5  = '';}
-				if(isset($idLevel_6)) {        $x6  = $idLevel_6;        }else{$x6  = '';}
-				if(isset($idLevel_7)) {        $x7  = $idLevel_7;        }else{$x7  = '';}
-				if(isset($idLevel_8)) {        $x8  = $idLevel_8;        }else{$x8  = '';}
-				if(isset($idLevel_9)) {        $x9  = $idLevel_9;        }else{$x9  = '';}
-				if(isset($idLevel_10)) {       $x10  = $idLevel_10;      }else{$x10  = '';}
-				if(isset($idLevel_11)) {       $x11  = $idLevel_11;      }else{$x11  = '';}
-				if(isset($idLevel_12)) {       $x12  = $idLevel_12;      }else{$x12  = '';}
-				if(isset($idLevel_13)) {       $x13  = $idLevel_13;      }else{$x13  = '';}
-				if(isset($idLevel_14)) {       $x14  = $idLevel_14;      }else{$x14  = '';}
-				if(isset($idLevel_15)) {       $x15  = $idLevel_15;      }else{$x15  = '';}
-				if(isset($idLevel_16)) {       $x16  = $idLevel_16;      }else{$x16  = '';}
-				if(isset($idLevel_17)) {       $x17  = $idLevel_17;      }else{$x17  = '';}
-				if(isset($idLevel_18)) {       $x18  = $idLevel_18;      }else{$x18  = '';}
-				if(isset($idLevel_19)) {       $x19  = $idLevel_19;      }else{$x19  = '';}
-				if(isset($idLevel_20)) {       $x20  = $idLevel_20;      }else{$x20  = '';}
-				if(isset($idLevel_21)) {       $x21  = $idLevel_21;      }else{$x21  = '';}
-				if(isset($idLevel_22)) {       $x22  = $idLevel_22;      }else{$x22  = '';}
-				if(isset($idLevel_23)) {       $x23  = $idLevel_23;      }else{$x23  = '';}
-				if(isset($idLevel_24)) {       $x24  = $idLevel_24;      }else{$x24  = '';}
-				if(isset($idLevel_25)) {       $x25  = $idLevel_25;      }else{$x25  = '';}
-				if(isset($Observacion)) {      $x26  = $Observacion;     }else{$x26  = '';}
-				
+				if(isset($idLicitacion)){     $x0  = $idLicitacion;     }else{$x0  = '';}
+				if(isset($idLevel_1)){        $x1  = $idLevel_1;        }else{$x1  = '';}
+				if(isset($idLevel_2)){        $x2  = $idLevel_2;        }else{$x2  = '';}
+				if(isset($idLevel_3)){        $x3  = $idLevel_3;        }else{$x3  = '';}
+				if(isset($idLevel_4)){        $x4  = $idLevel_4;        }else{$x4  = '';}
+				if(isset($idLevel_5)){        $x5  = $idLevel_5;        }else{$x5  = '';}
+				if(isset($idLevel_6)){        $x6  = $idLevel_6;        }else{$x6  = '';}
+				if(isset($idLevel_7)){        $x7  = $idLevel_7;        }else{$x7  = '';}
+				if(isset($idLevel_8)){        $x8  = $idLevel_8;        }else{$x8  = '';}
+				if(isset($idLevel_9)){        $x9  = $idLevel_9;        }else{$x9  = '';}
+				if(isset($idLevel_10)){       $x10  = $idLevel_10;      }else{$x10  = '';}
+				if(isset($idLevel_11)){       $x11  = $idLevel_11;      }else{$x11  = '';}
+				if(isset($idLevel_12)){       $x12  = $idLevel_12;      }else{$x12  = '';}
+				if(isset($idLevel_13)){       $x13  = $idLevel_13;      }else{$x13  = '';}
+				if(isset($idLevel_14)){       $x14  = $idLevel_14;      }else{$x14  = '';}
+				if(isset($idLevel_15)){       $x15  = $idLevel_15;      }else{$x15  = '';}
+				if(isset($idLevel_16)){       $x16  = $idLevel_16;      }else{$x16  = '';}
+				if(isset($idLevel_17)){       $x17  = $idLevel_17;      }else{$x17  = '';}
+				if(isset($idLevel_18)){       $x18  = $idLevel_18;      }else{$x18  = '';}
+				if(isset($idLevel_19)){       $x19  = $idLevel_19;      }else{$x19  = '';}
+				if(isset($idLevel_20)){       $x20  = $idLevel_20;      }else{$x20  = '';}
+				if(isset($idLevel_21)){       $x21  = $idLevel_21;      }else{$x21  = '';}
+				if(isset($idLevel_22)){       $x22  = $idLevel_22;      }else{$x22  = '';}
+				if(isset($idLevel_23)){       $x23  = $idLevel_23;      }else{$x23  = '';}
+				if(isset($idLevel_24)){       $x24  = $idLevel_24;      }else{$x24  = '';}
+				if(isset($idLevel_25)){       $x25  = $idLevel_25;      }else{$x25  = '';}
+				if(isset($Observacion)){      $x26  = $Observacion;     }else{$x26  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend25('Contrato','idLicitacion',$x0 ,2,'idLicitacion','Nombre','licitacion_listado',$z,0,
@@ -232,11 +232,11 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
-				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
 				$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
@@ -245,21 +245,21 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
 				$Form_Inputs->form_input_hidden('idEstadoTarea', 1, 2);
 				
-				?> 
+				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tarea"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tarea"> 
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['editTarea']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['editTarea'])){ 
 //Se traen los datos de la ot
 $SIS_query = 'idLicitacion, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, idLevel_6, idLevel_7, idLevel_8, idLevel_9, idLevel_10, idLevel_11, idLevel_12, idLevel_13, idLevel_14, idLevel_15, idLevel_16, idLevel_17, idLevel_18, idLevel_19, idLevel_20, idLevel_21, idLevel_22, idLevel_23, idLevel_24, idLevel_25,Observacion';
 $SIS_join  = '';
@@ -268,7 +268,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_tare
 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 }else{
 	//Se revisan los permisos a los contratos
 	$SIS_query = 'idLicitacion';
@@ -285,45 +285,45 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	}
 }
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Tarea</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idLicitacion)) {     $x0  = $idLicitacion;     }else{$x0  = $rowdata['idLicitacion'];}
-				if(isset($idLevel_1)) {        $x1  = $idLevel_1;        }else{$x1  = $rowdata['idLevel_1'];}
-				if(isset($idLevel_2)) {        $x2  = $idLevel_2;        }else{$x2  = $rowdata['idLevel_2'];}
-				if(isset($idLevel_3)) {        $x3  = $idLevel_3;        }else{$x3  = $rowdata['idLevel_3'];}
-				if(isset($idLevel_4)) {        $x4  = $idLevel_4;        }else{$x4  = $rowdata['idLevel_4'];}
-				if(isset($idLevel_5)) {        $x5  = $idLevel_5;        }else{$x5  = $rowdata['idLevel_5'];}
-				if(isset($idLevel_6)) {        $x6  = $idLevel_6;        }else{$x6  = $rowdata['idLevel_6'];}
-				if(isset($idLevel_7)) {        $x7  = $idLevel_7;        }else{$x7  = $rowdata['idLevel_7'];}
-				if(isset($idLevel_8)) {        $x8  = $idLevel_8;        }else{$x8  = $rowdata['idLevel_8'];}
-				if(isset($idLevel_9)) {        $x9  = $idLevel_9;        }else{$x9  = $rowdata['idLevel_9'];}
-				if(isset($idLevel_10)) {       $x10  = $idLevel_10;      }else{$x10  = $rowdata['idLevel_10'];}
-				if(isset($idLevel_11)) {       $x11  = $idLevel_11;      }else{$x11  = $rowdata['idLevel_11'];}
-				if(isset($idLevel_12)) {       $x12  = $idLevel_12;      }else{$x12  = $rowdata['idLevel_12'];}
-				if(isset($idLevel_13)) {       $x13  = $idLevel_13;      }else{$x13  = $rowdata['idLevel_13'];}
-				if(isset($idLevel_14)) {       $x14  = $idLevel_14;      }else{$x14  = $rowdata['idLevel_14'];}
-				if(isset($idLevel_15)) {       $x15  = $idLevel_15;      }else{$x15  = $rowdata['idLevel_15'];}
-				if(isset($idLevel_16)) {       $x16  = $idLevel_16;      }else{$x16  = $rowdata['idLevel_16'];}
-				if(isset($idLevel_17)) {       $x17  = $idLevel_17;      }else{$x17  = $rowdata['idLevel_17'];}
-				if(isset($idLevel_18)) {       $x18  = $idLevel_18;      }else{$x18  = $rowdata['idLevel_18'];}
-				if(isset($idLevel_19)) {       $x19  = $idLevel_19;      }else{$x19  = $rowdata['idLevel_19'];}
-				if(isset($idLevel_20)) {       $x20  = $idLevel_20;      }else{$x20  = $rowdata['idLevel_20'];}
-				if(isset($idLevel_21)) {       $x21  = $idLevel_21;      }else{$x21  = $rowdata['idLevel_21'];}
-				if(isset($idLevel_22)) {       $x22  = $idLevel_22;      }else{$x22  = $rowdata['idLevel_22'];}
-				if(isset($idLevel_23)) {       $x23  = $idLevel_23;      }else{$x23  = $rowdata['idLevel_23'];}
-				if(isset($idLevel_24)) {       $x24  = $idLevel_24;      }else{$x24  = $rowdata['idLevel_24'];}
-				if(isset($idLevel_25)) {       $x25  = $idLevel_25;      }else{$x25  = $rowdata['idLevel_25'];}
-				if(isset($Observacion)) {      $x26  = $Observacion;     }else{$x26  = $rowdata['Observacion'];}
-				
+				if(isset($idLicitacion)){     $x0  = $idLicitacion;     }else{$x0  = $rowdata['idLicitacion'];}
+				if(isset($idLevel_1)){        $x1  = $idLevel_1;        }else{$x1  = $rowdata['idLevel_1'];}
+				if(isset($idLevel_2)){        $x2  = $idLevel_2;        }else{$x2  = $rowdata['idLevel_2'];}
+				if(isset($idLevel_3)){        $x3  = $idLevel_3;        }else{$x3  = $rowdata['idLevel_3'];}
+				if(isset($idLevel_4)){        $x4  = $idLevel_4;        }else{$x4  = $rowdata['idLevel_4'];}
+				if(isset($idLevel_5)){        $x5  = $idLevel_5;        }else{$x5  = $rowdata['idLevel_5'];}
+				if(isset($idLevel_6)){        $x6  = $idLevel_6;        }else{$x6  = $rowdata['idLevel_6'];}
+				if(isset($idLevel_7)){        $x7  = $idLevel_7;        }else{$x7  = $rowdata['idLevel_7'];}
+				if(isset($idLevel_8)){        $x8  = $idLevel_8;        }else{$x8  = $rowdata['idLevel_8'];}
+				if(isset($idLevel_9)){        $x9  = $idLevel_9;        }else{$x9  = $rowdata['idLevel_9'];}
+				if(isset($idLevel_10)){       $x10  = $idLevel_10;      }else{$x10  = $rowdata['idLevel_10'];}
+				if(isset($idLevel_11)){       $x11  = $idLevel_11;      }else{$x11  = $rowdata['idLevel_11'];}
+				if(isset($idLevel_12)){       $x12  = $idLevel_12;      }else{$x12  = $rowdata['idLevel_12'];}
+				if(isset($idLevel_13)){       $x13  = $idLevel_13;      }else{$x13  = $rowdata['idLevel_13'];}
+				if(isset($idLevel_14)){       $x14  = $idLevel_14;      }else{$x14  = $rowdata['idLevel_14'];}
+				if(isset($idLevel_15)){       $x15  = $idLevel_15;      }else{$x15  = $rowdata['idLevel_15'];}
+				if(isset($idLevel_16)){       $x16  = $idLevel_16;      }else{$x16  = $rowdata['idLevel_16'];}
+				if(isset($idLevel_17)){       $x17  = $idLevel_17;      }else{$x17  = $rowdata['idLevel_17'];}
+				if(isset($idLevel_18)){       $x18  = $idLevel_18;      }else{$x18  = $rowdata['idLevel_18'];}
+				if(isset($idLevel_19)){       $x19  = $idLevel_19;      }else{$x19  = $rowdata['idLevel_19'];}
+				if(isset($idLevel_20)){       $x20  = $idLevel_20;      }else{$x20  = $rowdata['idLevel_20'];}
+				if(isset($idLevel_21)){       $x21  = $idLevel_21;      }else{$x21  = $rowdata['idLevel_21'];}
+				if(isset($idLevel_22)){       $x22  = $idLevel_22;      }else{$x22  = $rowdata['idLevel_22'];}
+				if(isset($idLevel_23)){       $x23  = $idLevel_23;      }else{$x23  = $rowdata['idLevel_23'];}
+				if(isset($idLevel_24)){       $x24  = $idLevel_24;      }else{$x24  = $rowdata['idLevel_24'];}
+				if(isset($idLevel_25)){       $x25  = $idLevel_25;      }else{$x25  = $rowdata['idLevel_25'];}
+				if(isset($Observacion)){      $x26  = $Observacion;     }else{$x26  = $rowdata['Observacion'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend25('Contrato','idLicitacion',$x0 ,2,'idLicitacion','Nombre','licitacion_listado',$z,0,
@@ -359,23 +359,23 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				$Form_Inputs->form_input_hidden('idEstadoTarea', 1, 2);
 				$Form_Inputs->form_input_hidden('idTrabajoOT', $_GET['editTarea'], 2);
 				
-				?> 
+				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edittarea"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edittarea"> 
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 
 	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addProd']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['addProd'])){
 //Se traen los datos de la ot
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
@@ -407,28 +407,28 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Productos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProducto)) {       $x1  = $idProducto;      }else{$x1  = '';}
-				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = '';}
-				
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $SIS_where, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
-					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
-					<div class="col-sm-8">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
@@ -436,11 +436,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
-				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
 				$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
@@ -468,17 +468,17 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				</script>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Agregar" name="submit_prod"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_prod"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_prod']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_prod'])){ 
 //Se traen los datos de la ot
 $SIS_query = '
 orden_trabajo_tareas_listado_productos.idProducto, 
@@ -515,28 +515,28 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Productos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProducto)) {       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
-				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
-				
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $SIS_where, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
-					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
-					<div class="col-sm-8">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
@@ -564,17 +564,17 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				</script>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Editar" name="submit_editprod"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_editprod"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addIns']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addIns'])){ 
 //Se traen los datos de la ot
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
@@ -606,28 +606,28 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Insumos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProducto)) {       $x1  = $idProducto;      }else{$x1  = '';}
-				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = '';}
-				
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $SIS_where, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
-					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
-					<div class="col-sm-8">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
@@ -635,11 +635,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
-				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
 				$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
@@ -667,17 +667,17 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 				</script>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Agregar" name="submit_ins"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_ins"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_ins']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_ins'])){ 
 //Se traen los datos de la ot
 $SIS_query = '
 orden_trabajo_tareas_listado_insumos.idProducto, 
@@ -714,28 +714,28 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Insumos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProducto)) {       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
-				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
-				
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $SIS_where, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
-					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
-					<div class="col-sm-8">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
@@ -763,17 +763,17 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 				</script>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Editar" name="submit_editins"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_editins"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addTrab']) ) { 	
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addTrab'])){ 	
 //Se traen los datos de la ot
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
@@ -785,18 +785,18 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Trabajador</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)) {     $x1  = $idTrabajador;    }else{$x1  = '';}
+				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
 
 				
 				//se dibujan los inputs
@@ -806,11 +806,11 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
-				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
-				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){ $Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_1'])&&$rowdata['idUbicacion_lvl_1']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_1', $rowdata['idUbicacion_lvl_1'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_2'])&&$rowdata['idUbicacion_lvl_2']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_2', $rowdata['idUbicacion_lvl_2'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_3'])&&$rowdata['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $rowdata['idUbicacion_lvl_3'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_4'])&&$rowdata['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $rowdata['idUbicacion_lvl_4'], 2);}
+				if(isset($rowdata['idUbicacion_lvl_5'])&&$rowdata['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $rowdata['idUbicacion_lvl_5'], 2);}
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', $rowdata['idEstado'], 2);
 				$Form_Inputs->form_input_hidden('idPrioridad', $rowdata['idPrioridad'], 2);
@@ -821,18 +821,18 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Agregar" name="submit_trab"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_trab"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_trab']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_trab'])){ 
 //Se traen los datos de la ot
 $SIS_query = 'idTrabajador';
 $SIS_join  = '';
@@ -840,22 +840,22 @@ $SIS_where = 'idResponsable ='.$_GET['edit_trab'];
 $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_responsable', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Trabajador</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)) {     $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
+				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -866,17 +866,17 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Editar" name="submit_edittrab"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_edittrab"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_obs']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_obs'])){ 
 //Se traen los datos de la ot
 $SIS_query = 'Observaciones';
 $SIS_join  = '';
@@ -885,19 +885,19 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos de la OT</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Observaciones)) {    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
-				
+				if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observacion','Observaciones', $x1, 1);
@@ -906,17 +906,17 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editObs"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editObs"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['modBase']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['modBase'])){
 //Se traen los datos de la ot
 $SIS_query = 'idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4,idUbicacion_lvl_5, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
@@ -926,27 +926,27 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 ?>
 	
 								
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos de la OT</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idUbicacion)) {        $x1  = $idUbicacion;        }else{$x1  = $rowdata['idUbicacion'];}
-				if(isset($idUbicacion_lvl_1)) {  $x2  = $idUbicacion_lvl_1;  }else{$x2  = $rowdata['idUbicacion_lvl_1'];}
-				if(isset($idUbicacion_lvl_2)) {  $x3  = $idUbicacion_lvl_2;  }else{$x3  = $rowdata['idUbicacion_lvl_2'];}
-				if(isset($idUbicacion_lvl_3)) {  $x4  = $idUbicacion_lvl_3;  }else{$x4  = $rowdata['idUbicacion_lvl_3'];}
-				if(isset($idUbicacion_lvl_4)) {  $x5  = $idUbicacion_lvl_4;  }else{$x5  = $rowdata['idUbicacion_lvl_4'];}
-				if(isset($idUbicacion_lvl_5)) {  $x6  = $idUbicacion_lvl_5;  }else{$x6  = $rowdata['idUbicacion_lvl_5'];}
-				if(isset($idPrioridad)) {        $x7  = $idPrioridad;        }else{$x7  = $rowdata['idPrioridad'];}
-				if(isset($idTipo)) {             $x8  = $idTipo;             }else{$x8  = $rowdata['idTipo'];}
-				if(isset($f_programacion)) {     $x9  = $f_programacion;     }else{$x9  = $rowdata['f_programacion'];}
-				
+				if(isset($idUbicacion)){        $x1  = $idUbicacion;        }else{$x1  = $rowdata['idUbicacion'];}
+				if(isset($idUbicacion_lvl_1)){  $x2  = $idUbicacion_lvl_1;  }else{$x2  = $rowdata['idUbicacion_lvl_1'];}
+				if(isset($idUbicacion_lvl_2)){  $x3  = $idUbicacion_lvl_2;  }else{$x3  = $rowdata['idUbicacion_lvl_2'];}
+				if(isset($idUbicacion_lvl_3)){  $x4  = $idUbicacion_lvl_3;  }else{$x4  = $rowdata['idUbicacion_lvl_3'];}
+				if(isset($idUbicacion_lvl_4)){  $x5  = $idUbicacion_lvl_4;  }else{$x5  = $rowdata['idUbicacion_lvl_4'];}
+				if(isset($idUbicacion_lvl_5)){  $x6  = $idUbicacion_lvl_5;  }else{$x6  = $rowdata['idUbicacion_lvl_5'];}
+				if(isset($idPrioridad)){        $x7  = $idPrioridad;        }else{$x7  = $rowdata['idPrioridad'];}
+				if(isset($idTipo)){             $x8  = $idTipo;             }else{$x8  = $rowdata['idTipo'];}
+				if(isset($f_programacion)){     $x9  = $f_programacion;     }else{$x9  = $rowdata['f_programacion'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'],   0,
@@ -958,24 +958,24 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 												  $dbConn, 'form1');
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x7, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x8, 2, 'idTipo', 'Nombre', 'core_ot_motivos_tipos', 0, '', $dbConn);
-				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x9, 2);			
+				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x9, 2);
 							
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				
 				?>
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editBase"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editBase"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>					
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['view']) ) { 
+</div>	
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['view'])){
 // Se trae un listado con todos los elementos
 $SIS_query = '
 orden_trabajo_tareas_listado.idOT,
@@ -1115,7 +1115,7 @@ $SIS_order = 0;
 $arrTarea = array();
 $arrTarea = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTarea');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con el historial
 $SIS_query = '
 orden_trabajo_tareas_listado_historial.Creacion_fecha, 
@@ -1139,11 +1139,11 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 	
 		<div id="customer">
 			
-			<table id="meta" class="fleft otdata">
+			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Ubicacion</td>
@@ -1219,9 +1219,9 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
-				</tr>		  
+				</tr>
 				
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Trabajadores Encargados</td>
 						<td>
@@ -1245,10 +1245,10 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
-						</tr> 
-					<?php }?>	
+						</tr>
+					<?php }?>
 					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php /**********************************************************************************/  ?>
+				<?php /**********************************************************************************/ ?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td>
 						<td>
@@ -1262,7 +1262,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 						if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="4"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
-								<td class="item-name"><?php echo $insumos['Cantidad'].' '.$insumos['UnidadMedida']; ?></td>	
+								<td class="item-name"><?php echo $insumos['Cantidad'].' '.$insumos['UnidadMedida']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<?php //Si la OT solo esta programada
@@ -1275,12 +1275,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 										<?php } ?>
 									</div>
 								</td>
-							</tr> 
+							</tr>
 						<?php
 						} 
 					} ?>
 					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td>
 						<td>
@@ -1290,11 +1290,11 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 							<?php } ?>
 						</td>
 					</tr>
-					<?php foreach ($arrProductos as $prod) { 
+					<?php foreach ($arrProductos as $prod) {
 						if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="4"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
-								<td class="item-name"><?php echo $prod['Cantidad'].' '.$prod['UnidadMedida']; ?></td>	
+								<td class="item-name"><?php echo $prod['Cantidad'].' '.$prod['UnidadMedida']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<?php //Si la OT solo esta programada
@@ -1307,12 +1307,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 										<?php } ?>
 									</div>
 								</td>
-							</tr> 
+							</tr>
 						<?php 
 						}
 					} ?>
 					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Tareas <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';}?></td>
 						<td>
@@ -1326,7 +1326,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 						<tr class="item-row linea_punteada">
 							<td class="item-name">
 								<strong>Estado: </strong><?php echo $tarea['EstadoTarea'];?>
-							</td>	
+							</td>
 							<td class="item-name" colspan="4">
 								<strong>Licitacion: </strong><?php echo $tarea['Licitacion'];?><br/>
 								<strong>Tarea: </strong>
@@ -1368,17 +1368,17 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 									//Boton para cambiar el estado de la tarea
 									echo '<a href="'.$ubicacion.'&editTarea='.$tarea['idTrabajoOT'].'" title="Editar Tarea" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>';
 									echo '<a onClick="dialogBox(\''.$ubicacion.'&del_tarea='.$tarea['idTrabajoOT'].'\', \''.$dialogo.'\')" title="Borrar Trabajo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';	
-									?>		
+									?>	
 								</div>
-							</td>		
-						</tr> 
+							</td>
+						</tr>
 					<?php } ?>
 					
-					<?php /**********************************************************************************/ ?>
+					<?php /**********************************************************************************/?>
 					
 					
 					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 
 				
 				<tr>
@@ -1393,13 +1393,13 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 				
 			</tbody>
 		</table>
-		<div class="clearfix"></div>	
+		<div class="clearfix"></div>
 	</div>
 </div>
 <br/>
 
 
-<div class="col-xs-12" style="margin-bottom:15px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 	<div class="row">
 		<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 			<div class="table-responsive">
@@ -1412,13 +1412,13 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 							<th width="160">Fecha</th>
 							<th>Usuario</th>
 							<th>Observacion</th>
-						</tr>			  
+						</tr>
 						<?php foreach ($arrHistorial as $doc){?>
 							<tr class="item-row">
 								<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 								<td><?php echo $doc['Usuario']; ?></td>
 								<td><?php echo '<i class="'.$doc['FonAwesome'].'" aria-hidden="true"></i> '.$doc['Observacion']; ?></td>
-							</tr> 
+							</tr>
 						<?php } ?>
 					</tbody>
 				</table>

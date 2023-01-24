@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -141,10 +141,10 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
 						<div class="panel-body">
 							<p>
 								<?php 
-								if(isset($rowDatos['SistemaRut'])&&$rowDatos['SistemaRut']!=''){                 echo 'R.U.T.: '.$rowDatos['SistemaRut'].'<br/>';}
-								if(isset($rowDatos['SistemaDireccion'])&&$rowDatos['SistemaDireccion']!=''){     echo $rowDatos['SistemaDireccion'].' '.$rowDatos['SistemaComuna'].' '.$rowDatos['SistemaCiudad'].'<br/>';}
-								if(isset($rowDatos['SistemaFono1'])&&$rowDatos['SistemaFono1']!=''){             echo 'Telefono Fijo: '.formatPhone($rowDatos['SistemaFono1']).'<br/>';}
-								if(isset($rowDatos['SistemaFono2'])&&$rowDatos['SistemaFono2']!=''){             echo 'Celular: '.formatPhone($rowDatos['SistemaFono2']).'<br/>';}
+								if(isset($rowDatos['SistemaRut'])&&$rowDatos['SistemaRut']!=''){         echo 'R.U.T.: '.$rowDatos['SistemaRut'].'<br/>';}
+								if(isset($rowDatos['SistemaDireccion'])&&$rowDatos['SistemaDireccion']!=''){    echo $rowDatos['SistemaDireccion'].' '.$rowDatos['SistemaComuna'].' '.$rowDatos['SistemaCiudad'].'<br/>';}
+								if(isset($rowDatos['SistemaFono1'])&&$rowDatos['SistemaFono1']!=''){     echo 'Telefono Fijo: '.formatPhone($rowDatos['SistemaFono1']).'<br/>';}
+								if(isset($rowDatos['SistemaFono2'])&&$rowDatos['SistemaFono2']!=''){     echo 'Celular: '.formatPhone($rowDatos['SistemaFono2']).'<br/>';}
 								
 								?>
 							</p>
@@ -156,19 +156,19 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
 						<div class="panel-heading">
 							<h4>
 								<?php 
-								if(isset($rowDatos['ApoderadoNombre'])&&$rowDatos['ApoderadoNombre']!=''){ echo $rowDatos['ApoderadoNombre'];}
-								if(isset($rowDatos['ApoderadoApellidoPat'])&&$rowDatos['ApoderadoApellidoPat']!=''){ echo ' '.$rowDatos['ApoderadoApellidoPat'];}
-								if(isset($rowDatos['ApoderadoApellidoMat'])&&$rowDatos['ApoderadoApellidoMat']!=''){ echo ' '.$rowDatos['ApoderadoApellidoMat'];}
-								?> 
+								if(isset($rowDatos['ApoderadoNombre'])&&$rowDatos['ApoderadoNombre']!=''){echo $rowDatos['ApoderadoNombre'];}
+								if(isset($rowDatos['ApoderadoApellidoPat'])&&$rowDatos['ApoderadoApellidoPat']!=''){echo ' '.$rowDatos['ApoderadoApellidoPat'];}
+								if(isset($rowDatos['ApoderadoApellidoMat'])&&$rowDatos['ApoderadoApellidoMat']!=''){echo ' '.$rowDatos['ApoderadoApellidoMat'];}
+								?>
 							</h4>
 						</div>
 						<div class="panel-body">
 							<p>
 								<?php 
-								if(isset($rowDatos['ApoderadoRut'])&&$rowDatos['ApoderadoRut']!=''){                 echo 'R.U.T.: '.$rowDatos['ApoderadoRut'].'<br/>';}
-								if(isset($rowDatos['ApoderadoDireccion'])&&$rowDatos['ApoderadoDireccion']!=''){     echo $rowDatos['ApoderadoDireccion'].' '.$rowDatos['ApoderadoComuna'].' '.$rowDatos['ApoderadoCiudad'].'<br/>';}
-								if(isset($rowDatos['ApoderadoFono1'])&&$rowDatos['ApoderadoFono1']!=''){             echo 'Telefono Fijo: '.formatPhone($rowDatos['ApoderadoFono1']).'<br/>';}
-								if(isset($rowDatos['ApoderadoFono2'])&&$rowDatos['ApoderadoFono2']!=''){             echo 'Celular: '.formatPhone($rowDatos['ApoderadoFono2']).'<br/>';}
+								if(isset($rowDatos['ApoderadoRut'])&&$rowDatos['ApoderadoRut']!=''){         echo 'R.U.T.: '.$rowDatos['ApoderadoRut'].'<br/>';}
+								if(isset($rowDatos['ApoderadoDireccion'])&&$rowDatos['ApoderadoDireccion']!=''){    echo $rowDatos['ApoderadoDireccion'].' '.$rowDatos['ApoderadoComuna'].' '.$rowDatos['ApoderadoCiudad'].'<br/>';}
+								if(isset($rowDatos['ApoderadoFono1'])&&$rowDatos['ApoderadoFono1']!=''){     echo 'Telefono Fijo: '.formatPhone($rowDatos['ApoderadoFono1']).'<br/>';}
+								if(isset($rowDatos['ApoderadoFono2'])&&$rowDatos['ApoderadoFono2']!=''){     echo 'Celular: '.formatPhone($rowDatos['ApoderadoFono2']).'<br/>';}
 								
 								?>
 							</p>
@@ -187,40 +187,40 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
 				</thead>
 				<tbody>
 					
-					<?php if(isset($rowDatos['Vehiculo_1_Nombre'])&&$rowDatos['Vehiculo_1_Nombre']!=''){ ?>
+					<?php if(isset($rowDatos['Vehiculo_1_Nombre'])&&$rowDatos['Vehiculo_1_Nombre']!=''){?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_1_Nombre'].' Patente '.$rowDatos['Vehiculo_1_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_1_Nombre'].' '.$rowDatos['Hijo_1_ApellidoPat'].' '.$rowDatos['Hijo_1_ApellidoMat']; ?></td>
 							<td align="right"><?php echo Valores($rowDatos['Monto_1'], 0);?></td>
-						</tr>	
+						</tr>
 					<?php }?>
-					<?php if(isset($rowDatos['Vehiculo_2_Nombre'])&&$rowDatos['Vehiculo_2_Nombre']!=''){ ?>
+					<?php if(isset($rowDatos['Vehiculo_2_Nombre'])&&$rowDatos['Vehiculo_2_Nombre']!=''){?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_2_Nombre'].' Patente '.$rowDatos['Vehiculo_2_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_2_Nombre'].' '.$rowDatos['Hijo_2_ApellidoPat'].' '.$rowDatos['Hijo_2_ApellidoMat']; ?></td>
 							<td align="right"><?php echo Valores($rowDatos['Monto_2'], 0);?></td>
-						</tr>	
+						</tr>
 					<?php }?>
-					<?php if(isset($rowDatos['Vehiculo_3_Nombre'])&&$rowDatos['Vehiculo_3_Nombre']!=''){ ?>
+					<?php if(isset($rowDatos['Vehiculo_3_Nombre'])&&$rowDatos['Vehiculo_3_Nombre']!=''){?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_3_Nombre'].' Patente '.$rowDatos['Vehiculo_3_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_3_Nombre'].' '.$rowDatos['Hijo_3_ApellidoPat'].' '.$rowDatos['Hijo_3_ApellidoMat']; ?></td>
 							<td align="right"><?php echo Valores($rowDatos['Monto_3'], 0);?></td>
-						</tr>	
+						</tr>
 					<?php }?>
-					<?php if(isset($rowDatos['Vehiculo_4_Nombre'])&&$rowDatos['Vehiculo_4_Nombre']!=''){ ?>
+					<?php if(isset($rowDatos['Vehiculo_4_Nombre'])&&$rowDatos['Vehiculo_4_Nombre']!=''){?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_4_Nombre'].' Patente '.$rowDatos['Vehiculo_4_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_4_Nombre'].' '.$rowDatos['Hijo_4_ApellidoPat'].' '.$rowDatos['Hijo_4_ApellidoMat']; ?></td>
 							<td align="right"><?php echo Valores($rowDatos['Monto_4'], 0);?></td>
-						</tr>	
+						</tr>
 					<?php }?>
-					<?php if(isset($rowDatos['Vehiculo_5_Nombre'])&&$rowDatos['Vehiculo_5_Nombre']!=''){ ?>
+					<?php if(isset($rowDatos['Vehiculo_5_Nombre'])&&$rowDatos['Vehiculo_5_Nombre']!=''){?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_5_Nombre'].' Patente '.$rowDatos['Vehiculo_5_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_5_Nombre'].' '.$rowDatos['Hijo_5_ApellidoPat'].' '.$rowDatos['Hijo_5_ApellidoMat']; ?></td>
 							<td align="right"><?php echo Valores($rowDatos['Monto_5'], 0);?></td>
-						</tr>	
+						</tr>
 					<?php }?>
 					
 					<tr>
@@ -260,12 +260,12 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -276,12 +276,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

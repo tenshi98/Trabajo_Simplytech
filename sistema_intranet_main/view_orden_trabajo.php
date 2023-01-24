@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -190,7 +190,7 @@ $zz .= '&view='.$_GET['view'];
 		
 			<div id="customer">
 				
-				<table id="meta" class="fleft otdata">
+				<table id="meta" class="pull-left otdata">
 					<tbody>
 						<tr>
 							<td class="meta-head"><strong>DATOS BASICOS</strong></td>
@@ -281,7 +281,7 @@ $zz .= '&view='.$_GET['view'];
 					<tr><th colspan="6">Detalle</th></tr>		  
 					
 					<?php 
-					/**********************************************************************************/ 
+					/**********************************************************************************/
 					if($arrTrabajadores!=false && !empty($arrTrabajadores) && $arrTrabajadores!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajadores</td></tr>
 						<?php foreach ($arrTrabajadores as $trab) {  ?>
@@ -289,39 +289,39 @@ $zz .= '&view='.$_GET['view'];
 								<td class="item-name"><?php echo $trab['Rut'];?></td>
 								<td class="item-name" colspan="4"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'];?></td>
 								<td class="item-name"><?php echo $trab['Cargo'];?></td> 
-							</tr> 
-						<?php }?>	
+							</tr>
+						<?php }?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
-					/**********************************************************************************/ 
+					/**********************************************************************************/
 					if($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
 						<?php foreach ($arrInsumos as $insumos) {
 							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
 								<tr class="item-row linea_punteada">
 									<td class="item-name" colspan="5"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
-									<td class="item-name"><?php echo Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida']; ?></td>	
-								</tr> 
+									<td class="item-name"><?php echo Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida']; ?></td>
+								</tr>
 							<?php
 							} 
 						} ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
-					/**********************************************************************************/ 
+					/**********************************************************************************/
 					if($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
-						<?php foreach ($arrProductos as $prod) { 
+						<?php foreach ($arrProductos as $prod) {
 							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
 								<tr class="item-row linea_punteada">
 									<td class="item-name" colspan="5"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
-									<td class="item-name"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['UnidadMedida']; ?></td>	
-								</tr> 
+									<td class="item-name"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['UnidadMedida']; ?></td>
+								</tr>
 							<?php 
 							}
 						} ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
-					/**********************************************************************************/ 
+					/**********************************************************************************/
 					if($arrTrabajo!=false && !empty($arrTrabajo) && $arrTrabajo!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';}?></td></tr>
 						<?php foreach ($arrTrabajo as $trab) {  ?>
@@ -339,8 +339,8 @@ $zz .= '&view='.$_GET['view'];
 										//El tipo de maquina que es
 										switch ($trab['idSubTipo']) {
 											case 1: //Grasa
-												if(isset($trab['Grasa_inicial'])&&$trab['Grasa_inicial']!=0){             echo Cantidades_decimales_justos($trab['Grasa_inicial']);}
-												if(isset($trab['Grasa_relubricacion'])&&$trab['Grasa_relubricacion']!=0){ echo Cantidades_decimales_justos($trab['Grasa_relubricacion']);}
+												if(isset($trab['Grasa_inicial'])&&$trab['Grasa_inicial']!=0){         echo Cantidades_decimales_justos($trab['Grasa_inicial']);}
+												if(isset($trab['Grasa_relubricacion'])&&$trab['Grasa_relubricacion']!=0){echo Cantidades_decimales_justos($trab['Grasa_relubricacion']);}
 												break;
 											case 2: //Aceite
 												echo Cantidades_decimales_justos($trab['Aceite']);
@@ -358,31 +358,31 @@ $zz .= '&view='.$_GET['view'];
 										echo '<strong>Obs: </strong>'.$trab['Observacion'];
 										break;
 								}?>
-								</td>	
-							</tr> 
+								</td>
+							</tr>
 						<?php } ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
-					/**********************************************************************************/ ?>
+					/**********************************************************************************/?>
 
 					<tr><td colspan="6" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td></tr>
 					<tr><td colspan="6" class="blank"><p>Observacion</p></td></tr>
 					
 				</tbody>
 			</table>
-			<div class="clearfix"></div>	
+			<div class="clearfix"></div>
 		</div>
 	</div>
 </div>
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -393,12 +393,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

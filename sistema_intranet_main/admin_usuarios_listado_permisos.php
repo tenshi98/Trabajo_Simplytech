@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "admin_usuarios_listado.php";
 $location = $original;
 $new_location = "admin_usuarios_listado_permisos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_GET['prm_add']) )  { 
+if (!empty($_GET['prm_add'])){
 	//nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -33,17 +33,17 @@ if ( !empty($_GET['prm_add']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['prm_del']) )     {
+if (!empty($_GET['prm_del'])){
 	//nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	$location.='#'.$_GET['anclaje'];
 	//Llamamos al formulario
 	$form_trabajo= 'prm_del';
-	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 //formulario para crear
-if ( !empty($_GET['prm_cat_add']) )  { 
+if (!empty($_GET['prm_cat_add'])){
 	//nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -53,27 +53,27 @@ if ( !empty($_GET['prm_cat_add']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['prm_cat_del']) )     {
+if (!empty($_GET['prm_cat_del'])){
 	//nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	$location.='#subcat_'.$_GET['anclaje'];
 	//Llamamos al formulario
 	$form_trabajo= 'prm_cat_del';
-	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 
 
 
 //se borra un dato
-if ( !empty($_GET['perm']) )     {
+if (!empty($_GET['perm'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	$location.='#'.$_GET['anclaje'];
 	//Llamamos al formulario
 	$form_trabajo= 'perm';
-	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -84,7 +84,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = 'Nombre';
 $SIS_join  = '';
@@ -94,7 +94,7 @@ $rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SI
 /**********************************/
 //Permisos a sistemas
 $SIS_query = '
-core_permisos_listado.idAdmpm, 
+core_permisos_listado.idAdmpm,
 core_permisos_listado.Nombre AS Nombre_permiso,
 core_permisos_listado.Descripcion,
 core_permisos_listado.Habilita,
@@ -118,12 +118,12 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Permisos Asignados');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -132,14 +132,14 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS
 				<li class="active"><a href="<?php echo 'admin_usuarios_listado_permisos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Permisos</a></li>
 				<li class=""><a href="<?php echo 'admin_usuarios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 				<li class=""><a href="<?php echo 'admin_usuarios_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
-			</ul>	
+			</ul>
 		</header>
 		
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
-						<th width="10">Ayuda</th> 
+						<th width="10">Ayuda</th>
 						<th>Permisos</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="10">Visualizacion</th><?php } ?>
 						<th width="10">Acciones</th>
@@ -152,7 +152,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS
 					<?php 
 					//Obtengo la ubicacion completa para devolver al punto inicial
 					$xxx ='&id='.$_GET['id'];//Ciclo
-					filtrar($arrPermisos, 'Categoria'); 
+					filtrar($arrPermisos, 'Categoria');
 					foreach ($arrPermisos as $categoria=>$subcategorias) {  ?>
 						<tr class="odd" >
 							<td colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ echo '4';}else{echo '3';}?>" style="background-color:#DDD">
@@ -160,40 +160,40 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS
 								<strong><?php echo $categoria; ?></strong>
 							</td>
 							<td style="background-color:#DDD">
-								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">	
+								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
 									<a href="<?php echo $new_location.$xxx.'&anclaje='.$subcategorias[0]['id_pmcat'].'&prm_cat_del='.simpleEncode($subcategorias[0]['id_pmcat'], fecha_actual()); ?>" title="Quitar todos los permisos de esta categoria" class="btn btn-sm btn-default unlocked_inactive tooltip">OFF</a>
 									<a href="<?php echo $new_location.$xxx.'&anclaje='.$subcategorias[0]['id_pmcat'].'&prm_cat_add='.simpleEncode($subcategorias[0]['id_pmcat'], fecha_actual()); ?>" title="Asignar todos los permisos de esta categoria" class="btn btn-sm btn-default unlocked_inactive tooltip">ON</a>
-								</div>	
+								</div>
 							</td>
 						</tr>
-						<?php foreach ($subcategorias as $permiso) {?>
-							<tr> 
+						<?php foreach ($subcategorias as $permiso){ ?>
+							<tr>
 								<td>
 									<a name="<?php echo $permiso['idAdmpm'] ?>"></a>
-									<?php if(isset($permiso['Descripcion'])&&$permiso['Descripcion']!=''){ ?>
+									<?php if(isset($permiso['Descripcion'])&&$permiso['Descripcion']!=''){?>
 										<a title="<?php echo $permiso['Descripcion']; ?>" class="btn btn-primary btn-sm tooltip"><i class="fa fa-question" aria-hidden="true"></i></a>
 									<?php } ?>
-								</td> 
+								</td>
 								<td>
 									<?php echo ' '.TituloMenu($permiso['Nombre_permiso']).' '; ?> 
 									<div class="btn-group" style="width: 140px;" >
-										<?php if(isset($permiso['Habilita'])&&$permiso['Habilita']!=''){ ?><a title="<?php echo $permiso['Habilita']; ?>" class="btn btn-success btn-sm tooltip"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a><?php } ?>
-										<?php if(isset($permiso['Principal'])&&$permiso['Principal']!=''){ ?><a title="<?php echo $permiso['Principal']; ?>" class="btn btn-info btn-sm tooltip"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a><?php } ?>
+										<?php if(isset($permiso['Habilita'])&&$permiso['Habilita']!=''){?><a title="<?php echo $permiso['Habilita']; ?>" class="btn btn-success btn-sm tooltip"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a><?php } ?>
+										<?php if(isset($permiso['Principal'])&&$permiso['Principal']!=''){?><a title="<?php echo $permiso['Principal']; ?>" class="btn btn-info btn-sm tooltip"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a><?php } ?>
 										
-									</div>	 
+									</div>
 								</td>
 								<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php if($permiso['visualizacion']==9999){echo 'Solo Superadministradores';}elseif($permiso['visualizacion']==9998){echo 'Todos';}else{echo $permiso['ver'];} ?></td><?php } ?>
 								<td>
-									<div class="btn-group" style="width: 100px;" id="toggle_event_editing">	
-										<?php $w='&anclaje='.$permiso['idAdmpm'];?> 
-										<?php if ( $permiso['contar']=='1' ) {?>   
+									<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
+										<?php $w='&anclaje='.$permiso['idAdmpm'];?>
+										<?php if ( $permiso['contar']=='1' ){ ?>
 											<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.$xxx; ?>&prm_del=<?php echo simpleEncode($permiso['idpermiso'], fecha_actual()).$w; ?>">OFF</a>
 											<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
 										<?php } else {?>
 											<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 											<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.$xxx; ?>&prm_add=<?php echo $permiso['idAdmpm'].$w; ?>">ON</a>
-										<?php }?>    
-									</div> 
+										<?php } ?>
+									</div>
 								</td>
 								<td>
 									<div class="btn-group" style="width: 140px;" id="toggle_event_editing">
@@ -204,21 +204,21 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS
 											<?php if ($permiso['Level_Limit'] >= 4){ ?><a href="<?php echo $new_location.$xxx.'&perm='.$permiso['idpermiso'].'&mod=4'.$w ?>" title="Ver - Editar - Crear - Borrar"  class="btn btn-sm unlocked_inactive tooltip <?php if ($permiso['level'] == 4) { echo 'btn-info';}else{ echo 'btn-default';} ?>">4</a><?php } ?>
 										<?php } ?>
 									</div>
-								</td> 
-							</tr> 
+								</td>
+							</tr>
 						<?php } ?>
 					<?php } ?>
 				</tbody>
 			</table>
 		
 			
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

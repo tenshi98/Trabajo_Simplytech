@@ -2,27 +2,27 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-034).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idCajaChica']) )      $idCajaChica        = $_POST['idCajaChica'];
-	if ( !empty($_POST['idSistema']) )        $idSistema          = $_POST['idSistema'];
-	if ( !empty($_POST['Nombre']) )           $Nombre             = $_POST['Nombre'];
-	if ( !empty($_POST['Descripcion']) )      $Descripcion        = $_POST['Descripcion'];
-	if ( !empty($_POST['Direccion_img']) )    $Direccion_img      = $_POST['Direccion_img'];
-	if ( !empty($_POST['FichaTecnica']) )     $FichaTecnica       = $_POST['FichaTecnica'];
-	if ( !empty($_POST['MontoActual']) )      $MontoActual        = $_POST['MontoActual'];
-	if ( !empty($_POST['MontoProgramado']) )  $MontoProgramado    = $_POST['MontoProgramado'];
-	
+	if (!empty($_POST['idCajaChica']))      $idCajaChica        = $_POST['idCajaChica'];
+	if (!empty($_POST['idSistema']))        $idSistema          = $_POST['idSistema'];
+	if (!empty($_POST['Nombre']))           $Nombre             = $_POST['Nombre'];
+	if (!empty($_POST['Descripcion']))      $Descripcion        = $_POST['Descripcion'];
+	if (!empty($_POST['Direccion_img']))    $Direccion_img      = $_POST['Direccion_img'];
+	if (!empty($_POST['FichaTecnica']))     $FichaTecnica       = $_POST['FichaTecnica'];
+	if (!empty($_POST['MontoActual']))      $MontoActual        = $_POST['MontoActual'];
+	if (!empty($_POST['MontoProgramado']))  $MontoProgramado    = $_POST['MontoProgramado'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -42,35 +42,35 @@ require_once '0_validate_user_1.php';
 			case 'FichaTecnica':    if(empty($FichaTecnica)){    $error['FichaTecnica']      = 'error/No ha ingresado la ficha tecnica';}break;
 			case 'MontoActual':     if(empty($MontoActual)){     $error['MontoActual']       = 'error/No ha ingresado el monto actual';}break;
 			case 'MontoProgramado': if(empty($MontoProgramado)){ $error['MontoProgramado']   = 'error/No ha ingresado el monto programado';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Nombre) && $Nombre != ''){                    $Nombre          = EstandarizarInput($Nombre); }
-	if(isset($Descripcion) && $Descripcion != ''){          $Descripcion     = EstandarizarInput($Descripcion); }
-	if(isset($FichaTecnica) && $FichaTecnica != ''){        $FichaTecnica    = EstandarizarInput($FichaTecnica); }
-	if(isset($MontoActual) && $MontoActual != ''){          $MontoActual     = EstandarizarInput($MontoActual); }
-	if(isset($MontoProgramado) && $MontoProgramado != ''){  $MontoProgramado = EstandarizarInput($MontoProgramado); }
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre) && $Nombre!=''){                   $Nombre          = EstandarizarInput($Nombre);}
+	if(isset($Descripcion) && $Descripcion!=''){          $Descripcion     = EstandarizarInput($Descripcion);}
+	if(isset($FichaTecnica) && $FichaTecnica!=''){        $FichaTecnica    = EstandarizarInput($FichaTecnica);}
+	if(isset($MontoActual) && $MontoActual!=''){          $MontoActual     = EstandarizarInput($MontoActual);}
+	if(isset($MontoProgramado) && $MontoProgramado!=''){  $MontoProgramado = EstandarizarInput($MontoProgramado);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){  $error['Descripcion'] = 'error/Edita la Descripcion, contiene palabras no permitidas'; }	
-		
+/*******************************************************************************************************************/
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre,contiene palabras no permitidas';}
+	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){  $error['Descripcion'] = 'error/Edita la Descripcion, contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -81,38 +81,38 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre de la caja chica ya existe';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){             $SIS_data  = "'".$idSistema."'" ;         }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre != ''){                   $SIS_data .= ",'".$Nombre."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($Descripcion) && $Descripcion != ''){         $SIS_data .= ",'".$Descripcion."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($MontoActual) && $MontoActual != ''){         $SIS_data .= ",'".$MontoActual."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($MontoProgramado) && $MontoProgramado != ''){ $SIS_data .= ",'".$MontoProgramado."'" ;  }else{$SIS_data .= ",''";}
-				
+				if(isset($idSistema) && $idSistema!=''){             $SIS_data  = "'".$idSistema."'";         }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",'".$Nombre."'";           }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){         $SIS_data .= ",'".$Descripcion."'";    }else{$SIS_data .= ",''";}
+				if(isset($MontoActual) && $MontoActual!=''){         $SIS_data .= ",'".$MontoActual."'";      }else{$SIS_data .= ",''";}
+				if(isset($MontoProgramado) && $MontoProgramado!=''){ $SIS_data .= ",'".$MontoProgramado."'";  }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, Nombre, Descripcion, MontoActual, MontoProgramado';
+				$SIS_columns = 'idSistema, Nombre,Descripcion, MontoActual, MontoProgramado';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'caja_chica_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
-					
-					//redirijo	
+
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
+
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -123,47 +123,47 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre de la caja chica ya existe';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idCajaChica='".$idCajaChica."'" ;
-				if(isset($Nombre) && $Nombre != ''){                   $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idSistema) && $idSistema != ''){             $SIS_data .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){         $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($MontoActual) && $MontoActual != ''){         $SIS_data .= ",MontoActual='".$MontoActual."'" ;}
-				if(isset($MontoProgramado) && $MontoProgramado != ''){ $SIS_data .= ",MontoProgramado='".$MontoProgramado."'" ;}
-				
+				$SIS_data = "idCajaChica='".$idCajaChica."'";
+				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($Descripcion) && $Descripcion!=''){         $SIS_data .= ",Descripcion='".$Descripcion."'";}
+				if(isset($MontoActual) && $MontoActual!=''){         $SIS_data .= ",MontoActual='".$MontoActual."'";}
+				if(isset($MontoProgramado) && $MontoProgramado!=''){ $SIS_data .= ",MontoProgramado='".$MontoProgramado."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
-				
+
 			}
-		
-		break;	
+
+		break;
 /*******************************************************************************************************************/
-		case 'submit_img':	
-			
+		case 'submit_img':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			if ($_FILES["Direccion_img"]["error"] > 0){
 				$error['Direccion_img'] = 'error/'.uploadPHPError($_FILES["Direccion_img"]["error"]);
 			} else {
 				//Se verifican las extensiones de los archivos
-				$permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
+				$permitidos = array("image/jpg","image/jpeg","image/gif","image/png");
 				//Se verifica que el archivo subido no exceda los 100 kb
 				$limite_kb = 1000;
 				//Sufijo
 				$sufijo = 'bod_ins_img_'.$idCajaChica.'_';
-				  
+
 				if (in_array($_FILES['Direccion_img']['type'], $permitidos) && $_FILES['Direccion_img']['size'] <= $limite_kb * 1024){
 					//Se especifica carpeta de destino
 					$ruta = "upload/".$sufijo.$_FILES['Direccion_img']['name'];
@@ -174,7 +174,7 @@ require_once '0_validate_user_1.php';
 						//Muevo el archivo
 						$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], "upload/xxxsxx_".$_FILES['Direccion_img']['name']);
 						if ($move_result){
-							
+
 							//se selecciona la imagen
 							switch ($_FILES['Direccion_img']['type']) {
 								case 'image/jpg':
@@ -190,11 +190,11 @@ require_once '0_validate_user_1.php';
 									$imgBase = imagecreatefrompng('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
 									break;
 							}
-								
+
 							//se reescala la imagen en caso de ser necesario
 							$imgBase_width = imagesx( $imgBase );
 							$imgBase_height = imagesy( $imgBase );
-								
+
 							//Se establece el tamaño maximo
 							$max_width  = 640;
 							$max_height = 640;
@@ -203,7 +203,7 @@ require_once '0_validate_user_1.php';
 								if($imgBase_width < $max_width){
 									$newwidth = $imgBase_width;
 								}else{
-									$newwidth = $max_width;	
+									$newwidth = $max_width;
 								}
 								$divisor = $imgBase_width / $newwidth;
 								$newheight = floor( $imgBase_height / $divisor);
@@ -212,7 +212,7 @@ require_once '0_validate_user_1.php';
 									$newheight = $imgBase_height;
 								}else{
 									$newheight =  $max_height;
-								} 
+								}
 								$divisor = $imgBase_height / $newheight;
 								$newwidth = floor( $imgBase_width / $divisor );
 							}
@@ -221,10 +221,10 @@ require_once '0_validate_user_1.php';
 
 							//se establece la calidad del archivo
 							$quality = 75;
-								
+
 							//se crea la imagen
 							imagejpeg($imgBase, $ruta, $quality);
-								
+
 							//se elimina la imagen base
 							try {
 								if(!is_writable('upload/xxxsxx_'.$_FILES['Direccion_img']['name'])){
@@ -232,25 +232,25 @@ require_once '0_validate_user_1.php';
 								}else{
 									unlink('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
 								}
-							}catch(Exception $e) { 
+							}catch(Exception $e) {
 								//guardar el dato en un archivo log
 							}
 							//se eliminan las imagenes de la memoria
 							imagedestroy($imgBase);
-						
-							//Filtro para idSistema		
-							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'" ;
-							
+
+							//Filtro para idSistema
+							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'";
+
 							/*******************************************************/
 							//se actualizan los datos
 							$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
-								
+								//redirijo
 								header( 'Location: '.$location.'&img_id='.$idCajaChica );
 								die;
-								
-							}	
+
+							}
 						} else {
 							$error['Direccion_img']       = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -264,11 +264,11 @@ require_once '0_validate_user_1.php';
 
 		break;
 /*******************************************************************************************************************/
-		case 'submit_file':	
-			
+		case 'submit_file':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			if ($_FILES["FichaTecnica"]["error"] > 0){
 				$error['FichaTecnica'] = 'error/'.uploadPHPError($_FILES["FichaTecnica"]["error"]);
 			} else {
@@ -278,7 +278,7 @@ require_once '0_validate_user_1.php';
 				$limite_kb = 10000;
 				//Sufijo
 				$sufijo = 'bod_ins_file_'.$idCajaChica.'_';
-				  
+
 				if (in_array($_FILES['FichaTecnica']['type'], $permitidos) && $_FILES['FichaTecnica']['size'] <= $limite_kb * 1024){
 					//Se especifica carpeta de destino
 					$ruta = "upload/".$sufijo.$_FILES['FichaTecnica']['name'];
@@ -287,21 +287,21 @@ require_once '0_validate_user_1.php';
 						//Se mueve el archivo a la carpeta previamente configurada
 						$move_result = @move_uploaded_file($_FILES["FichaTecnica"]["tmp_name"], $ruta);
 						if ($move_result){
-								
-							//Filtro para idSistema		
-							$SIS_data = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'" ;
-							
+
+							//Filtro para idSistema
+							$SIS_data = "FichaTecnica='".$sufijo.$_FILES['FichaTecnica']['name']."'";
+
 							/*******************************************************/
 							//se actualizan los datos
 							$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$idCajaChica.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
-								
+
 								header( 'Location: '.$location );
 								die;
-								
+
 							}
-									
+
 						} else {
 							$error['FichaTecnica']       = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -315,21 +315,21 @@ require_once '0_validate_user_1.php';
 
 		break;
 /*******************************************************************************************************************/
-		case 'del_img':	
-			
+		case 'del_img':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// Se obtiene el nombre del logo
+
+			// Se obtiene el nombre de la imagen
 			$rowdata = db_select_data (false, 'Direccion_img', 'caja_chica_listado', '', "idCajaChica = ".$_GET['del_img'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 			/*******************************************************/
 			//se actualizan los datos
 			$SIS_data = "Direccion_img=''" ;
 			$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
-				
+
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
 					try {
@@ -338,35 +338,34 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$rowdata['Direccion_img']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
-				
-				//Redirijo			
+
+				//redirijo
 				header( 'Location: '.$location.'&id='.$_GET['del_img'] );
 				die;
-				
-			}
-			
 
-		break;	
+			}
+
+		break;
 /*******************************************************************************************************************/
-		case 'del_file':	
-			
+		case 'del_file':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'FichaTecnica', 'caja_chica_listado', '', "idCajaChica = ".$_GET['del_file'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 			/*******************************************************/
 			//se actualizan los datos
 			$SIS_data = "FichaTecnica=''" ;
 			$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
-					
+
 				//se elimina el archivo
 				if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
 					try {
@@ -375,28 +374,27 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$rowdata['FichaTecnica']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
-				
-				//Redirijo			
+
+				//redirijo
 				header( 'Location: '.$location.'&id='.$_GET['del_file'] );
 				die;
 
 			}
-				
 
-		break;						
+		break;
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -404,20 +402,20 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				// Se obtiene el nombre del logo
 				$rowdata = db_select_data (false, 'Direccion_img, FichaTecnica', 'caja_chica_listado', '', "idCajaChica = ".$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -426,7 +424,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_delete_data (false, 'caja_chica_listado', 'idCajaChica = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//Se elimina la imagen
 					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
 						try {
@@ -435,7 +433,7 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/'.$rowdata['Direccion_img']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
@@ -447,25 +445,23 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/'.$rowdata['FichaTecnica']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-			
-		break;							
-						
+
+		break;
+
 /*******************************************************************************************************************/
 	}
 ?>

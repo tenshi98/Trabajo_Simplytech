@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "cross_solicitud_aplicacion_borrar.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,15 +18,15 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['NSolicitud']) && $_GET['NSolicitud'] != ''){          $location .= "&NSolicitud=".$_GET['NSolicitud'];          $search .= "&NSolicitud=".$_GET['NSolicitud'];}
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $location .= "&idPredio=".$_GET['idPredio'];              $search .= "&idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idTemporada']) && $_GET['idTemporada'] != ''){        $location .= "&idTemporada=".$_GET['idTemporada'];        $search .= "&idTemporada=".$_GET['idTemporada'];}
-if(isset($_GET['idEstadoFen']) && $_GET['idEstadoFen'] != ''){        $location .= "&idEstadoFen=".$_GET['idEstadoFen'];        $search .= "&idEstadoFen=".$_GET['idEstadoFen'];}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){        $location .= "&idCategoria=".$_GET['idCategoria'];        $search .= "&idCategoria=".$_GET['idCategoria'];}
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){          $location .= "&idProducto=".$_GET['idProducto'];          $search .= "&idProducto=".$_GET['idProducto'];}
-if(isset($_GET['f_programacion']) && $_GET['f_programacion'] != ''){  $location .= "&f_programacion=".$_GET['f_programacion'];  $search .= "&f_programacion=".$_GET['f_programacion'];}
-if(isset($_GET['horaProg']) && $_GET['horaProg'] != ''){              $location .= "&horaProg=".$_GET['horaProg'];              $search .= "&horaProg=".$_GET['horaProg'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $location .= "&idUsuario=".$_GET['idUsuario'];            $search .= "&idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['NSolicitud']) && $_GET['NSolicitud']!=''){   $location .= "&NSolicitud=".$_GET['NSolicitud'];          $search .= "&NSolicitud=".$_GET['NSolicitud'];}
+if(isset($_GET['idPredio']) && $_GET['idPredio']!=''){       $location .= "&idPredio=".$_GET['idPredio'];              $search .= "&idPredio=".$_GET['idPredio'];}
+if(isset($_GET['idTemporada']) && $_GET['idTemporada']!=''){ $location .= "&idTemporada=".$_GET['idTemporada'];        $search .= "&idTemporada=".$_GET['idTemporada'];}
+if(isset($_GET['idEstadoFen']) && $_GET['idEstadoFen']!=''){ $location .= "&idEstadoFen=".$_GET['idEstadoFen'];        $search .= "&idEstadoFen=".$_GET['idEstadoFen'];}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria']!=''){ $location .= "&idCategoria=".$_GET['idCategoria'];        $search .= "&idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){   $location .= "&idProducto=".$_GET['idProducto'];          $search .= "&idProducto=".$_GET['idProducto'];}
+if(isset($_GET['f_programacion']) && $_GET['f_programacion']!=''){  $location .= "&f_programacion=".$_GET['f_programacion'];  $search .= "&f_programacion=".$_GET['f_programacion'];}
+if(isset($_GET['horaProg']) && $_GET['horaProg']!=''){       $location .= "&horaProg=".$_GET['horaProg'];              $search .= "&horaProg=".$_GET['horaProg'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){     $location .= "&idUsuario=".$_GET['idUsuario'];            $search .= "&idUsuario=".$_GET['idUsuario'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -34,10 +34,10 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //se elimina la solicitud
-if ( !empty($_GET['del_Solicitud']) )     {
+if (!empty($_GET['del_Solicitud'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_All_Solicitud';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -53,25 +53,18 @@ if (isset($_GET['deleted'])){     $error['deleted']     = 'sucess/Solicitud borr
 if (isset($_GET['notslectjob'])){ $error['notslectjob'] = 'error/No ha seleccionado un trabajo a realizar';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['edit_Cuarteles']) ) {?>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['edit_Cuarteles'])){?>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){$num_pag = $_GET["pagina"];	
-} else {$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -94,7 +87,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 /**********************************************************/
 //filtro de usuarios
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -106,21 +99,21 @@ $y = "idEstado=1";
 $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['NSolicitud']) && $_GET['NSolicitud'] != ''){          $SIS_where .= " AND cross_solicitud_aplicacion_listado.NSolicitud=".$_GET['NSolicitud'];}
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $SIS_where .= " AND cross_solicitud_aplicacion_listado.idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idTemporada']) && $_GET['idTemporada'] != ''){        $SIS_where .= " AND cross_solicitud_aplicacion_listado.idTemporada=".$_GET['idTemporada'];}
-if(isset($_GET['idEstadoFen']) && $_GET['idEstadoFen'] != ''){        $SIS_where .= " AND cross_solicitud_aplicacion_listado.idEstadoFen=".$_GET['idEstadoFen'];}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){        $SIS_where .= " AND cross_solicitud_aplicacion_listado.idCategoria=".$_GET['idCategoria'];}
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){          $SIS_where .= " AND cross_solicitud_aplicacion_listado.idProducto=".$_GET['idProducto'];}
-if(isset($_GET['f_programacion']) && $_GET['f_programacion'] != ''){  $SIS_where .= " AND cross_solicitud_aplicacion_listado.f_programacion=".$_GET['f_programacion'];}
-if(isset($_GET['horaProg']) && $_GET['horaProg'] != ''){              $SIS_where .= " AND cross_solicitud_aplicacion_listado.horaProg=".$_GET['horaProg'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $SIS_where .= " AND cross_solicitud_aplicacion_listado.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['NSolicitud']) && $_GET['NSolicitud']!=''){   $SIS_where .= " AND cross_solicitud_aplicacion_listado.NSolicitud=".$_GET['NSolicitud'];}
+if(isset($_GET['idPredio']) && $_GET['idPredio']!=''){       $SIS_where .= " AND cross_solicitud_aplicacion_listado.idPredio=".$_GET['idPredio'];}
+if(isset($_GET['idTemporada']) && $_GET['idTemporada']!=''){ $SIS_where .= " AND cross_solicitud_aplicacion_listado.idTemporada=".$_GET['idTemporada'];}
+if(isset($_GET['idEstadoFen']) && $_GET['idEstadoFen']!=''){ $SIS_where .= " AND cross_solicitud_aplicacion_listado.idEstadoFen=".$_GET['idEstadoFen'];}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria']!=''){ $SIS_where .= " AND cross_solicitud_aplicacion_listado.idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){   $SIS_where .= " AND cross_solicitud_aplicacion_listado.idProducto=".$_GET['idProducto'];}
+if(isset($_GET['f_programacion']) && $_GET['f_programacion']!=''){  $SIS_where .= " AND cross_solicitud_aplicacion_listado.f_programacion=".$_GET['f_programacion'];}
+if(isset($_GET['horaProg']) && $_GET['horaProg']!=''){       $SIS_where .= " AND cross_solicitud_aplicacion_listado.horaProg=".$_GET['horaProg'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){     $SIS_where .= " AND cross_solicitud_aplicacion_listado.idUsuario=".$_GET['idUsuario'];}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idSolicitud', 'cross_solicitud_aplicacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 cross_solicitud_aplicacion_listado.idSolicitud,
@@ -140,34 +133,34 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 				
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($NSolicitud)) {       $x1  = $NSolicitud;       }else{$x1  = '';}
-				if(isset($idPredio)) {         $x2  = $idPredio;         }else{$x2  = '';}
-				if(isset($idTemporada)) {      $x3  = $idTemporada;      }else{$x3  = '';}
-				if(isset($idEstadoFen)) {      $x4  = $idEstadoFen;      }else{$x4  = '';}
-				if(isset($idCategoria)) {      $x5  = $idCategoria;      }else{$x5  = '';}
-				if(isset($idProducto)) {       $x6  = $idProducto;       }else{$x6  = '';}
-				if(isset($f_programacion)) {   $x7  = $f_programacion;   }else{$x7  = '';}
-				if(isset($horaProg)) {         $x8  = $horaProg;         }else{$x8  = '';}
-				if(isset($idUsuario)) {        $x9  = $idUsuario;        }else{$x9  = '';}
-				
+				if(isset($NSolicitud)){       $x1  = $NSolicitud;       }else{$x1  = '';}
+				if(isset($idPredio)){         $x2  = $idPredio;         }else{$x2  = '';}
+				if(isset($idTemporada)){      $x3  = $idTemporada;      }else{$x3  = '';}
+				if(isset($idEstadoFen)){      $x4  = $idEstadoFen;      }else{$x4  = '';}
+				if(isset($idCategoria)){      $x5  = $idCategoria;      }else{$x5  = '';}
+				if(isset($idProducto)){       $x6  = $idProducto;       }else{$x6  = '';}
+				if(isset($f_programacion)){   $x7  = $f_programacion;   }else{$x7  = '';}
+				if(isset($horaProg)){         $x8  = $horaProg;         }else{$x8  = '';}
+				if(isset($idUsuario)){        $x9  = $idUsuario;        }else{$x9  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_number('N° Solicitud','NSolicitud', $x1, 1);
@@ -179,34 +172,34 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 										 $dbConn, 'form1');
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x7, 1);
 				$Form_Inputs->form_time('Hora Programada','horaProg', $x8, 1, 2);
-				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x9, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x9, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                   
                                  
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Solicitudes de Aplicacion</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
-			</div>	
+			</div>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -245,9 +238,9 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrOTS as $ot) { ?>
-						<tr class="odd">		
-							<td><?php echo n_doc($ot['NSolicitud'], 5); ?></td>	
-							<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>	
+						<tr class="odd">
+							<td><?php echo n_doc($ot['NSolicitud'], 5); ?></td>
+							<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>
 							<td><?php echo $ot['NombrePredio']; ?></td>
 							<td><?php if(isset($ot['Especie'])&&$ot['Especie']!=''){echo $ot['Especie'].' '.$ot['Variedad'];}else{echo 'Todas las Especies - Variedades';} ?></td>
 							<td>
@@ -257,15 +250,15 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 										$ubicacion = $location.'&del_Solicitud='.simpleEncode($ot['idSolicitud'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el registro de la Solicitud  '.n_doc($ot['NSolicitud'], 5).'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>								
+									<?php } ?>
 								</div>
-							</td>	
+							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>

@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 
 ?>
 <!doctype html>
@@ -35,7 +35,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 			//echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
 			
 		////////////////////////////////////////////////////////////////////////////////
-		//si estoy en ambiente de produccion	
+		//si estoy en ambiente de produccion
 		}else{
 			echo '<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">';
 			echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
@@ -94,14 +94,14 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
           <div class="container-fluid">
             <header class="navbar-header">
               <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                <span class="sr-only">Toggle navigation</span> 
-                <span class="icon-bar"></span> 
-                <span class="icon-bar"></span> 
-                <span class="icon-bar"></span> 
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
               </button>
               <a href="principal.php" class="navbar-brand">
                 <?php require_once 'core/logo_empresa.php';?>
-              </a> 
+              </a>
             </header>
             <?php require_once 'core/infobox.php';?>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -126,23 +126,23 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 
 				<h3>Preview Formularios</h3>
 							
-				<div class="col-sm-8 fcenter">
+				<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 					<div class="box dark">
 						<header>
 							<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 							<h5>Crear Nuevo Producto</h5>
 						</header>
-						<div id="div-1" class="body">
+						<div class="body">
 							<form class="form-horizontal" id="form1" name="form1" novalidate>
 							
 								<?php 
 								//Se verifican si existen los datos
-								if(isset($Nombre)) {         $x1  = $Nombre;           }else{$x1  = '';}
-								if(isset($idTipo)) {         $x2  = $idTipo;           }else{$x2  = '';}
-								if(isset($idCategoria)) {    $x3  = $idCategoria;      }else{$x3  = '';}
-								if(isset($Marca)) {          $x4  = $Marca;            }else{$x4  = '';}
-								if(isset($idUml)) {          $x5  = $idUml;            }else{$x5  = '';}
-								if(isset($idTipoProducto)) { $x6  = $idTipoProducto;   }else{$x6  = '';}
+								if(isset($Nombre)){         $x1  = $Nombre;           }else{$x1  = '';}
+								if(isset($idTipo)){         $x2  = $idTipo;           }else{$x2  = '';}
+								if(isset($idCategoria)){    $x3  = $idCategoria;      }else{$x3  = '';}
+								if(isset($Marca)){          $x4  = $Marca;            }else{$x4  = '';}
+								if(isset($idUml)){          $x5  = $idUml;            }else{$x5  = '';}
+								if(isset($idTipoProducto)){ $x6  = $idTipoProducto;   }else{$x6  = '';}
 
 								//se dibujan los inputs
 								$Form_Inputs = new Form_Inputs();
@@ -157,12 +157,12 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 								?>
 								
 								<div class="form-group">
-									<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" >
-									<a href="#" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" >
+									<a href="#" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 								</div>
 									  
-							</form> 
-							<?php widget_validator(); ?>        
+							</form>
+							<?php widget_validator(); ?>
 						</div>
 					</div>
 				</div>
@@ -179,9 +179,9 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 				$arrComunas = array();
 				$arrComunas = db_select_array (false, $SIS_query, 'core_ubicacion_comunas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrComunas');
 
-				?>	
+				?>
 						
-				<div class="col-sm-12">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="box">
 						<header>
 							<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Comunas</h5>
@@ -195,7 +195,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 										<th>Nombre Comuna</th>
 										<th width="10">Acciones</th>
 									</tr>
-								</thead>				  
+								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrComunas as $comunas) { ?>
 									<tr class="odd">
@@ -213,7 +213,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 											</div>
 										</td>
 									</tr>
-								<?php } ?>                    
+								<?php } ?>
 								</tbody>
 							</table>
 						</div>
@@ -229,7 +229,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 
 <!--Otros archivos javascript -->
 <script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/js/bootstrap.min.js"></script>
-<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/screenfull/screenfull.js"></script> 
+<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/screenfull/screenfull.js"></script>
 <script src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/jquery-ui-1.10.3.min.js"></script>
 <script src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/main.min.js"></script>
 

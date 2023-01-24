@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "apoderados_listado.php";
 $location = $original;
 $new_location = "apoderados_listado_subcuentas.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/apoderados_subcuentas.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -41,13 +41,13 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/apoderados_subcuentas.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/apoderados_subcuentas.php';	
+	require_once 'A1XRXS_sys/xrxs_form/apoderados_subcuentas.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -62,10 +62,10 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Subcuenta editada corr
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Subcuenta borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['edit']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['edit'])){
 // consulto los datos
-$query = "SELECT Nombre, Usuario, Password, email
+$query = "SELECT Nombre,Usuario, Password, email
 FROM `apoderados_subcuentas`
 WHERE idSubcuenta = ".$_GET['edit'];
 //Consulta
@@ -85,22 +85,22 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
  ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Subcuenta</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Subcuenta</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {     $x1  = $Nombre;    }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Usuario)) {    $x2  = $Usuario;   }else{$x2  = $rowdata['Usuario'];}
-				if(isset($Password)) {   $x3  = $Password;  }else{$x3  = $rowdata['Password'];}
-				if(isset($email)) {      $x4  = $email;     }else{$x4  = $rowdata['email'];}
-				
+				if(isset($Nombre)){     $x1  = $Nombre;    }else{$x1  = $rowdata['Nombre'];}
+				if(isset($Usuario)){    $x2  = $Usuario;   }else{$x2  = $rowdata['Usuario'];}
+				if(isset($Password)){   $x3  = $Password;  }else{$x3  = $rowdata['Password'];}
+				if(isset($email)){      $x4  = $email;     }else{$x4  = $rowdata['email'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 2);
@@ -111,37 +111,37 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_hidden('idSubcuenta', $_GET['edit'], 2);
 				?>
 				
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Subcuenta</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Subcuenta</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {     $x1  = $Nombre;    }else{$x1  = '';}
-				if(isset($Usuario)) {    $x2  = $Usuario;   }else{$x2  = '';}
-				if(isset($Password)) {   $x3  = $Password;  }else{$x3  = '';}
-				if(isset($email)) {      $x4  = $email;     }else{$x4  = '';}
-				
+				if(isset($Nombre)){     $x1  = $Nombre;    }else{$x1  = '';}
+				if(isset($Usuario)){    $x2  = $Usuario;   }else{$x2  = '';}
+				if(isset($Password)){   $x3  = $Password;  }else{$x3  = '';}
+				if(isset($email)){      $x4  = $email;     }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -152,19 +152,19 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_hidden('idApoderado', $_GET['id'], 2);
 				?>
 
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
 $query = "SELECT Nombre,ApellidoPat,ApellidoMat, idOpciones_1,idOpciones_2
@@ -187,7 +187,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 // Se trae un listado con todas las cargas familiares
 $arrSubcuentas = array();
-$query = "SELECT idSubcuenta, Nombre, Usuario, Password, email
+$query = "SELECT idSubcuenta, Nombre,Usuario, Password, email
 FROM `apoderados_subcuentas`
 WHERE idApoderado = ".$_GET['id']."
 ORDER BY Nombre ASC ";
@@ -204,20 +204,20 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrSubcuentas,$row );
 }
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Listado de subcuentas');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Subcuenta</a><?php }?>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Subcuenta</a><?php }?>
 	</div>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -245,8 +245,8 @@ array_push( $arrSubcuentas,$row );
 						<li class=""><a href="<?php echo 'apoderados_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -261,11 +261,11 @@ array_push( $arrSubcuentas,$row );
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrSubcuentas as $sub) { ?>
-					<tr class="odd">		
-						<td><?php echo $sub['Nombre']; ?></td>	
+					<tr class="odd">
+						<td><?php echo $sub['Nombre']; ?></td>
 						<td><?php echo $sub['email']; ?></td>
-						<td><?php echo $sub['Usuario']; ?></td>	
-						<td><?php echo $sub['Password']; ?></td>		
+						<td><?php echo $sub['Usuario']; ?></td>
+						<td><?php echo $sub['Password']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$sub['idSubcuenta']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -273,20 +273,20 @@ array_push( $arrSubcuentas,$row );
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($sub['idSubcuenta'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al usuario '.$sub['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-				<?php } ?>                   
+				<?php } ?>
 				</tbody>
 			</table>
-		</div> 	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

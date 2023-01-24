@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_cross_weather_resumen_aspas.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,8 +22,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //Se aplican los filtros
 $idTelemetria = $_GET['idTelemetria'];
 /**********************************************************/
@@ -42,7 +42,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "telemetria_listado_tablarelacionada_".$idTelemetria.".idTabla!=0";
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
 	$SIS_where.=" AND telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 			
@@ -69,7 +69,7 @@ $SIS_join  = '';
 $SIS_order = 'telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTabla ASC';
 $arrConsulta = array();
 $arrConsulta = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrConsulta');
-	
+
 /****************************************************************************/
 $arrEvento       = array();
 $nevento         = 0;
@@ -178,8 +178,8 @@ foreach($arrConsulta as $temp) {
 
 
 
-?>	
-<div class="col-sm-12">
+?>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="row">
 		
 		<div class="col-md-4">
@@ -229,7 +229,7 @@ foreach($arrConsulta as $temp) {
 </div>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -245,9 +245,9 @@ foreach($arrConsulta as $temp) {
 				if(isset($temp['SensorValue_1'])&&$temp['SensorValue_1']<99900){
 					//se arma cadena	
 					$Temp_1 .= "'".Fecha_estandar($temp['FechaSistema'])." - ".$temp['HoraSistema']."',";
-					if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$temp['SensorValue_1'];    }else{ $arrData[1]['Value'] = $temp['SensorValue_1']; }
-					if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$temp['SensorValue_11'];   }else{ $arrData[2]['Value'] = $temp['SensorValue_11']; }
-					
+					if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){$arrData[1]['Value'] .= ", ".$temp['SensorValue_1'];    }else{ $arrData[1]['Value'] = $temp['SensorValue_1'];}
+					if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){$arrData[2]['Value'] .= ", ".$temp['SensorValue_11'];   }else{ $arrData[2]['Value'] = $temp['SensorValue_11'];}
+
 				}
 			}
 			$arrData[1]['Name'] = "'Temperatura (Celsius)'";
@@ -258,21 +258,21 @@ foreach($arrConsulta as $temp) {
 				
 			?>
 			
-			<div class="col-sm-12">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<p><span class="label label-default" style="background-color:#4285F4;">+</span> Temperatura (Grados Celsius)</p>
 				<p><span class="label label-default" style="background-color:#DB4437;">+</span> Funcionamiento (1:On - 0:Off)</p>
 				
-			</div>						
+			</div>		
 		</div>
 	</div>
 </div>
 
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo 'Detalle Helada (Bajo '.$rowdata['TempMinima'].'°C)'; ?></h5>
 		</header>
-		<div class="table-responsive">    
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -285,14 +285,14 @@ foreach($arrConsulta as $temp) {
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrEvento as $key => $eve){ ?>
-						<tr class="odd">		
-							<td><?php echo $eve['HoraInicio'].' - '.fecha_estandar($eve['FechaInicio']); ?></td>		
-							<td><?php echo $eve['HoraTermino'].' - '.fecha_estandar($eve['FechaTermino']); ?></td>		
-							<td><?php echo Cantidades($eve['TempMinima'], 2).'°C'; ?></td>		
-							<td><?php echo Cantidades($eve['TempMaxima'], 2).'°C'; ?></td>	
-							<td><?php if($eve['estadoSensor']==1){echo 'On';}elseif($eve['estadoSensor']==0){echo 'Off';}$eve['estadoSensor']; ?></td>	
+						<tr class="odd">
+							<td><?php echo $eve['HoraInicio'].' - '.fecha_estandar($eve['FechaInicio']); ?></td>
+							<td><?php echo $eve['HoraTermino'].' - '.fecha_estandar($eve['FechaTermino']); ?></td>
+							<td><?php echo Cantidades($eve['TempMinima'], 2).'°C'; ?></td>
+							<td><?php echo Cantidades($eve['TempMaxima'], 2).'°C'; ?></td>
+							<td><?php if($eve['estadoSensor']==1){echo 'On';}elseif($eve['estadoSensor']==0){echo 'Off';}$eve['estadoSensor']; ?></td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -302,55 +302,55 @@ foreach($arrConsulta as $temp) {
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Filtro de busqueda
 $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=4";//CrossWeather			
-} ?>			
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Filtro de busqueda</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+} ?>	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Filtro de busqueda</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
                
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;     }else{$x1  = '';}
-				if(isset($f_termino)) {     $x2  = $f_termino;    }else{$x2  = '';}
-				if(isset($idTelemetria)) {  $x3  = $idTelemetria; }else{$x3  = '';}
-				
+				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
+				if(isset($f_termino)){     $x2  = $f_termino;    }else{$x2  = '';}
+				if(isset($idTelemetria)){  $x3  = $idTelemetria; }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x3, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x3, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x3, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}?>        
 	   
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>

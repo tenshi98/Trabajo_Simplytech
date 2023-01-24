@@ -17,28 +17,28 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Variable de busqueda
 $SIS_where = "proveedor_listado.idProveedor!=0";
 //Filtros
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $SIS_where.=" AND proveedor_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Nombre'])&&$_GET['Nombre']!=''){             $SIS_where.=" AND proveedor_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Rut'])&&$_GET['Rut']!=''){                   $SIS_where.=" AND proveedor_listado.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['fNacimiento'])&&$_GET['fNacimiento']!=''){   $SIS_where.=" AND proveedor_listado.fNacimiento='".$_GET['fNacimiento']."'";}
-if(isset($_GET['idCiudad'])&&$_GET['idCiudad']!=''){         $SIS_where.=" AND proveedor_listado.idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna'])&&$_GET['idComuna']!=''){         $SIS_where.=" AND proveedor_listado.idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion'])&&$_GET['Direccion']!=''){       $SIS_where.=" AND proveedor_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
-if(isset($_GET['Giro'])&&$_GET['Giro']!=''){                 $SIS_where.=" AND proveedor_listado.Giro LIKE '%".$_GET['Giro']."%'";}
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){     $SIS_where.=" AND proveedor_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Nombre'])&&$_GET['Nombre']!=''){     $SIS_where.=" AND proveedor_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['Rut'])&&$_GET['Rut']!=''){           $SIS_where.=" AND proveedor_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
+if(isset($_GET['fNacimiento'])&&$_GET['fNacimiento']!=''){  $SIS_where.=" AND proveedor_listado.fNacimiento='".$_GET['fNacimiento']."'";}
+if(isset($_GET['idCiudad'])&&$_GET['idCiudad']!=''){ $SIS_where.=" AND proveedor_listado.idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna'])&&$_GET['idComuna']!=''){ $SIS_where.=" AND proveedor_listado.idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion'])&&$_GET['Direccion']!=''){      $SIS_where.=" AND proveedor_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
+if(isset($_GET['Giro'])&&$_GET['Giro']!=''){         $SIS_where.=" AND proveedor_listado.Giro LIKE '%".EstandarizarInput($_GET['Giro'])."%'";}
 
 /*******************************************************/
 $SIS_query = '
 proveedor_listado.email, 
-proveedor_listado.Nombre, 
+proveedor_listado.Nombre,
 proveedor_listado.Rut, 
 proveedor_listado.RazonSocial, 
 proveedor_listado.fNacimiento, 
@@ -139,7 +139,7 @@ foreach ($arrProveedores as $productos) {
 				->setCellValue('T'.$nn, formatPhone($productos['PersonaContacto_Fono']))
 				->setCellValue('U'.$nn, DeSanitizar($productos['PersonaContacto_email']))
 				->setCellValue('V'.$nn, DeSanitizar($productos['FormaPago']));
-	$nn++;           
+	$nn++;
    
 } 
 

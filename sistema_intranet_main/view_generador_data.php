@@ -12,17 +12,17 @@ require_once 'core/Load.Utils.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "view_generador_data.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -31,9 +31,9 @@ $location .='?view='.$X_Puntero;
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -45,7 +45,7 @@ require_once 'core/Web.Header.Views.php';
 /**************************************************************/
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre, cantSensores, FechaInsGen,SensorActivacionID,
+$subquery_1 = 'Nombre,cantSensores, FechaInsGen,SensorActivacionID,
 idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia,idGrupoEstanque';
 
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
@@ -60,12 +60,12 @@ $rowdata  = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTel
 
 /**************************************************************/
 //Grupo Sensores
-if(isset($rowdata['idGrupoVmonofasico'])&&$rowdata['idGrupoVmonofasico']!=''&&$rowdata['idGrupoVmonofasico']!=0){ $idGrupoVmonofasico = $rowdata['idGrupoVmonofasico']; }else{$idGrupoVmonofasico  = 87;}
-if(isset($rowdata['idGrupoVTrifasico'])&&$rowdata['idGrupoVTrifasico']!=''&&$rowdata['idGrupoVTrifasico']!=0){    $idGrupoVTrifasico  = $rowdata['idGrupoVTrifasico'];  }else{$idGrupoVTrifasico   = 106;}
-if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''&&$rowdata['idGrupoPotencia']!=0){          $idGrupoPotencia    = $rowdata['idGrupoPotencia'];    }else{$idGrupoPotencia     = 99;}
-if(isset($rowdata['idGrupoDespliegue'])&&$rowdata['idGrupoDespliegue']!=''&&$rowdata['idGrupoDespliegue']!=0){    $idGrupoDespliegue  = $rowdata['idGrupoDespliegue'];  }else{$idGrupoDespliegue   = 99;}
-if(isset($rowdata['idGrupoEstanque'])&&$rowdata['idGrupoEstanque']!=''&&$rowdata['idGrupoEstanque']!=0){          $idGrupoEstanque    = $rowdata['idGrupoEstanque'];    }else{$idGrupoEstanque   = 99;}
-$idVista             = 1; //1 = Vmonofasico - 2 = VTrifasico 
+if(isset($rowdata['idGrupoVmonofasico'])&&$rowdata['idGrupoVmonofasico']!=''&&$rowdata['idGrupoVmonofasico']!=0){$idGrupoVmonofasico = $rowdata['idGrupoVmonofasico'];}else{$idGrupoVmonofasico  = 87;}
+if(isset($rowdata['idGrupoVTrifasico'])&&$rowdata['idGrupoVTrifasico']!=''&&$rowdata['idGrupoVTrifasico']!=0){$idGrupoVTrifasico  = $rowdata['idGrupoVTrifasico'];  }else{$idGrupoVTrifasico   = 106;}
+if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''&&$rowdata['idGrupoPotencia']!=0){      $idGrupoPotencia    = $rowdata['idGrupoPotencia'];    }else{$idGrupoPotencia     = 99;}
+if(isset($rowdata['idGrupoDespliegue'])&&$rowdata['idGrupoDespliegue']!=''&&$rowdata['idGrupoDespliegue']!=0){$idGrupoDespliegue  = $rowdata['idGrupoDespliegue'];  }else{$idGrupoDespliegue   = 99;}
+if(isset($rowdata['idGrupoEstanque'])&&$rowdata['idGrupoEstanque']!=''&&$rowdata['idGrupoEstanque']!=0){      $idGrupoEstanque    = $rowdata['idGrupoEstanque'];    }else{$idGrupoEstanque     = 99;}
+$idVista             = 1; //1 = Vmonofasico - 2 = VTrifasico
 
 //Para el grafico
 $Grafico_FechaInicio    = fecha_actual();
@@ -152,13 +152,13 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 		}
 	}
 }
-/****************************************************************/	
+/****************************************************************/
 //Saco promedios
 if($TempCount_1!=0){  $Vmonofasico = $TempValue_1/$TempCount_1;}else{$Vmonofasico  = 0;}
 if($TempCount_2!=0){  $VTrifasico  = $TempValue_2/$TempCount_2;}else{$VTrifasico   = 0;}
 if($TempCount_3!=0){  $Potencia    = $TempValue_3/$TempCount_3;}else{$Potencia     = 0;}
 if($TempCount_4!=0){  $Estanque    = $TempValue_4/$TempCount_4;}else{$Estanque     = 0;}
-/****************************************************************/	
+/****************************************************************/
 //Consulto mediciones
 if($idVista==1){
 	$SIS_query = 'HoraSistema'.$Subquery_1.$Subquery_3.$Subquery_4;
@@ -174,12 +174,11 @@ $arrGraficos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarela
 /*******************************************************/
 /*******************************************************/
 $SIS_query = 'SUM(Horas_'.$rowdata['SensorActivacionID'].') AS Sum_Horas';
-$SIS_where = "idTelemetria='.$X_Puntero.' AND Fecha BETWEEN '".$Uso_FechaInicio."' AND '".$Uso_FechaTermino."'";
+$SIS_where = "idTelemetria=".$X_Puntero." AND Fecha BETWEEN '".$Uso_FechaInicio."' AND '".$Uso_FechaTermino."'";
 //Obtengo los datos
 $rowUso  = db_select_data (false, $SIS_query, 'telemetria_listado_historial_uso', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
-	
-	
-/****************************************************************/				
+
+/****************************************************************/
 //Variables
 $Temp_1     = '';
 $arrData_1  = array();//Voltaje
@@ -191,10 +190,10 @@ $arrData_3  = array();//Nivel Estanque
 if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGraficos!=''){
 	//recorro
 	foreach ($arrGraficos as $data) {
-		
-		//variables							
+
+		//Variables
 		$Temp_1 .= "'".$data['HoraSistema']."',";
-		
+
 		/***************************************/
 		//Verifico si es voltaje monofasico
 		if($idVista==1){
@@ -207,9 +206,9 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 					$arrData_1[$x]['Value'] = $data['SVmonofasico_'.$x];
 				}
 				//Nombre
-				$arrData_1[$x]['Name'] = "'".$arrSensores_1[$x]['Nombre']."'";	
+				$arrData_1[$x]['Name'] = "'".$arrSensores_1[$x]['Nombre']."'";
 			}
-		
+
 		//Verifico si es voltaje trifasico
 		}elseif($idVista==2){
 			for ($x = 1; $x <= $CountSub_2; $x++) {
@@ -221,10 +220,10 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 					$arrData_1[$x]['Value'] = $data['SVTrifasico_'.$x];
 				}
 				//Nombre
-				$arrData_1[$x]['Name'] = "'".$arrSensores_2[$x]['Nombre']."'";	
+				$arrData_1[$x]['Name'] = "'".$arrSensores_2[$x]['Nombre']."'";
 			}
 		}
-		
+
 		/***************************************/
 		for ($x = 1; $x <= $CountSub_3; $x++) {
 			//verifico si existe
@@ -235,9 +234,9 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 				$arrData_2[$x]['Value'] = $data['SAmperaje_'.$x];
 			}
 			//Nombre
-			$arrData_2[$x]['Name'] = "'".$arrSensores_3[$x]['Nombre']."'";	
+			$arrData_2[$x]['Name'] = "'".$arrSensores_3[$x]['Nombre']."'";
 		}
-		
+
 		/***************************************/
 		for ($x = 1; $x <= $CountSub_4; $x++) {
 			//verifico si existe
@@ -248,7 +247,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 				$arrData_3[$x]['Value'] = $data['SEstanque_'.$x];
 			}
 			//Nombre
-			$arrData_3[$x]['Name'] = "'".$arrSensores_4[$x]['Nombre']."'";	
+			$arrData_3[$x]['Name'] = "'".$arrSensores_4[$x]['Nombre']."'";
 		}
 
 	}
@@ -270,8 +269,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 		$CountSub = $CountSub_1;
 	//Verifico si es voltaje trifasico
 	}elseif($idVista==2){
-		$CountSub = $CountSub_2;	
-	}		
+		$CountSub = $CountSub_2;
+	}
 	for ($x = 1; $x <= $CountSub; $x++) {
 		if(isset($arrData_1[$x]['Value'])&&$arrData_1[$x]['Value']!=''){
 			//las fechas
@@ -299,7 +298,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	$Graphics_texts_1      .= '];';
 	$Graphics_lineColors_1 .= '];';
 	$Graphics_lineDash_1   .= '];';
-	$Graphics_lineWidth_1  .= '];';  
+	$Graphics_lineWidth_1  .= '];';
 	/*******************************************************/
 	/*******************************************************/
 	//variables
@@ -339,7 +338,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	$Graphics_texts_2      .= '];';
 	$Graphics_lineColors_2 .= '];';
 	$Graphics_lineDash_2   .= '];';
-	$Graphics_lineWidth_2  .= '];';  	 
+	$Graphics_lineWidth_2  .= '];';
 	/*******************************************************/
 	/*******************************************************/
 	//variables
@@ -379,48 +378,47 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	$Graphics_texts_3      .= '];';
 	$Graphics_lineColors_3 .= '];';
 	$Graphics_lineDash_3   .= '];';
-	$Graphics_lineWidth_3  .= '];'; 			
-			
-	
+	$Graphics_lineWidth_3  .= '];';
+
 //Si no hay datos
 }else{
-	echo '<div class="col-sm-12" style="margin-top:10px;">';
+	echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">';
 		alert_post_data(4,2,2, 'No existen datos para el grafico entre las '.$Grafico_HoraInicio.' y las '.$Grafico_HoraTermino);
 	echo '</div>';
 }
 ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Estado del Equipo <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
-        <div id="div-3" class="tab-content">
-			<div class="col-sm-12">
-				
+        <div class="tab-content">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
 				<div class="row">
-					<div class="col-sm-12">
-						<?php 
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<?php
 						//se arman datos
 						//Si existen
 						if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGraficos!=''){
 							//$Titulo = 'Potencia hora punta (Periodo: '.$Grafico_FechaInicio.' al '.$Grafico_FechaTermino.')';
 							$Titulo = 'Voltaje';
-							echo GraphLinear_1('graphLinear_1', $Titulo, 'Fecha', 'Voltaje',  $Graphics_xData_1, $Graphics_yData_1, $Graphics_names_1, $Graphics_types_1, $Graphics_texts_1, $Graphics_lineColors_1, $Graphics_lineDash_1, $Graphics_lineWidth_1, 0); 
+							echo GraphLinear_1('graphLinear_1', $Titulo, 'Fecha', 'Voltaje',  $Graphics_xData_1, $Graphics_yData_1, $Graphics_names_1, $Graphics_types_1, $Graphics_texts_1, $Graphics_lineColors_1, $Graphics_lineDash_1, $Graphics_lineWidth_1, 0);
 							$Titulo = 'Amperaje';
-							echo GraphLinear_1('graphLinear_2', $Titulo, 'Fecha', 'Amperaje', $Graphics_xData_2, $Graphics_yData_2, $Graphics_names_2, $Graphics_types_2, $Graphics_texts_2, $Graphics_lineColors_2, $Graphics_lineDash_2, $Graphics_lineWidth_2, 0); 
+							echo GraphLinear_1('graphLinear_2', $Titulo, 'Fecha', 'Amperaje', $Graphics_xData_2, $Graphics_yData_2, $Graphics_names_2, $Graphics_types_2, $Graphics_texts_2, $Graphics_lineColors_2, $Graphics_lineDash_2, $Graphics_lineWidth_2, 0);
 							$Titulo = 'Nivel Estanque';
-							echo GraphLinear_1('graphLinear_3', $Titulo, 'Fecha', 'Nivel',    $Graphics_xData_3, $Graphics_yData_3, $Graphics_names_3, $Graphics_types_3, $Graphics_texts_3, $Graphics_lineColors_3, $Graphics_lineDash_3, $Graphics_lineWidth_3, 0); 
+							echo GraphLinear_1('graphLinear_3', $Titulo, 'Fecha', 'Nivel',    $Graphics_xData_3, $Graphics_yData_3, $Graphics_names_3, $Graphics_types_3, $Graphics_texts_3, $Graphics_lineColors_3, $Graphics_lineDash_3, $Graphics_lineWidth_3, 0);
 						}
 						?>
 					</div>
 				</div>
-				
+
 				<div class="row">
-					
-					<div class="col-sm-6">
+
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Potencia</h3>
@@ -435,8 +433,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
-					<div class="col-sm-6">
+
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Voltaje</h3>
@@ -445,11 +443,11 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 								<div class="value">
 									<span><i class="fa fa-bolt" aria-hidden="true"></i></span>
 									<span>
-										<?php 
+										<?php
 										if($idVista==1){
-											echo Cantidades($Vmonofasico, 2).' V'; 
+											echo Cantidades($Vmonofasico, 2).' V';
 										}elseif($idVista==2){
-											echo Cantidades($VTrifasico, 2).' V'; 
+											echo Cantidades($VTrifasico, 2).' V';
 										}?>
 									</span>
 								</div>
@@ -458,8 +456,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
-					<div class="col-sm-6">
+
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Nivel Estanque</h3>
@@ -474,8 +472,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
-					<div class="col-sm-6">
+
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Horas de uso entregando energía</h3>
@@ -490,46 +488,39 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
-					
-					
+
 				</div>
-				
-			</div>	
-			<div class="clearfix"></div>	
-		</div>	
+
+			</div>
+			<div class="clearfix"></div>
+		</div>
 	</div>
 </div>
 
 
-
-	
-	
-
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

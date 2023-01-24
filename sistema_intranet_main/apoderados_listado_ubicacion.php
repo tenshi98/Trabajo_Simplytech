@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "apoderados_listado.php";
 $location = $original;
 $new_location = "apoderados_listado_ubicacion.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -44,9 +44,9 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ruta editada correctam
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ruta borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 	 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////	 
 // consulto los datos
-$query = "SELECT Nombre, ApellidoPat, ApellidoMat, Direccion, GeoLatitud, GeoLongitud , idOpciones_1,idOpciones_2
+$query = "SELECT Nombre,ApellidoPat, ApellidoMat, Direccion, GeoLatitud, GeoLongitud , idOpciones_1,idOpciones_2
 FROM `apoderados_listado`
 WHERE idApoderado = ".$_GET['id'];
 //Consulta
@@ -65,12 +65,12 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Ruta');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -98,12 +98,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'apoderados_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			
-			<div class="col-sm-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="row">
 					<?php
 					//Si no existe una ID se utiliza una por defecto
@@ -122,7 +122,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							var marker;
 							/* ************************************************************************** */
 							function initialize() {
-								<?php if(isset($rowdata['GeoLatitud'])&&$rowdata['GeoLatitud']!=0&&isset($rowdata['GeoLongitud'])&&$rowdata['GeoLongitud']!=0){ ?>
+								<?php if(isset($rowdata['GeoLatitud'])&&$rowdata['GeoLatitud']!=0&&isset($rowdata['GeoLongitud'])&&$rowdata['GeoLongitud']!=0){?>
 									var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud']; ?>, <?php echo $rowdata['GeoLongitud']; ?>);
 								<?php }else{ ?>
 									var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
@@ -163,7 +163,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				</div>
 			</div>
 			
-			<div class="col-sm-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
@@ -179,7 +179,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Ubicacion" name="submit"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Ubicacion" name="submit"> 
 						</div>
 							  
 					</form>
@@ -188,13 +188,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				</div>
 			</div>
 			
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

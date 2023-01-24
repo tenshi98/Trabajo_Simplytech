@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_gerencial_03.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -24,14 +24,14 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /*************************************************************/
 //se traen los datos basicos de la licitacion
 $query = "SELECT 
 licitacion_listado.idEstado,
 licitacion_listado.Codigo,
-licitacion_listado.Nombre, 
+licitacion_listado.Nombre,
 licitacion_listado.FechaInicio, 
 licitacion_listado.FechaTermino, 
 core_estados.Nombre AS Estado,
@@ -115,7 +115,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrLicitacion,$row );
 }
 
@@ -400,7 +400,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrUML,$row );
 }
 $UML = array();
@@ -431,7 +431,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrOTRealizadas,$row );
 }	
 $OTRealizadas = array();
@@ -448,7 +448,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
     foreach ($array as $key => $value){
 		
 	
-        if (isset($value['Nombre'])) {
+        if (isset($value['Nombre'])){
 			echo '<tr>';
 				//agrego los espacios a la izquierda
 				for ($zxi = 1; $zxi < $value['lvl']; $zxi++) {
@@ -456,13 +456,13 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 				}
 				$cols = $nmax-$zxi+1;
 				echo '<td colspan="'.$cols.'">'.$value['Codigo'].' - '.$value['Nombre'].'</td>';
-				if($value['Cantidad']!=0){   echo '<td align="right">'.$value['Cantidad'].'</td>';               }else{echo '<td></td>';}
-				if($value['Valor']!=0){      echo '<td align="right">'.valores($value['Valor'], 0).'</td>';      }else{echo '<td></td>';}
-				if($value['ValorTotal']!=0){ echo '<td align="right">'.valores($value['ValorTotal'], 0).'</td>'; }else{echo '<td></td>';}
-			
+				if($value['Cantidad']!=0){echo '<td align="right">'.$value['Cantidad'].'</td>';               }else{echo '<td></td>';}
+				if($value['Valor']!=0){  echo '<td align="right">'.valores($value['Valor'], 0).'</td>';      }else{echo '<td></td>';}
+				if($value['ValorTotal']!=0){echo '<td align="right">'.valores($value['ValorTotal'], 0).'</td>';}else{echo '<td></td>';}
+
 				if(isset($OTRealizadas[$value['lvl']][$value['id']]['Cuenta'])&&$OTRealizadas[$value['lvl']][$value['id']]['Cuenta']!=0){
 					echo '<td align="right">'.$OTRealizadas[$value['lvl']][$value['id']]['Cuenta'].'</td>';
-					if($value['Valor']!=0){      
+					if($value['Valor']!=0){  
 						//Se hacen calculos
 						$total = $value['Valor']*$OTRealizadas[$value['lvl']][$value['id']]['Cuenta'];
 						$porcentaje = ($total*100)/$value['ValorTotal'];
@@ -500,11 +500,11 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 				echo $value['Cantidad'];
 				if(isset($UML[$value['idFrecuencia']]['Nombre'])&&$UML[$value['idFrecuencia']]['Nombre']!=''){
 					echo ' '.$UML[$value['idFrecuencia']]['Nombre'];
-				}	
+				}
 			echo '</td>';
 			echo '<td align="right">'.valores($value['ValorTotal'], 0).'</td>';
 			//$_SESSION['garb']['xxx1'] = $_SESSION['garb']['xxx1'] + $value['ValorTotal'];
-			
+
 			//OC en espera de aprobacion
 			echo '<td align="right">';
 			if(isset($ConsumosOC[$value['lvl']][$value['id']]['Valor'])&&$ConsumosOC[$value['lvl']][$value['id']]['Valor']!=''){
@@ -513,7 +513,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 				//$_SESSION['garb']['xxx2'] = $_SESSION['garb']['xxx2'] + $ConsumosOC[$value['lvl']][$value['id']]['Valor'];
 			}
 			echo '</td>';
-			
+
 			//OC aprobadas
 			echo '<td align="right">';
 			if(isset($ConsumosOCApro[$value['lvl']][$value['id']]['Valor'])&&$ConsumosOCApro[$value['lvl']][$value['id']]['Valor']!=''){
@@ -559,13 +559,13 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Cumplimiento del Contrato</h5>	
+			<h5>Cumplimiento del Contrato</h5>
 		</header>
-		<div id="div-3" class="tab-content">
+		<div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
@@ -573,7 +573,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 										  
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 		
-							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
+							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
 								<tr class="odd">
 									<td>Cliente</td>
 									<td><?php echo $rowdata['Cliente'];?></td>
@@ -613,10 +613,10 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 							</tr>
 							
 						</tbody>
-					</table>	
+					</table>
 						
 						
-					<div class="table-responsive">		
+					<div class="table-responsive">	
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 											  
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -660,31 +660,31 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 	
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //sistema
 $y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";		
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {       $x0  = $idCliente;     }else{$x0  = '';}
-				if(isset($idLicitacion)) {    $x1  = $idLicitacion;  }else{$x1  = '';}
-				
+				if(isset($idCliente)){       $x0  = $idCliente;     }else{$x0  = '';}
+				if(isset($idLicitacion)){    $x1  = $idLicitacion;  }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				//verifico el sistema
@@ -693,18 +693,18 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 											 'Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $w, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Inputs->form_select_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $y, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $y, '', $dbConn);
 				}
 				
 				
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>          
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

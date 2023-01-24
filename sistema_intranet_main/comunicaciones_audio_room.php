@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "comunicaciones_audio_listado.php";
 $location = $original;
 /********************************************************************/
@@ -78,7 +78,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 .messaging .inbox_msg {white-space: initial!important;}
 </style> 
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<input type="hidden" id="room-id" value="abcdef" autocorrect=off autocapitalize=off size=20>
 	<?php
@@ -99,7 +99,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="col-sm-12 messaging">
 	<div class="row inbox_msg">
-		<div class="col-sm-4">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 			<div class="row">
 				<div class="chating" style="border-right:1px solid #c4c4c4;">
 					<div class="headind_srch">
@@ -129,7 +129,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			</div>
 		</div>
 		
-		<div class="col-sm-4">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 			<div class="row">
 				<div class="chating" style="border-right:1px solid #c4c4c4;">
 					<div class="headind_srch">
@@ -150,7 +150,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			</div>
 		</div>
 		
-		<div class="col-sm-4">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 			<div class="row">
 				<div class="chating">
 					<div class="headind_srch">
@@ -162,7 +162,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 									
 						<div class="msg_history" id="file-container" style="height: 612px;" >
 							<br/>
-							<div id="audios-container"></div>				
+							<div id="audios-container"></div>
 										
 						</div>
 										
@@ -193,7 +193,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			disableInputButtons();
 			connection.join(document.getElementById('room-id').value);
 		};
-	<?php } ?>	
+	<?php } ?>
 <?php }else{ ?>
 	document.getElementById('join-room').onclick = function() {
 		disableInputButtons();
@@ -335,9 +335,9 @@ function disableInputButtons() {
 
     var html = '<h2>Unique URL for your room:</h2><br/>';
 
-    html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank">' + roomHashURL + '</a>';
+    html += 'Hash URL: <a href="' + roomHashURL + '" target="_blank" rel="noopener noreferrer">' + roomHashURL + '</a>';
     html += '<br/>';
-    html += 'QueryString URL: <a href="' + roomQueryStringURL + '" target="_blank">' + roomQueryStringURL + '</a>';
+    html += 'QueryString URL: <a href="' + roomQueryStringURL + '" target="_blank" rel="noopener noreferrer">' + roomQueryStringURL + '</a>';
 
     var roomURLsDiv = document.getElementById('room-urls');
     roomURLsDiv.innerHTML = html;
@@ -359,7 +359,7 @@ function disableInputButtons() {
 })();
 
 var roomid = '';
-if (localStorage.getItem(connection.socketMessageEvent)) {
+if (localStorage.getItem(connection.socketMessageEvent)){
     roomid = '<?php echo DB_NAME.'_AudioRoom_'.$_GET['view']; ?>';//localStorage.getItem(connection.socketMessageEvent);
 } else {
     roomid = '<?php echo DB_NAME.'_AudioRoom_'.$_GET['view']; ?>';//connection.token();
@@ -423,7 +423,7 @@ connection.onstreamended = function(event) {
         mediaElement.parentNode.removeChild(mediaElement);
     }
 };
-</script> 
+</script>
    
 <?php
 /**********************************************************************************************************************************/

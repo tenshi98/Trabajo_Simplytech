@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Print.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -43,7 +43,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 	
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 }
 /**********************************************************************************************************************************/
@@ -63,7 +63,7 @@ $my_html ='
 			<br/>
 			
 			<div class="row">
-				<div class="col-sm-12">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<table class="table table-bordered">
 						<thead>
 							<tr>
@@ -77,7 +77,7 @@ $my_html ='
 						<tbody>';
 							
 							foreach ($arrProductos as $productos) { 
-								$stock_actual = $productos['stock_entrada'] - $productos['stock_salida']; 
+								$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 								if ($stock_actual!=0){
 									if ($productos['StockLimite']>$stock_actual){$delta = 'destaca';}else{$delta = '';}
 								

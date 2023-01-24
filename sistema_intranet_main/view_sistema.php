@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -36,19 +36,19 @@ if (validarNumero($_GET['view'])){
 /**************************************************************/
 // consulto los datos
 $SIS_query = '
-core_sistemas.Nombre,  
-core_sistemas.Rut, 
-core_ubicacion_ciudad.Nombre AS Ciudad, 
-core_ubicacion_comunas.Nombre AS Comuna, 
-core_sistemas.Direccion, 
-core_sistemas.Contacto_Nombre, 
-core_sistemas.Contacto_Fono1, 
-core_sistemas.Contacto_Fono2, 
-core_sistemas.Contacto_Fax, 
-core_sistemas.Contacto_Web, 
-core_sistemas.Contacto_Email, 
+core_sistemas.Nombre,
+core_sistemas.Rut,
+core_ubicacion_ciudad.Nombre AS Ciudad,
+core_ubicacion_comunas.Nombre AS Comuna,
+core_sistemas.Direccion,
+core_sistemas.Contacto_Nombre,
+core_sistemas.Contacto_Fono1,
+core_sistemas.Contacto_Fono2,
+core_sistemas.Contacto_Fax,
+core_sistemas.Contacto_Web,
+core_sistemas.Contacto_Email,
 core_sistemas.email_principal, 
-core_sistemas.Contrato_Nombre, 
+core_sistemas.Contrato_Nombre,
 core_sistemas.Contrato_Numero, 
 core_sistemas.Contrato_Fecha, 
 core_sistemas.Contrato_Duracion,
@@ -107,19 +107,19 @@ LEFT JOIN `core_config_ram`                    ON core_config_ram.idConfigRam   
 LEFT JOIN `core_config_time`                   ON core_config_time.idConfigTime                    = core_sistemas.idConfigTime
 LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                             = core_sistemas.Social_idUso';
 $SIS_where = 'core_sistemas.idSistema ='.$X_Puntero;
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ver Datos de la empresa</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ver Datos de la empresa</h5>
 		</header>
 		<div class="tab-content">
-			<div class="col-sm-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="row" style="border-right: 1px solid #333;">
-					<div class="col-sm-12">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 						<p class="text-muted word_break">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -211,7 +211,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="row">
 					<?php 
 						//se arma la direccion
@@ -241,12 +241,12 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -257,12 +257,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 	

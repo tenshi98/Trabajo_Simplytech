@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "aguas_analisis_ingreso.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,11 +18,11 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['f_muestra']) && $_GET['f_muestra'] != ''){                    $location .= "&f_muestra=".$_GET['f_muestra'];                    $search .= "&f_muestra=".$_GET['f_muestra'];}
-if(isset($_GET['f_recibida']) && $_GET['f_recibida'] != ''){                  $location .= "&f_recibida=".$_GET['f_recibida'];                  $search .= "&f_recibida=".$_GET['f_recibida'];}
-if(isset($_GET['idLaboratorio']) && $_GET['idLaboratorio'] != ''){            $location .= "&idLaboratorio=".$_GET['idLaboratorio'];            $search .= "&idLaboratorio=".$_GET['idLaboratorio'];}
-if(isset($_GET['codigoMuestra']) && $_GET['codigoMuestra'] != ''){            $location .= "&codigoMuestra=".$_GET['codigoMuestra'];            $search .= "&codigoMuestra=".$_GET['codigoMuestra'];}
-if(isset($_GET['CodigoLaboratorio']) && $_GET['CodigoLaboratorio'] != ''){    $location .= "&CodigoLaboratorio=".$_GET['CodigoLaboratorio'];    $search .= "&CodigoLaboratorio=".$_GET['CodigoLaboratorio'];}
+if(isset($_GET['f_muestra']) && $_GET['f_muestra']!=''){             $location .= "&f_muestra=".$_GET['f_muestra'];                    $search .= "&f_muestra=".$_GET['f_muestra'];}
+if(isset($_GET['f_recibida']) && $_GET['f_recibida']!=''){           $location .= "&f_recibida=".$_GET['f_recibida'];                  $search .= "&f_recibida=".$_GET['f_recibida'];}
+if(isset($_GET['idLaboratorio']) && $_GET['idLaboratorio']!=''){     $location .= "&idLaboratorio=".$_GET['idLaboratorio'];            $search .= "&idLaboratorio=".$_GET['idLaboratorio'];}
+if(isset($_GET['codigoMuestra']) && $_GET['codigoMuestra']!=''){     $location .= "&codigoMuestra=".$_GET['codigoMuestra'];            $search .= "&codigoMuestra=".$_GET['codigoMuestra'];}
+if(isset($_GET['CodigoLaboratorio']) && $_GET['CodigoLaboratorio']!=''){    $location .= "&CodigoLaboratorio=".$_GET['CodigoLaboratorio'];    $search .= "&CodigoLaboratorio=".$_GET['CodigoLaboratorio'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -30,22 +30,22 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/aguas_analisis_aguas.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/aguas_analisis_aguas.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/aguas_analisis_aguas.php';	
+	require_once 'A1XRXS_sys/xrxs_form/aguas_analisis_aguas.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -60,8 +60,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Analisis Modificado co
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Analisis borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -116,45 +116,45 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTipo,$row );
 }	 
 //Indico el sistema	 
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del Analisis</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_muestra)) {                 $x1  = $f_muestra;                  }else{$x1  = $rowdata['f_muestra'];}
-				if(isset($f_recibida)) {                $x2  = $f_recibida;                 }else{$x2  = $rowdata['f_recibida'];}
-				if(isset($idLaboratorio)) {             $x3  = $idLaboratorio;              }else{$x3  = $rowdata['idLaboratorio'];}
-				if(isset($codigoMuestra)) {             $x4  = $codigoMuestra;              }else{$x4  = $rowdata['codigoMuestra'];}
-				if(isset($CodigoLaboratorio)) {         $x5  = $CodigoLaboratorio;          }else{$x5  = $rowdata['CodigoLaboratorio'];}
-				if(isset($idTipoMuestra)) {             $x6  = $idTipoMuestra;              }else{$x6  = $rowdata['idTipoMuestra'];}
-				if(isset($RemuestraFecha)) {            $x7  = $RemuestraFecha;             }else{$x7  = $rowdata['RemuestraFecha'];}
-				if(isset($Remuestra_codigo_muestra)) {  $x8  = $Remuestra_codigo_muestra;   }else{$x8  = $rowdata['Remuestra_codigo_muestra'];}
-				if(isset($idParametros)) {              $x9  = $idParametros;               }else{$x9  = $rowdata['idParametros'];}
-				if(isset($idSigno)) {                   $x10 = $idSigno;                    }else{$x10 = $rowdata['idSigno'];}
-				if(isset($valorAnalisis)) {             $x11 = $valorAnalisis;              }else{$x11 = $rowdata['valorAnalisis'];}
-				if(isset($idOpciones)) {                $x12 = $idOpciones;                 }else{$x12 = $rowdata['idOpciones'];}
-				if(isset($idSector)) {                  $x13 = $idSector;                   }else{$x13 = $rowdata['idSector'];}
-				if(isset($UTM_norte)) {                 $x14 = $UTM_norte;                  }else{$x14 = $rowdata['UTM_norte'];}
-				if(isset($UTM_este)) {                  $x15 = $UTM_este;                   }else{$x15 = $rowdata['UTM_este'];}
-				if(isset($idPuntoMuestreo)) {           $x16 = $idPuntoMuestreo;            }else{$x16 = $rowdata['idPuntoMuestreo'];}
-				if(isset($idCliente)) {                 $x17 = $idCliente;                  }else{$x17 = $rowdata['idCliente'];}
-				if(isset($idEstado)) {                  $x18 = $idEstado;                   }else{$x18 = $rowdata['idEstado'];}
-				if(isset($Observaciones)) {             $x19 = $Observaciones;              }else{$x19 = $rowdata['Observaciones'];}
-				
+				if(isset($f_muestra)){                 $x1  = $f_muestra;                  }else{$x1  = $rowdata['f_muestra'];}
+				if(isset($f_recibida)){                $x2  = $f_recibida;                 }else{$x2  = $rowdata['f_recibida'];}
+				if(isset($idLaboratorio)){             $x3  = $idLaboratorio;              }else{$x3  = $rowdata['idLaboratorio'];}
+				if(isset($codigoMuestra)){             $x4  = $codigoMuestra;              }else{$x4  = $rowdata['codigoMuestra'];}
+				if(isset($CodigoLaboratorio)){         $x5  = $CodigoLaboratorio;          }else{$x5  = $rowdata['CodigoLaboratorio'];}
+				if(isset($idTipoMuestra)){             $x6  = $idTipoMuestra;              }else{$x6  = $rowdata['idTipoMuestra'];}
+				if(isset($RemuestraFecha)){            $x7  = $RemuestraFecha;             }else{$x7  = $rowdata['RemuestraFecha'];}
+				if(isset($Remuestra_codigo_muestra)){  $x8  = $Remuestra_codigo_muestra;   }else{$x8  = $rowdata['Remuestra_codigo_muestra'];}
+				if(isset($idParametros)){              $x9  = $idParametros;               }else{$x9  = $rowdata['idParametros'];}
+				if(isset($idSigno)){                   $x10 = $idSigno;                    }else{$x10 = $rowdata['idSigno'];}
+				if(isset($valorAnalisis)){             $x11 = $valorAnalisis;              }else{$x11 = $rowdata['valorAnalisis'];}
+				if(isset($idOpciones)){                $x12 = $idOpciones;                 }else{$x12 = $rowdata['idOpciones'];}
+				if(isset($idSector)){                  $x13 = $idSector;                   }else{$x13 = $rowdata['idSector'];}
+				if(isset($UTM_norte)){                 $x14 = $UTM_norte;                  }else{$x14 = $rowdata['UTM_norte'];}
+				if(isset($UTM_este)){                  $x15 = $UTM_este;                   }else{$x15 = $rowdata['UTM_este'];}
+				if(isset($idPuntoMuestreo)){           $x16 = $idPuntoMuestreo;            }else{$x16 = $rowdata['idPuntoMuestreo'];}
+				if(isset($idCliente)){                 $x17 = $idCliente;                  }else{$x17 = $rowdata['idCliente'];}
+				if(isset($idEstado)){                  $x18 = $idEstado;                   }else{$x18 = $rowdata['idEstado'];}
+				if(isset($Observaciones)){             $x19 = $Observaciones;              }else{$x19 = $rowdata['Observaciones'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
@@ -172,13 +172,13 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						
 				$Form_Inputs->form_tittle(3, 'Datos del Cliente');
 				$Form_Inputs->form_select('Relacionar a cliente','idOpciones', $x12, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				//En caso de no ser relacionado
 				$Form_Inputs->form_select('Sector','idSector', $x13, 1, 'idSector', 'Nombre', 'aguas_analisis_sectores', $z, '', $dbConn);
 				$Form_Inputs->form_input_number('UTM norte', 'UTM_norte', $x14, 1);
 				$Form_Inputs->form_input_number('UTM este', 'UTM_este', $x15, 1);
 				$Form_Inputs->form_select('Tipo de Medicion','idPuntoMuestreo', $x16, 1, 'idPuntoMuestreo', 'Nombre', 'aguas_analisis_aguas_tipo_punto_muestreo', 0, '', $dbConn);
-				
+
 				//en caso de ser relacionado
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x17, 2, 'idCliente', 'Identificador,Nombre', 'aguas_clientes_listado', $z.' AND aguas_clientes_listado.idEstado=1', 'ORDER BY Identificador ASC', $dbConn);
 				$Form_Inputs->form_input_disabled('Sector','idSector_fake1', '');
@@ -236,7 +236,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					var elem_8 = document.getElementById("idPuntoMuestreo_fake2");
 					
 					//inicio documentos
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 						
 						/***********************************************************************************/
 						tipo_val_1= $("#idTipoMuestra").val();
@@ -247,12 +247,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		
 						if(tipo_val_1 == 1){ 
 							document.getElementById('div_RemuestraFecha').style.display = 'none';
-							document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';	
+							document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
 						//si es remuestra
 						} else if(tipo_val_1 == 2){ 
 							document.getElementById('div_RemuestraFecha').style.display = '';
 							document.getElementById('div_Remuestra_codigo_muestra').style.display = '';
-						} else { 
+						} else {
 							document.getElementById('div_RemuestraFecha').style.display = 'none';
 							document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
 						}
@@ -266,7 +266,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							document.getElementById('div_idSector_fake1').style.display = '';
 							document.getElementById('div_UTM_norte_fake1').style.display = '';
 							document.getElementById('div_UTM_este_fake1').style.display = '';
-							document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';	
+							document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';
 						//si es no
 						} else if(tipo_val_2 == 2){ 
 							document.getElementById('div_idSector').style.display = '';
@@ -278,7 +278,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							document.getElementById('div_UTM_norte_fake1').style.display = 'none';
 							document.getElementById('div_UTM_este_fake1').style.display = 'none';
 							document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
-						} else { 
+						} else {
 							document.getElementById('div_idSector').style.display = 'none';
 							document.getElementById('div_UTM_norte').style.display = 'none';
 							document.getElementById('div_UTM_este').style.display = 'none';
@@ -289,7 +289,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							document.getElementById('div_UTM_este_fake1').style.display = 'none';
 							document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
 						}
-						
+
 						//actualizo
 						document.getElementById("idSector_fake1").value         = eval("Sector_" + tipo_val_3);
 						document.getElementById("UTM_norte_fake1").value        = eval("UTM_norte_" + tipo_val_3);
@@ -327,17 +327,17 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							//si es muestra
 							if(idTipoMuestra == 1){ 
 								document.getElementById('div_RemuestraFecha').style.display = 'none';
-								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';	
+								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
 							//si es remuestra
 							} else if(idTipoMuestra == 2){ 
 								document.getElementById('div_RemuestraFecha').style.display = '';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = '';
-							} else { 
+							} else {
 								document.getElementById('div_RemuestraFecha').style.display = 'none';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
 							}
 						});
-						
+
 						//busco cambios en el uso del cliente
 						$("#idOpciones").on("change", function(){ 
 							let idOpciones = $(this).val(); 
@@ -351,7 +351,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_idSector_fake1').style.display = '';
 								document.getElementById('div_UTM_norte_fake1').style.display = '';
 								document.getElementById('div_UTM_este_fake1').style.display = '';
-								document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';	
+								document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';
 							//si es no
 							} else if(idOpciones == 2){ 
 								document.getElementById('div_idSector').style.display = '';
@@ -363,7 +363,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_UTM_norte_fake1').style.display = 'none';
 								document.getElementById('div_UTM_este_fake1').style.display = 'none';
 								document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
-							} else { 
+							} else {
 								document.getElementById('div_idSector').style.display = 'none';
 								document.getElementById('div_UTM_norte').style.display = 'none';
 								document.getElementById('div_UTM_este').style.display = 'none';
@@ -376,25 +376,25 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							}
 						});
 					   
-					}); 
+					});
 				
 				</script>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); 
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //Busco los datos de los clientes
 $arrTipo = array();
 $query = "SELECT 
@@ -427,44 +427,44 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTipo,$row );
 }	 
 //Indico el sistema	 
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Analisis</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_muestra)) {                 $x1  = $f_muestra;                  }else{$x1  = '';}
-				if(isset($f_recibida)) {                $x2  = $f_recibida;                 }else{$x2  = '';}
-				if(isset($idLaboratorio)) {             $x3  = $idLaboratorio;              }else{$x3  = '';}
-				if(isset($codigoMuestra)) {             $x4  = $codigoMuestra;              }else{$x4  = '';}
-				if(isset($CodigoLaboratorio)) {         $x5  = $CodigoLaboratorio;          }else{$x5  = '';}
-				if(isset($idTipoMuestra)) {             $x6  = $idTipoMuestra;              }else{$x6  = '';}
-				if(isset($RemuestraFecha)) {            $x7  = $RemuestraFecha;             }else{$x7  = '';}
-				if(isset($Remuestra_codigo_muestra)) {  $x8  = $Remuestra_codigo_muestra;   }else{$x8  = '';}
-				if(isset($idParametros)) {              $x9  = $idParametros;               }else{$x9  = '';}
-				if(isset($idSigno)) {                   $x10 = $idSigno;                    }else{$x10 = '';}
-				if(isset($valorAnalisis)) {             $x11 = $valorAnalisis;              }else{$x11 = '';}
-				if(isset($idOpciones)) {                $x12 = $idOpciones;                 }else{$x12 = '';}
-				if(isset($idSector)) {                  $x13 = $idSector;                   }else{$x13 = '';}
-				if(isset($UTM_norte)) {                 $x14 = $UTM_norte;                  }else{$x14 = '';}
-				if(isset($UTM_este)) {                  $x15 = $UTM_este;                   }else{$x15 = '';}
-				if(isset($idPuntoMuestreo)) {           $x16 = $idPuntoMuestreo;            }else{$x16 = '';}
-				if(isset($idCliente)) {                 $x17 = $idCliente;                  }else{$x17 = '';}
-				if(isset($idEstado)) {                  $x18 = $idEstado;                   }else{$x18 = '';}
-				if(isset($Observaciones)) {             $x19 = $Observaciones;              }else{$x19 = '';}
-				
+				if(isset($f_muestra)){                 $x1  = $f_muestra;                  }else{$x1  = '';}
+				if(isset($f_recibida)){                $x2  = $f_recibida;                 }else{$x2  = '';}
+				if(isset($idLaboratorio)){             $x3  = $idLaboratorio;              }else{$x3  = '';}
+				if(isset($codigoMuestra)){             $x4  = $codigoMuestra;              }else{$x4  = '';}
+				if(isset($CodigoLaboratorio)){         $x5  = $CodigoLaboratorio;          }else{$x5  = '';}
+				if(isset($idTipoMuestra)){             $x6  = $idTipoMuestra;              }else{$x6  = '';}
+				if(isset($RemuestraFecha)){            $x7  = $RemuestraFecha;             }else{$x7  = '';}
+				if(isset($Remuestra_codigo_muestra)){  $x8  = $Remuestra_codigo_muestra;   }else{$x8  = '';}
+				if(isset($idParametros)){              $x9  = $idParametros;               }else{$x9  = '';}
+				if(isset($idSigno)){                   $x10 = $idSigno;                    }else{$x10 = '';}
+				if(isset($valorAnalisis)){             $x11 = $valorAnalisis;              }else{$x11 = '';}
+				if(isset($idOpciones)){                $x12 = $idOpciones;                 }else{$x12 = '';}
+				if(isset($idSector)){                  $x13 = $idSector;                   }else{$x13 = '';}
+				if(isset($UTM_norte)){                 $x14 = $UTM_norte;                  }else{$x14 = '';}
+				if(isset($UTM_este)){                  $x15 = $UTM_este;                   }else{$x15 = '';}
+				if(isset($idPuntoMuestreo)){           $x16 = $idPuntoMuestreo;            }else{$x16 = '';}
+				if(isset($idCliente)){                 $x17 = $idCliente;                  }else{$x17 = '';}
+				if(isset($idEstado)){                  $x18 = $idEstado;                   }else{$x18 = '';}
+				if(isset($Observaciones)){             $x19 = $Observaciones;              }else{$x19 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
@@ -482,13 +482,13 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						
 				$Form_Inputs->form_tittle(3, 'Datos del Cliente');
 				$Form_Inputs->form_select('Relacionar a cliente','idOpciones', $x12, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				//En caso de no ser relacionado
 				$Form_Inputs->form_select('Sector','idSector', $x13, 1, 'idSector', 'Nombre', 'aguas_analisis_sectores', $z, '', $dbConn);
 				$Form_Inputs->form_input_number('UTM norte', 'UTM_norte', $x14, 1);
 				$Form_Inputs->form_input_number('UTM este', 'UTM_este', $x15, 1);
 				$Form_Inputs->form_select('Tipo de Medicion','idPuntoMuestreo', $x16, 1, 'idPuntoMuestreo', 'Nombre', 'aguas_analisis_aguas_tipo_punto_muestreo', 0, '', $dbConn);
-				
+
 				//en caso de ser relacionado
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x17, 2, 'idCliente', 'Identificador,Nombre', 'aguas_clientes_listado', $z.' AND aguas_clientes_listado.idEstado=1', 'ORDER BY Identificador ASC', $dbConn);
 				$Form_Inputs->form_input_disabled('Sector','idSector_fake1', '');
@@ -540,7 +540,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
 					
 					//inicio documentos
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 						
 						//busco cambios en el Cliente seleccionado
 						$("#idCliente").on("change", function(){ 
@@ -566,17 +566,17 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							//si es muestra
 							if(idTipoMuestra == 1){ 
 								document.getElementById('div_RemuestraFecha').style.display = 'none';
-								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';	
+								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
 							//si es remuestra
 							} else if(idTipoMuestra == 2){ 
 								document.getElementById('div_RemuestraFecha').style.display = '';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = '';
-							} else { 
+							} else {
 								document.getElementById('div_RemuestraFecha').style.display = 'none';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
 							}
 						});
-						
+
 						//busco cambios en el uso del cliente
 						$("#idOpciones").on("change", function(){ 
 							let idOpciones = $(this).val(); 
@@ -590,7 +590,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_idSector_fake1').style.display = '';
 								document.getElementById('div_UTM_norte_fake1').style.display = '';
 								document.getElementById('div_UTM_este_fake1').style.display = '';
-								document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';	
+								document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';
 							//si es no
 							} else if(idOpciones == 2){ 
 								document.getElementById('div_idSector').style.display = '';
@@ -602,7 +602,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_UTM_norte_fake1').style.display = 'none';
 								document.getElementById('div_UTM_este_fake1').style.display = 'none';
 								document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
-							} else { 
+							} else {
 								document.getElementById('div_idSector').style.display = 'none';
 								document.getElementById('div_UTM_norte').style.display = 'none';
 								document.getElementById('div_UTM_este').style.display = 'none';
@@ -615,40 +615,31 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							}
 						});
 					   
-					}); 
+					});
 				
 				</script>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -673,20 +664,20 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Variable de busqueda
-$SIS_where = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['f_muestra']) && $_GET['f_muestra'] != ''){                    $SIS_where .= " AND aguas_analisis_aguas.f_muestra='".$_GET['f_muestra']."'";}
-if(isset($_GET['f_recibida']) && $_GET['f_recibida'] != ''){                  $SIS_where .= " AND aguas_analisis_aguas.f_recibida='".$_GET['f_recibida']."'";}
-if(isset($_GET['idLaboratorio']) && $_GET['idLaboratorio'] != ''){            $SIS_where .= " AND aguas_analisis_aguas.idLaboratorio='".$_GET['idLaboratorio']."'";}
-if(isset($_GET['codigoMuestra']) && $_GET['codigoMuestra'] != ''){            $SIS_where .= " AND aguas_analisis_aguas.codigoMuestra='".$_GET['codigoMuestra']."'";}
-if(isset($_GET['CodigoLaboratorio']) && $_GET['CodigoLaboratorio'] != ''){    $SIS_where .= " AND aguas_analisis_aguas.CodigoLaboratorio='".$_GET['CodigoLaboratorio']."'";}
+if(isset($_GET['f_muestra']) && $_GET['f_muestra']!=''){             $SIS_where .= " AND aguas_analisis_aguas.f_muestra='".$_GET['f_muestra']."'";}
+if(isset($_GET['f_recibida']) && $_GET['f_recibida']!=''){           $SIS_where .= " AND aguas_analisis_aguas.f_recibida='".$_GET['f_recibida']."'";}
+if(isset($_GET['idLaboratorio']) && $_GET['idLaboratorio']!=''){     $SIS_where .= " AND aguas_analisis_aguas.idLaboratorio='".$_GET['idLaboratorio']."'";}
+if(isset($_GET['codigoMuestra']) && $_GET['codigoMuestra']!=''){     $SIS_where .= " AND aguas_analisis_aguas.codigoMuestra='".$_GET['codigoMuestra']."'";}
+if(isset($_GET['CodigoLaboratorio']) && $_GET['CodigoLaboratorio']!=''){    $SIS_where .= " AND aguas_analisis_aguas.CodigoLaboratorio='".$_GET['CodigoLaboratorio']."'";}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idAnalisisAgua', 'aguas_analisis_aguas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 aguas_analisis_aguas.idAnalisisAgua,
@@ -707,32 +698,32 @@ $arrTipo = db_select_array (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join
 $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Analisis</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Analisis</a><?php } ?>
 	
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_muestra)) {            $x1  = $f_muestra;            }else{$x1  = '';}
-				if(isset($f_recibida)) {           $x2  = $f_recibida;           }else{$x2  = '';}
-				if(isset($idLaboratorio)) {        $x3  = $idLaboratorio;        }else{$x3  = '';}
-				if(isset($codigoMuestra)) {        $x4  = $codigoMuestra;        }else{$x4  = '';}
-				if(isset($CodigoLaboratorio)) {    $x5  = $CodigoLaboratorio;    }else{$x5  = '';}
-				
+				if(isset($f_muestra)){            $x1  = $f_muestra;            }else{$x1  = '';}
+				if(isset($f_recibida)){           $x2  = $f_recibida;           }else{$x2  = '';}
+				if(isset($idLaboratorio)){        $x3  = $idLaboratorio;        }else{$x3  = '';}
+				if(isset($codigoMuestra)){        $x4  = $codigoMuestra;        }else{$x4  = '';}
+				if(isset($CodigoLaboratorio)){    $x5  = $CodigoLaboratorio;    }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de la muestra','f_muestra', $x1, 1);
@@ -741,23 +732,23 @@ $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSis
 				$Form_Inputs->form_input_number('Codigo Muestra', 'codigoMuestra', $x4, 1);
 				$Form_Inputs->form_input_number('Codigo Laboratorio', 'CodigoLaboratorio', $x5, 1);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                      
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Analisis</h5>
@@ -826,7 +817,7 @@ $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSis
 						<td><?php echo $tipo['Parametro']; ?></td>
 						<td align="right"><?php echo Cantidades_decimales_justos($tipo['valorAnalisis']); ?></td>
 						<td><?php echo $tipo['Cliente']; ?></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['sistema']; ?></td><?php } ?>			
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_aguas_analisis.php?view='.simpleEncode($tipo['idAnalisisAgua'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -835,15 +826,15 @@ $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSis
 									$ubicacion = $location.'&del='.simpleEncode($tipo['idAnalisisAgua'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el analisis de la fecha '.fecha_estandar($tipo['f_muestra']).'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
@@ -851,7 +842,7 @@ $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSis
 	</div>
 </div>
 <?php widget_modal(80, 95); ?>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

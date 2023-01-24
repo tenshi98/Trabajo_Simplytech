@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                      Consulta                                                                  */
 /**********************************************************************************************************************************/
@@ -44,7 +44,7 @@ if(hora_actual()<$timeback){
 //se verifica si se ingreso la hora, es un dato optativo
 $z = " WHERE (TimeStamp BETWEEN '".$f_inicio." ".$h_inicio ."' AND '".$f_termino." ".$h_termino."')";
 
-/*****************************************/	
+/*****************************************/
 //datos extras
 $aa = '';
 $aa .= ',FechaSistema';
@@ -55,8 +55,8 @@ $aa .= ',GeoVelocidad';
 //se recorre deacuerdo a la cantidad de sensores
 for ($i = 1; $i <= $_GET['idSensoresActual']; $i++) { 
 	$aa .= ',Sensor_'.$i;
-}					
-/*****************************************/				
+}		
+/*****************************************/
 //Insumos
 $arrMediciones = array();
 $query = "SELECT idTabla
@@ -79,7 +79,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 		
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrMediciones,$row );
 }
 ?>

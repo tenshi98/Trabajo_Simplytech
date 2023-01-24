@@ -17,26 +17,26 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /*******************************************************/
 $SIS_query = '
 core_sistemas.Rut AS SistemaRut,
-aguas_facturacion_listado_detalle.idCliente, 
+aguas_facturacion_listado_detalle.idCliente,
 aguas_clientes_listado.idTipo AS tipoCliente,
 aguas_facturacion_listado_detalle.DetConsMesTotalCantidad AS Medicion';
 $SIS_join  = '
 LEFT JOIN `aguas_clientes_listado`      ON aguas_clientes_listado.idCliente     = aguas_facturacion_listado_detalle.idCliente
 LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema              = aguas_facturacion_listado_detalle.idSistema';
 $SIS_where = 'aguas_facturacion_listado_detalle.idMes = '.$_GET['idMes'].' AND aguas_facturacion_listado_detalle.Ano = '.$_GET['Ano'].' AND aguas_facturacion_listado_detalle.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
-$SIS_order = ''aguas_facturacion_listado_detalle.DetConsMesTotalCantidad ASC;
+$SIS_order = 'aguas_facturacion_listado_detalle.DetConsMesTotalCantidad ASC';
 $arrFacturacion = array();
 $arrFacturacion = db_select_array (false, $SIS_query, 'aguas_facturacion_listado_detalle', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFacturacion');
 
@@ -52,12 +52,12 @@ for ($i = 1; $i <= 5; $i++) {
 	}
 }
 
-foreach ($arrFacturacion as $fact) { 
+foreach ($arrFacturacion as $fact) {
 	//separo por codigo de rango
 	if($fact['Medicion']==0){
 		$informepr[$fact['tipoCliente']][1]['Cantidad']++;
 		$informepr[$fact['tipoCliente']][1]['Medicion'] = $informepr[$fact['tipoCliente']][1]['Medicion'] + $fact['Medicion'];
-	}elseif($fact['Medicion']>0 && $fact['Medicion']<=10){	
+	}elseif($fact['Medicion']>0 && $fact['Medicion']<=10){
 		$informepr[$fact['tipoCliente']][2]['Cantidad']++;
 		$informepr[$fact['tipoCliente']][2]['Medicion'] = $informepr[$fact['tipoCliente']][2]['Medicion'] + $fact['Medicion'];
 	}elseif($fact['Medicion']>10 && $fact['Medicion']<=15){
@@ -125,8 +125,7 @@ $spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-        
-            
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A1', 'codigoProceso')
@@ -143,21 +142,21 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('L1', 'MetrosCubicosAS')
             ->setCellValue('M1', 'CantidadClientes');
 
-					
+
 $nn       = 2;
 $total1   = 0;
 $total2   = 0;
 $clientes = 0;
 for ($i = 1; $i <= 5; $i++) {
 	for ($x = 1; $x <= 18; $x++) {
-		if(isset($informepr[$i][$x]['Cantidad'])&&$informepr[$i][$x]['Cantidad']!=''){ 
+		if(isset($informepr[$i][$x]['Cantidad'])&&$informepr[$i][$x]['Cantidad']!=''){
 			//se suman los totales de las mediciones y los clientes
 			$total1    = $total1 + $informepr[$i][$x]['Medicion'];
 			$total2    = $total2 + $informepr[$i][$x]['Medicion'];
 			$clientes  = $clientes + $informepr[$i][$x]['Cantidad'];
-			
-			if($_GET['idMes']>9){$fecha = $_GET['Ano'].$_GET['idMes'];}else{$fecha = $_GET['Ano'].'0'.$_GET['idMes'];}
-			
+
+			$fecha = $_GET['Ano'].numero_mes($_GET['idMes']);
+
 			$rut = substr($arrFacturacion[0]['SistemaRut'], 0, -2);
 
 			$spreadsheet->setActiveSheetIndex(0)
@@ -175,8 +174,8 @@ for ($i = 1; $i <= 5; $i++) {
 						->setCellValue('L'.$nn, $informepr[$i][$x]['Medicion'])
 						->setCellValue('M'.$nn, $informepr[$i][$x]['Cantidad']);
 
-			$nn++;           
-   
+			$nn++;
+
 		}
 	}
 }
@@ -185,7 +184,7 @@ $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('L'.$nn, $total2)
 			->setCellValue('M'.$nn, $clientes);
 
-			 
+
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Informe PR02701');
 

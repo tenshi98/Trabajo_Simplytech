@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "trabajadores_listado.php";
 $location = $original;
 $new_location = "trabajadores_listado_laboral.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -39,7 +39,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = '
 Nombre,ApellidoPat,ApellidoMat,idTipo,Cargo,FechaContrato, F_Inicio_Contrato,
@@ -54,12 +54,12 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Laborales');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -82,38 +82,38 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						<li class=""><a href="<?php echo 'trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
 						
 					</ul>
-                </li>           
+                </li>
 			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($idTipo)) {              $x1  = $idTipo;               }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Cargo)) {               $x2  = $Cargo;                }else{$x2  = $rowdata['Cargo'];}
-					if(isset($idContratista)) {       $x3  = $idContratista;        }else{$x3  = $rowdata['idContratista'];}
-					if(isset($idTipoContrato)) {      $x4  = $idTipoContrato;       }else{$x4  = $rowdata['idTipoContrato'];}
-					if(isset($FechaContrato)) {       $x5  = $FechaContrato;        }else{$x5  = $rowdata['FechaContrato'];}
-					if(isset($F_Inicio_Contrato)) {   $x6  = $F_Inicio_Contrato;    }else{$x6  = $rowdata['F_Inicio_Contrato'];}
-					if(isset($F_Termino_Contrato)) {  $x7  = $F_Termino_Contrato;   }else{$x7  = $rowdata['F_Termino_Contrato'];}
-					if(isset($UbicacionTrabajo)) {    $x8  = $UbicacionTrabajo;     }else{$x8  = $rowdata['UbicacionTrabajo'];}
-					if(isset($idAFP)) {               $x9  = $idAFP;                }else{$x9  = $rowdata['idAFP'];}
-					if(isset($idSalud)) {             $x10 = $idSalud;              }else{$x10 = $rowdata['idSalud'];}
-					if(isset($SueldoLiquido)) {       $x11 = $SueldoLiquido;        }else{$x11 = $rowdata['SueldoLiquido'];}
-					if(isset($SueldoDia)) {           $x12 = $SueldoDia;            }else{$x12 = $rowdata['SueldoDia'];}
-					if(isset($SueldoHora)) {          $x13 = $SueldoHora;           }else{$x13 = $rowdata['SueldoHora'];}
-					if(isset($idBanco)) {             $x14 = $idBanco;              }else{$x14 = $rowdata['idBanco'];}
-					if(isset($idTipoCuenta)) {        $x15 = $idTipoCuenta;         }else{$x15 = $rowdata['idTipoCuenta'];}
-					if(isset($N_Cuenta)) {            $x16 = $N_Cuenta;             }else{$x16 = $rowdata['N_Cuenta'];}
-					if(isset($idCentroCosto)) {       $x17 = $idCentroCosto;        }else{$x17 = $rowdata['idCentroCosto'];}
-					if(isset($idLevel_1)) {           $x18 = $idLevel_1;            }else{$x18 = $rowdata['idLevel_1'];}
-					if(isset($idLevel_2)) {           $x19 = $idLevel_2;            }else{$x19 = $rowdata['idLevel_2'];}
-					if(isset($idLevel_3)) {           $x20 = $idLevel_3;            }else{$x20 = $rowdata['idLevel_3'];}
-					if(isset($idLevel_4)) {           $x21 = $idLevel_4;            }else{$x21 = $rowdata['idLevel_4'];}
-					if(isset($idLevel_5)) {           $x22 = $idLevel_5;            }else{$x22 = $rowdata['idLevel_5'];}
-					if(isset($Observaciones)) {       $x23 = $Observaciones;        }else{$x23 = $rowdata['Observaciones'];}
+					if(isset($idTipo)){              $x1  = $idTipo;               }else{$x1  = $rowdata['idTipo'];}
+					if(isset($Cargo)){               $x2  = $Cargo;                }else{$x2  = $rowdata['Cargo'];}
+					if(isset($idContratista)){       $x3  = $idContratista;        }else{$x3  = $rowdata['idContratista'];}
+					if(isset($idTipoContrato)){      $x4  = $idTipoContrato;       }else{$x4  = $rowdata['idTipoContrato'];}
+					if(isset($FechaContrato)){       $x5  = $FechaContrato;        }else{$x5  = $rowdata['FechaContrato'];}
+					if(isset($F_Inicio_Contrato)){   $x6  = $F_Inicio_Contrato;    }else{$x6  = $rowdata['F_Inicio_Contrato'];}
+					if(isset($F_Termino_Contrato)){  $x7  = $F_Termino_Contrato;   }else{$x7  = $rowdata['F_Termino_Contrato'];}
+					if(isset($UbicacionTrabajo)){    $x8  = $UbicacionTrabajo;     }else{$x8  = $rowdata['UbicacionTrabajo'];}
+					if(isset($idAFP)){               $x9  = $idAFP;                }else{$x9  = $rowdata['idAFP'];}
+					if(isset($idSalud)){             $x10 = $idSalud;              }else{$x10 = $rowdata['idSalud'];}
+					if(isset($SueldoLiquido)){       $x11 = $SueldoLiquido;        }else{$x11 = $rowdata['SueldoLiquido'];}
+					if(isset($SueldoDia)){           $x12 = $SueldoDia;            }else{$x12 = $rowdata['SueldoDia'];}
+					if(isset($SueldoHora)){          $x13 = $SueldoHora;           }else{$x13 = $rowdata['SueldoHora'];}
+					if(isset($idBanco)){             $x14 = $idBanco;              }else{$x14 = $rowdata['idBanco'];}
+					if(isset($idTipoCuenta)){        $x15 = $idTipoCuenta;         }else{$x15 = $rowdata['idTipoCuenta'];}
+					if(isset($N_Cuenta)){            $x16 = $N_Cuenta;             }else{$x16 = $rowdata['N_Cuenta'];}
+					if(isset($idCentroCosto)){       $x17 = $idCentroCosto;        }else{$x17 = $rowdata['idCentroCosto'];}
+					if(isset($idLevel_1)){           $x18 = $idLevel_1;            }else{$x18 = $rowdata['idLevel_1'];}
+					if(isset($idLevel_2)){           $x19 = $idLevel_2;            }else{$x19 = $rowdata['idLevel_2'];}
+					if(isset($idLevel_3)){           $x20 = $idLevel_3;            }else{$x20 = $rowdata['idLevel_3'];}
+					if(isset($idLevel_4)){           $x21 = $idLevel_4;            }else{$x21 = $rowdata['idLevel_4'];}
+					if(isset($idLevel_5)){           $x22 = $idLevel_5;            }else{$x22 = $rowdata['idLevel_5'];}
+					if(isset($Observaciones)){       $x23 = $Observaciones;        }else{$x23 = $rowdata['Observaciones'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -155,19 +155,19 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

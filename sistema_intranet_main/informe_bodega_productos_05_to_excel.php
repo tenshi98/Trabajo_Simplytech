@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -27,29 +27,29 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*******************************************************/
 // Se trae un listado con todos los productos
 $SIS_where = "bodegas_productos_facturacion_existencias.idExistencia!=0";
-if(isset($_GET['idBodegaOrigen']) && $_GET['idBodegaOrigen'] != ''){     $SIS_where .= " AND bodegas_productos_facturacion.idBodegaOrigen=".$_GET['idBodegaOrigen']; }
-if(isset($_GET['idBodegaDestino']) && $_GET['idBodegaDestino'] != ''){   $SIS_where .= " AND bodegas_productos_facturacion.idBodegaDestino=".$_GET['idBodegaDestino']; }
-if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){               $SIS_where .= " AND bodegas_productos_facturacion.idSistema=".$_GET['idSistema']; }
-if(isset($_GET['idSistemaDestino']) && $_GET['idSistemaDestino'] != ''){ $SIS_where .= " AND bodegas_productos_facturacion.idSistemaDestino=".$_GET['idSistemaDestino']; }
-if(isset($_GET['idDocumentos']) && $_GET['idDocumentos'] != ''){         $SIS_where .= " AND bodegas_productos_facturacion.idDocumentos=".$_GET['idDocumentos']; }
-if(isset($_GET['N_Doc']) && $_GET['N_Doc'] != ''){                       $SIS_where .= " AND bodegas_productos_facturacion.N_Doc LIKE '%".$_GET['N_Doc']."%'"; }
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                     $SIS_where .= " AND bodegas_productos_facturacion.idTipo=".$_GET['idTipo']; }
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){         $SIS_where .= " AND bodegas_productos_facturacion.idTrabajador=".$_GET['idTrabajador']; }
-if(isset($_GET['idProveedor']) && $_GET['idProveedor'] != ''){           $SIS_where .= " AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor']; }
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){               $SIS_where .= " AND bodegas_productos_facturacion.idCliente=".$_GET['idCliente']; }
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                 $SIS_where .= " AND bodegas_productos_facturacion.idEstado=".$_GET['idEstado']; }
-if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){               $SIS_where .= " AND bodegas_productos_facturacion.idDocPago=".$_GET['idDocPago']; }
-if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){               $SIS_where .= " AND bodegas_productos_facturacion.N_DocPago LIKE '%".$_GET['N_DocPago']."%'"; }
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){             $SIS_where .= " AND bodegas_productos_facturacion_existencias.idProducto=".$_GET['idProducto']; }
+if(isset($_GET['idBodegaOrigen']) && $_GET['idBodegaOrigen']!=''){     $SIS_where .= " AND bodegas_productos_facturacion.idBodegaOrigen=".$_GET['idBodegaOrigen'];}
+if(isset($_GET['idBodegaDestino']) && $_GET['idBodegaDestino']!=''){   $SIS_where .= " AND bodegas_productos_facturacion.idBodegaDestino=".$_GET['idBodegaDestino'];}
+if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){        $SIS_where .= " AND bodegas_productos_facturacion.idSistema=".$_GET['idSistema'];}
+if(isset($_GET['idSistemaDestino']) && $_GET['idSistemaDestino']!=''){ $SIS_where .= " AND bodegas_productos_facturacion.idSistemaDestino=".$_GET['idSistemaDestino'];}
+if(isset($_GET['idDocumentos']) && $_GET['idDocumentos']!=''){  $SIS_where .= " AND bodegas_productos_facturacion.idDocumentos=".$_GET['idDocumentos'];}
+if(isset($_GET['N_Doc']) && $_GET['N_Doc']!=''){                $SIS_where .= " AND bodegas_productos_facturacion.N_Doc LIKE '%".EstandarizarInput($_GET['N_Doc'])."%'"; }
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){              $SIS_where .= " AND bodegas_productos_facturacion.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){  $SIS_where .= " AND bodegas_productos_facturacion.idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['idProveedor']) && $_GET['idProveedor']!=''){    $SIS_where .= " AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){        $SIS_where .= " AND bodegas_productos_facturacion.idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){          $SIS_where .= " AND bodegas_productos_facturacion.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idDocPago']) && $_GET['idDocPago']!=''){        $SIS_where .= " AND bodegas_productos_facturacion.idDocPago=".$_GET['idDocPago'];}
+if(isset($_GET['N_DocPago']) && $_GET['N_DocPago']!=''){        $SIS_where .= " AND bodegas_productos_facturacion.N_DocPago LIKE '%".EstandarizarInput($_GET['N_DocPago'])."%'"; }
+if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){      $SIS_where .= " AND bodegas_productos_facturacion_existencias.idProducto=".$_GET['idProducto'];}
 
-if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin'] != ''){   
-	$SIS_where .= " AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'" ;
+if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin']!=''){   
+	$SIS_where .= " AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'";
 }
-if(isset($_GET['Pago_fecha_ini']) && $_GET['Pago_fecha_ini'] != ''&&isset($_GET['Pago_fecha_fin']) && $_GET['Pago_fecha_fin'] != ''){   
-	$SIS_where .= " AND bodegas_productos_facturacion.Pago_fecha BETWEEN '".$_GET['Pago_fecha_ini']."' AND '".$_GET['Pago_fecha_fin']."'" ;
+if(isset($_GET['Pago_fecha_ini']) && $_GET['Pago_fecha_ini'] != ''&&isset($_GET['Pago_fecha_fin']) && $_GET['Pago_fecha_fin']!=''){   
+	$SIS_where .= " AND bodegas_productos_facturacion.Pago_fecha BETWEEN '".$_GET['Pago_fecha_ini']."' AND '".$_GET['Pago_fecha_fin']."'";
 }
-if(isset($_GET['F_Pago_ini']) && $_GET['F_Pago_ini'] != ''&&isset($_GET['F_Pago_fin']) && $_GET['F_Pago_fin'] != ''){   
-	$SIS_where .= " AND bodegas_productos_facturacion.F_Pago BETWEEN '".$_GET['F_Pago_ini']."' AND '".$_GET['F_Pago_fin']."'" ;
+if(isset($_GET['F_Pago_ini']) && $_GET['F_Pago_ini'] != ''&&isset($_GET['F_Pago_fin']) && $_GET['F_Pago_fin']!=''){   
+	$SIS_where .= " AND bodegas_productos_facturacion.F_Pago BETWEEN '".$_GET['F_Pago_ini']."' AND '".$_GET['F_Pago_fin']."'";
 }
 
 $SIS_query = '
@@ -200,7 +200,7 @@ foreach ($arrProductos as $productos) {
 				->setCellValue('AF'.$nn, cantidades_excel($productos['Cantidad_eg']))
 				->setCellValue('AG'.$nn, cantidades_excel($productos['Valor']))
 				->setCellValue('AH'.$nn, cantidades_excel($productos['ValorTotal']));
-	$nn++;           
+	$nn++;
    
 } 
 

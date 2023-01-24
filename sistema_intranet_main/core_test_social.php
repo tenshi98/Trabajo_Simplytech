@@ -12,14 +12,14 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_test_social.php";
 $location = $original;
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_whatsapp']) )  { 
+if (!empty($_POST['submit_whatsapp'])){
 	//Llamamos al formulario
 	$form_trabajo= 'send_whatsapp';
 	require_once 'A1XRXS_sys/xrxs_form/z_server_test.php';
@@ -42,40 +42,40 @@ $whitelist = array( 'localhost', '127.0.0.1', '::1' );
 //si estoy en ambiente de desarrollo
 if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 
-//si estoy en ambiente de produccion	
-}else{	
+//si estoy en ambiente de produccion
+}else{
 	/*    Global Variables    */
 	//Tiempo Maximo de la consulta, 40 minutos por defecto
-	if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+	if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 	//Memora RAM Maxima del servidor, 4GB por defecto
-	if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+	if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 }
 
 //Consulta de los datos del sistema del equipo
-$rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Config_Gmail_Password', 'core_sistemas', '', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+$rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Config_Gmail_Password', 'core_sistemas','', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 ?>
 
 
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Testeo de Whatsapp</h5>	
+			<h5>Testeo de Whatsapp</h5>
 		</header>
-        <div id="div-3" class="tab-content">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
+        <div class="tab-content">
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Token)) {       $x1 = $Token;        }else{$x1 = '';}
-					if(isset($InstanceId)) {  $x2 = $InstanceId;   }else{$x2 = '';}
-					if(isset($fono)) {        $x3 = $fono;         }else{$x3 = '';}
-					if(isset($grupo)) {       $x4 = $grupo;        }else{$x4 = '';}
-					if(isset($mensaje)) {     $x5 = $mensaje;      }else{$x5 = '';}
+					if(isset($Token)){       $x1 = $Token;        }else{$x1 = '';}
+					if(isset($InstanceId)){  $x2 = $InstanceId;   }else{$x2 = '';}
+					if(isset($fono)){        $x3 = $fono;         }else{$x3 = '';}
+					if(isset($grupo)){       $x4 = $grupo;        }else{$x4 = '';}
+					if(isset($mensaje)){     $x5 = $mensaje;      }else{$x5 = '';}
 								
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -87,17 +87,17 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 								
 					$Form_Inputs->form_input_hidden('email_principal', $rowEmpresa['email_principal'], 2);
 								
-					?>        
+					?>
 					   
 					<div class="form-group">
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf003; Enviar Prueba" name="submit_whatsapp"> 
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_whatsapp"> 
 					</div>
 									  
-				</form> 
+				</form>
 							
 			</div>
 				
-        </div>	
+        </div>
 	</div>
 </div>
 

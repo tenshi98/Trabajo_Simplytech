@@ -11,13 +11,13 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "view_telemetria_alertas.php";
 $location = $original;
 $location .='?pagina=1';
@@ -42,16 +42,16 @@ if(isset($_GET['idLeido'])&&$_GET['idLeido']!=''){
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //se borra un dato
-if ( !empty($_GET['idErrores']) )     {
+if (!empty($_GET['idErrores'])){
 	//Llamamos al formulario
 	$form_trabajo= 'silenciar_uno';
-	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_errores.php';	
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_errores.php';
 }
 //se borra un dato
-if ( !empty($_GET['all']) )     {
+if (!empty($_GET['all'])){
 	//Llamamos al formulario
 	$form_trabajo= 'silenciar_todos';
-	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_errores.php';	
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_errores.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -61,19 +61,11 @@ require_once 'core/Web.Header.Views.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //tomo el numero de la pagina si es que este existe
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 //Inicia variable
 $SIS_where = "telemetria_listado_errores.idErrores>0"; 
 $SIS_where.= " AND telemetria_listado_errores.idTipo!='999'";
@@ -82,7 +74,7 @@ $SIS_where.= " AND telemetria_listado.id_Geo='2'";
 $SIS_where.= " AND telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$SIS_where .= " AND telemetria_listado.idTab=6";//CrossCrane			
+	$SIS_where .= " AND telemetria_listado.idTab=6";//CrossCrane	
 }
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
@@ -152,17 +144,17 @@ foreach ($arrUnimed as $sen) {
 ?>
 
 
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resultados</h5>	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resultados</h5>
 			<div class="toolbar">
 				<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_cross_crane_01.php';if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){echo '?idTel='.$_GET['idTelemetria'];} ?>" class="btn btn-xs btn-primary"><i class="fa fa-history" aria-hidden="true"></i> Alertas históricas</a>
 				<a href="<?php echo $location.'&all='.$_GET['idTelemetria']; ?>" class="btn btn-xs btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Marcar Todos Leidos</a>
 				<?php echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive">    
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -215,13 +207,13 @@ foreach ($arrUnimed as $sen) {
 									?>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo $subloc; ?>" title="Ver historial operacional" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 								</div>
-							</td>	
+							</td>
 						</tr>
                     <?php }  ?>                    
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>

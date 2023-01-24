@@ -17,16 +17,16 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Variables
 $titulo_cuadro  = 'Ultimas Mediciones';
 $seguimiento    = 2;
-$HoraSistema    = hora_actual(); 
+$HoraSistema    = hora_actual();
 $FechaSistema   = fecha_actual();
 
 //Variable
@@ -35,14 +35,14 @@ $SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
 	$SIS_where .= " AND telemetria_listado.id_Geo = ".$seguimiento;
 }
-//Filtro el sistema al cual pertenece	
+//Filtro el sistema al cual pertenece
 $SIS_where .= " AND telemetria_listado.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 
 
 //Verifico el tipo de usuario que esta ingresando y el id
 $SIS_join = "LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema";	
 if(isset($_SESSION['usuario']['basic_data']['idTipoUsuario'])&&$_SESSION['usuario']['basic_data']['idTipoUsuario']!=1&&isset($_SESSION['usuario']['basic_data']['idUsuario'])&&$_SESSION['usuario']['basic_data']['idUsuario']!=0){
-	$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+	$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 
@@ -51,7 +51,7 @@ $SIS_query = '
 telemetria_listado.idTelemetria,
 telemetria_listado.Nombre,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.LastUpdateFecha, 
+telemetria_listado.LastUpdateFecha,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores';
 $SIS_order = 'telemetria_listado.Nombre ASC';
@@ -102,7 +102,7 @@ foreach($arrEquipo as $equip) {
 	$Time_Tiempo_FL  = horas2segundos($equip['TiempoFueraLinea']);
 	$Time_Tiempo_Max = horas2segundos('48:00:00');
 	//comparacion
-	if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+	if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
 		$in_eq_fueralinea++;
 	}
 								
@@ -131,7 +131,7 @@ foreach($arrEquipo as $equip) {
 				->setCellValue('C'.$nn, fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs')
 				->setCellValue('D'.$nn, $eq_ok);		
 	
-	$nn++;           
+	$nn++;
    
 } 
 

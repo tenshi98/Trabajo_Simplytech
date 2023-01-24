@@ -7,7 +7,7 @@ function set_bootstrap_theme() {
     
     $bootswatch = array('amelia','cerulean','cosmo','cyborg','darkly','flatly','journal','lumen','paper','readable','sandstone','simplex','slate','spacelab','superhero','united','yeti');
 
-    if (in_array($options['bootstrap']['theme'], $bootswatch)) {
+    if (in_array($options['bootstrap']['theme'], $bootswatch)){
         return str_replace("%theme%",$options['bootstrap']['theme'],$options['assets']['bootswatch_css']);
     } else if ($options['bootstrap']['theme'] == "m8tro" ) {
         return $options['assets']['m8tro_css'];
@@ -79,7 +79,7 @@ function set_header($bootstrap_css) {
         $header .= "  <link rel=\"stylesheet\" href=\"$server$bootstrap_css\" />" . PHP_EOL;
 
         // Highlight.js CSS
-        if ( ($options['general']['enable_viewer']) && ($options['general']['enable_highlight'] === true) ) {
+        if ( ($options['general']['enable_viewer']) && ($options['general']['enable_highlight'] === true)){
             $highlight_css = str_replace("%theme%",$options['highlight']['theme'],$options['assets']['highlight_css']);
             $header .= "  <link rel=\"stylesheet\" href=\"$server$highlight_css\" />" . PHP_EOL;
         }
@@ -112,7 +112,7 @@ function set_footer(){
     $server =  get_server();
 
     // jQuery
-    if ( ($options['general']['enable_sort']) || ($options['general']['enable_viewer']) ) {
+    if ( ($options['general']['enable_sort']) || ($options['general']['enable_viewer'])){
         $footer .= "  <script type=\"text/javascript\" src=\"" .$server.$options['assets']['jquery_js'] . "\"></script>" . PHP_EOL;
     }
 
@@ -128,12 +128,12 @@ function set_footer(){
     } else {
 
         // Stupid Table
-        if ( ($options['general']['enable_sort'] === true) && ($options['assets']['stupid_table']) ) {
+        if ( ($options['general']['enable_sort'] === true) && ($options['assets']['stupid_table'])){
            $footer .= "  <script type=\"text/javascript\" src=\"" .$server.$options['assets']['stupid_table'] . "\"></script>" . PHP_EOL;
         }
 
         // jQuery Searcher
-        if ( ($options['general']['enable_search'] === true) && ($options['assets']['jquery_searcher']) ) {
+        if ( ($options['general']['enable_search'] === true) && ($options['assets']['jquery_searcher'])){
             $footer .= "  <script type=\"text/javascript\" src=\"" .$server.$options['assets']['jquery_searcher'] . "\"></script>" . PHP_EOL;
         }
 
@@ -142,7 +142,7 @@ function set_footer(){
             $footer .= "  <script type=\"text/javascript\" src=\"" .$server.$options['assets']['bootstrap_js'] . "\"></script>" . PHP_EOL;
 
             // Highlighter.js
-            if ( ($options['general']['enable_highlight'] === true) && ($options['assets']['highlight_css']) && ($options['assets']['highlight_js']) ) {
+            if ( ($options['general']['enable_highlight'] === true) && ($options['assets']['highlight_css']) && ($options['assets']['highlight_js'])){
                 $footer .= "  <script type=\"text/javascript\" src=\"" .$server.$options['assets']['highlight_js'] . "\"></script>" . PHP_EOL;
             }
         }
@@ -196,7 +196,7 @@ function load_iconset($input = "glyphicon") {
     }
 
     // Does icon set exist?
-    if( file_exists('themes/'.$input.'.json')) {
+    if( file_exists('themes/'.$input.'.json')){
         $iconset = json_decode(file_get_contents('themes/'.$input.'.json'), true);
         return $iconset;
     } else {
@@ -210,7 +210,7 @@ function set_404_error() {
 }
 
 function utf8ify($str) {
-    if (is_file(!utf8_decode($str))) {
+    if (is_file(!utf8_decode($str))){
         return utf8_encode($str);
     } else {
         return $str;
@@ -287,7 +287,7 @@ function readfile_chunked($filename, $retbytes = TRUE) {
     if ($handle === false) {
       return false;
     }
-    while (!feof($handle)) {
+    while (!feof($handle)){
       $buffer = fread($handle, $chunksize);
       echo $buffer;
       ob_flush();

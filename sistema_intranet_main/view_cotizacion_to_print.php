@@ -11,19 +11,19 @@ require_once 'core/Load.Utils.Print.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -85,7 +85,7 @@ $SIS_where = 'cotizacion_listado.idCotizacion ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'cotizacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 
-/*****************************************/				
+/*****************************************/
 // Se consulta
 $SIS_query = '
 insumos_listado.Nombre,
@@ -101,7 +101,7 @@ $SIS_order = 'insumos_listado.Nombre';
 $arrInsumos = array();
 $arrInsumos = db_select_array (false, $SIS_query, 'cotizacion_listado_existencias_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
 
-/*****************************************/				
+/*****************************************/
 // Se consulta
 $SIS_query = '
 productos_listado.Nombre,
@@ -117,7 +117,7 @@ $SIS_order = 'productos_listado.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'cotizacion_listado_existencias_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-/*****************************************/				
+/*****************************************/
 // Se consulta
 $SIS_query = '
 equipos_arriendo_listado.Nombre,
@@ -133,7 +133,7 @@ $SIS_order = 'equipos_arriendo_listado.Nombre ASC';
 $arrArriendos = array();
 $arrArriendos = db_select_array (false, $SIS_query, 'cotizacion_listado_existencias_arriendos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArriendos');
 
-/*****************************************/				
+/*****************************************/
 // Se consulta
 $SIS_query = '
 servicios_listado.Nombre,
@@ -149,20 +149,20 @@ $SIS_order = 'servicios_listado.Nombre ASC';
 $arrServicios = array();
 $arrServicios = db_select_array (false, $SIS_query, 'cotizacion_listado_existencias_servicios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrServicios');
 
-/*****************************************/		
+/*****************************************/
 // Se consulta
-$SIS_query = 'Nombre, Porcentaje';
+$SIS_query = 'Nombre,Porcentaje';
 $SIS_join  = '';
 $SIS_where = 'Porcentaje!=0';
 $SIS_order = 'idImpuesto ASC';
 $arrImpuestos = array();
 $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrImpuestos');
 
-/*****************************************/	
+/*****************************************/
 //Recorro y guard el nombre de los impuestos 
 $nn = 0;
 $impuestos = array();
-foreach ($arrImpuestos as $impto) { 
+foreach ($arrImpuestos as $impto) {
 	$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
 	$nn++;
 }
@@ -262,7 +262,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 						$nn = 1;
 						$total = 0;
 						//Listado de productos solicitados
-						foreach ($arrProductos as $prod) { 
+						foreach ($arrProductos as $prod) {
 							$html .= '<tr>
 									<td>'.$nn.'</td>
 									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
@@ -275,7 +275,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							$nn++;
 						}
 						//listado de insumos solicitados
-						foreach ($arrInsumos as $prod) { 
+						foreach ($arrInsumos as $prod) {
 							$html .= '<tr>
 									<td>'.$nn.'</td>
 									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
@@ -288,7 +288,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							$nn++;
 						}
 						//listado de arriendos solicitados
-						foreach ($arrArriendos as $prod) { 
+						foreach ($arrArriendos as $prod) {
 							$html .= '<tr>
 									<td>'.$nn.'</td>
 									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
@@ -301,7 +301,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							$nn++;
 						}
 						//listado de servicios solicitados
-						foreach ($arrServicios as $prod) { 
+						foreach ($arrServicios as $prod) {
 							$html .= '<tr>
 									<td>'.$nn.'</td>
 									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>

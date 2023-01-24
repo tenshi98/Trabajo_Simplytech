@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "usuarios_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,14 +18,14 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['usuario']) && $_GET['usuario'] != ''){               $location .= "&usuario=".$_GET['usuario'];              $search .= "&usuario=".$_GET['usuario'];}
-if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario'] != ''){   $location .= "&idTipoUsuario=".$_GET['idTipoUsuario'];  $search .= "&idTipoUsuario=".$_GET['idTipoUsuario'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                 $location .= "&Nombre=".$_GET['Nombre'];                $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['Fono']) && $_GET['Fono'] != ''){                     $location .= "&Fono=".$_GET['Fono'];                    $search .= "&Fono=".$_GET['Fono'];}
-if(isset($_GET['email']) && $_GET['email'] != ''){                   $location .= "&email=".$_GET['email'];                  $search .= "&email=".$_GET['email'];}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                       $location .= "&Rut=".$_GET['Rut'];                      $search .= "&Rut=".$_GET['Rut'];}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){       $location .= "&fNacimiento=".$_GET['fNacimiento'];      $search .= "&fNacimiento=".$_GET['fNacimiento'];}
-if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){           $location .= "&idSistema=".$_GET['idSistema'];          $search .= "&idSistema=".$_GET['idSistema'];}
+if(isset($_GET['usuario']) && $_GET['usuario']!=''){        $location .= "&usuario=".$_GET['usuario'];              $search .= "&usuario=".$_GET['usuario'];}
+if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){   $location .= "&idTipoUsuario=".$_GET['idTipoUsuario'];  $search .= "&idTipoUsuario=".$_GET['idTipoUsuario'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){          $location .= "&Nombre=".$_GET['Nombre'];                $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Fono']) && $_GET['Fono']!=''){              $location .= "&Fono=".$_GET['Fono'];                    $search .= "&Fono=".$_GET['Fono'];}
+if(isset($_GET['email']) && $_GET['email']!=''){            $location .= "&email=".$_GET['email'];                  $search .= "&email=".$_GET['email'];}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                $location .= "&Rut=".$_GET['Rut'];                      $search .= "&Rut=".$_GET['Rut'];}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){$location .= "&fNacimiento=".$_GET['fNacimiento'];      $search .= "&fNacimiento=".$_GET['fNacimiento'];}
+if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){    $location .= "&idSistema=".$_GET['idSistema'];          $search .= "&idSistema=".$_GET['idSistema'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -33,19 +33,19 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 //se clona al usuario
-if ( !empty($_POST['clone_Usuario']) )  { 
+if (!empty($_POST['clone_Usuario'])){
 	//Llamamos al formulario
 	$form_trabajo= 'clone_Usuario';
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
@@ -64,32 +64,32 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Usuario borrado correc
 if (isset($_GET['clone'])){   $error['clone']   = 'sucess/Usuario clonado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['clone_idUsuario']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['clone_idUsuario'])){
 	
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Usuario <?php echo $_GET['nombre_usuario']; ?></h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($usuario)) {        $x1  = $usuario;        }else{$x1  = '';}
-				if(isset($idTipoUsuario)) {  $x3  = $idTipoUsuario;  }else{$x3  = '';}
-				if(isset($Nombre)) {         $x4  = $Nombre;         }else{$x4  = '';}
-				if(isset($Fono)) {           $x5  = $Fono;           }else{$x5  = '';}
-				if(isset($email)) {          $x6  = $email;          }else{$x6  = '';}
-				if(isset($Rut)) {            $x7  = $Rut;            }else{$x7  = '';}
-				if(isset($fNacimiento)) {    $x8  = $fNacimiento;    }else{$x8  = '';}
-				if(isset($idCiudad)) {       $x9  = $idCiudad;       }else{$x9  = '';}
-				if(isset($idComuna)) {       $x10 = $idComuna;       }else{$x10 = '';}
-				if(isset($Direccion)) {      $x11 = $Direccion;      }else{$x11 = '';}
-				
+				if(isset($usuario)){        $x1  = $usuario;        }else{$x1  = '';}
+				if(isset($idTipoUsuario)){  $x3  = $idTipoUsuario;  }else{$x3  = '';}
+				if(isset($Nombre)){         $x4  = $Nombre;         }else{$x4  = '';}
+				if(isset($Fono)){           $x5  = $Fono;           }else{$x5  = '';}
+				if(isset($email)){          $x6  = $email;          }else{$x6  = '';}
+				if(isset($Rut)){            $x7  = $Rut;            }else{$x7  = '';}
+				if(isset($fNacimiento)){    $x8  = $fNacimiento;    }else{$x8  = '';}
+				if(isset($idCiudad)){       $x9  = $idCiudad;       }else{$x9  = '';}
+				if(isset($idComuna)){       $x10 = $idComuna;       }else{$x10 = '';}
+				if(isset($Direccion)){      $x11 = $Direccion;      }else{$x11 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
@@ -105,9 +105,9 @@ if ( ! empty($_GET['clone_idUsuario']) ) {
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 2,'fa fa-envelope-o');
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
 				$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x8, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										 'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
-										 $dbConn, 'form1');	
+				$Form_Inputs->form_select_depend1('Region','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+										 'Comuna','idComuna', $x10, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
+										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
 				
 				
@@ -115,36 +115,36 @@ if ( ! empty($_GET['clone_idUsuario']) ) {
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_GET['clone_idUsuario'], 2);
 				
-				?>  
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c5; Clonar" name="clone_Usuario">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c5; Clonar" name="clone_Usuario">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	
 	
 	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['id']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 
 // consulto los datos
 $SIS_query = '
-usuarios_listado.usuario, 
+usuarios_listado.usuario,
 usuarios_tipos.Nombre AS tipo,
-usuarios_listado.email, 
-usuarios_listado.Nombre, 
-usuarios_listado.Rut, 
-usuarios_listado.fNacimiento, 
-usuarios_listado.Direccion, 
-usuarios_listado.Fono, 
-core_ubicacion_ciudad.Nombre AS Ciudad, 
+usuarios_listado.email,
+usuarios_listado.Nombre,
+usuarios_listado.Rut,
+usuarios_listado.fNacimiento,
+usuarios_listado.Direccion,
+usuarios_listado.Fono,
+core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
 usuarios_listado.Ultimo_acceso,
 usuarios_listado.Direccion_img,
@@ -160,18 +160,18 @@ $rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SI
 /**********************************/
 //Permisos asignados
 $SIS_query = '
-core_permisos_categorias.Nombre AS CategoriaNombre, 
+core_permisos_categorias.Nombre AS CategoriaNombre,
 core_font_awesome.Codigo AS CategoriaIcono,
 core_permisos_listado.Direccionbase AS TransaccionURLBase,
-core_permisos_listado.Direccionweb AS TransaccionURL, 
-core_permisos_listado.Nombre AS TransaccionNombre,							
+core_permisos_listado.Direccionweb AS TransaccionURL,
+core_permisos_listado.Nombre AS TransaccionNombre,	
 usuarios_permisos.level';
 $SIS_join  = '
 INNER JOIN core_permisos_listado      ON core_permisos_listado.idAdmpm        = usuarios_permisos.idAdmpm
-INNER JOIN core_permisos_categorias   ON core_permisos_categorias.id_pmcat    = core_permisos_listado.id_pmcat 
+INNER JOIN core_permisos_categorias   ON core_permisos_categorias.id_pmcat    = core_permisos_listado.id_pmcat
 LEFT JOIN `core_font_awesome`         ON core_font_awesome.idFont             = core_permisos_categorias.idFont';
 $SIS_where = 'usuarios_permisos.idUsuario ='.$_GET['id'];
-$SIS_order = 'CategoriaNombre, TransaccionNombre ASC';
+$SIS_order = 'CategoriaNombre,TransaccionNombre ASC';
 $arrMenu = array();
 $arrMenu = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMenu');
 
@@ -182,7 +182,7 @@ $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = usuarios_si
 $SIS_where = 'usuarios_sistemas.idUsuario ='.$_GET['id'];
 $SIS_order = 'core_sistemas.Nombre ASC';
 $arrSistemas = array();
-$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
+$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
 
 /**********************************/
 //Permisos a bodegas
@@ -241,7 +241,7 @@ $arrPer = array();
 foreach ($arrPermiso as $ins) {
 	$arrPer[$ins['Direccionbase']] = 1;
 }
-	
+
 /******************************************************/
 //variable de numero de permiso
 $x_nperm = 0;
@@ -355,12 +355,12 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -394,22 +394,22 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 							<li class=""><a href="<?php echo 'usuarios_listado_camaras.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-video-camera" aria-hidden="true"></i> Camaras de Seguridad</a></li>
 						<?php } ?>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					
-					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 						<?php }?>
 					</div>
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Perfil</h2>
 						<p class="text-muted">
 							<strong>Usuario : </strong><?php echo $rowdata['usuario']; ?><br/>
@@ -436,10 +436,10 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 								<strong><?php echo ' - '.$sis['Sistema']; ?></strong><br/>
 							<?php } ?>
 						</p>
-					</div>	
+					</div>
 					
 					<?php if($arrMenu!=false && !empty($arrMenu) && $arrMenu!=''){ ?>
-						<div class="col-sm-6">
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos Asignados</h2>
 							
 							<ul class="tree">
@@ -465,13 +465,13 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 									echo '</ul>
 									</li>';
 								}
-								?>				
+								?>			
 							</ul>
 						</div>
 					<?php } ?>
 					
 					
-					<div class="col-sm-6">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						
 						<?php
 						if($x_permisos_1 > 0){
@@ -594,43 +594,43 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 			
 				</div>
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Usuario</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Usuario</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($usuario)) {        $x1  = $usuario;        }else{$x1  = '';}
-				if(isset($idTipoUsuario)) {  $x3  = $idTipoUsuario;  }else{$x3  = '';}
-				if(isset($Nombre)) {         $x4  = $Nombre;         }else{$x4  = '';}
-				if(isset($Fono)) {           $x5  = $Fono;           }else{$x5  = '';}
-				if(isset($email)) {          $x6  = $email;          }else{$x6  = '';}
-				if(isset($Rut)) {            $x7  = $Rut;            }else{$x7  = '';}
-				if(isset($fNacimiento)) {    $x8  = $fNacimiento;    }else{$x8  = '';}
-				if(isset($idCiudad)) {       $x9  = $idCiudad;       }else{$x9  = '';}
-				if(isset($idComuna)) {       $x10 = $idComuna;       }else{$x10 = '';}
-				if(isset($Direccion)) {      $x11 = $Direccion;      }else{$x11 = '';}
-				
+				if(isset($usuario)){        $x1  = $usuario;        }else{$x1  = '';}
+				if(isset($idTipoUsuario)){  $x3  = $idTipoUsuario;  }else{$x3  = '';}
+				if(isset($Nombre)){         $x4  = $Nombre;         }else{$x4  = '';}
+				if(isset($Fono)){           $x5  = $Fono;           }else{$x5  = '';}
+				if(isset($email)){          $x6  = $email;          }else{$x6  = '';}
+				if(isset($Rut)){            $x7  = $Rut;            }else{$x7  = '';}
+				if(isset($fNacimiento)){    $x8  = $fNacimiento;    }else{$x8  = '';}
+				if(isset($idCiudad)){       $x9  = $idCiudad;       }else{$x9  = '';}
+				if(isset($idComuna)){       $x10 = $idComuna;       }else{$x10 = '';}
+				if(isset($Direccion)){      $x11 = $Direccion;      }else{$x11 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
@@ -648,8 +648,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
 				$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x8, 1);
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										 'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
-										 $dbConn, 'form1');	
+										 'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
+										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
 				
 				
@@ -662,34 +662,26 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				
 
 								
-				<div class="form-group">	
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 
 
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -713,23 +705,23 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $SIS_where = "usuarios_listado.idTipoUsuario!=1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['usuario']) && $_GET['usuario'] != ''){              $SIS_where .= " AND usuarios_listado.usuario LIKE '%".$_GET['usuario']."%'";}
-if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario'] != ''){  $SIS_where .= " AND usuarios_listado.idTipoUsuario=".$_GET['idTipoUsuario'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $SIS_where .= " AND usuarios_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Fono']) && $_GET['Fono'] != ''){                    $SIS_where .= " AND usuarios_listado.Fono LIKE '%".$_GET['Fono']."%'";}
-if(isset($_GET['email']) && $_GET['email'] != ''){                  $SIS_where .= " AND usuarios_listado.email LIKE '%".$_GET['email']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                      $SIS_where .= " AND usuarios_listado.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){      $SIS_where .= " AND usuarios_listado.fNacimiento='".$_GET['fNacimiento']."'";}
+if(isset($_GET['usuario']) && $_GET['usuario']!=''){       $SIS_where .= " AND usuarios_listado.usuario LIKE '%".EstandarizarInput($_GET['usuario'])."%'";}
+if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){  $SIS_where .= " AND usuarios_listado.idTipoUsuario=".$_GET['idTipoUsuario'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $SIS_where .= " AND usuarios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['Fono']) && $_GET['Fono']!=''){             $SIS_where .= " AND usuarios_listado.Fono LIKE '%".EstandarizarInput($_GET['Fono'])."%'";}
+if(isset($_GET['email']) && $_GET['email']!=''){           $SIS_where .= " AND usuarios_listado.email LIKE '%".EstandarizarInput($_GET['email'])."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){               $SIS_where .= " AND usuarios_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){      $SIS_where .= " AND usuarios_listado.fNacimiento='".$_GET['fNacimiento']."'";}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'usuarios_listado.idUsuario', 'usuarios_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 usuarios_listado.idUsuario,
 usuarios_listado.usuario,
-usuarios_tipos.Nombre AS tipo, 
+usuarios_tipos.Nombre AS tipo,
 usuarios_listado.Nombre,
 core_estados.Nombre AS estado,
 usuarios_listado.idEstado';
@@ -749,7 +741,7 @@ $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = usuarios_si
 $SIS_where = '';
 $SIS_order = 'core_sistemas.Nombre ASC';
 $arrSistemas = array();
-$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
+$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
 
 
 $arrSystem = array();
@@ -759,35 +751,35 @@ foreach ($arrSistemas as $sis) {
 }
 
 ?>
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Usuario</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Usuario</a><?php } ?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($usuario)) {        $x1  = $usuario;        }else{$x1  = '';}
-				if(isset($idTipoUsuario)) {  $x3  = $idTipoUsuario;  }else{$x3  = '';}
-				if(isset($Nombre)) {         $x4  = $Nombre;         }else{$x4  = '';}
-				if(isset($Fono)) {           $x5  = $Fono;           }else{$x5  = '';}
-				if(isset($email)) {          $x6  = $email;          }else{$x6  = '';}
-				if(isset($Rut)) {            $x7  = $Rut;            }else{$x7  = '';}
-				if(isset($fNacimiento)) {    $x8  = $fNacimiento;    }else{$x8  = '';}
-				if(isset($idSistema)) {      $x9  = $idSistema;      }else{$x9  = '';}
-				
+				if(isset($usuario)){        $x1  = $usuario;        }else{$x1  = '';}
+				if(isset($idTipoUsuario)){  $x3  = $idTipoUsuario;  }else{$x3  = '';}
+				if(isset($Nombre)){         $x4  = $Nombre;         }else{$x4  = '';}
+				if(isset($Fono)){           $x5  = $Fono;           }else{$x5  = '';}
+				if(isset($email)){          $x6  = $email;          }else{$x6  = '';}
+				if(isset($Rut)){            $x7  = $Rut;            }else{$x7  = '';}
+				if(isset($fNacimiento)){    $x8  = $fNacimiento;    }else{$x8  = '';}
+				if(isset($idSistema)){      $x9  = $idSistema;      }else{$x9  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_icon('Nombre de Usuario', 'usuario', $x1, 1,'fa fa-user');
@@ -797,38 +789,38 @@ foreach ($arrSistemas as $sis) {
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 1,'fa fa-envelope-o');
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
 				$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x8, 1);
-				$Form_Inputs->form_select('Sistema','idSistema', $x9, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs->form_select('Sistema','idSistema', $x9, 1, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                      
 
 
 
                                 
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Usuarios</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
-			</div>	
+			</div>
 		</header>
-		<div class="table-responsive">    
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -865,11 +857,11 @@ foreach ($arrSistemas as $sis) {
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrUsers as $usuarios) { 
+					<?php foreach ($arrUsers as $usuarios) {
 						//Variable
 						$s_paso = 0;
 						//si el filtro de sistema esta activo
-						if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){
+						if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){
 							if(isset($arrSystem[$usuarios['idUsuario']])){
 								foreach ($arrSystem[$usuarios['idUsuario']] as $sis) {
 									if($_GET['idSistema']==$sis['idSistema']){
@@ -882,11 +874,11 @@ foreach ($arrSistemas as $sis) {
 						}
 						//Si esta permitido mostrarlo
 						if(isset($s_paso)&&$s_paso>0){ ?>
-							<tr class="odd">		
-								<td><?php echo $usuarios['usuario']; ?></td>		
-								<td><?php echo $usuarios['Nombre']; ?></td>	
+							<tr class="odd">
+								<td><?php echo $usuarios['usuario']; ?></td>
+								<td><?php echo $usuarios['Nombre']; ?></td>
 								<td><?php echo $usuarios['tipo']; ?></td>
-								<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>		
+								<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>	
 								<td>
 									<?php
 									if(isset($arrSystem[$usuarios['idUsuario']])){
@@ -909,16 +901,16 @@ foreach ($arrSistemas as $sis) {
 												$dialogo   = '¿Realmente deseas eliminar al usuario '.$usuarios['Nombre'].'?';?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php } 
-										} ?>								
+										}?>
 									</div>
 								</td>
 							</tr>
-						<?php } ?>  
-					<?php } ?>                    
+						<?php } ?>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>

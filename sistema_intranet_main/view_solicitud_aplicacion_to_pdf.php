@@ -11,19 +11,19 @@ require_once 'core/Load.Utils.PDF.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -33,7 +33,7 @@ if (validarNumero($_GET['view'])){
 //Se buscan la imagen i el tipo de PDF
 if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSistema'], fecha_actual())!=0){
 	//Consulta
-	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema ='.simpleDecode($_GET['idSistema'], fecha_actual()), $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas','', 'idSistema ='.simpleDecode($_GET['idSistema'], fecha_actual()), $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 /**************************************************************/
 // consulto los datos
@@ -101,7 +101,7 @@ LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTr
 $SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-/*****************************************/				
+/*****************************************/
 //Cuarteles
 $SIS_query = '
 cross_solicitud_aplicacion_listado.idSolicitud,
@@ -131,7 +131,7 @@ $SIS_order = 'cross_predios_listado_zonas.Nombre ASC';
 $arrCuarteles = array();
 $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_cuarteles', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrCuarteles');
 
-/*****************************************/	
+/*****************************************/
 //Tractores
 $SIS_query = '
 telemetria_listado.Nombre AS TelemetriaNombre,
@@ -154,7 +154,7 @@ $SIS_order = 'telemetria_listado.Nombre ASC';
 $arrTractores = array();
 $arrTractores = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTractores');
 
-/*****************************************/	
+/*****************************************/
 //tractores por cuartel
 $SIS_query = '
 cross_solicitud_aplicacion_listado_cuarteles.idZona,
@@ -170,7 +170,7 @@ $SIS_order = 'cross_solicitud_aplicacion_listado_cuarteles.idZona ASC, telemetri
 $arrTracxCuartel = array();
 $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTracxCuartel');
 
-/*****************************************/	
+/*****************************************/
 //Se trae un listado con los productos	
 $SIS_query = '
 cross_solicitud_aplicacion_listado_productos.idProdQuim,
@@ -192,8 +192,8 @@ $SIS_where = 'cross_solicitud_aplicacion_listado_productos.idSolicitud = '.$X_Pu
 $SIS_order = 'productos_listado.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
-	
-/*****************************************/	
+
+/*****************************************/
 //Se trae un listado con los materiales	
 $SIS_query = '
 cross_checking_materiales_seguridad.Nombre,
@@ -242,8 +242,8 @@ $html .= '
 								Estado: '.$row_data['Estado'].'<br/>
 								Temporada: '.$row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre'].'<br/>
 								Estado Fenologico: '.$row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre'].'<br/>';
-								if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){       $html .= 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{$html .= 'Especie: Todas las Especies<br/>';}
-								if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){ $html .= 'Variedad: '.$row_data['VariedadNombre'].'<br/>'; }else{$html .= 'Variedad: Todas las Variedades<br/>';}
+								if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){      $html .= 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{$html .= 'Especie: Todas las Especies<br/>';}
+								if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){$html .= 'Variedad: '.$row_data['VariedadNombre'].'<br/>';}else{$html .= 'Variedad: Todas las Variedades<br/>';}
 							$html .= '
 							</td>
 							<td style="vertical-align: top;width:33%;">
@@ -252,12 +252,12 @@ $html .= '
 								N° Solicitud: '.n_doc($row_data['NSolicitud'], 5).'<br/>
 								Fecha inicio requerido: '.fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg'].'<br/>
 								Fecha termino requerido: '.fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin'].'<br/>';
-								if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){          $html .= 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
-								if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){  $html .= 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
-								if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){              $html .= 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
-								if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){      $html .= 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
+								if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){         $html .= 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
+								if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){ $html .= 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
+								if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){             $html .= 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
+								if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){     $html .= 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
 								$html .= 'Agrónomo: '.$row_data['NombreUsuario'];
-								if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ $html .= 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
+								if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){$html .= 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
 								$html .= '
 							</td>
 						</tr>
@@ -292,7 +292,7 @@ $html .= '
 							$html .= '<th style="vertical-align: top; width:10%;"><strong>Mojamiento<br/>Real</strong></th>';
 							$html .= '<th style="vertical-align: top; width:10%;"><strong>% Mojamiento</strong></th>';
 							$html .= '<th style="vertical-align: top; width:20%;"><strong>Vehiculos<br/>involucrados</strong></th>';
-							
+
 							$html .= '
 						</tr>
 					</thead>
@@ -317,17 +317,17 @@ $html .= '
 								$S_LitrosAplicados  = $cuartel['LitrosAplicados'];
 								$S_VelPromedio      = $cuartel['VelPromedio'];
 							}
-							
+
 							//calculo
 							if(isset($cuartel['CuartelHectareas'])&&$cuartel['CuartelHectareas']!=0){
 								$LitrosApliXhect = $S_LitrosAplicados/$cuartel['CuartelHectareas'];
 							}else{
 								$LitrosApliXhect = 0;
 							}
-							
+
 							//se muestra el estado de cierre
 							if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ $cierre = ' (Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';}else{$cierre = '';}
-							
+
 							//defino el icono y su color
 							switch ($cuartel['CuartelidEjecucion']) {
 								case 0:
@@ -340,7 +340,7 @@ $html .= '
 									$s_Icon = '<span style="color: #5cb85c;"><i class="fa fa-rss" aria-hidden="true"></i></span>';
 									break;
 							}
-							
+
 							//Sumo Variables
 							$TotalMojamiento       = $TotalMojamiento + $cuartel['Mojamiento'];
 							$TotalLitrosAplicados  = $TotalLitrosAplicados + $S_LitrosAplicados;
@@ -413,7 +413,7 @@ $html .= '
 					$NProd = 0;
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') {
-						foreach ($arrProductos as $prod) { 
+						foreach ($arrProductos as $prod) {
 							$NProd++;
 							$html .= '
 							<tr>
@@ -496,7 +496,7 @@ $html .= '
 					$nmb = 0;
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') {
-						foreach ($arrProductos as $prod) { 
+						foreach ($arrProductos as $prod) {
 							$PromedioCapacidad = $Capacidad/$NTract;
 							if($PromedioCapacidad!=0){$s_valor = Cantidades(($row_data['Mojamiento']*$TotalCuartelHectareas)/$PromedioCapacidad, 2);}else{$s_valor = 0;}
 							
@@ -531,7 +531,7 @@ $html .= '
 					<tbody>';
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrMateriales!=false && !empty($arrMateriales) && $arrMateriales!='') {
-						foreach ($arrMateriales as $prod) { 
+						foreach ($arrMateriales as $prod) {
 							$html .= '
 							<tr>
 								<td><i class="fa fa-eyedropper" aria-hidden="true"></i> '.$prod['Codigo'].' - '.$prod['Nombre'].'</td>
@@ -614,7 +614,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 			// set some language-dependent strings (optional)
-			if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+			if (@file_exists(dirname(__FILE__).'/lang/eng.php')){
 				require_once(dirname(__FILE__).'/lang/eng.php');
 				$pdf->setLanguageArray($l);
 			}

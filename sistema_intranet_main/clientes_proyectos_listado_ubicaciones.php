@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "clientes_proyectos_listado.php";
 $location = $original;
 $new_location = "clientes_proyectos_listado_ubicaciones.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -41,16 +41,16 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'delBasicData';
-	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';
 }
 //Si el estado esta distinto de vacio
-if ( !empty($_GET['estado']) ) {
+if (!empty($_GET['estado'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'].'&status='.$_GET['status'];
@@ -60,7 +60,7 @@ if ( !empty($_GET['estado']) ) {
 }
 /***********************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_idLevel']) )  { 
+if (!empty($_POST['submit_idLevel'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'];
@@ -69,7 +69,7 @@ if ( !empty($_POST['submit_idLevel']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit_idLevel']) )  { 
+if (!empty($_POST['submit_edit_idLevel'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'];
@@ -78,13 +78,13 @@ if ( !empty($_POST['submit_edit_idLevel']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_idLevel']) )     {
+if (!empty($_GET['del_idLevel'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_item';
-	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_ubicacion_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -99,8 +99,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ubicacion editada corr
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ubicacion borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['edit_itemizado']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['edit_itemizado'])){ 
 // consulto los datos
 $query = "SELECT Nombre
 FROM `ubicacion_listado_level_".$_GET['lvl']."`
@@ -121,22 +121,22 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Rama</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
-				
+				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				
 				$Form_Inputs->form_input_hidden('idLevel_'.$_GET['lvl'], $_GET['edit_itemizado'], 2);
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
@@ -144,44 +144,44 @@ $rowdata = mysqli_fetch_assoc ($resultado);
    	 
 				
 				
-				if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){   $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);}
-				if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){   $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);}
-				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){   $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
-				if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){   $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);}
-				if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){   $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);}
+				if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);}
+				if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);}
+				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
+				if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){  $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);}
+				if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){  $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);}
 				  	 
-				?>    
+				?> 
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel"> 
-					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel"> 
+					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>       
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new_itemizado']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['new_itemizado'])){ ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Rama</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {            $x1  = $Nombre;             }else{$x1  = '';}
-				
+				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $_GET['itemizado'], 2);
@@ -189,22 +189,22 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_hidden('idCliente', $_GET['id'], 2);
    	 
 				
-				if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){   $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);}
-				if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){   $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);}
-				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){   $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
-				if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){   $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);}
-				if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){   $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);}
+				if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);}
+				if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);}
+				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
+				if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){  $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);}
+				if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){  $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);}
 					
 					
-				?>       
+				?>    
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_idLevel">
-					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_idLevel">
+					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
@@ -212,10 +212,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['itemizado']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['itemizado'])){ 
 // consulto los datos
-$query = "SELECT Nombre, idSistema
+$query = "SELECT Nombre,idSistema
 FROM `ubicacion_listado`
 WHERE idUbicacion = ".$_GET['itemizado'];
 //Consulta
@@ -275,7 +275,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrLicitacion,$row );
 }
 
@@ -328,13 +328,13 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
     
     foreach ($array as $key => $value){
 		//Rearmo la ubicacion de acuerdo a la profundidad
-		if (isset($value['id'])) {
+		if (isset($value['id'])){
 			$loc = $location.'&lv_'.$lv.'='.$value['id'];
 		}else{
 			$loc = $location;
 		}
 		
-        if (isset($value['Nombre'])) {
+        if (isset($value['Nombre'])){
 			echo '<li><div class="blum">';
 			echo '<div class="pull-left">'.$value['Nombre'].'</div>';
 						
@@ -373,17 +373,17 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
     echo '</ul>';
 }	
 ?>
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php }?>
 
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 	
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Itemizado Ubicacion <?php echo $rowdata['Nombre']; ?></h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Itemizado Ubicacion <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
 			
@@ -391,18 +391,18 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 			echo arrayToUL($array3d, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'], $nmax);
 			?>
 
-		</div> 	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>	
 	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['status']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['status'])){
 // consulto los datos
 $query = "SELECT 
 ubicacion_listado.idUbicacion,
@@ -428,12 +428,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Estado Ubicacion</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Estado Ubicacion</h5>
 		</header>
-        <div class="table-responsive"> 
+        <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -442,36 +442,36 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<tr class="odd">			
-						<td><?php echo 'Ubicacion '.$rowdata['Nombre'].' '.$rowdata['estado']; ?></td>		
+					<tr class="odd">
+						<td><?php echo 'Ubicacion '.$rowdata['Nombre'].' '.$rowdata['estado']; ?></td>
 						<td>
-							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">	 
-								<?php if ($rowlevel['level']>=2){?> 
-								   <?php if ( $rowdata['estado']=='Activo' ) {?>   
+							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
+								<?php if ($rowlevel['level']>=2){?>
+								   <?php if ( $rowdata['estado']=='Activo' ){ ?>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$_GET['id'].'&status='.$_GET['status'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 								   <?php } else {?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$_GET['id'].'&status='.$_GET['status'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>" >ON</a>
-									<?php }?>    
-								<?php }?>  
-							</div>     
-						</td>	
-					</tr>                  
+									<?php } ?>
+								<?php } ?>
+							</div>
+						</td>
+					</tr>
 				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['edit']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['edit'])){
 // consulto los datos
 $query = "SELECT Nombre,idSistema
 FROM `ubicacion_listado`
@@ -492,66 +492,66 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
  ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Ubicacion</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Ubicacion</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {     $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
+				if(isset($Nombre)){     $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
 					
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 					
 					
 					
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idUbicacion', $_GET['edit'], 2);
-				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);		 
-				?> 
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2); 
+				?>
 				
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //verifico que sea un administrador
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Ubicacion</h5>
-		</header>	
-		<div id="div-1" class="body">	
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {       $x1  = $Nombre;       }else{$x1  = '';}
-				
+				if(isset($Nombre)){       $x1  = $Nombre;       }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -560,19 +560,19 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
 
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
 $query = "SELECT Nombre,idTipo
@@ -621,22 +621,22 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrArea,$row );
 }
 
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proyecto', $rowdata['Nombre'], 'Ubicaciones');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicacion</a><?php }?>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicacion</a><?php }?>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                                
-<div class="col-sm-12">
-	<div class="box">	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'clientes_proyectos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
@@ -655,8 +655,8 @@ array_push( $arrArea,$row );
 						<li class=""><a href="<?php echo 'clientes_proyectos_listado_contratos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contratos</a></li>
 						<li class="active"><a href="<?php echo 'clientes_proyectos_listado_ubicaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicaciones</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -670,10 +670,10 @@ array_push( $arrArea,$row );
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrArea as $area) { ?>
-					<tr class="odd">			
+					<tr class="odd">
 						<td><?php echo $area['Nombre']; ?></td>
 						<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $area['Estado']; ?></label></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>		
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 175px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ubicacion.php?view='.simpleEncode($area['idUbicacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -684,11 +684,11 @@ array_push( $arrArea,$row );
 									$ubicacion = $new_location.'&del='.simpleEncode($area['idUbicacion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -698,8 +698,8 @@ array_push( $arrArea,$row );
 <?php widget_modal(80, 95); ?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

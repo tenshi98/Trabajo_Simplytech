@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Print.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -47,7 +47,7 @@ $query = "SELECT
 trabajadores_listado.Direccion_img,
 trabajadores_listado.Nombre,
 trabajadores_listado.ApellidoPat,
-trabajadores_listado.ApellidoMat, 
+trabajadores_listado.ApellidoMat,
 trabajadores_listado.Rut,
 core_sexo.Nombre AS Sexo,
 trabajadores_listado.FNacimiento,
@@ -163,7 +163,7 @@ switch ($rowCard['idCardType']) {
 				   font-size:12px;
 				}';
 			break;
-			
+
 		}
 		
 			
@@ -390,7 +390,7 @@ $html ='
 						$html .= '<img width="80px" height="100px" style="border:1px solid black;" src="'.DB_SITE_REPO.'/LIB_assets/img/usr.png"><br/>';
 					}else{
 						$html .= '<img width="80px" height="100px" style="border:1px solid black;"  src="upload/'.$rowTrabajador['Direccion_img'].'"><br/>';
-					}			
+					}
 					$html .= '
 					<div id="card_ID">
 						ID : '.n_doc($_GET['idTrabajador'],5).'

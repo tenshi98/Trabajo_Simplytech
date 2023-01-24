@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "admin_telemetria_listado.php";
 $location = $original;
 $new_location = "admin_telemetria_listado_configuracion.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -43,7 +43,7 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Equipo editado correct
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Equipo borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = 'Nombre,Identificador,id_Geo,id_Sensores, TiempoFueraLinea,TiempoDetencion';
 $SIS_join  = '';
@@ -51,16 +51,16 @@ $SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Configuracion');?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -83,44 +83,43 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
-						
+
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
-			
-					<?php 
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+
+					<?php
 					//Se verifican si existen los datos
-					if(isset($TiempoFueraLinea)) {   $x1  = $TiempoFueraLinea;    }else{$x1  = $rowdata['TiempoFueraLinea'];}
-					if(isset($TiempoDetencion)) {    $x2  = $TiempoDetencion;     }else{$x2  = $rowdata['TiempoDetencion'];}
-					
+					if(isset($TiempoFueraLinea)){   $x1  = $TiempoFueraLinea;    }else{$x1  = $rowdata['TiempoFueraLinea'];}
+					if(isset($TiempoDetencion)){    $x2  = $TiempoDetencion;     }else{$x2  = $rowdata['TiempoDetencion'];}
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_time('Tiempo Fuera Linea Maximo','TiempoFueraLinea', $x1, 1, 1);
 					//Restrinjo la visualizacion
 					if($rowdata['id_Geo']==1){ $Form_Inputs->form_time('Tiempo Maximo Detencion','TiempoDetencion', $x2, 1, 1);}
-					
+
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 					?>
-				
-			
 
-					<div class="form-group">			
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

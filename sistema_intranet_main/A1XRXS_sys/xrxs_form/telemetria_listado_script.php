@@ -2,36 +2,36 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-179).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idScript']) )        $idScript         = $_POST['idScript'];
-	if ( !empty($_POST['idTelemetria']) )    $idTelemetria     = $_POST['idTelemetria'];
-	if ( !empty($_POST['idUsuario']) )       $idUsuario        = $_POST['idUsuario'];
-	if ( !empty($_POST['Fecha']) )           $Fecha            = $_POST['Fecha'];
-	if ( !empty($_POST['Version']) )         $Version          = $_POST['Version'];
-	if ( !empty($_POST['Observacion']) )     $Observacion      = $_POST['Observacion'];
-	if ( !empty($_POST['idDispositivo']) )   $idDispositivo    = $_POST['idDispositivo'];
-	if ( !empty($_POST['idShield']) )        $idShield         = $_POST['idShield'];
-	if ( !empty($_POST['idFormaEnvio']) )    $idFormaEnvio     = $_POST['idFormaEnvio'];
-	if ( !empty($_POST['idTab']) )           $idTab            = $_POST['idTab'];
-	if ( !empty($_POST['id_Geo']) )          $id_Geo           = $_POST['id_Geo'];
-	if ( !empty($_POST['id_Sensores']) )     $id_Sensores      = $_POST['id_Sensores'];
-	if ( !empty($_POST['cantSensores']) )    $cantSensores     = $_POST['cantSensores'];
-	if ( !empty($_POST['idAPNListado']) )    $idAPNListado     = $_POST['idAPNListado'];
-	if ( !empty($_POST['idPuertoSerial']) )  $idPuertoSerial   = $_POST['idPuertoSerial'];
-	if ( !empty($_POST['pinMode']) )         $pinMode          = $_POST['pinMode'];
-	if ( !empty($_POST['idModificado']) )    $idModificado     = $_POST['idModificado'];
-	if ( !empty($_POST['cantSensores']) ){
+	if (!empty($_POST['idScript']))        $idScript         = $_POST['idScript'];
+	if (!empty($_POST['idTelemetria']))    $idTelemetria     = $_POST['idTelemetria'];
+	if (!empty($_POST['idUsuario']))       $idUsuario        = $_POST['idUsuario'];
+	if (!empty($_POST['Fecha']))           $Fecha            = $_POST['Fecha'];
+	if (!empty($_POST['Version']))         $Version          = $_POST['Version'];
+	if (!empty($_POST['Observacion']))     $Observacion      = $_POST['Observacion'];
+	if (!empty($_POST['idDispositivo']))   $idDispositivo    = $_POST['idDispositivo'];
+	if (!empty($_POST['idShield']))        $idShield         = $_POST['idShield'];
+	if (!empty($_POST['idFormaEnvio']))    $idFormaEnvio     = $_POST['idFormaEnvio'];
+	if (!empty($_POST['idTab']))           $idTab            = $_POST['idTab'];
+	if (!empty($_POST['id_Geo']))          $id_Geo           = $_POST['id_Geo'];
+	if (!empty($_POST['id_Sensores']))     $id_Sensores      = $_POST['id_Sensores'];
+	if (!empty($_POST['cantSensores']))    $cantSensores     = $_POST['cantSensores'];
+	if (!empty($_POST['idAPNListado']))    $idAPNListado     = $_POST['idAPNListado'];
+	if (!empty($_POST['idPuertoSerial']))  $idPuertoSerial   = $_POST['idPuertoSerial'];
+	if (!empty($_POST['pinMode']))         $pinMode          = $_POST['pinMode'];
+	if (!empty($_POST['idModificado']))    $idModificado     = $_POST['idModificado'];
+	if (!empty($_POST['cantSensores'])){
 		for ($i = 1; $i <= $_POST['cantSensores']; $i++) {
 			$SensoresTipo[$i]     = $_POST['SensoresTipo_'.$i];
 		}
@@ -65,36 +65,36 @@ require_once '0_validate_user_1.php';
 			case 'idPuertoSerial':   if(empty($idPuertoSerial)){    $error['idPuertoSerial']   = 'error/No ha seleccionado el puerto serial';}break;
 			case 'pinMode':          if(empty($pinMode)){           $error['pinMode']          = 'error/No ha ingresado el pinMode';}break;
 			case 'idModificado':     if(empty($idModificado)){      $error['idModificado']     = 'error/No ha seleccionado si el script esta modificado';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Observacion) && $Observacion != ''){ $Observacion = EstandarizarInput($Observacion); }
+/*******************************************************************************************************************/
+	if(isset($Observacion) && $Observacion!=''){ $Observacion = EstandarizarInput($Observacion);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita la Observacion, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita la Observacion, contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//consulto el numero de registros
 				$ndata_1 = db_select_nrows (false, 'idTelemetria', 'telemetria_listado_script', '', 'idTelemetria ='.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//si no hay datos
 				if($ndata_1==0){
 					$Version = 1;
@@ -103,29 +103,29 @@ require_once '0_validate_user_1.php';
 					$rowdata = db_select_data (false, 'Version', 'telemetria_listado_script', '', 'idTelemetria ='.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					$Version = $rowdata['Version'] + 1;
 				}
-				
+
 				//subcolumnas en caso de existir sensores
 				$subColumn = '';
 				//filtros
-				if(isset($idTelemetria) && $idTelemetria != ''){       $SIS_data  = "'".$idTelemetria."'" ;      }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario != ''){             $SIS_data .= ",'".$idUsuario."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha != ''){                     $SIS_data .= ",'".$Fecha."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($Version) && $Version != ''){                 $SIS_data .= ",'".$Version."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($Observacion) && $Observacion != ''){         $SIS_data .= ",'".$Observacion."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($idDispositivo) && $idDispositivo != ''){     $SIS_data .= ",'".$idDispositivo."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($idShield) && $idShield != ''){               $SIS_data .= ",'".$idShield."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($idFormaEnvio) && $idFormaEnvio != ''){       $SIS_data .= ",'".$idFormaEnvio."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($idTab) && $idTab != ''){                     $SIS_data .= ",'".$idTab."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($id_Geo) && $id_Geo != ''){                   $SIS_data .= ",'".$id_Geo."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($id_Sensores) && $id_Sensores != ''){         $SIS_data .= ",'".$id_Sensores."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($cantSensores) && $cantSensores != ''){       $SIS_data .= ",'".$cantSensores."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($idAPNListado) && $idAPNListado != ''){       $SIS_data .= ",'".$idAPNListado."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($idPuertoSerial) && $idPuertoSerial != ''){   $SIS_data .= ",'".$idPuertoSerial."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($pinMode) && $pinMode != ''){                 $SIS_data .= ",'".$pinMode."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($idModificado) && $idModificado != ''){       $SIS_data .= ",'".$idModificado."'" ;     }else{$SIS_data .= ",''";}
-				
+				if(isset($idTelemetria) && $idTelemetria!=''){       $SIS_data  = "'".$idTelemetria."'";      }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";           }else{$SIS_data .= ",''";}
+				if(isset($Version) && $Version!=''){                 $SIS_data .= ",'".$Version."'";          }else{$SIS_data .= ",''";}
+				if(isset($Observacion) && $Observacion!=''){         $SIS_data .= ",'".$Observacion."'";      }else{$SIS_data .= ",''";}
+				if(isset($idDispositivo) && $idDispositivo!=''){     $SIS_data .= ",'".$idDispositivo."'";    }else{$SIS_data .= ",''";}
+				if(isset($idShield) && $idShield!=''){               $SIS_data .= ",'".$idShield."'";         }else{$SIS_data .= ",''";}
+				if(isset($idFormaEnvio) && $idFormaEnvio!=''){       $SIS_data .= ",'".$idFormaEnvio."'";     }else{$SIS_data .= ",''";}
+				if(isset($idTab) && $idTab!=''){                     $SIS_data .= ",'".$idTab."'";            }else{$SIS_data .= ",''";}
+				if(isset($id_Geo) && $id_Geo!=''){                   $SIS_data .= ",'".$id_Geo."'";           }else{$SIS_data .= ",''";}
+				if(isset($id_Sensores) && $id_Sensores!=''){         $SIS_data .= ",'".$id_Sensores."'";      }else{$SIS_data .= ",''";}
+				if(isset($cantSensores) && $cantSensores!=''){       $SIS_data .= ",'".$cantSensores."'";     }else{$SIS_data .= ",''";}
+				if(isset($idAPNListado) && $idAPNListado!=''){       $SIS_data .= ",'".$idAPNListado."'";     }else{$SIS_data .= ",''";}
+				if(isset($idPuertoSerial) && $idPuertoSerial!=''){   $SIS_data .= ",'".$idPuertoSerial."'";   }else{$SIS_data .= ",''";}
+				if(isset($pinMode) && $pinMode!=''){                 $SIS_data .= ",'".$pinMode."'";          }else{$SIS_data .= ",''";}
+				if(isset($idModificado) && $idModificado!=''){       $SIS_data .= ",'".$idModificado."'";     }else{$SIS_data .= ",''";}
+
 				//recorro los sensores para guardar los sensores
-				if(isset($cantSensores) && $cantSensores != ''){for ($i = 1; $i <= $cantSensores; $i++) {$SIS_data .= ",'".$SensoresTipo[$i]."'" ;$subColumn .= ',SensoresTipo_'.$i;}}
+				if(isset($cantSensores) && $cantSensores!=''){for ($i = 1; $i <= $cantSensores; $i++) {$SIS_data .= ",'".$SensoresTipo[$i]."'";$subColumn .= ',SensoresTipo_'.$i;}}
 				
 	
 				// inserto los datos de registro en la db
@@ -133,7 +133,7 @@ require_once '0_validate_user_1.php';
 				idShield, idFormaEnvio, idTab, id_Geo, id_Sensores, cantSensores, idAPNListado, 
 				idPuertoSerial, pinMode, idModificado'.$subColumn;
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_script', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -141,22 +141,22 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				/***********************************************************************************/
 				//se verifica si archivo existe
 				if (!empty($_FILES['ScriptFile']['name'])){
-					if ($_FILES["ScriptFile"]["error"] > 0){ 
-						$error['ScriptFile'] = 'error/'.uploadPHPError($_FILES["ScriptFile"]["error"]); 
+					if ($_FILES["ScriptFile"]["error"] > 0){
+						$error['ScriptFile'] = 'error/'.uploadPHPError($_FILES["ScriptFile"]["error"]);
 					} else {
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
@@ -172,17 +172,17 @@ require_once '0_validate_user_1.php';
 								$move_result = @move_uploaded_file($_FILES["ScriptFile"]["tmp_name"], $ruta);
 								if ($move_result){
 									//Filtros
-									$SIS_data = "idScript='".$idScript."'" ;
-									if(isset($idTelemetria) && $idTelemetria != ''){       $SIS_data .= ",idTelemetria='".$idTelemetria."'" ;}
-									if(isset($idUsuario) && $idUsuario != ''){             $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
-									if(isset($Fecha) && $Fecha != ''){                     $SIS_data .= ",Fecha='".$Fecha."'" ;}
-									if(isset($Version) && $Version != ''){                 $SIS_data .= ",Version='".$Version."'" ;}
-									if(isset($Observacion) && $Observacion != ''){         $SIS_data .= ",Observacion='".$Observacion."'" ;}
-									if(isset($idAPNListado) && $idAPNListado != ''){       $SIS_data .= ",idAPNListado='".$idAPNListado."'" ;}
-									if(isset($idPuertoSerial) && $idPuertoSerial != ''){   $SIS_data .= ",idPuertoSerial='".$idPuertoSerial."'" ;}
-									if(isset($pinMode) && $pinMode != ''){                 $SIS_data .= ",pinMode='".$pinMode."'" ;}
-									if(isset($idModificado) && $idModificado != ''){       $SIS_data .= ",idModificado='".$idModificado."'" ;}
-									$SIS_data .= "ScriptFile='".$sufijo.$_FILES['ScriptFile']['name']."'" ;
+									$SIS_data = "idScript='".$idScript."'";
+									if(isset($idTelemetria) && $idTelemetria!=''){       $SIS_data .= ",idTelemetria='".$idTelemetria."'";}
+									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",idUsuario='".$idUsuario."'";}
+									if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+									if(isset($Version) && $Version!=''){                 $SIS_data .= ",Version='".$Version."'";}
+									if(isset($Observacion) && $Observacion!=''){         $SIS_data .= ",Observacion='".$Observacion."'";}
+									if(isset($idAPNListado) && $idAPNListado!=''){       $SIS_data .= ",idAPNListado='".$idAPNListado."'";}
+									if(isset($idPuertoSerial) && $idPuertoSerial!=''){   $SIS_data .= ",idPuertoSerial='".$idPuertoSerial."'";}
+									if(isset($pinMode) && $pinMode!=''){                 $SIS_data .= ",pinMode='".$pinMode."'";}
+									if(isset($idModificado) && $idModificado!=''){       $SIS_data .= ",idModificado='".$idModificado."'";}
+									$SIS_data .= "ScriptFile='".$sufijo.$_FILES['ScriptFile']['name']."'";
 									
 									/*******************************************************/
 									//se actualizan los datos
@@ -198,42 +198,42 @@ require_once '0_validate_user_1.php';
 									}
 									
 							
-								} else {
-									$error['ScriptFile']     = 'error/Ocurrio un error al mover el archivo'; 
+								}else {
+									$error['ScriptFile']     = 'error/Ocurrio un error al mover el archivo';
 								}
 							} else {
-								$error['ScriptFile']     = 'error/El archivo '.$_FILES['ScriptFile']['name'].' ya existe'; 
+								$error['ScriptFile']     = 'error/El archivo '.$_FILES['ScriptFile']['name'].' ya existe';
 							}
 						} else {
-							$error['ScriptFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+							$error['ScriptFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 						}
 					}
-				
+
 				/************************************************************/
 				//si no hay archivo
 				}else{
 					//Filtros
-					$SIS_data = "idScript='".$idScript."'" ;
-					if(isset($idTelemetria) && $idTelemetria != ''){       $SIS_data .= ",idTelemetria='".$idTelemetria."'" ;}
-					if(isset($idUsuario) && $idUsuario != ''){             $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
-					if(isset($Fecha) && $Fecha != ''){                     $SIS_data .= ",Fecha='".$Fecha."'" ;}
-					if(isset($Version) && $Version != ''){                 $SIS_data .= ",Version='".$Version."'" ;}
-					if(isset($Observacion) && $Observacion != ''){         $SIS_data .= ",Observacion='".$Observacion."'" ;}
-					if(isset($idAPNListado) && $idAPNListado != ''){       $SIS_data .= ",idAPNListado='".$idAPNListado."'" ;}
-					if(isset($idPuertoSerial) && $idPuertoSerial != ''){   $SIS_data .= ",idPuertoSerial='".$idPuertoSerial."'" ;}
-					if(isset($pinMode) && $pinMode != ''){                 $SIS_data .= ",pinMode='".$pinMode."'" ;}
-					if(isset($idModificado) && $idModificado != ''){       $SIS_data .= ",idModificado='".$idModificado."'" ;}
-					
+					$SIS_data = "idScript='".$idScript."'";
+					if(isset($idTelemetria) && $idTelemetria!=''){       $SIS_data .= ",idTelemetria='".$idTelemetria."'";}
+					if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",idUsuario='".$idUsuario."'";}
+					if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+					if(isset($Version) && $Version!=''){                 $SIS_data .= ",Version='".$Version."'";}
+					if(isset($Observacion) && $Observacion!=''){         $SIS_data .= ",Observacion='".$Observacion."'";}
+					if(isset($idAPNListado) && $idAPNListado!=''){       $SIS_data .= ",idAPNListado='".$idAPNListado."'";}
+					if(isset($idPuertoSerial) && $idPuertoSerial!=''){   $SIS_data .= ",idPuertoSerial='".$idPuertoSerial."'";}
+					if(isset($pinMode) && $pinMode!=''){                 $SIS_data .= ",pinMode='".$pinMode."'";}
+					if(isset($idModificado) && $idModificado!=''){       $SIS_data .= ",idModificado='".$idModificado."'";}
+
 					/*******************************************************/
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_script', 'idScript = "'.$idScript.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
-						
+
 						//redirijo
 						header( 'Location: '.$location.'&edited=true' );
 						die;
-						
+
 					}
 				}
 				
@@ -241,19 +241,18 @@ require_once '0_validate_user_1.php';
 				
 				
 			}
-		
-	
-		break;	
-							
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -261,48 +260,46 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'telemetria_listado_script', 'idScript = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-		break;							
+		break;
 /*******************************************************************************************************************/
-		case 'del_file':	
-			
+		case 'del_file':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'ScriptFile', 'telemetria_listado_script', '', 'idScript = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 			/*******************************************************/
 			//se actualizan los datos
 			$SIS_data = "ScriptFile=''" ;
@@ -318,19 +315,18 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$rowdata['ScriptFile']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
-				
-				//Redirijo			
+
+				//redirijo
 				header( 'Location: '.$location.'&id_img=true' );
 				die;
-				
-			}
-			
 
-		break;						
+			}
+
+		break;
 /*******************************************************************************************************************/
 	}
 ?>

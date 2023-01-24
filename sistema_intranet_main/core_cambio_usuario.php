@@ -12,14 +12,14 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_cambio_usuario.php";
 $location = $original;
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para iniciar sesion
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	$form_trabajo= 'login_alt';
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
@@ -35,28 +35,28 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Listado de Usuarios</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Listado de Usuarios</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idUsuario)) {   $x1  = $idUsuario;   }else{$x1  = '';}
-				
+				if(isset($idUsuario)){   $x1  = $idUsuario;   }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'idEstado=1 AND idTipoUsuario!=1', '', $dbConn);
 				?>
 								
-				<div class="form-group">	
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Iniciar Sesion" name="submit">	
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Iniciar Sesion" name="submit">	
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 			
 			

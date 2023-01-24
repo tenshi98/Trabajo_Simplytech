@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -48,7 +48,7 @@ $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_lista
 //Verifico si existe
 if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	
-	/*****************************************/				
+	/*****************************************/
 	// Se trae un listado con todos los elementos
 	$SIS_query = '
 	cross_solicitud_aplicacion_listado.idSolicitud,
@@ -83,7 +83,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$row_data['idSolicitud'].' AND cross_solicitud_aplicacion_listado_cuarteles.idZona = '.$X_idZona.' GROUP BY cross_solicitud_aplicacion_listado.idSolicitud ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC';
 	$rowSolicitud = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSolicitud');
 		
-	/*****************************************/				
+	/*****************************************/
 	// consulto los datos
 	$SIS_query = '
 	cross_solicitud_aplicacion_listado_tractores.idTelemetria,
@@ -99,7 +99,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	$arrTractores = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTractores');
 
 						
-	/*****************************************/	
+	/*****************************************/
 	//Variable para almacenar los recorridos
 	$rec_x           = '';
 	$marker_loc      = '';
@@ -179,7 +179,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		}
 	}
 
-	/**************************************/				
+	/**************************************/
 	// consulto los datos
 	$SIS_query = '
 	cross_predios_listado_zonas.idZona,
@@ -194,7 +194,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	$arrZonas = array();
 	$arrZonas = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
 	
-	/**************************************/				
+	/**************************************/
 	// consulto los datos
 	$SIS_query = '
 	cross_solicitud_aplicacion_listado_tractores.idTelemetria,
@@ -218,9 +218,9 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 
 	//Se obtiene la ubicacion
 	$Ubicacion = "";
-	if(isset($arrZonas[0]['Direccion'])&&$arrZonas[0]['Direccion']!=''){ $Ubicacion.=' '.$arrZonas[0]['Direccion'];}
-	if(isset($arrZonas[0]['Comuna'])&&$arrZonas[0]['Comuna']!=''){       $Ubicacion.=', '.$arrZonas[0]['Comuna'];}
-	if(isset($arrZonas[0]['Ciudad'])&&$arrZonas[0]['Ciudad']!=''){       $Ubicacion.=', '.$arrZonas[0]['Ciudad'];}
+	if(isset($arrZonas[0]['Direccion'])&&$arrZonas[0]['Direccion']!=''){$Ubicacion.=' '.$arrZonas[0]['Direccion'];}
+	if(isset($arrZonas[0]['Comuna'])&&$arrZonas[0]['Comuna']!=''){      $Ubicacion.=', '.$arrZonas[0]['Comuna'];}
+	if(isset($arrZonas[0]['Ciudad'])&&$arrZonas[0]['Ciudad']!=''){      $Ubicacion.=', '.$arrZonas[0]['Ciudad'];}
 
 
 	//Se limpian los nombres
@@ -280,7 +280,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	}
 
 	</style>
-	<div class="col-sm-12" style="margin-top:20px;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 		
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 		<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table', 'gauge']});</script>	
@@ -293,7 +293,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 			$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
 			
 			<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
-		<?php } ?>	
+		<?php } ?>
 		<style>
 			.my_marker {color: white;background-color: black;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
 			.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
@@ -306,7 +306,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		
 		?>
 		
-		<div class="col-sm-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box noborderbox">
 				<header class="header">
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -324,7 +324,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 										$sum_LitrosAplicados    = $sum_LitrosAplicados + $tractda['LitrosAplicados'];				
 									}
 								}
-							}		
+							}
 							//paginador de tabs	
 							if($xcounter==7){ ?> <li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu"> <?php } ?>
 							<li>
@@ -346,14 +346,14 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane fade in active" id="resumen">
 						
-						<div class="col-sm-4"><h5 class="text-center"><strong>% Mojamiento</strong></h5>          <div class="col-sm-12 float_table" id="chart_mojamiento" style="height: 200px;"></div></div>
-						<div class="col-sm-4"><h5 class="text-center"><strong>Dispersión de Flujos</strong></h5>  <div class="col-sm-12 float_table" id="chart_gauge" style="height: 200px;"></div></div>
-						<div class="col-sm-4"><h5 class="text-center"><strong>Velocidad Promedio</strong></h5>    <div class="col-sm-12 float_table" id="chart_velocidades" style="height: 200px;"></div></div>			
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>% Mojamiento</strong></h5>          <div class="col-sm-12 float_table" id="chart_mojamiento" style="height: 200px;"></div></div>
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Dispersión de Flujos</strong></h5>  <div class="col-sm-12 float_table" id="chart_gauge" style="height: 200px;"></div></div>
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Velocidad Promedio</strong></h5>    <div class="col-sm-12 float_table" id="chart_velocidades" style="height: 200px;"></div></div>			
 						<div class="clearfix"></div>
 						
-						<?php //<div class="col-sm-4"><h5 class="text-center"><strong>Porcentaje Plantas Aplicadas</strong></h5>     <div class="col-sm-12"             id="chart_plantas_aplicadas" style="height: 200px;"></div></div> ?>
-						<div class="col-sm-4"><h5 class="text-center"><strong>Litros Programados vs Aplicados</strong></h5>  <div class="col-sm-12"             id="chart_litros_aplicados" style="height: 200px;"></div></div>			
-						<div class="col-sm-4"><h5 class="text-center"><strong>Caudales Promedios</strong></h5>               <div class="col-sm-12"             id="chart_caudales" style="height: 200px;"></div></div>
+						<?php //<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Porcentaje Plantas Aplicadas</strong></h5>     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_plantas_aplicadas" style="height: 200px;"></div></div> ?>
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Litros Programados vs Aplicados</strong></h5>  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_litros_aplicados" style="height: 200px;"></div></div>			
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Caudales Promedios</strong></h5>               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_caudales" style="height: 200px;"></div></div>
 						
 						
 						<?php
@@ -401,7 +401,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								draw_velocidades(data_vel_rows);
 							}
 							function Chart_litros_aplicados() {';
-								//variables		
+								//variables	
 								echo 'var data_litros_rows = [';						
 								echo '["Litros Aplicados",';
 								echo Cantidades_decimales_justos($LitrosProgramados).',';
@@ -412,7 +412,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								echo '];
 								//se llama funcion de dibujo
 								draw_litros_aplicados(data_litros_rows);
-							}	
+							}
 							function Chart_caudales() {';
 								//caudales	
 								echo 'var data_caud_rows = [';						
@@ -425,7 +425,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								echo '];
 								//se llama funcion de dibujo
 								draw_caudales(data_caud_rows);		
-							}	
+							}
 							function Chart_correccion() {';	
 								if($TractorDerechoProm>$TractorIzquierdoProm){
 									if($TractorIzquierdoProm!=0){ $correccion = (($TractorDerechoProm - $TractorIzquierdoProm)/$TractorIzquierdoProm)*100;}else{$correccion = 0;}
@@ -608,7 +608,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 									$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
 									alert_post_data(4,2,2, $Alert_Text);
-								}else{ ?>
+								}else{?>
 									<div id="map_canvas_x1" style="width: 100%; height: 550px;"></div>
 									<script>
 										
@@ -721,7 +721,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 													if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
 														echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
 														';
-														if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){	
+														if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){
 															$Latitud_x  = $puntos['Latitud'];
 															$Longitud_x = $puntos['Longitud'];
 															//Calculos para centrar mapa
@@ -802,7 +802,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 														echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');';
 														echo 'map_1.setCenter(myLatlng);'; 
 														//echo 'map_2.setCenter(myLatlng);'; 
-												}else{ 
+												}else{
 													echo 'codeAddress();';
 												}
 											}
@@ -822,7 +822,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 													map_1.setCenter(myLatlng);
 													map_2.setCenter(myLatlng);
 																			  
-												} else {
+												}else {
 													alert('Geocode was not successful for the following reason: ' + status);
 												}
 											});
@@ -856,7 +856,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 														break;
 													case 1: 
 														marcador = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/1_tractor_2.png";   	    
-														break;	
+														break;
 												}*/
 												//se crea marcador
 												var marker = new google.maps.Marker({
@@ -879,12 +879,12 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												var infowindow = new google.maps.InfoWindow();
 
 												//se agrega funcion de click a infowindow
-												google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+												google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
 													return function() {
 														infowindow.setContent(content);
 														infowindow.open(map_1,marker);
 													};
-												})(marker,content,infowindow)); 
+												})(marker,content,infowindow));
 
 											}
 											latlon = new google.maps.LatLng(last_latitude, last_longitude);
@@ -921,7 +921,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 						</div>
 					</div>
 					
-					<?php foreach($arrTractores as $trac) { ?>			  
+					<?php foreach($arrTractores as $trac) { ?>		  
 						<div role="tabpanel" class="tab-pane fade" id="equipo_<?php echo $trac['idTelemetria']; ?>">
 							
 							<div class="">
@@ -982,9 +982,9 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 															<?php
 															$total_caudal = $tractda['PromCaudalIzq'] + $tractda['PromCaudalDer'];
 															if($tractda['PromCaudalDer']>$tractda['PromCaudalIzq']){
-																if($tractda['PromCaudalIzq']!=0){ $correccion = (($tractda['PromCaudalDer'] - $tractda['PromCaudalIzq'])/$tractda['PromCaudalIzq'])*100;}else{$correccion = 0;}
+																if($tractda['PromCaudalIzq']!=0){$correccion = (($tractda['PromCaudalDer'] - $tractda['PromCaudalIzq'])/$tractda['PromCaudalIzq'])*100;}else{$correccion = 0;}
 															}else{
-																if($tractda['PromCaudalDer']!=0){ $correccion = (($tractda['PromCaudalIzq'] - $tractda['PromCaudalDer'])/$tractda['PromCaudalDer'])*100;}else{$correccion = 0;}
+																if($tractda['PromCaudalDer']!=0){$correccion = (($tractda['PromCaudalIzq'] - $tractda['PromCaudalDer'])/$tractda['PromCaudalDer'])*100;}else{$correccion = 0;}
 															}
 															?>
 															
@@ -1001,7 +1001,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 																</div>
 															</td>
 															
-														</tr> 
+														</tr>
 													
 														<?php 
 														//operaciones 
@@ -1033,12 +1033,12 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 															
 													<td></td>
 															
-												</tr> 
+												</tr>
 												
 												<?php 
 											}else{
 												echo '<tr class="item-row linea_punteada"><td colspan="10">No hay Cuarteles Recorridos</td></tr>';
-											} ?>
+											}?>
 										</tbody>
 									</table>
 								</div>
@@ -1071,9 +1071,9 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 									var chart1_'.$trac['idTelemetria'].' = new google.visualization.LineChart(document.getElementById("chart_caudales_'.$trac['idTelemetria'].'"));
 										chart1_'.$trac['idTelemetria'].'.draw(data_caud_'.$trac['idTelemetria'].', options1_'.$trac['idTelemetria'].');
 								}
-							</script> 
+							</script>
 							<div id="chart_caudales_'.$trac['idTelemetria'].'" style="height: 300px; width: 100%;"></div>';
-							
+
 							/********************************************************************/
 							//Nivel Estanque
 							echo '
@@ -1099,9 +1099,9 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 									var chart2_'.$trac['idTelemetria'].' = new google.visualization.LineChart(document.getElementById("chart_niveles_'.$trac['idTelemetria'].'"));
 										chart2_'.$trac['idTelemetria'].'.draw(data_niveles_'.$trac['idTelemetria'].', options2_'.$trac['idTelemetria'].');
 								}
-							</script> 
+							</script>
 							<div id="chart_niveles_'.$trac['idTelemetria'].'" style="height: 300px; width: 100%;"></div>';
-							
+
 							/********************************************************************/
 							//Velocidades
 							echo '
@@ -1127,43 +1127,43 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 									var chart3_'.$trac['idTelemetria'].' = new google.visualization.LineChart(document.getElementById("chart_velocidades_'.$trac['idTelemetria'].'"));
 										chart3_'.$trac['idTelemetria'].'.draw(data_vel_'.$trac['idTelemetria'].', options3_'.$trac['idTelemetria'].');
 								}
-							</script> 
+							</script>
 							<div id="chart_velocidades_'.$trac['idTelemetria'].'" style="height: 300px; width: 100%;"></div>';
 
 							?>
 							
 							
-							<div class="col-sm-12" style="margin-top:20px;">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 								<?php
-								$Alert_Text = '<a href="view_solicitud_aplicacion_finalizada_view_mapa.php?idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idSolicitud='.$_GET['view'].'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" class="btn btn-primary fright margin_width"><i class="fa fa-map-o" aria-hidden="true"></i> Ver mapas</a>';
+								$Alert_Text = '<a href="view_solicitud_aplicacion_finalizada_view_mapa.php?idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idSolicitud='.$_GET['view'].'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-map-o" aria-hidden="true"></i> Ver mapas</a>';
 								alert_post_data(4,2,2, $Alert_Text);
 								?>
 							</div>
 						</div>
-					<?php } ?>			
+					<?php } ?>
 				</div>
-			</div>	
+			</div>
 		</div>
 
 	</div>
 
 <?php }else{ ?>
-	<div class="col-sm-12" style="margin-top:20px;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 		<?php
 			$Alert_Text = 'La solicitud no existe';
 			alert_post_data(4,2,2, $Alert_Text);
 		?>
-	</div>	
+	</div>
 <?php } ?>
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -1174,12 +1174,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
  
 <?php

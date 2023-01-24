@@ -145,7 +145,7 @@ if ($options['bootstrap']['icons'] !== null) {
 }
 
 // Set icons for included extension
-if (!empty($icons['files'])) {
+if (!empty($icons['files'])){
     foreach ($icons['files'] as $type => $ext) {
         foreach ($ext as $k => $v) {
             $filetype[$k]['extensions'] = $v['extensions'];
@@ -211,55 +211,55 @@ if ($options['general']['text_direction'] == 'rtl') {
 $bootstrap_cdn = set_bootstrap_theme();
 
 // Set Bootstrap defaults
-if (isset($options['bootstrap']['body_style'])) {
+if (isset($options['bootstrap']['body_style'])){
     $body_style = ' class="' . $options['bootstrap']['body_style'] . '"';
 } else {
     $body_style = null;
 }
 
-if (isset($options['bootstrap']['container_style'])) {
+if (isset($options['bootstrap']['container_style'])){
     $container_style = " ".$options['bootstrap']['container_style'];
 } else {
     $container_style = null;
 }
 
-if (isset($options['bootstrap']['modal_size'])) {
+if (isset($options['bootstrap']['modal_size'])){
     $modal_size = $options['bootstrap']['modal_size'];
 } else {
     $modal_size = 'modal-lg';
 }
 
-if (isset($options['bootstrap']['button_default'])) {
+if (isset($options['bootstrap']['button_default'])){
     $btn_default = $options['bootstrap']['button_default'];
 } else {
     $btn_default = 'btn-default';
 }
 
-if (isset($options['bootstrap']['button_primary'])) {
+if (isset($options['bootstrap']['button_primary'])){
     $btn_primary = $options['bootstrap']['button_primary'];
 } else {
     $btn_primary = 'btn-primary';
 }
 
-if (isset($options['bootstrap']['button_highlight'])) {
+if (isset($options['bootstrap']['button_highlight'])){
     $btn_highlight = $options['bootstrap']['button_highlight'];
 } else {
     $btn_highlight = 'btn-link';
 }
 
-if (isset($options['bootstrap']['column_name'])) {
+if (isset($options['bootstrap']['column_name'])){
     $column_name = $options['bootstrap']['column_name'];
 } else {
     $column_name = 'col-lg-8';
 }
 
-if (isset($options['bootstrap']['column_size'])) {
+if (isset($options['bootstrap']['column_size'])){
     $column_size = $options['bootstrap']['column_size'];
 } else {
     $column_size = 'col-lg-2';
 }
 
-if (isset($options['bootstrap']['column_age'])) {
+if (isset($options['bootstrap']['column_age'])){
     $column_age = $options['bootstrap']['column_age'];
 } else {
     $column_age = 'col-lg-2';
@@ -301,7 +301,7 @@ if ($handle = opendir($navigation_dir))
         // Make sure we don't list this folder,file or their links.
         if ($file != "." && $file != ".." && $file != $this_script && !in_array($file, $ignore_list) )
         {
-            if ( ($options['general']['hide_dotfiles'] == true) && (substr($file, 0, 1) == '.') ) {
+            if ( ($options['general']['hide_dotfiles'] == true) && (substr($file, 0, 1) == '.')){
                 continue;
             }
 
@@ -313,7 +313,7 @@ if ($handle = opendir($navigation_dir))
             $item['bname']         =     $info['basename'];
             $item['lbname']        =     strtolower($info['basename']);
 
-            if (isset($info['extension'])) {
+            if (isset($info['extension'])){
                 $item['ext'] = $info['extension'];
                 $item['lext'] = strtolower($info['extension']);
             } else {
@@ -325,7 +325,7 @@ if ($handle = opendir($navigation_dir))
             $item['class'] = $icons['prefix'].' '.$icons['default'].' '. $options['bootstrap']['fontawesome_style'];
             
             foreach ($filetype as $v) {
-                if (in_array($item['lext'], $v['extensions'])) {
+                if (in_array($item['lext'], $v['extensions'])){
                     $item['class'] = $icons['prefix'].' '.$v['icon'].' '. $options['bootstrap']['fontawesome_style'];
                 }
             }
@@ -378,26 +378,26 @@ $total_folders = count($folder_list);
 $total_files = count($file_list);
 
 // Localized summary, hopefully not overly complicated
-if ( ($total_folders == 1) && ($total_files == 0) ) {
+if ( ($total_folders == 1) && ($total_files == 0)){
     $summary = sprintf(_('%1$s carpeta'), $total_folders);
-} else if ( ($total_folders > 1) && ($total_files == 0) ) {
+} else if ( ($total_folders > 1) && ($total_files == 0)){
     $summary = sprintf(_('%1$s carpetas'), $total_folders);
-} else if ( ($total_folders == 0) && ($total_files == 1) ) {
+} else if ( ($total_folders == 0) && ($total_files == 1)){
     $summary = sprintf(_('%1$s archivo, %2$s %3$s en total'), $total_files, $total_size['num'], $total_size['str']);
-} else if ( ($total_folders == 0) && ($total_files > 1) ) {
+} else if ( ($total_folders == 0) && ($total_files > 1)){
     $summary = sprintf(_('%1$s archivos, %2$s %3$s en total'), $total_files, $total_size['num'], $total_size['str']);
-} else if ( ($total_folders == 1) && ($total_files == 1) ) {
+} else if ( ($total_folders == 1) && ($total_files == 1)){
     $summary = sprintf(_('%1$s carpeta y %2$s archivo, %3$s %4$s en total'), $total_folders, $total_files, $total_size['num'], $total_size['str']);
-} else if ( ($total_folders == 1) && ($total_files >1) ) {
+} else if ( ($total_folders == 1) && ($total_files >1)){
     $summary = sprintf(_('%1$s carpeta y %2$s archivos, %3$s %4$s en total'), $total_folders, $total_files, $total_size['num'], $total_size['str']);
-} else if ( ($total_folders > 1) && ($total_files == 1) ) {
+} else if ( ($total_folders > 1) && ($total_files == 1)){
     $summary = sprintf(_('%1$s carpetas y %2$s archivo, %3$s %4$s en total'), $total_folders, $total_files, $total_size['num'], $total_size['str']);
-} else if ( ($total_folders > 1) && ($total_files > 1) ) {
+} else if ( ($total_folders > 1) && ($total_files > 1)){
     $summary = sprintf(_('%1$s carpetas y %2$s archivos, %3$s %4$s en total'), $total_folders, $total_files, $total_size['num'], $total_size['str']);
 }
 
 // Merge local settings with global settings
-if(isset($loptions)) {
+if(isset($loptions)){
     $options = array_merge($options, $loptions);
 }
 
@@ -421,7 +421,7 @@ $breadcrumbs = $breadcrumbs."    </ol>" . PHP_EOL;*/
 
 // Set breadcrumbs
 $breadcrumbs  = "    <ul class=\"btn-group btn-breadcrumb pull-left\">" . PHP_EOL;
-$breadcrumbs .= "      <li class=\"btn btn-default\" role=\"button\" data-toggle=\"collapse\" href=\"#collapseExample\" aria-expanded=\"false\" aria-controls=\"collapseExample\"><i class=\"fa fa-home\" aria-hidden=\"true\"></i></li>" . PHP_EOL;
+$breadcrumbs .= "      <li class=\"btn btn-default\" role=\"button\" data-toggle=\"collapse\" href=\"#collapseForm\" aria-expanded=\"false\" aria-controls=\"collapseForm\"><i class=\"fa fa-home\" aria-hidden=\"true\"></i></li>" . PHP_EOL;
 $breadcrumbs .= "      <li class=\"btn btn-default\"><a href=\"".htmlentities($root_dir, ENT_QUOTES, 'utf-8')."\">Principal</a></li>" . PHP_EOL;
 foreach($dir_name as $dir => $name) :
     if(($name != ' ') && ($name != '') && ($name != '.') && ($name != '/')):
@@ -497,12 +497,12 @@ if ($table_options['count']) {
     $row_counter = 1;
 }
 
-if(($folder_list) || ($file_list) ) {
+if(($folder_list) || ($file_list)){
 
     if($folder_list):    
         foreach($folder_list as $item) :
 
-            if (isset($options['bootstrap']['tablerow_folders'])) {
+            if (isset($options['bootstrap']['tablerow_folders'])){
                 $tr_folders = ' class="'.$options['bootstrap']['tablerow_folders'].'"';
             } else {
                 $tr_folders = null;
@@ -519,11 +519,11 @@ if(($folder_list) || ($file_list) ) {
                 $table_body .= " class=\"text-".$left."\" data-sort-value=\"". htmlentities($item['lbname'], ENT_QUOTES, 'utf-8') . "\"" ;
             }
             $table_body .= ">";
-            if (isset($options['bootstrap']['icons'])) {
+            if (isset($options['bootstrap']['icons'])){
                 $table_body .= "<".$icons['tag']." class=\"".$icons['folder']."\" aria-hidden=\"true\"></".$icons['tag'].">&nbsp;";
             }
 
-            if (isset($options['bootstrap']['tablerow_links'])) {
+            if (isset($options['bootstrap']['tablerow_links'])){
                 $tr_links = ' class="'.$options['bootstrap']['tablerow_links'].'"';
             } else {
                 $tr_links = null;
@@ -572,7 +572,7 @@ if(($folder_list) || ($file_list) ) {
             }
 
             // Is file hidden?
-            if (in_array($item['bname'], $options['hidden_files'])) {
+            if (in_array($item['bname'], $options['hidden_files'])){
                 $row_classes[] = "hidden";
                 // muted class on row…
                 $row_classes[] = $options['bootstrap']['hidden_files_row'];
@@ -626,7 +626,7 @@ if(($folder_list) || ($file_list) ) {
             }
 
             // Concatenate tr-classes
-            if (!empty($row_classes)) {
+            if (!empty($row_classes)){
                 $row_attr = ' class="'.implode(" ", $row_classes).'"';
             } else {
                 $row_attr = null;
@@ -654,17 +654,17 @@ if(($folder_list) || ($file_list) ) {
 
             // inject modal class if necessary
             if ($options['general']['enable_viewer']) {
-                if (in_array($item['lext'], $audio_files)) {
+                if (in_array($item['lext'], $audio_files)){
                     $file_classes[] = 'audio-modal';
                 } else if ($item['lext'] == 'swf') {
                     $file_classes[] = 'flash-modal';
-                } else if (in_array($item['lext'], $image_files)) {
+                } else if (in_array($item['lext'], $image_files)){
                     $file_classes[] = 'image-modal';
-                } else if (in_array($item['lext'], $pdf_files)) {
+                } else if (in_array($item['lext'], $pdf_files)){
                     $file_classes[] = 'pdf-modal';
-                } else if (in_array($item['lext'], $quicktime_files)) {
+                } else if (in_array($item['lext'], $quicktime_files)){
                      $file_classes[] = 'quicktime-modal';
-                } else if (in_array($item['lext'], $source_files)) {
+                } else if (in_array($item['lext'], $source_files)){
                     if ($options['general']['auto_highlight']) {
                         $file_meta[] = 'data-highlight="true"';
                     }
@@ -673,17 +673,17 @@ if(($folder_list) || ($file_list) ) {
                     } else {
                         $file_classes[] = 'source-modal';
                     }
-                } else if (in_array($item['lext'], $text_files)) {
+                } else if (in_array($item['lext'], $text_files)){
                     if ($options['viewer']['alt_load'] == true) {
                         $file_classes[] = 'text-modal-alt';
                     } else {
                         $file_classes[] = 'text-modal';
                     }
-                } else if (in_array($item['lext'], $video_files)) {
+                } else if (in_array($item['lext'], $video_files)){
                     $file_classes[] = 'video-modal';
-                } else if (in_array($item['lext'], $website_files)) {
+                } else if (in_array($item['lext'], $website_files)){
                     $file_classes[] = 'website-modal';
-                } else if (in_array($item['lext'], $virtual_files)) {
+                } else if (in_array($item['lext'], $virtual_files)){
                     $file_classes[] = 'virtual-modal';
                 }
             }
@@ -697,7 +697,7 @@ if(($folder_list) || ($file_list) ) {
             }
 
             //$table_body .= "<a href=\"" . htmlentities(rawurlencode($item['bname']), ENT_QUOTES, 'utf-8') . "\"$file_attr$file_data$virtual_attr$size_attr>" . utf8ify($display_name) . "</a></td>" . PHP_EOL;
-			
+
 			//obtengo la extension del archivo
 			$extension = strtolower(pathinfo($item['bname'] ,PATHINFO_EXTENSION));
 			//si es dav

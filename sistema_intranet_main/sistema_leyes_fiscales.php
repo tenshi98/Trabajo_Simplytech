@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "sistema_leyes_fiscales.php";
 $location = $original;
 /********************************************************************/
@@ -20,22 +20,22 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/sistema_leyes_fiscales.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/sistema_leyes_fiscales.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/sistema_leyes_fiscales.php';	
+	require_once 'A1XRXS_sys/xrxs_form/sistema_leyes_fiscales.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -50,8 +50,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Mantenedor Modificado 
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Mantenedor borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 
@@ -67,47 +67,47 @@ $SIS_where = 'idMantenedor ='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'sistema_leyes_fiscales', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Mantenedor</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Porcentaje_PPM)) {           $x0  = $Porcentaje_PPM;           }else{$x0  = $rowdata['Porcentaje_PPM'];}
-				if(isset($Porcentaje_Ret_Boletas)) {   $x1  = $Porcentaje_Ret_Boletas;   }else{$x1  = $rowdata['Porcentaje_Ret_Boletas'];}
-				if(isset($IVA_idCentroCosto)) {        $x2  = $IVA_idCentroCosto;        }else{$x2  = $rowdata['IVA_idCentroCosto'];}
-				if(isset($IVA_idLevel_1)) {            $x3  = $IVA_idLevel_1;            }else{$x3  = $rowdata['IVA_idLevel_1'];}
-				if(isset($IVA_idLevel_2)) {            $x4  = $IVA_idLevel_2;            }else{$x4  = $rowdata['IVA_idLevel_2'];}
-				if(isset($IVA_idLevel_3)) {            $x5  = $IVA_idLevel_3;            }else{$x5  = $rowdata['IVA_idLevel_3'];}
-				if(isset($IVA_idLevel_4)) {            $x6  = $IVA_idLevel_4;            }else{$x6  = $rowdata['IVA_idLevel_4'];}
-				if(isset($IVA_idLevel_5)) {            $x7  = $IVA_idLevel_5;            }else{$x7  = $rowdata['IVA_idLevel_5'];}
-				if(isset($PPM_idCentroCosto)) {        $x8  = $PPM_idCentroCosto;        }else{$x8  = $rowdata['PPM_idCentroCosto'];}
-				if(isset($PPM_idLevel_1)) {            $x9  = $PPM_idLevel_1;            }else{$x9  = $rowdata['PPM_idLevel_1'];}
-				if(isset($PPM_idLevel_2)) {            $x10 = $PPM_idLevel_2;            }else{$x10 = $rowdata['PPM_idLevel_2'];}
-				if(isset($PPM_idLevel_3)) {            $x11 = $PPM_idLevel_3;            }else{$x11 = $rowdata['PPM_idLevel_3'];}
-				if(isset($PPM_idLevel_4)) {            $x12 = $PPM_idLevel_4;            }else{$x12 = $rowdata['PPM_idLevel_4'];}
-				if(isset($PPM_idLevel_5)) {            $x13 = $PPM_idLevel_5;            }else{$x13 = $rowdata['PPM_idLevel_5'];}
-				if(isset($RET_idCentroCosto)) {        $x14 = $RET_idCentroCosto;        }else{$x14 = $rowdata['RET_idCentroCosto'];}
-				if(isset($RET_idLevel_1)) {            $x15 = $RET_idLevel_1;            }else{$x15 = $rowdata['RET_idLevel_1'];}
-				if(isset($RET_idLevel_2)) {            $x16 = $RET_idLevel_2;            }else{$x16 = $rowdata['RET_idLevel_2'];}
-				if(isset($RET_idLevel_3)) {            $x17 = $RET_idLevel_3;            }else{$x17 = $rowdata['RET_idLevel_3'];}
-				if(isset($RET_idLevel_4)) {            $x18 = $RET_idLevel_4;            }else{$x18 = $rowdata['RET_idLevel_4'];}
-				if(isset($RET_idLevel_5)) {            $x19 = $RET_idLevel_5;            }else{$x19 = $rowdata['RET_idLevel_5'];}
-				if(isset($IMPRENT_idCentroCosto)) {    $x20 = $IMPRENT_idCentroCosto;    }else{$x20 = $rowdata['IMPRENT_idCentroCosto'];}
-				if(isset($IMPRENT_idLevel_1)) {        $x21 = $IMPRENT_idLevel_1;        }else{$x21 = $rowdata['IMPRENT_idLevel_1'];}
-				if(isset($IMPRENT_idLevel_2)) {        $x22 = $IMPRENT_idLevel_2;        }else{$x22 = $rowdata['IMPRENT_idLevel_2'];}
-				if(isset($IMPRENT_idLevel_3)) {        $x23 = $IMPRENT_idLevel_3;        }else{$x23 = $rowdata['IMPRENT_idLevel_3'];}
-				if(isset($IMPRENT_idLevel_4)) {        $x24 = $IMPRENT_idLevel_4;        }else{$x24 = $rowdata['IMPRENT_idLevel_4'];}
-				if(isset($IMPRENT_idLevel_5)) {        $x25 = $IMPRENT_idLevel_5;        }else{$x25 = $rowdata['IMPRENT_idLevel_5'];}
-				
+				if(isset($Porcentaje_PPM)){           $x0  = $Porcentaje_PPM;           }else{$x0  = $rowdata['Porcentaje_PPM'];}
+				if(isset($Porcentaje_Ret_Boletas)){   $x1  = $Porcentaje_Ret_Boletas;   }else{$x1  = $rowdata['Porcentaje_Ret_Boletas'];}
+				if(isset($IVA_idCentroCosto)){        $x2  = $IVA_idCentroCosto;        }else{$x2  = $rowdata['IVA_idCentroCosto'];}
+				if(isset($IVA_idLevel_1)){            $x3  = $IVA_idLevel_1;            }else{$x3  = $rowdata['IVA_idLevel_1'];}
+				if(isset($IVA_idLevel_2)){            $x4  = $IVA_idLevel_2;            }else{$x4  = $rowdata['IVA_idLevel_2'];}
+				if(isset($IVA_idLevel_3)){            $x5  = $IVA_idLevel_3;            }else{$x5  = $rowdata['IVA_idLevel_3'];}
+				if(isset($IVA_idLevel_4)){            $x6  = $IVA_idLevel_4;            }else{$x6  = $rowdata['IVA_idLevel_4'];}
+				if(isset($IVA_idLevel_5)){            $x7  = $IVA_idLevel_5;            }else{$x7  = $rowdata['IVA_idLevel_5'];}
+				if(isset($PPM_idCentroCosto)){        $x8  = $PPM_idCentroCosto;        }else{$x8  = $rowdata['PPM_idCentroCosto'];}
+				if(isset($PPM_idLevel_1)){            $x9  = $PPM_idLevel_1;            }else{$x9  = $rowdata['PPM_idLevel_1'];}
+				if(isset($PPM_idLevel_2)){            $x10 = $PPM_idLevel_2;            }else{$x10 = $rowdata['PPM_idLevel_2'];}
+				if(isset($PPM_idLevel_3)){            $x11 = $PPM_idLevel_3;            }else{$x11 = $rowdata['PPM_idLevel_3'];}
+				if(isset($PPM_idLevel_4)){            $x12 = $PPM_idLevel_4;            }else{$x12 = $rowdata['PPM_idLevel_4'];}
+				if(isset($PPM_idLevel_5)){            $x13 = $PPM_idLevel_5;            }else{$x13 = $rowdata['PPM_idLevel_5'];}
+				if(isset($RET_idCentroCosto)){        $x14 = $RET_idCentroCosto;        }else{$x14 = $rowdata['RET_idCentroCosto'];}
+				if(isset($RET_idLevel_1)){            $x15 = $RET_idLevel_1;            }else{$x15 = $rowdata['RET_idLevel_1'];}
+				if(isset($RET_idLevel_2)){            $x16 = $RET_idLevel_2;            }else{$x16 = $rowdata['RET_idLevel_2'];}
+				if(isset($RET_idLevel_3)){            $x17 = $RET_idLevel_3;            }else{$x17 = $rowdata['RET_idLevel_3'];}
+				if(isset($RET_idLevel_4)){            $x18 = $RET_idLevel_4;            }else{$x18 = $rowdata['RET_idLevel_4'];}
+				if(isset($RET_idLevel_5)){            $x19 = $RET_idLevel_5;            }else{$x19 = $rowdata['RET_idLevel_5'];}
+				if(isset($IMPRENT_idCentroCosto)){    $x20 = $IMPRENT_idCentroCosto;    }else{$x20 = $rowdata['IMPRENT_idCentroCosto'];}
+				if(isset($IMPRENT_idLevel_1)){        $x21 = $IMPRENT_idLevel_1;        }else{$x21 = $rowdata['IMPRENT_idLevel_1'];}
+				if(isset($IMPRENT_idLevel_2)){        $x22 = $IMPRENT_idLevel_2;        }else{$x22 = $rowdata['IMPRENT_idLevel_2'];}
+				if(isset($IMPRENT_idLevel_3)){        $x23 = $IMPRENT_idLevel_3;        }else{$x23 = $rowdata['IMPRENT_idLevel_3'];}
+				if(isset($IMPRENT_idLevel_4)){        $x24 = $IMPRENT_idLevel_4;        }else{$x24 = $rowdata['IMPRENT_idLevel_4'];}
+				if(isset($IMPRENT_idLevel_5)){        $x25 = $IMPRENT_idLevel_5;        }else{$x25 = $rowdata['IMPRENT_idLevel_5'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Porcentajes');
@@ -157,62 +157,62 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); 
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Mantenedor</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Porcentaje_PPM)) {         $x0  = $Porcentaje_PPM;         }else{$x0  = '';}
-				if(isset($Porcentaje_Ret_Boletas)) { $x1  = $Porcentaje_Ret_Boletas; }else{$x1  = '';}
-				if(isset($IVA_idCentroCosto)) {      $x2  = $IVA_idCentroCosto;      }else{$x2  = '';}
-				if(isset($IVA_idLevel_1)) {          $x3  = $IVA_idLevel_1;          }else{$x3  = '';}
-				if(isset($IVA_idLevel_2)) {          $x4  = $IVA_idLevel_2;          }else{$x4  = '';}
-				if(isset($IVA_idLevel_3)) {          $x5  = $IVA_idLevel_3;          }else{$x5  = '';}
-				if(isset($IVA_idLevel_4)) {          $x6  = $IVA_idLevel_4;          }else{$x6  = '';}
-				if(isset($IVA_idLevel_5)) {          $x7  = $IVA_idLevel_5;          }else{$x7  = '';}
-				if(isset($PPM_idCentroCosto)) {      $x8  = $PPM_idCentroCosto;      }else{$x8  = '';}
-				if(isset($PPM_idLevel_1)) {          $x9  = $PPM_idLevel_1;          }else{$x9  = '';}
-				if(isset($PPM_idLevel_2)) {          $x10 = $PPM_idLevel_2;          }else{$x10 = '';}
-				if(isset($PPM_idLevel_3)) {          $x11 = $PPM_idLevel_3;          }else{$x11 = '';}
-				if(isset($PPM_idLevel_4)) {          $x12 = $PPM_idLevel_4;          }else{$x12 = '';}
-				if(isset($PPM_idLevel_5)) {          $x13 = $PPM_idLevel_5;          }else{$x13 = '';}
-				if(isset($RET_idCentroCosto)) {      $x14 = $RET_idCentroCosto;      }else{$x14 = '';}
-				if(isset($RET_idLevel_1)) {          $x15 = $RET_idLevel_1;          }else{$x15 = '';}
-				if(isset($RET_idLevel_2)) {          $x16 = $RET_idLevel_2;          }else{$x16 = '';}
-				if(isset($RET_idLevel_3)) {          $x17 = $RET_idLevel_3;          }else{$x17 = '';}
-				if(isset($RET_idLevel_4)) {          $x18 = $RET_idLevel_4;          }else{$x18 = '';}
-				if(isset($RET_idLevel_5)) {          $x19 = $RET_idLevel_5;          }else{$x19 = '';}
-				if(isset($IMPRENT_idCentroCosto)) {  $x20 = $IMPRENT_idCentroCosto;  }else{$x20 = '';}
-				if(isset($IMPRENT_idLevel_1)) {      $x21 = $IMPRENT_idLevel_1;      }else{$x21 = '';}
-				if(isset($IMPRENT_idLevel_2)) {      $x22 = $IMPRENT_idLevel_2;      }else{$x22 = '';}
-				if(isset($IMPRENT_idLevel_3)) {      $x23 = $IMPRENT_idLevel_3;      }else{$x23 = '';}
-				if(isset($IMPRENT_idLevel_4)) {      $x24 = $IMPRENT_idLevel_4;      }else{$x24 = '';}
-				if(isset($IMPRENT_idLevel_5)) {      $x25 = $IMPRENT_idLevel_5;      }else{$x25 = '';}
-				
+				if(isset($Porcentaje_PPM)){         $x0  = $Porcentaje_PPM;         }else{$x0  = '';}
+				if(isset($Porcentaje_Ret_Boletas)){ $x1  = $Porcentaje_Ret_Boletas; }else{$x1  = '';}
+				if(isset($IVA_idCentroCosto)){      $x2  = $IVA_idCentroCosto;      }else{$x2  = '';}
+				if(isset($IVA_idLevel_1)){          $x3  = $IVA_idLevel_1;          }else{$x3  = '';}
+				if(isset($IVA_idLevel_2)){          $x4  = $IVA_idLevel_2;          }else{$x4  = '';}
+				if(isset($IVA_idLevel_3)){          $x5  = $IVA_idLevel_3;          }else{$x5  = '';}
+				if(isset($IVA_idLevel_4)){          $x6  = $IVA_idLevel_4;          }else{$x6  = '';}
+				if(isset($IVA_idLevel_5)){          $x7  = $IVA_idLevel_5;          }else{$x7  = '';}
+				if(isset($PPM_idCentroCosto)){      $x8  = $PPM_idCentroCosto;      }else{$x8  = '';}
+				if(isset($PPM_idLevel_1)){          $x9  = $PPM_idLevel_1;          }else{$x9  = '';}
+				if(isset($PPM_idLevel_2)){          $x10 = $PPM_idLevel_2;          }else{$x10 = '';}
+				if(isset($PPM_idLevel_3)){          $x11 = $PPM_idLevel_3;          }else{$x11 = '';}
+				if(isset($PPM_idLevel_4)){          $x12 = $PPM_idLevel_4;          }else{$x12 = '';}
+				if(isset($PPM_idLevel_5)){          $x13 = $PPM_idLevel_5;          }else{$x13 = '';}
+				if(isset($RET_idCentroCosto)){      $x14 = $RET_idCentroCosto;      }else{$x14 = '';}
+				if(isset($RET_idLevel_1)){          $x15 = $RET_idLevel_1;          }else{$x15 = '';}
+				if(isset($RET_idLevel_2)){          $x16 = $RET_idLevel_2;          }else{$x16 = '';}
+				if(isset($RET_idLevel_3)){          $x17 = $RET_idLevel_3;          }else{$x17 = '';}
+				if(isset($RET_idLevel_4)){          $x18 = $RET_idLevel_4;          }else{$x18 = '';}
+				if(isset($RET_idLevel_5)){          $x19 = $RET_idLevel_5;          }else{$x19 = '';}
+				if(isset($IMPRENT_idCentroCosto)){  $x20 = $IMPRENT_idCentroCosto;  }else{$x20 = '';}
+				if(isset($IMPRENT_idLevel_1)){      $x21 = $IMPRENT_idLevel_1;      }else{$x21 = '';}
+				if(isset($IMPRENT_idLevel_2)){      $x22 = $IMPRENT_idLevel_2;      }else{$x22 = '';}
+				if(isset($IMPRENT_idLevel_3)){      $x23 = $IMPRENT_idLevel_3;      }else{$x23 = '';}
+				if(isset($IMPRENT_idLevel_4)){      $x24 = $IMPRENT_idLevel_4;      }else{$x24 = '';}
+				if(isset($IMPRENT_idLevel_5)){      $x25 = $IMPRENT_idLevel_5;      }else{$x25 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Porcentajes');
@@ -259,19 +259,19 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 // Se trae un listado con todos los elementos
 $arrImpuestos = array();
 $query = "SELECT 
@@ -343,7 +343,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrImpuestos,$row );
 }
 //cuento la cantidad de items creados
@@ -352,13 +352,13 @@ $ndata_1 = db_select_nrows (false, 'idSistema', 'sistema_leyes_fiscales', '', "i
 			
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 	<?php if (isset($ndata_1)&&$ndata_1==0){ ?>
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>?new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Mantenedor</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>?new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Mantenedor</a><?php } ?>
 	<?php } ?>
 </div>
                     
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Mantenedor</h5>
@@ -378,40 +378,40 @@ $ndata_1 = db_select_nrows (false, 'idSistema', 'sistema_leyes_fiscales', '', "i
 							<?php 
 							echo '<strong>Porcentaje PPM: </strong>'.$imp['Porcentaje_PPM'].'%<br/>'; 
 							echo '<strong>Porcentaje Retencion Boletas: </strong>'.$imp['Porcentaje_Ret_Boletas'].'%<br/>'; 
-							if(isset($imp['IVA_CC_Nombre'])&&$imp['IVA_CC_Nombre']!=''){ 
+							if(isset($imp['IVA_CC_Nombre'])&&$imp['IVA_CC_Nombre']!=''){
 								echo '<strong>Centro Costo IVA: </strong>'.$imp['IVA_CC_Nombre'];
-								if(isset($imp['IVA_CC_Level_1'])&&$imp['IVA_CC_Level_1']!=''){echo ' - '.$imp['IVA_CC_Level_1']; }
-								if(isset($imp['IVA_CC_Level_2'])&&$imp['IVA_CC_Level_2']!=''){echo ' - '.$imp['IVA_CC_Level_2']; }
-								if(isset($imp['IVA_CC_Level_3'])&&$imp['IVA_CC_Level_3']!=''){echo ' - '.$imp['IVA_CC_Level_3']; }
-								if(isset($imp['IVA_CC_Level_4'])&&$imp['IVA_CC_Level_4']!=''){echo ' - '.$imp['IVA_CC_Level_4']; }
-								if(isset($imp['IVA_CC_Level_5'])&&$imp['IVA_CC_Level_5']!=''){echo ' - '.$imp['IVA_CC_Level_5']; }
+								if(isset($imp['IVA_CC_Level_1'])&&$imp['IVA_CC_Level_1']!=''){echo ' - '.$imp['IVA_CC_Level_1'];}
+								if(isset($imp['IVA_CC_Level_2'])&&$imp['IVA_CC_Level_2']!=''){echo ' - '.$imp['IVA_CC_Level_2'];}
+								if(isset($imp['IVA_CC_Level_3'])&&$imp['IVA_CC_Level_3']!=''){echo ' - '.$imp['IVA_CC_Level_3'];}
+								if(isset($imp['IVA_CC_Level_4'])&&$imp['IVA_CC_Level_4']!=''){echo ' - '.$imp['IVA_CC_Level_4'];}
+								if(isset($imp['IVA_CC_Level_5'])&&$imp['IVA_CC_Level_5']!=''){echo ' - '.$imp['IVA_CC_Level_5'];}
 								echo '<br/>';
 							}
-							if(isset($imp['PPM_CC_Nombre'])&&$imp['PPM_CC_Nombre']!=''){ 
+							if(isset($imp['PPM_CC_Nombre'])&&$imp['PPM_CC_Nombre']!=''){
 								echo '<strong>Centro Costo PPM: </strong>'.$imp['PPM_CC_Nombre'];
-								if(isset($imp['PPM_CC_Level_1'])&&$imp['PPM_CC_Level_1']!=''){echo ' - '.$imp['PPM_CC_Level_1']; }
-								if(isset($imp['PPM_CC_Level_2'])&&$imp['PPM_CC_Level_2']!=''){echo ' - '.$imp['PPM_CC_Level_2']; }
-								if(isset($imp['PPM_CC_Level_3'])&&$imp['PPM_CC_Level_3']!=''){echo ' - '.$imp['PPM_CC_Level_3']; }
-								if(isset($imp['PPM_CC_Level_4'])&&$imp['PPM_CC_Level_4']!=''){echo ' - '.$imp['PPM_CC_Level_4']; }
-								if(isset($imp['PPM_CC_Level_5'])&&$imp['PPM_CC_Level_5']!=''){echo ' - '.$imp['PPM_CC_Level_5']; }
+								if(isset($imp['PPM_CC_Level_1'])&&$imp['PPM_CC_Level_1']!=''){echo ' - '.$imp['PPM_CC_Level_1'];}
+								if(isset($imp['PPM_CC_Level_2'])&&$imp['PPM_CC_Level_2']!=''){echo ' - '.$imp['PPM_CC_Level_2'];}
+								if(isset($imp['PPM_CC_Level_3'])&&$imp['PPM_CC_Level_3']!=''){echo ' - '.$imp['PPM_CC_Level_3'];}
+								if(isset($imp['PPM_CC_Level_4'])&&$imp['PPM_CC_Level_4']!=''){echo ' - '.$imp['PPM_CC_Level_4'];}
+								if(isset($imp['PPM_CC_Level_5'])&&$imp['PPM_CC_Level_5']!=''){echo ' - '.$imp['PPM_CC_Level_5'];}
 								echo '<br/>';
 							}
-							if(isset($imp['RET_CC_Nombre'])&&$imp['RET_CC_Nombre']!=''){ 
+							if(isset($imp['RET_CC_Nombre'])&&$imp['RET_CC_Nombre']!=''){
 								echo '<strong>Centro Costo Retenciones: </strong>'.$imp['RET_CC_Nombre'];
-								if(isset($imp['RET_CC_Level_1'])&&$imp['RET_CC_Level_1']!=''){echo ' - '.$imp['RET_CC_Level_1']; }
-								if(isset($imp['RET_CC_Level_2'])&&$imp['RET_CC_Level_2']!=''){echo ' - '.$imp['RET_CC_Level_2']; }
-								if(isset($imp['RET_CC_Level_3'])&&$imp['RET_CC_Level_3']!=''){echo ' - '.$imp['RET_CC_Level_3']; }
-								if(isset($imp['RET_CC_Level_4'])&&$imp['RET_CC_Level_4']!=''){echo ' - '.$imp['RET_CC_Level_4']; }
-								if(isset($imp['RET_CC_Level_5'])&&$imp['RET_CC_Level_5']!=''){echo ' - '.$imp['RET_CC_Level_5']; }
+								if(isset($imp['RET_CC_Level_1'])&&$imp['RET_CC_Level_1']!=''){echo ' - '.$imp['RET_CC_Level_1'];}
+								if(isset($imp['RET_CC_Level_2'])&&$imp['RET_CC_Level_2']!=''){echo ' - '.$imp['RET_CC_Level_2'];}
+								if(isset($imp['RET_CC_Level_3'])&&$imp['RET_CC_Level_3']!=''){echo ' - '.$imp['RET_CC_Level_3'];}
+								if(isset($imp['RET_CC_Level_4'])&&$imp['RET_CC_Level_4']!=''){echo ' - '.$imp['RET_CC_Level_4'];}
+								if(isset($imp['RET_CC_Level_5'])&&$imp['RET_CC_Level_5']!=''){echo ' - '.$imp['RET_CC_Level_5'];}
 								echo '<br/>';
 							}
-							if(isset($imp['IMPRENT_CC_Nombre'])&&$imp['IMPRENT_CC_Nombre']!=''){ 
+							if(isset($imp['IMPRENT_CC_Nombre'])&&$imp['IMPRENT_CC_Nombre']!=''){
 								echo '<strong>Centro Costo Impuesto a la Renta: </strong>'.$imp['IMPRENT_CC_Nombre'];
-								if(isset($imp['IMPRENT_CC_Level_1'])&&$imp['IMPRENT_CC_Level_1']!=''){echo ' - '.$imp['IMPRENT_CC_Level_1']; }
-								if(isset($imp['IMPRENT_CC_Level_2'])&&$imp['IMPRENT_CC_Level_2']!=''){echo ' - '.$imp['IMPRENT_CC_Level_2']; }
-								if(isset($imp['IMPRENT_CC_Level_3'])&&$imp['IMPRENT_CC_Level_3']!=''){echo ' - '.$imp['IMPRENT_CC_Level_3']; }
-								if(isset($imp['IMPRENT_CC_Level_4'])&&$imp['IMPRENT_CC_Level_4']!=''){echo ' - '.$imp['IMPRENT_CC_Level_4']; }
-								if(isset($imp['IMPRENT_CC_Level_5'])&&$imp['IMPRENT_CC_Level_5']!=''){echo ' - '.$imp['IMPRENT_CC_Level_5']; }
+								if(isset($imp['IMPRENT_CC_Level_1'])&&$imp['IMPRENT_CC_Level_1']!=''){echo ' - '.$imp['IMPRENT_CC_Level_1'];}
+								if(isset($imp['IMPRENT_CC_Level_2'])&&$imp['IMPRENT_CC_Level_2']!=''){echo ' - '.$imp['IMPRENT_CC_Level_2'];}
+								if(isset($imp['IMPRENT_CC_Level_3'])&&$imp['IMPRENT_CC_Level_3']!=''){echo ' - '.$imp['IMPRENT_CC_Level_3'];}
+								if(isset($imp['IMPRENT_CC_Level_4'])&&$imp['IMPRENT_CC_Level_4']!=''){echo ' - '.$imp['IMPRENT_CC_Level_4'];}
+								if(isset($imp['IMPRENT_CC_Level_5'])&&$imp['IMPRENT_CC_Level_5']!=''){echo ' - '.$imp['IMPRENT_CC_Level_5'];}
 								echo '<br/>';
 							}
 							?>
@@ -423,17 +423,17 @@ $ndata_1 = db_select_nrows (false, 'idSistema', 'sistema_leyes_fiscales', '', "i
 									$ubicacion = $location.'?del='.simpleEncode($imp['idMantenedor'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar los datos del mantenedor?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>	
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

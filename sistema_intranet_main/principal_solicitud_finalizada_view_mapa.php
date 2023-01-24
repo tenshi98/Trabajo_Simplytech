@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -21,7 +21,7 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $query = "SELECT
 vehiculos_listado.Nombre AS VehiculoNombreBack,
@@ -74,11 +74,11 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 		
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrZonas,$row );
 }
-	
-/*****************************************/	
+
+/*****************************************/
 //Variable para almacenar los recorridos
 $rec_x           = '';
 $marker_loc      = '';
@@ -114,7 +114,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 			
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrMediciones,$row );
 }
 //recorro los resultados
@@ -158,10 +158,10 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ver Mapas</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ver Mapas</h5>
 		</header>
 		<div class="tab-content">
 			<?php
@@ -239,7 +239,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 						};
 						map_1 = new google.maps.Map(document.getElementById("map_canvas_y"), myOptions1);
 						map_2 = new google.maps.Map(document.getElementById("map_canvas_z"), myOptions2);
-						
+
 						//Se dibujan los puntos en base a los niveles de riego
 						/* Data points defined as a mixture of WeightedLocation and LatLng objects */
 						var heatMapData = [<?php echo $rec_x; ?>];
@@ -249,7 +249,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 							map: map_2
 						});
 						heatmap.setMap(map_2);
-						
+
 						//Ubicacion de los distintos dispositivos
 						var locations = [<?php echo $marker_loc; ?>];
 								
@@ -293,7 +293,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 								if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
 									echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
 									';
-									if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){	
+									if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){
 										$Latitud_x  = $puntos['Latitud'];
 										$Longitud_x = $puntos['Longitud'];
 										//Calculos para centrar mapa
@@ -404,7 +404,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 				
 							//ubicacion mapa		
 							latlngset = new google.maps.LatLng(latitude, longitude);
-							
+
 							//se crea marcador
 							var marker = new google.maps.Marker({
 								map         : map_1, 
@@ -426,12 +426,12 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 							var infowindow = new google.maps.InfoWindow();
 
 							//se agrega funcion de click a infowindow
-							google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+							google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){
 								return function() {
 									infowindow.setContent(content);
 									infowindow.open(map_1,marker);
 								};
-							})(marker,content,infowindow)); 
+							})(marker,content,infowindow));
 
 						}
 						latlon = new google.maps.LatLng(last_latitude, last_longitude);
@@ -467,17 +467,17 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 					google.maps.event.addDomListener(window, "load", initialize());
 					
 						
-				</script>		
+				</script>
 			<?php } ?>
 		</div>
 	</div>
 </div>
 
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
+<?php if(isset($_GET['return'])&&$_GET['return']!=''){?>
 	<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+		<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
 	</div>
 <?php } ?>

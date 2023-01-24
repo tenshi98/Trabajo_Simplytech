@@ -44,7 +44,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>google.charts.load('current', {'packages':['line','corechart']});</script>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -89,7 +89,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 										
 							if($Temperatura_N!=0){  $New_Temperatura = $Temperatura/$Temperatura_N; }else{$New_Temperatura = 0;}
 							if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad     = 0;}
-							
+
 							//Se genera la cadena
 							if($New_Temperatura!=0 OR $New_Humedad!=0){
 								$chain  = "'".Fecha_estandar($fac['FechaSistema'])." - ".Hora_estandar($fac['HoraSistema'])."'";
@@ -129,7 +129,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 
 				}
 
-			</script> 
+			</script>
 			<div id="curve_chart" style="height: 500px"></div>
 									
 		</div>

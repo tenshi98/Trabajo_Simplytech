@@ -2,24 +2,24 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-273).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idTablaCarga']) )  $idTablaCarga   = $_POST['idTablaCarga'];
-	if ( !empty($_POST['Tramo']) )         $Tramo          = $_POST['Tramo'];
-	if ( isset($_POST['Valor_Desde']) )    $Valor_Desde    = $_POST['Valor_Desde'];
-	if ( isset($_POST['Valor_Hasta']) )    $Valor_Hasta    = $_POST['Valor_Hasta'];
-	if ( isset($_POST['Valor_Pago']) )     $Valor_Pago     = $_POST['Valor_Pago'];
-	
+	if (!empty($_POST['idTablaCarga']))  $idTablaCarga   = $_POST['idTablaCarga'];
+	if (!empty($_POST['Tramo']))         $Tramo          = $_POST['Tramo'];
+	if ( isset($_POST['Valor_Desde']))    $Valor_Desde    = $_POST['Valor_Desde'];
+	if ( isset($_POST['Valor_Hasta']))    $Valor_Hasta    = $_POST['Valor_Hasta'];
+	if ( isset($_POST['Valor_Pago']))     $Valor_Pago     = $_POST['Valor_Pago'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -36,30 +36,30 @@ require_once '0_validate_user_1.php';
 			case 'Valor_Desde':   if(!isset($Valor_Desde)){    $error['Valor_Desde']   = 'error/No ha ingresado el valor desde';}break;
 			case 'Valor_Hasta':   if(!isset($Valor_Hasta)){    $error['Valor_Hasta']   = 'error/No ha ingresado el valor hasta';}break;
 			case 'Valor_Pago':    if(!isset($Valor_Pago)){     $error['Valor_Pago']    = 'error/No ha ingresado el valor a pagar';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Tramo) && $Tramo != ''){ $Tramo = EstandarizarInput($Tramo); }
+/*******************************************************************************************************************/
+	if(isset($Tramo) && $Tramo!=''){ $Tramo = EstandarizarInput($Tramo);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Tramo)&&contar_palabras_censuradas($Tramo)!=0){  $error['Tramo'] = 'error/Edita Tramo, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Tramo)&&contar_palabras_censuradas($Tramo)!=0){  $error['Tramo'] = 'error/Edita Tramo, contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -70,16 +70,16 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idTablaCarga='".$idTablaCarga."'" ;
-				if(isset($Tramo) && $Tramo != ''){              $SIS_data .= ",Tramo='".$Tramo."'" ;}
-				if(isset($Valor_Desde) && $Valor_Desde != ''){  $SIS_data .= ",Valor_Desde='".$Valor_Desde."'" ;}
-				if(isset($Valor_Hasta) && $Valor_Hasta != ''){  $SIS_data .= ",Valor_Hasta='".$Valor_Hasta."'" ;}
-				if(isset($Valor_Pago) && $Valor_Pago != ''){    $SIS_data .= ",Valor_Pago='".$Valor_Pago."'" ;}
-				
+				$SIS_data = "idTablaCarga='".$idTablaCarga."'";
+				if(isset($Tramo) && $Tramo!=''){              $SIS_data .= ",Tramo='".$Tramo."'";}
+				if(isset($Valor_Desde) && $Valor_Desde!=''){  $SIS_data .= ",Valor_Desde='".$Valor_Desde."'";}
+				if(isset($Valor_Hasta) && $Valor_Hasta!=''){  $SIS_data .= ",Valor_Hasta='".$Valor_Hasta."'";}
+				if(isset($Valor_Pago) && $Valor_Pago!=''){    $SIS_data .= ",Valor_Pago='".$Valor_Pago."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'sistema_rrhh_tabla_carga_familiar', 'idTablaCarga = "'.$idTablaCarga.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -88,12 +88,11 @@ require_once '0_validate_user_1.php';
 					
 					header( 'Location: '.$location.'?edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
-		break;	
+
+		break;
 						
 		
 /*******************************************************************************************************************/

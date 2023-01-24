@@ -10,12 +10,12 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "principal_cheques_pagar.php";
 $location = $original;
 //Se agregan ubicaciones
-if(isset($_GET['Mes']) && $_GET['Mes'] != ''){  $location .= "?Mes=".$_GET['Mes']; } else { $location .= "?Mes=".mes_actual(); }
-if(isset($_GET['Ano']) && $_GET['Ano'] != ''){  $location .= "&Ano=".$_GET['Ano']; } else { $location .= "&Ano=".ano_actual(); }
+if(isset($_GET['Mes']) && $_GET['Mes']!=''){  $location .= "?Mes=".$_GET['Mes'];} else { $location .= "?Mes=".mes_actual();}
+if(isset($_GET['Ano']) && $_GET['Ano']!=''){  $location .= "&Ano=".$_GET['Ano'];} else { $location .= "&Ano=".ano_actual();}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -30,8 +30,8 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 include '1include_principal_cheques_cobrar.php';?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px; margin-top:30px">
-<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
+<a href="principal.php" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "seguridad_camaras_vista.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,7 +18,7 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){
 	$location .= "&Nombre=".$_GET['Nombre'];
 	$search .= "&Nombre=".$_GET['Nombre'];  	
 }
@@ -33,10 +33,10 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['idCamara']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['idCamara'])){ 
 // Se trae el usuario
-$query = "SELECT Nombre, idSubconfiguracion, idTipoCamara, Config_usuario, Config_Password,
+$query = "SELECT Nombre,idSubconfiguracion, idTipoCamara, Config_usuario, Config_Password,
 Config_IP, Config_Puerto, Config_Web
 FROM `seguridad_camaras_listado`
 WHERE idCamara = ".$_GET['idCamara'];
@@ -58,7 +58,7 @@ $rowCamara = mysqli_fetch_assoc ($resultado);
 
 // Se trae un listado con todos los impuestos existentes
 $arrCamaras = array();
-$query = "SELECT Nombre, idTipoCamara, Config_usuario, Config_Password,
+$query = "SELECT Nombre,idTipoCamara, Config_usuario, Config_Password,
 Config_IP, Config_Puerto, Config_Web, Chanel
 FROM `seguridad_camaras_listado_canales`
 WHERE idCamara = ".$_GET['idCamara'];
@@ -75,17 +75,17 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCamaras,$row );
 }
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Camaras de Seguridad</h5>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<?php
 			//recorro las camaras
 			foreach ($arrCamaras as $camara) {
@@ -94,7 +94,7 @@ array_push( $arrCamaras,$row );
 					
 				//si existe subconfiguracion
 				if(isset($rowCamara['idSubconfiguracion'])&&$rowCamara['idSubconfiguracion']==1){
-					
+
 					//Variables
 					$SIS_Config_usuario   = $camara['Config_usuario'];
 					$SIS_Config_Password  = $camara['Config_Password'];
@@ -111,7 +111,7 @@ array_push( $arrCamaras,$row );
 					
 				//si no existe subconfihuracion
 				}elseif(isset($rowCamara['idSubconfiguracion'])&&$rowCamara['idSubconfiguracion']==2){
-					
+
 					//Variables
 					$SIS_Config_usuario   = $rowCamara['Config_usuario'];
 					$SIS_Config_Password  = $rowCamara['Config_Password'];
@@ -125,9 +125,9 @@ array_push( $arrCamaras,$row );
 					$direccion .= ':'.$SIS_Config_Password;
 					$direccion .= '@'.$SIS_Config_IP;
 					if(isset($SIS_Config_Puerto)&&$SIS_Config_Puerto!=''){$direccion .= ':'.$SIS_Config_Puerto;}
-					
+
 				}
-				
+
 				/****************************************************/
 				//si esta configurado
 				if($SIS_Config_usuario!=''&&$SIS_Config_Password!=''&&$SIS_Config_IP!=''){
@@ -135,7 +135,7 @@ array_push( $arrCamaras,$row );
 					switch ($SIS_TipoCamara) {
 						//Dahua
 						case 1:
-							echo '<div class="col-sm-6">';
+							echo '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">';
 								echo '<img class="img-thumbnail" name="main" id="main" border="0" width="100%" height="100%" src="'.$direccion.'/cgi-bin/mjpg/video.cgi?channel='.$SIS_Config_Chanel.'&subtype=1">';
 							echo '</div>';
 							break;
@@ -149,7 +149,7 @@ array_push( $arrCamaras,$row );
 						$Alert_Text = 'La camara compartida del canal '.$SIS_Config_Chanel.' no esta completamente configurada';
 						alert_post_data(4,3,1, $Alert_Text);
 					echo '</div>';
-				}	
+				}
 			}
 			?>
 			
@@ -158,29 +158,20 @@ array_push( $arrCamaras,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -209,7 +200,7 @@ $SIS_where .= " GROUP BY seguridad_camaras_listado.idCamara";
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'seguridad_camaras_listado.idCamara', 'seguridad_camaras_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 seguridad_camaras_listado.idCamara,
@@ -222,18 +213,18 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $SIS
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
-		<li class="btn btn-default"><?php echo $bread_order; ?></li>	
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
 	
 </div>                    
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Grupos de Camaras</h5>
@@ -243,7 +234,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $SIS
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -257,7 +248,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $SIS
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrTipo as $tipo) { ?>
 					<tr class="odd">
@@ -269,18 +260,18 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $SIS
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div> 
+		</div>
 	</div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

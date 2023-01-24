@@ -6,13 +6,13 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport"              content="width=device-width, initial-scale=1, user-scalable=no">
 		<meta http-equiv="Content-Type"    content="text/html; charset=UTF-8">
-		
+
 		<!-- Informacion del sitio-->
 		<title>Maqueta</title>
 		<meta name="description"           content="">
 		<meta name="author"                content="">
 		<meta name="keywords"              content="">
-		
+
 		<!-- WEB FONT -->
 		<?php
 		//verifica la capa de desarrollo
@@ -22,15 +22,15 @@
 		if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			echo '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIB_assets/lib/font-awesome/css/font-awesome.min.css">';
 			//echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
-			
+
 		////////////////////////////////////////////////////////////////////////////////
-		//si estoy en ambiente de produccion	
+		//si estoy en ambiente de produccion
 		}else{
 			echo '<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">';
 			echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
 		}
 		?>
-		
+
 		<!-- CSS Base -->
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
@@ -54,7 +54,7 @@
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/chosen/chosen.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/modal/colorbox.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/tooltipster/css/tooltipster.bundle.min.css">
-		
+
 		<!-- Javascript -->
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/js/main.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/form_functions.min.js"></script>
@@ -74,20 +74,20 @@
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/country_picker/js/bootstrap-select.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly-locale-es-ar.js"></script>
-		
+
 		<!-- Favicons-->
 		<?php
 		//Favicon Personalizado
 		$nombre_fichero = 'img/mifavicon.png';
-		if (file_exists($nombre_fichero)) { ?>
+		if (file_exists($nombre_fichero)){ ?>
 			<link rel="icon"             type="image/png"                    href="img/mifavicon.png" >
 			<link rel="shortcut icon"    type="image/x-icon"                 href="img/mifavicon.png" >
 			<link rel="apple-touch-icon" type="image/x-icon"                 href="img/mifavicon-57x57.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="72x72"   href="img/mifavicon-72x72.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/mifavicon-114x114.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/mifavicon-144x144.png">
-		<?php 
-		//Favicon predefinido	
+		<?php
+		//Favicon predefinido
 		}else{ ?>
 			<link rel="icon"             type="image/png"                    href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/favicon.png" >
 			<link rel="shortcut icon"    type="image/x-icon"                 href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/favicon.png" >
@@ -96,13 +96,12 @@
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/apple-touch-icon-114x114-precomposed.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/apple-touch-icon-144x144-precomposed.png">
 		<?php } ?>
-		
+
 		<!-- Correcciones CSS -->
 		<style>
 			body {background-color: #FFF !important;}
 		</style>
-		
-		
+
 	</head>
 	<body>
 		<div id="loader-wrapper">

@@ -2,22 +2,22 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-116).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idLog']) )        $idLog        = $_POST['idLog'];
-	if ( !empty($_POST['Fecha']) )        $Fecha        = $_POST['Fecha'];
-	if ( !empty($_POST['Descripcion']) )  $Descripcion  = $_POST['Descripcion'];
-	
+	if (!empty($_POST['idLog']))        $idLog        = $_POST['idLog'];
+	if (!empty($_POST['Fecha']))        $Fecha        = $_POST['Fecha'];
+	if (!empty($_POST['Descripcion']))  $Descripcion  = $_POST['Descripcion'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -36,36 +36,36 @@ require_once '0_validate_user_1.php';
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Descripcion) && $Descripcion != ''){ $Descripcion = EstandarizarInput($Descripcion); }
+/*******************************************************************************************************************/
+	if(isset($Descripcion) && $Descripcion!=''){ $Descripcion = EstandarizarInput($Descripcion);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){  $error['Descripcion'] = 'error/Edita la Descripcion, contiene palabras no permitidas'; }	
+/*******************************************************************************************************************/
+	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){  $error['Descripcion'] = 'error/Edita la Descripcion, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($Fecha) && $Fecha != ''){              $SIS_data  = "'".$Fecha."'" ;          }else{$SIS_data  = "''";}
-				if(isset($Descripcion) && $Descripcion != ''){  $SIS_data .= ",'".$Descripcion."'" ;   }else{$SIS_data .= ",''";}
-				
+				if(isset($Fecha) && $Fecha!=''){ $SIS_data  = "'".$Fecha."'";          }else{$SIS_data  = "''";}
+				if(isset($Descripcion) && $Descripcion!=''){  $SIS_data .= ",'".$Descripcion."'"; }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'Fecha,Descripcion';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seg_vecinal_actualizaciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -73,45 +73,44 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idLog='".$idLog."'" ;
-				if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){   $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
-				
+				$SIS_data = "idLog='".$idLog."'";
+				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+				if(isset($Descripcion) && $Descripcion!=''){   $SIS_data .= ",Descripcion='".$Descripcion."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_actualizaciones', 'idLog = "'.$idLog.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
-		break;	
-						
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -119,40 +118,37 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'seg_vecinal_actualizaciones', 'idLog = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-			
 
-		break;												
+		break;
 /*******************************************************************************************************************/
 	}
 ?>

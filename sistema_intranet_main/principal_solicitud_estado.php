@@ -10,16 +10,16 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "principal_solicitud_estado.php";
 $location = $original;
 /**********************************************************************************************************************************/
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -27,19 +27,19 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "cross_solicitud_aplicacion_listado.idSolicitud!=0";
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){              $SIS_where .= " AND cross_solicitud_aplicacion_listado.idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){                  $SIS_where .= " AND cross_solicitud_aplicacion_listado_cuarteles.idZona=".$_GET['idZona'];}
-if(isset($_GET['idTemporada']) && $_GET['idTemporada'] != ''){        $SIS_where .= " AND cross_solicitud_aplicacion_listado.idTemporada=".$_GET['idTemporada'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $SIS_where .= " AND cross_solicitud_aplicacion_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idPredio']) && $_GET['idPredio']!=''){       $SIS_where .= " AND cross_solicitud_aplicacion_listado.idPredio=".$_GET['idPredio'];}
+if(isset($_GET['idZona']) && $_GET['idZona']!=''){           $SIS_where .= " AND cross_solicitud_aplicacion_listado_cuarteles.idZona=".$_GET['idZona'];}
+if(isset($_GET['idTemporada']) && $_GET['idTemporada']!=''){ $SIS_where .= " AND cross_solicitud_aplicacion_listado.idTemporada=".$_GET['idTemporada'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){       $SIS_where .= " AND cross_solicitud_aplicacion_listado.idEstado=".$_GET['idEstado'];}
 if(isset($_GET['f_programacion_desde'])&&$_GET['f_programacion_desde']!=''&&isset($_GET['f_programacion_hasta'])&&$_GET['f_programacion_hasta']!=''){
 	$SIS_where.=" AND cross_solicitud_aplicacion_listado.f_programacion BETWEEN '".$_GET['f_programacion_desde']."' AND '".$_GET['f_programacion_hasta']."'";
 }
@@ -95,9 +95,9 @@ $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicaci
 ?>
 
 
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen de Solicitudes de Aplicacion</h5>
 		</header>
 
@@ -162,17 +162,17 @@ $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicaci
 											}
 										}
 									}
-									?>		
-								</td>		
+									?>	
+								</td>
 										
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<a href="<?php echo 'view_solicitud_aplicacion_finalizada.php?view='.simpleEncode($temp['idSolicitud'], fecha_actual()).'&idZona='.simpleEncode($temp['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Cuartel Cerrado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										<a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($temp['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud Aplicacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									</div>
-								</td>	
+								</td>
 							</tr>
-						<?php } ?>  
+						<?php } ?>
 						
 						<tr class="odd">
 							<td><strong>Totales</strong></td>
@@ -183,11 +183,11 @@ $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicaci
 							<td><strong><?php echo Cantidades($LitrosAplicados,1); ?></strong></td>
 							<td><strong><?php if($s_count!=0){echo Cantidades($MojamientoReal/$s_count,1);}else{echo '0';} ?></strong></td>
 							<td><strong><?php if($MojamientoReal!=0){echo porcentaje($MojamientoReal/$Mojamiento);}else{ echo '0 %';} ?></td>
-							<td></td>		
 							<td></td>	
-						</tr>           
+							<td></td>
+						</tr>         
 					</tbody>
-				</table>	
+				</table>
 			</div>
 
 		
@@ -196,45 +196,45 @@ $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicaci
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
 $y = "idEstado=1";
-$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  	 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idPredio)) {              $x1  = $idPredio;               }else{$x1  = '';}
-				if(isset($idZona)) {                $x2  = $idZona;                 }else{$x2  = '';}
-				if(isset($idTemporada)) {           $x3  = $idTemporada;            }else{$x3  = '';}
-				if(isset($idEstado)) {              $x4  = $idEstado;               }else{$x4  = '';}
-				if(isset($f_programacion_desde)) {  $x5  = $f_programacion_desde;   }else{$x5  = '';}
-				if(isset($f_programacion_hasta)) {  $x6  = $f_programacion_hasta;   }else{$x6  = '';}
-				if(isset($f_ejecucion_desde)) {     $x7  = $f_ejecucion_desde;      }else{$x7  = '';}
-				if(isset($f_ejecucion_hasta)) {     $x8  = $f_ejecucion_hasta;      }else{$x8  = '';}
-				if(isset($f_termino_desde)) {       $x9  = $f_termino_desde;        }else{$x9  = '';}
-				if(isset($f_termino_hasta)) {       $x10 = $f_termino_hasta;        }else{$x10 = '';}
-				
+				if(isset($idPredio)){              $x1  = $idPredio;               }else{$x1  = '';}
+				if(isset($idZona)){                $x2  = $idZona;                 }else{$x2  = '';}
+				if(isset($idTemporada)){           $x3  = $idTemporada;            }else{$x3  = '';}
+				if(isset($idEstado)){              $x4  = $idEstado;               }else{$x4  = '';}
+				if(isset($f_programacion_desde)){  $x5  = $f_programacion_desde;   }else{$x5  = '';}
+				if(isset($f_programacion_hasta)){  $x6  = $f_programacion_hasta;   }else{$x6  = '';}
+				if(isset($f_ejecucion_desde)){     $x7  = $f_ejecucion_desde;      }else{$x7  = '';}
+				if(isset($f_ejecucion_hasta)){     $x8  = $f_ejecucion_hasta;      }else{$x8  = '';}
+				if(isset($f_termino_desde)){       $x9  = $f_termino_desde;        }else{$x9  = '';}
+				if(isset($f_termino_hasta)){       $x10 = $f_termino_hasta;        }else{$x10 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Predio','idPredio', $x1, 2, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
@@ -252,11 +252,11 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>

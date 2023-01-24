@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "admin_trabajadores_listado.php";
 $location = $original;
 $new_location = "admin_trabajadores_listado_previsional.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -43,7 +43,7 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Trabajador editado cor
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Trabajador borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = 'Nombre,ApellidoPat,ApellidoMat,idAFP,idSalud,idMutual,idCotizacionSaludExtra,PorcCotSaludExtra, MontoCotSaludExtra';
 $SIS_join  = '';
@@ -52,12 +52,12 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Previsionales');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -73,7 +73,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_bonos_fijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Bonos Fijos Asignados</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_cargas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Cargas Familiares</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						
+
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Contrato</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_anexos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Anexos Contrato</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_licencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Licencia Conducir</a></li>
@@ -82,111 +82,111 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Antecedentes</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Carnet</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
-						
+
 					</ul>
-                </li>           
+                </li>
 			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
-			
-					<?php 
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+
+					<?php
 					//Se verifican si existen los datos
-					if(isset($idAFP)) {                   $x1 = $idAFP;                    }else{$x1 = $rowdata['idAFP'];}
-					if(isset($idMutual)) {                $x2 = $idMutual;                 }else{$x2 = $rowdata['idMutual'];}
-					if(isset($idSalud)) {                 $x3 = $idSalud;                  }else{$x3 = $rowdata['idSalud'];}
-					if(isset($idCotizacionSaludExtra)) {  $x4 = $idCotizacionSaludExtra;   }else{$x4 = $rowdata['idCotizacionSaludExtra'];}
-					if(isset($PorcCotSaludExtra)) {       $x5 = $PorcCotSaludExtra;        }else{$x5 = $rowdata['PorcCotSaludExtra'];}
-					if(isset($MontoCotSaludExtra)) {      $x6 = $MontoCotSaludExtra;       }else{$x6 = $rowdata['MontoCotSaludExtra'];}
-					
+					if(isset($idAFP)){                   $x1 = $idAFP;                    }else{$x1 = $rowdata['idAFP'];}
+					if(isset($idMutual)){                $x2 = $idMutual;                 }else{$x2 = $rowdata['idMutual'];}
+					if(isset($idSalud)){                 $x3 = $idSalud;                  }else{$x3 = $rowdata['idSalud'];}
+					if(isset($idCotizacionSaludExtra)){  $x4 = $idCotizacionSaludExtra;   }else{$x4 = $rowdata['idCotizacionSaludExtra'];}
+					if(isset($PorcCotSaludExtra)){       $x5 = $PorcCotSaludExtra;        }else{$x5 = $rowdata['PorcCotSaludExtra'];}
+					if(isset($MontoCotSaludExtra)){      $x6 = $MontoCotSaludExtra;       }else{$x6 = $rowdata['MontoCotSaludExtra'];}
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Administradora Fondos de Pensiones');
 					$Form_Inputs->form_select('AFP','idAFP', $x1, 1, 'idAFP', 'Nombre', 'sistema_afp', 'idEstado=1', '', $dbConn);
-					
+
 					$Form_Inputs->form_tittle(3, 'Mutual de Seguridad');
 					$Form_Inputs->form_select('Mutual','idMutual', $x2, 1, 'idMutual', 'Nombre', 'sistema_mutual', 'idEstado=1', '', $dbConn);
-					
+
 					$Form_Inputs->form_tittle(3, 'Salud');
 					$Form_Inputs->form_select('Sistema Salud','idSalud', $x3, 1, 'idSalud', 'Nombre', 'sistema_salud', 'idEstado=1', '', $dbConn);
 					$Form_Inputs->form_select('Cotizacion Adicional Voluntaria','idCotizacionSaludExtra', $x4, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_input_number_spinner('Porcentaje Cotizacion Adicional','PorcCotSaludExtra', $x5, 0, 100, '0.1', 1, 1);
 					$Form_Inputs->form_values('Monto Cotizacion Adicional','MontoCotSaludExtra', $x6, 1);
-					
+
 					$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
 					?>
-					
+
 					<script>
 						//oculto los div
 						document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
 						document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
-						
-						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
-									
+
+						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
+
 							let idCotizacionSaludExtra      = $("#idCotizacionSaludExtra").val();
-							
+
 							/*************************************/
 							//Si
-							if(idCotizacionSaludExtra == 1){ 
-								document.getElementById('div_PorcCotSaludExtra').style.display = 'block';			
-								document.getElementById('div_MontoCotSaludExtra').style.display = 'block';			
-								
-							//No
-							}else if(idCotizacionSaludExtra == 2){ 
-								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
-								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
-								
-							//si no en ninguno
-							}else{ 
-								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
-								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
-							
-							}
-									
-						}); 
-						
-						$("#idCotizacionSaludExtra").on("change", function(){ //se ejecuta al cambiar valor del select
-							let idCotizacionSaludExtra_sel = $(this).val(); //Asignamos el valor seleccionado
-							
-							//Si
-							if(idCotizacionSaludExtra_sel == 1){ 
+							if(idCotizacionSaludExtra == 1){
 								document.getElementById('div_PorcCotSaludExtra').style.display = 'block';
 								document.getElementById('div_MontoCotSaludExtra').style.display = 'block';
-								
+
 							//No
-							}else if(idCotizacionSaludExtra_sel == 2){ 
+							}else if(idCotizacionSaludExtra == 2){
 								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
 								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('PorcCotSaludExtra').value = "0";				
-								document.getElementById('MontoCotSaludExtra').value = "0";				
-								
+
 							//si no en ninguno
-							}else{ 
+							}else{
+								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
+								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
+
+							}
+
+						});
+
+						$("#idCotizacionSaludExtra").on("change", function(){ //se ejecuta al cambiar valor del select
+							let idCotizacionSaludExtra_sel = $(this).val(); //Asignamos el valor seleccionado
+
+							//Si
+							if(idCotizacionSaludExtra_sel == 1){
+								document.getElementById('div_PorcCotSaludExtra').style.display = 'block';
+								document.getElementById('div_MontoCotSaludExtra').style.display = 'block';
+
+							//No
+							}else if(idCotizacionSaludExtra_sel == 2){
 								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
 								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('PorcCotSaludExtra').value = "0";				
-								document.getElementById('MontoCotSaludExtra').value = "0";				
-								
+								document.getElementById('PorcCotSaludExtra').value = "0";
+								document.getElementById('MontoCotSaludExtra').value = "0";
+
+							//si no en ninguno
+							}else{
+								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
+								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
+								//Reseteo los valores a 0
+								document.getElementById('PorcCotSaludExtra').value = "0";
+								document.getElementById('MontoCotSaludExtra').value = "0";
+
 							}
 						});
 					</script>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

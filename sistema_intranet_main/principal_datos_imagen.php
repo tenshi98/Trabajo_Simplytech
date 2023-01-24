@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "principal_datos_imagen.php";
 $location = $original;
 $location .= '?d=d';
@@ -18,18 +18,18 @@ $location .= '?d=d';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_img']) )  { 
+if (!empty($_POST['submit_img'])){
 	//Llamamos al formulario
 	$form_trabajo= 'submit_img';
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_img']) )     {
+if (!empty($_GET['del_img'])){
 	//datos extra
 	$location.='&id_usuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_img';
-	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -44,7 +44,7 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Perfil editado correct
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Perfil borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = 'Direccion_img';
 $SIS_join  = '';
@@ -79,12 +79,12 @@ for ($i = 1; $i <= 4; $i++) {
 //verifico permisos
 $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Perfil', $_SESSION['usuario']['basic_data']['Nombre'], 'Editar Imagen Perfil');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -99,17 +99,17 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 							<li class=""><a href="<?php echo 'principal_datos_documentos_pago.php'?>" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Documentos Pago</a></li>
 						<?php } ?>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 				<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
 				
 					<div class="col-sm-10 fcenter">
-						<img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" class="img-thumbnail" > 
+						<img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" class="img-thumbnail" >
 						<br/>
-						<a href="<?php echo $location.'&id_usuario='.$_SESSION['usuario']['basic_data']['idUsuario'].'&del_img=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
+						<a href="<?php echo $location.'&id_usuario='.$_SESSION['usuario']['basic_data']['idUsuario'].'&del_img=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 					</div>
 					<div class="clearfix"></div>
 				
@@ -151,7 +151,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 						</div>
 					</div>
 					
-					<script>  
+					<script>
 						$(document).ready(function(){
 
 							$image_crop = $('#image_demo').croppie({
@@ -191,19 +191,19 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 										data:{"image": response},
 										success:function(data){
 											$('#uploadimageModal').modal('hide');
-											location.reload(); 
+											location.reload();
 											//alert('listo');
 										}
 									});
 								})
 							});
 
-						});  
+						});
 					</script>
 					
 				<?php }?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 

@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -25,17 +25,17 @@ require_once 'core/Web.Header.Views.php';
 $SIS_where  = 'telemetria_listado_historial_activaciones.idEstado=1';
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){      
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){      
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];
 }
-if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino'] != ''){ 
+if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){ 
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
-}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''){ 
+}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){ 
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 
 //verifico el numero de datos antes de hacer la consulta
-$ndata_1 = db_select_nrows (false, 'idTelemetria', 'telemetria_listado_historial_activaciones', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
+$ndata_1 = db_select_nrows (false, 'idTelemetria', 'telemetria_listado_historial_activaciones', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'ndata_1');
 	
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
@@ -62,7 +62,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	$SIS_order = 'telemetria_listado_historial_activaciones.idTelemetria ASC, telemetria_listado_historial_activaciones.Fecha ASC, telemetria_listado_historial_activaciones.Hora ASC';
 	$arrConsulta = array();
-	$arrConsulta = db_select_array (false, $SIS_query,  'telemetria_listado_historial_activaciones', $SIS_join,  $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrConsulta');
+	$arrConsulta = db_select_array (false, $SIS_query,  'telemetria_listado_historial_activaciones', $SIS_join,  $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrConsulta');
 	
 
 	/**************************************************************************************/
@@ -71,7 +71,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//mensajes de error en caso de no tener configurados los datos
 	if(isset($arrConsulta[0]['EquipoActivacionValor'])&&$arrConsulta[0]['EquipoActivacionValor']==0){
 		echo '
-		<div class="col-sm-12" >';
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >';
 			$Alert_Text = 'No tiene configurado el interruptor de encendido';
 			alert_post_data(4,2,2, $Alert_Text);
 		echo '
@@ -80,7 +80,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	}
 	if(isset($arrConsulta[0]['EquipoColacion_termino'])&&$arrConsulta[0]['EquipoColacion_termino']=='00:00:00'){
 		echo '
-		<div class="col-sm-12" >';
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >';
 			$Alert_Text = 'No tiene configurada la hora de termino de la colacion';
 			alert_post_data(4,2,2, $Alert_Text);
 		echo '
@@ -89,7 +89,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	}
 	if(isset($arrConsulta[0]['EquipoColacion_inicio'])&&$arrConsulta[0]['EquipoColacion_inicio']=='00:00:00'){
 		echo '
-		<div class="col-sm-12" >';
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >';
 			$Alert_Text = 'No tiene configurada la hora de inicio de la colacion';
 			alert_post_data(4,2,2, $Alert_Text);
 		echo '
@@ -98,7 +98,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	}
 	if(isset($arrConsulta[0]['EquipoJornada_inicio'])&&$arrConsulta[0]['EquipoJornada_inicio']=='00:00:00'){
 		echo '
-		<div class="col-sm-12" >';
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >';
 			$Alert_Text = 'No tiene configurada la hora de inicio de la jornada';
 			alert_post_data(4,2,2, $Alert_Text);
 		echo '
@@ -107,7 +107,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	}
 	if(isset($arrConsulta[0]['EquipoJornada_termino'])&&$arrConsulta[0]['EquipoJornada_termino']=='00:00:00'){
 		echo '
-		<div class="col-sm-12" >';
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >';
 			$Alert_Text = 'No tiene configurada la hora de termino de la jornada';
 			alert_post_data(4,2,2, $Alert_Text);
 		echo '
@@ -130,7 +130,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		filtrar($arrConsulta, 'EquipoNombre');
 		foreach($arrConsulta as $categoria=>$permisos){ ?>
 					                               
-			<div class="col-sm-12">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="box">
 					<header>
 						<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Actividad del equipo <?php echo $categoria.' ('.$permisos[0]['EquipoJornada_inicio'].' a '.$permisos[0]['EquipoJornada_termino'].')'; ?></h5>
@@ -334,7 +334,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									$l_v1   = $con['EquipoValor'];
 									$l_v2   = $con['EquipoActivacionValor'];
 									
-								} 
+								}
 								
 								/**********************************************************************************/
 								//ultimo dato
@@ -387,7 +387,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 }
 
 
-?>	
+?>
 
 
 

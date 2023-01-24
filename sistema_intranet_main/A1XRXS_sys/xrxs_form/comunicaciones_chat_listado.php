@@ -2,28 +2,28 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-041).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idChat']) )               $idChat                 = $_POST['idChat'];
-	if ( !empty($_POST['idSistema']) )            $idSistema              = $_POST['idSistema'];
-	if ( !empty($_POST['idEstado']) )             $idEstado               = $_POST['idEstado'];
-	if ( !empty($_POST['idTipo']) )               $idTipo                 = $_POST['idTipo'];
-	if ( !empty($_POST['idUsuario']) )            $idUsuario              = $_POST['idUsuario'];
-	if ( !empty($_POST['Nombre']) )               $Nombre                 = $_POST['Nombre'];
-	if ( !empty($_POST['Fecha']) )                $Fecha                  = $_POST['Fecha'];
-	if ( !empty($_POST['HoraInicio']) )           $HoraInicio             = $_POST['HoraInicio'];
-	if ( !empty($_POST['HoraTermino']) )          $HoraTermino            = $_POST['HoraTermino'];
-	
+	if (!empty($_POST['idChat']))               $idChat                 = $_POST['idChat'];
+	if (!empty($_POST['idSistema']))            $idSistema              = $_POST['idSistema'];
+	if (!empty($_POST['idEstado']))             $idEstado               = $_POST['idEstado'];
+	if (!empty($_POST['idTipo']))               $idTipo                 = $_POST['idTipo'];
+	if (!empty($_POST['idUsuario']))            $idUsuario              = $_POST['idUsuario'];
+	if (!empty($_POST['Nombre']))               $Nombre                 = $_POST['Nombre'];
+	if (!empty($_POST['Fecha']))                $Fecha                  = $_POST['Fecha'];
+	if (!empty($_POST['HoraInicio']))           $HoraInicio             = $_POST['HoraInicio'];
+	if (!empty($_POST['HoraTermino']))          $HoraTermino            = $_POST['HoraTermino'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -44,112 +44,111 @@ require_once '0_validate_user_1.php';
 			case 'Fecha':                if(empty($Fecha)){                 $error['Fecha']                = 'error/No ha ingresado la fecha';}break;
 			case 'HoraInicio':           if(empty($HoraInicio)){            $error['HoraInicio']           = 'error/No ha ingresado la hora inicio';}break;
 			case 'HoraTermino':          if(empty($HoraTermino)){           $error['HoraTermino']          = 'error/No ha ingresado la hora de termino';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Nombre) && $Nombre != ''){  $Nombre = EstandarizarInput($Nombre); }
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre) && $Nombre!=''){ $Nombre = EstandarizarInput($Nombre);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre,contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//generacion de errores
 			if($HoraInicio > $HoraTermino) {$error['ndata_1'] = 'error/La Hora de Inicio es superior a la Hora de Termino';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){         $SIS_data  = "'".$idSistema."'" ;        }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado != ''){           $SIS_data .= ",'".$idEstado."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo != ''){               $SIS_data .= ",'".$idTipo."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario != ''){         $SIS_data .= ",'".$idUsuario."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){               $SIS_data .= ",'".$Nombre."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha != ''){                 $SIS_data .= ",'".$Fecha."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($HoraInicio) && $HoraInicio != ''){       $SIS_data .= ",'".$HoraInicio."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($HoraTermino) && $HoraTermino != ''){     $SIS_data .= ",'".$HoraTermino."'" ;     }else{$SIS_data .= ",''";}
-				
+				if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";        }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado!=''){           $SIS_data .= ",'".$idEstado."'";        }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){               $SIS_data .= ",'".$idTipo."'";          }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",'".$idUsuario."'";       }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){               $SIS_data .= ",'".$Nombre."'";          }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){                 $SIS_data .= ",'".$Fecha."'";           }else{$SIS_data .= ",''";}
+				if(isset($HoraInicio) && $HoraInicio!=''){       $SIS_data .= ",'".$HoraInicio."'";      }else{$SIS_data .= ",''";}
+				if(isset($HoraTermino) && $HoraTermino!=''){     $SIS_data .= ",'".$HoraTermino."'";     }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, idEstado, idTipo, idUsuario, Nombre, Fecha, HoraInicio, HoraTermino';
+				$SIS_columns = 'idSistema, idEstado, idTipo, idUsuario, Nombre,Fecha, HoraInicio, HoraTermino';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'comunicaciones_chat_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
-					
-					//redirijo	
+
+					//redirijo
 					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 					die;
-					
+
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//generacion de errores
 			if($HoraInicio > $HoraTermino) {$error['ndata_1'] = 'error/La Hora de Inicio es superior a la Hora de Termino';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idChat='".$idChat."'" ;
-				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idEstado) && $idEstado != ''){         $SIS_data .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idTipo) && $idTipo != ''){             $SIS_data .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($Nombre) && $Nombre != ''){             $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
-				if(isset($HoraInicio) && $HoraInicio != ''){     $SIS_data .= ",HoraInicio='".$HoraInicio."'" ;}
-				if(isset($HoraTermino) && $HoraTermino != ''){   $SIS_data .= ",HoraTermino='".$HoraTermino."'" ;}
-				
+				$SIS_data = "idChat='".$idChat."'";
+				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idTipo) && $idTipo!=''){             $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Fecha) && $Fecha!=''){               $SIS_data .= ",Fecha='".$Fecha."'";}
+				if(isset($HoraInicio) && $HoraInicio!=''){     $SIS_data .= ",HoraInicio='".$HoraInicio."'";}
+				if(isset($HoraTermino) && $HoraTermino!=''){   $SIS_data .= ",HoraTermino='".$HoraTermino."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'comunicaciones_chat_listado', 'idChat = "'.$idChat.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
-				
+
 			}
-		
-	
-		break;	
-						
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -157,43 +156,39 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado_1 = db_delete_data (false, 'comunicaciones_chat_listado', 'idChat = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$resultado_2 = db_delete_data (false, 'comunicaciones_chat_listado_usuarios', 'idChat = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado_1==true OR $resultado_2==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-			
+		break;
 
-		break;	
-		
 /*******************************************************************************************************************/
 	}
 ?>

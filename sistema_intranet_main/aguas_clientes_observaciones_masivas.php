@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "aguas_clientes_observaciones_masivas.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -19,7 +19,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//se agregan ubicaciones
 	$form_trabajo= 'send_masivo';
 	require_once 'A1XRXS_sys/xrxs_form/aguas_clientes_observaciones_masivas.php';
@@ -31,17 +31,17 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 //Variable de busqueda
-$z = "WHERE aguas_clientes_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "WHERE aguas_clientes_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){          $z .= " AND aguas_clientes_listado.idCliente=".$_GET['idCliente'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                $z .= " AND aguas_clientes_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['idFacturable']) && $_GET['idFacturable'] != ''){    $z .= " AND aguas_clientes_listado.idFacturable=".$_GET['idFacturable'];}
-if(isset($_GET['idSector']) && $_GET['idSector'] != ''){            $z .= " AND aguas_clientes_listado.idSector=".$_GET['idSector'];}
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){   $z .= " AND aguas_clientes_listado.idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){         $z .= " AND aguas_clientes_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idFacturable']) && $_GET['idFacturable']!=''){    $z .= " AND aguas_clientes_listado.idFacturable=".$_GET['idFacturable'];}
+if(isset($_GET['idSector']) && $_GET['idSector']!=''){     $z .= " AND aguas_clientes_listado.idSector=".$_GET['idSector'];}
 /**********************************************************/
 // Se trae un listado con todos los elementos
 $arrUsers = array();
@@ -74,7 +74,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrUsers,$row );
 }
 
@@ -83,23 +83,23 @@ $num = 0;
 foreach ($arrUsers as $usuarios) {
 	$num++;
 }
-//cuadro para descargar	 
+//cuadro para descargar
 $Alert_Text  = 'Se ingresara la observacion a <strong>'.$num.'</strong> clientes con el filtro actual';
 alert_post_data(2,1,2, $Alert_Text);
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Envio Observacion Masiva</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Observacion)) {   $x1  = $Observacion;   }else{$x1  = '';}
-				
+				if(isset($Observacion)){   $x1  = $Observacion;   }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
@@ -110,29 +110,29 @@ alert_post_data(2,1,2, $Alert_Text);
 				$Form_Inputs->form_input_hidden('Fecha', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('NClientes', $num, 2);
 				
-				if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){         $Form_Inputs->form_input_hidden('idCliente', $_GET['idCliente'], 2);}        
-				if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){               $Form_Inputs->form_input_hidden('idTipo', $_GET['idTipo'], 2);}                
-				if(isset($_GET['idFacturable']) && $_GET['idFacturable'] != ''){   $Form_Inputs->form_input_hidden('idFacturable', $_GET['idFacturable'], 2);}    
-				if(isset($_GET['idSector']) && $_GET['idSector'] != ''){           $Form_Inputs->form_input_hidden('idSector', $_GET['idSector'], 2);}    
+				if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){  $Form_Inputs->form_input_hidden('idCliente', $_GET['idCliente'], 2);}        
+				if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){        $Form_Inputs->form_input_hidden('idTipo', $_GET['idTipo'], 2);}                
+				if(isset($_GET['idFacturable']) && $_GET['idFacturable']!=''){   $Form_Inputs->form_input_hidden('idFacturable', $_GET['idFacturable'], 2);}    
+				if(isset($_GET['idSector']) && $_GET['idSector']!=''){    $Form_Inputs->form_input_hidden('idSector', $_GET['idSector'], 2);}    
 				
 				?>
 				
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Clientes</h5>	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Clientes</h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -148,24 +148,24 @@ alert_post_data(2,1,2, $Alert_Text);
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrUsers as $usuarios) { ?>
-					<tr class="odd">		
-						<td><?php echo $usuarios['Identificador']; ?></td>		
-						<td><?php echo $usuarios['Nombre']; ?></td>		
-						<td><?php echo $usuarios['Tipo']; ?></td>		
-						<td><?php echo $usuarios['DocFacturable']; ?></td>		
-						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>		
+					<?php foreach ($arrUsers as $usuarios){ ?>
+					<tr class="odd">
+						<td><?php echo $usuarios['Identificador']; ?></td>
+						<td><?php echo $usuarios['Nombre']; ?></td>
+						<td><?php echo $usuarios['Tipo']; ?></td>
+						<td><?php echo $usuarios['DocFacturable']; ?></td>
+						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>	
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_aguas_cliente.php?view='.simpleEncode($usuarios['idCliente'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
-		</div>  
+		</div> 
 	</div>
 </div>
 	
@@ -174,32 +174,32 @@ alert_post_data(2,1,2, $Alert_Text);
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Indico el sistema	 
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';		 
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {      $x1  = $idCliente;      }else{$x1  = '';}
-				if(isset($idTipo)) {         $x2  = $idTipo;         }else{$x2  = '';}
-				if(isset($idFacturable)) {   $x3  = $idFacturable;   }else{$x3  = '';}
-				if(isset($idSector)) {       $x4  = $idSector;       }else{$x4  = '';}
-				
+				if(isset($idCliente)){      $x1  = $idCliente;      }else{$x1  = '';}
+				if(isset($idTipo)){         $x2  = $idTipo;         }else{$x2  = '';}
+				if(isset($idFacturable)){   $x3  = $idFacturable;   }else{$x3  = '';}
+				if(isset($idSector)){       $x4  = $idSector;       }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 1, 'idCliente', 'Identificador,Nombre', 'aguas_clientes_listado', $z, 'ORDER BY Identificador ASC', $dbConn);
@@ -207,18 +207,18 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs->form_select('Forma Facturacion','idFacturable', $x3, 1, 'idFacturable', 'Nombre', 'aguas_clientes_facturable', 0, '', $dbConn);
 				$Form_Inputs->form_select('Sector','idSector', $x4, 1, 'idSector', 'Nombre', 'aguas_analisis_sectores', 0, '', $dbConn);
 				
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

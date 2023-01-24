@@ -17,15 +17,15 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 /**********************************************************/
 //Seleccionar la tabla
-if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$x_table = 'telemetria_listado_aux_equipo';
 }else{
 	$x_table = 'telemetria_listado_aux';
@@ -38,7 +38,7 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 }elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 	$SIS_where.= " AND (".$x_table.".Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
-if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where.= " AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
 }
 /**********************************************************/

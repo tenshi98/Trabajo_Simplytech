@@ -12,9 +12,9 @@ require_once '../../Legacy/gestion_modular/funciones/Helpers.Functions.Propias.a
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-set_time_limit(2400);          
+set_time_limit(2400);         
 //Memora RAM Maxima del servidor, 4GB por defecto
-ini_set('memory_limit', '4096M');  
+ini_set('memory_limit', '4096M'); 
 /**********************************************************************************************************************************/
 /*                                                      Codigo                                                                    */
 /**********************************************************************************************************************************/
@@ -60,12 +60,12 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 	//se elimina archivo
 	/*try {
 		if(!is_writable($FileOriginal)){
-		
+
 		//throw new Exception('File not writable');
 		}else{
 			unlink($FileOriginal);
 		}
-	}catch(Exception $e) { 
+	}catch(Exception $e) {
 		//guardar el dato en un archivo log
 	}*/
 	
@@ -106,7 +106,7 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 		<?php
 		//Favicon Personalizado
 		$nombre_fichero = '../img/mifavicon.png';
-		if (file_exists($nombre_fichero)) { ?>
+		if (file_exists($nombre_fichero)){ ?>
 			<link rel="icon"             type="image/png"                    href="../img/mifavicon.png" >
 			<link rel="shortcut icon"    type="image/x-icon"                 href="../img/mifavicon.png" >
 			<link rel="apple-touch-icon" type="image/x-icon"                 href="../img/mifavicon-57x57.png">
@@ -114,7 +114,7 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="../img/mifavicon-114x114.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="../img/mifavicon-144x144.png">
 		<?php 
-		//Favicon predefinido	
+		//Favicon predefinido
 		}else{ ?>
 			<link rel="icon"             type="image/png"                    href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/favicon.png" >
 			<link rel="shortcut icon"    type="image/x-icon"                 href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/favicon.png" >
@@ -165,7 +165,7 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 		</style>
 		<br/>
 		
-		<div class="col-sm-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<?php 
 			$Alert_Text = 'Descargue el archivo en Formato MP4.';
 			alert_post_data(1,1,1, $Alert_Text);
@@ -181,7 +181,7 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 			<a href="<?php echo DB_SITE_MAIN.'/1download.php?dir='.simpleEncode($Directorio, fecha_actual()).'&file='.simpleEncode($Archivo, fecha_actual()); ?>" title="Descargar Archivo MP4" class="buttonDownload">Descargar Archivo MP4</a>
 		</div>
 		
-		<div class="col-sm-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<?php 
 			$Alert_Text = 'En algunos casos el archivo transformado no reproduce sonido, puede descargar el archivo original y reproducirlo con VLC Player.';
 			alert_post_data(4,1,1, $Alert_Text);

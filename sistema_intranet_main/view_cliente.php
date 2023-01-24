@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -37,7 +37,7 @@ if (validarNumero($_GET['view'])){
 // consulto los datos
 $SIS_query = '
 clientes_listado.email, 
-clientes_listado.Nombre, 
+clientes_listado.Nombre,
 clientes_listado.Rut, 
 clientes_listado.RazonSocial, 
 clientes_listado.fNacimiento, 
@@ -58,7 +58,7 @@ core_estados.Nombre AS estado,
 core_sistemas.Nombre AS sistema,
 clientes_tipos.Nombre AS tipoCliente,
 core_rubros.Nombre AS Rubro, 
-clientes_listado.Contrato_Nombre, 
+clientes_listado.Contrato_Nombre,
 clientes_listado.Contrato_Numero, 
 core_cross_cliente.Nombre AS Contrato_Periodo,
 clientes_listado.Contrato_Fecha_Ini, 
@@ -148,7 +148,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -164,14 +164,14 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 				<?php if($arrCotizaciones!=false && !empty($arrCotizaciones) && $arrCotizaciones!=''){ ?>
 					<li class=""><a href="#cotizaciones" data-toggle="tab"><i class="fa fa-search" aria-hidden="true"></i> Cotizaciones realizadas</a></li>
 				<?php } ?>
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
-						<div class="col-sm-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 							<p class="text-muted word_break">
 								<strong>Tipo de Cliente : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
@@ -181,7 +181,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 									<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<?php 
 								//si es una persona
-								}else{ ?>
+								}else{?>
 									<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
 									<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 								<?php } ?>
@@ -257,13 +257,13 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 										if(isset($rowdata['idTab_7'])&&$rowdata['idTab_7']==2&&isset($arrTabsSorter[7])){ echo ' - '.$arrTabsSorter[7].' <a target="new" href="view_cliente_contrato.php?view='.$_GET['view'].'&idTab='.simpleEncode( 7, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';}
 										if(isset($rowdata['idTab_8'])&&$rowdata['idTab_8']==2&&isset($arrTabsSorter[8])){ echo ' - '.$arrTabsSorter[8].' <a target="new" href="view_cliente_contrato.php?view='.$_GET['view'].'&idTab='.simpleEncode( 8, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
 									?>
-								</p>			
+								</p>		
 							<?php } ?>
 							
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php 
 							//se arma la direccion
@@ -298,13 +298,13 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 									</tr>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php foreach ($arrObservaciones as $observaciones) { ?>
-									<tr class="odd">		
+								<?php foreach ($arrObservaciones as $observaciones){ ?>
+									<tr class="odd">
 										<td><?php echo $observaciones['nombre_usuario']; ?></td>
-										<td><?php echo $observaciones['Fecha']; ?></td>		
-										<td class="word_break"><?php echo $observaciones['Observacion']; ?></td>	
+										<td><?php echo $observaciones['Fecha']; ?></td>
+										<td class="word_break"><?php echo $observaciones['Observacion']; ?></td>
 									</tr>
-								<?php } ?>                    
+								<?php } ?>
 								</tbody>
 							</table>
 						</div>
@@ -325,16 +325,16 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrVentas as $venta) { ?>
-									<tr class="odd">		
+									<tr class="odd">
 										<td>
 											<div class="btn-group" style="width: 35px;" >
 												<a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($venta['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 											</div>
 											<?php echo $venta['Documento'].' N°'.$venta['N_Doc']; ?>
 										</td>
-										<td><?php echo Fecha_estandar($venta['Creacion_fecha']); ?></td>			
+										<td><?php echo Fecha_estandar($venta['Creacion_fecha']); ?></td>	
 									</tr>
-								<?php } ?>                    
+								<?php } ?>
 								</tbody>
 							</table>
 						</div>
@@ -373,19 +373,19 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 				</div>
 			<?php } ?>
 			
-        </div>	
+        </div>
 	</div>
 </div>
 
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -396,12 +396,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

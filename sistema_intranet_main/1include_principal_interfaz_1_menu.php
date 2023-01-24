@@ -3,9 +3,9 @@ echo '
 <div class="cover-info">
 	<div class="avatar">';
 		if ($_SESSION['usuario']['basic_data']['Direccion_img']=='') {
-			echo '<img alt="User Picture" src="'.DB_SITE_REPO.'/LIB_assets/img/usr.png">';
+			echo '<img alt="Imagen Referencia" src="'.DB_SITE_REPO.'/LIB_assets/img/usr.png">';
 		}else{
-			echo '<img alt="User Picture" src="upload/'.$_SESSION['usuario']['basic_data']['Direccion_img'].'">';
+			echo '<img alt="Imagen Referencia" src="upload/'.$_SESSION['usuario']['basic_data']['Direccion_img'].'">';
 		}
 		echo '
 	</div>
@@ -34,7 +34,7 @@ echo '
 		}
 		
 		//Repositorio
-		if($n_permisos['idOpcionesGen_9']=='1' OR $idTipoUsuario==1) { 
+		if($n_permisos['idOpcionesGen_9']=='1' OR $idTipoUsuario==1){
 			echo '<li><a href="#Menu_tab_5" data-toggle="tab"><i class="fa fa-database" aria-hidden="true"></i> Repositorio</a></li>';
 		}
 			

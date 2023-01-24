@@ -7,24 +7,24 @@ if(isset($_SESSION['usuario']['zona']['id_Geo'])&&$_SESSION['usuario']['zona']['
 	$id_Geo = $_SESSION['usuario']['zona']['id_Geo'];
 }else{
 	$id_Geo = 1;//seguimiento activo
-}	
+}
 
-/************************************************************************/		
+/************************************************************************/
 //Variable
 $SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 //solo los equipos que tengan el seguimiento activado
 $SIS_where .= " AND telemetria_listado.id_Geo = ".$id_Geo;
 //Filtro de los tab
 $SIS_where .= " AND telemetria_listado.idTab = 1";//CrossChecking
-//Filtro el sistema al cual pertenece	
+//Filtro el sistema al cual pertenece
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-	$SIS_where .= " AND telemetria_listado.idSistema = ".$idSistema;	
+	$SIS_where .= " AND telemetria_listado.idSistema = ".$idSistema;
 }
 //Verifico el tipo de usuario que esta ingresando y el id
 $SIS_join  = '';
 if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-	$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
-	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;	
+	$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
+	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
 }
 //filtro la zona
 if(isset($idZona)&&$idZona!=''&&$idZona!=9999){
@@ -33,9 +33,9 @@ if(isset($idZona)&&$idZona!=''&&$idZona!=9999){
 
 //Se consulta
 $SIS_query = '
-telemetria_listado.idTelemetria, 
-telemetria_listado.cantSensores, 
-telemetria_listado.Nombre, 
+telemetria_listado.idTelemetria,
+telemetria_listado.cantSensores,
+telemetria_listado.Nombre,
 telemetria_listado.Identificador';
 $SIS_order = 'telemetria_listado.Nombre ASC';
 $arrEquipo = array();
@@ -60,14 +60,14 @@ if(hora_actual()<$timeback){
 $arrMediciones = array();
 
 if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
-	/*****************************************/	
+	/*****************************************/
 	//datos extras
 	$extraData = '';
 	//se recorre deacuerdo a la cantidad de sensores
-	for ($i = 1; $i <= $arrEquipo[0]['cantSensores']; $i++) { 
+	for ($i = 1; $i <= $arrEquipo[0]['cantSensores']; $i++) {
 		$extraData .= ',Sensor_'.$i;
-	}					
-	/*****************************************/				
+	}
+	/*****************************************/
 	//Consulto
 	$SIS_query = 'idTabla,FechaSistema,HoraSistema,GeoLatitud,GeoLongitud,GeoVelocidad'.$extraData;
 	$SIS_join  = '';
@@ -87,7 +87,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 
 
 
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -95,41 +95,38 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 				<ul class="nav nav-tabs pull-right">
 					<?php
 					$xcounter = 1;
-					foreach($arrEquipo as $cli) {	
+					foreach($arrEquipo as $cli) {
 						if($xcounter==1){$xactive = 'active';}else{$xactive = '';}
 						if($xcounter==4){ ?> <li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu"> <?php } ?>
 						<li class="<?php echo $xactive; ?>"><a href="" onClick="chngEquipo(<?php echo $cli['idTelemetria']; ?>, '<?php echo $cli['Nombre']; ?>', '<?php echo $cli['Identificador']; ?>', <?php echo $cli['cantSensores']; ?>)"  data-toggle="tab"><i class="fa fa-map-marker" aria-hidden="true"></i> <?php echo $cli['Nombre']; ?></a></li>
 						<?php $xcounter++;
 					}
 					if($xcounter>4){?></ul></li><?php } ?>
-				</ul>	
+				</ul>
 			</header>
-			
-			
-			
+
 			<div class="tab-content">
-				
+
 				<div id="loading"></div>
-				
 
 				<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 				<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table', 'gauge']});</script>	
-				
-				<div class="col-sm-12" style="margin-top:10px;">
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
 					<h5 class="panel-title" id="txtEquipo"><?php echo "Equipo: <strong>".$arrEquipo[0]['Nombre']." - ".$arrEquipo[0]['Identificador']."</strong>"; ?></h5>
 					<h5 class="panel-title" id="txtDatade"><?php echo "Datos desde <strong>".fecha_estandar($f_inicio)."-".$h_inicio ."</strong> a <strong>".fecha_estandar($f_termino)."-".$h_termino."</strong>"; ?></h5>
 				</div>
-				
-				<div class="col-sm-6"><h5 class="text-center"><strong>Velocidad Tractor</strong></h5>    <div class="col-sm-12"             id="chart_velocidades" style="height: 200px;"></div></div>
-				<div class="col-sm-6"><h5 class="text-center"><strong>Vaciado Estanque</strong></h5>     <div class="col-sm-12"             id="chart_niveles" style="height: 200px;"></div></div>
+
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><h5 class="text-center"><strong>Velocidad Tractor</strong></h5>    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_velocidades" style="height: 200px;"></div></div>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6"><h5 class="text-center"><strong>Vaciado Estanque</strong></h5>     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_niveles" style="height: 200px;"></div></div>
 				<div class="clearfix"></div>
-				
-				<div class="col-sm-4"><h5 class="text-center"><strong>Flujos Caudales</strong></h5>      <div class="col-sm-12"             id="chart_caudales_flujos" style="height: 200px;"></div></div>
-				<div class="col-sm-4"><h5 class="text-center"><strong>Caudales Promedios</strong></h5>   <div class="col-sm-12"             id="chart_caudales" style="height: 200px;"></div></div>
-				<div class="col-sm-4"><h5 class="text-center"><strong>Dispersión de Flujos</strong></h5> <div class="col-sm-12 float_table" id="chart_gauge" style="height: 200px;"></div></div>
-				
+
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Flujos Caudales</strong></h5>      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_caudales_flujos" style="height: 200px;"></div></div>
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Caudales Promedios</strong></h5>   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_caudales" style="height: 200px;"></div></div>
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Dispersión de Flujos</strong></h5> <div class="col-sm-12 float_table" id="chart_gauge" style="height: 200px;"></div></div>
+
 				<div id="update_content_graphics"></div>
-				
+
 				<?php
 				/********************************************************************/
 				//Velocidades
@@ -143,39 +140,38 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 					let idSensoresActual            = '.$arrEquipo[0]['cantSensores'].';
 					let Counter_x1                  = 0;
 					let correccion_x                = 0;
-					
+
 					let chart_vel                   = "";
 					let chart_tanque                = "";
 					let chart_caud_flu              = "";
 					let chart_caud                  = "";
 					let chart_gauge                 = "";
-					
+
 					let data_vel                    = "";
 					let data_tanque                 = "";
 					let data_caud_flu               = "";
 					let data_caud                   = "";
 					let data_gauge                  = "";
-					
+
 					let options_vel                 = "";
 					let options_tanque              = "";
 					let options_caud_flu            = "";
 					let options_caud                = "";
 					let options_gauge               = "";
-					
-					
+
 					let route                       = [];
 					let tmp;
-						
-					//carga de los graficos	
+
+					//carga de los graficos
 					google.charts.setOnLoadCallback(Chart_velocidades);
 					google.charts.setOnLoadCallback(Chart_estanque);
 					google.charts.setOnLoadCallback(Chart_caudales_flujos);
 					google.charts.setOnLoadCallback(Chart_caudales);
 					google.charts.setOnLoadCallback(Chart_correccion);
-					
+
 					//oculto el loader
-					document.getElementById("loading").style.display = "none";	
-										
+					document.getElementById("loading").style.display = "none";
+
 					//refresco de los datos
 					updtGraficos('.$x_seg.');
 					/* ************************************************************************** */
@@ -183,7 +179,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						setInterval(function(){updtGraficosTimer()},(time / 2));
 					}
 					/* ************************************************************************** */
-					
+
 					function updtGraficosTimer() {
 
 						switch(Counter_x1) {
@@ -191,13 +187,13 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 							case 1:
 								$("#update_content_graphics").load("principal_update_graphics_crosstech_1.php?idEquipoActual=" + idEquipoActual + "&idSensoresActual="+idSensoresActual);
 								break;
-							//se actualizan los iconos 	
+							//se actualizan los iconos
 							case 2:
 								//actualizo graficos
 								actualiza_graficos(data_vel_x, data_tanque_x, data_caud_flu_x, data_caud_x);
 								correccion_x = data_correccion_x;
 								update_correccion();
-								
+
 								//vacio rutas
 								route = [];
 								var myLatlng;
@@ -209,29 +205,29 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 								}
 								//Se dibuja la ruta
 								RutasAlternativas(route);
-								
+
 								//se centra mapa
 								map_x.setCenter(myLatlng);
-								
-								break;		
+
+								break;
 						}
-						Counter_x1++;	
+						Counter_x1++;
 						if(Counter_x1==3){Counter_x1=1}
 					}
-		
+
 					/* ************************************************************************** */
-					function chngEquipo(idEquipo, Nombre, Identificador, cantSensores) {
-						
+					function chngEquipo(idEquipo, Nombre,Identificador, cantSensores) {
+
 						//guardo las nuevas variables
 						idEquipoActual   = idEquipo;
-						idSensoresActual = cantSensores;	
-						
+						idSensoresActual = cantSensores;
+
 						//muestro el loader
 						document.getElementById("loading").style.display = "block";
-						
+
 						//Pido actualizacion
 						$("#update_content_graphics").load("principal_update_graphics_crosstech_1.php?idEquipoActual=" + idEquipoActual + "&idSensoresActual="+idSensoresActual);
-						
+
 						//se esperan 3 segundos
 						setTimeout(
 							function(){
@@ -239,7 +235,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 								actualiza_graficos(data_vel_x, data_tanque_x, data_caud_flu_x, data_caud_x);
 								correccion_x = data_correccion_x;
 								update_correccion();
-								
+
 								//vacio rutas
 								route = [];
 								var myLatlng;
@@ -251,18 +247,17 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 								}
 								//Se dibuja la ruta
 								RutasAlternativas(route);
-								
+
 								//se centra mapa
 								map_x.setCenter(myLatlng);
-										
+
 								//actualizo la cabecera
 								document.getElementById("txtEquipo").innerHTML="Equipo: <strong>"+Nombre+" - "+Identificador+"</strong>";
-								
+
 								//oculto el loader
 								document.getElementById("loading").style.display = "none";
 							}
 						, 3000);
-						
 
 					}
 					/* ************************************************************************** */
@@ -274,12 +269,11 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						draw_caudales_flujos(data_3);
 						draw_caudales(data_4);
 						update_correccion();
-								
+
 						//actualizo la hora de actualizacion
 						document.getElementById("txtDatade").innerHTML=DatosRefresco;
 					}
-					
-	
+
 					/* ************************************************************************** */
 					//Graficos	al cargar datos
 					function Chart_velocidades() {';
@@ -311,7 +305,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						echo '];
 						//se llama funcion de dibujo
 						draw_estanque(data_tanque_rows);
-					}	
+					}
 					function Chart_caudales_flujos() {';
 						//Vaciado del estanque
 						echo 'var data_caud_flu_rows = [';
@@ -347,8 +341,8 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						//Calculo
 						if($cuenta_derecho!=0){    $Prom_derecho   = $total_derecho/$cuenta_derecho;      }else{$Prom_derecho   = 0;}
 						if($cuenta_izquierdo!=0){  $Prom_izquierdo = $total_izquierdo/$cuenta_izquierdo;  }else{$Prom_izquierdo = 0;}
-						
-						echo 'var data_caud_rows = [';						
+
+						echo 'var data_caud_rows = [';
 						echo '["Caudales",';
 						echo Cantidades_decimales_justos($Prom_derecho).',';
 						echo '"'.Cantidades($Prom_derecho, 2).'",';
@@ -358,27 +352,27 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						echo '];
 						//se llama funcion de dibujo
 						draw_caudales(data_caud_rows);
-					
-					}	
+
+					}
 					function Chart_correccion() {';
 						if($Prom_derecho>$Prom_izquierdo){
 							if($Prom_izquierdo!=0){ $correccion = (($Prom_derecho - $Prom_izquierdo)/$Prom_izquierdo)*100;}else{$correccion = 0;}
 						}else{
 							if($Prom_derecho!=0){   $correccion = (($Prom_izquierdo - $Prom_derecho)/$Prom_derecho)*100;}else{$correccion = 0;}
 						}
-						
+
 						echo 'var data_correccion_rows = '.str_replace(",", ".",Cantidades($correccion, 2)).';
 						//se llama funcion de dibujo
 						draw_correccion(data_correccion_rows);
 					}
-					
+
 					/********************************************************************/
 					//dibujado de los graficos
 					//Velocidades
 					function draw_velocidades(data) {
 						//instanciacion
 						data_vel = new google.visualization.DataTable();
-						data_vel.addColumn("string", "Hora"); 
+						data_vel.addColumn("string", "Hora");
 						data_vel.addColumn("number", "Velocidad");
 						//datos
 						data_vel.addRows(data);
@@ -399,7 +393,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 					//Vaciado del estanque
 					function draw_estanque(data) {
 						data_tanque = new google.visualization.DataTable();
-						data_tanque.addColumn("string", "Hora"); 
+						data_tanque.addColumn("string", "Hora");
 						data_tanque.addColumn("number", "Nivel Estanque");
 						//datos
 						data_tanque.addRows(data);
@@ -420,12 +414,12 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 					/********************************************************************/
 					//Vaciado del flujo de los caudales
 					function draw_caudales_flujos(data) {
-					
+
 						data_caud_flu = new google.visualization.DataTable();
-						data_caud_flu.addColumn("string", "Hora"); 
+						data_caud_flu.addColumn("string", "Hora");
 						data_caud_flu.addColumn("number", "Caudal Derecho");
-						data_caud_flu.addColumn("number", "Caudal Izquierdo"); 
-						
+						data_caud_flu.addColumn("number", "Caudal Izquierdo");
+
 						//datos
 						data_caud_flu.addRows(data);
 
@@ -439,17 +433,17 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						};
 						chart_flu = new google.visualization.LineChart(document.getElementById("chart_caudales_flujos"));
 						chart_flu.draw(data_caud_flu, options_flu);
-						
+
 					}
 					/********************************************************************/
 					//Caudales
 					function draw_caudales(data) {
 						//Caudales
 						data_caud = new google.visualization.DataTable();
-						data_caud.addColumn("string", "Grupo"); 
+						data_caud.addColumn("string", "Grupo");
 						data_caud.addColumn("number", "Caudal Derecho");
 						data_caud.addColumn({type: "string", role: "annotation"});
-						data_caud.addColumn("number", "Caudal Izquierdo"); 
+						data_caud.addColumn("number", "Caudal Izquierdo");
 						data_caud.addColumn({type: "string", role: "annotation"});
 						//datos
 						data_caud.addRows(data);
@@ -465,7 +459,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						//dibujo
 						chart_caud = new google.visualization.ColumnChart(document.getElementById("chart_caudales"));
 						chart_caud.draw(data_caud, options_caud);
-					
+
 					}
 					/********************************************************************/
 					//Correccion
@@ -477,7 +471,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						]);
 						//opciones
 						options_gauge = {
-							width: 400, 
+							width: 400,
 							height: 200,
 							greenFrom: 0,
 							greenTo: 10,
@@ -504,19 +498,17 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						data_gauge.setValue(0, 1, correccion_x);
 						chart_gauge.draw(data_gauge, options_gauge);
 					}
-				</script> 
+				</script>
 				';
-				
+
 				?>
-				
-				
-				
-				<div class="col-sm-12">
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<header>
 						<div class="icons"><i class="fa fa-map-o" aria-hidden="true"></i></div>
 						<h5>Rutas</h5>
 					</header>
-			
+
 					<div class="row">
 						<?php
 						//Si no existe una ID se utiliza una por defecto
@@ -524,37 +516,37 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 							$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
 							alert_post_data(4,2,2, $Alert_Text);
 						}else{ ?>
-							
+
 							<div id="map_canvas_x" style="width: 100%; height: 550px;"></div>
-							
+
 							<script>
-								
+
 								var map_x;
 								var marker_x;
 								let last_latitude  = 0;
 								let last_longitude = 0;
 
-								var locations_rows = [ 
-									<?php foreach ( $arrMediciones as $pos ) { 
+								var locations_rows = [
+									<?php foreach ( $arrMediciones as $pos ) {
 										if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){
 											if((isset($pos['Sensor_1'])&&$pos['Sensor_1']>0) OR (isset($pos['Sensor_2'])&&$pos['Sensor_2']>0)){ ?>
 												['<?php echo $pos['idTabla']; ?>', <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
-									<?php 	} 
+									<?php 	}
 										}
 									}?>
 								];
-								
-								<?php 
-								foreach ( $arrMediciones as $pos ) { 
+
+								<?php
+								foreach ( $arrMediciones as $pos ) {
 									if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){
 										if((isset($pos['Sensor_1'])&&$pos['Sensor_1']>0) OR (isset($pos['Sensor_2'])&&$pos['Sensor_2']>0)){ ?>
 											last_latitude  = <?php echo $pos['GeoLatitud']; ?>;
 											last_longitude = <?php echo $pos['GeoLongitud']; ?>;
-																
-								<?php 	} 
+
+								<?php 	}
 									}
 								}?>
-								
+
 								//lineas del mapa
 								var poly = new google.maps.Polyline({
 									map: map_x,
@@ -563,12 +555,12 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 									strokeOpacity: 1,
 									strokeWeight: 5
 								});
-								
+
 								/* ************************************************************************** */
 								function initialize_map() {
-									
+
 									var myLatlng = new google.maps.LatLng(last_latitude, last_longitude);
-									
+
 									var myOptions = {
 										zoom: 19,
 										center: myLatlng,
@@ -579,7 +571,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 										mapTypeId: google.maps.MapTypeId.SATELLITE
 									};
 									map_x = new google.maps.Map(document.getElementById("map_canvas_x"), myOptions);
-									
+
 									//Se llama al marcador y se anima
 									marker_x = new google.maps.Marker({
 										position	: new google.maps.LatLng(last_latitude, last_longitude),
@@ -587,42 +579,40 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 										animation 	: google.maps.Animation.DROP,
 										icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 									});
-									
+
 									//se crea la ruta
 									route = [];
 									for(var i in locations_rows){
 										tmp = new google.maps.LatLng(locations_rows[i][1], locations_rows[i][2]);
 										route.push(tmp);
 									}
-									
-													
+
 									map_x.setCenter(myLatlng);
-													
+
 									//Se dibuja la ruta
 									RutasAlternativas(route);
-									
+
 								}
-								
+
 								/* ************************************************************************** */
 								function RutasAlternativas(data_route) {
-									
+
 									//se actualizan rutas
 									poly.setPath(data_route);
 									poly.setMap(map_x);
 								}
 
-								
 								/* ************************************************************************** */
 								google.maps.event.addDomListener(window, "load", initialize_map());
 							</script>
-				
+
 						<?php } ?>
 					</div>
 				</div>
-				
+
 				<div class="clearfix"></div>
-		
-			</div>	
+
+			</div>
 		</div>
 	</div>
 

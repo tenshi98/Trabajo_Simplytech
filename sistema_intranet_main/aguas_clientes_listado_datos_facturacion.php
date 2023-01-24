@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "aguas_clientes_listado.php";
 $location = $original;
 $new_location = "aguas_clientes_listado_datos_facturacion.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$location.='&id='.$_GET['id'];
 	$form_trabajo= 'update';
@@ -42,9 +42,9 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Cliente editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Cliente borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Se traen todos los datos de mi Cliente
-$query = "SELECT Identificador, Nombre, RazonSocial, idMarcadores, idRemarcadores, 
+$query = "SELECT Identificador, Nombre,RazonSocial, idMarcadores, idRemarcadores, 
 UnidadHabitacional, Arranque, idFacturable, idCiudadFact, idComunaFact, DireccionFact, 
 Giro, idRubro, latitud, longitud	
 FROM `aguas_clientes_listado`
@@ -64,12 +64,12 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Editar Datos Facturacion');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -85,28 +85,28 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						<li class=""><a href="<?php echo 'aguas_clientes_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'aguas_clientes_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;padding-bottom:240px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:240px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($RazonSocial)) {         $x1  = $RazonSocial;          }else{$x1  = $rowdata['RazonSocial'];}
-					if(isset($idMarcadores)) {        $x2  = $idMarcadores;         }else{$x2  = $rowdata['idMarcadores'];}
-					if(isset($idRemarcadores)) {      $x3  = $idRemarcadores;       }else{$x3  = $rowdata['idRemarcadores'];}
-					if(isset($UnidadHabitacional)) {  $x4  = $UnidadHabitacional;   }else{$x4  = $rowdata['UnidadHabitacional'];}
-					if(isset($Arranque)) {            $x5  = $Arranque;             }else{$x5  = $rowdata['Arranque'];}
-					if(isset($idFacturable)) {        $x6  = $idFacturable;         }else{$x6  = $rowdata['idFacturable'];}
-					if(isset($idCiudadFact)) {        $x7  = $idCiudadFact;         }else{$x7  = $rowdata['idCiudadFact'];}
-					if(isset($idComunaFact)) {        $x8  = $idComunaFact;         }else{$x8  = $rowdata['idComunaFact'];}
-					if(isset($DireccionFact)) {       $x9  = $DireccionFact;        }else{$x9  = $rowdata['DireccionFact'];}
-					if(isset($Giro)) {                $x10 = $Giro;                 }else{$x10 = $rowdata['Giro'];}
-					if(isset($idRubro)) {             $x11 = $idRubro;              }else{$x11 = $rowdata['idRubro'];}
-					if(isset($latitud)) {             $x12 = $latitud;              }else{$x12 = $rowdata['latitud'];}
-					if(isset($longitud)) {            $x13 = $longitud;             }else{$x13 = $rowdata['longitud'];}
+					if(isset($RazonSocial)){         $x1  = $RazonSocial;          }else{$x1  = $rowdata['RazonSocial'];}
+					if(isset($idMarcadores)){        $x2  = $idMarcadores;         }else{$x2  = $rowdata['idMarcadores'];}
+					if(isset($idRemarcadores)){      $x3  = $idRemarcadores;       }else{$x3  = $rowdata['idRemarcadores'];}
+					if(isset($UnidadHabitacional)){  $x4  = $UnidadHabitacional;   }else{$x4  = $rowdata['UnidadHabitacional'];}
+					if(isset($Arranque)){            $x5  = $Arranque;             }else{$x5  = $rowdata['Arranque'];}
+					if(isset($idFacturable)){        $x6  = $idFacturable;         }else{$x6  = $rowdata['idFacturable'];}
+					if(isset($idCiudadFact)){        $x7  = $idCiudadFact;         }else{$x7  = $rowdata['idCiudadFact'];}
+					if(isset($idComunaFact)){        $x8  = $idComunaFact;         }else{$x8  = $rowdata['idComunaFact'];}
+					if(isset($DireccionFact)){       $x9  = $DireccionFact;        }else{$x9  = $rowdata['DireccionFact'];}
+					if(isset($Giro)){                $x10 = $Giro;                 }else{$x10 = $rowdata['Giro'];}
+					if(isset($idRubro)){             $x11 = $idRubro;              }else{$x11 = $rowdata['idRubro'];}
+					if(isset($latitud)){             $x12 = $latitud;              }else{$x12 = $rowdata['latitud'];}
+					if(isset($longitud)){            $x13 = $longitud;             }else{$x13 = $rowdata['longitud'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -118,7 +118,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_input_number('Arranque (mm)', 'Arranque', $x5, 2);
 					$Form_Inputs->form_select('Forma Facturacion','idFacturable', $x6, 2, 'idFacturable', 'Nombre', 'aguas_clientes_facturable', 0, '', $dbConn);
 					$Form_Inputs->form_select_depend1('Ciudad de Facturacion','idCiudadFact', $x7, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-													'Comuna de Facturacion','idComunaFact', $x8, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+													'Comuna de Facturacion','idComunaFact', $x8, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 													$dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion de Facturacion', 'DireccionFact', $x9, 2,'fa fa-map');	
 					$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x10, 1,'fa fa-industry');
@@ -131,19 +131,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

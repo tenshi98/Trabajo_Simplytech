@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_listado_unidad_medida.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -21,22 +21,22 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_unidad_medida.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_unidad_medida.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_unidad_medida.php';	
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_unidad_medida.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -51,127 +51,115 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Unidad Medida Modifica
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Unidad Medida borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // Se tre el nombre
-$rowdata = db_select_data (false, 'Nombre, NombreLargo', 'telemetria_listado_unidad_medida', '', 'idUniMed='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowUnimed');
+$rowdata = db_select_data (false, 'Nombre,NombreLargo', 'telemetria_listado_unidad_medida', '', 'idUniMed='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowUnimed');
 ?>
- 
-<div class="col-sm-8 fcenter">
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Unidad Medida</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {       $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
-				if(isset($NombreLargo)) {  $x2  = $NombreLargo; }else{$x2  = $rowdata['NombreLargo'];}
+				if(isset($Nombre)){       $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
+				if(isset($NombreLargo)){  $x2  = $NombreLargo; }else{$x2  = $rowdata['NombreLargo'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Nombre Largo', 'NombreLargo', $x2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idUniMed', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Unidad Medida</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {       $x1  = $Nombre;      }else{$x1  = '';}
-				if(isset($NombreLargo)) {  $x2  = $NombreLargo; }else{$x2  = '';}
+				if(isset($Nombre)){       $x1  = $Nombre;      }else{$x1  = '';}
+				if(isset($NombreLargo)){  $x2  = $NombreLargo; }else{$x2  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Nombre Largo', 'NombreLargo', $x2, 2);
 				?>
-				
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
- 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idUniMed', 'telemetria_listado_unidad_medida', '', '', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre,NombreLargo', 'telemetria_listado_unidad_medida', '', '', 'Nombre ASC LIMIT '.$comienzo.', '.$cant_reg, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
-
 
 //paginador
 $search='';
 ?>
 
-<div class="col-sm-12">
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Unidad Medida</a><?php } ?>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Unidad Medida</a><?php } ?>
 </div>
-                       
-                         
-<div class="col-sm-12">
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Unidades Medidas</h5>
 			<div class="toolbar">
-				<?php 
+				<?php
 				//paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
@@ -185,7 +173,7 @@ $search='';
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrUnimed as $cat) { ?>
 					<tr class="odd">
@@ -198,23 +186,22 @@ $search='';
 									$ubicacion = $location.'&del='.simpleEncode($cat['idUniMed'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el dato '.$cat['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>	
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
-			<?php 
+		<div class="pagrow">
+			<?php
 			//paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div> 
-		
+		</div>
 	</div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

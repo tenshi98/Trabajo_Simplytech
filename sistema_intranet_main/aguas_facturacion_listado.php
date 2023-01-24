@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "aguas_facturacion_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,9 +18,9 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Ano']) && $_GET['Ano'] != ''){               $location .= "&Ano=".$_GET['Ano'];               $search .= "&Ano=".$_GET['Ano'];}
-if(isset($_GET['idMes']) && $_GET['idMes'] != ''){           $location .= "&idMes=".$_GET['idMes'];           $search .= "&idMes=".$_GET['idMes'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $location .= "&idUsuario=".$_GET['idUsuario'];   $search .= "&idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['Ano']) && $_GET['Ano']!=''){        $location .= "&Ano=".$_GET['Ano'];               $search .= "&Ano=".$_GET['Ano'];}
+if(isset($_GET['idMes']) && $_GET['idMes']!=''){    $location .= "&idMes=".$_GET['idMes'];           $search .= "&idMes=".$_GET['idMes'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){   $location .= "&idUsuario=".$_GET['idUsuario'];   $search .= "&idUsuario=".$_GET['idUsuario'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -28,28 +28,28 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'new_Facturacion';
 	require_once 'A1XRXS_sys/xrxs_form/aguas_facturacion_listado.php';
 }
 //formulario para editar
-if ( !empty($_GET['clear_all']) )  { 
+if (!empty($_GET['clear_all'])){
 	//Llamamos al formulario
 	$form_trabajo= 'clear_all';
 	require_once 'A1XRXS_sys/xrxs_form/aguas_facturacion_listado.php';
 }
 /********************************************/
-if ( !empty($_GET['ing_doc']) )  { 
+if (!empty($_GET['ing_doc'])){
 	//Llamamos al formulario
 	$form_trabajo= 'ing_Facturacion';
 	require_once 'A1XRXS_sys/xrxs_form/aguas_facturacion_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/aguas_facturacion_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/aguas_facturacion_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -64,8 +64,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Medicion Modificada co
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Medicion borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['view_facturacion']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['view_facturacion'])){ 
 //Obtengo los datos principales
 $query = "SELECT 
 aguas_facturacion_listado.Fecha,
@@ -129,19 +129,19 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrFacturacion,$row );
 }	
 	
 						
 ?>
 	
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> Ver Facturacion de Clientes  </div>
 		<div id="customer">
-			<table id="meta" class="fleft otdata">
+			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
@@ -182,7 +182,7 @@ array_push( $arrFacturacion,$row );
 			<tbody>
 				<tr>
 					<th colspan="6">Detalle</th>
-				</tr>		  
+				</tr>
 				
 			
 				<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
@@ -192,7 +192,7 @@ array_push( $arrFacturacion,$row );
 					<td><strong>Estado Pago</strong></td>
 					<td><strong>Documento</strong></td>
 					<td><strong>Acciones</strong></td>
-				</tr>	
+				</tr>
 				<?php foreach ($arrFacturacion as $clientes){ ?>
 					<tr class="item-row linea_punteada">
 						<td><?php echo $clientes['ClienteIdentificador']; ?></td>
@@ -217,7 +217,7 @@ array_push( $arrFacturacion,$row );
 								<?php } ?>
 							</div>
 						</td>
-					</tr> 
+					</tr>
 				<?php } ?>
 				<tr id="hiderow"><td colspan="6"></td></tr>
 			
@@ -245,14 +245,14 @@ array_push( $arrFacturacion,$row );
 
 <div class="clearfix"></div>
 <div class="col-lg-12 fcenter" style="margin-bottom:30px; margin-top:30px">
-<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>	
 	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['view']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['view'])){ ?>
 	
-<div class="col-sm-12" style="margin-bottom:30px">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 	
 		<?php 
@@ -271,12 +271,12 @@ array_push( $arrFacturacion,$row );
 	<div class="clearfix"></div>
 </div> 
 	
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> Facturacion de Clientes  </div>
 		<div id="customer">
-			<table id="meta" class="fleft otdata">
+			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
@@ -317,9 +317,9 @@ array_push( $arrFacturacion,$row );
 			<tbody>
 				<tr>
 					<th colspan="6">Detalle</th>
-				</tr>		  
+				</tr>
 				
-				<?php if(isset($_SESSION['Facturacion_clientes'])) { ?>
+				<?php if(isset($_SESSION['Facturacion_clientes'])){ ?>
 					<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
 						<td><strong>Identificador</strong></td>
 						<td><strong>Cliente</strong></td>
@@ -327,8 +327,8 @@ array_push( $arrFacturacion,$row );
 						<td><strong>Direccion</strong></td>
 						<td><strong>Ultimo Pago</strong></td>
 						<td><strong>Acciones</strong></td>
-					</tr>	
-					<?php foreach ($_SESSION['Facturacion_clientes'] as $key => $clientes){ ?>
+					</tr>
+					<?php foreach ($_SESSION['Facturacion_clientes'] as $key => $clientes){?>
 						<tr class="item-row linea_punteada">
 							<td><?php echo $clientes['ClienteIdentificador']; ?></td>
 							<td><?php echo $clientes['ClienteNombre']; ?></td>
@@ -340,7 +340,7 @@ array_push( $arrFacturacion,$row );
 									<a href="<?php echo 'view_aguas_facturacion_ing.php?view='.simpleEncode($clientes['idCliente'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
-						</tr> 
+						</tr>
 					<?php } ?>
 					<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php } ?>
@@ -373,38 +373,38 @@ array_push( $arrFacturacion,$row );
 
 <div class="clearfix"></div>
 <div class="col-lg-12 fcenter" style="margin-bottom:30px; margin-top:30px">
-<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); 
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
 $sub_fecha = '10/'.fecha2NMes(fecha_actual()).'/'.fecha2Ano(fecha_actual());
-//cuadro para descargar	 
+//cuadro para descargar
 $Alert_Text  = 'Tasa de Interés Corriente y Máxima Convencional vigentes al '.$sub_fecha;
 $Alert_Text .= '<a target="_blank" rel="noopener noreferrer" href="http://www.sbif.cl/sbifweb/servlet/InfoFinanciera?indice=4.2.1&FECHA='.$sub_fecha.'" title="Ver Tasas" class="btn btn-primary btn-sm pull-right" ><i class="fa fa-list" aria-hidden="true"></i> Ver Tasas</a>';
-alert_post_data(2,1,2, $Alert_Text);		 
+alert_post_data(2,1,2, $Alert_Text); 
 ?>
 
 		
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Facturacion</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate >
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {               $x1  = $Fecha;               }else{$x1  = '';}
-				if(isset($intAnual)) {            $x2  = $intAnual;            }else{$x2  = '';}
-				if(isset($idOpcionesInteres)) {   $x3  = $idOpcionesInteres;   }else{$x3  = '';}
-				if(isset($Observaciones)) {       $x4  = $Observaciones;       }else{$x4  = '';}
-				
+				if(isset($Fecha)){     $x1  = $Fecha;               }else{$x1  = '';}
+				if(isset($intAnual)){            $x2  = $intAnual;            }else{$x2  = '';}
+				if(isset($idOpcionesInteres)){   $x3  = $idOpcionesInteres;   }else{$x3  = '';}
+				if(isset($Observaciones)){       $x4  = $Observaciones;       }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Facturacion','Fecha', $x1, 2);
@@ -421,34 +421,25 @@ alert_post_data(2,1,2, $Alert_Text);
 				
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -469,18 +460,18 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Variable de busqueda
-$SIS_where = "aguas_facturacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "aguas_facturacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Ano']) && $_GET['Ano'] != ''){              $SIS_where .= " AND aguas_facturacion_listado.Ano='".$_GET['Ano']."'";}
-if(isset($_GET['idMes']) && $_GET['idMes'] != ''){          $SIS_where .= " AND aguas_facturacion_listado.idMes='".$_GET['idMes']."'";}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $SIS_where .= " AND aguas_facturacion_listado.idUsuario='".$_GET['idUsuario']."'";}
+if(isset($_GET['Ano']) && $_GET['Ano']!=''){       $SIS_where .= " AND aguas_facturacion_listado.Ano='".$_GET['Ano']."'";}
+if(isset($_GET['idMes']) && $_GET['idMes']!=''){   $SIS_where .= " AND aguas_facturacion_listado.idMes='".$_GET['idMes']."'";}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){  $SIS_where .= " AND aguas_facturacion_listado.idUsuario='".$_GET['idUsuario']."'";}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idFacturacion', 'aguas_facturacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 aguas_facturacion_listado.idFacturacion,
@@ -496,60 +487,60 @@ $arrTipo = array();
 $arrTipo = db_select_array (false, $SIS_query, 'aguas_facturacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Facturacion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Facturacion</a><?php } ?>
 	
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
 				//Se verifican si existen los datos
-				if(isset($Ano)) {       $x1  = $Ano;       }else{$x1  = '';}
-				if(isset($idMes)) {     $x2  = $idMes;     }else{$x2  = '';}
-				if(isset($idUsuario)) { $x3  = $idUsuario; }else{$x3  = '';}
-				
+				if(isset($Ano)){       $x1  = $Ano;       }else{$x1  = '';}
+				if(isset($idMes)){     $x2  = $idMes;     }else{$x2  = '';}
+				if(isset($idUsuario)){ $x3  = $idUsuario; }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x1, 1, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
-				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x3, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x3, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                      
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Facturaciones</h5>
@@ -602,7 +593,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						<td><?php echo fecha_estandar($tipo['fCreacion']); ?></td>
 						<td><?php echo fecha_estandar($tipo['Fecha']); ?></td>
 						<td><?php echo $tipo['NombreUsuario']; ?></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['sistema']; ?></td><?php } ?>			
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&view_facturacion='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -610,15 +601,15 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 									$ubicacion = $location.'&del='.simpleEncode($tipo['idFacturacion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la facturacion '.n_doc($tipo['idFacturacion'], 7).'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
@@ -626,7 +617,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	</div>
 </div>
 <?php widget_modal(80, 95); ?>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

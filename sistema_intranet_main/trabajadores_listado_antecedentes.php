@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "trabajadores_listado.php";
 $location = $original;
 $new_location = "trabajadores_listado_antecedentes.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -32,13 +32,13 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_File_Antecedentes']) )     {
+if (!empty($_GET['del_File_Antecedentes'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_File_Antecedentes';
-	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -53,9 +53,9 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Archivo editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Archivo borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$query = "SELECT Nombre, ApellidoPat, ApellidoMat, File_Antecedentes
+$query = "SELECT Nombre,ApellidoPat, ApellidoMat, File_Antecedentes
 FROM `trabajadores_listado`
 WHERE idTrabajador = ".$_GET['id'];
 //Consulta
@@ -74,13 +74,13 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Papel de Antecedentes');?>
 </div>
 <div class="clearfix"></div>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -103,11 +103,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 				
 				<?php if(isset($rowdata['File_Antecedentes'])&&$rowdata['File_Antecedentes']!=''){?>
         
@@ -115,7 +115,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<h3>Archivo</h3>
 						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Antecedentes'], ''); ?>
 						<br/>
-						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_File_Antecedentes='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
+						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_File_Antecedentes='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					</div>
 					<div class="clearfix"></div>
 					
@@ -129,26 +129,26 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Antecedentes', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
 						
 						$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
-						?> 
+						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf093; Subir Archivo" name="submit_edit"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf093; Subir Archivo" name="submit_edit">
 						</div>
 							  
-					</form> 
+					</form>
 					<?php widget_validator(); ?>
-				<?php }?> 
+				<?php } ?>
 				
 				
 				
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

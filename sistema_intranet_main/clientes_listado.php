@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "clientes_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,29 +18,29 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $location .= "&idTipo=".$_GET['idTipo'];              $search .= "&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $location .= "&Nombre=".$_GET['Nombre'];              $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                  $location .= "&Rut=".$_GET['Rut'];                    $search .= "&Rut=".$_GET['Rut'];}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){  $location .= "&fNacimiento=".$_GET['fNacimiento'];    $search .= "&fNacimiento=".$_GET['fNacimiento'];}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){        $location .= "&idCiudad=".$_GET['idCiudad'];          $search .= "&idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){        $location .= "&idComuna=".$_GET['idComuna'];          $search .= "&idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){      $location .= "&Direccion=".$_GET['Direccion'];        $search .= "&Direccion=".$_GET['Direccion'];}
-if(isset($_GET['Giro']) && $_GET['Giro'] != ''){                $location .= "&Giro=".$_GET['Giro'];                  $search .= "&Giro=".$_GET['Giro'];}
-if(isset($_GET['idTab_1']) && $_GET['idTab_1'] != ''){          $location .= "&idTab_1=".$_GET['idTab_1'];            $search .= "&idTab_1=".$_GET['idTab_1'];}
-if(isset($_GET['idTab_2']) && $_GET['idTab_2'] != ''){          $location .= "&idTab_2=".$_GET['idTab_2'];            $search .= "&idTab_2=".$_GET['idTab_2'];}
-if(isset($_GET['idTab_3']) && $_GET['idTab_3'] != ''){          $location .= "&idTab_3=".$_GET['idTab_3'];            $search .= "&idTab_3=".$_GET['idTab_3'];}
-if(isset($_GET['idTab_4']) && $_GET['idTab_4'] != ''){          $location .= "&idTab_4=".$_GET['idTab_4'];            $search .= "&idTab_4=".$_GET['idTab_4'];}
-if(isset($_GET['idTab_5']) && $_GET['idTab_5'] != ''){          $location .= "&idTab_5=".$_GET['idTab_5'];            $search .= "&idTab_5=".$_GET['idTab_5'];}
-if(isset($_GET['idTab_6']) && $_GET['idTab_6'] != ''){          $location .= "&idTab_6=".$_GET['idTab_6'];            $search .= "&idTab_6=".$_GET['idTab_6'];}
-if(isset($_GET['idTab_7']) && $_GET['idTab_7'] != ''){          $location .= "&idTab_7=".$_GET['idTab_7'];            $search .= "&idTab_7=".$_GET['idTab_7'];}
-if(isset($_GET['idTab_8']) && $_GET['idTab_8'] != ''){          $location .= "&idTab_8=".$_GET['idTab_8'];            $search .= "&idTab_8=".$_GET['idTab_8'];}
-if(isset($_GET['idTab_9']) && $_GET['idTab_9'] != ''){          $location .= "&idTab_9=".$_GET['idTab_9'];            $search .= "&idTab_9=".$_GET['idTab_9'];}
-if(isset($_GET['idTab_10']) && $_GET['idTab_10'] != ''){        $location .= "&idTab_10=".$_GET['idTab_10'];          $search .= "&idTab_10=".$_GET['idTab_10'];}
-if(isset($_GET['idTab_11']) && $_GET['idTab_11'] != ''){        $location .= "&idTab_11=".$_GET['idTab_11'];          $search .= "&idTab_11=".$_GET['idTab_11'];}
-if(isset($_GET['idTab_12']) && $_GET['idTab_12'] != ''){        $location .= "&idTab_12=".$_GET['idTab_12'];          $search .= "&idTab_12=".$_GET['idTab_12'];}
-if(isset($_GET['idTab_13']) && $_GET['idTab_13'] != ''){        $location .= "&idTab_13=".$_GET['idTab_13'];          $search .= "&idTab_13=".$_GET['idTab_13'];}
-if(isset($_GET['idTab_14']) && $_GET['idTab_14'] != ''){        $location .= "&idTab_14=".$_GET['idTab_14'];          $search .= "&idTab_14=".$_GET['idTab_14'];}
-if(isset($_GET['idTab_15']) && $_GET['idTab_15'] != ''){        $location .= "&idTab_15=".$_GET['idTab_15'];          $search .= "&idTab_15=".$_GET['idTab_15'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){     $location .= "&idTipo=".$_GET['idTipo'];              $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){     $location .= "&Nombre=".$_GET['Nombre'];              $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){           $location .= "&Rut=".$_GET['Rut'];                    $search .= "&Rut=".$_GET['Rut'];}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){  $location .= "&fNacimiento=".$_GET['fNacimiento'];    $search .= "&fNacimiento=".$_GET['fNacimiento'];}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){ $location .= "&idCiudad=".$_GET['idCiudad'];          $search .= "&idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){ $location .= "&idComuna=".$_GET['idComuna'];          $search .= "&idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){      $location .= "&Direccion=".$_GET['Direccion'];        $search .= "&Direccion=".$_GET['Direccion'];}
+if(isset($_GET['Giro']) && $_GET['Giro']!=''){         $location .= "&Giro=".$_GET['Giro'];                  $search .= "&Giro=".$_GET['Giro'];}
+if(isset($_GET['idTab_1']) && $_GET['idTab_1']!=''){   $location .= "&idTab_1=".$_GET['idTab_1'];            $search .= "&idTab_1=".$_GET['idTab_1'];}
+if(isset($_GET['idTab_2']) && $_GET['idTab_2']!=''){   $location .= "&idTab_2=".$_GET['idTab_2'];            $search .= "&idTab_2=".$_GET['idTab_2'];}
+if(isset($_GET['idTab_3']) && $_GET['idTab_3']!=''){   $location .= "&idTab_3=".$_GET['idTab_3'];            $search .= "&idTab_3=".$_GET['idTab_3'];}
+if(isset($_GET['idTab_4']) && $_GET['idTab_4']!=''){   $location .= "&idTab_4=".$_GET['idTab_4'];            $search .= "&idTab_4=".$_GET['idTab_4'];}
+if(isset($_GET['idTab_5']) && $_GET['idTab_5']!=''){   $location .= "&idTab_5=".$_GET['idTab_5'];            $search .= "&idTab_5=".$_GET['idTab_5'];}
+if(isset($_GET['idTab_6']) && $_GET['idTab_6']!=''){   $location .= "&idTab_6=".$_GET['idTab_6'];            $search .= "&idTab_6=".$_GET['idTab_6'];}
+if(isset($_GET['idTab_7']) && $_GET['idTab_7']!=''){   $location .= "&idTab_7=".$_GET['idTab_7'];            $search .= "&idTab_7=".$_GET['idTab_7'];}
+if(isset($_GET['idTab_8']) && $_GET['idTab_8']!=''){   $location .= "&idTab_8=".$_GET['idTab_8'];            $search .= "&idTab_8=".$_GET['idTab_8'];}
+if(isset($_GET['idTab_9']) && $_GET['idTab_9']!=''){   $location .= "&idTab_9=".$_GET['idTab_9'];            $search .= "&idTab_9=".$_GET['idTab_9'];}
+if(isset($_GET['idTab_10']) && $_GET['idTab_10']!=''){ $location .= "&idTab_10=".$_GET['idTab_10'];          $search .= "&idTab_10=".$_GET['idTab_10'];}
+if(isset($_GET['idTab_11']) && $_GET['idTab_11']!=''){ $location .= "&idTab_11=".$_GET['idTab_11'];          $search .= "&idTab_11=".$_GET['idTab_11'];}
+if(isset($_GET['idTab_12']) && $_GET['idTab_12']!=''){ $location .= "&idTab_12=".$_GET['idTab_12'];          $search .= "&idTab_12=".$_GET['idTab_12'];}
+if(isset($_GET['idTab_13']) && $_GET['idTab_13']!=''){ $location .= "&idTab_13=".$_GET['idTab_13'];          $search .= "&idTab_13=".$_GET['idTab_13'];}
+if(isset($_GET['idTab_14']) && $_GET['idTab_14']!=''){ $location .= "&idTab_14=".$_GET['idTab_14'];          $search .= "&idTab_14=".$_GET['idTab_14'];}
+if(isset($_GET['idTab_15']) && $_GET['idTab_15']!=''){ $location .= "&idTab_15=".$_GET['idTab_15'];          $search .= "&idTab_15=".$_GET['idTab_15'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -48,16 +48,16 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/clientes_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/clientes_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/clientes_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -72,14 +72,14 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Cliente editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Cliente borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
 $query = "SELECT  
 clientes_listado.email, 
-clientes_listado.Nombre, 
+clientes_listado.Nombre,
 clientes_listado.Rut, 
 clientes_listado.RazonSocial, 
 clientes_listado.fNacimiento, 
@@ -100,7 +100,7 @@ core_estados.Nombre AS estado,
 core_sistemas.Nombre AS sistema,
 clientes_tipos.Nombre AS tipoCliente,
 core_rubros.Nombre AS Rubro, 
-clientes_listado.Contrato_Nombre, 
+clientes_listado.Contrato_Nombre,
 clientes_listado.Contrato_Numero, 
 core_cross_cliente.Nombre AS Contrato_Periodo,
 clientes_listado.Contrato_Fecha_Ini, 
@@ -167,12 +167,12 @@ foreach ($arrTabs as $tab) {
 }
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Resumen');?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -192,15 +192,15 @@ foreach ($arrTabs as $tab) {
 						<li class=""><a href="<?php echo 'clientes_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 						<li class=""><a href="<?php echo 'clientes_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
-						<div class="col-sm-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 							<p class="text-muted word_break">
 								<strong>Tipo de Cliente : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
@@ -210,7 +210,7 @@ foreach ($arrTabs as $tab) {
 									<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<?php 
 								//si es una persona
-								}else{ ?>
+								}else{?>
 									<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
 									<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 								<?php } ?>
@@ -293,14 +293,14 @@ foreach ($arrTabs as $tab) {
 										if(isset($rowdata['idTab_14'])&&$rowdata['idTab_14']==2&&isset($arrTabsSorter[14])){ echo ' - '.$arrTabsSorter[14].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 14, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
 										if(isset($rowdata['idTab_15'])&&$rowdata['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].' <a target="new" href="view_cliente_contrato.php?view='.simpleEncode($_GET['id'], fecha_actual()).'&idTab='.simpleEncode( 15, fecha_actual()).'" class="btn btn-default btn-sm"><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar Contrato Tipo</a><br/>';} 
 									?>
-								</p>			
+								</p>		
 							<?php } ?>
 							
 							
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php 
 							//se arma la direccion
@@ -321,40 +321,40 @@ foreach ($arrTabs as $tab) {
 				<div class="clearfix"></div>
 
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);  ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Cliente</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Cliente</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipo)) {           $x1  = $idTipo;            }else{$x1  = '';}
-				if(isset($Nombre)) {           $x2  = $Nombre;            }else{$x2  = '';}
-				if(isset($Rut)) {              $x3  = $Rut;               }else{$x3  = '';}
-				if(isset($fNacimiento)) {      $x4  = $fNacimiento;       }else{$x4  = '';}
-				if(isset($idCiudad)) {         $x5  = $idCiudad;          }else{$x5  = '';}
-				if(isset($idComuna)) {         $x6  = $idComuna;          }else{$x6  = '';}
-				if(isset($Direccion)) {        $x7  = $Direccion;         }else{$x7  = '';}
-				if(isset($Giro)) {             $x8  = $Giro;              }else{$x8  = '';}
+				if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = '';}
+				if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = '';}
+				if(isset($Rut)){              $x3  = $Rut;               }else{$x3  = '';}
+				if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = '';}
+				if(isset($idCiudad)){         $x5  = $idCiudad;          }else{$x5  = '';}
+				if(isset($idComuna)){         $x6  = $idComuna;          }else{$x6  = '';}
+				if(isset($Direccion)){        $x7  = $Direccion;         }else{$x7  = '';}
+				if(isset($Giro)){             $x8  = $Giro;              }else{$x8  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -364,7 +364,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);  ?>
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 2);
 				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x8, 1,'fa fa-industry');
@@ -376,32 +376,26 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);  ?>
 				$Form_Inputs->form_input_hidden('new_folder', 1, 2);
 				?>
 								
-				<div class="form-group">	
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 			
 			
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){$num_pag = $_GET["pagina"];	
-} else {$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -427,35 +421,35 @@ $SIS_where.= " AND clientes_listado.idSistema=".$_SESSION['usuario']['basic_data
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){             $SIS_where .= " AND clientes_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){             $SIS_where .= " AND clientes_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                   $SIS_where .= " AND clientes_listado.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){   $SIS_where .= " AND clientes_listado.fNacimiento='".$_GET['fNacimiento']."'";}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){         $SIS_where .= " AND clientes_listado.idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){         $SIS_where .= " AND clientes_listado.idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){       $SIS_where .= " AND clientes_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
-if(isset($_GET['Giro']) && $_GET['Giro'] != ''){                 $SIS_where .= " AND clientes_listado.Giro LIKE '%".$_GET['Giro']."%'";}
-if(isset($_GET['idTab_1']) && $_GET['idTab_1'] != ''){           $SIS_where .= " AND clientes_listado.idTab_1='".$_GET['idTab_1']."'";}
-if(isset($_GET['idTab_2']) && $_GET['idTab_2'] != ''){           $SIS_where .= " AND clientes_listado.idTab_2='".$_GET['idTab_2']."'";}
-if(isset($_GET['idTab_3']) && $_GET['idTab_3'] != ''){           $SIS_where .= " AND clientes_listado.idTab_3='".$_GET['idTab_3']."'";}
-if(isset($_GET['idTab_4']) && $_GET['idTab_4'] != ''){           $SIS_where .= " AND clientes_listado.idTab_4='".$_GET['idTab_4']."'";}
-if(isset($_GET['idTab_5']) && $_GET['idTab_5'] != ''){           $SIS_where .= " AND clientes_listado.idTab_5='".$_GET['idTab_5']."'";}
-if(isset($_GET['idTab_6']) && $_GET['idTab_6'] != ''){           $SIS_where .= " AND clientes_listado.idTab_6='".$_GET['idTab_6']."'";}
-if(isset($_GET['idTab_7']) && $_GET['idTab_7'] != ''){           $SIS_where .= " AND clientes_listado.idTab_7='".$_GET['idTab_7']."'";}
-if(isset($_GET['idTab_8']) && $_GET['idTab_8'] != ''){           $SIS_where .= " AND clientes_listado.idTab_8='".$_GET['idTab_8']."'";}
-if(isset($_GET['idTab_9']) && $_GET['idTab_9'] != ''){           $SIS_where .= " AND clientes_listado.idTab_9='".$_GET['idTab_9']."'";}
-if(isset($_GET['idTab_10']) && $_GET['idTab_10'] != ''){         $SIS_where .= " AND clientes_listado.idTab_10='".$_GET['idTab_10']."'";}
-if(isset($_GET['idTab_11']) && $_GET['idTab_11'] != ''){         $SIS_where .= " AND clientes_listado.idTab_11='".$_GET['idTab_11']."'";}
-if(isset($_GET['idTab_12']) && $_GET['idTab_12'] != ''){         $SIS_where .= " AND clientes_listado.idTab_12='".$_GET['idTab_12']."'";}
-if(isset($_GET['idTab_13']) && $_GET['idTab_13'] != ''){         $SIS_where .= " AND clientes_listado.idTab_13='".$_GET['idTab_13']."'";}
-if(isset($_GET['idTab_14']) && $_GET['idTab_14'] != ''){         $SIS_where .= " AND clientes_listado.idTab_14='".$_GET['idTab_14']."'";}
-if(isset($_GET['idTab_15']) && $_GET['idTab_15'] != ''){         $SIS_where .= " AND clientes_listado.idTab_15='".$_GET['idTab_15']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){      $SIS_where .= " AND clientes_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){      $SIS_where .= " AND clientes_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){            $SIS_where .= " AND clientes_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){   $SIS_where .= " AND clientes_listado.fNacimiento='".$_GET['fNacimiento']."'";}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){  $SIS_where .= " AND clientes_listado.idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){  $SIS_where .= " AND clientes_listado.idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){$SIS_where .= " AND clientes_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
+if(isset($_GET['Giro']) && $_GET['Giro']!=''){          $SIS_where .= " AND clientes_listado.Giro LIKE '%".EstandarizarInput($_GET['Giro'])."%'";}
+if(isset($_GET['idTab_1']) && $_GET['idTab_1']!=''){    $SIS_where .= " AND clientes_listado.idTab_1='".$_GET['idTab_1']."'";}
+if(isset($_GET['idTab_2']) && $_GET['idTab_2']!=''){    $SIS_where .= " AND clientes_listado.idTab_2='".$_GET['idTab_2']."'";}
+if(isset($_GET['idTab_3']) && $_GET['idTab_3']!=''){    $SIS_where .= " AND clientes_listado.idTab_3='".$_GET['idTab_3']."'";}
+if(isset($_GET['idTab_4']) && $_GET['idTab_4']!=''){    $SIS_where .= " AND clientes_listado.idTab_4='".$_GET['idTab_4']."'";}
+if(isset($_GET['idTab_5']) && $_GET['idTab_5']!=''){    $SIS_where .= " AND clientes_listado.idTab_5='".$_GET['idTab_5']."'";}
+if(isset($_GET['idTab_6']) && $_GET['idTab_6']!=''){    $SIS_where .= " AND clientes_listado.idTab_6='".$_GET['idTab_6']."'";}
+if(isset($_GET['idTab_7']) && $_GET['idTab_7']!=''){    $SIS_where .= " AND clientes_listado.idTab_7='".$_GET['idTab_7']."'";}
+if(isset($_GET['idTab_8']) && $_GET['idTab_8']!=''){    $SIS_where .= " AND clientes_listado.idTab_8='".$_GET['idTab_8']."'";}
+if(isset($_GET['idTab_9']) && $_GET['idTab_9']!=''){    $SIS_where .= " AND clientes_listado.idTab_9='".$_GET['idTab_9']."'";}
+if(isset($_GET['idTab_10']) && $_GET['idTab_10']!=''){  $SIS_where .= " AND clientes_listado.idTab_10='".$_GET['idTab_10']."'";}
+if(isset($_GET['idTab_11']) && $_GET['idTab_11']!=''){  $SIS_where .= " AND clientes_listado.idTab_11='".$_GET['idTab_11']."'";}
+if(isset($_GET['idTab_12']) && $_GET['idTab_12']!=''){  $SIS_where .= " AND clientes_listado.idTab_12='".$_GET['idTab_12']."'";}
+if(isset($_GET['idTab_13']) && $_GET['idTab_13']!=''){  $SIS_where .= " AND clientes_listado.idTab_13='".$_GET['idTab_13']."'";}
+if(isset($_GET['idTab_14']) && $_GET['idTab_14']!=''){  $SIS_where .= " AND clientes_listado.idTab_14='".$_GET['idTab_14']."'";}
+if(isset($_GET['idTab_15']) && $_GET['idTab_15']!=''){  $SIS_where .= " AND clientes_listado.idTab_15='".$_GET['idTab_15']."'";}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'clientes_listado.idCliente', 'clientes_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 clientes_listado.idCliente,
@@ -498,50 +492,50 @@ foreach ($arrTabs as $tab) {
 }
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cliente</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cliente</a><?php }?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipo)) {           $x1   = $idTipo;            }else{$x1   = '';}
-				if(isset($Nombre)) {           $x2   = $Nombre;            }else{$x2   = '';}
-				if(isset($Rut)) {              $x3   = $Rut;               }else{$x3   = '';}
-				if(isset($fNacimiento)) {      $x4   = $fNacimiento;       }else{$x4   = '';}
-				if(isset($idCiudad)) {         $x5   = $idCiudad;          }else{$x5   = '';}
-				if(isset($idComuna)) {         $x6   = $idComuna;          }else{$x6   = '';}
-				if(isset($Direccion)) {        $x7   = $Direccion;         }else{$x7   = '';}
-				if(isset($Giro)) {             $x9   = $Giro;              }else{$x9   = '';}
-				if(isset($idTab_1)) {          $x10  = $idTab_1;           }else{$x10  = '';}
-				if(isset($idTab_2)) {          $x10 .= ','.$idTab_2;       }else{$x10 .= ',';}
-				if(isset($idTab_3)) {          $x10 .= ','.$idTab_3;       }else{$x10 .= ',';}
-				if(isset($idTab_4)) {          $x10 .= ','.$idTab_4;       }else{$x10 .= ',';}
-				if(isset($idTab_5)) {          $x10 .= ','.$idTab_5;       }else{$x10 .= ',';}
-				if(isset($idTab_6)) {          $x10 .= ','.$idTab_6;       }else{$x10 .= ',';}
-				if(isset($idTab_7)) {          $x10 .= ','.$idTab_7;       }else{$x10 .= ',';}
-				if(isset($idTab_8)) {          $x10 .= ','.$idTab_8;       }else{$x10 .= ',';}
-				if(isset($idTab_9)) {          $x10 .= ','.$idTab_9;       }else{$x10 .= ',';}
-				if(isset($idTab_10)) {         $x10 .= ','.$idTab_10;      }else{$x10 .= ',';}
-				if(isset($idTab_11)) {         $x10 .= ','.$idTab_11;      }else{$x10 .= ',';}
-				if(isset($idTab_12)) {         $x10 .= ','.$idTab_12;      }else{$x10 .= ',';}
-				if(isset($idTab_13)) {         $x10 .= ','.$idTab_13;      }else{$x10 .= ',';}
-				if(isset($idTab_14)) {         $x10 .= ','.$idTab_14;      }else{$x10 .= ',';}
-				if(isset($idTab_15)) {         $x10 .= ','.$idTab_15;      }else{$x10 .= ',';}
-				
+				if(isset($idTipo)){           $x1   = $idTipo;            }else{$x1   = '';}
+				if(isset($Nombre)){           $x2   = $Nombre;            }else{$x2   = '';}
+				if(isset($Rut)){              $x3   = $Rut;               }else{$x3   = '';}
+				if(isset($fNacimiento)){      $x4   = $fNacimiento;       }else{$x4   = '';}
+				if(isset($idCiudad)){         $x5   = $idCiudad;          }else{$x5   = '';}
+				if(isset($idComuna)){         $x6   = $idComuna;          }else{$x6   = '';}
+				if(isset($Direccion)){        $x7   = $Direccion;         }else{$x7   = '';}
+				if(isset($Giro)){             $x9   = $Giro;              }else{$x9   = '';}
+				if(isset($idTab_1)){          $x10  = $idTab_1;           }else{$x10  = '';}
+				if(isset($idTab_2)){          $x10 .= ','.$idTab_2;       }else{$x10 .= ',';}
+				if(isset($idTab_3)){          $x10 .= ','.$idTab_3;       }else{$x10 .= ',';}
+				if(isset($idTab_4)){          $x10 .= ','.$idTab_4;       }else{$x10 .= ',';}
+				if(isset($idTab_5)){          $x10 .= ','.$idTab_5;       }else{$x10 .= ',';}
+				if(isset($idTab_6)){          $x10 .= ','.$idTab_6;       }else{$x10 .= ',';}
+				if(isset($idTab_7)){          $x10 .= ','.$idTab_7;       }else{$x10 .= ',';}
+				if(isset($idTab_8)){          $x10 .= ','.$idTab_8;       }else{$x10 .= ',';}
+				if(isset($idTab_9)){          $x10 .= ','.$idTab_9;       }else{$x10 .= ',';}
+				if(isset($idTab_10)){         $x10 .= ','.$idTab_10;      }else{$x10 .= ',';}
+				if(isset($idTab_11)){         $x10 .= ','.$idTab_11;      }else{$x10 .= ',';}
+				if(isset($idTab_12)){         $x10 .= ','.$idTab_12;      }else{$x10 .= ',';}
+				if(isset($idTab_13)){         $x10 .= ','.$idTab_13;      }else{$x10 .= ',';}
+				if(isset($idTab_14)){         $x10 .= ','.$idTab_14;      }else{$x10 .= ',';}
+				if(isset($idTab_15)){         $x10 .= ','.$idTab_15;      }else{$x10 .= ',';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo de Cliente','idTipo', $x1, 1, 'idTipo', 'Nombre', 'clientes_tipos', 0, '', $dbConn);
@@ -549,7 +543,7 @@ foreach ($arrTabs as $tab) {
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
 				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
@@ -558,25 +552,25 @@ foreach ($arrTabs as $tab) {
 					$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x10, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 				}
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>  
-<div class="clearfix"></div>                  
+<div class="clearfix"></div>
                                  
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Clientes</h5>	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Clientes</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -623,11 +617,11 @@ foreach ($arrTabs as $tab) {
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrClientes as $cliente) { ?>
-					<tr class="odd">		
-						<td><?php echo $cliente['Rut']; ?></td>		
-						<td><?php echo $cliente['Nombre']; ?></td>		
-						<td><label class="label <?php if(isset($cliente['idEstado'])&&$cliente['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $cliente['estado']; ?></label></td>		
-						<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){ ?>		
+					<tr class="odd">
+						<td><?php echo $cliente['Rut']; ?></td>
+						<td><?php echo $cliente['Nombre']; ?></td>
+						<td><label class="label <?php if(isset($cliente['idEstado'])&&$cliente['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $cliente['estado']; ?></label></td>	
+						<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){ ?>	
 							<td>
 								<?php 
 									if(isset($cliente['idTab_1'])&&$cliente['idTab_1']==2&&isset($arrTabsSorter[1])){    echo ' - '.$arrTabsSorter[1].'<br/>';}
@@ -646,7 +640,7 @@ foreach ($arrTabs as $tab) {
 									if(isset($cliente['idTab_14'])&&$cliente['idTab_14']==2&&isset($arrTabsSorter[14])){ echo ' - '.$arrTabsSorter[14].'<br/>';} 
 									if(isset($cliente['idTab_15'])&&$cliente['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].'<br/>';} 
 								?>
-							</td>		
+							</td>
 						<?php } ?>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $cliente['sistema']; ?></td><?php } ?>
 						<td>
@@ -657,19 +651,19 @@ foreach ($arrTabs as $tab) {
 									$ubicacion = $location.'&del='.simpleEncode($cliente['idCliente'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al cliente '.$cliente['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div>   
+		</div>
 	</div>
 </div>
 	

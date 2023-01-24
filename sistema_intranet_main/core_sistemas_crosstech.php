@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistemas.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -21,7 +21,7 @@ $location .='?pagina='.$_GET['pagina'];
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$location.='&id='.$_GET['id'];
 	$form_trabajo= 'updateCrossTech';
@@ -40,24 +40,24 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sistema editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = '
-Nombre, CrossTech_HoraPrevRev, CrossTech_HoraPrevision, CrossTech_HoraPrevCuenta,
+Nombre,CrossTech_HoraPrevRev, CrossTech_HoraPrevision, CrossTech_HoraPrevCuenta,
 CrossTech_HeladaTemp, CrossTech_FechaUnidadFrio, CrossTech_TempMax, CrossTech_FechaTempMax, 
 CrossTech_DiasTempMin, CrossTech_FechaDiasTempMin, CrossTech_TempMin, CrossTech_FechaTempMin,
 CrossTech_HeladaMailHoraIni, CrossTech_HeladaMailHoraTerm';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -80,28 +80,28 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($CrossTech_HoraPrevRev)) {        $x1  = $CrossTech_HoraPrevRev;        }else{$x1  = $rowdata['CrossTech_HoraPrevRev'];}
-					if(isset($CrossTech_HoraPrevision)) {      $x2  = $CrossTech_HoraPrevision;      }else{$x2  = $rowdata['CrossTech_HoraPrevision'];}
-					if(isset($CrossTech_HoraPrevCuenta)) {     $x3  = $CrossTech_HoraPrevCuenta;     }else{$x3  = $rowdata['CrossTech_HoraPrevCuenta'];}
-					if(isset($CrossTech_HeladaTemp)) {         $x4  = $CrossTech_HeladaTemp;         }else{$x4  = $rowdata['CrossTech_HeladaTemp'];}
-					if(isset($CrossTech_HeladaMailHoraIni)) {  $x5  = $CrossTech_HeladaMailHoraIni;  }else{$x5  = $rowdata['CrossTech_HeladaMailHoraIni'];}
-					if(isset($CrossTech_HeladaMailHoraTerm)) { $x6  = $CrossTech_HeladaMailHoraTerm; }else{$x6  = $rowdata['CrossTech_HeladaMailHoraTerm'];}
-					if(isset($CrossTech_FechaUnidadFrio)) {    $x7  = $CrossTech_FechaUnidadFrio;    }else{$x7  = $rowdata['CrossTech_FechaUnidadFrio'];}
-					if(isset($CrossTech_TempMin)) {            $x8  = $CrossTech_TempMin;            }else{$x8  = $rowdata['CrossTech_TempMin'];}
-					if(isset($CrossTech_FechaTempMin)) {       $x9  = $CrossTech_FechaTempMin;       }else{$x9  = $rowdata['CrossTech_FechaTempMin'];}
-					if(isset($CrossTech_TempMax)) {            $x10 = $CrossTech_TempMax;            }else{$x10 = $rowdata['CrossTech_TempMax'];}
-					if(isset($CrossTech_FechaTempMax)) {       $x11 = $CrossTech_FechaTempMax;       }else{$x11 = $rowdata['CrossTech_FechaTempMax'];}
-					if(isset($CrossTech_DiasTempMin)) {        $x12 = $CrossTech_DiasTempMin;        }else{$x12 = $rowdata['CrossTech_DiasTempMin'];}
-					if(isset($CrossTech_FechaDiasTempMin)) {   $x13 = $CrossTech_FechaDiasTempMin;   }else{$x13 = $rowdata['CrossTech_FechaDiasTempMin'];}
+					if(isset($CrossTech_HoraPrevRev)){        $x1  = $CrossTech_HoraPrevRev;        }else{$x1  = $rowdata['CrossTech_HoraPrevRev'];}
+					if(isset($CrossTech_HoraPrevision)){      $x2  = $CrossTech_HoraPrevision;      }else{$x2  = $rowdata['CrossTech_HoraPrevision'];}
+					if(isset($CrossTech_HoraPrevCuenta)){     $x3  = $CrossTech_HoraPrevCuenta;     }else{$x3  = $rowdata['CrossTech_HoraPrevCuenta'];}
+					if(isset($CrossTech_HeladaTemp)){         $x4  = $CrossTech_HeladaTemp;         }else{$x4  = $rowdata['CrossTech_HeladaTemp'];}
+					if(isset($CrossTech_HeladaMailHoraIni)){  $x5  = $CrossTech_HeladaMailHoraIni;  }else{$x5  = $rowdata['CrossTech_HeladaMailHoraIni'];}
+					if(isset($CrossTech_HeladaMailHoraTerm)){ $x6  = $CrossTech_HeladaMailHoraTerm; }else{$x6  = $rowdata['CrossTech_HeladaMailHoraTerm'];}
+					if(isset($CrossTech_FechaUnidadFrio)){    $x7  = $CrossTech_FechaUnidadFrio;    }else{$x7  = $rowdata['CrossTech_FechaUnidadFrio'];}
+					if(isset($CrossTech_TempMin)){            $x8  = $CrossTech_TempMin;            }else{$x8  = $rowdata['CrossTech_TempMin'];}
+					if(isset($CrossTech_FechaTempMin)){       $x9  = $CrossTech_FechaTempMin;       }else{$x9  = $rowdata['CrossTech_FechaTempMin'];}
+					if(isset($CrossTech_TempMax)){            $x10 = $CrossTech_TempMax;            }else{$x10 = $rowdata['CrossTech_TempMax'];}
+					if(isset($CrossTech_FechaTempMax)){       $x11 = $CrossTech_FechaTempMax;       }else{$x11 = $rowdata['CrossTech_FechaTempMax'];}
+					if(isset($CrossTech_DiasTempMin)){        $x12 = $CrossTech_DiasTempMin;        }else{$x12 = $rowdata['CrossTech_DiasTempMin'];}
+					if(isset($CrossTech_FechaDiasTempMin)){   $x13 = $CrossTech_FechaDiasTempMin;   }else{$x13 = $rowdata['CrossTech_FechaDiasTempMin'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -141,19 +141,19 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 					$Form_Inputs->form_input_hidden('CrossTech_FechaUnidadFrioOld', $rowdata['CrossTech_FechaUnidadFrio'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

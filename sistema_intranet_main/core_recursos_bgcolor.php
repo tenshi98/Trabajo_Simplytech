@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistemas.php";
 $location = $original;
 /**********************************************************************************************************************************/
@@ -31,7 +31,7 @@ require_once 'core/Web.Header.Main.php';
  ul li { height: 50px;line-height: 50px;}
 </style>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -39,9 +39,9 @@ require_once 'core/Web.Header.Main.php';
 				<li class=""><a href="#tema" data-toggle="tab">Tema</a></li>
 				<li class=""><a href="#bootstrap" data-toggle="tab">Bootstrap</a></li>
 				<li class=""><a href="#mycolors" data-toggle="tab">My Colors</a></li>
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="fuentes">
 				<div class="col-lg-4">
@@ -199,7 +199,7 @@ require_once 'core/Web.Header.Main.php';
 					</div>
 				</div>
 
-			</div>	
+			</div>
 			
 			<div class="tab-pane fade" id="bootstrap">
 				<div class="col-sm-3">
@@ -784,7 +784,7 @@ require_once 'core/Web.Header.Main.php';
 		
 			</div>
 			
-        </div>	
+        </div>
 	</div>
 </div>
 

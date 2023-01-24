@@ -108,7 +108,7 @@ $Mantenciones = db_select_data (false, $SIS_query, 'core_mantenciones', $SIS_joi
 $SIS_query = 'idOpcionesTel,idOpcionesGen_1, idOpcionesGen_2, idOpcionesGen_4, idOpcionesGen_6, idOpcionesGen_9';
 $SIS_join  = '';
 $SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
+$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
 /*****************************************************************************************************************/
 /*                                                Subconsultas                                                   */
@@ -124,29 +124,29 @@ $x1 = " idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
 if($idTipoUsuario==1){
 	$z .= " AND idUsuario>=0";
-	$x2 = "idUsuario>=0";		
+	$x2 = "idUsuario>=0";
 }else{
 	$z .= " AND idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 	$x2 = "idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 /****************************************/
 //Visualizacion de los widgets Comunes, se verifica si esta activado o si es un superusuario
-if($n_permisos['idOpcionesGen_1']=='1' OR $idTipoUsuario==1) { 
+if($n_permisos['idOpcionesGen_1']=='1' OR $idTipoUsuario==1){
 	$subquery .= ",(SELECT COUNT(idNoti) FROM principal_notificaciones_ver ".$z." AND idEstado='1' LIMIT 1) AS Notificacion";
 	$subquery .= ",(SELECT COUNT(idAgenda) FROM principal_agenda_telefonica ".$w." AND idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."' OR idUsuario=9999 LIMIT 1) AS CuentaContactos";
 	$subquery .= ",(SELECT COUNT(idSoftware) FROM soporte_software_listado LIMIT 1) AS CuentaProgramas";
 	$subquery .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado ".$w." AND Mes=".mes_actual()." AND Ano=".ano_actual()." LIMIT 1) AS CuentaEventos";
 }
 /****************************************/
-//Visualizacion de los widgets de las transacciones 
-if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1) { 
+//Visualizacion de los widgets de las transacciones
+if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1){
 	
 	/***************************************** PRIMERA COLUMNA *****************************************/
 	/*** Cargas por Vencer ***/
-	if($prm_x[12]=='1' OR $idTipoUsuario==1) { $subquery .= ",(SELECT COUNT(idCarga) FROM telemetria_carga_bam ".$w." AND Semana=".semana_actual()." AND Ano=".ano_actual()." LIMIT 1) AS CuentaRecargas";}
+	if($prm_x[12]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idCarga) FROM telemetria_carga_bam ".$w." AND Semana=".semana_actual()." AND Ano=".ano_actual()." LIMIT 1) AS CuentaRecargas";}
 	
 	/*** Solicitudes sin OC ***/
-	if($prm_x[13]=='1' OR $idTipoUsuario==1) { 
+	if($prm_x[13]=='1' OR $idTipoUsuario==1){
 		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_productos ".$w." AND idOcompra=0 LIMIT 1) AS CuentaSolProd";
 		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_insumos ".$w." AND idOcompra=0 LIMIT 1) AS CuentaSolIns";
 		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_arriendos ".$w." AND idOcompra=0 LIMIT 1) AS CuentaSolArr";
@@ -155,16 +155,16 @@ if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1) {
 	}
 	
 	/*** OC sin Aprobar ***/
-	if($prm_x[14]=='1' OR $idTipoUsuario==1) { $subquery .= ",(SELECT COUNT(idOcompra) FROM ocompra_listado ".$w." AND idEstado=1 LIMIT 1) AS CuentaOC";}
+	if($prm_x[14]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idOcompra) FROM ocompra_listado ".$w." AND idEstado=1 LIMIT 1) AS CuentaOC";}
 
 	/*** OT Maquinas para la Semana ***/
-	$OT_Semana = $prm_x[10] + $prm_x[11];					
+	$OT_Semana = $prm_x[10] + $prm_x[11];
 	if($OT_Semana!=0 OR $idTipoUsuario==1) {
 		$subquery .= ",(SELECT COUNT(idOT) FROM orden_trabajo_listado WHERE  ".$x1." AND progSemana=".semana_actual()."   AND progAno=".ano_actual()." AND idEstado=1  LIMIT 1 ) AS CountOTSemana";
 	}
 	
 	/*** OT Maquinas no Cumplidas ***/
-	$OT_Semana = $prm_x[10] + $prm_x[11];					
+	$OT_Semana = $prm_x[10] + $prm_x[11];
 	if($OT_Semana!=0 OR $idTipoUsuario==1) {
 		$subquery .= ",(SELECT COUNT(idOT) FROM orden_trabajo_listado WHERE  ".$x1." AND progSemana<".semana_actual()."   AND progAno=".ano_actual()." AND idEstado=1  LIMIT 1 ) AS CountOTRetrasada";
 	}
@@ -182,7 +182,7 @@ if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1) {
 	}
 	
 	/*** OT Tareas no Cumplidas ***/
-	$Tickets_temp = $prm_x[51] + $prm_x[52] + $prm_x[53];					
+	$Tickets_temp = $prm_x[51] + $prm_x[52] + $prm_x[53];
 	if($Tickets_temp!=0 OR $idTipoUsuario==1) {
 		$subquery .= ",(SELECT COUNT(gestion_tickets.idTicket) 
 		FROM gestion_tickets 
@@ -215,7 +215,7 @@ if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1) {
 	}
 	
 	/*** Devolucion Arriendos ***/
-	if($prm_x[15]=='1' OR $idTipoUsuario==1) { $subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idTipo=1 AND bodegas_arriendos_facturacion.idEstadoDevolucion=1   AND bodegas_arriendos_facturacion.".$x1."   AND bodegas_arriendos_facturacion.Devolucion_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Devolucion_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$x2." LIMIT 1) AS CountArriendoIn";}
+	if($prm_x[15]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idTipo=1 AND bodegas_arriendos_facturacion.idEstadoDevolucion=1   AND bodegas_arriendos_facturacion.".$x1."   AND bodegas_arriendos_facturacion.Devolucion_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Devolucion_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$x2." LIMIT 1) AS CountArriendoIn";}
 	
 	/*** Documentos x Pagar ***/
 	$PermChequesPagar = $prm_x[23] + $prm_x[24];					
@@ -235,7 +235,7 @@ if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1) {
 	}
 	
 	/*** Devolucion Arriendos ***/
-	if($prm_x[19]=='1' OR $idTipoUsuario==1) { $subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idTipo=2 AND bodegas_arriendos_facturacion.idEstadoDevolucion=1   AND bodegas_arriendos_facturacion.".$x1."   AND bodegas_arriendos_facturacion.Devolucion_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Devolucion_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$x2." LIMIT 1) AS CountArriendoOut";}
+	if($prm_x[19]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idTipo=2 AND bodegas_arriendos_facturacion.idEstadoDevolucion=1   AND bodegas_arriendos_facturacion.".$x1."   AND bodegas_arriendos_facturacion.Devolucion_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Devolucion_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$x2." LIMIT 1) AS CountArriendoOut";}
 	
 	/*** Documentos x Cobrar ***/
 	$PermChequesCobrar = $prm_x[25] + $prm_x[26];					
@@ -263,14 +263,14 @@ if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1) {
 				
 /************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
-$SIS_query = 'core_ubicacion_ciudad.Nombre AS Ciudad, 
-core_ubicacion_comunas.Nombre AS Comuna, 
+$SIS_query = 'core_ubicacion_ciudad.Nombre AS Ciudad,
+core_ubicacion_comunas.Nombre AS Comuna,
 core_ubicacion_comunas.Wheater AS Wheater'.$subquery;
 $SIS_join  = '
 LEFT JOIN core_ubicacion_ciudad    ON core_ubicacion_ciudad.idCiudad    = core_sistemas.idCiudad
 LEFT JOIN core_ubicacion_comunas   ON core_ubicacion_comunas.idComuna   = core_sistemas.idComuna';
 $SIS_where = 'core_sistemas.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$subconsulta = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'subconsulta');
+$subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'subconsulta');
 
 /*****************************************************************************************************************/
 /*                                                Modelado                                                       */
@@ -278,12 +278,12 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $S
 
 echo '
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="cover profile">';
-			
+
 				//portada animada
 				include '1include_principal_interfaz_1_portada.php';
-			
+
 				//menu
 				include '1include_principal_interfaz_1_menu.php';
 			
@@ -307,8 +307,8 @@ echo '
 				include '1include_principal_interfaz_tab_99.php';
 
 				echo '
-				<div class="clearfix"></div>				 
-			</div> 
+				<div class="clearfix"></div>
+			</div>
 			
 		</div>
 	</div>';

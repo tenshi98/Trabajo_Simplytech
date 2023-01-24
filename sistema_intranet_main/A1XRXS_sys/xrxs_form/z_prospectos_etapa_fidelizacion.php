@@ -2,29 +2,29 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-265).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idEtapaFide']) )    $idEtapaFide     = $_POST['idEtapaFide'];
-	if ( !empty($_POST['idProspecto']) )    $idProspecto     = $_POST['idProspecto'];
-	if ( !empty($_POST['idUsuario']) )      $idUsuario       = $_POST['idUsuario'];
-	if ( !empty($_POST['idEtapa']) )        $idEtapa         = $_POST['idEtapa'];
-	if ( !empty($_POST['Fecha']) )          $Fecha           = $_POST['Fecha'];
-	if ( !empty($_POST['Observacion']) )    $Observacion     = $_POST['Observacion'];
-	
-	if ( !empty($_POST['FModificacion']) )  $FModificacion   = $_POST['FModificacion'];
-	if ( !empty($_POST['HModificacion']) )  $HModificacion   = $_POST['HModificacion'];
-	if ( !empty($_POST['idUsuarioMod']) )   $idUsuarioMod    = $_POST['idUsuarioMod'];
-	
+	if (!empty($_POST['idEtapaFide']))    $idEtapaFide     = $_POST['idEtapaFide'];
+	if (!empty($_POST['idProspecto']))    $idProspecto     = $_POST['idProspecto'];
+	if (!empty($_POST['idUsuario']))      $idUsuario       = $_POST['idUsuario'];
+	if (!empty($_POST['idEtapa']))        $idEtapa         = $_POST['idEtapa'];
+	if (!empty($_POST['Fecha']))          $Fecha           = $_POST['Fecha'];
+	if (!empty($_POST['Observacion']))    $Observacion     = $_POST['Observacion'];
+
+	if (!empty($_POST['FModificacion']))  $FModificacion   = $_POST['FModificacion'];
+	if (!empty($_POST['HModificacion']))  $HModificacion   = $_POST['HModificacion'];
+	if (!empty($_POST['idUsuarioMod']))   $idUsuarioMod    = $_POST['idUsuarioMod'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -42,36 +42,36 @@ require_once '0_validate_user_1.php';
 			case 'idEtapa':        if(empty($idEtapa)){         $error['idEtapa']        = 'error/No ha seleccionado una etapa';}break;
 			case 'Fecha':          if(empty($Fecha)){           $error['Fecha']          = 'error/No ha ingresado la fecha';}break;
 			case 'Observacion':    if(empty($Observacion)){     $error['Observacion']    = 'error/No ha ingresado la observacion';}break;
-			
+
 			case 'FModificacion':  if(empty($FModificacion)){   $error['FModificacion']  = 'error/No ha ingresado la fecha de modificacion';}break;
 			case 'HModificacion':  if(empty($HModificacion)){   $error['HModificacion']  = 'error/No ha ingresado la hora de modificacion';}break;
 			case 'idUsuarioMod':   if(empty($idUsuarioMod)){    $error['idUsuarioMod']   = 'error/No ha ingresado el usuario de la modificacion';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Observacion) && $Observacion != ''){ $Observacion = EstandarizarInput($Observacion); }
+/*******************************************************************************************************************/
+	if(isset($Observacion) && $Observacion!=''){ $Observacion = EstandarizarInput($Observacion);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita Observacion, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Observacion)&&contar_palabras_censuradas($Observacion)!=0){  $error['Observacion'] = 'error/Edita Observacion, contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				
 				/***********************************************************************************/
@@ -82,16 +82,16 @@ require_once '0_validate_user_1.php';
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array(
-											"image/jpg", 
-											"image/png", 
-											"image/gif", 
+											"image/jpg",
+											"image/png",
+											"image/gif",
 											"image/jpeg",
 											"image/bmp",
-								
+
 											"application/msword",
 											"application/vnd.ms-word",
-											"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-											
+											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+
 											"application/msexcel",
 											"application/vnd.ms-excel",
 											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -113,7 +113,7 @@ require_once '0_validate_user_1.php';
 												
 											"application/x-zip-compressed",
 											"application/zip",
-											"multipart/x-zip",			
+											"multipart/x-zip",
 											"application/x-7z-compressed",
 											"application/x-rar-compressed",
 											"application/gzip",
@@ -135,14 +135,14 @@ require_once '0_validate_user_1.php';
 								//Se mueve el archivo a la carpeta previamente configurada
 								$move_result = @move_uploaded_file($_FILES["Archivo"]["tmp_name"], $ruta);
 								if ($move_result){
-									
+
 									//filtros
-									if(isset($idProspecto) && $idProspecto != ''){ $SIS_data  = "'".$idProspecto."'" ;    }else{$SIS_data  = "''";}
-									if(isset($idUsuario) && $idUsuario != ''){     $SIS_data .= ",'".$idUsuario."'" ;     }else{$SIS_data .= ",''";}
-									if(isset($idEtapa) && $idEtapa != ''){         $SIS_data .= ",'".$idEtapa."'" ;       }else{$SIS_data .= ",''";}
-									if(isset($Fecha) && $Fecha != ''){             $SIS_data .= ",'".$Fecha."'" ;         }else{$SIS_data .= ",''";}
-									if(isset($Observacion) && $Observacion != ''){ $SIS_data .= ",'".$Observacion."'" ;   }else{$SIS_data .= ",''";}
-									$SIS_data .= ",'".$sufijo.$_FILES['Archivo']['name']."'" ;
+									if(isset($idProspecto) && $idProspecto!=''){ $SIS_data  = "'".$idProspecto."'";    }else{$SIS_data  = "''";}
+									if(isset($idUsuario) && $idUsuario!=''){    $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
+									if(isset($idEtapa) && $idEtapa!=''){         $SIS_data .= ",'".$idEtapa."'";       }else{$SIS_data .= ",''";}
+									if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";        }else{$SIS_data .= ",''";}
+									if(isset($Observacion) && $Observacion!=''){ $SIS_data .= ",'".$Observacion."'";   }else{$SIS_data .= ",''";}
+									$SIS_data .= ",'".$sufijo.$_FILES['Archivo']['name']."'";
 									
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idProspecto, idUsuario, idEtapa, Fecha, Observacion, Archivo';
@@ -151,11 +151,11 @@ require_once '0_validate_user_1.php';
 									//Si ejecuto correctamente la consulta
 									if($ultimo_id!=0){
 										//Actualizo los datos
-										$SIS_data = "idProspecto='".$idProspecto."'" ;
-										if(isset($idEtapa) && $idEtapa!= ''){              $SIS_data .= ",idEtapa='".$idEtapa."'" ;}
-										if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'" ;}
-										if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'" ;}
-										if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'" ;}
+										$SIS_data = "idProspecto='".$idProspecto."'";
+										if(isset($idEtapa) && $idEtapa!= ''){              $SIS_data .= ",idEtapa='".$idEtapa."'";}
+										if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'";}
+										if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'";}
+										if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'";}
 										
 										/*******************************************************/
 										//se actualizan los datos
@@ -167,8 +167,8 @@ require_once '0_validate_user_1.php';
 											die;
 											
 										}
-									}	
-								} else {
+									}
+								}else {
 									$error['Archivo']       = 'error/Ocurrio un error al mover el archivo';
 								}
 							} else {
@@ -181,28 +181,28 @@ require_once '0_validate_user_1.php';
 				/************************************************************/
 				//si no hay archivo
 				}else{
-					
+
 					//filtros
-					if(isset($idProspecto) && $idProspecto != ''){ $SIS_data  = "'".$idProspecto."'" ;    }else{$SIS_data  = "''";}
-					if(isset($idUsuario) && $idUsuario != ''){     $SIS_data .= ",'".$idUsuario."'" ;     }else{$SIS_data .= ",''";}
-					if(isset($idEtapa) && $idEtapa != ''){         $SIS_data .= ",'".$idEtapa."'" ;       }else{$SIS_data .= ",''";}
-					if(isset($Fecha) && $Fecha != ''){             $SIS_data .= ",'".$Fecha."'" ;         }else{$SIS_data .= ",''";}
-					if(isset($Observacion) && $Observacion != ''){ $SIS_data .= ",'".$Observacion."'" ;   }else{$SIS_data .= ",''";}
-					
+					if(isset($idProspecto) && $idProspecto!=''){ $SIS_data  = "'".$idProspecto."'";    }else{$SIS_data  = "''";}
+					if(isset($idUsuario) && $idUsuario!=''){    $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
+					if(isset($idEtapa) && $idEtapa!=''){         $SIS_data .= ",'".$idEtapa."'";       }else{$SIS_data .= ",''";}
+					if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";        }else{$SIS_data .= ",''";}
+					if(isset($Observacion) && $Observacion!=''){ $SIS_data .= ",'".$Observacion."'";   }else{$SIS_data .= ",''";}
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idProspecto, idUsuario, idEtapa, Fecha, Observacion';
 					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'prospectos_etapa_fidelizacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Si ejecuto correctamente la consulta
 					if($ultimo_id!=0){
-					
+
 						//Actualizo los datos
-						$SIS_data = "idProspecto='".$idProspecto."'" ;
-						if(isset($idEtapa) && $idEtapa!= ''){              $SIS_data .= ",idEtapa='".$idEtapa."'" ;}
-						if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'" ;}
-						if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'" ;}
-						if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'" ;}
-						
+						$SIS_data = "idProspecto='".$idProspecto."'";
+						if(isset($idEtapa) && $idEtapa!= ''){              $SIS_data .= ",idEtapa='".$idEtapa."'";}
+						if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'";}
+						if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'";}
+						if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'";}
+
 						/*******************************************************/
 						//se actualizan los datos
 						$resultado2 = db_update_data (false, $SIS_data, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -211,22 +211,22 @@ require_once '0_validate_user_1.php';
 							//redirijo
 							header( 'Location: '.$location.'&created=true' );
 							die;
-							
+
 						}
 					}
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				/***********************************************************************************/
 				//se verifica si la imagen existe
 				if (!empty($_FILES['Archivo']['name'])){
@@ -235,16 +235,16 @@ require_once '0_validate_user_1.php';
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array(
-											"image/jpg", 
-											"image/png", 
-											"image/gif", 
+											"image/jpg",
+											"image/png",
+											"image/gif",
 											"image/jpeg",
 											"image/bmp",
-								
+
 											"application/msword",
 											"application/vnd.ms-word",
-											"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-											
+											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+
 											"application/msexcel",
 											"application/vnd.ms-excel",
 											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -266,7 +266,7 @@ require_once '0_validate_user_1.php';
 												
 											"application/x-zip-compressed",
 											"application/zip",
-											"multipart/x-zip",			
+											"multipart/x-zip",
 											"application/x-7z-compressed",
 											"application/x-rar-compressed",
 											"application/gzip",
@@ -288,15 +288,15 @@ require_once '0_validate_user_1.php';
 								//Se mueve el archivo a la carpeta previamente configurada
 								$move_result = @move_uploaded_file($_FILES["Archivo"]["tmp_name"], $ruta);
 								if ($move_result){
-									
+
 									//Filtros
-									$SIS_data = "idEtapaFide='".$idEtapaFide."'" ;
-									if(isset($idProspecto) && $idProspecto != ''){   $SIS_data .= ",idProspecto='".$idProspecto."'" ;}
-									if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
-									if(isset($idEtapa) && $idEtapa != ''){           $SIS_data .= ",idEtapa='".$idEtapa."'" ;}
-									if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
-									if(isset($Observacion) && $Observacion != ''){   $SIS_data .= ",Observacion='".$Observacion."'" ;}
-									$SIS_data .= ",Archivo='".$sufijo.$_FILES['Archivo']['name']."'" ;
+									$SIS_data = "idEtapaFide='".$idEtapaFide."'";
+									if(isset($idProspecto) && $idProspecto!=''){   $SIS_data .= ",idProspecto='".$idProspecto."'";}
+									if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
+									if(isset($idEtapa) && $idEtapa!=''){           $SIS_data .= ",idEtapa='".$idEtapa."'";}
+									if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+									if(isset($Observacion) && $Observacion!=''){   $SIS_data .= ",Observacion='".$Observacion."'";}
+									$SIS_data .= ",Archivo='".$sufijo.$_FILES['Archivo']['name']."'";
 									
 									/*******************************************************/
 									//se actualizan los datos
@@ -305,11 +305,11 @@ require_once '0_validate_user_1.php';
 									if($resultado==true){
 										
 										//Actualizo los datos
-										$SIS_data = "idProspecto='".$idProspecto."'" ;
-										if(isset($idEtapa) && $idEtapa!= ''){              $SIS_data .= ",idEtapa='".$idEtapa."'" ;}
-										if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'" ;}
-										if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'" ;}
-										if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'" ;}
+										$SIS_data = "idProspecto='".$idProspecto."'";
+										if(isset($idEtapa) && $idEtapa!= ''){              $SIS_data .= ",idEtapa='".$idEtapa."'";}
+										if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'";}
+										if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'";}
+										if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'";}
 										
 										/*******************************************************/
 										//se actualizan los datos
@@ -320,8 +320,8 @@ require_once '0_validate_user_1.php';
 											header( 'Location: '.$location.'&edited=true' );
 											die;
 										}
-									}	
-								} else {
+									}
+								}else {
 									$error['Archivo']       = 'error/Ocurrio un error al mover el archivo';
 								}
 							} else {
@@ -335,26 +335,26 @@ require_once '0_validate_user_1.php';
 				//si no hay archivo
 				}else{
 					//Filtros
-					$SIS_data = "idEtapaFide='".$idEtapaFide."'" ;
-					if(isset($idProspecto) && $idProspecto != ''){   $SIS_data .= ",idProspecto='".$idProspecto."'" ;}
-					if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
-					if(isset($idEtapa) && $idEtapa != ''){           $SIS_data .= ",idEtapa='".$idEtapa."'" ;}
-					if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
-					if(isset($Observacion) && $Observacion != ''){   $SIS_data .= ",Observacion='".$Observacion."'" ;}
-					
+					$SIS_data = "idEtapaFide='".$idEtapaFide."'";
+					if(isset($idProspecto) && $idProspecto!=''){   $SIS_data .= ",idProspecto='".$idProspecto."'";}
+					if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
+					if(isset($idEtapa) && $idEtapa!=''){           $SIS_data .= ",idEtapa='".$idEtapa."'";}
+					if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+					if(isset($Observacion) && $Observacion!=''){   $SIS_data .= ",Observacion='".$Observacion."'";}
+
 					/*******************************************************/
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'prospectos_etapa_fidelizacion', 'idEtapaFide = "'.$idEtapaFide.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
-						
+
 						//Actualizo los datos
-						$SIS_data = "idProspecto='".$idProspecto."'" ;
-						if(isset($idEtapa) && $idEtapa!= ''){              $SIS_data .= ",idEtapa='".$idEtapa."'" ;}
-						if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'" ;}
-						if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'" ;}
-						if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'" ;}
-						
+						$SIS_data = "idProspecto='".$idProspecto."'";
+						if(isset($idEtapa) && $idEtapa!= ''){              $SIS_data .= ",idEtapa='".$idEtapa."'";}
+						if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'";}
+						if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'";}
+						if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'";}
+
 						/*******************************************************/
 						//se actualizan los datos
 						$resultado2 = db_update_data (false, $SIS_data, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -367,19 +367,18 @@ require_once '0_validate_user_1.php';
 					}
 				}
 			}
-		
-	
-		break;	
-						
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del_archivo':	
-			
+		case 'del_Archivo':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//busco los archivos relacionados
 			$rowdata = db_select_data (false, 'Archivo', 'prospectos_etapa_fidelizacion', '', 'idEtapaFide = "'.$_GET['del_archivo'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 			/*******************************************************/
 			//se actualizan los datos
 			$resultado = db_update_data (false, 'Archivo=""', 'prospectos_etapa_fidelizacion', 'idEtapaFide = "'.$_GET['del_archivo'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -393,19 +392,19 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$rowdata['Archivo']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
-				
-				//Redirijo			
+
+				//redirijo
 				header( 'Location: '.$location.'&edit='.$_GET['del_archivo'].'&del_arch=true' );
 				die;
 			}
 					
 			
 			
-		break;						
+		break;
 /*******************************************************************************************************************/
 	}
 ?>

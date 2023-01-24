@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -62,13 +62,13 @@ LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado            
 $SIS_where = 'seguridad_accesos_nominas.idAcceso ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con todos los otros
 $SIS_query = '
 seguridad_accesos_nominas_listado.Fecha, 
 seguridad_accesos_nominas_listado.HoraEntrada, 
 seguridad_accesos_nominas_listado.HoraSalida, 
-seguridad_accesos_nominas_listado.Nombre, 
+seguridad_accesos_nominas_listado.Nombre,
 seguridad_accesos_nominas_listado.Rut, 
 seguridad_accesos_nominas_listado.NDocCedula,
 core_estado_nomina_asistencia.Nombre AS Estado';
@@ -78,7 +78,7 @@ $SIS_order = 'seguridad_accesos_nominas_listado.Fecha ASC';
 $arrPersonas = array();
 $arrPersonas = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPersonas');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con todos los archivos adjuntos
 $SIS_query = 'Nombre';
 $SIS_join  = '';
@@ -97,7 +97,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 				<i class="fa fa-globe" aria-hidden="true"></i> Nomina de Control de Accesos.
 				<small class="pull-right">Nomina N°: <?php echo n_doc($X_Puntero, 8) ?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">
@@ -177,14 +177,14 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
       
 </section>
 
-<div class="col-xs-12" style="margin-bottom:15px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 	
 	<?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
-				</tr>		  
+				</tr>
 				<?php foreach ($arrArchivo as $producto){?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
@@ -204,12 +204,12 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -220,12 +220,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
  
 <?php

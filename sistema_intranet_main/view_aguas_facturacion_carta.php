@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,14 +23,14 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -46,8 +46,7 @@ $dia = $dia + 17;
 $output = 'Carta de Corte cliente '.$rowdata['ClienteIdentificador'].' fecha '.Fecha_estandar($rowdata['AguasInfFechaEmision']);
 
 //se crea una fecha
-$mes_ant = ((fecha2NMes($rowdata['AguasInfFechaEmision']))- 1);
-if($mes_ant<10){$mes_ant = '0'.$mes_ant;}
+$mes_ant = numero_mes((fecha2NMes($rowdata['AguasInfFechaEmision']))- 1);
 $ano     = fecha2Ano($rowdata['AguasInfFechaEmision']);
 //se realizan correcciones
 if($mes_ant==0){
@@ -76,7 +75,7 @@ $fecha_mesanterior = $ano.'-'.$mes_ant.'-10';
 		//se ejecuta al cargar la página (OBLIGATORIO)
 		$(document).ready(function(){
 			generate();
-		}); 				
+		});
 		function loadFile(url,callback){
 			PizZipUtils.getBinaryContent(url,callback);
 		}
@@ -126,7 +125,7 @@ $fecha_mesanterior = $ano.'-'.$mes_ant.'-10';
 					monto: '<?php echo Valores($rowdata['DetalleSaldoAnterior'], 0); ?>',
 					fecha_corte: '<?php echo $dia." de ".fecha2NombreMes($rowdata['AguasInfFechaEmision']); ?>'
 				});
-		
+
 				try {
 					// render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
 					doc.render();

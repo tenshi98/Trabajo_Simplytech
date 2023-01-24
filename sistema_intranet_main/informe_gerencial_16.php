@@ -10,17 +10,17 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_gerencial_16.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){         $search .="&idTipoMov=".$_GET['idTipoMov'];}
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor=".$_GET['idProveedor'];}
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){         $search .="&idCliente=".$_GET['idCliente'];}
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){               $search .="&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){         $search .="&idDocPago=".$_GET['idDocPago'];}
-if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){         $search .="&N_DocPago=".$_GET['N_DocPago'];}
+if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){ $search .="&idTipoMov=".$_GET['idTipoMov'];}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){    $search .="&idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){ $search .="&idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){       $search .="&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){ $search .="&idDocPago=".$_GET['idDocPago'];}
+if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){ $search .="&N_DocPago=".$_GET['N_DocPago'];}
 if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
 	$search .="&f_inicio_p=".$_GET['f_inicio_p'];
 	$search .="&f_termino_p=".$_GET['f_termino_p'];
@@ -37,8 +37,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 switch ($_GET['idTipoProd']) {
    			
@@ -49,10 +49,10 @@ switch ($_GET['idTipoProd']) {
         /**********************************************************/
 		//Variable de busqueda
 		$z    = "WHERE bodegas_arriendos_facturacion_existencias.idExistencia!=0";
-		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_arriendos_facturacion.idTipo=".$_GET['idTipoMov'];}
-		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['idProveedor'];}
-		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_arriendos_facturacion.idCliente=".$_GET['idCliente'];}
-		if(isset($_GET['idEquipo'])&&$_GET['idEquipo']!=''){         $z.=" AND bodegas_arriendos_facturacion_existencias.idEquipo=".$_GET['idEquipo'];}
+		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){      $z.=" AND bodegas_arriendos_facturacion.idTipo=".$_GET['idTipoMov'];}
+		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $z.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['idProveedor'];}
+		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $z.=" AND bodegas_arriendos_facturacion.idCliente=".$_GET['idCliente'];}
+		if(isset($_GET['idEquipo'])&&$_GET['idEquipo']!=''){ $z.=" AND bodegas_arriendos_facturacion_existencias.idEquipo=".$_GET['idEquipo'];}
 		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 			$z.=" AND bodegas_arriendos_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
@@ -88,7 +88,7 @@ switch ($_GET['idTipoProd']) {
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 							
 		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		while ( $row = mysqli_fetch_assoc ($resultado)){
 		array_push( $arrTipo,$row );
 		}
         break;
@@ -98,10 +98,10 @@ switch ($_GET['idTipoProd']) {
 		/**********************************************************/
 		//Variable de busqueda
 		$z    = "WHERE bodegas_insumos_facturacion_existencias.idExistencia!=0";
-		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_insumos_facturacion.idTipo=".$_GET['idTipoMov'];}
-		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];}
-		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_insumos_facturacion.idCliente=".$_GET['idCliente'];}
-		if(isset($_GET['idInsumo'])&&$_GET['idInsumo']!=''){         $z.=" AND bodegas_insumos_facturacion_existencias.idProducto=".$_GET['idInsumo'];}
+		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){      $z.=" AND bodegas_insumos_facturacion.idTipo=".$_GET['idTipoMov'];}
+		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $z.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];}
+		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $z.=" AND bodegas_insumos_facturacion.idCliente=".$_GET['idCliente'];}
+		if(isset($_GET['idInsumo'])&&$_GET['idInsumo']!=''){ $z.=" AND bodegas_insumos_facturacion_existencias.idProducto=".$_GET['idInsumo'];}
 		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 			$z.=" AND bodegas_insumos_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
@@ -137,7 +137,7 @@ switch ($_GET['idTipoProd']) {
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 							
 		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		while ( $row = mysqli_fetch_assoc ($resultado)){
 		array_push( $arrTipo,$row );
 		}
         break;
@@ -147,10 +147,10 @@ switch ($_GET['idTipoProd']) {
 		/**********************************************************/
 		//Variable de busqueda
 		$z    = "WHERE bodegas_productos_facturacion_existencias.idExistencia!=0";
-		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_productos_facturacion.idTipo=".$_GET['idTipoMov'];}
-		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];}
-		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_productos_facturacion.idCliente=".$_GET['idCliente'];}
-		if(isset($_GET['idProducto'])&&$_GET['idProducto']!=''){     $z.=" AND bodegas_productos_facturacion_existencias.idProducto=".$_GET['idProducto'];}
+		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){      $z.=" AND bodegas_productos_facturacion.idTipo=".$_GET['idTipoMov'];}
+		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $z.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];}
+		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $z.=" AND bodegas_productos_facturacion.idCliente=".$_GET['idCliente'];}
+		if(isset($_GET['idProducto'])&&$_GET['idProducto']!=''){    $z.=" AND bodegas_productos_facturacion_existencias.idProducto=".$_GET['idProducto'];}
 		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 			$z.=" AND bodegas_productos_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
@@ -186,7 +186,7 @@ switch ($_GET['idTipoProd']) {
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 							
 		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		while ( $row = mysqli_fetch_assoc ($resultado)){
 		array_push( $arrTipo,$row );
 		}
         break;
@@ -196,10 +196,10 @@ switch ($_GET['idTipoProd']) {
 		/**********************************************************/
 		//Variable de busqueda
 		$z    = "WHERE bodegas_servicios_facturacion_existencias.idExistencia!=0";
-		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){       $z.=" AND bodegas_servicios_facturacion.idTipo=".$_GET['idTipoMov'];}
-		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $z.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['idProveedor'];}
-		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $z.=" AND bodegas_servicios_facturacion.idCliente=".$_GET['idCliente'];}
-		if(isset($_GET['idServicio'])&&$_GET['idServicio']!=''){     $z.=" AND bodegas_servicios_facturacion_existencias.idServicio=".$_GET['idServicio'];}
+		if(isset($_GET['idTipoMov'])&&$_GET['idTipoMov']!=''){      $z.=" AND bodegas_servicios_facturacion.idTipo=".$_GET['idTipoMov'];}
+		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $z.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['idProveedor'];}
+		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $z.=" AND bodegas_servicios_facturacion.idCliente=".$_GET['idCliente'];}
+		if(isset($_GET['idServicio'])&&$_GET['idServicio']!=''){    $z.=" AND bodegas_servicios_facturacion_existencias.idServicio=".$_GET['idServicio'];}
 		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 			$z.=" AND bodegas_servicios_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
@@ -235,7 +235,7 @@ switch ($_GET['idTipoProd']) {
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 							
 		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		while ( $row = mysqli_fetch_assoc ($resultado)){
 		array_push( $arrTipo,$row );
 		}
         break;
@@ -245,7 +245,7 @@ switch ($_GET['idTipoProd']) {
 ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Productos</h5>
@@ -269,9 +269,9 @@ switch ($_GET['idTipoProd']) {
 						<th>Valor</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrTipo as $prod) { ?>
+				<?php foreach ($arrTipo as $prod) {?>
 					<tr class="odd">
 						<td>
 							<?php
@@ -307,7 +307,7 @@ switch ($_GET['idTipoProd']) {
 							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -316,12 +316,12 @@ switch ($_GET['idTipoProd']) {
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
@@ -345,7 +345,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -371,7 +371,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -379,28 +379,28 @@ foreach ($arrPermisos as $prod) {
 }
 
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipoMov)) {      $x1  = $idTipoMov;     }else{$x1  = '';}
-				if(isset($idProveedor)) {    $x2  = $idProveedor;   }else{$x2  = '';}
-				if(isset($idCliente)) {      $x3  = $idCliente;     }else{$x3  = '';}
-				if(isset($idTipoProd)) {     $x4  = $idTipoProd;    }else{$x4  = '';}
-				if(isset($idEquipo)) {       $x5  = $idEquipo;      }else{$x5  = '';}
-				if(isset($idInsumo)) {       $x6  = $idInsumo;      }else{$x6  = '';}
-				if(isset($idProducto)) {     $x7  = $idProducto;    }else{$x7  = '';}
-				if(isset($idServicio)) {     $x8  = $idServicio;    }else{$x8  = '';}
-				if(isset($f_inicio)) {       $x9  = $f_inicio;      }else{$x9  = '';}
-				if(isset($f_termino)) {      $x10 = $f_termino;     }else{$x10 = '';}
-				
+				if(isset($idTipoMov)){      $x1  = $idTipoMov;     }else{$x1  = '';}
+				if(isset($idProveedor)){    $x2  = $idProveedor;   }else{$x2  = '';}
+				if(isset($idCliente)){      $x3  = $idCliente;     }else{$x3  = '';}
+				if(isset($idTipoProd)){     $x4  = $idTipoProd;    }else{$x4  = '';}
+				if(isset($idEquipo)){       $x5  = $idEquipo;      }else{$x5  = '';}
+				if(isset($idInsumo)){       $x6  = $idInsumo;      }else{$x6  = '';}
+				if(isset($idProducto)){     $x7  = $idProducto;    }else{$x7  = '';}
+				if(isset($idServicio)){     $x8  = $idServicio;    }else{$x8  = '';}
+				if(isset($f_inicio)){       $x9  = $f_inicio;      }else{$x9  = '';}
+				if(isset($f_termino)){      $x10 = $f_termino;     }else{$x10 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo Movimiento','idTipoMov', $x1, 2, 'idTipoMov', 'Nombre', 'core_bodega_tipomov', 0, '', $dbConn);
@@ -416,7 +416,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_date('Fecha Mov Desde','f_inicio', $x9, 1);
 				$Form_Inputs->form_date('Fecha Mov Hasta','f_termino', $x10, 1);
 						
-				?> 
+				?>
 				
 				<script>
 					document.getElementById('div_idProveedor').style.display = 'none';
@@ -424,33 +424,33 @@ foreach ($arrPermisos as $prod) {
 					document.getElementById('div_idEquipo').style.display = 'none';
 					document.getElementById('div_idInsumo').style.display = 'none';
 					document.getElementById('div_idProducto').style.display = 'none';
-					document.getElementById('div_idServicio').style.display = 'none';	
+					document.getElementById('div_idServicio').style.display = 'none';
 					
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 						
 						$("#idTipoMov").on("change", function(){ //se ejecuta al cambiar valor del select
 							let tipo_val = $("#idTipoMov").val();//Asignamos el valor seleccionado
 								
 							//Proveedores
-							if(tipo_val == 1){ 
+							if(tipo_val == 1){
 								document.getElementById('div_idProveedor').style.display = '';
 								document.getElementById('div_idCliente').style.display = 'none';
 							//Clientes	
-							} else if(tipo_val == 2){ 
+							} else if(tipo_val == 2){
 								document.getElementById('div_idProveedor').style.display = 'none';
 								document.getElementById('div_idCliente').style.display = '';
-							} else { 
+							} else {
 								document.getElementById('div_idProveedor').style.display = 'none';
 								document.getElementById('div_idCliente').style.display = 'none';
 							}
 							
-						}); 
+						});
 						
 						$("#idTipoProd").on("change", function(){ //se ejecuta al cambiar valor del select
 							tipo_val= $("#idTipoProd").val();//Asignamos el valor seleccionado
 								
 							//Arriendos
-							if(tipo_val == 1){ 
+							if(tipo_val == 1){
 								document.getElementById('div_idEquipo').style.display = '';
 								document.getElementById('div_idInsumo').style.display = 'none';
 								document.getElementById('div_idProducto').style.display = 'none';
@@ -461,7 +461,7 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('idProducto').required = 'false';
 								document.getElementById('idServicio').required = 'false';
 							//Insumos	
-							} else if(tipo_val == 2){ 
+							} else if(tipo_val == 2){
 								document.getElementById('div_idEquipo').style.display = 'none';
 								document.getElementById('div_idInsumo').style.display = '';
 								document.getElementById('div_idProducto').style.display = 'none';
@@ -472,7 +472,7 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('idProducto').required = 'false';
 								document.getElementById('idServicio').required = 'false';
 							//Productos	
-							} else if(tipo_val == 3){ 
+							} else if(tipo_val == 3){
 								document.getElementById('div_idEquipo').style.display = 'none';
 								document.getElementById('div_idInsumo').style.display = 'none';
 								document.getElementById('div_idProducto').style.display = '';
@@ -494,7 +494,7 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('idProducto').required = 'false';
 								document.getElementById('idServicio').required = 'true';
 							//Otros
-							} else { 
+							} else {
 								document.getElementById('div_idEquipo').style.display = 'none';
 								document.getElementById('div_idInsumo').style.display = 'none';
 								document.getElementById('div_idProducto').style.display = 'none';
@@ -507,16 +507,16 @@ foreach ($arrPermisos as $prod) {
 							}
 							
 						});
-					}); 
+					});
 						
 				</script>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

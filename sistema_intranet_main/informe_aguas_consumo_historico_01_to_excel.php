@@ -17,23 +17,23 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /*******************************************************/
 //Variable de busqueda
 $SIS_where = "aguas_facturacion_listado_detalle.idFacturacionDetalle!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Ano']) && $_GET['Ano'] != ''){                $SIS_where .= " AND aguas_facturacion_listado_detalle.Ano=".$_GET['Ano'];}
-if(isset($_GET['idMes']) && $_GET['idMes'] != ''){            $SIS_where .= " AND aguas_facturacion_listado_detalle.idMes=".$_GET['idMes'];}
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){    $SIS_where .= " AND aguas_facturacion_listado_detalle.idCliente=".$_GET['idCliente'];}
+if(isset($_GET['Ano']) && $_GET['Ano']!=''){         $SIS_where .= " AND aguas_facturacion_listado_detalle.Ano=".$_GET['Ano'];}
+if(isset($_GET['idMes']) && $_GET['idMes']!=''){     $SIS_where .= " AND aguas_facturacion_listado_detalle.idMes=".$_GET['idMes'];}
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){    $SIS_where .= " AND aguas_facturacion_listado_detalle.idCliente=".$_GET['idCliente'];}
 
 $SIS_query = '
 aguas_facturacion_listado_detalle.Ano, 

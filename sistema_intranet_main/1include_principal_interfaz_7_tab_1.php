@@ -3,15 +3,15 @@
 
 	<div class="col-sm-12 admin-grid">
 		<div class="sort-disable">
-			<div class="col-sm-12">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row">
-					<div class="col-sm-12">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						
 						<div class="row">
 							<div class="panel-body mnw700 of-a">
 								<div class="row">
 									
-									<div class="col-sm-4">
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 										<h5 style="color: #666;font-weight: 600 !important;">Operacional</h5>
 										<table class="table mbn covertable">
 											<tbody>
@@ -43,7 +43,7 @@
 										</table>
 									</div>
 									
-									<div class="col-sm-4">
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 										<h5 style="color: #666;font-weight: 600 !important;">Calendario</h5>
 										<table class="table mbn covertable">
 											<tbody>
@@ -63,11 +63,11 @@
 										</table>
 									</div>
 									
-									<div class="col-sm-4">
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 										<h5 style="color: #666;font-weight: 600 !important;">Tareas Pendientes</h5>
 										<table class="table mbn covertable">
 											<tbody>
-												<?php foreach ($arrTareas as $tarea) { 
+												<?php foreach ($arrTareas as $tarea) {
 									//solo si se tiene acceso a la transaccion o es superadministrador
 									if($prm_x[1]['Val']=='1' OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1) {
 										$Link = $prm_x[1]['Link'].'&idEstado='.$tarea['idEstado'].'&filtro_form=Filtrar';

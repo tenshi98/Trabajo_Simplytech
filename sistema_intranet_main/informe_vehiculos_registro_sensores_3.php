@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_vehiculos_registro_sensores_3.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,8 +22,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 
              
   
@@ -65,8 +65,8 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		$datosx .= '&f_termino='.$_GET['f_termino'];
 		$datosx .= '&num='.$i;
 		
-		$Alert_Text  = '<span class="fleft">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
-		$Alert_Text .= '<a target="new" href="informe_vehiculos_registro_sensores_3_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 fright "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
+		$Alert_Text  = '<span class="pull-left">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
+		$Alert_Text .= '<a target="new" href="informe_vehiculos_registro_sensores_3_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 pull-right "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
 		$Alert_Text .= '<div class="clearfix"></div>';
 		alert_post_data(2,1,1, $Alert_Text);
 		 
@@ -104,7 +104,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
+	while ( $row = mysqli_fetch_assoc ($resultado)){
 	array_push( $arrEquipos,$row );
 	}
 	
@@ -153,15 +153,15 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		
 		$datosx .= '&num='.$i;
 		
-		$Alert_Text  = '<span class="fleft">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
-		$Alert_Text .= '<a target="new" href="informe_vehiculos_registro_sensores_3_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 fright "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
+		$Alert_Text  = '<span class="pull-left">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
+		$Alert_Text .= '<a target="new" href="informe_vehiculos_registro_sensores_3_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 pull-right "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
 		$Alert_Text .= '<div class="clearfix"></div>';
 		alert_post_data(2,1,1, $Alert_Text);
 		 
 	}
 
 }
-?>	
+?>
 
 
 
@@ -169,44 +169,44 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
- ?>			
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Filtro de busqueda</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+ ?>		
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Filtro de busqueda</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
                
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;     }else{$x1  = '';}
-				if(isset($f_termino)) {     $x2  = $f_termino;    }else{$x2  = '';}
-				if(isset($idVehiculo)) {    $x3  = $idVehiculo;   }else{$x3  = '';}
-				
+				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
+				if(isset($f_termino)){     $x2  = $f_termino;    }else{$x2  = '';}
+				if(isset($idVehiculo)){    $x3  = $idVehiculo;   }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
 				$Form_Inputs->form_select_filter('Vehiculo','idVehiculo', $x3, 1, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
 				
-				?>        
+				?>
 	   
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>

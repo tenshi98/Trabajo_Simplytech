@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_aguas_sis_PR02701.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,21 +22,21 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 // Se trae un listado con todos los productos
 $arrFacturacion = array();
 $query = "SELECT
 core_sistemas.Rut AS SistemaRut,
-aguas_facturacion_listado_detalle.idCliente, 
+aguas_facturacion_listado_detalle.idCliente,
 aguas_clientes_listado.idTipo AS tipoCliente,
 aguas_facturacion_listado_detalle.DetConsMesTotalCantidad AS Medicion
 
 FROM `aguas_facturacion_listado_detalle`
 LEFT JOIN `aguas_clientes_listado`      ON aguas_clientes_listado.idCliente     = aguas_facturacion_listado_detalle.idCliente
 LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema              = aguas_facturacion_listado_detalle.idSistema
-WHERE aguas_facturacion_listado_detalle.idMes = ".$_GET['idMes']." 
-AND aguas_facturacion_listado_detalle.Ano = ".$_GET['Ano']." 
+WHERE aguas_facturacion_listado_detalle.idMes = ".$_GET['idMes']."
+AND aguas_facturacion_listado_detalle.Ano = ".$_GET['Ano']."
 AND aguas_facturacion_listado_detalle.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
 ORDER BY aguas_facturacion_listado_detalle.DetConsMesTotalCantidad ASC";
 //Consulta
@@ -45,16 +45,16 @@ $resultado = mysqli_query ($dbConn, $query);
 if(!$resultado){
 	//Genero numero aleatorio
 	$vardata = genera_password(8,'alfanumerico');
-					
+
 	//Guardo el error en una variable temporal
 	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrFacturacion,$row );
-} 
+}
 
 //Programacion Cretiva
 $informepr = array();
@@ -68,12 +68,12 @@ for ($i = 1; $i <= 5; $i++) {
 	}
 }
 
-foreach ($arrFacturacion as $fact) { 
+foreach ($arrFacturacion as $fact) {
 	//separo por codigo de rango
 	if($fact['Medicion']==0){
 		$informepr[$fact['tipoCliente']][1]['Cantidad']++;
 		$informepr[$fact['tipoCliente']][1]['Medicion'] = $informepr[$fact['tipoCliente']][1]['Medicion'] + $fact['Medicion'];
-	}elseif($fact['Medicion']>0 && $fact['Medicion']<=10){	
+	}elseif($fact['Medicion']>0 && $fact['Medicion']<=10){
 		$informepr[$fact['tipoCliente']][2]['Cantidad']++;
 		$informepr[$fact['tipoCliente']][2]['Medicion'] = $informepr[$fact['tipoCliente']][2]['Medicion'] + $fact['Medicion'];
 	}elseif($fact['Medicion']>10 && $fact['Medicion']<=15){
@@ -125,8 +125,8 @@ foreach ($arrFacturacion as $fact) {
 		$informepr[$fact['tipoCliente']][18]['Cantidad']++;
 		$informepr[$fact['tipoCliente']][18]['Medicion'] = $informepr[$fact['tipoCliente']][18]['Medicion'] + $fact['Medicion'];
 
-	}	
-	
+	}
+
 }?>
 
 
@@ -135,19 +135,19 @@ foreach ($arrFacturacion as $fact) {
 	$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 	$zz .= '&idMes='.$_GET['idMes'];
 	$zz .= '&Ano='.$_GET['Ano'];
-	?>			
+	?>
 	<a target="new" href="<?php echo 'informe_aguas_sis_PR02701_to_excel.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	<a target="new" href="<?php echo 'informe_aguas_sis_PR02701_to_xml.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-warning pull-right margin_width"><i class="fa fa-file-code-o" aria-hidden="true"></i> Exportar a XML</a>
 </div>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Informe SIS PR02701</h5>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -166,7 +166,7 @@ foreach ($arrFacturacion as $fact) {
 						<th>CantidadClientes</th>
 					</tr>
 				</thead>
-							  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php
 					$total1 = 0;
@@ -174,19 +174,19 @@ foreach ($arrFacturacion as $fact) {
 					$clientes = 0;
 					for ($i = 1; $i <= 5; $i++) {
 						for ($x = 1; $x <= 18; $x++) {
-							if(isset($informepr[$i][$x]['Cantidad'])&&$informepr[$i][$x]['Cantidad']!=''){ 
+							if(isset($informepr[$i][$x]['Cantidad'])&&$informepr[$i][$x]['Cantidad']!=''){
 								//se suman los totales de las mediciones y los clientes
 								$total1 = $total1 + $informepr[$i][$x]['Medicion'];
 								$total2 = $total2 + $informepr[$i][$x]['Medicion'];
 								$clientes = $clientes + $informepr[$i][$x]['Cantidad'];
-								
+
 								$rut = substr($arrFacturacion[0]['SistemaRut'], 0, -2);
 								?>
 								<tr class="odd">
 									<td>3</td>
 									<td>9</td>
 									<td><?php echo $rut ?></td>
-									<td><?php if($_GET['idMes']>9){echo $_GET['Ano'].$_GET['idMes'];}else{echo $_GET['Ano'].'0'.$_GET['idMes'];} ?></td>
+									<td><?php echo $_GET['Ano'].numero_mes($_GET['idMes']); ?></td>
 									<td>7</td>
 									<td>393</td>
 									<td>13115</td>
@@ -201,7 +201,7 @@ foreach ($arrFacturacion as $fact) {
 							}
 						}
 					}?>
-					
+
 					<tr class="odd">
 						<td colspan="13"></td>
 					</tr>
@@ -219,7 +219,7 @@ foreach ($arrFacturacion as $fact) {
 						<td><?php echo $total1; ?></td>
 						<td><?php echo $total2; ?></td>
 						<td><?php echo $clientes; ?></td>
-					</tr>                    
+					</tr> 
 				</tbody>
 			</table>
 		</div>
@@ -229,44 +229,44 @@ foreach ($arrFacturacion as $fact) {
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { ?>
-<div class="col-sm-8 fcenter">
+
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {?>
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($Ano)) {    $x1  = $Ano;   }else{$x1  = '';}
-				if(isset($idMes)) {  $x2  = $idMes; }else{$x2  = '';}
+				if(isset($Ano)){    $x1  = $Ano;   }else{$x1  = '';}
+				if(isset($idMes)){  $x2  = $idMes; }else{$x2  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x1, 2, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
-				
-				?>        
-	   
+
+				?>
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
-<?php } ?>           
+</div>
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

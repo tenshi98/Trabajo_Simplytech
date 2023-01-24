@@ -8,7 +8,6 @@
 				setTimeout(function(){
 					$('body').addClass('loaded');
 				}, 1000);
-				
 				//Burbuja de ayuda
 				$('.tooltip').tooltipster({
 					animation: 'grow',

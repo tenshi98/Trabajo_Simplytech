@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -48,7 +48,7 @@ $arrGruposRev = db_select_array (false, $SIS_query, 'telemetria_listado_grupos_u
 $SIS_where = "telemetria_listado_tablarelacionada_".$X_Puntero.".idTabla!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['dia']) && $_GET['dia'] != ''){    $SIS_where.=" AND telemetria_listado_tablarelacionada_".$X_Puntero.".FechaSistema ='".simpleDecode($_GET['dia'], fecha_actual())."'";}
+if(isset($_GET['dia']) && $_GET['dia']!=''){    $SIS_where.=" AND telemetria_listado_tablarelacionada_".$X_Puntero.".FechaSistema ='".simpleDecode($_GET['dia'], fecha_actual())."'";}
 
 //Se arma la queri con los datos justos recibidos
 $subquery = '';
@@ -120,7 +120,7 @@ foreach ($arrConsulta as $con) {
 								$arrTable['termino']['EquipoHora']       = $con['EquipoHora'];
 								$arrTable['termino']['EquipoNombre']     = $con['EquipoNombre'];
 								
-							}						
+							}
 						}
 					}
 				}
@@ -144,7 +144,7 @@ foreach ($arrConsulta as $con) {
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Amperaje del equipo <?php echo $arrTable['termino']['EquipoNombre'].' el '.fecha_estandar($arrTable['termino']['EquipoFecha']); ?></h5>
@@ -157,7 +157,7 @@ foreach ($arrConsulta as $con) {
 							<th>Inicio</th>
 							<th>Termino</th>
 						</tr>
-					</thead>				  
+					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<tr class="odd">
 							<td><?php echo $arrTable['inicio']['EquipoHora']; ?></td>
@@ -193,12 +193,12 @@ foreach ($arrConsulta as $con) {
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -209,12 +209,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

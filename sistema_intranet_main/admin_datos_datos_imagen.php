@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "admin_datos.php";
 $location = $original;
 $new_location = "admin_datos_datos_imagen.php";
@@ -20,7 +20,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='?id='.$_SESSION['usuario']['basic_data']['idSistema'];
@@ -29,13 +29,13 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_img']) )     {
+if (!empty($_GET['del_img'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='?id='.$_SESSION['usuario']['basic_data']['idSistema'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_img';
-	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';	
+	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -50,12 +50,12 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sistema editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$SIS_query = 'Nombre, Config_imgLogo';
+$SIS_query = 'Nombre,Config_imgLogo';
 $SIS_join  = '';
 $SIS_where = 'core_sistemas.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /******************************************************/
 //Accesos a bodegas de productos
@@ -92,31 +92,31 @@ $trans_37 = "cross_shipping_consolidacion_aprobar_auto.php";
 /************************************/
 //realizo la consulta
 $SIS_query = '
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_1."'  AND visualizacion!=9999 LIMIT 1) AS tran_1,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_2."'  AND visualizacion!=9999 LIMIT 1) AS tran_2,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_3."'  AND visualizacion!=9999 LIMIT 1) AS tran_3,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_4."'  AND visualizacion!=9999 LIMIT 1) AS tran_4,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_5."'  AND visualizacion!=9999 LIMIT 1) AS tran_5,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_1.'"  AND visualizacion!=9999 LIMIT 1) AS tran_1,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_2.'"  AND visualizacion!=9999 LIMIT 1) AS tran_2,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_3.'"  AND visualizacion!=9999 LIMIT 1) AS tran_3,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_4.'"  AND visualizacion!=9999 LIMIT 1) AS tran_4,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_5.'"  AND visualizacion!=9999 LIMIT 1) AS tran_5,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_11."'  AND visualizacion!=9999 LIMIT 1) AS tran_11,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_12."'  AND visualizacion!=9999 LIMIT 1) AS tran_12,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_13."'  AND visualizacion!=9999 LIMIT 1) AS tran_13,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_14."'  AND visualizacion!=9999 LIMIT 1) AS tran_14,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_15."'  AND visualizacion!=9999 LIMIT 1) AS tran_15,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_11.'"  AND visualizacion!=9999 LIMIT 1) AS tran_11,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_12.'"  AND visualizacion!=9999 LIMIT 1) AS tran_12,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_13.'"  AND visualizacion!=9999 LIMIT 1) AS tran_13,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_14.'"  AND visualizacion!=9999 LIMIT 1) AS tran_14,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_15.'"  AND visualizacion!=9999 LIMIT 1) AS tran_15,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_21."'  AND visualizacion!=9999 LIMIT 1) AS tran_21,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_22."'  AND visualizacion!=9999 LIMIT 1) AS tran_22,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_21.'"  AND visualizacion!=9999 LIMIT 1) AS tran_21,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_22.'"  AND visualizacion!=9999 LIMIT 1) AS tran_22,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_26."'  AND visualizacion!=9999 LIMIT 1) AS tran_26,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_27."'  AND visualizacion!=9999 LIMIT 1) AS tran_27,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_26.'"  AND visualizacion!=9999 LIMIT 1) AS tran_26,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_27.'"  AND visualizacion!=9999 LIMIT 1) AS tran_27,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_31."'  AND visualizacion!=9999 LIMIT 1) AS tran_31,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_32."'  AND visualizacion!=9999 LIMIT 1) AS tran_32,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_33."'  AND visualizacion!=9999 LIMIT 1) AS tran_33,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_34."'  AND visualizacion!=9999 LIMIT 1) AS tran_34,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_35."'  AND visualizacion!=9999 LIMIT 1) AS tran_35,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_36."'  AND visualizacion!=9999 LIMIT 1) AS tran_36,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_37."'  AND visualizacion!=9999 LIMIT 1) AS tran_37,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_31.'"  AND visualizacion!=9999 LIMIT 1) AS tran_31,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_32.'"  AND visualizacion!=9999 LIMIT 1) AS tran_32,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_33.'"  AND visualizacion!=9999 LIMIT 1) AS tran_33,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_34.'"  AND visualizacion!=9999 LIMIT 1) AS tran_34,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_35.'"  AND visualizacion!=9999 LIMIT 1) AS tran_35,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_36.'"  AND visualizacion!=9999 LIMIT 1) AS tran_36,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_37.'"  AND visualizacion!=9999 LIMIT 1) AS tran_37,
 
 idUsuario';
 $SIS_join  = '';
@@ -144,12 +144,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Logo');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -185,46 +185,44 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<?php } ?>
 						<li class=""><a href="<?php echo 'admin_datos_datos_social.php'; ?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
-				
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
+
 				<?php if(isset($rowdata['Config_imgLogo'])&&$rowdata['Config_imgLogo']!=''){?>
-        
+
 					<div class="col-sm-10 fcenter">
-						<img src="upload/<?php echo $rowdata['Config_imgLogo'] ?>" width="100%" class="img-thumbnail" > 
+						<img src="upload/<?php echo $rowdata['Config_imgLogo'] ?>" width="100%" class="img-thumbnail" >
 						<br/>
-						<a href="<?php echo $new_location.'?id='.$_SESSION['usuario']['basic_data']['idSistema'].'&del_img='.$_SESSION['usuario']['basic_data']['idSistema']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
-					</div> 
+						<a href="<?php echo $new_location.'?id='.$_SESSION['usuario']['basic_data']['idSistema'].'&del_img='.$_SESSION['usuario']['basic_data']['idSistema']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
+					</div>
 					<div class="clearfix"></div>
-					
+
 				<?php }else{?>
 
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
-					
-						<?php 
+
+						<?php
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','Config_imgLogo', 1, '"jpg", "png", "gif", "jpeg"');
-					
+
 						$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 						$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-						?> 
+						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf093; Subir Archivo" name="submit_edit"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf093; Subir Archivo" name="submit_edit">
 						</div>
-							  
-					</form> 
+
+					</form>
 					<?php widget_validator(); ?>
-				<?php }?> 
-				
-				
-				
+				<?php } ?>
+
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 

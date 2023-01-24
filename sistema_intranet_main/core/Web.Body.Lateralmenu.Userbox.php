@@ -1,15 +1,15 @@
 <div class="media user-media">
     <div class="user-media-toggleHover">
-        <i class="fa fa-user" aria-hidden="true"></i> 
+        <i class="fa fa-user" aria-hidden="true"></i>
     </div>
     <div class="user-wrapper">
         <a class="user-link" href="principal_datos.php">
         <?php if ($_SESSION['usuario']['basic_data']['Direccion_img']=='') { ?>
-        	<img class="media-object img-thumbnail user-img" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
+        	<img class="media-object img-thumbnail user-img" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
         <?php }else{  ?>
-        	<img class="media-object img-thumbnail user-img" alt="User Picture" src="upload/<?php echo $_SESSION['usuario']['basic_data']['Direccion_img']; ?>">
-        <?php }?>      
-        </a> 
+        	<img class="media-object img-thumbnail user-img" alt="Imagen Referencia" src="upload/<?php echo $_SESSION['usuario']['basic_data']['Direccion_img']; ?>">
+        <?php } ?>
+        </a>
         <div class="media-body">
             <h5 class="media-heading"><?php echo $_SESSION['usuario']['basic_data']['Nombre'] ?></h5>
             <ul class="list-unstyled user-info">
@@ -21,9 +21,6 @@
 					</small>
 				</li>
 			</ul>
-
-
-
       </div>
   </div>
 </div>

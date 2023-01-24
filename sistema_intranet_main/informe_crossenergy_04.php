@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_crossenergy_04.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,12 +22,12 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre, cantSensores';
+$subquery_1 = 'Nombre,cantSensores';
 $subquery_2 = 'idTabla';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery_1 .= ',SensoresGrupo_'.$i;
@@ -62,8 +62,8 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 $Subquery_2 .= ') AS Total';
 
 //valido fechas
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){   $f_inicio  = $_GET['f_inicio'];   }else{$f_inicio  = fecha_actual();}
-if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ $f_termino = $_GET['f_termino'];  }else{$f_termino = fecha_actual();}
+if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){  $f_inicio  = $_GET['f_inicio'];   }else{$f_inicio  = fecha_actual();}
+if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){$f_termino = $_GET['f_termino'];  }else{$f_termino = fecha_actual();}
 
 $Mes_01 = fecha2NMes($f_inicio) - 1;
 $Mes_02 = fecha2NMes($f_inicio) - 2;
@@ -105,18 +105,18 @@ if($Mes_11 < 1){ $Mes_11 = (12 + fecha2NMes($f_inicio)) - 11; $Ano_11 = $Ano_11 
 if($Mes_12 < 1){ $Mes_12 = (12 + fecha2NMes($f_inicio)) - 12; $Ano_12 = $Ano_12 - 1; }
 
 
-if($Mes_01<10){$Mesx_01 = '0'.$Mes_01;}else{$Mesx_01 = $Mes_01;}
-if($Mes_02<10){$Mesx_02 = '0'.$Mes_02;}else{$Mesx_02 = $Mes_02;}
-if($Mes_03<10){$Mesx_03 = '0'.$Mes_03;}else{$Mesx_03 = $Mes_03;}
-if($Mes_04<10){$Mesx_04 = '0'.$Mes_04;}else{$Mesx_04 = $Mes_04;}
-if($Mes_05<10){$Mesx_05 = '0'.$Mes_05;}else{$Mesx_05 = $Mes_05;}
-if($Mes_06<10){$Mesx_06 = '0'.$Mes_06;}else{$Mesx_06 = $Mes_06;}
-if($Mes_07<10){$Mesx_07 = '0'.$Mes_07;}else{$Mesx_07 = $Mes_07;}
-if($Mes_08<10){$Mesx_08 = '0'.$Mes_08;}else{$Mesx_08 = $Mes_08;}
-if($Mes_09<10){$Mesx_09 = '0'.$Mes_09;}else{$Mesx_09 = $Mes_09;}
-if($Mes_10<10){$Mesx_10 = '0'.$Mes_10;}else{$Mesx_10 = $Mes_10;}
-if($Mes_11<10){$Mesx_11 = '0'.$Mes_11;}else{$Mesx_11 = $Mes_11;}
-if($Mes_12<10){$Mesx_12 = '0'.$Mes_12;}else{$Mesx_12 = $Mes_12;}
+$Mesx_01 = numero_mes($Mes_01);
+$Mesx_02 = numero_mes($Mes_02);
+$Mesx_03 = numero_mes($Mes_03);
+$Mesx_04 = numero_mes($Mes_04);
+$Mesx_05 = numero_mes($Mes_05);
+$Mesx_06 = numero_mes($Mes_06);
+$Mesx_07 = numero_mes($Mes_07);
+$Mesx_08 = numero_mes($Mes_08);
+$Mesx_09 = numero_mes($Mes_09);
+$Mesx_10 = numero_mes($Mes_10);
+$Mesx_11 = numero_mes($Mes_11);
+$Mesx_12 = numero_mes($Mes_12);
 
 $Fecha_Ini_01 = $Ano_01.'-'.$Mesx_01.'-01';
 $Fecha_Ini_02 = $Ano_02.'-'.$Mesx_02.'-01';
@@ -193,7 +193,7 @@ $arrDemanda_12 = db_select_array (false, $SIS_query, 'telemetria_listado_crossen
 
 
 
-/****************************************************************/				
+/****************************************************************/
 //Variables
 $Temp_0      = '';
 $Temp_1      = '';
@@ -204,7 +204,7 @@ $Data_2   = '';
 /******************************************************/
 //recorro
 foreach ($arrDemanda_0 as $data) {
-	//variables							
+	//Variables
 	$Temp_0 .= "'".$data['FechaSistema']." ".$data['HoraSistema']."',";
 	//verifico si existe
 	if(isset($arrData_0['Value'])&&$arrData_0['Value']!=''){
@@ -212,7 +212,7 @@ foreach ($arrDemanda_0 as $data) {
 	//si no lo crea
 	}else{
 		$arrData_0['Value'] = floatval(number_format($data['Total'], 2, '.', ''));
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -224,7 +224,7 @@ foreach ($arrDemanda_12 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_12." - ".$Mes_12."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -236,7 +236,7 @@ foreach ($arrDemanda_11 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_11." - ".$Mes_11."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -248,7 +248,7 @@ foreach ($arrDemanda_10 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_10." - ".$Mes_10."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -260,7 +260,7 @@ foreach ($arrDemanda_9 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_09." - ".$Mes_09."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -272,7 +272,7 @@ foreach ($arrDemanda_8 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_08." - ".$Mes_08."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -284,7 +284,7 @@ foreach ($arrDemanda_7 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_07." - ".$Mes_07."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -296,7 +296,7 @@ foreach ($arrDemanda_6 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_06." - ".$Mes_06."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -308,7 +308,7 @@ foreach ($arrDemanda_5 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_05." - ".$Mes_05."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -320,7 +320,7 @@ foreach ($arrDemanda_4 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_04." - ".$Mes_04."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -332,7 +332,7 @@ foreach ($arrDemanda_3 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_03." - ".$Mes_03."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -344,7 +344,7 @@ foreach ($arrDemanda_2 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_02." - ".$Mes_02."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 //recorro
 $xx = 0;
@@ -356,7 +356,7 @@ foreach ($arrDemanda_1 as $data) {
 	}else{
 		$Temp_2 .= "'".$Ano_01." - ".$Mes_01."',";
 		$Data_2 .= floatval(number_format($data['Total'], 2, '.', '')).',';
-	}	
+	}
 }
 
 //nombres
@@ -383,67 +383,67 @@ $Graphics_markerLine_1  = "var markerLine = [''];";
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Estado del Equipo <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
-		<div class="table-responsive" id="grf">	
-			<?php 
+		<div class="table-responsive" id="grf">
+			<?php
 				$Titulo = 'Demanda de suministro (Periodo: '.$_GET['h_inicio'].'-'.$f_inicio.' al '.$_GET['h_termino'].'-'.$f_termino.')';
 				echo GraphBarr_1('graphBarra_1', $Titulo, 'Fecha', 'kW', $Graphics_xData_0, $Graphics_yData_0, $Graphics_names_0, $Graphics_info_0, $Graphics_markerColor_0, $Graphics_markerLine_0,1, 0); 
-			?>	
-			<?php 
+			?>
+			<?php
 				$Titulo = 'Demanda de suministro (del '.$Ano_12.'-'.$Mesx_12.' al  '.$Ano_01.'-'.$Mesx_01.')';
 				echo GraphBarr_1('graphBarra_2', $Titulo, 'Año - mes', 'kW', $Graphics_xData_1, $Graphics_yData_1, $Graphics_names_1, $Graphics_info_1, $Graphics_markerColor_1, $Graphics_markerLine_1,1, 1); 
-			?>				
+			?>
 		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-			
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Filtro de busqueda
 $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=9";//CrossEnergy			
+	$z .= " AND telemetria_listado.idTab=9";//CrossEnergy
 }
 
-?>	
-		
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Filtro de busqueda</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+?>
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Filtro de busqueda</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
-               <?php 
+
+               <?php
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;     }else{$x1  = '';}
-				if(isset($h_inicio)) {      $x2  = $h_inicio;     }else{$x2  = '';}
-				if(isset($f_termino)) {     $x3  = $f_termino;    }else{$x3  = '';}
-				if(isset($h_termino)) {     $x4  = $h_termino;    }else{$x4  = '';}
-				if(isset($idTelemetria)) {  $x5  = $idTelemetria; }else{$x5  = '';}
-				if(isset($idGrafico)) {     $x8  = $idGrafico;    }else{$x8  = '';}
+				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
+				if(isset($h_inicio)){      $x2  = $h_inicio;     }else{$x2  = '';}
+				if(isset($f_termino)){     $x3  = $f_termino;    }else{$x3  = '';}
+				if(isset($h_termino)){     $x4  = $h_termino;    }else{$x4  = '';}
+				if(isset($idTelemetria)){  $x5  = $idTelemetria; }else{$x5  = '';}
+				if(isset($idGrafico)){     $x8  = $idGrafico;    }else{$x8  = '';}
 				//Si es redireccionado desde otra pagina con datos precargados
-				if(isset($_GET['view'])&&$_GET['view']!='') { $x5  = $_GET['view']; }
-				
+				if(isset($_GET['view'])&&$_GET['view']!='') { $x5  = $_GET['view'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
@@ -452,24 +452,23 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
-				?> 
-				
+				?>
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 <?php } ?>
 
-	
 
 <?php
 /**********************************************************************************************************************************/

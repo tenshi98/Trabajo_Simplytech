@@ -11,19 +11,19 @@ require_once 'core/Load.Utils.Print.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -68,7 +68,7 @@ LEFT JOIN `trabajadores_listado`     trab_rel   ON trab_rel.idTrabajador        
 $SIS_where = 'caja_chica_facturacion.idFacturacion ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'caja_chica_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-/***********************************************/			
+/***********************************************/		
 // Se trae un listado con todos los productos utilizados
 $SIS_query = '
 sistema_documentos_pago.Nombre,
@@ -80,7 +80,7 @@ $SIS_order = 'sistema_documentos_pago.Nombre ASC';
 $arrDocumentos = array();
 $arrDocumentos = db_select_array (false, $SIS_query, 'caja_chica_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDocumentos');
 
-/***********************************************/	
+/***********************************************/
 // Se trae un listado con todos los productos utilizados
 $SIS_query = 'Item, Valor';
 $SIS_join  = '';
@@ -104,7 +104,7 @@ $html = '
 				<i class="fa fa-globe" aria-hidden="true"></i> '.$row_data['CajaTipo'].'
 				<small class="pull-right">Numero Documento: '.n_doc($_GET['view'], 8).'</small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">';
@@ -161,7 +161,7 @@ $html = '
 			case 3:
 				
 				break;
-			
+
 		}
 		
 	$html .= '</div>
@@ -180,7 +180,7 @@ $html = '
 					//si existen productos
 					if ($arrRendiciones!=false && !empty($arrRendiciones) && $arrRendiciones!='') {
 						$html .= '<tr class="active"><td colspan="3"><strong>Rendiciones</strong></td></tr>';
-						foreach ($arrRendiciones as $prod) { 
+						foreach ($arrRendiciones as $prod) {
 							$html .= '<tr>
 								<td><strong>'.$prod['Item'].'</td>';
 								
@@ -198,13 +198,13 @@ $html = '
 					//si existen productos
 					if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!='') {
 						$html .= '<tr class="active"><td colspan="3"><strong>Montos</strong></td></tr>';
-						foreach ($arrDocumentos as $prod) { 
+						foreach ($arrDocumentos as $prod) {
 							$html .= '<tr>
 								<td><strong>';
 									$html .= $prod['Nombre'];
 									if(isset($prod['N_Doc'])&&$prod['N_Doc']!=''){
 										$html .= ' N°'.$prod['N_Doc'];
-									}	
+									}
 								$html .= '</td>';
 								
 								if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
@@ -248,7 +248,7 @@ $html = '
 	if($row_data['idTipo']==2){
 		$html .= '<div class="row firma">
 			<div class="col-sm-6 fcont"><p>Firma Transportista</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Receptor</p></div> 
+			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
 		</div>';
 	}
     

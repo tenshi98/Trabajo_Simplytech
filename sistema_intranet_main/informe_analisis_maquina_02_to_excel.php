@@ -17,32 +17,32 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 //filtros
 $SIS_where_1 = "maquinas_listado_matriz.idMatriz>=0";	
 $SIS_where_2 = "maquinas_listado.idMaquina>=0";
 $SIS_where_3 = "analisis_listado.idAnalisis>=0";
 if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {     
-	$SIS_where_3 .= " AND analisis_listado.idSistema = '".$_GET['idSistema']."'" ;
+	$SIS_where_3 .= " AND analisis_listado.idSistema = '".$_GET['idSistema']."'";
 }
 if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {     
-	$SIS_where_2 .= " AND maquinas_listado.idMaquina = '".$_GET['idMaquina']."'" ;
-	$SIS_where_3 .= " AND analisis_listado.idMaquina = '".$_GET['idMaquina']."'" ;
+	$SIS_where_2 .= " AND maquinas_listado.idMaquina = '".$_GET['idMaquina']."'";
+	$SIS_where_3 .= " AND analisis_listado.idMaquina = '".$_GET['idMaquina']."'";
 }
 if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {       
-	$SIS_where_1 .= " AND idMatriz = '".$_GET['idMatriz']."'" ;
-	$SIS_where_2 .= " AND maquinas_listado_matriz.idMatriz = '".$_GET['idMaquina']."'" ;
-	$SIS_where_3 .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'" ;
+	$SIS_where_1 .= " AND idMatriz = '".$_GET['idMatriz']."'";
+	$SIS_where_2 .= " AND maquinas_listado_matriz.idMatriz = '".$_GET['idMaquina']."'";
+	$SIS_where_3 .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
 	$SIS_where_3 .= " AND analisis_listado.f_muestreo BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /*******************************************************/
@@ -158,19 +158,19 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('B8', 'Rut: '.DeSanitizar($rowMaquina['SistemaOrigenRut'])); 
 /*******************************/
 $Ubicacion = 'Ubicacion: '.DeSanitizar($rowMaquina['MaquinaUbicacion']);
-if(isset($rowMaquina['MaquinaUbicacion_lvl_1'])&&$rowMaquina['MaquinaUbicacion_lvl_1']!=''){ 
+if(isset($rowMaquina['MaquinaUbicacion_lvl_1'])&&$rowMaquina['MaquinaUbicacion_lvl_1']!=''){
 	$Ubicacion .= ' - '.DeSanitizar($rowMaquina['MaquinaUbicacion_lvl_1']);
 }
-if(isset($rowMaquina['MaquinaUbicacion_lvl_2'])&&$rowMaquina['MaquinaUbicacion_lvl_2']!=''){ 
+if(isset($rowMaquina['MaquinaUbicacion_lvl_2'])&&$rowMaquina['MaquinaUbicacion_lvl_2']!=''){
 	$Ubicacion .= ' - '.DeSanitizar($rowMaquina['MaquinaUbicacion_lvl_2']);
 }
-if(isset($rowMaquina['MaquinaUbicacion_lvl_3'])&&$rowMaquina['MaquinaUbicacion_lvl_3']!=''){ 
+if(isset($rowMaquina['MaquinaUbicacion_lvl_3'])&&$rowMaquina['MaquinaUbicacion_lvl_3']!=''){
 	$Ubicacion .= ' - '.DeSanitizar($rowMaquina['MaquinaUbicacion_lvl_3']);
 }
-if(isset($rowMaquina['MaquinaUbicacion_lvl_4'])&&$rowMaquina['MaquinaUbicacion_lvl_4']!=''){ 
+if(isset($rowMaquina['MaquinaUbicacion_lvl_4'])&&$rowMaquina['MaquinaUbicacion_lvl_4']!=''){
 	$Ubicacion .= ' - '.DeSanitizar($rowMaquina['MaquinaUbicacion_lvl_4']);
 }
-if(isset($rowMaquina['MaquinaUbicacion_lvl_5'])&&$rowMaquina['MaquinaUbicacion_lvl_5']!=''){ 
+if(isset($rowMaquina['MaquinaUbicacion_lvl_5'])&&$rowMaquina['MaquinaUbicacion_lvl_5']!=''){
 	$Ubicacion .= ' - '.DeSanitizar($rowMaquina['MaquinaUbicacion_lvl_5']);
 }
 
@@ -241,10 +241,10 @@ foreach ($arrGrupo as $grupo) {
 					//Suma de 1
 					$nn++;
 				break;
-			}			
+			}
 		}
 	}
-}				
+}	
 				
 				                       
 // Rename worksheet

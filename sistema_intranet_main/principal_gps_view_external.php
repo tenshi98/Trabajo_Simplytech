@@ -22,7 +22,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 	$CON_Password  = '';
 	$CON_Base      = 'power_engine_main';
 ////////////////////////////////////////////////////////////////////////////////
-//si estoy en ambiente de produccion	
+//si estoy en ambiente de produccion
 }else{
 	$CON_Server    = 'localhost';
 	$CON_Usuario   = 'crosstech_admin';
@@ -34,7 +34,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 function conectarDB ($servidor, $usuario, $password, $base_datos) {
 	$db_con = mysqli_connect($servidor, $usuario, $password, $base_datos);
 	$db_con->set_charset("utf8");
-	return $db_con; 
+	return $db_con;
 }
 //verifico si existen datos
 if($CON_Server!=''&&$CON_Usuario!=''&&$CON_Base!=''){
@@ -42,7 +42,7 @@ if($CON_Server!=''&&$CON_Usuario!=''&&$CON_Base!=''){
 	$dbConn_2 = conectarDB($CON_Server, $CON_Usuario, $CON_Password, $CON_Base);
 				
 	//variables
-	$HoraSistema    = hora_actual(); 
+	$HoraSistema    = hora_actual();
 	$FechaSistema   = fecha_actual();
 	
 	//Se consultan datos
@@ -50,7 +50,7 @@ if($CON_Server!=''&&$CON_Usuario!=''&&$CON_Base!=''){
 	telemetria_listado.idTelemetria,
 	telemetria_listado.Nombre,
 	telemetria_listado.LastUpdateHora,
-	telemetria_listado.LastUpdateFecha, 
+	telemetria_listado.LastUpdateFecha,
 	telemetria_listado.NDetenciones,
 	telemetria_listado.TiempoFueraLinea,
 	telemetria_listado.NErrores,
@@ -61,7 +61,7 @@ if($CON_Server!=''&&$CON_Usuario!=''&&$CON_Base!=''){
 	$arrEquipo = array();
 	$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
 			
-}			
+}
 			
 
 /**********************************************************************************************************************************/
@@ -76,17 +76,17 @@ require_once 'core/Web.Header.Views.php';
 
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo</h5>
 				
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			
-			<div class="table-responsive"> 
+			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<thead>
 						<tr role="row">
@@ -103,18 +103,18 @@ require_once 'core/Web.Header.Views.php';
 							$xy = 0;
 							$xz = 0;
 							$ident = 0;
-									
+
 							//dependiendo del tipo de datos que quiero mostrar ajusto los datos
-							switch (simpleDecode($_GET['dataType'], fecha_actual())) {
+							switch (simpleDecode($_GET['dataType'], fecha_actual())){
 								//En caso de que los sensores registren alguna alerta
 								case 1:
 									//Alertas
 									if(isset($data['NErrores'])&&$data['NErrores']>0){
 										echo '
-										<tr class="odd">		
+										<tr class="odd">
 											<td>'.$data['Sistema'].'</td>
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>		
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
 										</tr>
 										';
 									}
@@ -135,12 +135,12 @@ require_once 'core/Web.Header.Views.php';
 									$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 									$Time_Tiempo_Max = horas2segundos('48:00:00');
 									//comparacion
-									if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+									if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
 										echo '
-										<tr class="odd">		
+										<tr class="odd">
 											<td>'.$data['Sistema'].'</td>
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>		
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
 										</tr>
 										';
 									}
@@ -171,7 +171,7 @@ require_once 'core/Web.Header.Views.php';
 									$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 									$Time_Tiempo_Max = horas2segundos('48:00:00');
 									//comparacion
-									if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+									if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
 										$in_eq_fueralinea++;
 									}
 									
@@ -184,10 +184,10 @@ require_once 'core/Web.Header.Views.php';
 									if($in_eq_fueralinea==0&&$in_eq_alertas==0){
 										//imprimo	
 										echo '
-										<tr class="odd">		
+										<tr class="odd">
 											<td>'.$data['Sistema'].'</td>
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>		
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
 										</tr>';
 									}
 									
@@ -198,20 +198,20 @@ require_once 'core/Web.Header.Views.php';
 									if($data['NDetenciones']!=0){
 										//imprimo	
 										echo '
-										<tr class="odd">		
+										<tr class="odd">
 											<td>'.$data['Sistema'].'</td>
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>		
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
 										</tr>
 										';
 									}
 									break;
 							}
-						} ?>                    
+						} ?>        
 					</tbody>
 				</table>
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 

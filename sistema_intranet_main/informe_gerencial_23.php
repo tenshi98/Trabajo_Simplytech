@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_gerencial_23.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -25,8 +25,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //Tablas
 $table_1 = 'bodegas_arriendos_facturacion_existencias';
 $table_2 = 'bodegas_insumos_facturacion_existencias';
@@ -50,7 +50,7 @@ $z8 = "(idFactFiscal!=0)";      //siempre pasa
 $z9 = "(idFactSocial!=0)";      //siempre pasa
 		
 //variable
-if(isset($_GET['Creacion_ano'])&&$_GET['Creacion_ano']!=''){ 
+if(isset($_GET['Creacion_ano'])&&$_GET['Creacion_ano']!=''){
 	//se crean cadenas
 	$z1.=" AND ".$table_1.".Creacion_ano='".$_GET['Creacion_ano']."'";
 	$z2.=" AND ".$table_2.".Creacion_ano='".$_GET['Creacion_ano']."'";
@@ -296,7 +296,7 @@ foreach ($arrTemporal_9 as $trab) {
 ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Informe de rentabilidad de negocio</h5>
@@ -321,7 +321,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td><strong>diciembre</strong></td>
 						<td><strong>Total</strong></td>
 					</tr>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php
 					//Variable
 					$arrTotColIngCIVA  = array();  //Ingresos con Iva
@@ -346,7 +346,7 @@ foreach ($arrTemporal_9 as $trab) {
 						$arrTotColGastos[$i]  = 0;
 					}
 					?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<tr class="odd" style="background-color: #d2d2d2;">
 						<td><strong>Ingresos</strong></td>
 						<td></td>
@@ -363,7 +363,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 					</tr>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<tr class="odd" style="background-color: #e4e4e4;">
 						<td><strong>Arriendos</strong></td>
 						<td></td>
@@ -379,7 +379,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>		
+					</tr>	
 					<?php 
 					//recorro
 					foreach ($arrArriendos as $trab) { 
@@ -389,74 +389,17 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_1[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_1[2][$trab['Ident']][$i]['ConIVA']!=''){   
+							if(isset($arrTemp_1[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_1[2][$trab['Ident']][$i]['ConIVA']!=''){  
 								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_1[2][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_1[2][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotColIngCIVA[$i] = $arrTotColIngCIVA[$i]  + $arrTemp_1[2][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_1[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_1[2][$trab['Ident']][$i]['SinIVA']!=''){   
+							if(isset($arrTemp_1[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_1[2][$trab['Ident']][$i]['SinIVA']!=''){  
 								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_1[2][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_1[2][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotColIngSIVA[$i] = $arrTotColIngSIVA[$i]  + $arrTemp_1[2][$trab['Ident']][$i]['SinIVA']; 
 							} 
-						}			
-						//Recorro los que tienen IVA
-						if($arrTotalCIVA[13]!=0){
-							echo '<tr class="odd">';
-								echo '<td><strong>Afecto a IVA:</strong> '.$trab['Nombre'].'</td>';
-								for ($i = 1; $i <= 13; $i++) {
-									echo '<td align="right">'.valores($arrTotalCIVA[$i], 0).'</td>';
-								}
-							echo '</tr>';
-						} 			
-						//Recorro los que no tienen IVA
-						if($arrTotalSIVA[13]!=0){
-							echo '<tr class="odd">';
-								echo '<td><strong>No afecto a IVA:</strong> '.$trab['Nombre'].'</td>';
-								for ($i = 1; $i <= 13; $i++) {
-									echo '<td align="right">'.valores($arrTotalSIVA[$i], 0).'</td>';
-								}
-							echo '</tr>';
 						}
-						?> 
-					<?php } ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
-					<tr class="odd" style="background-color: #e4e4e4;">
-						<td><strong>Insumos</strong></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>		
-					<?php 
-					//recorro
-					foreach ($arrInsumos as $trab) { 
-						//creo variables en 0
-						for ($i = 1; $i <= 13; $i++) {
-							$arrTotalCIVA[$i] = 0;
-							$arrTotalSIVA[$i] = 0;
-						}
-						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_2[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_2[2][$trab['Ident']][$i]['ConIVA']!=''){   
-								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_2[2][$trab['Ident']][$i]['ConIVA'];  
-								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_2[2][$trab['Ident']][$i]['ConIVA'];  
-								$arrTotColIngCIVA[$i] = $arrTotColIngCIVA[$i]  + $arrTemp_2[2][$trab['Ident']][$i]['ConIVA']; 
-							} 
-							if(isset($arrTemp_2[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_2[2][$trab['Ident']][$i]['SinIVA']!=''){   
-								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_2[2][$trab['Ident']][$i]['SinIVA'];  
-								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_2[2][$trab['Ident']][$i]['SinIVA'];  
-								$arrTotColIngSIVA[$i] = $arrTotColIngSIVA[$i]  + $arrTemp_2[2][$trab['Ident']][$i]['SinIVA']; 
-							} 
-						}			
 						//Recorro los que tienen IVA
 						if($arrTotalCIVA[13]!=0){
 							echo '<tr class="odd">';
@@ -477,7 +420,64 @@ foreach ($arrTemporal_9 as $trab) {
 						}
 						?>
 					<?php } ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
+					<tr class="odd" style="background-color: #e4e4e4;">
+						<td><strong>Insumos</strong></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>	
+					<?php 
+					//recorro
+					foreach ($arrInsumos as $trab) { 
+						//creo variables en 0
+						for ($i = 1; $i <= 13; $i++) {
+							$arrTotalCIVA[$i] = 0;
+							$arrTotalSIVA[$i] = 0;
+						}
+						for ($i = 1; $i <= 12; $i++) {
+							if(isset($arrTemp_2[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_2[2][$trab['Ident']][$i]['ConIVA']!=''){  
+								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_2[2][$trab['Ident']][$i]['ConIVA'];  
+								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_2[2][$trab['Ident']][$i]['ConIVA'];  
+								$arrTotColIngCIVA[$i] = $arrTotColIngCIVA[$i]  + $arrTemp_2[2][$trab['Ident']][$i]['ConIVA']; 
+							} 
+							if(isset($arrTemp_2[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_2[2][$trab['Ident']][$i]['SinIVA']!=''){  
+								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_2[2][$trab['Ident']][$i]['SinIVA'];  
+								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_2[2][$trab['Ident']][$i]['SinIVA'];  
+								$arrTotColIngSIVA[$i] = $arrTotColIngSIVA[$i]  + $arrTemp_2[2][$trab['Ident']][$i]['SinIVA']; 
+							} 
+						}
+						//Recorro los que tienen IVA
+						if($arrTotalCIVA[13]!=0){
+							echo '<tr class="odd">';
+								echo '<td><strong>Afecto a IVA:</strong> '.$trab['Nombre'].'</td>';
+								for ($i = 1; $i <= 13; $i++) {
+									echo '<td align="right">'.valores($arrTotalCIVA[$i], 0).'</td>';
+								}
+							echo '</tr>';
+						} 			
+						//Recorro los que no tienen IVA
+						if($arrTotalSIVA[13]!=0){
+							echo '<tr class="odd">';
+								echo '<td><strong>No afecto a IVA:</strong> '.$trab['Nombre'].'</td>';
+								for ($i = 1; $i <= 13; $i++) {
+									echo '<td align="right">'.valores($arrTotalSIVA[$i], 0).'</td>';
+								}
+							echo '</tr>';
+						}
+						?>
+					<?php } ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<tr class="odd" style="background-color: #e4e4e4;">
 						<td><strong>Productos</strong></td>
 						<td></td>
@@ -493,7 +493,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>		
+					</tr>	
 					<?php 
 					//recorro
 					foreach ($arrProductos as $trab) { 
@@ -503,17 +503,17 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_3[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_3[2][$trab['Ident']][$i]['ConIVA']!=''){   
+							if(isset($arrTemp_3[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_3[2][$trab['Ident']][$i]['ConIVA']!=''){  
 								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_3[2][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_3[2][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotColIngCIVA[$i] = $arrTotColIngCIVA[$i]  + $arrTemp_3[2][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_3[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_3[2][$trab['Ident']][$i]['SinIVA']!=''){   
+							if(isset($arrTemp_3[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_3[2][$trab['Ident']][$i]['SinIVA']!=''){  
 								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_3[2][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_3[2][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotColIngSIVA[$i] = $arrTotColIngSIVA[$i]  + $arrTemp_3[2][$trab['Ident']][$i]['SinIVA']; 
 							} 
-						}			
+						}
 						//Recorro los que tienen IVA
 						if($arrTotalCIVA[13]!=0){
 							echo '<tr class="odd">';
@@ -532,9 +532,9 @@ foreach ($arrTemporal_9 as $trab) {
 								}
 							echo '</tr>';
 						} 
-						?> 
+						?>
 					<?php } ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<tr class="odd" style="background-color: #e4e4e4;">
 						<td><strong>Servicios</strong></td>
 						<td></td>
@@ -550,7 +550,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>		
+					</tr>	
 					<?php 
 					//recorro
 					foreach ($arrServicios as $trab) { 
@@ -560,17 +560,17 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_4[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_4[2][$trab['Ident']][$i]['ConIVA']!=''){   
+							if(isset($arrTemp_4[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_4[2][$trab['Ident']][$i]['ConIVA']!=''){  
 								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_4[2][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_4[2][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotColIngCIVA[$i] = $arrTotColIngCIVA[$i]  + $arrTemp_4[2][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_4[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_4[2][$trab['Ident']][$i]['SinIVA']!=''){   
+							if(isset($arrTemp_4[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_4[2][$trab['Ident']][$i]['SinIVA']!=''){  
 								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_4[2][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_4[2][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotColIngSIVA[$i] = $arrTotColIngSIVA[$i]  + $arrTemp_4[2][$trab['Ident']][$i]['SinIVA']; 
 							} 
-						}			
+						}
 						//Recorro los que tienen IVA
 						if($arrTotalCIVA[13]!=0){
 							echo '<tr class="odd">';
@@ -589,9 +589,9 @@ foreach ($arrTemporal_9 as $trab) {
 								}
 							echo '</tr>';
 						}
-						?> 
+						?>
 					<?php } ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php
 					//creo variables en 0
 					$Sub_IVA    = 0;
@@ -647,16 +647,16 @@ foreach ($arrTemporal_9 as $trab) {
 						}
 					echo '</tr>';
 					
-					?> 
+					?>
 					<tr class="odd" style="background-color: #ffffff;">
 						<td colspan="14"></td>
 					</tr>
 					
 					
-					<?php /////////////////////////////////////////////////////////////////// ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
+					<?php ///////////////////////////////////////////////////////////////////?>
+					<?php ///////////////////////////////////////////////////////////////////?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<tr class="odd" style="background-color: #d2d2d2;">
 						<td><strong>Egresos</strong></td>
 						<td></td>
@@ -673,7 +673,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 					</tr>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<tr class="odd" style="background-color: #e4e4e4;">
 						<td><strong>Arriendos</strong></td>
 						<td></td>
@@ -689,7 +689,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>		
+					</tr>	
 					<?php 
 					//recorro
 					foreach ($arrArriendos as $trab) { 
@@ -699,17 +699,17 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_1[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_1[1][$trab['Ident']][$i]['ConIVA']!=''){   
+							if(isset($arrTemp_1[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_1[1][$trab['Ident']][$i]['ConIVA']!=''){  
 								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_1[1][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_1[1][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotColEgCIVA[$i]  = $arrTotColEgCIVA[$i] + $arrTemp_1[1][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_1[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_1[1][$trab['Ident']][$i]['SinIVA']!=''){   
+							if(isset($arrTemp_1[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_1[1][$trab['Ident']][$i]['SinIVA']!=''){  
 								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_1[1][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_1[1][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotColEgSIVA[$i]  = $arrTotColEgSIVA[$i] + $arrTemp_1[1][$trab['Ident']][$i]['SinIVA']; 
 							} 
-						}			
+						}
 						//Recorro los que tienen IVA
 						if($arrTotalCIVA[13]!=0){
 							echo '<tr class="odd">';
@@ -728,9 +728,9 @@ foreach ($arrTemporal_9 as $trab) {
 								}
 							echo '</tr>';
 						}
-						?> 
+						?>
 					<?php } ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<tr class="odd" style="background-color: #e4e4e4;">
 						<td><strong>Insumos</strong></td>
 						<td></td>
@@ -746,7 +746,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>		
+					</tr>	
 					<?php 
 					//recorro
 					foreach ($arrInsumos as $trab) { 
@@ -756,17 +756,17 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_2[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_2[1][$trab['Ident']][$i]['ConIVA']!=''){   
+							if(isset($arrTemp_2[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_2[1][$trab['Ident']][$i]['ConIVA']!=''){  
 								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_2[1][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_2[1][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotColEgCIVA[$i]  = $arrTotColEgCIVA[$i] + $arrTemp_2[1][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_2[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_2[1][$trab['Ident']][$i]['SinIVA']!=''){   
+							if(isset($arrTemp_2[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_2[1][$trab['Ident']][$i]['SinIVA']!=''){  
 								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_2[1][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_2[1][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotColEgSIVA[$i]  = $arrTotColEgSIVA[$i] + $arrTemp_2[1][$trab['Ident']][$i]['SinIVA']; 
 							} 
-						}			
+						}
 						//Recorro los que tienen IVA
 						if($arrTotalCIVA[13]!=0){
 							echo '<tr class="odd">';
@@ -785,9 +785,9 @@ foreach ($arrTemporal_9 as $trab) {
 								}
 							echo '</tr>';
 						}
-						?> 
+						?>
 					<?php } ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<tr class="odd" style="background-color: #e4e4e4;">
 						<td><strong>Productos</strong></td>
 						<td></td>
@@ -803,7 +803,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>		
+					</tr>	
 					<?php 
 					//recorro
 					foreach ($arrProductos as $trab) { 
@@ -813,17 +813,17 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_3[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_3[1][$trab['Ident']][$i]['ConIVA']!=''){   
+							if(isset($arrTemp_3[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_3[1][$trab['Ident']][$i]['ConIVA']!=''){  
 								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_3[1][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_3[1][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotColEgCIVA[$i]  = $arrTotColEgCIVA[$i] + $arrTemp_3[1][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_3[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_3[1][$trab['Ident']][$i]['SinIVA']!=''){   
+							if(isset($arrTemp_3[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_3[1][$trab['Ident']][$i]['SinIVA']!=''){  
 								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_3[1][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_3[1][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotColEgSIVA[$i]  = $arrTotColEgSIVA[$i] + $arrTemp_3[1][$trab['Ident']][$i]['SinIVA']; 
 							} 
-						}			
+						}
 						//Recorro los que tienen IVA
 						if($arrTotalCIVA[13]!=0){
 							echo '<tr class="odd">';
@@ -842,9 +842,9 @@ foreach ($arrTemporal_9 as $trab) {
 								}
 							echo '</tr>';
 						} 
-						?> 
+						?>
 					<?php } ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<tr class="odd" style="background-color: #e4e4e4;">
 						<td><strong>Servicios</strong></td>
 						<td></td>
@@ -860,7 +860,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>		
+					</tr>	
 					<?php 
 					//recorro
 					foreach ($arrServicios as $trab) { 
@@ -870,17 +870,17 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_4[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_4[1][$trab['Ident']][$i]['ConIVA']!=''){   
+							if(isset($arrTemp_4[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_4[1][$trab['Ident']][$i]['ConIVA']!=''){  
 								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_4[1][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_4[1][$trab['Ident']][$i]['ConIVA'];  
 								$arrTotColEgCIVA[$i]  = $arrTotColEgCIVA[$i] + $arrTemp_4[1][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_4[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_4[1][$trab['Ident']][$i]['SinIVA']!=''){   
+							if(isset($arrTemp_4[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_4[1][$trab['Ident']][$i]['SinIVA']!=''){  
 								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_4[1][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_4[1][$trab['Ident']][$i]['SinIVA'];  
 								$arrTotColEgSIVA[$i]  = $arrTotColEgSIVA[$i] + $arrTemp_4[1][$trab['Ident']][$i]['SinIVA']; 
 							} 
-						}			
+						}
 						//Recorro los que tienen IVA
 						if($arrTotalCIVA[13]!=0){
 							echo '<tr class="odd">';
@@ -899,9 +899,9 @@ foreach ($arrTemporal_9 as $trab) {
 								}
 							echo '</tr>';
 						}
-						?> 
+						?>
 					<?php } ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php
 					//creo variables en 0
 					$Sub_IVA    = 0;
@@ -957,15 +957,15 @@ foreach ($arrTemporal_9 as $trab) {
 						}
 					echo '</tr>';
 					
-					?> 
+					?>
 					<tr class="odd" style="background-color: #ffffff;">
 						<td colspan="14"></td>
 					</tr>
 						
-					<?php /////////////////////////////////////////////////////////////////// ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
+					<?php ///////////////////////////////////////////////////////////////////?>
+					<?php ///////////////////////////////////////////////////////////////////?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<tr class="odd" style="background-color: #d2d2d2;">
 						<td><strong>Gastos Generales</strong></td>
 						<td></td>
@@ -982,7 +982,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 					</tr>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php 
 					//creo variables en 0
 					for ($i = 1; $i <= 13; $i++) {
@@ -994,7 +994,7 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotGastos[13]    = $arrTotGastos[13] + $arrTemp_5[1][$i];  
 							$arrTotColGastos[$i] = $arrTotColGastos[$i]  + $arrTemp_5[1][$i]; 
 						} 
-					}			
+					}
 					//Recorro los que tienen IVA
 					if($arrTotGastos[13]!=0){
 						echo '<tr class="odd">';
@@ -1004,7 +1004,7 @@ foreach ($arrTemporal_9 as $trab) {
 							}
 						echo '</tr>';
 					} ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php 
 					//creo variables en 0
 					for ($i = 1; $i <= 13; $i++) {
@@ -1016,7 +1016,7 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotGastos[13]    = $arrTotGastos[13] + $arrTemp_6[$i];  
 							$arrTotColGastos[$i] = $arrTotColGastos[$i]  + $arrTemp_6[$i]; 
 						} 
-					}			
+					}
 					//Recorro los que tienen IVA
 					if($arrTotGastos[13]!=0){
 						echo '<tr class="odd">';
@@ -1026,7 +1026,7 @@ foreach ($arrTemporal_9 as $trab) {
 							}
 						echo '</tr>';
 					} ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php  
 					//creo variables en 0
 					for ($i = 1; $i <= 13; $i++) {
@@ -1038,7 +1038,7 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotGastos[13]    = $arrTotGastos[13] + $arrTemp_7[$i];  
 							$arrTotColGastos[$i] = $arrTotColGastos[$i]  + $arrTemp_7[$i]; 
 						} 
-					}			
+					}
 					//Recorro los que tienen IVA
 					if($arrTotGastos[13]!=0){
 						echo '<tr class="odd">';
@@ -1048,7 +1048,7 @@ foreach ($arrTemporal_9 as $trab) {
 							}
 						echo '</tr>';
 					}?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php 
 					//creo variables en 0
 					for ($i = 1; $i <= 13; $i++) {
@@ -1060,7 +1060,7 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotGastos[13]    = $arrTotGastos[13] + $arrTemp_8[$i];  
 							$arrTotColGastos[$i] = $arrTotColGastos[$i]  + $arrTemp_8[$i]; 
 						} 
-					}			
+					}
 					//Recorro los que tienen IVA
 					if($arrTotGastos[13]!=0){
 						echo '<tr class="odd">';
@@ -1070,7 +1070,7 @@ foreach ($arrTemporal_9 as $trab) {
 							}
 						echo '</tr>';
 					} ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php 
 					//creo variables en 0
 					for ($i = 1; $i <= 13; $i++) {
@@ -1082,7 +1082,7 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotGastos[13]    = $arrTotGastos[13] + $arrTemp_9[$i];  
 							$arrTotColGastos[$i] = $arrTotColGastos[$i]  + $arrTemp_9[$i]; 
 						} 
-					}			
+					}
 					//Recorro los que tienen IVA
 					if($arrTotGastos[13]!=0){
 						echo '<tr class="odd">';
@@ -1093,7 +1093,7 @@ foreach ($arrTemporal_9 as $trab) {
 						echo '</tr>';
 					} 
 					?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php
 					//creo variables en 0
 					$Total_acu  = 0;
@@ -1113,15 +1113,15 @@ foreach ($arrTemporal_9 as $trab) {
 						}
 					echo '</tr>';
 					
-					?> 
+					?>
 					<tr class="odd" style="background-color: #ffffff;">
 						<td colspan="14"></td>
 					</tr>
 					
-					<?php /////////////////////////////////////////////////////////////////// ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
-					<?php /////////////////////////////////////////////////////////////////// ?>
+					<?php ///////////////////////////////////////////////////////////////////?>
+					<?php ///////////////////////////////////////////////////////////////////?>
+					<?php ///////////////////////////////////////////////////////////////////?>
+					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php
 					//creo variables en 0
 					$Total_acu  = 0;
@@ -1151,47 +1151,47 @@ foreach ($arrTemporal_9 as $trab) {
 						                   
 				</tbody>
 			</table>
-		</div> 
+		</div>
 	</div>
 </div>
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Creacion_ano)) { $x1  = $Creacion_ano;  }else{$x1  = '';}
-				
+				if(isset($Creacion_ano)){ $x1  = $Creacion_ano;  }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Año','Creacion_ano', $x1, 2, 2016, ano_actual());
 						
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

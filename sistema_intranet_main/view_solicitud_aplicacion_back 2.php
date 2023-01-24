@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -114,7 +114,7 @@ if(!$resultado){
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 
-/*****************************************/				
+/*****************************************/
 //Insumos
 $arrCuarteles = array();
 $query = "SELECT 
@@ -159,7 +159,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 		
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCuarteles,$row );
 }
 
@@ -198,7 +198,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 		
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTractores,$row );
 }
 
@@ -234,7 +234,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 			
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTracxCuartel,$row );
 }
 
@@ -272,7 +272,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 			
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 }
 	
@@ -298,11 +298,11 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 			
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrMateriales,$row );
 }
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con el historial
 $arrHistorial = array();
 $query = "SELECT 
@@ -328,7 +328,7 @@ if(!$resultado){
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrHistorial,$row );
 }
 ?>
@@ -352,7 +352,7 @@ array_push( $arrHistorial,$row );
 				<i class="fa fa-globe" aria-hidden="true"></i> Solicitud de Aplicacion.
 				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['f_creacion'])?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 
 	<div class="row invoice-info">
@@ -376,8 +376,8 @@ array_push( $arrHistorial,$row );
 						Estado: '.$row_data['Estado'].'<br/>
 						Temporada: '.$row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre'].'<br/>
 						Estado Fenologico: '.$row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre'].'<br/>';
-						if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){        echo 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
-						if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){  echo 'Variedad: '.$row_data['VariedadNombre'].'<br/>'; }else{echo 'Variedad: Todas las Variedades<br/>';}
+						if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){echo 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
+						if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){ echo 'Variedad: '.$row_data['VariedadNombre'].'<br/>';}else{echo 'Variedad: Todas las Variedades<br/>';}
 						echo '
 					</address>
 				</div>
@@ -388,12 +388,12 @@ array_push( $arrHistorial,$row );
 						N° Solicitud: '.n_doc($row_data['NSolicitud'], 5).'<br/>
 						Fecha inicio requerido: '.fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg'].'<br/>
 						Fecha termino requerido: '.fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin'].'<br/>';
-						if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){ echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
-						if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){ echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
-						if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){ echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
-						if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){ echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
+						if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
+						if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
+						if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
+						if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
 						echo 'Agrónomo: '.$row_data['NombreUsuario'];
-						if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
+						if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
 						
 						echo '
 					</address>
@@ -471,7 +471,7 @@ array_push( $arrHistorial,$row );
 								$S_LitrosAplicados  = $cuartel['LitrosAplicados'];
 								$S_VelPromedio      = $cuartel['VelPromedio'];
 							}
-							
+
 							//Sumo Variables
 							$TotalNPlantas             = $TotalNPlantas + $cuartel['NPlantas'];
 							$TotalCuartelHectareas     = $TotalCuartelHectareas + $cuartel['CuartelHectareas'];
@@ -479,17 +479,17 @@ array_push( $arrHistorial,$row );
 							$TotalPlantasAplicadas     = $TotalPlantasAplicadas + $aplicadas;
 							$TotalLitrosAplicados      = $TotalLitrosAplicados + $S_LitrosAplicados;
 							$TotalMojamiento           = $TotalMojamiento + $row_data['Mojamiento'];
-							
+
 							//calculo
 							if(isset($cuartel['CuartelHectareas'])&&$cuartel['CuartelHectareas']!=0){
 								$LitrosApliXhect = $S_LitrosAplicados/$cuartel['CuartelHectareas'];
 							}else{
 								$LitrosApliXhect = 0;
 							}
-							
+
 							//se muestra el estado de cierre
 							if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ $cierre = ' (Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';}else{$cierre = '';}
-							
+
 							//defino el icono y su color
 							switch ($cuartel['CuartelidEjecucion']) {
 								case 0:
@@ -579,7 +579,7 @@ array_push( $arrHistorial,$row );
 							<td class="item-name"><strong></strong></td>
 							<td class="item-name"><strong></strong></td>
 							
-						</tr> 
+						</tr>
                         <?php    
 					}else{
 						echo '<tr class="item-row linea_punteada"><td colspan="7">No hay cuarteles asignados</td></tr>';
@@ -625,7 +625,7 @@ array_push( $arrHistorial,$row );
 								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoCarencia']);?></td>
 								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoResidual']);?></td>
 								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoRetroactivo']);?></td>
-							</tr> 
+							</tr>
 							<?php 
 						}
 					}else{
@@ -671,7 +671,7 @@ array_push( $arrHistorial,$row );
 								<td class="item-name"><?php echo Cantidades($tract['Diferencia'], 0);?></td>
 								<td class="item-name"><?php echo Cantidades($tract['GeoVelocidadProm'],2);?></td>
 								<td class="item-name"><?php echo $tract['T_Aplicacion'];?></td>
-							</tr> 
+							</tr>
 						
 							<?php 
 						}
@@ -700,7 +700,7 @@ array_push( $arrHistorial,$row );
 					$nmb = 0; 
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrProductos) {
-						foreach ($arrProductos as $prod) { 
+						foreach ($arrProductos as $prod) {
 							$PromedioCapacidad = $Capacidad/$NTract;
 							
 							?>
@@ -713,7 +713,7 @@ array_push( $arrHistorial,$row );
 								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre'];?></td>
 								<td class="item-name"><?php echo Cantidades((($row_data['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed'];?></td>
 	
-							</tr> 
+							</tr>
 	
 							<?php 
 							//se suma 1
@@ -741,10 +741,10 @@ array_push( $arrHistorial,$row );
 					<?php
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrMateriales) {
-						foreach ($arrMateriales as $prod) {?>
+						foreach ($arrMateriales as $prod){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Codigo'].' - '.$prod['Nombre'];?></td>
-							</tr> 
+							</tr>
 							<?php 
 						}
 					}else{
@@ -760,7 +760,7 @@ array_push( $arrHistorial,$row );
 	    
 </section>
 
-<div class="col-xs-12" style="margin-bottom:15px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 	
 	<?php if ($arrHistorial){ ?>
 		<table id="items">
@@ -773,14 +773,14 @@ array_push( $arrHistorial,$row );
 					<th width="160">Estado</th>
 					<th width="260">Usuario</th>
 					<th>Observacion</th>
-				</tr>			  
+				</tr>
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Estado']; ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
 						<td><?php echo $doc['Observacion']; ?></td>
-					</tr> 
+					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
@@ -790,12 +790,12 @@ array_push( $arrHistorial,$row );
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -806,12 +806,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
  
 <?php

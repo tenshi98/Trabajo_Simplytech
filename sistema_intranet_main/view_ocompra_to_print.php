@@ -11,19 +11,19 @@ require_once 'core/Load.Utils.Print.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -75,7 +75,7 @@ LEFT JOIN `core_oc_estado`                          ON core_oc_estado.idEstado  
 $SIS_where = 'ocompra_listado.idOcompra ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
  
-/*****************************************/				
+/*****************************************/
 //Insumos
 $SIS_query = '
 insumos_listado.Nombre,
@@ -91,7 +91,7 @@ $SIS_order = 'insumos_listado.Nombre ASC';
 $arrInsumos = array();
 $arrInsumos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
 
-/*****************************************/				
+/*****************************************/
 //Productos
 $SIS_query = '
 productos_listado.Nombre,
@@ -107,7 +107,7 @@ $SIS_order = 'productos_listado.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-/*****************************************/				
+/*****************************************/
 //Arriendos
 $SIS_query = '
 equipos_arriendo_listado.Nombre,
@@ -123,7 +123,7 @@ $SIS_order = 'equipos_arriendo_listado.Nombre ASC';
 $arrArriendos = array();
 $arrArriendos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_arriendos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArriendos');
 
-/*****************************************/				
+/*****************************************/
 //Servicios
 $SIS_query = '
 servicios_listado.Nombre,
@@ -139,7 +139,7 @@ $SIS_order = 'servicios_listado.Nombre ASC';
 $arrServicios = array();
 $arrServicios = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_servicios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrServicios');
 
-/*****************************************/				
+/*****************************************/
 //Otros
 $SIS_query = '
 ocompra_listado_existencias_otros.Nombre,
@@ -153,7 +153,7 @@ $SIS_order = 'ocompra_listado_existencias_otros.Nombre ASC';
 $arrOtros = array();
 $arrOtros = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_otros', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOtros');
 
-/*****************************************/				
+/*****************************************/
 //Boletas Trabajadores
 $SIS_query = '
 ocompra_listado_existencias_boletas.N_Doc,
@@ -168,7 +168,7 @@ $SIS_order = 'ocompra_listado_existencias_boletas.N_Doc ASC';
 $arrBoletas = array();
 $arrBoletas = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_boletas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrBoletas');
 
-/*****************************************/				
+/*****************************************/
 //Boletas Empresas
 $SIS_query = 'idExistencia, Descripcion, Valor';
 $SIS_join  = '';
@@ -264,7 +264,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 						$nn = 1;
 						$total = 0;
 						//Listado de productos solicitados
-						foreach ($arrProductos as $prod) { 
+						foreach ($arrProductos as $prod) {
 							$html .= '<tr>
 									<td>'.$nn.'</td>
 									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
@@ -277,7 +277,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							$nn++;
 						}
 						//listado de insumos solicitados
-						foreach ($arrInsumos as $prod) { 
+						foreach ($arrInsumos as $prod) {
 							$html .= '<tr>
 									<td>'.$nn.'</td>
 									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
@@ -290,7 +290,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							$nn++;
 						}
 						//listado de arriendos solicitados
-						foreach ($arrArriendos as $prod) { 
+						foreach ($arrArriendos as $prod) {
 							$html .= '<tr>
 									<td>'.$nn.'</td>
 									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
@@ -303,7 +303,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							$nn++;
 						}
 						//listado de servicios solicitados
-						foreach ($arrServicios as $prod) { 
+						foreach ($arrServicios as $prod) {
 							$html .= '<tr>
 									<td>'.$nn.'</td>
 									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
@@ -316,7 +316,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							$nn++;
 						}
 						//listado de otros solicitados
-						foreach ($arrOtros as $prod) { 
+						foreach ($arrOtros as $prod) {
 							$html .= '<tr>
 									<td>'.$nn.'</td>
 									<td>'.Cantidades_decimales_justos($prod['Cantidad']).'</td>
@@ -330,7 +330,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 						}
 						//listado de boletas trabajadores
 						$nbol = 0;
-						foreach ($arrBoletas as $prod) { 
+						foreach ($arrBoletas as $prod) {
 							$html .= '<tr>
 									<td>'.$nn.'</td>
 									<td>'.$prod['TrabRut'].' - '.$prod['TrabNombre'].' '.$prod['TrabApellidoPat'].'</td>
@@ -344,7 +344,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 						}
 						//listado de boletas empresas
 						$nbol = 0;
-						foreach ($arrBoletasEmp as $prod) { 
+						foreach ($arrBoletasEmp as $prod) {
 							$html .= '<tr>
 									<td>'.$nn.'</td>
 									<td colspan="3">'.$prod['Descripcion'].'</td>

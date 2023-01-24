@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -85,7 +85,7 @@ LEFT JOIN `core_ubicacion_comunas`   clientcomuna   ON clientcomuna.idComuna    
 $SIS_where = 'cotizacion_listado.idCotizacion ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'cotizacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-/*****************************************/				
+/*****************************************/
 // Se consulta
 $SIS_query = '
 insumos_listado.Nombre,
@@ -101,7 +101,7 @@ $SIS_order = 'insumos_listado.Nombre ASC';
 $arrInsumos = array();
 $arrInsumos = db_select_array (false, $SIS_query, 'cotizacion_listado_existencias_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
 
-/*****************************************/				
+/*****************************************/
 // Se consulta
 $SIS_query = '
 productos_listado.Nombre,
@@ -117,7 +117,7 @@ $SIS_order = 'productos_listado.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'cotizacion_listado_existencias_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-/*****************************************/				
+/*****************************************/
 // Se consulta
 $SIS_query = '
 equipos_arriendo_listado.Nombre,
@@ -133,7 +133,7 @@ $SIS_order = 'equipos_arriendo_listado.Nombre ASC';
 $arrArriendos = array();
 $arrArriendos = db_select_array (false, $SIS_query, 'cotizacion_listado_existencias_arriendos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArriendos');
 
-/*****************************************/				
+/*****************************************/
 // Se consulta
 $SIS_query = '
 servicios_listado.Nombre,
@@ -149,7 +149,7 @@ $SIS_order = 'servicios_listado.Nombre ASC';
 $arrServicios = array();
 $arrServicios = db_select_array (false, $SIS_query, 'cotizacion_listado_existencias_servicios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrServicios');
 
-/*****************************************/		
+/*****************************************/
 // Se consulta
 $SIS_query = 'Nombre';
 $SIS_join  = '';
@@ -158,20 +158,20 @@ $SIS_order = 'Nombre ASC';
 $arrArchivo = array();
 $arrArchivo = db_select_array (false, $SIS_query, 'cotizacion_listado_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
-/*****************************************/		
+/*****************************************/
 // Se consulta
-$SIS_query = 'Nombre, Porcentaje';
+$SIS_query = 'Nombre,Porcentaje';
 $SIS_join  = '';
 $SIS_where = 'Porcentaje!=0';
 $SIS_order = 'idImpuesto ASC';
 $arrImpuestos = array();
 $arrImpuestos = db_select_array (false, $SIS_query, 'sistema_impuestos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrImpuestos');
 
-/*****************************************/	
+/*****************************************/
 //Recorro y guard el nombre de los impuestos 
 $nn = 0;
 $impuestos = array();
-foreach ($arrImpuestos as $impto) { 
+foreach ($arrImpuestos as $impto) {
 	$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
 	$nn++;
 }
@@ -186,7 +186,7 @@ foreach ($arrImpuestos as $impto) {
 				<i class="fa fa-globe" aria-hidden="true"></i> Cotizacion <?php echo n_doc($X_Puntero, 5); ?>.
 				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha'])?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">
@@ -239,7 +239,7 @@ foreach ($arrImpuestos as $impto) {
 				<tbody>
 					<?php if ($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Insumos</strong></td></tr>
-						<?php foreach ($arrInsumos as $prod) { ?>
+						<?php foreach ($arrInsumos as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
@@ -250,7 +250,7 @@ foreach ($arrImpuestos as $impto) {
 					<?php } ?>
 					<?php if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Productos</strong></td></tr>
-						<?php foreach ($arrProductos as $prod) { ?>
+						<?php foreach ($arrProductos as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
@@ -261,7 +261,7 @@ foreach ($arrImpuestos as $impto) {
 					<?php } ?>
 					<?php if ($arrArriendos!=false && !empty($arrArriendos) && $arrArriendos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Arriendos</strong></td></tr>
-						<?php foreach ($arrArriendos as $prod) { ?>
+						<?php foreach ($arrArriendos as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -272,7 +272,7 @@ foreach ($arrImpuestos as $impto) {
 					<?php } ?>
 					<?php if ($arrServicios!=false && !empty($arrServicios) && $arrServicios!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Servicios</strong></td></tr>
-						<?php foreach ($arrServicios as $prod) { ?>
+						<?php foreach ($arrServicios as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -285,75 +285,75 @@ foreach ($arrImpuestos as $impto) {
 			</table>
 			<table class="table">
 				<tbody>	
-					<?php if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){ ?>
+					<?php if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>Neto Imponible</strong></td> 
+							<td colspan="4" align="right"><strong>Neto Imponible</strong></td>
 							<td width="160" align="right"><?php echo Valores($row_data['ValorNetoImp'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){ ?>
+					<?php if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong><?php echo $impuestos[0]['nimp']; ?></strong></td> 
+							<td colspan="4" align="right"><strong><?php echo $impuestos[0]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_01'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){ ?>
+					<?php if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong><?php echo $impuestos[1]['nimp']; ?></strong></td> 
+							<td colspan="4" align="right"><strong><?php echo $impuestos[1]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_02'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){ ?>
+					<?php if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong><?php echo $impuestos[2]['nimp']; ?></strong></td> 
+							<td colspan="4" align="right"><strong><?php echo $impuestos[2]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_03'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){ ?>
+					<?php if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong><?php echo $impuestos[3]['nimp']; ?></strong></td> 
+							<td colspan="4" align="right"><strong><?php echo $impuestos[3]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_04'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){ ?>
+					<?php if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong><?php echo $impuestos[4]['nimp']; ?></strong></td> 
+							<td colspan="4" align="right"><strong><?php echo $impuestos[4]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_05'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){ ?>
+					<?php if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong><?php echo $impuestos[5]['nimp']; ?></strong></td> 
+							<td colspan="4" align="right"><strong><?php echo $impuestos[5]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_06'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){ ?>
+					<?php if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong><?php echo $impuestos[6]['nimp']; ?></strong></td> 
+							<td colspan="4" align="right"><strong><?php echo $impuestos[6]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_07'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){ ?>
+					<?php if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong><?php echo $impuestos[7]['nimp']; ?></strong></td> 
+							<td colspan="4" align="right"><strong><?php echo $impuestos[7]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_08'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){ ?>
+					<?php if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong><?php echo $impuestos[8]['nimp']; ?></strong></td> 
+							<td colspan="4" align="right"><strong><?php echo $impuestos[8]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_09'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){ ?>
+					<?php if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong><?php echo $impuestos[9]['nimp']; ?></strong></td> 
+							<td colspan="4" align="right"><strong><?php echo $impuestos[9]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_10'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){ ?>
+					<?php if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>Total</strong></td> 
+							<td colspan="4" align="right"><strong>Total</strong></td>
 							<td align="right"><?php echo Valores($row_data['ValorTotal'], 0); ?></td>
 						</tr>
 					<?php } ?>
@@ -372,7 +372,7 @@ foreach ($arrImpuestos as $impto) {
 	
 </section>
 
-<div class="col-xs-12" style="margin-bottom:15px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 	
     <table id="items">
         <tbody>
@@ -405,12 +405,12 @@ foreach ($arrImpuestos as $impto) {
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -421,12 +421,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
  
 

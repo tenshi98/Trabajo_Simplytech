@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_listado.php";
 $location = $original;
 $new_location = "telemetria_listado_geocercas.php";
@@ -24,7 +24,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -34,13 +34,13 @@ if ( !empty($_POST['submit']) )  {
 }
 
 //se borra un dato
-if ( !empty($_GET['del_geocerca']) )     {
+if (!empty($_GET['del_geocerca'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_geocerca';
-	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -54,68 +54,65 @@ if (isset($_GET['created'])){      $error['created']      = 'sucess/Geocerca cre
 if (isset($_GET['del_doc_vehi'])){ $error['del_doc_vehi'] = 'sucess/Geocerca borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['new']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
- 
-<div class="col-sm-8 fcenter">
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Seleccionar Geocerca</h5>
 		</header>
-		<div id="div-1" class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
-				<?php 
+		<div class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<?php
 				//Se verifican si existen los datos
-				if(isset($idZona)) {    $x1  = $idZona;  }else{$x1  = '';}
-					
+				if(isset($idZona)){    $x1  = $idZona;  }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Geocercas Disponibles','idZona', $x1, 2, 'idZona', 'Nombre', 'telemetria_geocercas', $w, '', $dbConn);
-					
-					
+
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
-				
-				?> 
+
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-							  
-			</form> 
-			<?php widget_validator(); ?>  
+
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  } else{
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre, id_Geo, id_Sensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 // consulto los datos
 $arrGeocerca = array();
 $arrGeocerca = db_select_array (false, 'telemetria_listado_geocercas.idGeocerca,telemetria_geocercas.Nombre AS Geocerca', 'telemetria_listado_geocercas', 'LEFT JOIN `telemetria_geocercas` ON telemetria_geocercas.idZona = telemetria_listado_geocercas.idZona', 'telemetria_listado_geocercas.idTelemetria ='.$_GET['id'], 'telemetria_geocercas.Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGeocerca');
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Geocercas');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Geocerca</a><?php }?>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Geocerca</a><?php }?>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-
-
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -144,10 +141,10 @@ $arrGeocerca = db_select_array (false, 'telemetria_listado_geocercas.idGeocerca,
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
-						
+
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -159,28 +156,28 @@ $arrGeocerca = db_select_array (false, 'telemetria_listado_geocercas.idGeocerca,
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrGeocerca as $geo) { ?>
-						<tr class="odd">			
-							<td><?php echo $geo['Geocerca']; ?></td>		
+						<tr class="odd">
+							<td><?php echo $geo['Geocerca']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del_geocerca='.simpleEncode($geo['idGeocerca'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la geocerca '.$geo['Geocerca'].'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>								
+									<?php } ?>
 								</div>
-							</td>	
+							</td>
 						</tr>
-					<?php } ?>   
+					<?php } ?>
 				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

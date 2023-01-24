@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion
 $original = "telemetria_listado.php";
 $location = $original;
 $new_location = "telemetria_listado_parametros.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_listado.php';
 }
 //formulario para editar
-if ( !empty($_GET['modDelAct']) )  { 
+if (!empty($_GET['modDelAct'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -53,69 +53,67 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sensor Activacion edit
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sensor Activacion borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['modAct']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if(!empty($_GET['modAct'])){
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresNombre_'.$i;
-}	 
+}
 $rowdata = db_select_data (false, 'Nombre AS Equipo,SensorActivacionID, SensorActivacionValor,cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
-	 
+
 ?>
-	 
-<div class="col-sm-8 fcenter">
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Sensor Activacion de <?php echo $rowdata['Equipo']; ?></h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
-				<?php 
+
+				<?php
 				//se dibujan los inputs
 				$input = '
 				<div class="form-group" id="div_SensorActivacionID">
-					<label for="text2" class="control-label col-sm-4" id="label_SensorActivacionID">Sensor de Activacion</label>
-					<div class="col-sm-8 field">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_SensorActivacionID">Sensor de Activacion</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 						<select name="SensorActivacionID" id="SensorActivacionID" class="form-control" required >
 							<option value="" selected>Seleccione una Opcion</option>';
-							for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
-								$w = '';
+							for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+								$selected = '';
 								if($i==$rowdata['SensorActivacionID']){
-									$w .= 'selected="selected"';
+									$selected = 'selected="selected"';
 								}
-								$input .= '<option value="'.$i.'" '.$w.' >Sensor : '.$rowdata['SensoresNombre_'.$i].'</option>';
+								$input .= '<option value="'.$i.'" '.$selected.' >Sensor : '.$rowdata['SensoresNombre_'.$i].'</option>';
 							}
 							$input .= '
 						</select>
 					</div>
 				</div>';
 				echo $input;
-				
-				
+
 				$Form_Inputs = new Form_Inputs();
-				
 				$Form_Inputs->form_input_text('Valor Activacion', 'SensorActivacionValor', $rowdata['SensorActivacionValor'], 1);
-				
+
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				?>
-	 
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['mod']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['mod'])){
 //Armo cadena
 $cadena  = ',SensoresNombre_'.$_GET['mod'].' AS Nombre';
 $cadena .= ',SensoresTipo_'.$_GET['mod'].' AS Sensor';
@@ -132,47 +130,47 @@ $cadena .= ',SensoresRevisionGrupo_'.$_GET['mod'].' AS RevisionGrupo';
 
 // consulto los datos
 $rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
-	 
+
 ?>
-	 
-<div class="col-sm-8 fcenter" style="margin-bottom:350px;">
+
+<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="margin-bottom:350px;">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Parametros de <?php echo $rowdata['Equipo']; ?></h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
-				<?php 
+
+				<?php
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Basicos');
 				$Form_Inputs->form_input_text('Nombre', 'SensoresNombre_'.$_GET['mod'], $rowdata['Nombre'], 1);
-				
+
 				$Form_Inputs->form_tittle(3, 'Configuracion');
-				$Form_Inputs->form_select_filter('Tipo de Sensor','SensoresTipo_'.$_GET['mod'], $rowdata['Sensor'], 1, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);	
-				$Form_Inputs->form_select_filter('Grupo','SensoresGrupo_'.$_GET['mod'], $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);	
-				$Form_Inputs->form_select_filter('Unidad de Medida','SensoresUniMed_'.$_GET['mod'], $rowdata['UniMed'], 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Estado Sensor','SensoresActivo_'.$_GET['mod'], $rowdata['Activo'], 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
-				
+				$Form_Inputs->form_select_filter('Tipo de Sensor','SensoresTipo_'.$_GET['mod'], $rowdata['Sensor'], 1, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Grupo','SensoresGrupo_'.$_GET['mod'], $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Unidad de Medida','SensoresUniMed_'.$_GET['mod'], $rowdata['UniMed'], 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
+				$Form_Inputs->form_select('Estado Sensor','SensoresActivo_'.$_GET['mod'], $rowdata['Activo'], 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
+
 				$Form_Inputs->form_tittle(3, 'Uso Sensor(Ciclos, Tiempo, Cumplimiento)');
 				$Form_Inputs->form_post_data(2, '<strong>Opcional:</strong> Se mide el uso del sensor y alerta bajo criterios ingresados si llega a fecha limite o a un numero de usos.' );
-				$Form_Inputs->form_select('Utilizacion','SensoresUso_'.$_GET['mod'], $rowdata['Uso'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Utilizacion','SensoresUso_'.$_GET['mod'], $rowdata['Uso'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Cambio','SensoresFechaUso_'.$_GET['mod'], $rowdata['FechaUso'], 1);
 				$Form_Inputs->form_input_number('Ciclos Limite(Cantidad)','SensoresAccionC_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['AccionC']), 1);
 				$Form_Inputs->form_input_number('Tiempo Limite (Horas)','SensoresAccionT_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['AccionT']/3600), 1);
 				$Form_Inputs->form_select_n_auto('% Cumplimiento (1 a 100)','SensoresAccionAlerta_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['AccionAlerta']), 1, 1, 100);
-		
+
 				$Form_Inputs->form_tittle(3, 'Revision Trabajo');
 				$Form_Inputs->form_post_data(2, '<strong>Opcional:</strong> Utilizacion en los mantenimientos.' );
-				$Form_Inputs->form_select('Utilizar','SensoresRevision_'.$_GET['mod'], $rowdata['Revision'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Inputs->form_select_filter('Grupo','SensoresRevisionGrupo_'.$_GET['mod'], $rowdata['RevisionGrupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos_uso', 'idSupervisado=1', '', $dbConn);	
+				$Form_Inputs->form_select('Utilizar','SensoresRevision_'.$_GET['mod'], $rowdata['Revision'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Grupo','SensoresRevisionGrupo_'.$_GET['mod'], $rowdata['RevisionGrupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos_uso', 'idSupervisado=1', '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('SensoresFechaUso_Fake', $rowdata['FechaUso'], 2);
 				?>
-				
+
 				<script>
 					//oculto los div
 					document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
@@ -180,127 +178,124 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listad
 					document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
 					document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
 					document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'none';
-						
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
-									
+
+					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
+
 						let SensoresUso_<?php echo $_GET['mod']; ?>= $("#SensoresUso_<?php echo $_GET['mod']; ?>").val();
 						let SensoresRevision_<?php echo $_GET['mod']; ?>= $("#SensoresRevision_<?php echo $_GET['mod']; ?>").val();
-							
+
 						//Si es si
-						if(SensoresUso_<?php echo $_GET['mod']; ?> == 1){ 
+						if(SensoresUso_<?php echo $_GET['mod']; ?> == 1){
 							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'block';
 							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'block';
 							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'block';
 							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'block';
-								
+
 						//Si es no
-						}else if(SensoresUso_<?php echo $_GET['mod']; ?> == 2){ 
+						}else if(SensoresUso_<?php echo $_GET['mod']; ?> == 2){
 							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
-								
+
 						//si no en ninguno
-						}else{ 
+						}else{
 							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
-								
+
 						}
-							
+
 						//Si es si
-						if(SensoresRevision_<?php echo $_GET['mod']; ?> == 1){ 
+						if(SensoresRevision_<?php echo $_GET['mod']; ?> == 1){
 							document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'block';
-								
+
 						//Si es no
-						}else if(SensoresRevision_<?php echo $_GET['mod']; ?> == 2){ 
+						}else if(SensoresRevision_<?php echo $_GET['mod']; ?> == 2){
 							document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'none';
-								
+
 						//si no en ninguno
-						}else{ 
+						}else{
 							document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'none';
-								
-						}		
-					}); 
-								
+
+						}
+					});
+
 					$("#SensoresUso_<?php echo $_GET['mod']; ?>").on("change", function(){ //se ejecuta al cambiar valor del select
 						let SensoresUso_<?php echo $_GET['mod']; ?>_sel = $(this).val(); //Asignamos el valor seleccionado
-							
+
 						//Si es si
-						if(SensoresUso_<?php echo $_GET['mod']; ?>_sel == 1){ 
+						if(SensoresUso_<?php echo $_GET['mod']; ?>_sel == 1){
 							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'block';
 							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'block';
 							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'block';
 							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'block';
-		
+
 						//Si es no
-						}else if(SensoresUso_<?php echo $_GET['mod']; ?>_sel == 2){ 
+						}else if(SensoresUso_<?php echo $_GET['mod']; ?>_sel == 2){
 							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							//Reseteo los valores a 0
-							document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";				
-							document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";				
-							document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";	
-							document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;			
-								
-							
+							document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";
+							document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";
+							document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";
+							document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
+
 						//si no en ninguno
-						}else{ 
+						}else{
 							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'block';
 							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'block';
 							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'block';
 							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'block';
 							//Reseteo los valores a 0
-							document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";				
-							document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";				
-							document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";	
-							document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;			
-								
+							document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";
+							document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";
+							document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";
+							document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
+
 						}
 					});
-						
-						
+
 					$("#SensoresRevision_<?php echo $_GET['mod']; ?>").on("change", function(){ //se ejecuta al cambiar valor del select
 						let SensoresRevision_<?php echo $_GET['mod']; ?>_sel = $(this).val(); //Asignamos el valor seleccionado
-							
+
 						//Si es si
-						if(SensoresRevision_<?php echo $_GET['mod']; ?>_sel == 1){ 
+						if(SensoresRevision_<?php echo $_GET['mod']; ?>_sel == 1){
 							document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'block';
-								
+
 						//Si es no
-						}else if(SensoresRevision_<?php echo $_GET['mod']; ?>_sel == 2){ 
+						}else if(SensoresRevision_<?php echo $_GET['mod']; ?>_sel == 2){
 							document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'none';
 							//Reseteo los valores a 0
-							document.getElementById('SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').selectedIndex = 0;			
-								
-							
+							document.getElementById('SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
+
 						//si no en ninguno
-						}else{ 
+						}else{
 							document.getElementById('div_SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').style.display = 'block';
 							//Reseteo los valores a 0
-							document.getElementById('SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').selectedIndex = 0;			
-								
+							document.getElementById('SensoresRevisionGrupo_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
+
 						}
 					});
-					
+
 				</script>
-	 
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
-	 	 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} else  {	 
+</div>
+
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else  {
 
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
@@ -318,7 +313,7 @@ $rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores,cantSensores,Senso
 
 $arrSensores = array();
 $arrSensores = db_select_array (false, 'idSensores,Nombre', 'telemetria_listado_sensores', '', '', 'idSensores ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
-											
+
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 
@@ -334,10 +329,10 @@ $arrFinalGrupos    = array();
 $arrFinalEstado    = array();
 $arrFinalGruposRev = array();
 
-foreach ($arrSensores as $sen) {  $arrFinalSensores[$sen['idSensores']] = $sen['Nombre']; }
-foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre']; }
-foreach ($arrEstado as $sen) {    $arrFinalEstado[$sen['idEstado']] = $sen['Nombre']; }
-foreach ($arrGruposRev as $sen) { $arrFinalGruposRev[$sen['idGrupo']] = $sen['Nombre']; }
+foreach ($arrSensores as $sen) {  $arrFinalSensores[$sen['idSensores']] = $sen['Nombre'];}
+foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];}
+foreach ($arrEstado as $sen) {    $arrFinalEstado[$sen['idEstado']] = $sen['Nombre'];}
+foreach ($arrGruposRev as $sen) { $arrFinalGruposRev[$sen['idGrupo']] = $sen['Nombre'];}
 
 //no configurado
 $arrFinalSensores[0]  = 'S/C';
@@ -345,16 +340,14 @@ $arrFinalGrupos[0]    = 'S/C';
 $arrFinalEstado[0]    = 'S/C';
 $arrFinalGruposRev[0] = 'S/C';
 
-
 ?>
 
-
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Sensores');?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -383,20 +376,19 @@ $arrFinalGruposRev[0] = 'S/C';
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
-						
+
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-		
-		
-        <div class="table-responsive">    
-			
+
+        <div class="table-responsive">
+
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-				<tr class="odd">		
+				<tr class="odd">
 					<td width="210"><strong>Sensor de Activacion</strong></td>
 					<td>
-						<?php 
+						<?php
 						if(isset($rowdata['SensoresNombre_'.$rowdata['SensorActivacionID']])&&$rowdata['SensoresNombre_'.$rowdata['SensorActivacionID']]!=''){
 							echo $rowdata['SensoresNombre_'.$rowdata['SensorActivacionID']];
 						}else{
@@ -415,7 +407,7 @@ $arrFinalGruposRev[0] = 'S/C';
 						</div>
 					</td>
 				</tr>
-				<tr class="odd">		
+				<tr class="odd">
 					<td width="210"><strong>Valor Sensor Activo</strong></td>
 					<td colspan="2">
 						<?php if(isset($rowdata['SensorActivacionValor'])&&$rowdata['SensorActivacionValor']!=''){
@@ -425,7 +417,7 @@ $arrFinalGruposRev[0] = 'S/C';
 				</tr>
 				<tr class="odd"><td colspan="3"></td></tr>
 			</table>
-				
+
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -438,25 +430,24 @@ $arrFinalGruposRev[0] = 'S/C';
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-				<tbody role="alert" aria-live="polite" aria-relevant="all">	
+				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php //bucle con la cantidad de sensores
-					for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
+					for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 						//Datos
 						if(isset($arrFinalSensores[$rowdata['SensoresTipo_'.$i]])){           $Sensores  = $arrFinalSensores[$rowdata['SensoresTipo_'.$i]];           }else{$Sensores   = '';}
 						if(isset($arrFinalGrupos[$rowdata['SensoresGrupo_'.$i]])){            $Grupos    = $arrFinalGrupos[$rowdata['SensoresGrupo_'.$i]];            }else{$Grupos     = '';}
 						if(isset($arrFinalEstado[$rowdata['SensoresActivo_'.$i]])){           $Estado    = $arrFinalEstado[$rowdata['SensoresActivo_'.$i]];           }else{$Estado     = '';}
-						if(isset($arrFinalGruposRev[$rowdata['SensoresRevisionGrupo_'.$i]])){ $GruposRev = $arrFinalGruposRev[$rowdata['SensoresRevisionGrupo_'.$i]]; }else{$GruposRev  = '';}
+						if(isset($arrFinalGruposRev[$rowdata['SensoresRevisionGrupo_'.$i]])){ $GruposRev = $arrFinalGruposRev[$rowdata['SensoresRevisionGrupo_'.$i]];}else{$GruposRev  = '';}
 						if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==2){
-							$Color = 'FF3A00';		
+							$Color = 'FF3A00';
 						}else{
 							$Color = '55BD55';
 						}
-						
-						
+
 						?>
-						<tr class="odd">		
+						<tr class="odd">
 							<td><?php echo 's'.$i ?></td>
-							<td><?php echo $rowdata['SensoresNombre_'.$i]; ?></td>	
+							<td><?php echo $rowdata['SensoresNombre_'.$i]; ?></td>
 							<td><?php echo $Sensores; ?></td>
 							<td><?php echo $Grupos; ?></td>
 							<td><?php echo $GruposRev; ?></td>
@@ -467,19 +458,18 @@ $arrFinalGruposRev[0] = 'S/C';
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		
-			
+
 	</div>
 </div>
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

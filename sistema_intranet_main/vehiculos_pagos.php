@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "vehiculos_pagos.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -21,7 +21,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_pago']) )  { 
+if (!empty($_POST['submit_pago'])){
 	//Llamamos al formulario
 	$form_trabajo= 'pago';
 	require_once 'A1XRXS_sys/xrxs_form/z_vehiculos_facturacion_listado.php';
@@ -37,10 +37,10 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Pago Realizado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['pagar']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['pagar'])){ 
 //obtengo los datos del cliente
-$query = "SELECT Nombre, ApellidoPat, ApellidoMat
+$query = "SELECT Nombre,ApellidoPat, ApellidoMat
 FROM `apoderados_listado`
 WHERE idApoderado = '".$_GET['idApoderado']."' ";
 //Consulta
@@ -84,7 +84,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
  
 
 <div class="row inbox"> 
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2><strong>Apoderado : </strong><?php echo $rowCliente['Nombre'].' '.$rowCliente['ApellidoPat'].' '.$rowCliente['ApellidoMat']; ?></h2>
 		<hr>	
 	</div>
@@ -94,7 +94,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 <div class="row inbox">
   						
 	  
-	<div class="col-sm-4">
+	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 		<ul class="list-group inbox-options">
 			<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Detalle Ultima Facturacion</li>
 			<li class="list-group-item">		
@@ -141,7 +141,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 	
 	
 	
-	<div class="col-sm-8">
+	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 			
 		<ul class="list-group inbox-options">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -150,10 +150,10 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 				<li class="list-group-item">		
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Pagofecha)) {    $x1  = $Pagofecha;     }else{$x1  = '';}
-					if(isset($idTipoPago)) {   $x2  = $idTipoPago;    }else{$x2  = '';}
-					if(isset($nDocPago)) {     $x3  = $nDocPago;      }else{$x3  = '';}
-					if(isset($montoPago)) {    $x4  = $montoPago;     }else{$x4  = '';}
+					if(isset($Pagofecha)){    $x1  = $Pagofecha;     }else{$x1  = '';}
+					if(isset($idTipoPago)){   $x2  = $idTipoPago;    }else{$x2  = '';}
+					if(isset($nDocPago)){     $x3  = $nDocPago;      }else{$x3  = '';}
+					if(isset($montoPago)){    $x4  = $montoPago;     }else{$x4  = '';}
 						
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -161,8 +161,8 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_select('Documento de Pago','idTipoPago', $x2, 2, 'idTipoPago', 'Nombre', 'sistema_tipos_pago', 0, '', $dbConn);
 					$Form_Inputs->form_input_text('N° Documento', 'nDocPago', $x3, 1);
 					echo '<div class="form-group" id="div_">
-							<label class="control-label col-sm-4" id="label_">Total a Pagar</label>
-							<div class="col-sm-8">
+							<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Total a Pagar</label>
+							<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 								<input value="'.Valores($calculo, 0).'" type="text" placeholder="Unidad de Medida" class="form-control"  name="unimed" id="unimed" disabled >
 							</div>
 						</div>';
@@ -177,11 +177,11 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 
 				</li>
 				<li class="list-group-item">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf155; Realizar Pago" name="submit_pago">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf155; Realizar Pago" name="submit_pago">
 					<div class="clearfix"></div>
 				</li>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</ul>
 			
 	</div> 
@@ -196,15 +196,15 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 
  
 <div class="clearfix"></div>
-<div class="col-sm-12" >
-<a href="<?php echo $location.'&submit=Buscar&idApoderado='.$_GET['idApoderado']; ?>"  class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+<a href="<?php echo $location.'&submit=Buscar&idApoderado='.$_GET['idApoderado']; ?>"  class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div> 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['submit']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['submit'])){ 
 //obtengo los datos del cliente
-$query = "SELECT Nombre, ApellidoPat, ApellidoMat
+$query = "SELECT Nombre,ApellidoPat, ApellidoMat
 FROM `apoderados_listado`
 WHERE idApoderado = '".$_GET['idApoderado']."' ";
 //Consulta
@@ -271,26 +271,26 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrFacturaciones,$row );
-}				
+}	
 					 
 ?>
 
 <div class="row inbox"> 
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2><strong>Apoderado : </strong><?php echo $rowCliente['Nombre'].' '.$rowCliente['ApellidoPat'].' '.$rowCliente['ApellidoMat']; ?></h2>
 		<hr>	
 	</div>
 </div>
  
-<?php if(isset($rowFacturacion['MontoTotal'])&&$rowFacturacion['MontoTotal']!=''){ ?>
+<?php if(isset($rowFacturacion['MontoTotal'])&&$rowFacturacion['MontoTotal']!=''){?>
 	
 	
 	
 	<div class="row inbox">	
 						
-		<div class="col-sm-8">
+		<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 			<div class="box">
 				<header>
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Facturaciones Pendientes</h5>
@@ -305,7 +305,7 @@ array_push( $arrFacturaciones,$row );
 								<th>Total</th>
 								<th width="10">Acciones</th>
 							</tr>
-						</thead>			  
+						</thead>
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php foreach ($arrFacturaciones as $fac) { ?>
 							<tr class="odd">
@@ -319,12 +319,12 @@ array_push( $arrFacturaciones,$row );
 									</div>
 								</td>
 							</tr>
-						<?php } ?>                    
+						<?php } ?>
 						</tbody>
 					</table>
 				</div>
 			</div>
-		</div>  
+		</div> 
 
 
 
@@ -371,7 +371,7 @@ array_push( $arrFacturaciones,$row );
 				</li>
 			</ul>
 		
-		</div> 
+		</div>
 								
 	</div>
 	<?php widget_modal(80, 95); ?>
@@ -383,34 +383,34 @@ array_push( $arrFacturaciones,$row );
  
 <div class="clearfix"></div>
 <?php if ($rowlevel['level']>=3){?>
-	<div class="col-sm-12" >
-		<?php if($rowFacturacion['MontoTotal']!=0){ ?>
-		<a href="<?php echo $location.'&idApoderado='.$_GET['idApoderado'].'&pagar=true'; ?>"  class="btn btn-primary fright margin_width"><i class="fa fa-usd" aria-hidden="true"></i> Pagar</a>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+		<?php if($rowFacturacion['MontoTotal']!=0){?>
+		<a href="<?php echo $location.'&idApoderado='.$_GET['idApoderado'].'&pagar=true'; ?>"  class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-usd" aria-hidden="true"></i> Pagar</a>
 		<?php } ?>
-		<a href="<?php echo $location; ?>"  class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
 	</div> 
-<?php } ?> 
+<?php } ?>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else  {
 //filtro sistema
-$z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 	
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Seleccionar Apoderado</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location; ?>" id="form1" name="form1" novalidate >
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idApoderado)) {        $x1  = $idApoderado;        }else{$x1  = '';}
-				
+				if(isset($idApoderado)){        $x1  = $idApoderado;        }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Apoderado','idApoderado', $x1, 2, 'idApoderado', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'apoderados_listado', $z, '', $dbConn);
@@ -419,11 +419,11 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Buscar" name="submit">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Buscar" name="submit">
 				</div>
                       
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
                     
 		</div>
 	</div>

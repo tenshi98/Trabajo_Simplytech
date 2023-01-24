@@ -70,7 +70,7 @@ LEFT JOIN `trabajadores_listado`                         ON trabajadores_listado
 LEFT JOIN `cross_shipping_recibidores`                   ON cross_shipping_recibidores.idRecibidor                    = cross_shipping_consolidacion.idRecibidor';
 $SIS_where = 'cross_shipping_consolidacion.idConsolidacion = '.$_GET['view'];
 $rowConso = db_select_data (false, $SIS_query, 'cross_shipping_consolidacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConso');
-			
+
 /************************************************************/
 // Se traen las estibas
 $SIS_query = '
@@ -121,14 +121,14 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 } 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> Control Proceso Preembarque - T° y Estiba de Contenedores <?php if(isset($rowConso['idEstado'])&&$rowConso['idEstado']!=2){echo '('.$rowConso['Estado'].')';} ?></div>
 
 		<div id="customer">
 			
-			<table id="meta" class="fleft" style="width:100%" >
+			<table id="meta" class="pull-left" style="width:100%" >
 				<tbody>
 					<tr>
 						<td class="meta-head" colspan="3"><strong>DATOS MAESTROS</strong></td>
@@ -199,7 +199,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 						<td><?php if(isset($rowConso['TransporteNombre'])&&$rowConso['TransporteNombre']!=''){echo $rowConso['TransporteCodigo'].' - '.$rowConso['TransporteNombre'];}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">Conductor</td>
 						<td><?php if(isset($rowConso['ChoferNombreRut'])&&$rowConso['ChoferNombreRut']!=''){echo $rowConso['ChoferNombreRut'];}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">Patente Camion</td>
 						<td><?php if(isset($rowConso['PatenteCamion'])&&$rowConso['PatenteCamion']!=''){echo $rowConso['PatenteCamion'];}else{echo 'Sin Datos';}?></td>
@@ -215,19 +215,19 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 						<td><?php if(isset($rowConso['Condicion'])&&$rowConso['Condicion']!=''){echo $rowConso['Condicion'];}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">Sellado Piso</td>
 						<td><?php if(isset($rowConso['Sellado'])&&$rowConso['Sellado']!=''){echo $rowConso['Sellado'];}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">T°Set Point</td>
 						<td><?php if(isset($rowConso['TSetPoint'])&&$rowConso['TSetPoint']!=''){echo Cantidades_decimales_justos($rowConso['TSetPoint']);}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">T° Ventilacion</td>
 						<td><?php if(isset($rowConso['TSetPoint'])&&$rowConso['TSetPoint']!=''){echo Cantidades_decimales_justos($rowConso['TVentilacion']);}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">T° Ambiente</td>
 						<td><?php if(isset($rowConso['TAmbiente'])&&$rowConso['TAmbiente']!=''){echo Cantidades_decimales_justos($rowConso['TAmbiente']);}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">Numero de sello</td>
 						<td><?php if(isset($rowConso['NumeroSello'])&&$rowConso['NumeroSello']!=''){echo $rowConso['NumeroSello'];}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">Inspector</td>
 						<td colspan="3"><?php if(isset($rowConso['InspectorNombre'])&&$rowConso['InspectorNombre']!=''){echo $rowConso['InspectorNombre'].' '.$rowConso['InspectorApellido'];}else{echo 'Sin Datos';}?></td>
@@ -282,7 +282,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 												<td class="item-name"><?php echo Cantidades_decimales_justos($estiba['Temperatura']);?></td>
 												<td class="item-name"><?php echo $estiba['Termografo'];?></td>
 												<td class="item-name"><?php echo $estiba['NSerieSensor'];?></td>
-											</tr> 
+											</tr>
 										<?php } ?>
 
 										
@@ -291,7 +291,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 										
 									</tbody>
 								</table>
-							<?php echo '			
+							<?php echo '
 							</div>
 						</div>
 					</div>
@@ -321,7 +321,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
             
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td>Archivos Adjuntos</td>
-            </tr>		  
+            </tr>
             
 			<?php 
 			filtrar($arrArchivos, 'Tipo');  

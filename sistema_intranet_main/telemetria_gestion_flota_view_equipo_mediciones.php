@@ -55,11 +55,11 @@ foreach ($arrUnimed as $sen) {
 }
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Datos del Equipo <?php echo $rowdata['Nombre']; ?></h5>	
+			<h5>Datos del Equipo <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
 			<?php 
@@ -79,7 +79,7 @@ foreach ($arrUnimed as $sen) {
 								
 			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
 		
-        </div>	
+        </div>
 	</div>
 </div>
 
@@ -88,8 +88,8 @@ foreach ($arrUnimed as $sen) {
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

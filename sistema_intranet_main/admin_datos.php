@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "admin_datos.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -28,21 +28,21 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sistema editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = '
-core_sistemas.Nombre,  
-core_sistemas.Rut, 
-core_ubicacion_ciudad.Nombre AS Ciudad, 
-core_ubicacion_comunas.Nombre AS Comuna, 
-core_sistemas.Direccion, 
-core_sistemas.Contacto_Nombre, 
-core_sistemas.Contacto_Fono1, 
-core_sistemas.Contacto_Fono2, 
-core_sistemas.Contacto_Fax, 
-core_sistemas.Contacto_Web, 
+core_sistemas.Nombre,
+core_sistemas.Rut,
+core_ubicacion_ciudad.Nombre AS Ciudad,
+core_ubicacion_comunas.Nombre AS Comuna,
+core_sistemas.Direccion,
+core_sistemas.Contacto_Nombre,
+core_sistemas.Contacto_Fono1,
+core_sistemas.Contacto_Fono2,
+core_sistemas.Contacto_Fax,
+core_sistemas.Contacto_Web,
 core_sistemas.email_principal, 
-core_sistemas.Contrato_Nombre, 
+core_sistemas.Contrato_Nombre,
 core_sistemas.Contrato_Numero, 
 core_sistemas.Contrato_Fecha, 
 core_sistemas.Contrato_Duracion,
@@ -68,7 +68,7 @@ LEFT JOIN `bodegas_productos_listado`          ON bodegas_productos_listado.idBo
 LEFT JOIN `bodegas_insumos_listado`            ON bodegas_insumos_listado.idBodega     = core_sistemas.OT_idBodegaIns
 LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                 = core_sistemas.Social_idUso';
 $SIS_where = 'core_sistemas.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /******************************************************/
 //Accesos a bodegas de productos
@@ -106,31 +106,31 @@ $trans_37 = "cross_shipping_consolidacion_aprobar_auto.php";
 /************************************/
 //realizo la consulta
 $SIS_query = '
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_1."'  AND visualizacion!=9999 LIMIT 1) AS tran_1,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_2."'  AND visualizacion!=9999 LIMIT 1) AS tran_2,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_3."'  AND visualizacion!=9999 LIMIT 1) AS tran_3,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_4."'  AND visualizacion!=9999 LIMIT 1) AS tran_4,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_5."'  AND visualizacion!=9999 LIMIT 1) AS tran_5,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_1.'"  AND visualizacion!=9999 LIMIT 1) AS tran_1,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_2.'"  AND visualizacion!=9999 LIMIT 1) AS tran_2,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_3.'"  AND visualizacion!=9999 LIMIT 1) AS tran_3,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_4.'"  AND visualizacion!=9999 LIMIT 1) AS tran_4,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_5.'"  AND visualizacion!=9999 LIMIT 1) AS tran_5,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_11."'  AND visualizacion!=9999 LIMIT 1) AS tran_11,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_12."'  AND visualizacion!=9999 LIMIT 1) AS tran_12,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_13."'  AND visualizacion!=9999 LIMIT 1) AS tran_13,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_14."'  AND visualizacion!=9999 LIMIT 1) AS tran_14,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_15."'  AND visualizacion!=9999 LIMIT 1) AS tran_15,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_11.'"  AND visualizacion!=9999 LIMIT 1) AS tran_11,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_12.'"  AND visualizacion!=9999 LIMIT 1) AS tran_12,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_13.'"  AND visualizacion!=9999 LIMIT 1) AS tran_13,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_14.'"  AND visualizacion!=9999 LIMIT 1) AS tran_14,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_15.'"  AND visualizacion!=9999 LIMIT 1) AS tran_15,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_21."'  AND visualizacion!=9999 LIMIT 1) AS tran_21,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_22."'  AND visualizacion!=9999 LIMIT 1) AS tran_22,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_21.'"  AND visualizacion!=9999 LIMIT 1) AS tran_21,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_22.'"  AND visualizacion!=9999 LIMIT 1) AS tran_22,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_26."'  AND visualizacion!=9999 LIMIT 1) AS tran_26,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_27."'  AND visualizacion!=9999 LIMIT 1) AS tran_27,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_26.'"  AND visualizacion!=9999 LIMIT 1) AS tran_26,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_27.'"  AND visualizacion!=9999 LIMIT 1) AS tran_27,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_31."'  AND visualizacion!=9999 LIMIT 1) AS tran_31,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_32."'  AND visualizacion!=9999 LIMIT 1) AS tran_32,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_33."'  AND visualizacion!=9999 LIMIT 1) AS tran_33,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_34."'  AND visualizacion!=9999 LIMIT 1) AS tran_34,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_35."'  AND visualizacion!=9999 LIMIT 1) AS tran_35,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_36."'  AND visualizacion!=9999 LIMIT 1) AS tran_36,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_37."'  AND visualizacion!=9999 LIMIT 1) AS tran_37,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_31.'"  AND visualizacion!=9999 LIMIT 1) AS tran_31,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_32.'"  AND visualizacion!=9999 LIMIT 1) AS tran_32,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_33.'"  AND visualizacion!=9999 LIMIT 1) AS tran_33,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_34.'"  AND visualizacion!=9999 LIMIT 1) AS tran_34,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_35.'"  AND visualizacion!=9999 LIMIT 1) AS tran_35,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_36.'"  AND visualizacion!=9999 LIMIT 1) AS tran_36,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_37.'"  AND visualizacion!=9999 LIMIT 1) AS tran_37,
 
 idUsuario';
 $SIS_join  = '';
@@ -158,12 +158,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -198,17 +198,17 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 							<li class=""><a href="<?php echo 'admin_datos_datos_cross.php';?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'admin_datos_datos_social.php'; ?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
-						
+
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
-			
+        <div class="tab-content">
+
 			<div class="tab-pane fade active in" id="basicos">
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
-						<div class="col-sm-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary">Datos Basicos</h2>
 							<p class="text-muted word_break">
 								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -218,8 +218,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
 								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?>
 							</p>
-									
-									
+
 							<h2 class="text-primary">Datos de contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Nombre Contacto : </strong><?php echo $rowdata['Contacto_Nombre']; ?><br/>
@@ -237,19 +236,19 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 								<strong>Fecha inicio Contrato : </strong><?php echo $rowdata['Contrato_Fecha']; ?><br/>
 								<strong>Duracion Contrato(Meses) : </strong><?php echo $rowdata['Contrato_Duracion']; ?>
 							</p>
-								
+
 							<h2 class="text-primary">Configuracion</h2>
 							<p class="text-muted word_break">
 								<strong>Tema : </strong><?php echo $rowdata['Tema']; ?><br/>
 								<strong>ID Google : </strong><?php echo $rowdata['Config_IDGoogle']; ?><br/>
 							</p>
-									
+
 							<h2 class="text-primary">Bodegas OT</h2>
 							<p class="text-muted word_break">
 								<strong>Bodega Productos : </strong><?php echo $rowdata['BodegaProd']; ?><br/>
 								<strong>Bodega Insumos : </strong><?php echo $rowdata['BodegaIns']; ?><br/>
 							</p>
-									
+
 							<h2 class="text-primary">Social</h2>
 							<p class="text-muted word_break">
 								<strong>Uso de widget Sociales : </strong><?php echo $rowdata['SocialUso']; ?><br/>
@@ -266,9 +265,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<?php 
+						<?php
 							//se arma la direccion
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
@@ -285,9 +284,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				
+
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 

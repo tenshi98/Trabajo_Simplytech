@@ -2,24 +2,24 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-158).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idEmbalaje']) )     $idEmbalaje       = $_POST['idEmbalaje'];
-	if ( !empty($_POST['idCategoria']) )    $idCategoria      = $_POST['idCategoria'];
-	if ( !empty($_POST['idTipo']) )         $idTipo           = $_POST['idTipo'];
-	if ( !empty($_POST['idProceso']) )      $idProceso        = $_POST['idProceso'];
-	if ( !empty($_POST['idSistema']) )      $idSistema        = $_POST['idSistema'];
-	
+	if (!empty($_POST['idEmbalaje']))     $idEmbalaje       = $_POST['idEmbalaje'];
+	if (!empty($_POST['idCategoria']))    $idCategoria      = $_POST['idCategoria'];
+	if (!empty($_POST['idTipo']))         $idTipo           = $_POST['idTipo'];
+	if (!empty($_POST['idProceso']))      $idProceso        = $_POST['idProceso'];
+	if (!empty($_POST['idSistema']))      $idSistema        = $_POST['idSistema'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -36,21 +36,21 @@ require_once '0_validate_user_1.php';
 			case 'idTipo':         if(empty($idTipo)){       $error['idTipo']        = 'error/No ha seleccionado el tipo';}break;
 			case 'idProceso':      if(empty($idProceso)){    $error['idProceso']     = 'error/No ha seleccionado el proceso';}break;
 			case 'idSistema':      if(empty($idSistema)){    $error['idSistema']     = 'error/No ha seleccionado el sistema';}break;
-			
+
 		}
 	}
-	
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert_embalaje':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -61,22 +61,20 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El embalaje ya existe en el sistema';}
 			/*******************************************************************/
-			
-			
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idCategoria) && $idCategoria != ''){  $SIS_data  = "'".$idCategoria."'" ; }else{$SIS_data  = "''";}
-				if(isset($idTipo) && $idTipo != ''){            $SIS_data .= ",'".$idTipo."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($idProceso) && $idProceso != ''){      $SIS_data .= ",'".$idProceso."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($idSistema) && $idSistema != ''){      $SIS_data .= ",'".$idSistema."'" ;  }else{$SIS_data .= ",''";}
-				
+				if(isset($idCategoria) && $idCategoria!=''){  $SIS_data  = "'".$idCategoria."'"; }else{$SIS_data  = "''";}
+				if(isset($idTipo) && $idTipo!=''){           $SIS_data .= ",'".$idTipo."'";     }else{$SIS_data .= ",''";}
+				if(isset($idProceso) && $idProceso!=''){      $SIS_data .= ",'".$idProceso."'";  }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){      $SIS_data .= ",'".$idSistema."'";  }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idCategoria, idTipo, idProceso, idSistema';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'sistema_variedades_categorias_tipo_emb', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -84,14 +82,14 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update_embalaje':	
-			
+/*******************************************************************************************************************/
+		case 'update_embalaje':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -102,40 +100,39 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El embalaje ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idEmbalaje='".$idEmbalaje."'" ;
-				if(isset($idCategoria) && $idCategoria != ''){   $SIS_data .= ",idCategoria='".$idCategoria."'" ;}
-				if(isset($idTipo) && $idTipo != ''){             $SIS_data .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idProceso) && $idProceso != ''){       $SIS_data .= ",idProceso='".$idProceso."'" ;}
-				if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",idSistema='".$idSistema."'" ;}
-				
+				$SIS_data = "idEmbalaje='".$idEmbalaje."'";
+				if(isset($idCategoria) && $idCategoria!=''){   $SIS_data .= ",idCategoria='".$idCategoria."'";}
+				if(isset($idTipo) && $idTipo!=''){            $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idProceso) && $idProceso!=''){       $SIS_data .= ",idProceso='".$idProceso."'";}
+				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'sistema_variedades_categorias_tipo_emb', 'idEmbalaje = "'.$idEmbalaje.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
-		break;	
-						
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del_embalaje':	
-			
+		case 'del_embalaje':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -143,40 +140,38 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'sistema_variedades_categorias_tipo_emb', 'idEmbalaje = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
 		break;
-							
+
 /*******************************************************************************************************************/
 	}
 ?>

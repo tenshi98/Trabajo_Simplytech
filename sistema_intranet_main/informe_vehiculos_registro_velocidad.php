@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_vehiculos_registro_velocidad.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,8 +22,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = '';
@@ -58,11 +58,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		//titulos
 		$arrData[1]['Name'] = "'Medicion'";
 		$arrData[2]['Name'] = "'Limite Velocidad'";
-		//fechas									
-		if(isset($arrData['Fecha'])&&$arrData['Fecha']!=''){ $arrData['Fecha'] .= ",'".Fecha_estandar($rutas['FechaSistema'])." ".$rutas['HoraSistema']."'"; }else{ $arrData['Fecha'] = "'".Fecha_estandar($rutas['FechaSistema'])." ".$rutas['HoraSistema']."'"; }
+		//fechas					
+		if(isset($arrData['Fecha'])&&$arrData['Fecha']!=''){$arrData['Fecha'] .= ",'".Fecha_estandar($rutas['FechaSistema'])." ".$rutas['HoraSistema']."'"; }else{ $arrData['Fecha'] = "'".Fecha_estandar($rutas['FechaSistema'])." ".$rutas['HoraSistema']."'"; }
 		//datos											
-		if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$rutas['GeoVelocidad'];         }else{ $arrData[1]['Value'] = $rutas['GeoVelocidad']; }
-		if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$rowEquipo['LimiteVelocidad'];  }else{ $arrData[2]['Value'] = $rowEquipo['LimiteVelocidad']; }
+		if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){$arrData[1]['Value'] .= ", ".$rutas['GeoVelocidad'];         }else{ $arrData[1]['Value'] = $rutas['GeoVelocidad'];}
+		if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){$arrData[2]['Value'] .= ", ".$rowEquipo['LimiteVelocidad'];  }else{ $arrData[2]['Value'] = $rowEquipo['LimiteVelocidad'];}
 		
 	}
 	/******************************************/  
@@ -105,8 +105,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$Graphics_lineDash   .= '];';
 	$Graphics_lineWidth  .= '];';
 
-	?>	
-	<div class="col-sm-12">
+	?>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -116,18 +116,18 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<?php
 				$gr_tittle = 'Informe Velocidades equipo '.$rowEquipo['NombreEquipo'];
 				echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', 'KM/H', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0);
-				?>			
+				?>		
 			</div>
 		</div>
 	</div>
 	
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Informe Velocidades equipo <?php echo $rowEquipo['NombreEquipo']; ?></h5>
 			</header>
-			<div class="table-responsive"> 
+			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<thead>
 						<tr role="row">
@@ -152,7 +152,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									</div>
 								</td>
 							</tr>
-						<?php } ?>                     
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>
@@ -160,44 +160,44 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</div>
 
 	<?php widget_modal(80, 95); ?>
-<?php } ?> 
+<?php } ?>
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);	
-?>			
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Filtro de busqueda</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+?>		
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Filtro de busqueda</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
                
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;     }else{$x1  = '';}
-				if(isset($h_inicio)) {      $x2  = $h_inicio;     }else{$x2  = '';}
-				if(isset($f_termino)) {     $x3  = $f_termino;    }else{$x3  = '';}
-				if(isset($h_termino)) {     $x4  = $h_termino;    }else{$x4  = '';}
-				if(isset($idVehiculo)) {    $x5  = $idVehiculo;   }else{$x5  = '';}
-				
+				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
+				if(isset($h_inicio)){      $x2  = $h_inicio;     }else{$x2  = '';}
+				if(isset($f_termino)){     $x3  = $f_termino;    }else{$x3  = '';}
+				if(isset($h_termino)){     $x4  = $h_termino;    }else{$x4  = '';}
+				if(isset($idVehiculo)){    $x5  = $idVehiculo;   }else{$x5  = '';}
+
 				//Si es redireccionado desde otra pagina con datos precargados
-				if(isset($_GET['view'])&&$_GET['view']!='') { $x5  = $_GET['view']; }
-				
+				if(isset($_GET['view'])&&$_GET['view']!='') { $x5  = $_GET['view'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
@@ -207,13 +207,13 @@ alert_post_data(2,1,1, $Alert_Text);
 				$Form_Inputs->form_select_filter('Vehiculo','idVehiculo', $x5, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
 				
 				
-				?>        
+				?>
 	   
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>

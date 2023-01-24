@@ -53,7 +53,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 									
 				}
 				$row_data = mysqli_fetch_assoc ($resultado);
-				
+
 				/******************************************************************/
 				//Se traspasan los valores a variables de sesion
 				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];
@@ -114,7 +114,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 									
 				}
 				$row_data = mysqli_fetch_assoc ($resultado);
-				
+
 				/******************************************************************/
 				//Se traspasan los valores a variables de sesion
 				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];
@@ -174,7 +174,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 									
 				}
 				$row_data = mysqli_fetch_assoc ($resultado);
-				
+
 				/******************************************************************/
 				//Se traspasan los valores a variables de sesion
 				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];
@@ -234,7 +234,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 									
 				}
 				$row_data = mysqli_fetch_assoc ($resultado);
-				
+
 				/******************************************************************/
 				//Se traspasan los valores a variables de sesion
 				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];

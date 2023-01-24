@@ -21,92 +21,135 @@ class Form_Inputs extends Basic_Form_Inputs{
 	/*******************************************************************************************************************/
 	public function form_select_temporada($placeholder,$name, $value, $required, $data){
 
-		//Validacion de variables
-		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
-			
+		/******************************************/
+		//Valido si es requerido
+		switch ($required) {
+			//Si el dato no es requerido
+			case 1:
+				$requerido = '';//variable vacia
+				break;
+			//Si el dato es requerido
+			case 2:
+				$requerido = 'required'; //se marca como requerido
+				if(!isset($_SESSION['form_require']) OR $_SESSION['form_require']==''){$_SESSION['form_require'] = 'required';}
+				$_SESSION['form_require'].= ','.$name;  //se guarda en la sesion para la validacion al guardar formulario
+				break;
+		}
+
+		/******************************************/
 		//generacion del input
 		$input = '
 			<div class="form-group" id="div_'.$name.'">
-				<label for="text2" class="control-label col-sm-4" id="label_'.$name.'">'.$placeholder.'</label>
-				<div class="col-sm-8 field">
-					<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.' >
+				<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_'.$name.'">'.$placeholder.'</label>
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
+					<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.' >
 					<option value="" selected>Seleccione una Opcion</option>';
 					//pongo rango de +4 y -4
 					$desde = $data - 4;
 					$hasta = $data + 4;
 					for ($i = $desde; $i <= $hasta; $i++) {
-						$w = '';
+						$selected = '';
 						$x = $i+1;
 						$xdata = $i.' - '.$x;
 						if($value==$xdata){
-							$w .= 'selected="selected"';
+							$selected = 'selected="selected"';
 						}
-						$input .= '<option value="'.$xdata.'" '.$w.' >'.$xdata.'</option>';
+						$input .= '<option value="'.$xdata.'" '.$selected.' >'.$xdata.'</option>';
 					}
-						
+
 					$input .= '
 					</select>
 				</div>
 			</div>';
-		
-		//Imprimir dato	
+
+		/******************************************/
+		//Imprimir dato
 		echo $input;
 
 	}
 	/*******************************************************************************************************************/
 	public function form_select_temporada_2($placeholder,$name, $value, $required, $data){
 
-		//Validacion de variables
-		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
-			
+		/******************************************/
+		//Valido si es requerido
+		switch ($required) {
+			//Si el dato no es requerido
+			case 1:
+				$requerido = '';//variable vacia
+				break;
+			//Si el dato es requerido
+			case 2:
+				$requerido = 'required'; //se marca como requerido
+				if(!isset($_SESSION['form_require']) OR $_SESSION['form_require']==''){$_SESSION['form_require'] = 'required';}
+				$_SESSION['form_require'].= ','.$name;  //se guarda en la sesion para la validacion al guardar formulario
+				break;
+		}
+
+		/******************************************/
 		//generacion del input
 		$input = '
 			<div class="form-group" id="div_'.$name.'">
-				<label for="text2" class="control-label col-sm-4" id="label_'.$name.'">'.$placeholder.'</label>
-				<div class="col-sm-8 field">
-					<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.' >
+				<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_'.$name.'">'.$placeholder.'</label>
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
+					<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.' >
 						<option value="" selected>Seleccione una Opcion</option>';
 						//pongo rango de +4 y -4
 						$desde = $data;
 						$hasta = $data;
 						for ($i = $desde; $i <= $hasta; $i++) {
-							$w = '';
+							$selected = '';
 							$x = $i+1;
 							$xdata = $i.' - '.$x;
 							if($value==$xdata){
-								$w .= 'selected="selected"';
+								$selected = 'selected="selected"';
 							}
-							$input .= '<option value="'.$xdata.'" '.$w.' >'.$xdata.'</option>';
+							$input .= '<option value="'.$xdata.'" '.$selected.' >'.$xdata.'</option>';
 						}
-						
+
 					$input .= '
 					</select>
 				</div>
 			</div>';
-			
-		//Imprimir dato	
+
+		/******************************************/
+		//Imprimir dato
 		echo $input;
 
 	}
 	/*******************************************************************************************************************/
 	public function form_visualizacion($placeholder,$name, $value, $required, $data1, $data2, $table, $filter, $dbConn){
 
-		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
+		/******************************************/
+		//Valido si es requerido
+		switch ($required) {
+			//Si el dato no es requerido
+			case 1:
+				$requerido = '';//variable vacia
+				break;
+			//Si el dato es requerido
+			case 2:
+				$requerido = 'required'; //se marca como requerido
+				if(!isset($_SESSION['form_require']) OR $_SESSION['form_require']==''){$_SESSION['form_require'] = 'required';}
+				$_SESSION['form_require'].= ','.$name;  //se guarda en la sesion para la validacion al guardar formulario
+				break;
+		}
+
+		/******************************************/
 		//FILTRO
 		$filtro = '';
-		if ($filter!='0'){$filtro .="WHERE ".$filter;	}
-		
+		if ($filter!='0'){$filtro ="WHERE ".$filter; }
+
 		//se trae un listado con todas las categorias
 		$arrSelect = array();
 		$arrSelect = db_select_array (false, $data1.' AS idData, '.$data2.' AS Nombre', $table, '', $filtro, 'Nombre ASC', $dbConn, 'form_checkbox_active', basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
-			
+
 		//si hay resultados
 		if($arrSelect!=false){
-			
+
 			$input = '<div class="form-group" id="div_'.$name.'">
-						<label for="text2" class="control-label col-sm-4">'.$placeholder.'</label>
-						<div class="col-sm-8 field">
-							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.' >
+						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
+							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.' >
 								<option value="" selected>Seleccione una Opcion</option>';
 								$w1 = '';
 								$w2 = '';
@@ -114,38 +157,54 @@ class Form_Inputs extends Basic_Form_Inputs{
 									$w1 = 'selected="selected"';
 								}elseif($value==9999){
 									$w2 = 'selected="selected"';
-								}			
-								$input .= '<option value="9998" '.$w1.' >Todos</option>';
+								}
+								$input .= '<option value="9998" '.$w1.'>Todos</option>';
 								$input .= '<option value="9999" '.$w2.'>Solo Superadministradores</option>';
-							
+
 								foreach ( $arrSelect as $select ) {
-									$w = '';
-									if($value==$select['idData']){ $w .= 'selected="selected"'; } 	
-									$input .= '<option value="'.$select['idData'].'" '.$w.' >'.$select['Nombre'].'</option>';
-								} 
+									$selected = '';
+									if($value==$select['idData']){
+										$selected = 'selected="selected"';
+									}
+									$input .= '<option value="'.$select['idData'].'" '.$selected.' >'.$select['Nombre'].'</option>';
+								}
 							$input .= '
 							</select>
 						</div>
 					</div>';
-					
+
 			echo $input;
-			
+
 		//si no hay datos
 		}elseif(empty($arrSelect) OR $arrSelect==''){
 			//Devuelvo mensaje
-			alert_post_data(4,1,1, 'No hay datos en <strong>'.$placeholder.'</strong>, consulte con el administrador');	
+			alert_post_data(4,1,1, 'No hay datos en <strong>'.$placeholder.'</strong>, consulte con el administrador');
 		//si existe un error
 		}elseif($arrSelect==false){
 			//Devuelvo mensaje
-			alert_post_data(4,1,1, 'Hay un error en la consulta <strong>'.$placeholder.'</strong>, consulte con el administrador');	
+			alert_post_data(4,1,1, 'Hay un error en la consulta <strong>'.$placeholder.'</strong>, consulte con el administrador');
 		}
-		
+
 	}
 	/*******************************************************************************************************************/
 	public function form_select_sys($placeholder,$name, $value, $required, $data1, $data2, $table, $filter, $dbConn){
 
-		//si dato es requerido
-		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
+		/******************************************/
+		//Valido si es requerido
+		switch ($required) {
+			//Si el dato no es requerido
+			case 1:
+				$requerido = '';//variable vacia
+				break;
+			//Si el dato es requerido
+			case 2:
+				$requerido = 'required'; //se marca como requerido
+				if(!isset($_SESSION['form_require']) OR $_SESSION['form_require']==''){$_SESSION['form_require'] = 'required';}
+				$_SESSION['form_require'].= ','.$name;  //se guarda en la sesion para la validacion al guardar formulario
+				break;
+		}
+
+		/******************************************/
 		//Filtro para el where
 		$filtro = '';
 		if ($filter!='0'){$filtro .="WHERE ".$filter;	}
@@ -167,72 +226,91 @@ class Form_Inputs extends Basic_Form_Inputs{
 		//se trae un listado con todas las categorias
 		$arrSelect = array();
 		$arrSelect = db_select_array (false, $data1.' AS idData '.$data_required, $table, '', $filtro, $order_by, $dbConn, 'form_checkbox_active', basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
-		
+
 		//Si ejecuto correctamente la consulta
-		if($arrSelect!=false){	
-			
-			$input = '<div class="form-group" id="div_'.$name.'">
-						<label for="text2" class="control-label col-sm-4" id="label_'.$name.'">'.$placeholder.'</label>
-						<div class="col-sm-8 field">
-						<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.' >
-						<option value="" selected>Seleccione una Opcion</option>';
-					   
-						$w = '';
-						if($value==9999){
-							$w .= 'selected="selected"';
-						}   
-			$input .= '<option value="9999" '.$w.' >Todos</option>';
-						
-						foreach ( $arrSelect as $select ) {
-							$w = '';
-							if($value==$select['idData']){
-								$w .= 'selected="selected"';
-							}  	
-							if(count($datos)==1){
-								$data_writing = $select[$datos[0]].' ';
-							}else{
-								$data_writing = '';
-								foreach($datos as $dato){
-									$data_writing .= $select[$dato].' ';
+		if($arrSelect!=false){
+
+			$input = '
+					<div class="form-group" id="div_'.$name.'">
+						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_'.$name.'">'.$placeholder.'</label>
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
+							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.' >
+								<option value="" selected>Seleccione una Opcion</option>';
+
+								$selected = '';
+								if($value==9999){
+									$selected = 'selected="selected"';
 								}
-							}
-			$input .= '<option value="'.$select['idData'].'" '.$w.' >'.$data_writing.'</option>';
-						 } 
-			$input .= '</select>
+								$input .= '<option value="9999" '.$selected.' >Todos</option>';
+
+								foreach ( $arrSelect as $select ) {
+
+									if($value==$select['idData']){
+										$selected = 'selected="selected"';
+									}
+									if(count($datos)==1){
+										$data_writing = $select[$datos[0]].' ';
+									}else{
+										$data_writing = '';
+										foreach($datos as $dato){
+											$data_writing .= $select[$dato].' ';
+										}
+									}
+									$input .= '<option value="'.$select['idData'].'" '.$selected.' >'.$data_writing.'</option>';
+								}
+								$input .= '
+							</select>
 						</div>
 					</div>';
-					
-			
+
 			echo $input;
-			
+
 		//si no hay datos
 		}elseif(empty($arrSelect) OR $arrSelect==''){
 			//Devuelvo mensaje
-			alert_post_data(4,1,1, 'No hay datos en <strong>'.$placeholder.'</strong>, consulte con el administrador');	
+			alert_post_data(4,1,1, 'No hay datos en <strong>'.$placeholder.'</strong>, consulte con el administrador');
 		//si existe un error
 		}elseif($arrSelect==false){
 			//Devuelvo mensaje
-			alert_post_data(4,1,1, 'Hay un error en la consulta <strong>'.$placeholder.'</strong>, consulte con el administrador');	
+			alert_post_data(4,1,1, 'Hay un error en la consulta <strong>'.$placeholder.'</strong>, consulte con el administrador');
 		}
 	}
 	/*******************************************************************************************************************/
 	public function form_input_validate($placeholder,$name, $value, $required, $aValidar){
-		
-		//Validacion de variables
-		if($value==''){$w='';}else{$w=$value;}
-		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}	
-		
+
+		/******************************************/
+		//Valido si es requerido
+		switch ($required) {
+			//Si el dato no es requerido
+			case 1:
+				$requerido = '';//variable vacia
+				break;
+			//Si el dato es requerido
+			case 2:
+				$requerido = 'required'; //se marca como requerido
+				if(!isset($_SESSION['form_require']) OR $_SESSION['form_require']==''){$_SESSION['form_require'] = 'required';}
+				$_SESSION['form_require'].= ','.$name;  //se guarda en la sesion para la validacion al guardar formulario
+				break;
+		}
+
+		/******************************************/
+		//Si existe un valor entregado
+		$valor = '';
+		if($value!=''){$valor = $value;}
+
+		/******************************************/
 		//generacion del input
 		$input = '
 			<div class="form-group" id="div_'.$name.'">
-				<label class="control-label col-sm-4" id="label_'.$name.'">'.$placeholder.'</label>
+				<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_'.$name.'">'.$placeholder.'</label>
 				<div class="col-sm-8 field autocomplete">
-					<input type="text" placeholder="'.$placeholder.'" class="form-control"  name="'.$name.'" id="'.$name.'" value="'.$w.'"  '.$x.' onkeypress="return soloLetras(event)" autocomplete="off">
+					<input type="text" placeholder="'.$placeholder.'" class="form-control"  name="'.$name.'" id="'.$name.'" value="'.$valor.'"  '.$requerido.' onkeypress="return soloLetras(event)" autocomplete="off">
 					<input type="hidden" name="rev_'.$name.'" id="rev_'.$name.'" value="'.$aValidar.'" >
 				</div>
-			</div>';	
-		
-		//ejecucion script		
+			</div>';
+
+		/******************************************/
+		//ejecucion script
 		$input .= '
 				<script>
 				function autocomplete(inp, arr) {
@@ -331,34 +409,47 @@ class Form_Inputs extends Basic_Form_Inputs{
 						closeAllLists(e.target);
 					});
 				}';
-				
+
 			$input .= '
 				/*An array containing all the country names in the world:*/
 				var vali_val = [""';
-				
+
 				//limpio y separo los datos de la cadena de comprobacion
 				$obligatorios = str_replace(' ', '', $aValidar);
-				$piezas = explode(",", $obligatorios);
+				$piezas       = explode(",", $obligatorios);
 				//recorro los elementos
 				foreach ($piezas as $validd) {
 					$input .= ',"'.$validd.'"';
-				}		
-				
-				
+				}
+
 			$input .= '];
 
 			/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
 			autocomplete(document.getElementById("'.$name.'"), vali_val);
 		</script>';
-				
-		//Imprimir dato	
+
+		/******************************************/
+		//Imprimir dato
 		echo $input;
 	}
 	/*******************************************************************************************************************/
 	public function form_select_tel_group_sens($placeholder,$name, $idChanged, $idForm, $required, $dbConn){
-		//si dato es requerido
-		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
-		
+
+		/******************************************/
+		//Valido si es requerido
+		switch ($required) {
+			//Si el dato no es requerido
+			case 1:
+				$requerido = '';//variable vacia
+				break;
+			//Si el dato es requerido
+			case 2:
+				$requerido = 'required'; //se marca como requerido
+				if(!isset($_SESSION['form_require']) OR $_SESSION['form_require']==''){$_SESSION['form_require'] = 'required';}
+				$_SESSION['form_require'].= ','.$name;  //se guarda en la sesion para la validacion al guardar formulario
+				break;
+		}
+
 		/******************************/
 		//numero sensores equipo
 		$N_Maximo_Sensores = 72;
@@ -380,26 +471,26 @@ class Form_Inputs extends Basic_Form_Inputs{
 		$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
 		//se recorren los grupos
 		$arrFinalGrupos = array();
-		foreach ($arrGrupos as $sen) { 
+		foreach ($arrGrupos as $sen) {
 			$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
 		}
-		
-		
+
 		/******************************/
 		//se dibuja
 		$input = '<div class="form-group" id="div_'.$name.'" >
-						<label for="text2" class="control-label col-sm-4">'.$placeholder.'</label>
-						<div class="col-sm-8 field">
-							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.'>
+						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
+							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.'>
 								<option value="" selected>Seleccione una Opcion</option>
 							</select>
 						</div>
 					</div>';
-					
-		//script		
+
+		/******************************************/
+		//script
 		$input .= '<script>';
 		$input .= 'document.getElementById("'.$idChanged.'").onchange = function() {cambia_'.$idChanged.'()};';
-					
+
 		foreach ($arrSelect as $select) {
 			$id_data = 'let id_data_'.$select['idTelemetria'].'=new Array(""';
 			$data    = 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
@@ -411,12 +502,12 @@ class Form_Inputs extends Basic_Form_Inputs{
 				if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
 					//si el arreglo temporal existe
 					if(isset($arrTempGrupos[$select['SensoresGrupo_'.$i]])&&$arrTempGrupos[$select['SensoresGrupo_'.$i]]==1){
-						//nada	
+						//nada
 					}else{
 						/***************************/
 						//id_data
 						$id_data .= ',"'.$i.'"';
-						
+
 						/***************************/
 						//data
 						if(isset($arrFinalGrupos[$select['SensoresGrupo_'.$i]])){
@@ -425,15 +516,15 @@ class Form_Inputs extends Basic_Form_Inputs{
 							$grupo = '';
 						}
 						$data .= ',"'.$grupo.str_replace('"', '',$select['SensoresNombre_'.$i]).'"';
-						
+
 						/***************************/
 						//genero valor
-						$arrTempGrupos[$select['SensoresGrupo_'.$i]] = 1;	
+						$arrTempGrupos[$select['SensoresGrupo_'.$i]] = 1;
 					}
 				}
-			}	
+			}
 			$id_data .= ')
-			';	
+			';
 			$data .= ')
 			';
 			/***************************/
@@ -441,11 +532,12 @@ class Form_Inputs extends Basic_Form_Inputs{
 			$input .= $id_data;
 			$input .= $data;
 		}
-		
-	
+
+		/******************************************/
+		//ejecucion script
 		$input .= '
 		function cambia_'.$idChanged.'(){
-					
+
 			let Componente = document.'.$idForm.'.'.$idChanged.'[document.'.$idForm.'.'.$idChanged.'.selectedIndex].value
 			try {
 				if (Componente != "") {
@@ -457,7 +549,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 						document.'.$idForm.'.'.$name.'.options[i].value = id_data[i];
 						document.'.$idForm.'.'.$name.'.options[i].text  = data[i];
 					}
-					document.getElementById("div_'.$name.'").style.display = "block";	
+					document.getElementById("div_'.$name.'").style.display = "block";
 				}else{
 					document.'.$idForm.'.'.$name.'.length = 1;
 					document.'.$idForm.'.'.$name.'.options[0].value = "";
@@ -469,20 +561,34 @@ class Form_Inputs extends Basic_Form_Inputs{
 				document.'.$idForm.'.'.$name.'.options[0].value = "";
 				document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opcion";
 				document.getElementById("div_'.$name.'").style.display = "none";
-					
+
 			}
 			document.'.$idForm.'.'.$name.'.options[0].selected = true;
 		}
-		</script>';					
-				
-				
+		</script>';
+
+		/******************************************/
+		//imprimo
 		echo $input;
 	}
 	/*******************************************************************************************************************/
 	public function form_select_tel_group($placeholder,$name, $idChanged, $idForm, $required, $dbConn){
-		//si dato es requerido
-		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
-		
+
+		/******************************************/
+		//Valido si es requerido
+		switch ($required) {
+			//Si el dato no es requerido
+			case 1:
+				$requerido = '';//variable vacia
+				break;
+			//Si el dato es requerido
+			case 2:
+				$requerido = 'required'; //se marca como requerido
+				if(!isset($_SESSION['form_require']) OR $_SESSION['form_require']==''){$_SESSION['form_require'] = 'required';}
+				$_SESSION['form_require'].= ','.$name;  //se guarda en la sesion para la validacion al guardar formulario
+				break;
+		}
+
 		/******************************/
 		//numero sensores equipo
 		$N_Maximo_Sensores = 72;
@@ -503,26 +609,26 @@ class Form_Inputs extends Basic_Form_Inputs{
 		$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
 		//se recorren los grupos
 		$arrFinalGrupos = array();
-		foreach ($arrGrupos as $sen) { 
+		foreach ($arrGrupos as $sen) {
 			$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
 		}
-		
-		
+
 		/******************************/
 		//se dibuja
 		$input = '<div class="form-group" id="div_'.$name.'" >
-						<label for="text2" class="control-label col-sm-4">'.$placeholder.'</label>
-						<div class="col-sm-8 field">
-							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.'>
+						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
+							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.'>
 								<option value="" selected>Seleccione una Opcion</option>
 							</select>
 						</div>
 					</div>';
-					
-		//script		
+
+		/******************************************/
+		//script
 		$input .= '<script>';
 		$input .= 'document.getElementById("'.$idChanged.'").onchange = function() {cambia_'.$idChanged.'()};';
-					
+
 		foreach ($arrSelect as $select) {
 			$id_data = 'let id_data_'.$select['idTelemetria'].'=new Array(""';
 			$data    = 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
@@ -535,23 +641,23 @@ class Form_Inputs extends Basic_Form_Inputs{
 				if(isset($select['SensoresActivo_'.$i])&&$select['SensoresActivo_'.$i]==1){
 					//si el arreglo temporal existe
 					if(isset($arrTempGrupos[$select['SensoresGrupo_'.$i]])&&$arrTempGrupos[$select['SensoresGrupo_'.$i]]==1){
-						//nada	
+						//nada
 					}else{
 						//ejecuto
 						//verifico que el grupo no este ingresado
 						if($valorx != $select['SensoresGrupo_'.$i]){
-							
+
 							/***************************/
 							//guardo valor
 							$valorx = $select['SensoresGrupo_'.$i];
 							//genero valor
 							$arrTempGrupos[$select['SensoresGrupo_'.$i]] = 1;
-							
+
 							if($valorx!=0){
 								/***************************/
 								//id_data
 								$id_data .= ',"'.$valorx.'"';
-								
+
 								/***************************/
 								//data
 								if(isset($arrFinalGrupos[$select['SensoresGrupo_'.$i]])){
@@ -561,26 +667,27 @@ class Form_Inputs extends Basic_Form_Inputs{
 								}
 								$data .= ',"'.$grupo.'"';
 							}
-						}	
+						}
 					}
 				}
-			}	
+			}
 			$id_data .= ')
-			';	
+			';
 			$data .= ')
 			';
-			
+
 			/***************************/
 			//guardo dentro del input
 			$input .= $id_data;
 			$input .= $data;
-			
+
 		}
-		
-	
+
+		/******************************************/
+		//ejecucion script
 		$input .= '
 		function cambia_'.$idChanged.'(){
-					
+
 			let Componente = document.'.$idForm.'.'.$idChanged.'[document.'.$idForm.'.'.$idChanged.'.selectedIndex].value
 			try {
 				if (Componente != "") {
@@ -592,7 +699,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 						document.'.$idForm.'.'.$name.'.options[i].value = id_data[i];
 						document.'.$idForm.'.'.$name.'.options[i].text  = data[i];
 					}
-					document.getElementById("div_'.$name.'").style.display = "block";	
+					document.getElementById("div_'.$name.'").style.display = "block";
 				}else{
 					document.'.$idForm.'.'.$name.'.length = 1;
 					document.'.$idForm.'.'.$name.'.options[0].value = "";
@@ -604,26 +711,39 @@ class Form_Inputs extends Basic_Form_Inputs{
 				document.'.$idForm.'.'.$name.'.options[0].value = "";
 				document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opcion";
 				document.getElementById("div_'.$name.'").style.display = "none";
-					
+
 			}
 			document.'.$idForm.'.'.$name.'.options[0].selected = true;
 		}
-		</script>';					
-				
-				
+		</script>';
+
 		echo $input;
 	}
 	/*******************************************************************************************************************/
 	public function form_select_col_tem_hum($placeholder, $name, $required){
-		//si dato es requerido
-		if($required==1){$x='';}elseif($required==2){$x='required';$_SESSION['form_require'].=','.$name;}
-		
+
+		/******************************************/
+		//Valido si es requerido
+		switch ($required) {
+			//Si el dato no es requerido
+			case 1:
+				$requerido = '';//variable vacia
+				break;
+			//Si el dato es requerido
+			case 2:
+				$requerido = 'required'; //se marca como requerido
+				if(!isset($_SESSION['form_require']) OR $_SESSION['form_require']==''){$_SESSION['form_require'] = 'required';}
+				$_SESSION['form_require'].= ','.$name;  //se guarda en la sesion para la validacion al guardar formulario
+				break;
+		}
+
 		/****************************************************************/
 		//seleccionar temperatura o humedad
-		$input = '<div class="form-group" id="div_'.$name.'" >
-						<label for="text2" class="control-label col-sm-4">'.$placeholder.'</label>
-						<div class="col-sm-8 field">
-							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$x.'>
+		$input = '
+					<div class="form-group" id="div_'.$name.'" >
+						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
+							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.'>
 								<option value="" selected>Seleccione una Opcion</option>
 								<option value="1">Temperatura</option>
 								<option value="2">Humedad</option>
@@ -632,7 +752,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 					</div>';
 		echo $input;
 	}
-	
+
 }
 
 ?>

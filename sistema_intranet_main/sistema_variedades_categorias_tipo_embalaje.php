@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "sistema_variedades_categorias.php";
 $location = $original;
 $new_location = "sistema_variedades_categorias_tipo_embalaje.php";
@@ -24,7 +24,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/sistema_variedades_categorias_tipo_emb.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -40,12 +40,12 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/sistema_variedades_categorias_tipo_emb.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
 	$form_trabajo= 'del_embalaje';
-	require_once 'A1XRXS_sys/xrxs_form/sistema_variedades_categorias_tipo_emb.php';	
+	require_once 'A1XRXS_sys/xrxs_form/sistema_variedades_categorias_tipo_emb.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -60,10 +60,10 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tipo Embalaje editado 
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tipo Embalaje borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['edit']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['edit'])){
 //verifico que sea un administrador
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 // consulto los datos
 $query = "SELECT idTipo, idProceso, idSistema
 FROM `sistema_variedades_categorias_tipo_emb`
@@ -83,24 +83,24 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado); 	
 ?>
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Embalaje</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Embalaje</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProceso)) {  $x1  = $idProceso; }else{$x1  = $rowdata['idProceso'];}
-				if(isset($idTipo)) {     $x2  = $idTipo;    }else{$x2  = $rowdata['idTipo'];}
-				
+				if(isset($idProceso)){  $x1  = $idProceso; }else{$x1  = $rowdata['idProceso'];}
+				if(isset($idTipo)){     $x2  = $idTipo;    }else{$x2  = $rowdata['idTipo'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);	
-				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x2, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);	
+				$Form_Inputs->form_select('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x2, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -110,42 +110,42 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 				?>
 
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //verifico que sea un administrador
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Agregar Nuevo Embalaje</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Agregar Nuevo Embalaje</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProceso)) {  $x1  = $idProceso; }else{$x1  = '';}
-				if(isset($idTipo)) {     $x2  = $idTipo;    }else{$x2  = '';}
-				
+				if(isset($idProceso)){  $x1  = $idProceso; }else{$x1  = '';}
+				if(isset($idTipo)){     $x2  = $idTipo;    }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);	
-				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x2, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);	
+				$Form_Inputs->form_select('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x2, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -154,18 +154,18 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 			
 				?>
 
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // Se traen todos los datos de mi Transporte
 $query = "SELECT Nombre
@@ -215,20 +215,20 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 }
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowdata['Nombre'], 'Editar Tipos de Embalaje');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar nuevo embalaje</a><?php }?>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar nuevo embalaje</a><?php }?>
 	</div>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -241,8 +241,8 @@ array_push( $arrProductos,$row );
 						<li class=""><a href="<?php echo 'sistema_variedades_categorias_matriz_proceso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Matriz Proceso</a></li>
 						<li class="active"><a href="<?php echo 'sistema_variedades_categorias_tipo_embalaje.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Tipo Embalaje</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -252,14 +252,14 @@ array_push( $arrProductos,$row );
 						<th width="200">Sistema</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>				  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<?php
 					filtrar($arrProductos, 'Proceso');  
-					foreach($arrProductos as $Proceso=>$listproc){ 
+					foreach($arrProductos as $Proceso=>$listproc){
 						echo '<tr class="odd" ><td colspan="3"  style="background-color:#DDD"><strong>'.$Proceso.'</strong></td></tr>';
 						foreach ($listproc as $subprocesos) { ?>
-						<tr class="odd"> 
+						<tr class="odd">
 							<td><?php echo $subprocesos['EmbalajeCodigo'].' - '.$subprocesos['Embalaje']; ?></td>
 							<td><?php echo $subprocesos['Sistema']; ?></td>
 							<td>
@@ -268,22 +268,22 @@ array_push( $arrProductos,$row );
 									<?php 
 										$ubicacion = $new_location.'&del='.simpleEncode($subprocesos['idEmbalaje'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el dato '.$subprocesos['Embalaje'].'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>	
 								</div>
-							</td>   
-						</tr> 
+							</td>
+						</tr>
 					 <?php } 
 					}?>
 								   
 				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

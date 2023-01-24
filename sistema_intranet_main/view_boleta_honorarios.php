@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -111,16 +111,16 @@ LEFT JOIN `core_ubicacion_comunas`   provcomuna     ON provcomuna.idComuna      
 $SIS_where = 'boleta_honorarios_facturacion.idFacturacion ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'boleta_honorarios_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-/*****************************************/		
+/*****************************************/
 // Se consulta
-$SIS_query = 'Nombre, vTotal';
+$SIS_query = 'Nombre,vTotal';
 $SIS_join  = '';
 $SIS_where = 'idFacturacion ='.$X_Puntero;
 $SIS_order = 'Nombre ASC';
 $arrOtros = array();
 $arrOtros = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion_servicios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOtros');
 
-/*****************************************/		
+/*****************************************/
 // Se consulta
 $SIS_query = 'Nombre';
 $SIS_join  = '';
@@ -129,7 +129,7 @@ $SIS_order = 0;
 $arrArchivo = array();
 $arrArchivo = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
-/*****************************************/		
+/*****************************************/
 // Se consulta
 $SIS_query = '
 boleta_honorarios_facturacion_historial.Creacion_fecha, 
@@ -145,7 +145,7 @@ $SIS_order = 'boleta_honorarios_facturacion_historial.idHistorial ASC';
 $arrHistorial = array();
 $arrHistorial = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
-/*****************************************/		
+/*****************************************/
 // Se consulta
 $SIS_query = '
 sistema_documentos_pago.Nombre,
@@ -161,7 +161,7 @@ $SIS_order = 'pagos_boletas_trabajadores.F_Pago ASC';
 $arrPagosTrab = array();
 $arrPagosTrab = db_select_array (false, $SIS_query, 'pagos_boletas_trabajadores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPagosTrab');
 
-/*****************************************/		
+/*****************************************/
 // Se consulta
 $SIS_query = '
 sistema_documentos_pago.Nombre,
@@ -177,7 +177,7 @@ $SIS_order = 'pagos_boletas_clientes.F_Pago ASC';
 $arrPagosClien = array();
 $arrPagosClien = db_select_array (false, $SIS_query, 'pagos_boletas_clientes', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPagosClien');
 
-/*****************************************/		
+/*****************************************/
 // Se consulta
 $SIS_query = '
 sistema_documentos_pago.Nombre,
@@ -211,7 +211,7 @@ if($row_data['MontoPagado']!=0){?>
 									<th>Fecha</th> 
 									<th>Monto</th>
 								</tr>
-							</thead>			  
+							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrPagosTrab as $pagos) { ?>
 									<tr class="odd">
@@ -220,7 +220,7 @@ if($row_data['MontoPagado']!=0){?>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
 										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
-								<?php } ?> 
+								<?php } ?>
 								<?php foreach ($arrPagosClien as $pagos) { ?>
 									<tr class="odd">
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
@@ -228,7 +228,7 @@ if($row_data['MontoPagado']!=0){?>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
 										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
-								<?php } ?> 
+								<?php } ?>
 								<?php foreach ($arrPagosProv as $pagos) { ?>
 									<tr class="odd">
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
@@ -243,8 +243,8 @@ if($row_data['MontoPagado']!=0){?>
 					</div>
 						
 					<div class="row invoice-payment">
-						<div class="col-sm-8"></div>
-						<div class="col-sm-4">
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8"></div>
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 							<table class="table">
 								<tbody>
 									<tr>
@@ -277,7 +277,7 @@ if($row_data['MontoPagado']!=0){?>
 			</div>
 		</div>
 	</div>
-<?php } ?>	
+<?php } ?>
 
 
 
@@ -292,7 +292,7 @@ if($row_data['MontoPagado']!=0){?>
 				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['BoletaTipo']?>.
 				<small class="pull-right">Boleta N°: <?php echo n_doc($row_data['N_Doc'], 8) ?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">
@@ -330,14 +330,14 @@ if($row_data['MontoPagado']!=0){?>
 				<div class="col-sm-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
-					
-					if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){ 
+
+					if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){
 						echo '<strong>Estado: </strong>'.$row_data['BoletaEstado'].'<br/>';
 					}
-					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
+					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){
 						echo '<strong>Dto de Pago : </strong>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br/>';
 					}
-					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
+					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){
 						echo '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
 					}
 
@@ -378,14 +378,14 @@ if($row_data['MontoPagado']!=0){?>
 				<div class="col-sm-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
-					
-					if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){ 
+
+					if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){
 						echo '<strong>Estado: </strong>'.$row_data['BoletaEstado'].'<br/>';
 					}
-					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
+					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){
 						echo '<strong>Dto de Pago : </strong>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br/>';
 					}
-					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
+					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){
 						echo '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
 					}
 					
@@ -426,14 +426,14 @@ if($row_data['MontoPagado']!=0){?>
 				<div class="col-sm-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
-					
-					if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){ 
+
+					if(isset($row_data['BoletaEstado'])&&$row_data['BoletaEstado']!=''){
 						echo '<strong>Estado: </strong>'.$row_data['BoletaEstado'].'<br/>';
 					}
-					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){ 
+					if(isset($row_data['DocPago'])&&$row_data['DocPago']!=''){
 						echo '<strong>Dto de Pago : </strong>'.$row_data['DocPago'].' '.$row_data['N_DocPago'].'<br/>';
 					}
-					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){ 
+					if(isset($row_data['F_Pago'])&&$row_data['F_Pago']!=''&&$row_data['F_Pago']!='0000-00-00'){
 						echo '<strong>Fecha Pagado: </strong>'.Fecha_estandar($row_data['F_Pago']).'<br/>';
 					}
 
@@ -467,21 +467,21 @@ if($row_data['MontoPagado']!=0){?>
 			</table>
 			<table class="table">
 				<tbody>	
-					<?php if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){ ?>
+					<?php if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Total Honorarios</strong></td> 
 							<td width="160" align="right"><?php echo Valores($row_data['ValorNeto'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto'])&&$row_data['Impuesto']!=0){ ?>
+					<?php if(isset($row_data['Impuesto'])&&$row_data['Impuesto']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $row_data['Porcentaje_Ret_Boletas'].'%'; ?> Impuesto Retenido</strong></td> 
 							<td width="160" align="right"><?php echo Valores($row_data['Impuesto'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){ ?>
+					<?php if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>Total</strong></td> 
+							<td colspan="4" align="right"><strong>Total</strong></td>
 							<td align="right"><?php echo Valores($row_data['ValorTotal'], 0); ?></td>
 						</tr>
 					<?php } ?>
@@ -503,7 +503,7 @@ if($row_data['MontoPagado']!=0){?>
 	if($row_data['idTipo']==3){?>
 		<div class="row firma">
 			<div class="col-sm-6 fcont"><p>Firma Emisor</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div> 
+			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
 		</div>
 	<?php } ?>
 	
@@ -512,7 +512,7 @@ if($row_data['MontoPagado']!=0){?>
 	if($row_data['idTipo']==6){?>
 		<div class="row firma">
 			<div class="col-sm-6 fcont"><p>Firma Transportista</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Receptor</p></div> 
+			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
 		</div>
 	<?php } ?>
 
@@ -535,7 +535,7 @@ if($row_data['MontoPagado']!=0){?>
 </section>
 
 
-<div class="col-xs-12" style="margin-bottom:15px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 	
 	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
@@ -547,13 +547,13 @@ if($row_data['MontoPagado']!=0){?>
 					<th width="160">Fecha</th>
 					<th>Usuario</th>
 					<th>Observacion</th>
-				</tr>			  
+				</tr>
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
 						<td><?php echo '<i class="'.$doc['FonAwesome'].'" aria-hidden="true"></i> '.$doc['Observacion']; ?></td>
-					</tr> 
+					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
@@ -564,7 +564,7 @@ if($row_data['MontoPagado']!=0){?>
 			<tbody>
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
-				</tr>		  
+				</tr>
 				<?php foreach ($arrArchivo as $producto){?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
@@ -584,12 +584,12 @@ if($row_data['MontoPagado']!=0){?>
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -600,12 +600,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
  
 <?php

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "pago_boletas_proveedor_reversa.php";
 $location = $original;  
 //Se agregan ubicaciones
@@ -22,7 +22,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
 /************************************************************/
 //formulario para borrar
-if ( !empty($_GET['del_idPago']) )  { 
+if (!empty($_GET['del_idPago'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_pagos';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_boletas_proveedores_reversa.php';
@@ -37,9 +37,9 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['reversa'])){ $error['reversa'] = 'sucess/Pago Reversado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);}					
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) {  
+if(isset($error)&&$error!=''){echo notifications_list($error);}		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 
 /**********************************************************************************************/
 //datos 
@@ -83,7 +83,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrBoletas,$row );
 }
 
@@ -104,7 +104,7 @@ array_push( $arrBoletas,$row );
 						<th>Pagado</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
 					if ($arrBoletas!=false && !empty($arrBoletas) && $arrBoletas!='') {
@@ -120,8 +120,8 @@ array_push( $arrBoletas,$row );
 											$ubicacion = $location.'&submit_filter=Filtrar&del_idPago='.simpleEncode($productos[0]['idPago'], fecha_actual()).'&idFacturacion='.simpleEncode($productos[0]['idFacturacion'], fecha_actual());
 											$dialogo   = '¿Realmente deseas eliminar el pago '.$productos[0]['DocumentoPago'].' '.$menu.'?';?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-exchange" aria-hidden="true"></i></a>
-										<?php } ?>	
-									</div>	
+										<?php } ?>
+									</div>
 								</td>
 							</tr>
 							<?php foreach ($productos as $tipo){ ?>
@@ -148,45 +148,45 @@ array_push( $arrBoletas,$row );
 
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right margin_form_btn" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando 
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idDocPago)) {     $x1  = $idDocPago;     }else{$x1  = '';}
-				if(isset($N_DocPago)) {     $x2  = $N_DocPago;     }else{$x2  = '';}
-				if(isset($idProveedor)) {   $x3  = $idProveedor;   }else{$x3  = '';}
-				
+				if(isset($idDocPago)){     $x1  = $idDocPago;     }else{$x1  = '';}
+				if(isset($N_DocPago)){     $x2  = $N_DocPago;     }else{$x2  = '';}
+				if(isset($idProveedor)){   $x3  = $idProveedor;   }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);	
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x3, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

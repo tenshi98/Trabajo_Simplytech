@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "seg_vecinal_servicios_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,14 +18,14 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $location .= "&idTipo=".$_GET['idTipo'];              $search .= "&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $location .= "&Nombre=".$_GET['Nombre'];              $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                  $location .= "&Rut=".$_GET['Rut'];                    $search .= "&Rut=".$_GET['Rut'];}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){  $location .= "&fNacimiento=".$_GET['fNacimiento'];    $search .= "&fNacimiento=".$_GET['fNacimiento'];}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){        $location .= "&idCiudad=".$_GET['idCiudad'];          $search .= "&idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){        $location .= "&idComuna=".$_GET['idComuna'];          $search .= "&idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){      $location .= "&Direccion=".$_GET['Direccion'];        $search .= "&Direccion=".$_GET['Direccion'];}
-if(isset($_GET['Giro']) && $_GET['Giro'] != ''){                $location .= "&Giro=".$_GET['Giro'];                  $search .= "&Giro=".$_GET['Giro'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){     $location .= "&idTipo=".$_GET['idTipo'];              $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){     $location .= "&Nombre=".$_GET['Nombre'];              $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){           $location .= "&Rut=".$_GET['Rut'];                    $search .= "&Rut=".$_GET['Rut'];}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){  $location .= "&fNacimiento=".$_GET['fNacimiento'];    $search .= "&fNacimiento=".$_GET['fNacimiento'];}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){ $location .= "&idCiudad=".$_GET['idCiudad'];          $search .= "&idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){ $location .= "&idComuna=".$_GET['idComuna'];          $search .= "&idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){      $location .= "&Direccion=".$_GET['Direccion'];        $search .= "&Direccion=".$_GET['Direccion'];}
+if(isset($_GET['Giro']) && $_GET['Giro']!=''){         $location .= "&Giro=".$_GET['Giro'];                  $search .= "&Giro=".$_GET['Giro'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -33,22 +33,22 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/seg_vecinal_servicios_listado.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/seg_vecinal_servicios_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/seg_vecinal_servicios_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/seg_vecinal_servicios_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -63,9 +63,9 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Servicio editado corre
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Servicio borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['map']) ) { 
-$query = "SELECT Nombre, GeoLatitud, GeoLongitud, Direccion
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if(!empty($_GET['map'])){ 
+$query = "SELECT Nombre,GeoLatitud, GeoLongitud, Direccion
 FROM `seg_vecinal_servicios_listado`
 WHERE idServicio = ".$_GET['map'];
 //Consulta
@@ -84,21 +84,21 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 
 //informacion
-echo '<div class="col-sm-12">';
+echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 $Alert_Text  = 'Pone el cursor del mouse sobre el marcador  <img src="'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_blue.png" alt="marcador" width="33" height="44">  y arrastralo hasta la posicion correcta';
 alert_post_data(1,3,3, $Alert_Text);
 echo '</div>';
 	
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Modificar Posicion de <?php echo $rowdata['Nombre']; ?></h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Modificar Posicion de <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div class="table-responsive">
 			
-			<div class="col-sm-8">
+			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				<div class="row">
 					<?php
 					//Si no existe una ID se utiliza una por defecto
@@ -204,7 +204,7 @@ echo '</div>';
 				</div>
 			</div>
 			
-			<div class="col-sm-4">
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
@@ -222,7 +222,7 @@ echo '</div>';
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit">
 						</div>
 							  
 					</form>
@@ -231,7 +231,7 @@ echo '</div>';
 				</div>
 			</div>
 			
-		</div>	
+		</div>
 		
 		
    
@@ -239,12 +239,12 @@ echo '</div>';
 </div>	
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['id']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ }elseif(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 //consulta
-$query = "SELECT idTipo, Nombre, idCiudad, idComuna, Direccion, Fono1, Fono2, Fax, email, Web,
+$query = "SELECT idTipo, Nombre,idCiudad, idComuna, Direccion, Fono1, Fono2, Fax, email, Web,
 HoraInicio, HoraTermino
 FROM `seg_vecinal_servicios_listado`
 WHERE idServicio = ".$_GET['id'];
@@ -264,37 +264,37 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Servicio</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Servicio</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipo)) {      $x1  = $idTipo;      }else{$x1  = $rowdata['idTipo'];}
-				if(isset($Nombre)) {      $x2  = $Nombre;      }else{$x2  = $rowdata['Nombre'];}
-				if(isset($idCiudad)) {    $x3  = $idCiudad;    }else{$x3  = $rowdata['idCiudad'];}
-				if(isset($idComuna)) {    $x4  = $idComuna;    }else{$x4  = $rowdata['idComuna'];}
-				if(isset($Direccion)) {   $x5  = $Direccion;   }else{$x5  = $rowdata['Direccion'];}
-				if(isset($HoraInicio)) {  $x6  = $HoraInicio;  }else{$x6  = $rowdata['HoraInicio'];}
-				if(isset($HoraTermino)) { $x7  = $HoraTermino; }else{$x7  = $rowdata['HoraTermino'];}
-				if(isset($Fono1)) {       $x8  = $Fono1;       }else{$x8  = $rowdata['Fono1'];}
-				if(isset($Fono2)) {       $x9  = $Fono2;       }else{$x9  = $rowdata['Fono2'];}
-				if(isset($Fax)) {         $x10 = $Fax;         }else{$x10 = $rowdata['Fax'];}
-				if(isset($email)) {       $x11 = $email;       }else{$x11 = $rowdata['email'];}
-				if(isset($Web)) {         $x12 = $Web;         }else{$x12 = $rowdata['Web'];}
-				
+				if(isset($idTipo)){      $x1  = $idTipo;      }else{$x1  = $rowdata['idTipo'];}
+				if(isset($Nombre)){      $x2  = $Nombre;      }else{$x2  = $rowdata['Nombre'];}
+				if(isset($idCiudad)){    $x3  = $idCiudad;    }else{$x3  = $rowdata['idCiudad'];}
+				if(isset($idComuna)){    $x4  = $idComuna;    }else{$x4  = $rowdata['idComuna'];}
+				if(isset($Direccion)){   $x5  = $Direccion;   }else{$x5  = $rowdata['Direccion'];}
+				if(isset($HoraInicio)){  $x6  = $HoraInicio;  }else{$x6  = $rowdata['HoraInicio'];}
+				if(isset($HoraTermino)){ $x7  = $HoraTermino; }else{$x7  = $rowdata['HoraTermino'];}
+				if(isset($Fono1)){       $x8  = $Fono1;       }else{$x8  = $rowdata['Fono1'];}
+				if(isset($Fono2)){       $x9  = $Fono2;       }else{$x9  = $rowdata['Fono2'];}
+				if(isset($Fax)){         $x10 = $Fax;         }else{$x10 = $rowdata['Fax'];}
+				if(isset($email)){       $x11 = $email;       }else{$x11 = $rowdata['email'];}
+				if(isset($Web)){         $x12 = $Web;         }else{$x12 = $rowdata['Web'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_select('Tipo de Servicio','idTipo', $x1, 2, 'idTipo', 'Nombre', 'seg_vecinal_servicios_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 2);
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-												  'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+												  'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												  $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');	 
 				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x6, 2, 2);
@@ -311,53 +311,53 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 				?>
 								
-				<div class="form-group">	
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 			
 			
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Servicio</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Servicio</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipo)) {      $x1  = $idTipo;      }else{$x1  = '';}
-				if(isset($Nombre)) {      $x2  = $Nombre;      }else{$x2  = '';}
-				if(isset($idCiudad)) {    $x3  = $idCiudad;    }else{$x3  = '';}
-				if(isset($idComuna)) {    $x4  = $idComuna;    }else{$x4  = '';}
-				if(isset($Direccion)) {   $x5  = $Direccion;   }else{$x5  = '';}
-				if(isset($HoraInicio)) {  $x6  = $HoraInicio;  }else{$x6  = '';}
-				if(isset($HoraTermino)) { $x7  = $HoraTermino; }else{$x7  = '';}
-				if(isset($Fono1)) {       $x8  = $Fono1;       }else{$x8  = '';}
-				if(isset($Fono2)) {       $x9  = $Fono2;       }else{$x9  = '';}
-				if(isset($Fax)) {         $x10 = $Fax;         }else{$x10 = '';}
-				if(isset($email)) {       $x11 = $email;       }else{$x11 = '';}
-				if(isset($Web)) {         $x12 = $Web;         }else{$x12 = '';}
-				
+				if(isset($idTipo)){      $x1  = $idTipo;      }else{$x1  = '';}
+				if(isset($Nombre)){      $x2  = $Nombre;      }else{$x2  = '';}
+				if(isset($idCiudad)){    $x3  = $idCiudad;    }else{$x3  = '';}
+				if(isset($idComuna)){    $x4  = $idComuna;    }else{$x4  = '';}
+				if(isset($Direccion)){   $x5  = $Direccion;   }else{$x5  = '';}
+				if(isset($HoraInicio)){  $x6  = $HoraInicio;  }else{$x6  = '';}
+				if(isset($HoraTermino)){ $x7  = $HoraTermino; }else{$x7  = '';}
+				if(isset($Fono1)){       $x8  = $Fono1;       }else{$x8  = '';}
+				if(isset($Fono2)){       $x9  = $Fono2;       }else{$x9  = '';}
+				if(isset($Fax)){         $x10 = $Fax;         }else{$x10 = '';}
+				if(isset($email)){       $x11 = $email;       }else{$x11 = '';}
+				if(isset($Web)){         $x12 = $Web;         }else{$x12 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_select('Tipo de Servicio','idTipo', $x1, 2, 'idTipo', 'Nombre', 'seg_vecinal_servicios_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 2);
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-												  'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+												  'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												  $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');	 
 				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x6, 2, 2);
@@ -372,32 +372,26 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				
 				?>
 								
-				<div class="form-group">	
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 			
 			
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){$num_pag = $_GET["pagina"];	
-} else {$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -417,17 +411,17 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $SIS_where = "seg_vecinal_servicios_listado.idServicio!=0";	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){             $SIS_where .= " AND seg_vecinal_servicios_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){             $SIS_where .= " AND seg_vecinal_servicios_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){         $SIS_where .= " AND seg_vecinal_servicios_listado.idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){         $SIS_where .= " AND seg_vecinal_servicios_listado.idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){       $SIS_where .= " AND seg_vecinal_servicios_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){      $SIS_where .= " AND seg_vecinal_servicios_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){      $SIS_where .= " AND seg_vecinal_servicios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){  $SIS_where .= " AND seg_vecinal_servicios_listado.idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){  $SIS_where .= " AND seg_vecinal_servicios_listado.idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){$SIS_where .= " AND seg_vecinal_servicios_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idServicio', 'seg_vecinal_servicios_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 seg_vecinal_servicios_listado.idServicio,
@@ -440,60 +434,60 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_servicios_listado',
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Servicio</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Servicio</a><?php }?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipo)) {           $x1  = $idTipo;            }else{$x1  = '';}
-				if(isset($Nombre)) {           $x2  = $Nombre;            }else{$x2  = '';}
-				if(isset($idCiudad)) {         $x3  = $idCiudad;          }else{$x3  = '';}
-				if(isset($idComuna)) {         $x4  = $idComuna;          }else{$x4  = '';}
-				if(isset($Direccion)) {        $x5  = $Direccion;         }else{$x5  = '';}
-				
+				if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = '';}
+				if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = '';}
+				if(isset($idCiudad)){         $x3  = $idCiudad;          }else{$x3  = '';}
+				if(isset($idComuna)){         $x4  = $idComuna;          }else{$x4  = '';}
+				if(isset($Direccion)){        $x5  = $Direccion;         }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo de Servicio','idTipo', $x1, 1, 'idTipo', 'Nombre', 'seg_vecinal_servicios_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 1);
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										'Comuna','idComuna', $x4, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+										'Comuna','idComuna', $x4, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 1,'fa fa-map');	 
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>  
-<div class="clearfix"></div>                  
+<div class="clearfix"></div>
                                  
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Servicios</h5>	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Servicios</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -522,10 +516,10 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_servicios_listado',
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrUsers as $usuarios) { ?>
-					<tr class="odd">		
-						<td><?php echo $usuarios['Tipo']; ?></td>		
-						<td><?php echo $usuarios['Nombre']; ?></td>		
+					<?php foreach ($arrUsers as $usuarios){ ?>
+					<tr class="odd">
+						<td><?php echo $usuarios['Tipo']; ?></td>
+						<td><?php echo $usuarios['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_seg_vecinal_servicios.php?view='.simpleEncode($usuarios['idServicio'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -535,19 +529,19 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_servicios_listado',
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idServicio'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al Servicio '.$usuarios['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div>   
+		</div>
 	</div>
 </div>
 	

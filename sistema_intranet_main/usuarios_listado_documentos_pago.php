@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "usuarios_listado.php";
 $location = $original;
 $new_location = "usuarios_listado_documentos_pago.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_GET['doc_add']) )  { 
+if (!empty($_GET['doc_add'])){
 	//nuevas ubicaciones
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -32,13 +32,13 @@ if ( !empty($_GET['doc_add']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['doc_del']) )     {
+if (!empty($_GET['doc_del'])){
 	//nuevas ubicaciones
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'doc_del';
-	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -51,7 +51,7 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Permiso asignado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = 'Nombre';
 $SIS_join  = '';
@@ -72,7 +72,7 @@ $arrPer = array();
 foreach ($arrPermiso as $ins) {
 	$arrPer[$ins['Direccionbase']] = 1;
 }
-	
+
 /******************************************************/
 //variable de numero de permiso
 $x_nperm = 0;
@@ -200,12 +200,12 @@ $arrDocumentos = db_select_array (false, $SIS_query, 'sistema_documentos_pago', 
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Documentos a ver');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -239,8 +239,8 @@ $arrDocumentos = db_select_array (false, $SIS_query, 'sistema_documentos_pago', 
 							<li class=""><a href="<?php echo 'usuarios_listado_camaras.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-video-camera" aria-hidden="true"></i> Camaras de Seguridad</a></li>
 						<?php } ?>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			
@@ -260,29 +260,29 @@ $arrDocumentos = db_select_array (false, $SIS_query, 'sistema_documentos_pago', 
 						<tr class="odd">
 							<td><?php echo '<strong>Documento: </strong>'.$permiso['Nombre']; ?></td>
 							<td>
-								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">	
-									<?php if ( $permiso['contar']=='1' ) {?>    
+								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
+									<?php if ( $permiso['contar']=='1' ){ ?> 
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&doc_del='.$permiso['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
 									<?php } else {?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&doc_add='.$permiso['idDocPago']; ?>">ON</a>
-									<?php }?>    
-								</div> 
+									<?php } ?>
+								</div>
 							</td>
 						</tr>
-					<?php } ?>  
+					<?php } ?>
 					                 
 				</tbody>
 			</table>
 
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

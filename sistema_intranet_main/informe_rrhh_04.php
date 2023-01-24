@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_rrhh_04.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,13 +22,13 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = 'trabajadores_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search .= '&Fecha='.$_GET['Fecha'];
-if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){  
+if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){ 
 	$SIS_where .=" AND trabajadores_listado.idTrabajador='".$_GET['idTrabajador']."'";
 	$search .= '&idTrabajador='.$_GET['idTrabajador'];
 }
@@ -58,12 +58,12 @@ $arrAsistencias = db_select_array (false, $SIS_query, 'trabajadores_listado', $S
 
 ?>
 
-<div class="col-sm-12 clearfix">		
+<div class="col-sm-12 clearfix">
 	<a target="new" href="<?php echo 'informe_rrhh_04_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 	
 	
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Revision Asistencia</h5>
@@ -79,7 +79,7 @@ $arrAsistencias = db_select_array (false, $SIS_query, 'trabajadores_listado', $S
 						<th>Ingreso</th>
 						<th>Egreso</th>
 					</tr>
-				</thead>				  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrAsistencias as $con) { ?>
 						<tr class="odd">
@@ -90,7 +90,7 @@ $arrAsistencias = db_select_array (false, $SIS_query, 'trabajadores_listado', $S
 							<td><?php echo $con['Ingreso']; if($con['Ingreso_IP']=='999.999.999.999'){echo '<i class="fa fa-check" aria-hidden="true"></i>';} ?></td>
 							<td><?php echo $con['Egreso']; if($con['Ingreso_IP']=='999.999.999.999'){echo '<i class="fa fa-check" aria-hidden="true"></i>';}?></td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -104,42 +104,42 @@ $arrAsistencias = db_select_array (false, $SIS_query, 'trabajadores_listado', $S
 
  
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {        $x1  = $Fecha;         }else{$x1  = '';}
-				if(isset($idTrabajador)) { $x2  = $idTrabajador;  }else{$x2  = '';}
-				
+				if(isset($Fecha)){        $x1  = $Fecha;         }else{$x1  = '';}
+				if(isset($idTrabajador)){ $x2  = $idTrabajador;  }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x2, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
 						
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

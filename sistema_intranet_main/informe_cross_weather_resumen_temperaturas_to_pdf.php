@@ -11,24 +11,24 @@ require_once 'core/Load.Utils.PDF.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Se revisan los datos
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){   $idSistema   = $_GET['idSistema'];   }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){   $idSistema   = $_POST['idSistema'];}
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){     $f_inicio    = $_GET['f_inicio'];    }elseif(isset($_POST['f_inicio'])&&$_POST['f_inicio']!=''){     $f_inicio    = $_POST['f_inicio'];}
-if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){   $f_termino   = $_GET['f_termino'];   }elseif(isset($_POST['f_termino'])&&$_POST['f_termino']!=''){   $f_termino   = $_POST['f_termino'];}
-if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){     $h_inicio    = $_GET['h_inicio'];    }elseif(isset($_POST['h_inicio'])&&$_POST['h_inicio']!=''){     $h_inicio    = $_POST['h_inicio'];}
-if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){   $h_termino   = $_GET['h_termino'];   }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){   $h_termino   = $_POST['h_termino'];}
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){  $idSistema   = $_GET['idSistema'];   }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){  $idSistema   = $_POST['idSistema'];}
+if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){    $f_inicio    = $_GET['f_inicio'];    }elseif(isset($_POST['f_inicio'])&&$_POST['f_inicio']!=''){    $f_inicio    = $_POST['f_inicio'];}
+if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){  $f_termino   = $_GET['f_termino'];   }elseif(isset($_POST['f_termino'])&&$_POST['f_termino']!=''){  $f_termino   = $_POST['f_termino'];}
+if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){    $h_inicio    = $_GET['h_inicio'];    }elseif(isset($_POST['h_inicio'])&&$_POST['h_inicio']!=''){    $h_inicio    = $_POST['h_inicio'];}
+if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){  $h_termino   = $_GET['h_termino'];   }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){  $h_termino   = $_POST['h_termino'];}
 //Seleccionar la tabla
-if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){  
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
 	$x_table = 'telemetria_listado_aux_equipo';
 	$idTelemetria   = $_GET['idTelemetria'];
 }else{
-	if(isset($_POST['idTelemetria'])&&$_POST['idTelemetria']!=''){    
+	if(isset($_POST['idTelemetria'])&&$_POST['idTelemetria']!=''){   
 		$x_table = 'telemetria_listado_aux_equipo';
 		$idTelemetria   = $_POST['idTelemetria'];
 	}else{
@@ -39,7 +39,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 
 //Se buscan la imagen i el tipo de PDF
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas','', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 /********************************************************************/
 //Variable de busqueda
@@ -104,12 +104,12 @@ foreach($arrHistorial as $hist) {
 
 		$tabla  .= '
 		<tr>		
-			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$x_dia.'-'.$x_mes.'-'.$x_ano.'</td>	
-			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$x_hora.':'.$x_minuto.'</td>	
-			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$temp_real.'</td>	
-			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$temp_predic.'</td>	
+			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$x_dia.'-'.$x_mes.'-'.$x_ano.'</td>
+			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$x_hora.':'.$x_minuto.'</td>
+			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$temp_real.'</td>
+			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$temp_predic.'</td>
 		</tr>';		
-	}			
+	}
 }
 /********************************************************************/
 //Se define el contenido del PDF
@@ -118,8 +118,8 @@ $html = '
 	tbody tr:nth-child(odd) {background-color: #dfdfdf;}
 </style>';
 
-//se imprime la imagen 
-if(isset($_POST["img_adj"]) && $_POST["img_adj"] != ''){
+//se imprime la imagen
+if(isset($_POST["img_adj"]) && $_POST["img_adj"]!=''){
 	$html .= '<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>';
 	
 }
@@ -210,7 +210,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 			// set some language-dependent strings (optional)
-			if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+			if (@file_exists(dirname(__FILE__).'/lang/eng.php')){
 				require_once(dirname(__FILE__).'/lang/eng.php');
 				$pdf->setLanguageArray($l);
 			}
@@ -218,9 +218,9 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			//Se crea el archivo
 			$pdf->SetFont('helvetica', '', 10);
 			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
-			
-			//se imprime la imagen 
-			if(isset($_POST["img_adj"]) && $_POST["img_adj"] != ''){
+
+			//se imprime la imagen
+			if(isset($_POST["img_adj"]) && $_POST["img_adj"]!=''){
 				$imgdata = base64_decode(str_replace('data:image/png;base64,', '',$_POST["img_adj"]));
 				// The '@' character is used to indicate that follows an image data stream and not an image file name
 				$pdf->Image('@'.$imgdata, 15, 30, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);

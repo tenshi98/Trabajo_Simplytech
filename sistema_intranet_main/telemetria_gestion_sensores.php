@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_gestion_sensores.php";
 $location = $original;  
 //Se agregan ubicaciones
@@ -24,10 +24,10 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) {
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //Variables
-$HoraSistema    = hora_actual(); 
+$HoraSistema    = hora_actual();
 $FechaSistema   = fecha_actual();
 
 //Variable
@@ -35,7 +35,7 @@ $SIS_where  = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 $SIS_where .= " AND telemetria_listado.id_Geo = 2";//solo los equipos que tengan el seguimiento desactivado
 $enlace     = "?dd=true";
 //verifico que sea un administrador
-$SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $enlace .= "&idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 if (isset($_GET['idCiudad'])&&$_GET['idCiudad']!=''){
@@ -65,7 +65,7 @@ $SIS_query = '
 telemetria_listado.idTelemetria,
 telemetria_listado.Nombre,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.LastUpdateFecha, 
+telemetria_listado.LastUpdateFecha,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.GeoLatitud,
 telemetria_listado.GeoLongitud,
@@ -86,14 +86,14 @@ foreach ($arrUnimed as $sen) {
 }
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Gestion de Sensores en Tiempo Real</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Gestion de Sensores en Tiempo Real</h5>
 		</header>
         <div class="table-responsive">
 			
-			<div class="col-sm-4">
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div class="row">
 					<div id="consulta">
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -125,7 +125,7 @@ foreach ($arrUnimed as $sen) {
 									$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 									$Time_Tiempo_Max = horas2segundos('48:00:00');
 									//comparacion
-									if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+									if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
 										$in_eq_fueralinea++;
 									}
 															
@@ -148,22 +148,22 @@ foreach ($arrUnimed as $sen) {
 			
 									?>
 									<tr class="odd <?php echo $danger; ?>">		
-										<td><?php echo $data['Nombre']; ?></td>		
-										<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>			
+										<td><?php echo $data['Nombre']; ?></td>
+										<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>		
 										<td>
 											<div class="btn-group" style="width: 35px;" >
 												<a href="<?php echo 'telemetria_gestion_sensores_view_equipo.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
 											</div>
 										</td>
 									</tr>
-								<?php } ?>                    
+								<?php } ?>
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
 			
-			<div class="col-sm-8">
+			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				<div class="row">	
 					
 					<?php
@@ -334,12 +334,12 @@ foreach ($arrUnimed as $sen) {
 												infowindow.setContent(contenido);
 												infowindow.open(map, marker);
 											})(marker, contenido);
-										}					
+										}
 
-										break;		
+										break;
 								}
 
-								mapax++;	
+								mapax++;
 								if(mapax==3){mapax=1}
 							} 
 						</script>
@@ -352,7 +352,7 @@ foreach ($arrUnimed as $sen) {
 			
 			
 			
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -361,12 +361,12 @@ foreach ($arrUnimed as $sen) {
 
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";	
@@ -391,7 +391,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
+	while ( $row = mysqli_fetch_assoc ($resultado)){
 	array_push( $arrPermisos,$row );
 	}
 	foreach ($arrPermisos as $prod) {
@@ -401,37 +401,37 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 ?>
 
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Filtro de Busqueda</h5>	
+			<h5>Filtro de Busqueda</h5>
 		</header>
 		
-        <div id="div-3" class="tab-content body">
+        <div class="tab-content body">
 			
 			
 				<div class="wmd-panel">
 					<form class="form-horizontal" action="<?php echo $original; ?>" id="form1" name="form2" novalidate>
 						<?php
 						//Se verifican si existen los datos
-						if(isset($idTelemetria)) {   $x1  = $idTelemetria;    }else{$x1  = '';}
-			
+						if(isset($idTelemetria)){   $x1  = $idTelemetria;    }else{$x1  = '';}
+
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 						
 						?>
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 						</div>
 						<div class="clearfix"></div>
 					</form>
 				</div>
 			
-			<?php widget_validator(); ?>	
+			<?php widget_validator(); ?>
 			
-        </div>	
+        </div>
 	</div>
 </div>
 

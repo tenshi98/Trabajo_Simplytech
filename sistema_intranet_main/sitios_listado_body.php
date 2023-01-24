@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "sitios_listado.php";
 $location = $original;
 $new_location = "sitios_listado_body.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/sitios_listado_body.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -41,13 +41,13 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/sitios_listado_body.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/sitios_listado_body.php';	
+	require_once 'A1XRXS_sys/xrxs_form/sitios_listado_body.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -62,8 +62,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Cuerpo editado correct
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Cuerpo borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['edit']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['edit'])){
 // consulto los datos
 $SIS_query = 'idTipo,Icono,IconoStyle,Titulo,TituloStyle,Texto,TextoStyle,LinkNombre,
 LinkStyle,LinkURL,idNewTab,idPopup,idEstado,idPosicion,Imagen';
@@ -73,33 +73,33 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_body', $SIS_join, 
 
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Cuerpo</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Cuerpo</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipo)) {        $x0  = $idTipo;        }else{$x0  = $rowdata['idTipo'];}
-				if(isset($idPosicion)) {    $x1  = $idPosicion;    }else{$x1  = $rowdata['idPosicion'];}
-				if(isset($Icono)) {         $x2  = $Icono;         }else{$x2  = $rowdata['Icono'];}
-				if(isset($IconoStyle)) {    $x3  = $IconoStyle;    }else{$x3  = $rowdata['IconoStyle'];}
-				if(isset($Titulo)) {        $x4  = $Titulo;        }else{$x4  = $rowdata['Titulo'];}
-				if(isset($TituloStyle)) {   $x5  = $TituloStyle;   }else{$x5  = $rowdata['TituloStyle'];}
-				if(isset($Texto)) {         $x6  = $Texto;         }else{$x6  = $rowdata['Texto'];}
-				if(isset($TextoStyle)) {    $x7  = $TextoStyle;    }else{$x7  = $rowdata['TextoStyle'];}
-				if(isset($LinkNombre)) {    $x8  = $LinkNombre;    }else{$x8  = $rowdata['LinkNombre'];}
-				if(isset($LinkStyle)) {     $x9  = $LinkStyle;     }else{$x9  = $rowdata['LinkStyle'];}
-				if(isset($LinkURL)) {       $x10 = $LinkURL;       }else{$x10 = $rowdata['LinkURL'];}
-				if(isset($idNewTab)) {      $x11 = $idNewTab;      }else{$x11 = $rowdata['idNewTab'];}
-				if(isset($idPopup)) {       $x12 = $idPopup;       }else{$x12 = $rowdata['idPopup'];}
-				if(isset($Imagen)) {        $x13 = $Imagen;        }else{$x13 = $rowdata['Imagen'];}
-				if(isset($idEstado)) {      $x14 = $idEstado;      }else{$x14 = $rowdata['idEstado'];}
-				
+				if(isset($idTipo)){        $x0  = $idTipo;        }else{$x0  = $rowdata['idTipo'];}
+				if(isset($idPosicion)){    $x1  = $idPosicion;    }else{$x1  = $rowdata['idPosicion'];}
+				if(isset($Icono)){         $x2  = $Icono;         }else{$x2  = $rowdata['Icono'];}
+				if(isset($IconoStyle)){    $x3  = $IconoStyle;    }else{$x3  = $rowdata['IconoStyle'];}
+				if(isset($Titulo)){        $x4  = $Titulo;        }else{$x4  = $rowdata['Titulo'];}
+				if(isset($TituloStyle)){   $x5  = $TituloStyle;   }else{$x5  = $rowdata['TituloStyle'];}
+				if(isset($Texto)){         $x6  = $Texto;         }else{$x6  = $rowdata['Texto'];}
+				if(isset($TextoStyle)){    $x7  = $TextoStyle;    }else{$x7  = $rowdata['TextoStyle'];}
+				if(isset($LinkNombre)){    $x8  = $LinkNombre;    }else{$x8  = $rowdata['LinkNombre'];}
+				if(isset($LinkStyle)){     $x9  = $LinkStyle;     }else{$x9  = $rowdata['LinkStyle'];}
+				if(isset($LinkURL)){       $x10 = $LinkURL;       }else{$x10 = $rowdata['LinkURL'];}
+				if(isset($idNewTab)){      $x11 = $idNewTab;      }else{$x11 = $rowdata['idNewTab'];}
+				if(isset($idPopup)){       $x12 = $idPopup;       }else{$x12 = $rowdata['idPopup'];}
+				if(isset($Imagen)){        $x13 = $Imagen;        }else{$x13 = $rowdata['Imagen'];}
+				if(isset($idEstado)){      $x14 = $idEstado;      }else{$x14 = $rowdata['idEstado'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo','idTipo', $x0, 2, 'idTipo', 'Nombre', 'core_sitios_tipos_body', 0, '', $dbConn);
@@ -121,8 +121,8 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_body', $SIS_join, 
 				$Form_Inputs->form_input_text('Nombre del enlace', 'LinkNombre', $x8, 1);
 				$Form_Inputs->form_input_icon('Estilo del enlace', 'LinkStyle', $x9, 1,'fa fa-file-image-o');
 				$Form_Inputs->form_input_text('Enlace (Link o referencia)', 'LinkURL', $x10, 1);
-				$Form_Inputs->form_select('Abrir en una nueva pestaña','idNewTab', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Abrir en ventana emergente','idPopup', $x12, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Abrir en una nueva pestaña','idNewTab', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select('Abrir en ventana emergente','idPopup', $x12, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				
 				$Form_Inputs->form_post_data(2, 'Imagen de fondo del Body (Opcional).' );
 				$Form_Inputs->form_input_icon('Imagen', 'Imagen', $x13, 1,'fa fa-file-image-o');
@@ -133,47 +133,47 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_body', $SIS_join, 
 				$Form_Inputs->form_input_hidden('idBody', $_GET['edit'], 2);
 				?>
 				
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Cuerpo</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Cuerpo</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipo)) {        $x0  = $idTipo;        }else{$x0  = '';}
-				if(isset($idPosicion)) {    $x1  = $idPosicion;    }else{$x1  = '';}
-				if(isset($Icono)) {         $x2  = $Icono;         }else{$x2  = '';}
-				if(isset($IconoStyle)) {    $x3  = $IconoStyle;    }else{$x3  = '';}
-				if(isset($Titulo)) {        $x4  = $Titulo;        }else{$x4  = '';}
-				if(isset($TituloStyle)) {   $x5  = $TituloStyle;   }else{$x5  = '';}
-				if(isset($Texto)) {         $x6  = $Texto;         }else{$x6  = '';}
-				if(isset($TextoStyle)) {    $x7  = $TextoStyle;    }else{$x7  = '';}
-				if(isset($LinkNombre)) {    $x8  = $LinkNombre;    }else{$x8  = '';}
-				if(isset($LinkStyle)) {     $x9  = $LinkStyle;     }else{$x9  = '';}
-				if(isset($LinkURL)) {       $x10 = $LinkURL;       }else{$x10 = '';}
-				if(isset($idNewTab)) {      $x11 = $idNewTab;      }else{$x11 = '';}
-				if(isset($idPopup)) {       $x12 = $idPopup;       }else{$x12 = '';}
-				if(isset($Imagen)) {        $x13 = $Imagen;        }else{$x13 = '';}
-				
+				if(isset($idTipo)){        $x0  = $idTipo;        }else{$x0  = '';}
+				if(isset($idPosicion)){    $x1  = $idPosicion;    }else{$x1  = '';}
+				if(isset($Icono)){         $x2  = $Icono;         }else{$x2  = '';}
+				if(isset($IconoStyle)){    $x3  = $IconoStyle;    }else{$x3  = '';}
+				if(isset($Titulo)){        $x4  = $Titulo;        }else{$x4  = '';}
+				if(isset($TituloStyle)){   $x5  = $TituloStyle;   }else{$x5  = '';}
+				if(isset($Texto)){         $x6  = $Texto;         }else{$x6  = '';}
+				if(isset($TextoStyle)){    $x7  = $TextoStyle;    }else{$x7  = '';}
+				if(isset($LinkNombre)){    $x8  = $LinkNombre;    }else{$x8  = '';}
+				if(isset($LinkStyle)){     $x9  = $LinkStyle;     }else{$x9  = '';}
+				if(isset($LinkURL)){       $x10 = $LinkURL;       }else{$x10 = '';}
+				if(isset($idNewTab)){      $x11 = $idNewTab;      }else{$x11 = '';}
+				if(isset($idPopup)){       $x12 = $idPopup;       }else{$x12 = '';}
+				if(isset($Imagen)){        $x13 = $Imagen;        }else{$x13 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo','idTipo', $x0, 2, 'idTipo', 'Nombre', 'core_sitios_tipos_body', 0, '', $dbConn);
@@ -195,8 +195,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_text('Nombre del enlace', 'LinkNombre', $x8, 1);
 				$Form_Inputs->form_input_icon('Estilo del enlace', 'LinkStyle', $x9, 1,'fa fa-file-image-o');
 				$Form_Inputs->form_input_text('Enlace (Link o referencia)', 'LinkURL', $x10, 1);
-				$Form_Inputs->form_select('Abrir en una nueva pestaña','idNewTab', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Abrir en ventana emergente','idPopup', $x12, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Abrir en una nueva pestaña','idNewTab', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select('Abrir en ventana emergente','idPopup', $x12, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				
 				$Form_Inputs->form_post_data(2, 'Imagen de fondo del Body (Opcional).' );
 				$Form_Inputs->form_input_icon('Imagen', 'Imagen', $x13, 1,'fa fa-file-image-o');
@@ -206,17 +206,17 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				
 				?>
 
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
 $SIS_query = 'Nombre,Config_Menu,Config_MenuOtros,Config_Carousel,Config_Links_Rel';
@@ -227,10 +227,10 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 /**********************************/
 //listado de bodys
 $SIS_query = '
-sitios_listado_body.idBody, 
+sitios_listado_body.idBody,
 sitios_listado_body.idTipo,
 sitios_listado_body.idPosicion,
-sitios_listado_body.Titulo, 
+sitios_listado_body.Titulo,
 core_sitios_tipos_body.Nombre AS Tipo,
 sitios_listado_body.idEstado,
 core_estados.Nombre AS Estado';
@@ -244,15 +244,15 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Elementos Cuerpo');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuerpo</a><?php }?>
-	</div>	
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuerpo</a><?php }?>
+	</div>
 </div>
-<div class="clearfix"></div>   
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -269,8 +269,8 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 						
 						<li class="active"><a href="<?php echo 'sitios_listado_body.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Body</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -284,8 +284,8 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<?php 
-					filtrar($arrBody, 'idTipo');  
-					foreach($arrBody as $Tipo=>$TipoBody){ 
+					filtrar($arrBody, 'idTipo');
+					foreach($arrBody as $Tipo=>$TipoBody){
 						echo '<tr class="odd" >
 							<td style="background-color:#DDD" colspan="4"><strong>'.$TipoBody[0]['Tipo'].'</strong></td>
 						</tr>';
@@ -293,29 +293,29 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 							<tr class="odd">
 								<td><?php echo $tipos['idPosicion']; ?></td>
 								<td><?php echo $tipos['Titulo']; ?></td>
-								<td><label class="label <?php if(isset($tipos['idEstado'])&&$tipos['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $tipos['Estado']; ?></label></td>	
+								<td><label class="label <?php if(isset($tipos['idEstado'])&&$tipos['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $tipos['Estado']; ?></label></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$tipos['idBody']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 										<?php 
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($tipos['idBody'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el body '.$tipos['Titulo'].'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
-						<?php } ?>  
+						<?php } ?>
 					<?php } ?>
 					                  
 				</tbody>
 			</table>
-		</div> 	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

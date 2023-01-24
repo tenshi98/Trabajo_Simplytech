@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "alumnos_evaluaciones_asignar.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,14 +18,14 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idAsignar']) && $_GET['idAsignar'] != ''){                $location .= "&idAsignar=".$_GET['idAsignar'];                 $search .= "&idAsignar=".$_GET['idAsignar']; }
-if(isset($_GET['idCurso']) && $_GET['idCurso'] != ''){                    $location .= "&idCurso=".$_GET['idCurso'];                     $search .= "&idCurso=".$_GET['idCurso'];}
-if(isset($_GET['idQuiz']) && $_GET['idQuiz'] != ''){                      $location .= "&idQuiz=".$_GET['idQuiz'];                       $search .= "&idQuiz=".$_GET['idQuiz'];}
-if(isset($_GET['Programada_fecha']) && $_GET['Programada_fecha'] != ''){  $location .= "&Programada_fecha=".$_GET['Programada_fecha'];   $search .= "&Programada_fecha=".$_GET['Programada_fecha'];}
-if(isset($_GET['N_preguntas']) && $_GET['N_preguntas'] != ''){            $location .= "&N_preguntas=".$_GET['N_preguntas'];             $search .= "&N_preguntas=".$_GET['N_preguntas'];}
-if(isset($_GET['N_Alumnos']) && $_GET['N_Alumnos'] != ''){                $location .= "&N_Alumnos=".$_GET['N_Alumnos'];                 $search .= "&N_Alumnos=".$_GET['N_Alumnos'];}
-if(isset($_GET['N_Alumnos_Falla']) && $_GET['N_Alumnos_Falla'] != ''){    $location .= "&N_Alumnos_Falla=".$_GET['N_Alumnos_Falla'];     $search .= "&N_Alumnos_Falla=".$_GET['N_Alumnos_Falla'];}
-if(isset($_GET['N_Alumnos_Rep']) && $_GET['N_Alumnos_Rep'] != ''){        $location .= "&N_Alumnos_Rep=".$_GET['N_Alumnos_Rep'];         $search .= "&N_Alumnos_Rep=".$_GET['N_Alumnos_Rep'];}
+if(isset($_GET['idAsignar']) && $_GET['idAsignar']!=''){         $location .= "&idAsignar=".$_GET['idAsignar'];                 $search .= "&idAsignar=".$_GET['idAsignar'];}
+if(isset($_GET['idCurso']) && $_GET['idCurso']!=''){             $location .= "&idCurso=".$_GET['idCurso'];                     $search .= "&idCurso=".$_GET['idCurso'];}
+if(isset($_GET['idQuiz']) && $_GET['idQuiz']!=''){               $location .= "&idQuiz=".$_GET['idQuiz'];                       $search .= "&idQuiz=".$_GET['idQuiz'];}
+if(isset($_GET['Programada_fecha']) && $_GET['Programada_fecha']!=''){  $location .= "&Programada_fecha=".$_GET['Programada_fecha'];   $search .= "&Programada_fecha=".$_GET['Programada_fecha'];}
+if(isset($_GET['N_preguntas']) && $_GET['N_preguntas']!=''){     $location .= "&N_preguntas=".$_GET['N_preguntas'];             $search .= "&N_preguntas=".$_GET['N_preguntas'];}
+if(isset($_GET['N_Alumnos']) && $_GET['N_Alumnos']!=''){         $location .= "&N_Alumnos=".$_GET['N_Alumnos'];                 $search .= "&N_Alumnos=".$_GET['N_Alumnos'];}
+if(isset($_GET['N_Alumnos_Falla']) && $_GET['N_Alumnos_Falla']!=''){    $location .= "&N_Alumnos_Falla=".$_GET['N_Alumnos_Falla'];     $search .= "&N_Alumnos_Falla=".$_GET['N_Alumnos_Falla'];}
+if(isset($_GET['N_Alumnos_Rep']) && $_GET['N_Alumnos_Rep']!=''){ $location .= "&N_Alumnos_Rep=".$_GET['N_Alumnos_Rep'];         $search .= "&N_Alumnos_Rep=".$_GET['N_Alumnos_Rep'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -33,13 +33,13 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'paso_1';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_evaluaciones_asignar.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_pas_2a']) )  { 
+if (!empty($_POST['submit_pas_2a'])){
 	//Nueva Ubicacion
 	$location = $original;
 	$location .='?pagina='.$_GET['pagina'];
@@ -48,7 +48,7 @@ if ( !empty($_POST['submit_pas_2a']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_evaluaciones_asignar.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_pas_2b']) )  { 
+if (!empty($_POST['submit_pas_2b'])){
 	//Nueva Ubicacion
 	$location = $original;
 	$location .='?pagina='.$_GET['pagina'];
@@ -57,22 +57,22 @@ if ( !empty($_POST['submit_pas_2b']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_evaluaciones_asignar.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_reintento']) )  { 
+if (!empty($_POST['submit_reintento'])){
 	//Llamamos al formulario
 	$form_trabajo= 'reintento';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_evaluaciones_asignar.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_modfecha']) )  { 
+if (!empty($_POST['submit_modfecha'])){
 	//Llamamos al formulario
 	$form_trabajo= 'modfecha';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_evaluaciones_asignar.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_asignacion']) )     {
+if (!empty($_GET['del_asignacion'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_asignacion';
-	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_evaluaciones_asignar.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_evaluaciones_asignar.php';
 }
 
 /**********************************************************************************************************************************/
@@ -88,8 +88,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Asignacion Modificada 
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Asignacion borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['editFecha']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if(!empty($_GET['editFecha'])){ 
 // consulto los datos
 $query = "SELECT Programada_fecha
 FROM `alumnos_evaluaciones_asignadas`
@@ -109,72 +109,72 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Reprogramar Fecha</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Programada_fecha)) {   $x1  = $Programada_fecha;  }else{$x1  = $rowdata['Programada_fecha'];}
-				
+				if(isset($Programada_fecha)){   $x1  = $Programada_fecha;  }else{$x1  = $rowdata['Programada_fecha'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Programada','Programada_fecha', $x1, 2);
 				
 				$Form_Inputs->form_input_hidden('idAsignadas', $_GET['editFecha'], 2);
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_modfecha"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_modfecha"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	 
 	 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['add']) ) { ?>
-<div class="col-sm-8 fcenter">
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['add'])){ ?>
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Programar Reintento</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Programada_fecha)) {   $x1  = $Programada_fecha;  }else{$x1  = '';}
-				
+				if(isset($Programada_fecha)){   $x1  = $Programada_fecha;  }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Programada','Programada_fecha', $x1, 2);
 				
 				$Form_Inputs->form_input_hidden('idAsignadas', $_GET['add'], 2);
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_reintento"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_reintento"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	 
 	 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['paso_2a']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['paso_2a'])){ 
 //Consulto por las categorias y el maximo de preguntas por cada una de estas
 $arrCategoria = array();
 $query = "SELECT 
@@ -198,7 +198,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCategoria,$row );
 }
 
@@ -206,13 +206,13 @@ array_push( $arrCategoria,$row );
 	 
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Limitar Cantidades por categoria</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php
@@ -223,7 +223,7 @@ array_push( $arrCategoria,$row );
 					$xxn++;
 					$Form_Inputs->form_input_number_alt($cat['Categoria'].'(Maximo '.$cat['Cuenta'].')','categoria_'.$xxn, '', 2);
 				}
-				
+
 				//Se envian ocultos los valores maximos
 				$xxn = 0;
 				foreach ($arrCategoria as $cat) {
@@ -239,21 +239,21 @@ array_push( $arrCategoria,$row );
 				//$Form_Inputs->form_input_hidden('Semana', $_GET['Semana'], 2);
 				
 				
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_pas_2a"> 
-					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_pas_2a"> 
+					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['paso_2b']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['paso_2b'])){
 //Consulto por las categorias y el maximo de preguntas por cada una de estas
 $arrCategoria = array();
 $query = "SELECT 
@@ -277,7 +277,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCategoria,$row );
 }
 
@@ -285,13 +285,13 @@ array_push( $arrCategoria,$row );
 	 
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Limitar Cantidades por categoria</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php
@@ -302,7 +302,7 @@ array_push( $arrCategoria,$row );
 					$xxn++;
 					$Form_Inputs->form_input_number_alt($cat['Categoria'].'(Maximo '.$cat['Cuenta'].')','categoria_'.$xxn, '', 2);
 				}
-				
+
 				//Se envian ocultos los valores maximos
 				$xxn = 0;
 				foreach ($arrCategoria as $cat) {
@@ -316,42 +316,42 @@ array_push( $arrCategoria,$row );
 				$Form_Inputs->form_input_hidden('Programada_fecha', $_GET['Programada_fecha'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				//$Form_Inputs->form_input_hidden('Semana', $_GET['Semana'], 2);
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_pas_2b"> 
-					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_pas_2b"> 
+					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); 
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Asignar Evaluacion</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idAsignar)) {          $x1  = $idAsignar;         }else{$x1  = '';}
-				if(isset($idCurso)) {            $x2  = $idCurso;           }else{$x2  = '';}
-				if(isset($idQuiz)) {             $x3  = $idQuiz;            }else{$x3  = '';}
-				if(isset($Programada_fecha)) {   $x4  = $Programada_fecha;  }else{$x4  = '';}
-				
+				if(isset($idAsignar)){          $x1  = $idAsignar;         }else{$x1  = '';}
+				if(isset($idCurso)){            $x2  = $idCurso;           }else{$x2  = '';}
+				if(isset($idQuiz)){             $x3  = $idQuiz;            }else{$x3  = '';}
+				if(isset($Programada_fecha)){   $x4  = $Programada_fecha;  }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo Asignacion','idAsignar', $x1, 2, 'idAsignar', 'Nombre', 'alumnos_evaluaciones_asignar', 0, '', $dbConn);
@@ -363,33 +363,27 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				
-				?>         
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Asignar" name="submit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Asignar" name="submit"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){$num_pag = $_GET["pagina"];	
-} else {$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -427,20 +421,20 @@ $SIS_where.= " AND alumnos_evaluaciones_asignadas.idSistema=".$_SESSION['usuario
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idAsignar']) && $_GET['idAsignar'] != ''){                 $SIS_where .= " AND alumnos_evaluaciones_asignadas.idAsignar=".$_GET['idAsignar'];}
-if(isset($_GET['idCurso']) && $_GET['idCurso'] != ''){                     $SIS_where .= " AND alumnos_evaluaciones_asignadas.idCurso=".$_GET['idCurso'];}
-if(isset($_GET['idQuiz']) && $_GET['idQuiz'] != ''){                       $SIS_where .= " AND alumnos_evaluaciones_asignadas.idQuiz=".$_GET['idQuiz'];}
-if(isset($_GET['Programada_fecha']) && $_GET['Programada_fecha'] != ''){   $SIS_where .= " AND alumnos_evaluaciones_asignadas.Programada_fecha='".$_GET['Programada_fecha']."'";}
-if(isset($_GET['N_preguntas']) && $_GET['N_preguntas'] != ''){             $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_preguntas=".$_GET['N_preguntas'];}
-if(isset($_GET['N_Alumnos']) && $_GET['N_Alumnos'] != ''){                 $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_Alumnos=".$_GET['N_Alumnos'];}
-if(isset($_GET['N_Alumnos_Falla']) && $_GET['N_Alumnos_Falla'] != ''){     $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_Alumnos_Falla=".$_GET['N_Alumnos_Falla'];}
-if(isset($_GET['N_Alumnos_Rep']) && $_GET['N_Alumnos_Rep'] != ''){         $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_Alumnos_Rep=".$_GET['N_Alumnos_Rep'];}
+if(isset($_GET['idAsignar']) && $_GET['idAsignar']!=''){          $SIS_where .= " AND alumnos_evaluaciones_asignadas.idAsignar=".$_GET['idAsignar'];}
+if(isset($_GET['idCurso']) && $_GET['idCurso']!=''){              $SIS_where .= " AND alumnos_evaluaciones_asignadas.idCurso=".$_GET['idCurso'];}
+if(isset($_GET['idQuiz']) && $_GET['idQuiz']!=''){                $SIS_where .= " AND alumnos_evaluaciones_asignadas.idQuiz=".$_GET['idQuiz'];}
+if(isset($_GET['Programada_fecha']) && $_GET['Programada_fecha']!=''){   $SIS_where .= " AND alumnos_evaluaciones_asignadas.Programada_fecha='".$_GET['Programada_fecha']."'";}
+if(isset($_GET['N_preguntas']) && $_GET['N_preguntas']!=''){      $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_preguntas=".$_GET['N_preguntas'];}
+if(isset($_GET['N_Alumnos']) && $_GET['N_Alumnos']!=''){          $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_Alumnos=".$_GET['N_Alumnos'];}
+if(isset($_GET['N_Alumnos_Falla']) && $_GET['N_Alumnos_Falla']!=''){     $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_Alumnos_Falla=".$_GET['N_Alumnos_Falla'];}
+if(isset($_GET['N_Alumnos_Rep']) && $_GET['N_Alumnos_Rep']!=''){  $SIS_where .= " AND alumnos_evaluaciones_asignadas.N_Alumnos_Rep=".$_GET['N_Alumnos_Rep'];}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'alumnos_evaluaciones_asignadas.idAsignadas', 'alumnos_evaluaciones_asignadas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 alumnos_evaluaciones_asignadas.idAsignadas,
@@ -466,35 +460,35 @@ $arrUsers = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignadas'
 //Verifico el tipo de usuario que esta ingresando
 $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Asignar Evaluacion</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Asignar Evaluacion</a><?php }?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idAsignar)) {          $x1  = $idAsignar;         }else{$x1  = '';}
-				if(isset($idCurso)) {            $x2  = $idCurso;           }else{$x2  = '';}
-				if(isset($idQuiz)) {             $x3  = $idQuiz;            }else{$x3  = '';}
-				if(isset($Programada_fecha)) {   $x4  = $Programada_fecha;  }else{$x4  = '';}
-				if(isset($N_preguntas)) {        $x5  = $N_preguntas;       }else{$x5  = '';}
-				if(isset($N_Alumnos)) {          $x6  = $N_Alumnos;         }else{$x6  = '';}
-				if(isset($N_Alumnos_Falla)) {    $x7  = $N_Alumnos_Falla;   }else{$x7  = '';}
-				if(isset($N_Alumnos_Rep)) {      $x8  = $N_Alumnos_Rep;     }else{$x8  = '';}
-				
+				if(isset($idAsignar)){          $x1  = $idAsignar;         }else{$x1  = '';}
+				if(isset($idCurso)){            $x2  = $idCurso;           }else{$x2  = '';}
+				if(isset($idQuiz)){             $x3  = $idQuiz;            }else{$x3  = '';}
+				if(isset($Programada_fecha)){   $x4  = $Programada_fecha;  }else{$x4  = '';}
+				if(isset($N_preguntas)){        $x5  = $N_preguntas;       }else{$x5  = '';}
+				if(isset($N_Alumnos)){          $x6  = $N_Alumnos;         }else{$x6  = '';}
+				if(isset($N_Alumnos_Falla)){    $x7  = $N_Alumnos_Falla;   }else{$x7  = '';}
+				if(isset($N_Alumnos_Rep)){      $x8  = $N_Alumnos_Rep;     }else{$x8  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo Asignacion','idAsignar', $x1, 1, 'idAsignar', 'Nombre', 'alumnos_evaluaciones_asignar', 0, '', $dbConn);
@@ -506,25 +500,25 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 				$Form_Inputs->form_input_number('N° Fallas','N_Alumnos_Falla', $x7, 1);
 				$Form_Inputs->form_input_number('N° Reintentos','N_Alumnos_Rep', $x8, 1);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>  
-<div class="clearfix"></div>                  
+<div class="clearfix"></div>
                                  
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Evaluaciones</h5>	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Evaluaciones</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -597,16 +591,16 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 				</thead>
 				
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrUsers as $usuarios) { ?>
-					<tr class="odd">		
-						<td><?php echo fecha_estandar($usuarios['Programada_fecha']); ?></td>		
-						<td><?php echo $usuarios['Asignar']; ?></td>		
-						<td><?php echo $usuarios['Curso']; ?></td>		
-						<td><?php echo $usuarios['Quiz']; ?></td>		
-						<td style="text-align:center"><?php echo $usuarios['N_preguntas']; ?></td>		
-						<td style="text-align:center"><?php echo $usuarios['N_Alumnos']; ?></td>		
-						<td style="text-align:center"><?php echo $usuarios['N_Alumnos_Falla']; ?></td>		
-						<td style="text-align:center"><?php echo $usuarios['N_Alumnos_Rep']; ?></td>		
+					<?php foreach ($arrUsers as $usuarios){ ?>
+					<tr class="odd">
+						<td><?php echo fecha_estandar($usuarios['Programada_fecha']); ?></td>
+						<td><?php echo $usuarios['Asignar']; ?></td>
+						<td><?php echo $usuarios['Curso']; ?></td>
+						<td><?php echo $usuarios['Quiz']; ?></td>
+						<td style="text-align:center"><?php echo $usuarios['N_preguntas']; ?></td>
+						<td style="text-align:center"><?php echo $usuarios['N_Alumnos']; ?></td>
+						<td style="text-align:center"><?php echo $usuarios['N_Alumnos_Falla']; ?></td>
+						<td style="text-align:center"><?php echo $usuarios['N_Alumnos_Rep']; ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
@@ -617,26 +611,26 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 									$ubicacion = $location.'&del_asignacion='.simpleEncode($usuarios['idAsignadas'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la evaluacion '.$usuarios['Quiz'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Asignacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div>   
+		</div>
 	</div>
 </div>
 	
 <?php widget_modal(80, 95); ?>
 	 
 	 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

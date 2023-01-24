@@ -21,7 +21,7 @@ if(isset($_GET['data_3'])&&isset($_GET['data_4'])&&isset($_GET['data_5'])&&isset
 	function conectarDB ($servidor, $usuario, $password, $base_datos) {
 		$db_con = mysqli_connect($servidor, $usuario, $password, $base_datos);
 		$db_con->set_charset("utf8");
-		return $db_con; 
+		return $db_con;
 	}	
 	//ejecuto conexion
 	$dbConn = conectarDB($_GET['data_3'], $_GET['data_4'], $_GET['data_5'], $_GET['data_6']);	
@@ -64,7 +64,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 	$aa .= ',SensoresMedActual_'.$i;
 }
 // consulto los datos
-$SIS_query = 'Nombre, id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,GeoVelocidad'.$aa;
+$SIS_query = 'Nombre,id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,GeoVelocidad'.$aa;
 $SIS_join  = '';
 $SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
 $rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMed');
@@ -90,7 +90,7 @@ foreach ($arrGrupos as $sen) {
 	$grupo[$sen['idGrupo']]['Nombre'] = $sen['Nombre'];
 }
 
-/****************************************************************/	
+/****************************************************************/
 //numero sensores equipo
 $N_Maximo_Sensores = $rowdata['cantSensores'];
 $subquery = '';
@@ -116,14 +116,14 @@ $SIS_order = 'telemetria_listado_errores.idErrores DESC LIMIT 20';
 $arrAlertas = array();
 $arrAlertas = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlertas');
 
-/****************************************************************/	
+/****************************************************************/
 // Se trae un listado con todas las fuera de linea
 $arrFlinea = array();
 $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, Fecha_termino, Hora_termino, Tiempo', 'telemetria_listado_error_fuera_linea', '', 'idTelemetria = '.simpleDecode($_GET['view'], fecha_actual()), 'idFueraLinea DESC LIMIT 20', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrFlinea');
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -138,36 +138,36 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 				<li class=""><a href="#alertas" data-toggle="tab"><i class="fa fa-bullhorn"  aria-hidden="true"></i> Alertas</a></li>
 				<li class=""><a href="#flinea"  data-toggle="tab"><i class="fa fa-power-off" aria-hidden="true"></i> Fuera de Linea</a></li>
 
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					
-					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<?php if (isset($_GET['data_1'])&&$_GET['data_1']=='si') { ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo 'https://'.$_GET['data_2'].$rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo 'https://'.$_GET['data_2'].$rowdata['Direccion_img']; ?>">
 							<?php }else{  ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-							<?php }?>	
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<?php }?>
 						<?php }?>
 					</div>
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos del Equipo</h2>
 						<p class="text-muted">
-							<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){ ?><strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){ ?><strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){ ?><strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){ ?><strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){ ?><strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){ ?><strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){ ?><strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){ ?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){ ?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){?><strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){?><strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){?><strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){?><strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){?><strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){?><strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){?><strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
 						</p>
 						
 						<h2 class="text-primary">Datos de Configuracion</h2>
@@ -179,7 +179,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 						</p>
 
 						
-					</div>	
+					</div>
 					<div class="clearfix"></div>
 					
 					
@@ -193,8 +193,8 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default fright margin_width fmrbtn" >Ver Ubicacion</a>
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default fright margin_width fmrbtn" >Informe Medicion Sensores</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ubicacion</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 							
@@ -212,9 +212,9 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 									<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
 										//solo sensores activos
 										if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){?>
-											<tr class="odd">		
+											<tr class="odd">
 												<td><?php echo 's'.$i ?></td>
-												<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>	
+												<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
 												<td><?php echo $grupo[$rowMed['SensoresGrupo_'.$i]]['Nombre']; ?></td>
 												<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
 												<td><?php 
@@ -222,11 +222,11 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 													echo Cantidades_decimales_justos($rowMed['SensoresMedActual_'.$i]).' '.$unimed[$rowMed['SensoresUniMed_'.$i]]['Nombre'];
 												}else{
 													echo 'Sin Datos';
-												} ?>
+												}?>
 												</td>
 											</tr>
-										<?php } ?>  
-									<?php } ?>                    
+										<?php } ?>
+									<?php } ?>
 								</tbody>
 							</table>
 						</div>
@@ -239,7 +239,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 					<div class="table-responsive">
 							
 						<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-							<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default fright margin_width fmrbtn" >Abrir Reporte</a>
+							<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 							<div style="padding-bottom:10px;padding-top:10px;"></div>
 						</div>
 							
@@ -271,7 +271,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 											</div>
 										</td>
 									</tr>
-								<?php } ?>                    
+								<?php } ?>
 							</tbody>
 						</table>
 	
@@ -284,7 +284,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 					<div class="table-responsive">
 							
 						<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-							<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default fright margin_width fmrbtn" >Abrir Reporte</a>
+							<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 							<div style="padding-bottom:10px;padding-top:10px;"></div>
 						</div>
 							
@@ -312,9 +312,9 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 											<div class="btn-group" style="width: 35px;" >
 												<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_2_view.php?view='.$error['idFueraLinea']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 											</div>
-										</td>		
+										</td>
 									</tr>
-								<?php } ?>                    
+								<?php } ?>
 							</tbody>
 						</table>
 	
@@ -323,7 +323,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 			</div>
 			
 			
-        </div>	
+        </div>
 	</div>
 </div>
 

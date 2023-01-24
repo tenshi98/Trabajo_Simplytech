@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "admin_telemetria_listado.php";
 $location = $original;
 $new_location = "admin_telemetria_listado_direccion.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -43,7 +43,7 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Equipo editado correct
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Equipo borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud,GeoLongitud,id_Geo, id_Sensores, idZona';
 $SIS_join  = '';
@@ -52,12 +52,12 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Direccion');?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -82,12 +82,12 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
 		<div class="table-responsive">
 			
-			<div class="col-sm-8">
+			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				<div class="row">
 					<?php
 					//Si no existe una ID se utiliza una por defecto
@@ -196,14 +196,14 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 									if (status == google.maps.GeocoderStatus.OK) {
 										if (results[0]) {
 											document.getElementById(div).value = results[0].formatted_address;
-										} else {
+										}else {
 											alert('No results found');
 										}
-									} else {
+									}else {
 										alert('Geocoder failed due to: ' + status);
 									}
 								});
-							}	
+							}
 							
 
 							/* ************************************************************************** */
@@ -214,22 +214,22 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 				</div>
 			</div>
 			
-			<div class="col-sm-4">
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 						<?php 
-						if(isset($idZona)) {      $x0  = $idZona;      }else{$x0  = $rowdata['idZona'];}
-						if(isset($idCiudad)) {    $x1  = $idCiudad;    }else{$x1  = $rowdata['idCiudad'];}
-						if(isset($idComuna)) {    $x2  = $idComuna;    }else{$x2  = $rowdata['idComuna'];}
-					
+						if(isset($idZona)){      $x0  = $idZona;      }else{$x0  = $rowdata['idZona'];}
+						if(isset($idCiudad)){    $x1  = $idCiudad;    }else{$x1  = $rowdata['idCiudad'];}
+						if(isset($idComuna)){    $x2  = $idComuna;    }else{$x2  = $rowdata['idComuna'];}
+
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
-						$Form_Inputs->form_select('Zona','idZona', $x0, 1, 'idZona', 'Nombre', 'telemetria_zonas', 0, '', $dbConn);	
+						$Form_Inputs->form_select('Zona','idZona', $x0, 1, 'idZona', 'Nombre', 'telemetria_zonas', 0, '', $dbConn);
 						$Form_Inputs->form_select_depend1('Region','idCiudad', $x1, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-												'Comuna','idComuna', $x2, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+												'Comuna','idComuna', $x2, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												 $dbConn, 'form1');
-					
+
 						//se dibujan los inputs
 						$Form_Inputs->form_input_icon('Direccion', 'Direccion', $rowdata['Direccion'], 1,'fa fa-map');
 						$Form_Inputs->form_input_disabled('Latitud', 'Latitud_fake', $rowdata['GeoLatitud']);
@@ -242,7 +242,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit">
 						</div>
 							  
 					</form>
@@ -251,7 +251,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 				</div>
 			</div>
 			
-		</div>	
+		</div>
 		
 		
    
@@ -259,8 +259,8 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_usuarios_accesos_01.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -18,9 +18,9 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /********************************************************************/
 //Variables para filtro y paginacion
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){          $location .= "&idUsuario=".$_GET['idUsuario'];          $search .= "&idUsuario=".$_GET['idUsuario'];}
-if(isset($_GET['Rango_Inicio']) && $_GET['Rango_Inicio'] != ''){    $location .= "&Rango_Inicio=".$_GET['Rango_Inicio'];    $search .= "&Rango_Inicio=".$_GET['Rango_Inicio'];}
-if(isset($_GET['Rango_Termino']) && $_GET['Rango_Termino'] != ''){  $location .= "&Rango_Termino=".$_GET['Rango_Termino'];  $search .= "&Rango_Termino=".$_GET['Rango_Termino'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){   $location .= "&idUsuario=".$_GET['idUsuario'];          $search .= "&idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['Rango_Inicio']) && $_GET['Rango_Inicio']!=''){    $location .= "&Rango_Inicio=".$_GET['Rango_Inicio'];    $search .= "&Rango_Inicio=".$_GET['Rango_Inicio'];}
+if(isset($_GET['Rango_Termino']) && $_GET['Rango_Termino']!=''){  $location .= "&Rango_Termino=".$_GET['Rango_Termino'];  $search .= "&Rango_Termino=".$_GET['Rango_Termino'];}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -28,17 +28,17 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 //Variable de busqueda
 $z = "WHERE usuarios_accesos.idAcceso>0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){         $z .= " AND usuarios_accesos.idUsuario=".$_GET['idUsuario'];}
-if(isset($_GET['idSistemaFil']) && $_GET['idSistemaFil'] != ''){   $z .= " AND usuarios_accesos.idSistema=".$_GET['idSistemaFil'];}
-if(isset($_GET['Rango_Inicio']) && $_GET['Rango_Inicio'] != ''&&isset($_GET['Rango_Termino']) && $_GET['Rango_Termino'] != ''){  
-	$z .= " AND usuarios_accesos.Fecha BETWEEN '".$_GET['Rango_Inicio']."' AND '".$_GET['Rango_Termino']."'" ;
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){  $z .= " AND usuarios_accesos.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idSistemaFil']) && $_GET['idSistemaFil']!=''){   $z .= " AND usuarios_accesos.idSistema=".$_GET['idSistemaFil'];}
+if(isset($_GET['Rango_Inicio']) && $_GET['Rango_Inicio'] != ''&&isset($_GET['Rango_Termino']) && $_GET['Rango_Termino']!=''){  
+	$z .= " AND usuarios_accesos.Fecha BETWEEN '".$_GET['Rango_Inicio']."' AND '".$_GET['Rango_Termino']."'";
 }
 /**********************************************************/
 //consulta
@@ -69,7 +69,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrAccesos,$row );
 }
 
@@ -81,17 +81,17 @@ array_push( $arrAccesos,$row );
 	<?php
 	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
 	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-	?>			
+	?>		
 	<a target="new" href="<?php echo 'informe_usuarios_accesos_01_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
                        
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Accesos</h5>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -116,7 +116,7 @@ array_push( $arrAccesos,$row );
 							<td><?php echo $sol['IP_Client']; ?></td>
 							<td><?php echo $sol['Agent_Transp']; ?></td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -124,51 +124,51 @@ array_push( $arrAccesos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idSistemaFil)) {   $x1 = $idSistemaFil;   }else{$x1 = '';}
-				if(isset($idUsuario)) {      $x2 = $idUsuario;      }else{$x2 = '';}
-				if(isset($Rango_Inicio)) {   $x3 = $Rango_Inicio;   }else{$x3 = '';}
-				if(isset($Rango_Termino)) {  $x4 = $Rango_Termino;  }else{$x4 = '';}
+				if(isset($idSistemaFil)){   $x1 = $idSistemaFil;   }else{$x1 = '';}
+				if(isset($idUsuario)){      $x2 = $idUsuario;      }else{$x2 = '';}
+				if(isset($Rango_Inicio)){   $x3 = $Rango_Inicio;   }else{$x3 = '';}
+				if(isset($Rango_Termino)){  $x4 = $Rango_Termino;  }else{$x4 = '';}
 
 				//se dibujan los inputs	
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter('Sistema','idSistemaFil', $x1, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Sistema','idSistemaFil', $x1, 1, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Usuario','idUsuario', $x2, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 0, '', $dbConn);
 				$Form_Inputs->form_date('Rango de Inicio','Rango_Inicio', $x3, 1);
 				$Form_Inputs->form_date('Rango de Termino','Rango_Termino', $x4, 1);
 
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

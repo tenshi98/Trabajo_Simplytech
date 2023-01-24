@@ -17,14 +17,14 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /*******************************************************/
 $SIS_query = '
@@ -69,7 +69,7 @@ $spreadsheet->setActiveSheetIndex(0)
             
 $nn=2;
 foreach ($arrProductos as $productos) { 
-	$stock_actual = $productos['stock_entrada'] - $productos['stock_salida']; 
+	$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 	if ($productos['StockLimite']>$stock_actual){$delta = 'Stock Bajo';}else{$delta = '';}
 	if ($stock_actual!=0&&$productos['NombreProd']!=''){
 		$spreadsheet->setActiveSheetIndex(0)
@@ -78,7 +78,7 @@ foreach ($arrProductos as $productos) {
 					->setCellValue('C'.$nn, cantidades_excel($productos['StockLimite']))
 					->setCellValue('D'.$nn, cantidades_excel($stock_actual))
 					->setCellValue('E'.$nn, DeSanitizar($productos['UnidadMedida']));
-		$nn++;  
+		$nn++;
 	}          
 } 
 

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "rrhh_asistencia_predios.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,12 +18,12 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){  $location .= "&idTrabajador=".$_GET['idTrabajador'];   $search .= "&idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                $location .= "&Fecha=".$_GET['Fecha'];                 $search .= "&Fecha=".$_GET['Fecha'];}
-if(isset($_GET['Hora']) && $_GET['Hora'] != ''){                  $location .= "&Hora=".$_GET['Hora'];                   $search .= "&Hora=".$_GET['Hora'];}
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){          $location .= "&idPredio=".$_GET['idPredio'];           $search .= "&idPredio=".$_GET['idPredio'];}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){              $location .= "&idZona=".$_GET['idZona'];               $search .= "&idZona=".$_GET['idZona'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){          $location .= "&idEstado=".$_GET['idEstado'];           $search .= "&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){  $location .= "&idTrabajador=".$_GET['idTrabajador'];   $search .= "&idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){         $location .= "&Fecha=".$_GET['Fecha'];                 $search .= "&Fecha=".$_GET['Fecha'];}
+if(isset($_GET['Hora']) && $_GET['Hora']!=''){           $location .= "&Hora=".$_GET['Hora'];                   $search .= "&Hora=".$_GET['Hora'];}
+if(isset($_GET['idPredio']) && $_GET['idPredio']!=''){   $location .= "&idPredio=".$_GET['idPredio'];           $search .= "&idPredio=".$_GET['idPredio'];}
+if(isset($_GET['idZona']) && $_GET['idZona']!=''){       $location .= "&idZona=".$_GET['idZona'];               $search .= "&idZona=".$_GET['idZona'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){   $location .= "&idEstado=".$_GET['idEstado'];           $search .= "&idEstado=".$_GET['idEstado'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -31,22 +31,22 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'new_registro';
 	require_once 'A1XRXS_sys/xrxs_form/trabajadores_asistencias_predios.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update_registro';
 	require_once 'A1XRXS_sys/xrxs_form/trabajadores_asistencias_predios.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_registro';
-	require_once 'A1XRXS_sys/xrxs_form/trabajadores_asistencias_predios.php';	
+	require_once 'A1XRXS_sys/xrxs_form/trabajadores_asistencias_predios.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -61,8 +61,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Registro Modificado co
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Registro borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 //Consulto
@@ -81,24 +81,24 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_asistencias_predios'
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Modificacion Registro</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Modificacion Registro</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)) {  $x1 = $idTrabajador;  }else{$x1 = $rowdata['idTrabajador'];}
-				if(isset($Fecha)) {         $x2 = $Fecha;         }else{$x2 = $rowdata['Fecha'];}
-				if(isset($Hora)) {          $x3 = $Hora;          }else{$x3 = $rowdata['Hora'];}
-				if(isset($idPredio)) {      $x4 = $idPredio;      }else{$x4 = $rowdata['idPredio'];}
-				if(isset($idZona)) {        $x5 = $idZona;        }else{$x5 = $rowdata['idZona'];}
-				if(isset($idEstado)) {      $x6 = $idEstado;      }else{$x6 = $rowdata['idEstado'];}
-				
+				if(isset($idTrabajador)){  $x1 = $idTrabajador;  }else{$x1 = $rowdata['idTrabajador'];}
+				if(isset($Fecha)){         $x2 = $Fecha;         }else{$x2 = $rowdata['Fecha'];}
+				if(isset($Hora)){          $x3 = $Hora;          }else{$x3 = $rowdata['Hora'];}
+				if(isset($idPredio)){      $x4 = $idPredio;      }else{$x4 = $rowdata['idPredio'];}
+				if(isset($idZona)){        $x5 = $idZona;        }else{$x5 = $rowdata['idZona'];}
+				if(isset($idEstado)){      $x6 = $idEstado;      }else{$x6 = $rowdata['idEstado'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
@@ -116,43 +116,43 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				
 				?>
 			
-				<div class="form-group">	
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); 
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
 
 ?>
 
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Registro</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Registro</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)) {  $x1 = $idTrabajador;  }else{$x1 = '';}
-				if(isset($Fecha)) {         $x2 = $Fecha;         }else{$x2 = '';}
-				if(isset($Hora)) {          $x3 = $Hora;          }else{$x3 = '';}
-				if(isset($idPredio)) {      $x4 = $idPredio;      }else{$x4 = '';}
-				if(isset($idZona)) {        $x5 = $idZona;        }else{$x5 = '';}
-				if(isset($idEstado)) {      $x6 = $idEstado;      }else{$x6 = '';}
-				
+				if(isset($idTrabajador)){  $x1 = $idTrabajador;  }else{$x1 = '';}
+				if(isset($Fecha)){         $x2 = $Fecha;         }else{$x2 = '';}
+				if(isset($Hora)){          $x3 = $Hora;          }else{$x3 = '';}
+				if(isset($idPredio)){      $x4 = $idPredio;      }else{$x4 = '';}
+				if(isset($idZona)){        $x5 = $idZona;        }else{$x5 = '';}
+				if(isset($idEstado)){      $x6 = $idEstado;      }else{$x6 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
@@ -172,31 +172,25 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				
 				?>
 			
-				<div class="form-group">	
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  {  
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else { 
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){$num_pag = $_GET["pagina"];	
-} else {$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //Orden
 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ingreso Descendente';
@@ -204,16 +198,16 @@ $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ingreso 
 $SIS_where = 'trabajadores_asistencias_predios.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){  $SIS_where .= " AND trabajadores_asistencias_predios.idTrabajador='".$_GET['idTrabajador']."'";}
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                $SIS_where .= " AND trabajadores_asistencias_predios.Fecha='".$_GET['Fecha']."'";}
-if(isset($_GET['Hora']) && $_GET['Hora'] != ''){                  $SIS_where .= " AND trabajadores_asistencias_predios.Hora='".$_GET['Hora']."'";}
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){          $SIS_where .= " AND cross_predios_listado_zonas.idPredio='".$_GET['idPredio']."'";}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){              $SIS_where .= " AND trabajadores_asistencias_predios.idZona='".$_GET['idZona']."'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){          $SIS_where .= " AND trabajadores_asistencias_predios.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){  $SIS_where .= " AND trabajadores_asistencias_predios.idTrabajador='".$_GET['idTrabajador']."'";}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){         $SIS_where .= " AND trabajadores_asistencias_predios.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['Hora']) && $_GET['Hora']!=''){           $SIS_where .= " AND trabajadores_asistencias_predios.Hora='".$_GET['Hora']."'";}
+if(isset($_GET['idPredio']) && $_GET['idPredio']!=''){   $SIS_where .= " AND cross_predios_listado_zonas.idPredio='".$_GET['idPredio']."'";}
+if(isset($_GET['idZona']) && $_GET['idZona']!=''){       $SIS_where .= " AND trabajadores_asistencias_predios.idZona='".$_GET['idZona']."'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){   $SIS_where .= " AND trabajadores_asistencias_predios.idEstado='".$_GET['idEstado']."'";}
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idAsistencia', 'trabajadores_asistencias_predios', 'LEFT JOIN `cross_predios_listado_zonas` ON cross_predios_listado_zonas.idZona = trabajadores_asistencias_predios.idZona', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 //se traen lo datos del equipo
 $SIS_query = '
 trabajadores_asistencias_predios.idAsistencia,
@@ -245,33 +239,33 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Registro</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Registro</a><?php } ?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)) {  $x1 = $idTrabajador;  }else{$x1 = '';}
-				if(isset($Fecha)) {         $x2 = $Fecha;         }else{$x2 = '';}
-				if(isset($Hora)) {          $x3 = $Hora;          }else{$x3 = '';}
-				if(isset($idPredio)) {      $x4 = $idPredio;      }else{$x4 = '';}
-				if(isset($idZona)) {        $x5 = $idZona;        }else{$x5 = '';}
-				if(isset($idEstado)) {      $x6 = $idEstado;      }else{$x6 = '';}
-				
+				if(isset($idTrabajador)){  $x1 = $idTrabajador;  }else{$x1 = '';}
+				if(isset($Fecha)){         $x2 = $Fecha;         }else{$x2 = '';}
+				if(isset($Hora)){          $x3 = $Hora;          }else{$x3 = '';}
+				if(isset($idPredio)){      $x4 = $idPredio;      }else{$x4 = '';}
+				if(isset($idZona)){        $x5 = $idZona;        }else{$x5 = '';}
+				if(isset($idEstado)){      $x6 = $idEstado;      }else{$x6 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
@@ -282,22 +276,22 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_asistencia_predio', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div>                    
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ultimos Registros</h5>
@@ -320,7 +314,7 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						<th>Estado</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>				  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrAsistencias as $con) { ?>
 						<tr class="odd">
@@ -328,8 +322,8 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							<td><?php echo fecha_estandar($con['PredioFecha']); ?></td>
 							<td><?php echo $con['PredioHora']; ?></td>
 							<td><?php echo $con['PredioIP']; ?></td>
-							<td><?php if(isset($con['PredioNombre'])&&$con['PredioNombre']!=''){   echo $con['PredioNombre'];  }else{echo 'Fuera del Predio';} ?></td>
-							<td><?php if(isset($con['PredioCuartel'])&&$con['PredioCuartel']!=''){ echo $con['PredioCuartel']; }else{echo 'Fuera del Cuartel';} ?></td>
+							<td><?php if(isset($con['PredioNombre'])&&$con['PredioNombre']!=''){  echo $con['PredioNombre'];  }else{echo 'Fuera del Predio';} ?></td>
+							<td><?php if(isset($con['PredioCuartel'])&&$con['PredioCuartel']!=''){echo $con['PredioCuartel'];}else{echo 'Fuera del Cuartel';} ?></td>
 							<td><?php echo $con['Estado']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
@@ -339,16 +333,16 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 										$ubicacion = $location.'&del='.simpleEncode($con['idAsistencia'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar los datos del registro?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>	
+									<?php } ?>
 								
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
@@ -357,7 +351,7 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 </div>
 
 <?php widget_modal(80, 95); ?>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

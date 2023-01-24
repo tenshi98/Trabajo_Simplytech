@@ -61,7 +61,7 @@ function EscribirLog($file, $data, $type){
 			}
 		} catch (Exception $e) {
 			error_log('No se ha podido abrir el archivo '.$file.', verifiqoe el siguiente error: '.$e->getMessage(), 0);
-		}	
+		}
     }else{
 		//se crea archivo
 		if ($FP = fopen ($file, $tipo)){
@@ -118,7 +118,7 @@ function LimpiarInput($Data){
 	$Data = str_replace('"', '', $Data);
 	$Data = str_replace('[', '', $Data);
 	$Data = str_replace(']', '', $Data);
-	
+
 	return $Data;
 
 }

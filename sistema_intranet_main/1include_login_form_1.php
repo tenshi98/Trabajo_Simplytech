@@ -5,7 +5,7 @@
 	.login_logo{width:100%!important;margin-bottom: 20px;}
 	.tab-content .text-muted {margin-left: 0px !important;color: #FFFFFF !important;}
 	<?php
-	if (file_exists($nombre_fichero)) {
+	if (file_exists($nombre_fichero)){
 		echo '
 			.btn-primary {color: #fff;background-color: #8b00ff !important;border-color: #8b00ff !important;}
 			.btn-primary:hover {background-color: #670CB3 !important;}
@@ -22,7 +22,7 @@
 <div class="form-signin">
 	<div class="text-center">
 		<?php
-		if (file_exists($nombre_fichero)) {
+		if (file_exists($nombre_fichero)){
 			echo '<img src="img/login_logo.png" alt="login_logo" class="login_logo fcenter"> ';
 		} else {
 			echo '
@@ -57,7 +57,7 @@
 								<div class="bar"></div>
 							</div>
 						</div>
-					</div>  
+					</div>
 				</div>
 			</div>
 			<hr>
@@ -75,9 +75,9 @@
 				<p class="text-muted text-center">Ingrese su nombre de usuario y contraseña para acceder</p>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($usuario)) {    $x1  = $usuario;   }else{$x1  = '';}
-				if(isset($password)) {   $x2  = $password;  }else{$x2  = '';}
-				
+				if(isset($usuario)){    $x1  = $usuario;   }else{$x1  = '';}
+				if(isset($password)){   $x2  = $password;  }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Inputs();
 				$Form_Inputs->input_login_usr('Usuario', 'usuario', $x1);
@@ -96,12 +96,12 @@
 				<p class="text-muted text-center">Ingresa tu Email para recuperar tu contraseña.Revisa la bandeja de entrada o spam de tu correo.</p>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($email)) {    $x1  = $email;   }else{$x1  = '';}
-				
+				if(isset($email)){    $x1  = $email;   }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs->input_login_mail('mimail@midominio.cl', 'email', $x1);
 				
-				$Form_Inputs->input_hidden('fkinput2', '', 1);	  
+				$Form_Inputs->input_hidden('fkinput2', '', 1);
 				?>
 				<br>
 				
@@ -196,7 +196,7 @@
 			rot: Math.random() * 180,
 			a1: Math.random() * 10,
 			a2: Math.random() * 10,
-			a3: Math.random() * 10 
+			a3: Math.random() * 10
 		});
 	};
 

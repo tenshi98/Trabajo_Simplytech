@@ -11,21 +11,21 @@ require_once 'core/Load.Utils.PDF.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Se revisan los datos
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){    $idSistema   = $_GET['idSistema'];  }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){   $idSistema   = $_POST['idSistema'];}
-if(isset($_GET['fecha'])&&$_GET['fecha']!=''){            $fecha       = $_GET['fecha'];      }elseif(isset($_POST['fecha'])&&$_POST['fecha']!=''){           $fecha       = $_POST['fecha'];}
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){   $idSistema   = $_GET['idSistema'];  }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){  $idSistema   = $_POST['idSistema'];}
+if(isset($_GET['fecha'])&&$_GET['fecha']!=''){    $fecha       = $_GET['fecha'];      }elseif(isset($_POST['fecha'])&&$_POST['fecha']!=''){   $fecha       = $_POST['fecha'];}
 //Seleccionar la tabla
-if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){  
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$x_table = 'telemetria_listado_aux_equipo';
 	$idTelemetria   = $_GET['idTelemetria'];
 }else{
-	if(isset($_POST['idTelemetria'])&&$_POST['idTelemetria']!=''){    
+	if(isset($_POST['idTelemetria'])&&$_POST['idTelemetria']!=''){
 		$x_table = 'telemetria_listado_aux_equipo';
 		$idTelemetria   = $_POST['idTelemetria'];
 	}else{
@@ -36,14 +36,14 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 
 //Se buscan la imagen i el tipo de PDF
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas','', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 /********************************************************************/
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = $x_table.".idSistema=".$idSistema;
 //Se aplican los filtros
 if(isset($fecha)&&$fecha!=''){
-	
+
 	//Se organizan los datos
 	$FechaActual  = $fecha;
 	$HoraActual   = '20:00:00';
@@ -52,7 +52,7 @@ if(isset($fecha)&&$fecha!=''){
 
 	//se crea query
 	$SIS_where.= " AND (".$x_table.".TimeStamp BETWEEN '".$FechaActual." ".$HoraActual ."' AND '".$FechaSig." ".$HoraSig."')";
-	
+
 }
 if(isset($idTelemetria)&&$idTelemetria!=''){
 	$SIS_where.= " AND ".$x_table.".idTelemetria='".$idTelemetria."'";
@@ -69,13 +69,13 @@ $arrHistorial = db_select_array (false, $SIS_query, $x_table, $SIS_join, $SIS_wh
 /****************************************************************************/
 $arrEvento = array();
 $nevento   = 0;
-//Se busca la temperatura real							
+//Se busca la temperatura real
 foreach($arrHistorial as $hist2) {
 	//verifico que exista fecha
 	if(isset($hist2['Fecha'])&&$hist2['Fecha']!='0000-00-00'){
 		//se obtiene la hora
 		if(isset($hist2['Temperatura'])&&$hist2['Temperatura']<=$hist2['CrossTech_TempMin']){
-			
+
 			//se crean variables en caso de no existir
 			if(!isset($arrEvento[$nevento]['TempMinima'])){  $arrEvento[$nevento]['TempMinima']  = 1000;}
 			if(!isset($arrEvento[$nevento]['TempMaxima'])){  $arrEvento[$nevento]['TempMaxima']  = -1000;}
@@ -91,7 +91,7 @@ foreach($arrHistorial as $hist2) {
 			$arrEvento[$nevento]['TempCuenta']   = $arrEvento[$nevento]['TempCuenta'] + 1;
 			$arrEvento[$nevento]['TempProm']     = $arrEvento[$nevento]['TempSum']/$arrEvento[$nevento]['TempCuenta'];
 			$arrEvento[$nevento]['Minutos']      = $arrEvento[$nevento]['Minutos'] + $hist2['Tiempo_Helada'];
-			
+
 			//Guardo la temperatura Minima
 			if(isset($hist2['Temperatura'])&&$hist2['Temperatura']<$arrEvento[$nevento]['TempMinima']){
 				$arrEvento[$nevento]['TempMinima'] = $hist2['Temperatura'];
@@ -100,24 +100,24 @@ foreach($arrHistorial as $hist2) {
 			if(isset($hist2['Temperatura'])&&$hist2['Temperatura']>$arrEvento[$nevento]['TempMaxima']){
 				$arrEvento[$nevento]['TempMaxima'] = $hist2['Temperatura'];
 			}
-		
+
 		}else{
 			$nevento++;
 		}
 	}
 }
 /***********************************************************/
-$arrResumen = array();	
+$arrResumen               = array();
 $arrResumen['Tiempo']     = 0;
 $arrResumen['TempMinima'] = 0;
-foreach ($arrEvento as $key => $eve){ 
+foreach ($arrEvento as $key => $eve){
 	//comparo temperaturas
-	if($arrResumen['TempMinima']>$eve['TempMinima']){                               
+	if($arrResumen['TempMinima']>$eve['TempMinima']){
 		$arrResumen['TempMinima']      = $eve['TempMinima'];
 		//guardo los otros datos
 		if(!isset($arrResumen['Duracion'])OR $arrResumen['Duracion']==''){              $arrResumen['Duracion']        = $eve['Minutos'];}
 		if(!isset($arrResumen['HoraTempMinima'])OR $arrResumen['HoraTempMinima']==''){  $arrResumen['HoraTempMinima']  = $eve['HoraInicio'];}
-	
+
 	}
 	//tiempo total de la helada
 	$arrResumen['Tiempo'] = $arrResumen['Tiempo'] + $eve['Minutos'];
@@ -129,15 +129,14 @@ $html = '
 	tbody tr:nth-child(odd) {background-color: #dfdfdf;}
 </style>';
 
-//se imprime la imagen 
-if(isset($_POST["img_adj"]) && $_POST["img_adj"] != ''){
+//se imprime la imagen
+if(isset($_POST["img_adj"]) && $_POST["img_adj"]!=''){
 	$html .= '<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>';
-	
 }
 $html .= '
-<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 	<thead>';
-		$html .='	
+		$html .='
 		<tr>
 			<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Temperatura Minima</th>
 			<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Duracion Temp Min</th>
@@ -146,26 +145,26 @@ $html .= '
 		</tr>
 	</thead>
 	<tbody>';
- 
 
-	$html .='	
+
+	$html .='
 		<tr>
 			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$arrResumen['TempMinima'].'°C</td>
 			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$arrResumen['Duracion'].' Horas</td>
 			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$arrResumen['HoraTempMinima'].'</td>
-			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($arrResumen['Tiempo']), 0).' Horas</td>
-		</tr>';	
+			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($arrResumen['Tiempo'], 0).' Horas</td>
+		</tr>';
 
-						
+
 $html .='</tbody>
 </table>
 <br/><br/>';
 
 /***************************************************************************/
 $html .= '
-<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 	<thead>';
-		$html .='	
+		$html .='
 		<tr>
 			<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Inicio</th>
 			<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Termino</th>
@@ -176,10 +175,9 @@ $html .= '
 		</tr>
 	</thead>
 	<tbody>';
-		
-	 
-foreach ($arrEvento as $key => $eve){	
-	$html .='	
+
+foreach ($arrEvento as $key => $eve){
+	$html .='
 		<tr>
 			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$eve['HoraInicio'].' - '.fecha_estandar($eve['FechaInicio']).'</td>
 			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$eve['HoraTermino'].' - '.fecha_estandar($eve['FechaTermino']).'</td>
@@ -188,14 +186,11 @@ foreach ($arrEvento as $key => $eve){
 			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($eve['TempProm'], 2).'°C</td>
 			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$eve['Minutos'].' horas</td>
 		</tr>';
-			
+
 }
-		
-							
+
 $html .='</tbody>
 </table>';
- 
-
 
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */
@@ -217,7 +212,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -261,7 +256,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 			// set some language-dependent strings (optional)
-			if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+			if (@file_exists(dirname(__FILE__).'/lang/eng.php')){
 				require_once(dirname(__FILE__).'/lang/eng.php');
 				$pdf->setLanguageArray($l);
 			}
@@ -269,18 +264,18 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			//Se crea el archivo
 			$pdf->SetFont('helvetica', '', 10);
 			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
-			
-			//se imprime la imagen 
-			if(isset($_POST["img_adj"]) && $_POST["img_adj"] != ''){
+
+			//se imprime la imagen
+			if(isset($_POST["img_adj"]) && $_POST["img_adj"]!=''){
 				$imgdata = base64_decode(str_replace('data:image/png;base64,', '',$_POST["img_adj"]));
 				// The '@' character is used to indicate that follows an image data stream and not an image file name
 				$pdf->Image('@'.$imgdata, 15, 30, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);
 			}
-			
+
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

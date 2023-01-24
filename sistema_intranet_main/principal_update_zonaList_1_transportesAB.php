@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                      Consulta                                                                  */
 /**********************************************************************************************************************************/
@@ -30,8 +30,8 @@ if(isset($_SESSION['usuario']['zona']['id_Geo'])&&$_SESSION['usuario']['zona']['
 if(isset($_GET['idZona'])&&$_GET['idZona']!=''){
 	//Variables
 	$idZona  = $_GET['idZona'];
-	//redefino la variable temporal de la zona 
-	$_SESSION['usuario']['zona']['idZona'] = $idZona;	
+	//redefino la variable temporal de la zona
+	$_SESSION['usuario']['zona']['idZona'] = $idZona;
 }else{
 	$idZona  = $_SESSION['usuario']['zona']['idZona'];
 }
@@ -50,15 +50,15 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
-}		
+}
 //Listar los equipos
 $SIS_query = '
-telemetria_listado.idTelemetria, 
-telemetria_listado.Nombre, 
+telemetria_listado.idTelemetria,
+telemetria_listado.Nombre,
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.GeoLatitud, 
-telemetria_listado.GeoLongitud, 
+telemetria_listado.GeoLatitud,
+telemetria_listado.GeoLongitud,
 telemetria_listado.NDetenciones,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.GeoErrores,
@@ -73,8 +73,8 @@ if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){ $SIS_where.= ' AND telemet
 if(isset($idZona)&&$idZona!=''&&$idZona!=9999){       $SIS_where.= ' AND telemetria_listado.idZona = '.$idZona;}
 //Filtro por el tipo de usuario
 if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-	$SIS_join .= 'INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria';	
-	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario; 	
+	$SIS_join .= 'INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria';
+	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 }
 $SIS_order = 'telemetria_listado.Nombre ASC';
 //Realizo la consulta
@@ -91,14 +91,13 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 				<div class="field">
 					<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >
 						<option value="9999" <?php if($idZona==9999){ echo 'selected="selected"';} ?>>Todas las Zonas</option>
-						<?php foreach ( $arrZonas as $select ) { 
-							$w = '';
+						<?php foreach ( $arrZonas as $select ) {
+							$selected = '';
 							if($idZona==$select['idZona']){
-								$w .= 'selected="selected"';
+								$selected = 'selected="selected"';
 							}
-							?>
-							<option value="<?php echo $select['idZona']?>" <?php echo $w; ?> ><?php echo $select['Nombre']?></option>
-						<?php } ?> 
+							echo '<option value="'.$select['idZona'].'" '.$selected.' >'.$select['Nombre'].'</option>';
+						} ?>
 					</select>
 				</div>
 			</th>
@@ -117,15 +116,15 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 		<?php } ?>
 	</thead>
 	<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
-		<?php 
-		
+		<?php
+
 		//variables
-		$HoraSistema    = hora_actual(); 
+		$HoraSistema    = hora_actual();
 		$FechaSistema   = fecha_actual();
 		$nicon          = 0;
-									
-		foreach ($arrEquipo as $data) { 
-			
+
+		foreach ($arrEquipo as $data) {
+
 			/**********************************************/
 			//Se resetean
 			$in_eq_alertas     = 0;
@@ -134,7 +133,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 			$in_eq_detenidos   = 0;
 			$in_eq_gps_fuera   = 0;
 			$in_eq_ok          = 1;
-			
+
 			/**********************************************/
 			//Fuera de linea
 			$diaInicio   = $data['LastUpdateFecha'];
@@ -142,16 +141,16 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 			$tiempo1     = $data['LastUpdateHora'];
 			$tiempo2     = $HoraSistema;
 			$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-			
+
 			//Comparaciones de tiempo
 			$Time_Tiempo     = horas2segundos($Tiempo);
 			$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 			$Time_Tiempo_Max = horas2segundos('48:00:00');
 			//comparacion
-			if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+			if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
 				$in_eq_fueralinea++;
 			}
-			
+
 			/**********************************************/
 			//GPS con problemas
 			if(isset($data['GeoErrores'])&&$data['GeoErrores']>0){    $in_eq_gps_fuera++; }
@@ -161,11 +160,11 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 			/**********************************************/
 			//Equipos Errores
 			if($data['NErrores']>0){ $in_eq_alertas++; }
-			
+
 			/**********************************************/
 			//Equipos detenidos
 			if($data['NDetenciones']>0){ $in_eq_detenidos++; }
-						
+
 			/*******************************************************/
 			//rearmo
 			if($in_eq_detenidos>0){  $in_eq_ok = 0;$in_eq_detenidos = 1;}
@@ -173,16 +172,16 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 			if($in_eq_fueraruta>0){  $in_eq_ok = 0;$in_eq_fueraruta = 1;  $in_eq_alertas = 0;   $in_eq_detenidos = 0;}
 			if($in_eq_gps_fuera>0){  $in_eq_ok = 0;$in_eq_gps_fuera = 1;  $in_eq_fueraruta = 0; $in_eq_alertas = 0;    $in_eq_detenidos = 0;}
 			if($in_eq_fueralinea>0){ $in_eq_ok = 0;$in_eq_fueralinea = 1; $in_eq_gps_fuera = 0; $in_eq_fueraruta = 0;  $in_eq_alertas = 0;  $in_eq_detenidos = 0;}
-			
+
 			/*******************************************************/
 			//se guardan estados
 			$danger = '';
-			if($in_eq_detenidos>0){  $danger = '';         $dataex = '<a href="#" title="Equipo Detenido"           class="btn btn-success btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
+			if($in_eq_detenidos>0){  $danger = '';    $dataex = '<a href="#" title="Equipo Detenido"           class="btn btn-success btn-sm tooltip"><i class="fa fa-car" aria-hidden="true"></i></a>';}
 			if($in_eq_alertas>0){    $danger = 'warning';  $dataex = '<a href="#" title="Equipo con Alertas"        class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
 			if($in_eq_fueraruta>0){  $danger = 'warning';  $dataex = '<a href="#" title="Equipo fuera de ruta"      class="btn btn-warning btn-sm tooltip"><i class="fa fa-location-arrow" aria-hidden="true"></i></a>';}
 			if($in_eq_gps_fuera>0){  $danger = 'info';     $dataex = '<a href="#" title="Equipo sin cobertura GPS"  class="btn btn-info btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a>';}
 			if($in_eq_fueralinea>0){ $danger = 'danger';   $dataex = '<a href="#" title="Fuera de Linea"            class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
-			
+
 			/*******************************************************/
 			//traspasan los estados
 			if($in_eq_ok==1){
@@ -190,20 +189,20 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 			}else{
 				$eq_ok_icon = $dataex;
 			}
-												
+
 			/*******************************************************/
 			//cadena
 			if(isset($data['SensoresMedActual_1'])&&$data['SensoresMedActual_1']<99900){$xdata_1 = Cantidades($data['SensoresMedActual_1'], 2);}else{$xdata_1 = 'Sin Datos';}
 			if(isset($data['SensoresMedActual_2'])&&$data['SensoresMedActual_2']<99900){$xdata_2 = Cantidades($data['SensoresMedActual_2'], 2);}else{$xdata_2 = 'Sin Datos';}
 			if(isset($data['SensoresMedActual_3'])&&$data['SensoresMedActual_3']<99900){$xdata_3 = Cantidades($data['SensoresMedActual_3'], 2);}else{$xdata_3 = 'Sin Datos';}
-			
-			?> 
+
+			?>
 			<tr class="odd <?php echo $danger; ?>">
 				<td width="10">
-					<div class="btn-group" style="width: 35px;" ><?php echo $eq_ok_icon; ?></div> 
+					<div class="btn-group" style="width: 35px;" ><?php echo $eq_ok_icon; ?></div>
 				</td>
 				<?php if(isset($_GET['idTab'])&&$_GET['idTab']==1){ ?>
-					<td>	
+					<td>
 						<?php echo $data['Nombre'];?><br/>
 						<?php echo fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];?>
 					</td>
@@ -212,12 +211,12 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 					<td><?php echo $xdata_2;?> l/min</td>
 					<td><?php echo $xdata_1;?> l/min</td>
 				<?php }else{ ?>
-					<td colspan="5">	
+					<td colspan="5">
 						<?php echo $data['Nombre'];?><br/>
 						<?php echo fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];?>
 					</td>
 				<?php } ?>
-					
+
 				<td width="10">
 					<div class="btn-group" style="width: 70px;" >
 						<a href="view_telemetria_registro_ruta_transporte_ab.php?view=<?php echo simpleEncode($data['idTelemetria'], fecha_actual());?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
@@ -225,10 +224,10 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 					</div>
 				</td>
 			</tr>
-			<?php 
+			<?php
 			//le sumo 1 al indicador del icono
 			$nicon++;
-		} ?>                 
+		} ?>
 	</tbody>
 </table>
 <?php widget_modal(80, 95); ?>

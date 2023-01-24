@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_aguas_consumo_historico_01.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,23 +22,23 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 // Se trae un listado con todos los productos
 //Variable de busqueda
 $z      = "WHERE aguas_facturacion_listado_detalle.idFacturacionDetalle!=0";
 $search = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Ano']) && $_GET['Ano'] != ''){               
+if(isset($_GET['Ano']) && $_GET['Ano']!=''){        
 	$z .= " AND aguas_facturacion_listado_detalle.Ano=".$_GET['Ano'];
 	$search .= '&Ano='.$_GET['Ano'];
 }
-if(isset($_GET['idMes']) && $_GET['idMes'] != ''){           
+if(isset($_GET['idMes']) && $_GET['idMes']!=''){    
 	$z .= " AND aguas_facturacion_listado_detalle.idMes=".$_GET['idMes'];
 	$search .= '&idMes='.$_GET['idMes'];
 }
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){   
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){   
 	$z .= " AND aguas_facturacion_listado_detalle.idCliente=".$_GET['idCliente'];
 	$search .= '&idCliente='.$_GET['idCliente'];
 }
@@ -73,7 +73,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrConsumos,$row );
 }
 ?>
@@ -83,13 +83,13 @@ array_push( $arrConsumos,$row );
 	<a target="new" href="<?php echo 'informe_aguas_consumo_historico_01_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Consumo Historico</h5>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -112,7 +112,7 @@ array_push( $arrConsumos,$row );
 							<td><?php echo cantidades($fact['DetalleConsumoCantidad'], 0); ?></td>
 							<td><?php echo cantidades($fact['DetalleRecoleccionCantidad'], 0); ?></td>
 						</tr>
-					<?php } ?>              
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -122,50 +122,50 @@ array_push( $arrConsumos,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Indico el sistema	 
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';	 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Ano)) {        $x1  = $Ano;        }else{$x1  = '';}
-				if(isset($idMes)) {      $x2  = $idMes;      }else{$x2  = '';}
-				if(isset($idCliente)) {  $x3  = $idCliente;  }else{$x3  = '';}
-				
+				if(isset($Ano)){        $x1  = $Ano;        }else{$x1  = '';}
+				if(isset($idMes)){      $x2  = $idMes;      }else{$x2  = '';}
+				if(isset($idCliente)){  $x3  = $idCliente;  }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x1, 1, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x2, 1, 'idCliente', 'Identificador,Nombre', 'aguas_clientes_listado', $z, 'ORDER BY Identificador ASC', $dbConn);
 				
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

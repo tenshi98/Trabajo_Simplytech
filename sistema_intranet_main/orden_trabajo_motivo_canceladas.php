@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "orden_trabajo_motivo_canceladas.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,16 +18,16 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idOT']) && $_GET['idOT'] != ''){                            $location .= "&idOT=".$_GET['idOT'];                            $search .= "&idOT=".$_GET['idOT'];}
-if(isset($_GET['f_programacion']) && $_GET['f_programacion'] != ''){        $location .= "&f_programacion=".$_GET['f_programacion'];        $search .= "&f_programacion=".$_GET['f_programacion'];}
-if(isset($_GET['idUbicacion']) && $_GET['idUbicacion'] != ''){              $location .= "&idUbicacion=".$_GET['idUbicacion'];              $search .= "&idUbicacion=".$_GET['idUbicacion'];}
-if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1'] != ''){  $location .= "&idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];  $search .= "&idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];}
-if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2'] != ''){  $location .= "&idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];  $search .= "&idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];}
-if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3'] != ''){  $location .= "&idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];  $search .= "&idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];}
-if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4'] != ''){  $location .= "&idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];  $search .= "&idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];}
-if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5'] != ''){  $location .= "&idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];  $search .= "&idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];}
-if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){              $location .= "&idPrioridad=".$_GET['idPrioridad'];              $search .= "&idPrioridad=".$_GET['idPrioridad'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                        $location .= "&idTipo=".$_GET['idTipo'];                        $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idOT']) && $_GET['idOT']!=''){                     $location .= "&idOT=".$_GET['idOT'];                            $search .= "&idOT=".$_GET['idOT'];}
+if(isset($_GET['f_programacion']) && $_GET['f_programacion']!=''){ $location .= "&f_programacion=".$_GET['f_programacion'];        $search .= "&f_programacion=".$_GET['f_programacion'];}
+if(isset($_GET['idUbicacion']) && $_GET['idUbicacion']!=''){       $location .= "&idUbicacion=".$_GET['idUbicacion'];              $search .= "&idUbicacion=".$_GET['idUbicacion'];}
+if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1']!=''){  $location .= "&idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];  $search .= "&idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];}
+if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2']!=''){  $location .= "&idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];  $search .= "&idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];}
+if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3']!=''){  $location .= "&idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];  $search .= "&idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];}
+if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4']!=''){  $location .= "&idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];  $search .= "&idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];}
+if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5']!=''){  $location .= "&idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];  $search .= "&idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];}
+if(isset($_GET['idPrioridad']) && $_GET['idPrioridad']!=''){       $location .= "&idPrioridad=".$_GET['idPrioridad'];              $search .= "&idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                 $location .= "&idTipo=".$_GET['idTipo'];                        $search .= "&idTipo=".$_GET['idTipo'];}
 			
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
@@ -46,26 +46,19 @@ if (isset($_GET['deleted'])){     $error['deleted']     = 'sucess/Orden de Traba
 if (isset($_GET['notslectjob'])){ $error['notslectjob'] = 'error/No ha seleccionado un trabajo a realizar';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['clone']) ) {  ?>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['clone'])){  ?>
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){$num_pag = $_GET["pagina"];	
-} else {$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -91,25 +84,25 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $SIS_where  = "orden_trabajo_tareas_listado.idOT!=0";
 $SIS_where .= " AND orden_trabajo_tareas_listado.idEstado = 4";//solo las canceladas
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where .= " AND orden_trabajo_tareas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where .= " AND orden_trabajo_tareas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idOT']) && $_GET['idOT'] != ''){                            $SIS_where .= " AND orden_trabajo_tareas_listado.idOT=".$_GET['idOT'];}
-if(isset($_GET['f_programacion']) && $_GET['f_programacion'] != ''){        $SIS_where .= " AND orden_trabajo_tareas_listado.f_programacion='".$_GET['Nombre']."'";}
-if(isset($_GET['idUbicacion']) && $_GET['idUbicacion'] != ''){              $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion=".$_GET['idUbicacion'];}
-if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];}
-if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];}
-if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];}
-if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];}
-if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5'] != ''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];}
-if(isset($_GET['idPrioridad']) && $_GET['idPrioridad'] != ''){              $SIS_where .= " AND orden_trabajo_tareas_listado.idPrioridad=".$_GET['idPrioridad'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                        $SIS_where .= " AND orden_trabajo_tareas_listado.idTipo=".$_GET['Nombre'];}
+if(isset($_GET['idOT']) && $_GET['idOT']!=''){                     $SIS_where .= " AND orden_trabajo_tareas_listado.idOT=".$_GET['idOT'];}
+if(isset($_GET['f_programacion']) && $_GET['f_programacion']!=''){ $SIS_where .= " AND orden_trabajo_tareas_listado.f_programacion='".$_GET['Nombre']."'";}
+if(isset($_GET['idUbicacion']) && $_GET['idUbicacion']!=''){       $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion=".$_GET['idUbicacion'];}
+if(isset($_GET['idUbicacion_lvl_1']) && $_GET['idUbicacion_lvl_1']!=''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_1=".$_GET['idUbicacion_lvl_1'];}
+if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2']!=''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_2=".$_GET['idUbicacion_lvl_2'];}
+if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3']!=''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];}
+if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4']!=''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];}
+if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5']!=''){  $SIS_where .= " AND orden_trabajo_tareas_listado.idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];}
+if(isset($_GET['idPrioridad']) && $_GET['idPrioridad']!=''){       $SIS_where .= " AND orden_trabajo_tareas_listado.idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                 $SIS_where .= " AND orden_trabajo_tareas_listado.idTipo=".$_GET['Nombre'];}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idOT', 'orden_trabajo_tareas_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 orden_trabajo_tareas_listado.idOT,
@@ -137,36 +130,36 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
 				
-				if(isset($idOT)) {                $x1  = $idOT;                }else{$x1  = '';}
-				if(isset($f_programacion)) {      $x2  = $f_programacion;      }else{$x2  = '';}
-				if(isset($idUbicacion)) {         $x3  = $idUbicacion;         }else{$x3  = '';}
-				if(isset($idUbicacion_lvl_1)) {   $x4  = $idUbicacion_lvl_1;   }else{$x4  = '';}
-				if(isset($idUbicacion_lvl_2)) {   $x5  = $idUbicacion_lvl_2;   }else{$x5  = '';}
-				if(isset($idUbicacion_lvl_3)) {   $x6  = $idUbicacion_lvl_3;   }else{$x6  = '';}
-				if(isset($idUbicacion_lvl_4)) {   $x7  = $idUbicacion_lvl_4;   }else{$x7  = '';}
-				if(isset($idUbicacion_lvl_5)) {   $x8  = $idUbicacion_lvl_5;   }else{$x8  = '';}
-				if(isset($idPrioridad)) {         $x9  = $idPrioridad;         }else{$x9  = '';}
-				if(isset($idTipo)) {              $x10 = $idTipo;              }else{$x10 = '';}
-				
+				if(isset($idOT)){                $x1  = $idOT;                }else{$x1  = '';}
+				if(isset($f_programacion)){      $x2  = $f_programacion;      }else{$x2  = '';}
+				if(isset($idUbicacion)){         $x3  = $idUbicacion;         }else{$x3  = '';}
+				if(isset($idUbicacion_lvl_1)){   $x4  = $idUbicacion_lvl_1;   }else{$x4  = '';}
+				if(isset($idUbicacion_lvl_2)){   $x5  = $idUbicacion_lvl_2;   }else{$x5  = '';}
+				if(isset($idUbicacion_lvl_3)){   $x6  = $idUbicacion_lvl_3;   }else{$x6  = '';}
+				if(isset($idUbicacion_lvl_4)){   $x7  = $idUbicacion_lvl_4;   }else{$x7  = '';}
+				if(isset($idUbicacion_lvl_5)){   $x8  = $idUbicacion_lvl_5;   }else{$x8  = '';}
+				if(isset($idPrioridad)){         $x9  = $idPrioridad;         }else{$x9  = '';}
+				if(isset($idTipo)){              $x10 = $idTipo;              }else{$x10 = '';}
+
 			//verifico que sea un administrador
 
 				//se dibujan los inputs
@@ -184,31 +177,31 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x10, 1, 'idTipo', 'Nombre', 'core_ot_motivos_tipos', 0, '', $dbConn);
 				
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                   
                                  
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Ordenes de Trabajo</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
-			</div>	
+			</div>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -254,9 +247,9 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrOTS as $ot) { ?>
-					<tr class="odd">		
-						<td><?php echo n_doc($ot['idOT'], 8); ?></td>	
-						<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>	
+					<tr class="odd">
+						<td><?php echo n_doc($ot['idOT'], 8); ?></td>
+						<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>
 						<td>
 							<?php echo $ot['Ubicacion']; 
 							if(isset($ot['UbicacionLVL_1'])&&$ot['UbicacionLVL_1']!=''){echo ' - '.$ot['UbicacionLVL_1'];}
@@ -267,18 +260,18 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 							?>
 						</td>
 						<td><?php echo $ot['NombrePrioridad']; ?></td>
-						<td><?php echo $ot['NombreTipo']; ?></td>		
+						<td><?php echo $ot['NombreTipo']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_orden_tarea_trabajo.php?view='.simpleEncode($ot['idOT'], fecha_actual()); ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>

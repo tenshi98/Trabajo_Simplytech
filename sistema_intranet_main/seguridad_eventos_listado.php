@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "seguridad_eventos_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,11 +18,11 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){    $location .= "&idUsuario=".$_GET['idUsuario'];    $search .= "&idUsuario=".$_GET['idUsuario'];}
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''){      $location .= "&h_inicio=".$_GET['h_inicio'];      $search .= "&h_inicio=".$_GET['h_inicio'];}
-if(isset($_GET['h_termino']) && $_GET['h_termino'] != ''){    $location .= "&h_termino=".$_GET['h_termino'];    $search .= "&h_termino=".$_GET['h_termino'];}
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''){      $location .= "&f_inicio=".$_GET['f_inicio'];      $search .= "&f_inicio=".$_GET['f_inicio'];}
-if(isset($_GET['f_termino']) && $_GET['f_termino'] != ''){    $location .= "&f_termino=".$_GET['f_termino'];    $search .= "&f_termino=".$_GET['f_termino'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){    $location .= "&idUsuario=".$_GET['idUsuario'];    $search .= "&idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['h_inicio']) && $_GET['h_inicio']!=''){      $location .= "&h_inicio=".$_GET['h_inicio'];      $search .= "&h_inicio=".$_GET['h_inicio'];}
+if(isset($_GET['h_termino']) && $_GET['h_termino']!=''){    $location .= "&h_termino=".$_GET['h_termino'];    $search .= "&h_termino=".$_GET['h_termino'];}
+if(isset($_GET['f_inicio']) && $_GET['f_inicio']!=''){      $location .= "&f_inicio=".$_GET['f_inicio'];      $search .= "&f_inicio=".$_GET['f_inicio'];}
+if(isset($_GET['f_termino']) && $_GET['f_termino']!=''){    $location .= "&f_termino=".$_GET['f_termino'];    $search .= "&f_termino=".$_GET['f_termino'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -30,16 +30,16 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/seguridad_eventos_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/seguridad_eventos_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/seguridad_eventos_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -54,8 +54,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Evento Modificado corr
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evento borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -104,34 +104,34 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrArchivos,$row );
 }
 ?>
  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="<?php echo 'seguridad_eventos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'seguridad_eventos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="<?php echo 'seguridad_eventos_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos Adjuntos</a></li>          
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
-					<div class="col-sm-4">
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/evento-seguridad.jpg">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/evento-seguridad.jpg">
 					</div>
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Evento</h2>
 						<p class="text-muted">
 							<strong>Usuario Ingreso : </strong><?php echo $rowdata['Usuario']; ?><br/>
@@ -170,43 +170,43 @@ array_push( $arrArchivos,$row );
 						<?php widget_modal(80, 95); ?>
 
 						
-					</div>	
+					</div>
 					<div class="clearfix"></div>
 			
 				</div>
 			</div>
 
 			
-        </div>	
+        </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Evento</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {         $x1  = $Fecha;        }else{$x1  = '';}
-				if(isset($Hora)) {          $x2  = $Hora;         }else{$x2  = '';}
-				if(isset($Observacion)) {   $x3  = $Observacion;  }else{$x3  = '';}
-				
+				if(isset($Fecha)){         $x1  = $Fecha;        }else{$x1  = '';}
+				if(isset($Hora)){          $x2  = $Hora;         }else{$x2  = '';}
+				if(isset($Observacion)){   $x3  = $Observacion;  }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
@@ -220,35 +220,26 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -269,9 +260,9 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $SIS_where = "seguridad_eventos_listado.idEvento!=0";
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where.= " AND seguridad_eventos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND seguridad_eventos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -279,20 +270,20 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
-	$SIS_where .= " AND seguridad_eventos_listado.idUsuario = '".$_GET['idUsuario']."'" ;
+	$SIS_where .= " AND seguridad_eventos_listado.idUsuario = '".$_GET['idUsuario']."'";
 }
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
-	$SIS_where .= " AND seguridad_eventos_listado.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'" ;
+if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){ 
+	$SIS_where .= " AND seguridad_eventos_listado.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$SIS_where .= " AND seguridad_eventos_listado.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'" ;
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+	$SIS_where .= " AND seguridad_eventos_listado.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idEvento', 'seguridad_eventos_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 seguridad_eventos_listado.idEvento,
@@ -309,56 +300,56 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_eventos_listado', $SIS
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evento</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evento</a><?php } ?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idUsuario)) {   $x1  = $idUsuario;  }else{$x1  = '';}
-				if(isset($f_inicio)) {    $x2  = $f_inicio;   }else{$x2  = '';}
-				if(isset($f_termino)) {   $x3  = $f_termino;  }else{$x3  = '';}
-				if(isset($h_inicio)) {    $x4  = $h_inicio;   }else{$x4  = '';}
-				if(isset($h_termino)) {   $x5  = $h_termino;  }else{$x5  = '';}
-				
+				if(isset($idUsuario)){   $x1  = $idUsuario;  }else{$x1  = '';}
+				if(isset($f_inicio)){    $x2  = $f_inicio;   }else{$x2  = '';}
+				if(isset($f_termino)){   $x3  = $f_termino;  }else{$x3  = '';}
+				if(isset($h_inicio)){    $x4  = $h_inicio;   }else{$x4  = '';}
+				if(isset($h_termino)){   $x5  = $h_termino;  }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x2, 1);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 1);
 				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x4, 1, 1);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x5, 1, 1);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div>                       
+<div class="clearfix"></div>
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Eventos</h5>
@@ -368,7 +359,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_eventos_listado', $SIS
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -396,7 +387,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_eventos_listado', $SIS
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrTipo as $tipo) { ?>
 						<tr class="odd">
@@ -411,22 +402,22 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_eventos_listado', $SIS
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idEvento'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el evento?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>								
+									<?php } ?>
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div> 
+		</div>
 	</div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

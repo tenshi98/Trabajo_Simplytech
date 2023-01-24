@@ -12,17 +12,17 @@ require_once 'core/Load.Utils.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "view_crossenergy_estado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -31,9 +31,9 @@ $location .='?view='.$X_Puntero;
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -60,7 +60,7 @@ $Demanda_HoraTermino    = hora_actual();
 
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre, cantSensores';
+$subquery_1 = 'Nombre,cantSensores';
 $subquery_2 = 'idTabla';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery_1 .= ',SensoresGrupo_'.$i;
@@ -71,12 +71,12 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 
 //Obtengo los datos
 $rowdata            = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
-$n_permisos         = db_select_data (false, 'idOpcionesGen_6', 'core_sistemas', '', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
+$n_permisos         = db_select_data (false, 'idOpcionesGen_6', 'core_sistemas','', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
-$SIS_query = 'Nombre, CrossEnergy_PeriodoInicio, CrossEnergy_PeriodoTermino, CrossEnergy_HorarioInicio, CrossEnergy_HorarioTermino';
+$SIS_query = 'Nombre,CrossEnergy_PeriodoInicio, CrossEnergy_PeriodoTermino, CrossEnergy_HorarioInicio, CrossEnergy_HorarioTermino';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'];
-$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSistema');
+$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSistema');
 
 
 //Temporales
@@ -120,7 +120,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 $x_seg = 300000;//5 minutos
 
 
-/****************************************************************/				
+/****************************************************************/
 //Variables
 $Temp_1      = '';
 $Temp_1b     = '';
@@ -136,8 +136,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	//recorro
 	$counterz = 1;
 	foreach ($arrGraficos as $data) {
-		
-		//variables							
+
+		//Variables
 		$Temp_1 .= "'".$data['FechaSistema']." ".$data['HoraSistema']."',";
 		$Temp_1b .= "'".$counterz."',";
 		//verifico si existe
@@ -164,8 +164,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	/******************************************************/
 	//recorro
 	foreach ($arrDemanda as $data) {
-		
-		//variables							
+
+		//Variables
 		$Temp_2 .= "'".$data['FechaSistema']." ".$data['HoraSistema']."',";
 		//verifico si existe
 		if(isset($arrData_2['Value'])&&$arrData_2['Value']!=''){
@@ -197,17 +197,17 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	}, <?php echo $x_seg; ?>);
 </script>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Estado del Equipo <?php echo $rowdata['Nombre'].' (Hora Refresco: '.hora_actual().')'; ?></h5>
 		</header>
-        <div id="div-3" class="tab-content">
-			<div class="col-sm-12">
+        <div class="tab-content">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				
 				<div class="row">
-					<div class="col-sm-12">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<?php 
 							$Titulo = 'Potencia hora punta (Periodo: '.$rowSistema['CrossEnergy_PeriodoInicio'].' al '.$rowSistema['CrossEnergy_PeriodoTermino'].' / Horario: '.$rowSistema['CrossEnergy_HorarioInicio'].'-'.$rowSistema['CrossEnergy_HorarioTermino'].')';
 							echo GraphBarr_1('graphBarra_1', $Titulo, 'Fecha', 'Amperaje', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0); 
@@ -217,7 +217,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 				</div>
 				
 				<div class="row">
-					<div class="col-sm-12">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<?php 
 							$Titulo = 'Demanda de suministro (Periodo: '.$Demanda_FechaInicio.' al '.$Demanda_FechaTermino.' / Horario: '.$Demanda_HoraInicio.'-'.$Demanda_HoraTermino.')';
 							echo GraphBarr_1('graphBarra_2', $Titulo, 'Fecha', 'Amperaje', $Graphics_xData_2, $Graphics_yData_2, $Graphics_names_2, $Graphics_info_2, $Graphics_markerColor_2, $Graphics_markerLine_2,1, 0); 
@@ -225,15 +225,15 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 					</div>
 				</div>
 				
-			</div>	
-			<div class="clearfix"></div>	
-		</div>	
+			</div>
+			<div class="clearfix"></div>
+		</div>
 	</div>
 </div>
 <?php
 //Si no hay datos
 }else{
-	echo '<div class="col-sm-12" style="margin-top:10px;">';
+	echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">';
 		alert_post_data(4,2,2, 'No existen datos');
 	echo '</div>';
 }
@@ -241,12 +241,12 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -257,12 +257,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

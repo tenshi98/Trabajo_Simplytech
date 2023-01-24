@@ -2,32 +2,32 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-170).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idAlarma']) )         $idAlarma            = $_POST['idAlarma'];
-	if ( !empty($_POST['idTelemetria']) )     $idTelemetria        = $_POST['idTelemetria'];
-	if ( !empty($_POST['Nombre']) )           $Nombre              = $_POST['Nombre'];
-	if ( !empty($_POST['idTipo']) )           $idTipo              = $_POST['idTipo'];
-	if ( !empty($_POST['idTipoAlerta']) )     $idTipoAlerta        = $_POST['idTipoAlerta'];
-	if ( !empty($_POST['idUniMed']) )         $idUniMed            = $_POST['idUniMed'];
-	if ( !empty($_POST['valor_error']) )      $valor_error         = $_POST['valor_error'];
-	if ( !empty($_POST['valor_diferencia']) ) $valor_diferencia    = $_POST['valor_diferencia'];
-	if ( !empty($_POST['Rango_ini']) )        $Rango_ini           = $_POST['Rango_ini'];
-	if ( !empty($_POST['Rango_fin']) )        $Rango_fin           = $_POST['Rango_fin'];
-	if ( !empty($_POST['NErroresMax']) )      $NErroresMax         = $_POST['NErroresMax'];
-	if ( !empty($_POST['NErroresActual']) )   $NErroresActual      = $_POST['NErroresActual'];
-	if ( !empty($_POST['idEstado']) )         $idEstado            = $_POST['idEstado'];
-	
+	if (!empty($_POST['idAlarma']))         $idAlarma            = $_POST['idAlarma'];
+	if (!empty($_POST['idTelemetria']))     $idTelemetria        = $_POST['idTelemetria'];
+	if (!empty($_POST['Nombre']))           $Nombre              = $_POST['Nombre'];
+	if (!empty($_POST['idTipo']))           $idTipo              = $_POST['idTipo'];
+	if (!empty($_POST['idTipoAlerta']))     $idTipoAlerta        = $_POST['idTipoAlerta'];
+	if (!empty($_POST['idUniMed']))         $idUniMed            = $_POST['idUniMed'];
+	if (!empty($_POST['valor_error']))      $valor_error         = $_POST['valor_error'];
+	if (!empty($_POST['valor_diferencia'])) $valor_diferencia    = $_POST['valor_diferencia'];
+	if (!empty($_POST['Rango_ini']))        $Rango_ini           = $_POST['Rango_ini'];
+	if (!empty($_POST['Rango_fin']))        $Rango_fin           = $_POST['Rango_fin'];
+	if (!empty($_POST['NErroresMax']))      $NErroresMax         = $_POST['NErroresMax'];
+	if (!empty($_POST['NErroresActual']))   $NErroresActual      = $_POST['NErroresActual'];
+	if (!empty($_POST['idEstado']))         $idEstado            = $_POST['idEstado'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -52,30 +52,30 @@ require_once '0_validate_user_1.php';
 			case 'NErroresMax':       if(empty($NErroresMax)){         $error['NErroresMax']        = 'error/No ha ingresado el numero maximo de errores';}break;
 			case 'NErroresActual':    if(empty($NErroresActual)){      $error['NErroresActual']     = 'error/No ha ingresado el numero actual de errores';}break;
 			case 'idEstado':          if(empty($idEstado)){            $error['idEstado']           = 'error/No ha seleccionado el estado';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Nombre) && $Nombre != ''){ $Nombre = EstandarizarInput($Nombre); }
+/*******************************************************************************************************************/
+	if(isset($Nombre) && $Nombre!=''){$Nombre = EstandarizarInput($Nombre);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre,contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -86,28 +86,28 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idTelemetria) && $idTelemetria != ''){          $SIS_data  = "'".$idTelemetria."'" ;      }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre != ''){                      $SIS_data .= ",'".$Nombre."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo != ''){                      $SIS_data .= ",'".$idTipo."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($idTipoAlerta) && $idTipoAlerta != ''){          $SIS_data .= ",'".$idTipoAlerta."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($idUniMed) && $idUniMed != ''){                  $SIS_data .= ",'".$idUniMed."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($valor_error) && $valor_error != ''){            $SIS_data .= ",'".$valor_error."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($valor_diferencia) && $valor_diferencia != ''){  $SIS_data .= ",'".$valor_diferencia."'" ; }else{$SIS_data .= ",''";}
-				if(isset($Rango_ini) && $Rango_ini != ''){                $SIS_data .= ",'".$Rango_ini."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($Rango_fin) && $Rango_fin != ''){                $SIS_data .= ",'".$Rango_fin."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($NErroresMax) && $NErroresMax != ''){            $SIS_data .= ",'".$NErroresMax."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($NErroresActual) && $NErroresActual != ''){      $SIS_data .= ",'".$NErroresActual."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){                  $SIS_data .= ",'".$idEstado."'" ;         }else{$SIS_data .= ",''";}
-				
+				if(isset($idTelemetria) && $idTelemetria!=''){          $SIS_data  = "'".$idTelemetria."'";      }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){                     $SIS_data .= ",'".$Nombre."'";           }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                     $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
+				if(isset($idTipoAlerta) && $idTipoAlerta!=''){          $SIS_data .= ",'".$idTipoAlerta."'";     }else{$SIS_data .= ",''";}
+				if(isset($idUniMed) && $idUniMed!=''){                  $SIS_data .= ",'".$idUniMed."'";         }else{$SIS_data .= ",''";}
+				if(isset($valor_error) && $valor_error!=''){            $SIS_data .= ",'".$valor_error."'";      }else{$SIS_data .= ",''";}
+				if(isset($valor_diferencia) && $valor_diferencia!=''){  $SIS_data .= ",'".$valor_diferencia."'"; }else{$SIS_data .= ",''";}
+				if(isset($Rango_ini) && $Rango_ini!=''){                $SIS_data .= ",'".$Rango_ini."'";        }else{$SIS_data .= ",''";}
+				if(isset($Rango_fin) && $Rango_fin!=''){                $SIS_data .= ",'".$Rango_fin."'";        }else{$SIS_data .= ",''";}
+				if(isset($NErroresMax) && $NErroresMax!=''){            $SIS_data .= ",'".$NErroresMax."'";      }else{$SIS_data .= ",''";}
+				if(isset($NErroresActual) && $NErroresActual!=''){      $SIS_data .= ",'".$NErroresActual."'";   }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                 $SIS_data .= ",'".$idEstado."'";         }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idTelemetria, Nombre, idTipo, idTipoAlerta, idUniMed, valor_error, valor_diferencia, Rango_ini, Rango_fin, NErroresMax, NErroresActual, idEstado';
+				$SIS_columns = 'idTelemetria, Nombre,idTipo, idTipoAlerta, idUniMed, valor_error, valor_diferencia, Rango_ini, Rango_fin, NErroresMax, NErroresActual, idEstado';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_alarmas_perso', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -115,14 +115,14 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -133,48 +133,47 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idAlarma='".$idAlarma."'" ;
-				if(isset($idTelemetria) && $idTelemetria != ''){            $SIS_data .= ",idTelemetria='".$idTelemetria."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                        $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idTipo) && $idTipo != ''){                        $SIS_data .= ",idTipo='".$idTipo."'" ;}
-				if(isset($idTipoAlerta) && $idTipoAlerta != ''){            $SIS_data .= ",idTipoAlerta='".$idTipoAlerta."'" ;}
-				if(isset($idUniMed) && $idUniMed != ''){                    $SIS_data .= ",idUniMed='".$idUniMed."'" ;}
-				if(isset($valor_error) && $valor_error != ''){              $SIS_data .= ",valor_error='".$valor_error."'" ;}
-				if(isset($valor_diferencia) && $valor_diferencia != ''){    $SIS_data .= ",valor_diferencia='".$valor_diferencia."'" ;}
-				if(isset($Rango_ini) && $Rango_ini != ''){                  $SIS_data .= ",Rango_ini='".$Rango_ini."'" ;}
-				if(isset($Rango_fin) && $Rango_fin != ''){                  $SIS_data .= ",Rango_fin='".$Rango_fin."'" ;}
-				if(isset($NErroresMax) && $NErroresMax != ''){              $SIS_data .= ",NErroresMax='".$NErroresMax."'" ;         }else{$SIS_data .= ",NErroresMax='0'" ;}
-				if(isset($NErroresActual) && $NErroresActual != ''){        $SIS_data .= ",NErroresActual='".$NErroresActual."'" ;   }else{$SIS_data .= ",NErroresActual='0'" ;}
-				if(isset($idEstado) && $idEstado != ''){                    $SIS_data .= ",idEstado='".$idEstado."'" ;   }
-				
+				$SIS_data = "idAlarma='".$idAlarma."'";
+				if(isset($idTelemetria) && $idTelemetria!=''){            $SIS_data .= ",idTelemetria='".$idTelemetria."'";}
+				if(isset($Nombre) && $Nombre!=''){                       $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idTipo) && $idTipo!=''){                       $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idTipoAlerta) && $idTipoAlerta!=''){            $SIS_data .= ",idTipoAlerta='".$idTipoAlerta."'";}
+				if(isset($idUniMed) && $idUniMed!=''){                    $SIS_data .= ",idUniMed='".$idUniMed."'";}
+				if(isset($valor_error) && $valor_error!=''){              $SIS_data .= ",valor_error='".$valor_error."'";}
+				if(isset($valor_diferencia) && $valor_diferencia!=''){    $SIS_data .= ",valor_diferencia='".$valor_diferencia."'";}
+				if(isset($Rango_ini) && $Rango_ini!=''){                  $SIS_data .= ",Rango_ini='".$Rango_ini."'";}
+				if(isset($Rango_fin) && $Rango_fin!=''){                  $SIS_data .= ",Rango_fin='".$Rango_fin."'";}
+				if(isset($NErroresMax) && $NErroresMax!=''){              $SIS_data .= ",NErroresMax='".$NErroresMax."'";         }else{$SIS_data .= ",NErroresMax='0'";}
+				if(isset($NErroresActual) && $NErroresActual!=''){        $SIS_data .= ",NErroresActual='".$NErroresActual."'";   }else{$SIS_data .= ",NErroresActual='0'";}
+				if(isset($idEstado) && $idEstado!=''){                   $SIS_data .= ",idEstado='".$idEstado."'";   }
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_alarmas_perso', 'idAlarma = "'.$idAlarma.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
-		break;	
-						
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'delAlarma':	
-			
+		case 'delAlarma':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['delAlarma']) OR !validaEntero($_GET['delAlarma']))&&$_GET['delAlarma']!=''){
 				$indice = simpleDecode($_GET['delAlarma'], fecha_actual());
@@ -182,31 +181,31 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['delAlarma'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado_1 = db_delete_data (false, 'telemetria_listado_alarmas_perso', 'idAlarma = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$resultado_2 = db_delete_data (false, 'telemetria_listado_alarmas_perso_items', 'idAlarma = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado_1==true OR $resultado_2==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
@@ -214,16 +213,16 @@ require_once '0_validate_user_1.php';
 			}
 			
 			
-		break;							
-	
+		break;
+
 /*******************************************************************************************************************/
 		//Cambio el estado de activo a inactivo
-		case 'estado':	
-			
+		case 'estado':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			//variables
+
+			//Variables
 			$idTelemetria  = simpleDecode($_GET['view'], fecha_actual());
 			$idAlarma      = simpleDecode($_GET['idAlarma'], fecha_actual());
 			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
@@ -232,30 +231,30 @@ require_once '0_validate_user_1.php';
 			$Hora          = hora_actual();
 			$TimeStamp     = fecha_actual().' '.hora_actual();
 					
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				/*******************************************************/
 				//se actualizan los datos
-				$SIS_data = "idEstado='".$idEstado."'" ;
+				$SIS_data = "idEstado='".$idEstado."'";
 				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_alarmas_perso', 'idAlarma = "'.$idAlarma.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//actualizo historial
 					//filtros
-					if(isset($idTelemetria) && $idTelemetria != ''){    $SIS_data  = "'".$idTelemetria."'" ; }else{$SIS_data  = "''";}
-					if(isset($idAlarma) && $idAlarma != ''){            $SIS_data .= ",'".$idAlarma."'" ;    }else{$SIS_data .= ",''";}
-					if(isset($idEstado) && $idEstado != ''){            $SIS_data .= ",'".$idEstado."'" ;    }else{$SIS_data .= ",''";}
-					if(isset($idUsuario) && $idUsuario != ''){          $SIS_data .= ",'".$idUsuario."'" ;   }else{$SIS_data .= ",''";}
-					if(isset($Fecha) && $Fecha != ''){                  $SIS_data .= ",'".$Fecha."'" ;       }else{$SIS_data .= ",''";}
-					if(isset($Hora) && $Hora != ''){                    $SIS_data .= ",'".$Hora."'" ;        }else{$SIS_data .= ",''";}
-					if(isset($TimeStamp) && $TimeStamp != ''){          $SIS_data .= ",'".$TimeStamp."'" ;   }else{$SIS_data .= ",''";}
-					
+					if(isset($idTelemetria) && $idTelemetria!=''){    $SIS_data  = "'".$idTelemetria."'"; }else{$SIS_data  = "''";}
+					if(isset($idAlarma) && $idAlarma!=''){            $SIS_data .= ",'".$idAlarma."'";    }else{$SIS_data .= ",''";}
+					if(isset($idEstado) && $idEstado!=''){           $SIS_data .= ",'".$idEstado."'";    }else{$SIS_data .= ",''";}
+					if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",'".$idUsuario."'";   }else{$SIS_data .= ",''";}
+					if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";      }else{$SIS_data .= ",''";}
+					if(isset($Hora) && $Hora!=''){                    $SIS_data .= ",'".$Hora."'";        }else{$SIS_data .= ",''";}
+					if(isset($TimeStamp) && $TimeStamp!=''){          $SIS_data .= ",'".$TimeStamp."'";   }else{$SIS_data .= ",''";}
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idTelemetria, idAlarma, idEstado, idUsuario, Fecha, Hora, TimeStamp';
 					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_alarmas_perso_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Si ejecuto correctamente la consulta
 					if($ultimo_id!=0){
 						//redirijo
@@ -264,16 +263,16 @@ require_once '0_validate_user_1.php';
 					}
 				}
 			}
-			
-		break;	
+
+		break;
 /*******************************************************************************************************************/
 		//Cambio el estado de activo a inactivo
-		case 'estadoAll':	
-			
+		case 'estadoAll':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			//variables
+
+			//Variables
 			$idTelemetria  = simpleDecode($_GET['view'], fecha_actual());
 			$idAlarma      = simpleDecode($_GET['idAlarma'], fecha_actual());
 			$idEstado      = simpleDecode($_GET['estadoAll'], fecha_actual());
@@ -282,9 +281,9 @@ require_once '0_validate_user_1.php';
 			$Hora          = hora_actual();
 			$TimeStamp     = fecha_actual().' '.hora_actual();
 					
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				/*******************************************************/
 				//filtro inteligente
 				$SIS_where = 'idTelemetria ='.$idTelemetria;
@@ -293,7 +292,7 @@ require_once '0_validate_user_1.php';
 				}elseif($idEstado==2){
 					$SIS_where .= ' AND idEstado = 1';
 				}
-				
+
 				/*******************************************************/
 				//traigo un listado con los equipos que estan activos, inactivos
 				$arrAlarmas = array();
@@ -301,35 +300,35 @@ require_once '0_validate_user_1.php';
 
 				/*******************************************************/
 				//se actualizan los datos
-				$SIS_data = "idEstado='".$idEstado."'" ;
+				$SIS_data = "idEstado='".$idEstado."'";
 				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_alarmas_perso', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//actualizo historial
 					foreach ($arrAlarmas as $alarm) {
 						//filtros
-						if(isset($idTelemetria) && $idTelemetria != ''){            $SIS_data  = "'".$idTelemetria."'" ;          }else{$SIS_data  = "''";}
-						if(isset($alarm['idAlarma']) && $alarm['idAlarma'] != ''){  $SIS_data .= ",'".$alarm['idAlarma']."'" ;    }else{$SIS_data .= ",''";}
-						if(isset($idEstado) && $idEstado != ''){                    $SIS_data .= ",'".$idEstado."'" ;             }else{$SIS_data .= ",''";}
-						if(isset($idUsuario) && $idUsuario != ''){                  $SIS_data .= ",'".$idUsuario."'" ;            }else{$SIS_data .= ",''";}
-						if(isset($Fecha) && $Fecha != ''){                          $SIS_data .= ",'".$Fecha."'" ;                }else{$SIS_data .= ",''";}
-						if(isset($Hora) && $Hora != ''){                            $SIS_data .= ",'".$Hora."'" ;                 }else{$SIS_data .= ",''";}
-						if(isset($TimeStamp) && $TimeStamp != ''){                  $SIS_data .= ",'".$TimeStamp."'" ;            }else{$SIS_data .= ",''";}
-						
+						if(isset($idTelemetria) && $idTelemetria!=''){            $SIS_data  = "'".$idTelemetria."'";          }else{$SIS_data  = "''";}
+						if(isset($alarm['idAlarma']) && $alarm['idAlarma']!=''){  $SIS_data .= ",'".$alarm['idAlarma']."'";    }else{$SIS_data .= ",''";}
+						if(isset($idEstado) && $idEstado!=''){                   $SIS_data .= ",'".$idEstado."'";             }else{$SIS_data .= ",''";}
+						if(isset($idUsuario) && $idUsuario!=''){                 $SIS_data .= ",'".$idUsuario."'";            }else{$SIS_data .= ",''";}
+						if(isset($Fecha) && $Fecha!=''){     $SIS_data .= ",'".$Fecha."'";               }else{$SIS_data .= ",''";}
+						if(isset($Hora) && $Hora!=''){                            $SIS_data .= ",'".$Hora."'";                 }else{$SIS_data .= ",''";}
+						if(isset($TimeStamp) && $TimeStamp!=''){                  $SIS_data .= ",'".$TimeStamp."'";            }else{$SIS_data .= ",''";}
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idTelemetria, idAlarma, idEstado, idUsuario, Fecha, Hora, TimeStamp';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_alarmas_perso_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 				}
 			}
-			
-		break;					
+
+		break;	
 /*******************************************************************************************************************/
 	}
 ?>

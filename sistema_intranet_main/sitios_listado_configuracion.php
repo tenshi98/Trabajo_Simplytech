@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "sitios_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -21,7 +21,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -41,7 +41,7 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sitio editado correcta
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sitio borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = 'Nombre,Config_Logo_Nombre,Config_Logo_Archivo,Config_Root_Folder,Config_Menu,
 Config_MenuOtros,Config_Carousel,Config_Links_Rel,Config_Top_Bar,Config_Footer_Links,
@@ -53,12 +53,12 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Editar Configuracion');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -75,32 +75,32 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 						
 						<li class=""><a href="<?php echo 'sitios_listado_body.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Body</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Config_Logo_Nombre)) {       $x1  = $Config_Logo_Nombre;       }else{$x1  = $rowdata['Config_Logo_Nombre'];}
-					if(isset($Config_Logo_Archivo)) {      $x2  = $Config_Logo_Archivo;      }else{$x2  = $rowdata['Config_Logo_Archivo'];}
-					if(isset($Config_Root_Folder)) {       $x3  = $Config_Root_Folder;       }else{$x3  = $rowdata['Config_Root_Folder'];}
-					if(isset($idEstado)) {                 $x4  = $idEstado;                 }else{$x4  = $rowdata['idEstado'];}
-					if(isset($Config_Menu)) {              $x5  = $Config_Menu;              }else{$x5  = $rowdata['Config_Menu'];}
-					if(isset($Config_MenuOtros)) {         $x6  = $Config_MenuOtros;         }else{$x6  = $rowdata['Config_MenuOtros'];}
-					if(isset($Config_Carousel)) {          $x7  = $Config_Carousel;          }else{$x7  = $rowdata['Config_Carousel'];}
-					if(isset($Config_Links_Rel)) {         $x8  = $Config_Links_Rel;         }else{$x8  = $rowdata['Config_Links_Rel'];}
-					if(isset($Config_Top_Bar)) {           $x9  = $Config_Top_Bar;           }else{$x9  = $rowdata['Config_Top_Bar'];}
-					if(isset($Config_Footer_Links)) {      $x10 = $Config_Footer_Links;      }else{$x10 = $rowdata['Config_Footer_Links'];}
-					if(isset($Config_Footer_Services)) {   $x11 = $Config_Footer_Services;   }else{$x11 = $rowdata['Config_Footer_Services'];}
-					if(isset($Config_Footer_Letters)) {    $x12 = $Config_Footer_Letters;    }else{$x12 = $rowdata['Config_Footer_Letters'];}
-					if(isset($Config_SMTP_mailUsername)) { $x13 = $Config_SMTP_mailUsername; }else{$x13 = $rowdata['Config_SMTP_mailUsername'];}
-					if(isset($Config_SMTP_mailPassword)) { $x14 = $Config_SMTP_mailPassword; }else{$x14 = $rowdata['Config_SMTP_mailPassword'];}
-					if(isset($Config_SMTP_Host)) {         $x15 = $Config_SMTP_Host;         }else{$x15 = $rowdata['Config_SMTP_Host'];}
-					if(isset($Config_SMTP_Port)) {         $x16 = $Config_SMTP_Port;         }else{$x16 = $rowdata['Config_SMTP_Port'];}
-					if(isset($Config_SMTP_Secure)) {       $x17 = $Config_SMTP_Secure;       }else{$x17 = $rowdata['Config_SMTP_Secure'];}
+					if(isset($Config_Logo_Nombre)){       $x1  = $Config_Logo_Nombre;       }else{$x1  = $rowdata['Config_Logo_Nombre'];}
+					if(isset($Config_Logo_Archivo)){      $x2  = $Config_Logo_Archivo;      }else{$x2  = $rowdata['Config_Logo_Archivo'];}
+					if(isset($Config_Root_Folder)){       $x3  = $Config_Root_Folder;       }else{$x3  = $rowdata['Config_Root_Folder'];}
+					if(isset($idEstado)){                 $x4  = $idEstado;                 }else{$x4  = $rowdata['idEstado'];}
+					if(isset($Config_Menu)){              $x5  = $Config_Menu;              }else{$x5  = $rowdata['Config_Menu'];}
+					if(isset($Config_MenuOtros)){         $x6  = $Config_MenuOtros;         }else{$x6  = $rowdata['Config_MenuOtros'];}
+					if(isset($Config_Carousel)){          $x7  = $Config_Carousel;          }else{$x7  = $rowdata['Config_Carousel'];}
+					if(isset($Config_Links_Rel)){         $x8  = $Config_Links_Rel;         }else{$x8  = $rowdata['Config_Links_Rel'];}
+					if(isset($Config_Top_Bar)){           $x9  = $Config_Top_Bar;           }else{$x9  = $rowdata['Config_Top_Bar'];}
+					if(isset($Config_Footer_Links)){      $x10 = $Config_Footer_Links;      }else{$x10 = $rowdata['Config_Footer_Links'];}
+					if(isset($Config_Footer_Services)){   $x11 = $Config_Footer_Services;   }else{$x11 = $rowdata['Config_Footer_Services'];}
+					if(isset($Config_Footer_Letters)){    $x12 = $Config_Footer_Letters;    }else{$x12 = $rowdata['Config_Footer_Letters'];}
+					if(isset($Config_SMTP_mailUsername)){ $x13 = $Config_SMTP_mailUsername; }else{$x13 = $rowdata['Config_SMTP_mailUsername'];}
+					if(isset($Config_SMTP_mailPassword)){ $x14 = $Config_SMTP_mailPassword; }else{$x14 = $rowdata['Config_SMTP_mailPassword'];}
+					if(isset($Config_SMTP_Host)){         $x15 = $Config_SMTP_Host;         }else{$x15 = $rowdata['Config_SMTP_Host'];}
+					if(isset($Config_SMTP_Port)){         $x16 = $Config_SMTP_Port;         }else{$x16 = $rowdata['Config_SMTP_Port'];}
+					if(isset($Config_SMTP_Secure)){       $x17 = $Config_SMTP_Secure;       }else{$x17 = $rowdata['Config_SMTP_Secure'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -112,16 +112,16 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					$Form_Inputs->form_select('Estado','idEstado', $x4, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 					
 					$Form_Inputs->form_post_data(2, '<strong>Elementos: </strong>Elementos existentes y necesarios.' );
-					$Form_Inputs->form_select('Uso Menu','Config_Menu', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Uso Menu Otros','Config_MenuOtros', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Uso Carousel','Config_Carousel', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Uso Links Relacionados','Config_Links_Rel', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Uso Menu','Config_Menu', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_select('Uso Menu Otros','Config_MenuOtros', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_select('Uso Carousel','Config_Carousel', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_select('Uso Links Relacionados','Config_Links_Rel', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					
 					$Form_Inputs->form_post_data(2, '<strong>Mostrar elementos extras: </strong>' );
-					$Form_Inputs->form_select('Mostrar Top Bar','Config_Top_Bar', $x9, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Mostrar enlaces en el Footer','Config_Footer_Links', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Mostrar servicios en el Footer','Config_Footer_Services', $x11, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Mostrar suscripcion en el Footer','Config_Footer_Letters', $x12, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Mostrar Top Bar','Config_Top_Bar', $x9, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_select('Mostrar enlaces en el Footer','Config_Footer_Links', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_select('Mostrar servicios en el Footer','Config_Footer_Services', $x11, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_select('Mostrar suscripcion en el Footer','Config_Footer_Letters', $x12, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					
 					$Form_Inputs->form_post_data(2, '<strong>Contacto: </strong>Usuario y contraseña del gestor de correos del servidor.' );
 					$Form_Inputs->form_input_icon('Usuario SMTP', 'Config_SMTP_mailUsername', $x13, 1,'fa fa-users');
@@ -133,19 +133,19 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					$Form_Inputs->form_input_hidden('idSitio', simpleDecode($_GET['id'], fecha_actual()), 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

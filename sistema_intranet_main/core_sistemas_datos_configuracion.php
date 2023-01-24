@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistemas.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -21,7 +21,7 @@ $location .='?pagina='.$_GET['pagina'];
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$location.='&id='.$_GET['id'];
 	$form_trabajo= 'update';
@@ -40,7 +40,7 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sistema editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = '
 Nombre,Config_idTheme, Config_CorreoRespaldo, email_principal, idOpcionesTel, 
@@ -49,15 +49,15 @@ idOpcionesGen_5, idOpcionesGen_6, idOpcionesGen_7, idOpcionesGen_8, idOpcionesGe
 Config_Gmail_Usuario, Config_Gmail_Password';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Configuracion');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -80,56 +80,56 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Config_idTheme)) {            $x1  = $Config_idTheme;             }else{$x1  = $rowdata['Config_idTheme'];}
-					if(isset($Config_CorreoRespaldo)) {     $x2  = $Config_CorreoRespaldo;      }else{$x2  = $rowdata['Config_CorreoRespaldo'];}
-					if(isset($email_principal)) {           $x3  = $email_principal;            }else{$x3  = $rowdata['email_principal'];}
-					if(isset($idOpcionesTel)) {             $x4  = $idOpcionesTel;              }else{$x4  = $rowdata['idOpcionesTel'];}
-					if(isset($idConfigRam)) {               $x5  = $idConfigRam;                }else{$x5  = $rowdata['idConfigRam'];}
-					if(isset($idConfigTime)) {              $x6  = $idConfigTime;               }else{$x6  = $rowdata['idConfigTime'];}
-					if(isset($idOpcionesGen_1)) {           $x7  = $idOpcionesGen_1;            }else{$x7  = $rowdata['idOpcionesGen_1'];}
-					if(isset($idOpcionesGen_2)) {           $x8  = $idOpcionesGen_2;            }else{$x8  = $rowdata['idOpcionesGen_2'];}
-					if(isset($idOpcionesGen_3)) {           $x9  = $idOpcionesGen_3;            }else{$x9  = $rowdata['idOpcionesGen_3'];}
-					if(isset($idOpcionesGen_4)) {           $x10 = $idOpcionesGen_4;            }else{$x10 = $rowdata['idOpcionesGen_4'];}
-					if(isset($idOpcionesGen_5)) {           $x11 = $idOpcionesGen_5;            }else{$x11 = $rowdata['idOpcionesGen_5'];}
-					if(isset($idOpcionesGen_6)) {           $x12 = $idOpcionesGen_6;            }else{$x12 = $rowdata['idOpcionesGen_6'];}
-					if(isset($idOpcionesGen_7)) {           $x13 = $idOpcionesGen_7;            }else{$x13 = $rowdata['idOpcionesGen_7'];}
-					if(isset($idOpcionesGen_8)) {           $x14 = $idOpcionesGen_8;            }else{$x14 = $rowdata['idOpcionesGen_8'];}
-					if(isset($idOpcionesGen_9)) {           $x15 = $idOpcionesGen_9;            }else{$x15 = $rowdata['idOpcionesGen_9'];}
-					if(isset($Config_Gmail_Usuario)) {      $x16 = $Config_Gmail_Usuario;       }else{$x16 = $rowdata['Config_Gmail_Usuario'];}
-					if(isset($Config_Gmail_Password)) {     $x17 = $Config_Gmail_Password;      }else{$x17 = $rowdata['Config_Gmail_Password'];}
-					if(isset($idOpcionesGen_10)) {          $x18 = $idOpcionesGen_10;           }else{$x18 = $rowdata['idOpcionesGen_10'];}
+					if(isset($Config_idTheme)){            $x1  = $Config_idTheme;             }else{$x1  = $rowdata['Config_idTheme'];}
+					if(isset($Config_CorreoRespaldo)){     $x2  = $Config_CorreoRespaldo;      }else{$x2  = $rowdata['Config_CorreoRespaldo'];}
+					if(isset($email_principal)){           $x3  = $email_principal;            }else{$x3  = $rowdata['email_principal'];}
+					if(isset($idOpcionesTel)){             $x4  = $idOpcionesTel;              }else{$x4  = $rowdata['idOpcionesTel'];}
+					if(isset($idConfigRam)){               $x5  = $idConfigRam;                }else{$x5  = $rowdata['idConfigRam'];}
+					if(isset($idConfigTime)){              $x6  = $idConfigTime;               }else{$x6  = $rowdata['idConfigTime'];}
+					if(isset($idOpcionesGen_1)){           $x7  = $idOpcionesGen_1;            }else{$x7  = $rowdata['idOpcionesGen_1'];}
+					if(isset($idOpcionesGen_2)){           $x8  = $idOpcionesGen_2;            }else{$x8  = $rowdata['idOpcionesGen_2'];}
+					if(isset($idOpcionesGen_3)){           $x9  = $idOpcionesGen_3;            }else{$x9  = $rowdata['idOpcionesGen_3'];}
+					if(isset($idOpcionesGen_4)){           $x10 = $idOpcionesGen_4;            }else{$x10 = $rowdata['idOpcionesGen_4'];}
+					if(isset($idOpcionesGen_5)){           $x11 = $idOpcionesGen_5;            }else{$x11 = $rowdata['idOpcionesGen_5'];}
+					if(isset($idOpcionesGen_6)){           $x12 = $idOpcionesGen_6;            }else{$x12 = $rowdata['idOpcionesGen_6'];}
+					if(isset($idOpcionesGen_7)){           $x13 = $idOpcionesGen_7;            }else{$x13 = $rowdata['idOpcionesGen_7'];}
+					if(isset($idOpcionesGen_8)){           $x14 = $idOpcionesGen_8;            }else{$x14 = $rowdata['idOpcionesGen_8'];}
+					if(isset($idOpcionesGen_9)){           $x15 = $idOpcionesGen_9;            }else{$x15 = $rowdata['idOpcionesGen_9'];}
+					if(isset($Config_Gmail_Usuario)){      $x16 = $Config_Gmail_Usuario;       }else{$x16 = $rowdata['Config_Gmail_Usuario'];}
+					if(isset($Config_Gmail_Password)){     $x17 = $Config_Gmail_Password;      }else{$x17 = $rowdata['Config_Gmail_Password'];}
+					if(isset($idOpcionesGen_10)){          $x18 = $idOpcionesGen_10;           }else{$x18 = $rowdata['idOpcionesGen_10'];}
 					
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Visualizacion General');
-					$Form_Inputs->form_select('Tema','Config_idTheme', $x1, 2, 'idTheme', 'Nombre', 'core_theme_colors', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Mostrar Repositorio Comun','idOpcionesGen_9', $x15, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Gestor de Correo','idOpcionesGen_8', $x14, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Tema','Config_idTheme', $x1, 2, 'idTheme', 'Nombre', 'core_theme_colors', 0, '', $dbConn);
+					$Form_Inputs->form_select('Mostrar Repositorio Comun','idOpcionesGen_9', $x15, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_select('Gestor de Correo','idOpcionesGen_8', $x14, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					
 					$Form_Inputs->form_tittle(3, 'Visualizacion Pagina Inicio');
-					$Form_Inputs->form_select('Interfaz','idOpcionesGen_7', $x13, 2, 'idInterfaz', 'Nombre', 'core_interfaces', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Tipo Resumen Telemetria','idOpcionesTel', $x4, 1, 'idOpcionesTel', 'Nombre', 'core_sistemas_opciones_telemetria', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Refresh Pagina Principal','idOpcionesGen_4', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Interfaz','idOpcionesGen_7', $x13, 2, 'idInterfaz', 'Nombre', 'core_interfaces', 0, '', $dbConn);
+					$Form_Inputs->form_select('Tipo Resumen Telemetria','idOpcionesTel', $x4, 1, 'idOpcionesTel', 'Nombre', 'core_sistemas_opciones_telemetria', 0, '', $dbConn);
+					$Form_Inputs->form_select('Refresh Pagina Principal','idOpcionesGen_4', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_input_number('Segundos para Refrescar','idOpcionesGen_6', $x12, 1);
-					$Form_Inputs->form_select('Widget Comunes','idOpcionesGen_1', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Widget de acceso directo','idOpcionesGen_2', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Valores promedios de las mediciones','idOpcionesGen_3', $x9, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Nuevo Widget CrossC','idOpcionesGen_10', $x18, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Widget Comunes','idOpcionesGen_1', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_select('Widget de acceso directo','idOpcionesGen_2', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_select('Valores promedios de las mediciones','idOpcionesGen_3', $x9, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+					$Form_Inputs->form_select('Nuevo Widget CrossC','idOpcionesGen_10', $x18, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					
 					$Form_Inputs->form_tittle(3, 'Configuracion Sistema');
-					$Form_Inputs->form_select('Ram Maxima (Mega Bytes)','idConfigRam', $x5, 2, 'idConfigRam', 'Nombre', 'core_config_ram', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Tiempo Maximo (Minutos)','idConfigTime', $x6, 2, 'idConfigTime', 'Nombre', 'core_config_time', 0, '', $dbConn);	
-					$Form_Inputs->form_select('Motor PDF','idOpcionesGen_5', $x11, 2, 'idPDF', 'Nombre', 'core_pdf_motores', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Ram Maxima (Mega Bytes)','idConfigRam', $x5, 2, 'idConfigRam', 'Nombre', 'core_config_ram', 0, '', $dbConn);
+					$Form_Inputs->form_select('Tiempo Maximo (Minutos)','idConfigTime', $x6, 2, 'idConfigTime', 'Nombre', 'core_config_time', 0, '', $dbConn);
+					$Form_Inputs->form_select('Motor PDF','idOpcionesGen_5', $x11, 2, 'idPDF', 'Nombre', 'core_pdf_motores', 0, '', $dbConn);
 					$Form_Inputs->form_input_icon('Correo Respaldo Datos', 'Config_CorreoRespaldo', $x2, 1,'fa fa-envelope-o');
 					$Form_Inputs->form_input_icon('Correo Envio Notificaciones', 'email_principal', $x3, 1,'fa fa-envelope-o');
 					$Form_Inputs->form_input_icon('Usuario Gmail Envio Notificaciones', 'Config_Gmail_Usuario', $x16, 1,'fa fa-envelope-o');
@@ -148,11 +148,11 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 						document.getElementById('div_idOpcionesGen_10').style.display = 'none';//Nuevo Widget CrossC
 						
 						//se ejecuta al cargar la página (OBLIGATORIO)
-						$(document).ready(function(){ 
+						$(document).ready(function(){
 									
 							let Interfaz               = $("#idOpcionesGen_7").val();
 							let RefreshPaginaPrincipal = $("#idOpcionesGen_4").val();
-							
+
 							/*******************************************/
 							//seleccion de interfaces 
 							//Interfaz Nueva v1
@@ -199,7 +199,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 								document.getElementById('idOpcionesTel').selectedIndex = 1;
 								document.getElementById('idOpcionesGen_1').selectedIndex = 1;
 								document.getElementById('idOpcionesGen_2').selectedIndex = 1;
-							} else { 
+							} else {
 								document.getElementById('div_idOpcionesTel').style.display = 'none';
 								document.getElementById('div_idOpcionesGen_1').style.display = 'none';
 								document.getElementById('div_idOpcionesGen_2').style.display = 'none';
@@ -215,14 +215,14 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 							//Si la Pagina Principal necesita refrescarse, se indica el tiempo
 							//Si
 							if(RefreshPaginaPrincipal == 1){ 
-								document.getElementById('div_idOpcionesGen_6').style.display = '';					
+								document.getElementById('div_idOpcionesGen_6').style.display = '';				
 							//No
 							} else if(RefreshPaginaPrincipal == 2){ 
 								document.getElementById('div_idOpcionesGen_6').style.display = 'none';
 								//Reseteo los valores a 0
 								document.getElementById('idOpcionesGen_6').value = "0";
-							}		
-						}); 
+							}
+						});
 						
 						/*******************************************/
 						//se ejecuta al cambiar valor del select		
@@ -274,7 +274,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 								document.getElementById('idOpcionesTel').selectedIndex = 1;
 								document.getElementById('idOpcionesGen_1').selectedIndex = 1;
 								document.getElementById('idOpcionesGen_2').selectedIndex = 1;
-							} else { 
+							} else {
 								document.getElementById('div_idOpcionesTel').style.display = 'none';
 								document.getElementById('div_idOpcionesGen_1').style.display = 'none';
 								document.getElementById('div_idOpcionesGen_2').style.display = 'none';
@@ -295,7 +295,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 							//Si la Pagina Principal necesita refrescarse, se indica el tiempo
 							//Si
 							if(OpcionesGen_4 == 1){ 
-								document.getElementById('div_idOpcionesGen_6').style.display = '';					
+								document.getElementById('div_idOpcionesGen_6').style.display = '';				
 							//No
 							} else if(OpcionesGen_4 == 2){ 
 								document.getElementById('div_idOpcionesGen_6').style.display = 'none';
@@ -307,19 +307,19 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 								
 					</script>
 
-					<div class="form-group">	
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

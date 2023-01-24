@@ -10,32 +10,32 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "principal_notificaciones.php";
 $location = $original;
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
-if(isset($_GET['filtersender']) && $_GET['filtersender'] != ''){   $location .= "&filtersender=".$_GET['filtersender']; 	}
+if(isset($_GET['filtersender']) && $_GET['filtersender']!=''){   $location .= "&filtersender=".$_GET['filtersender']; 	}
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //se borra un dato
-if ( !empty($_GET['id']) )     {
+if (!empty($_GET['id'])){
 	//Llamamos al formulario
 	$form_trabajo= 'aprobar_uno';
-	require_once 'A1XRXS_sys/xrxs_form/z_notificaciones.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_notificaciones.php';
 }
 //se borra un dato
-if ( !empty($_GET['all']) )     {
+if (!empty($_GET['all'])){
 	//Llamamos al formulario
 	$form_trabajo= 'aprobar_todos';
-	require_once 'A1XRXS_sys/xrxs_form/z_notificaciones.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_notificaciones.php';
 }
 //se indica que no hay que molestar
-if ( !empty($_GET['noMolestar']) )     {
+if (!empty($_GET['noMolestar'])){
 	//Llamamos al formulario
 	$form_trabajo= 'noMolestar';
-	require_once 'A1XRXS_sys/xrxs_form/telemetria_mnt_correos_list.php';	
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_mnt_correos_list.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -63,8 +63,8 @@ include '1include_principal_notificaciones.php';
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="principal.php" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
        

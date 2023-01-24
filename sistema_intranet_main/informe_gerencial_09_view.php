@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,10 +23,10 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Cadena de busqueda
 $search = '?bla=bla';
-if(isset($_GET['Ano'])&&$_GET['Ano']!=''){              $search .= '&Ano='.$_GET['Ano'];}
-if(isset($_GET['mes'])&&$_GET['mes']!=''){              $search .= '&mes='.$_GET['mes'];}
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){  $search .= '&idSistema='.$_GET['idSistema'];}
-if(isset($_GET['type'])&&$_GET['type']!=''){            $search .= '&type='.$_GET['type'];}
+if(isset($_GET['Ano'])&&$_GET['Ano']!=''){      $search .= '&Ano='.$_GET['Ano'];}
+if(isset($_GET['mes'])&&$_GET['mes']!=''){      $search .= '&mes='.$_GET['mes'];}
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){ $search .= '&idSistema='.$_GET['idSistema'];}
+if(isset($_GET['type'])&&$_GET['type']!=''){    $search .= '&type='.$_GET['type'];}
 /***********************************************************/
 //Solo compras pagadas totalmente
 $z1  = "pagos_facturas_proveedores.idPago!=0";
@@ -37,7 +37,7 @@ $z5  = "contab_caja_gastos_existencias.idExistencia!=0";
 $z6  = "pagos_leyes_fiscales_formas_pago.idHistorial!=0";
 $z7  = "pagos_leyes_sociales_formas_pago.idHistorial!=0";
 //filtro el año
-if(isset($_GET['Ano'])&&$_GET['Ano']!=''){ 
+if(isset($_GET['Ano'])&&$_GET['Ano']!=''){
 	$z1.=" AND pagos_facturas_proveedores.F_Pago_ano=".simpleDecode($_GET['Ano'], fecha_actual());
 	$z2.=" AND pagos_facturas_clientes.F_Pago_ano=".simpleDecode($_GET['Ano'], fecha_actual());
 	$z3.=" AND pagos_rrhh_liquidaciones.F_Pago_ano=".simpleDecode($_GET['Ano'], fecha_actual());
@@ -214,16 +214,16 @@ $total_egreso  = 0;
 
  		
 ?>
-<div class="col-sm-12 clearfix">		
+<div class="col-sm-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_09_view_to_excel.php'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Documentos</h5>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -235,7 +235,7 @@ $total_egreso  = 0;
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><th>Egreso</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Pagos a Proveedores</th>
@@ -274,14 +274,14 @@ $total_egreso  = 0;
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
+					<?php } ?>
 					<tr role="row" style="background-color: #E5E5E5;">
 						<th colspan="4">Subtotal Pagos a Proveedores</th>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($Subtotal_1, 0); ?></td><?php } ?>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
-					</tr> 
-					<?php //////////////////////////////////////////////////////////////////// ?> 
+					</tr>
+					<?php ////////////////////////////////////////////////////////////////////?> 
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Pagos de Clientes</th>
 					</tr>
@@ -319,14 +319,14 @@ $total_egreso  = 0;
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
+					<?php } ?>
 					<tr role="row" style="background-color: #E5E5E5;">
 						<th colspan="4">Subtotal Pagos de Clientes</th>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($Subtotal_1, 0); ?></td><?php } ?>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
-					</tr>  
-					<?php //////////////////////////////////////////////////////////////////// ?> 
+					</tr> 
+					<?php ////////////////////////////////////////////////////////////////////?> 
 					 <tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Pagos a trabajadores</th>
 					</tr>
@@ -349,14 +349,14 @@ $total_egreso  = 0;
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
+					<?php } ?>
 					<tr role="row" style="background-color: #E5E5E5;">
 						<th colspan="4">Subtotal Pagos a trabajadores</th>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($Subtotal_1, 0); ?></td><?php } ?>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
-					</tr> 
-					<?php //////////////////////////////////////////////////////////////////// ?> 
+					</tr>
+					<?php ////////////////////////////////////////////////////////////////////?> 
 					 <tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Pagos boletas a trabajadores</th>
 					</tr>
@@ -379,14 +379,14 @@ $total_egreso  = 0;
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
+					<?php } ?>
 					<tr role="row" style="background-color: #E5E5E5;">
 						<th colspan="4">Subtotal Pagos boletas a trabajadores</th>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($Subtotal_1, 0); ?></td><?php } ?>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
-					</tr> 
-					<?php //////////////////////////////////////////////////////////////////// ?> 
+					</tr>
+					<?php ////////////////////////////////////////////////////////////////////?> 
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Rendiciones</th>
 					</tr>
@@ -409,14 +409,14 @@ $total_egreso  = 0;
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
+					<?php } ?>
 					<tr role="row" style="background-color: #E5E5E5;">
 						<th colspan="4">Subtotal Rendiciones</th>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($Subtotal_1, 0); ?></td><?php } ?>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
-					</tr> 
-					<?php //////////////////////////////////////////////////////////////////// ?> 
+					</tr>
+					<?php ////////////////////////////////////////////////////////////////////?> 
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Formulario 29</th>
 					</tr>
@@ -439,14 +439,14 @@ $total_egreso  = 0;
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
+					<?php } ?>
 					<tr role="row" style="background-color: #E5E5E5;">
 						<th colspan="4">Subtotal Formulario 29</th>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($Subtotal_1, 0); ?></td><?php } ?>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
-					</tr> 
-					<?php //////////////////////////////////////////////////////////////////// ?> 
+					</tr>
+					<?php ////////////////////////////////////////////////////////////////////?> 
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Pagos de previred</th>
 					</tr>
@@ -469,20 +469,20 @@ $total_egreso  = 0;
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
+					<?php } ?>
 					<tr role="row" style="background-color: #E5E5E5;">
 						<th colspan="4">Subtotal Pagos de previred</th>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($Subtotal_1, 0); ?></td><?php } ?>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
-					</tr> 
-					<?php //////////////////////////////////////////////////////////////////// ?>  
+					</tr>
+					<?php ////////////////////////////////////////////////////////////////////?>  
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="4">Total General</th>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($total_ingreso, 0); ?></td><?php } ?>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($total_egreso, 0); ?></td><?php } ?>
 						<td></td>
-					</tr>           
+					</tr>          
 				</tbody>
 			</table>
 		</div>
@@ -490,10 +490,10 @@ $total_egreso  = 0;
 </div>
 
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
+<?php if(isset($_GET['return'])&&$_GET['return']!=''){?>
 	<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-		<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+		<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
 	</div>
 <?php } ?>

@@ -11,29 +11,29 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 
 // Se trae un listado con todos los productos
 $arrFacturacion = array();
 $query = "SELECT
 core_sistemas.Rut AS SistemaRut,
-aguas_facturacion_listado_detalle.idCliente, 
+aguas_facturacion_listado_detalle.idCliente,
 aguas_clientes_listado.idTipo AS tipoCliente,
 aguas_facturacion_listado_detalle.DetConsMesTotalCantidad AS Medicion
 
 FROM `aguas_facturacion_listado_detalle`
 LEFT JOIN `aguas_clientes_listado`      ON aguas_clientes_listado.idCliente     = aguas_facturacion_listado_detalle.idCliente
 LEFT JOIN `core_sistemas`               ON core_sistemas.idSistema              = aguas_facturacion_listado_detalle.idSistema
-WHERE aguas_facturacion_listado_detalle.idMes = ".$_GET['idMes']." 
-AND aguas_facturacion_listado_detalle.Ano = ".$_GET['Ano']." 
+WHERE aguas_facturacion_listado_detalle.idMes = ".$_GET['idMes']."
+AND aguas_facturacion_listado_detalle.Ano = ".$_GET['Ano']."
 AND aguas_facturacion_listado_detalle.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema']."
 ORDER BY aguas_facturacion_listado_detalle.DetConsMesTotalCantidad ASC";
 //Consulta
@@ -42,16 +42,16 @@ $resultado = mysqli_query ($dbConn, $query);
 if(!$resultado){
 	//Genero numero aleatorio
 	$vardata = genera_password(8,'alfanumerico');
-					
+
 	//Guardo el error en una variable temporal
 	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrFacturacion,$row );
-} 
+}
 
 //Programacion Cretiva
 $informepr = array();
@@ -65,12 +65,12 @@ for ($i = 1; $i <= 5; $i++) {
 	}
 }
 
-foreach ($arrFacturacion as $fact) { 
+foreach ($arrFacturacion as $fact) {
 	//separo por codigo de rango
 	if($fact['Medicion']==0){
 		$informepr[$fact['tipoCliente']][1]['Cantidad']++;
 		$informepr[$fact['tipoCliente']][1]['Medicion'] = $informepr[$fact['tipoCliente']][1]['Medicion'] + $fact['Medicion'];
-	}elseif($fact['Medicion']>0 && $fact['Medicion']<=10){	
+	}elseif($fact['Medicion']>0 && $fact['Medicion']<=10){
 		$informepr[$fact['tipoCliente']][2]['Cantidad']++;
 		$informepr[$fact['tipoCliente']][2]['Medicion'] = $informepr[$fact['tipoCliente']][2]['Medicion'] + $fact['Medicion'];
 	}elseif($fact['Medicion']>10 && $fact['Medicion']<=15){
@@ -122,16 +122,14 @@ foreach ($arrFacturacion as $fact) {
 		$informepr[$fact['tipoCliente']][18]['Cantidad']++;
 		$informepr[$fact['tipoCliente']][18]['Medicion'] = $informepr[$fact['tipoCliente']][18]['Medicion'] + $fact['Medicion'];
 
-	}	
-	
+	}
+
 }
 
 /***********************************************************************************/
 //Exporto a XML
 /************************************/
-$mes = $_GET['idMes'];
-//Normalizo
-if($_GET['idMes']<10){$mes = '0'.$_GET['idMes'];}
+$mes = numero_mes($_GET['idMes']);
 $periodo = $_GET['Ano'].$mes;
 /************************************/
 $rut = substr($arrFacturacion[0]['SistemaRut'], 0, -2);
@@ -177,7 +175,7 @@ $xmlstr =
 						$xmlstr .= '</Cliente>';
 					}
 				}
-               $xmlstr .= ' 
+               $xmlstr .= '
             </Localidad>
         </Limite>
     </Empresa>
@@ -188,7 +186,7 @@ header("Content-type: text/xml");
 header('Content-Desposition: attachment; filename="foobar.xml"');
 echo $xml->asXML();
 //exit();
- 
+
 
 
 ?>

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "cross_solicitud_aplicacion_editar.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -19,90 +19,90 @@ $location .='?view='.$_GET['view'];
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //se modifican los datos basicos
-if ( !empty($_POST['submit_modBase']) )  { 
+if (!empty($_POST['submit_modBase'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_mod_base';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 /*************************************************************************/
 //se agrega un trabajo
-if ( !empty($_POST['submit_cuartel']) )  { 
+if (!empty($_POST['submit_cuartel'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_addCuartel';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 //se agrega un trabajo
-if ( !empty($_POST['submit_edit_cuartel']) )  { 
+if (!empty($_POST['submit_edit_cuartel'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_editCuartel';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 //se cierra un trabajo
-if ( !empty($_POST['submit_close_cuartel']) )     {
+if (!empty($_POST['submit_close_cuartel'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_close_Cuartel';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 //se borra un trabajo
-if ( !empty($_GET['del_cuartel']) )     {
+if (!empty($_GET['del_cuartel'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_del_Cuartel';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 /*************************************************************************/
 //se agrega un trabajo
-if ( !empty($_POST['submit_tractor']) )  { 
+if (!empty($_POST['submit_tractor'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_addtractor';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 //se agrega un trabajo
-if ( !empty($_POST['submit_edit_tractor']) )  { 
+if (!empty($_POST['submit_edit_tractor'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_edittractor';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 //se borra un trabajo
-if ( !empty($_GET['del_trac']) )     {
+if (!empty($_GET['del_trac'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_del_trac';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 /*************************************************************************/
 //se agrega un trabajo
-if ( !empty($_POST['submit_material']) )  { 
+if (!empty($_POST['submit_material'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_addmaterial';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 //se borra un trabajo
-if ( !empty($_GET['del_material']) )     {
+if (!empty($_GET['del_material'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_del_material';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 /*************************************************************************/
 //se agrega un trabajo
-if ( !empty($_POST['submit_producto']) )  { 
+if (!empty($_POST['submit_producto'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_addproducto';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 //se agrega un trabajo
-if ( !empty($_POST['submit_edit_producto']) )  { 
+if (!empty($_POST['submit_edit_producto'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_editproducto';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 //se borra un trabajo
-if ( !empty($_GET['del_prod']) )     {
+if (!empty($_GET['del_prod'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_del_prod';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 /*************************************************************************/
 //se agrega un trabajo
-if ( !empty($_POST['submit_add_detalle']) )  { 
+if (!empty($_POST['submit_add_detalle'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_adddetalle';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
@@ -133,22 +133,22 @@ if (isset($_GET['not_delmaterial'])){  $error['not_delmaterial']  = 'sucess/Mate
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(isset($error1)&&$error1!=''){echo notifications_list($error1);};
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['addDetalle']) ) {?>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['addDetalle'])){?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Detalle</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Observacion)) {      $x1  = $Observacion;        }else{$x1  = '';}
-				
+				if(isset($Observacion)){      $x1  = $Observacion;        }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observacion','Observacion', $x1, 1);
@@ -161,36 +161,36 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_add_detalle"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_add_detalle"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-/*}elseif ( ! empty($_GET['lock_cuartel']) ) {?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*}elseif(!empty($_GET['lock_cuartel'])){?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Cerrar Cuartel</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php
 				//Se verifican si existen los datos
-				if(isset($f_cierre)) {          $x1  = $f_cierre;         }else{$x1  = '';}
-				if(isset($idEjecucion)) {       $x2  = $idEjecucion;      }else{$x2  = '';}
-				if(isset($GeoDistance)) {       $x3  = $GeoDistance;      }elseif(isset($_GET['distancia'])&&$_GET['distancia']!=''){$x3  = Cantidades(($_GET['distancia']/1000), 0);}else{$x3  = '';}
-				if(isset($VelPromedio)) {       $x4  = $VelPromedio;      }else{$x4  = '';}
-				if(isset($LitrosAplicados)) {   $x5  = $LitrosAplicados;  }else{$x5  = '';}
-				//if(isset($T_Aplicacion)) {      $x6  = $T_Aplicacion;     }else{$x6  = '';}
-				
+				if(isset($f_cierre)){          $x1  = $f_cierre;         }else{$x1  = '';}
+				if(isset($idEjecucion)){       $x2  = $idEjecucion;      }else{$x2  = '';}
+				if(isset($GeoDistance)){       $x3  = $GeoDistance;      }elseif(isset($_GET['distancia'])&&$_GET['distancia']!=''){$x3  = Cantidades(($_GET['distancia']/1000), 0);}else{$x3  = '';}
+				if(isset($VelPromedio)){       $x4  = $VelPromedio;      }else{$x4  = '';}
+				if(isset($LitrosAplicados)){   $x5  = $LitrosAplicados;  }else{$x5  = '';}
+				//if(isset($T_Aplicacion)){      $x6  = $T_Aplicacion;     }else{$x6  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Cierre Cuartel','f_cierre', $x1, 2);	
@@ -223,7 +223,7 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 							//document.getElementById('div_T_Aplicacion').style.display = '';
 													
 						//Para el resto
-						} else { 
+						} else {
 							document.getElementById('div_GeoDistance').style.display = 'none';
 							document.getElementById('div_VelPromedio').style.display = 'none';
 							document.getElementById('div_LitrosAplicados').style.display = 'none';
@@ -239,17 +239,17 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 				</script>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_close_cuartel"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_close_cuartel"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div><?php */ ?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['edit_prod']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['edit_prod'])){ 
 // consulto los datos
 $SIS_query = 'idProducto, DosisAplicar, Objetivo';
 $SIS_join  = '';
@@ -269,21 +269,21 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 	
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Producto Químico</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProducto)) {     $x1  = $idProducto;    }else{$x1  = $row_data['idProducto'];}
-				if(isset($DosisAplicar)) {   $x2  = $DosisAplicar;  }else{$x2  = $row_data['DosisAplicar'];}
-				if(isset($Objetivo)) {       $x3  = $Objetivo;      }else{$x3  = $row_data['Objetivo'];}
-				
+				if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = $row_data['idProducto'];}
+				if(isset($DosisAplicar)){   $x2  = $DosisAplicar;  }else{$x2  = $row_data['DosisAplicar'];}
+				if(isset($Objetivo)){       $x3  = $Objetivo;      }else{$x3  = $row_data['Objetivo'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Producto Químico a aplicar');
@@ -328,17 +328,17 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				</script>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_producto"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_producto"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['add_prod']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['add_prod'])){ 
 // consulto los datos
 $SIS_query = '
 productos_listado.idProducto, 
@@ -352,21 +352,21 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 	
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Producto Químico</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProducto)) {     $x1  = $idProducto;    }else{$x1  = '';}
-				if(isset($DosisAplicar)) {   $x2  = $DosisAplicar;  }else{$x2  = '';}
-				if(isset($Objetivo)) {       $x3  = $Objetivo;      }else{$x3  = '';}
-				
+				if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = '';}
+				if(isset($DosisAplicar)){   $x2  = $DosisAplicar;  }else{$x2  = '';}
+				if(isset($Objetivo)){       $x3  = $Objetivo;      }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Producto Químico a aplicar');
@@ -410,17 +410,17 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				</script>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_producto"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_producto"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_trac']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_trac'])){
 // consulto los datos
 $SIS_query = 'idVehiculo, idTelemetria, idTrabajador';
 $SIS_join  = '';
@@ -430,37 +430,37 @@ $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_lista
 /***************************************************/
 $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	 
+$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$w .= " AND telemetria_listado.idTab=1";//CrossChecking					
-}				
+}	
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Tractor</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idVehiculo)) {     $x1  = $idVehiculo;    }else{$x1  = $row_data['idVehiculo'];}
-				if(isset($idTelemetria)) {   $x2  = $idTelemetria;  }else{$x2  = $row_data['idTelemetria'];}
-				if(isset($idTrabajador)) {   $x3  = $idTrabajador;  }else{$x3  = $row_data['idTrabajador'];}
-				
+				if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  = $row_data['idVehiculo'];}
+				if(isset($idTelemetria)){   $x2  = $idTelemetria;  }else{$x2  = $row_data['idTelemetria'];}
+				if(isset($idTrabajador)){   $x3  = $idTrabajador;  }else{$x3  = $row_data['idTrabajador'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Tractor');
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Tractor','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
@@ -475,23 +475,23 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_tractor"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_tractor"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['add_trac']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['add_trac'])){
 $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	 
+$x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
@@ -500,26 +500,26 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 			
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Tractor</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idVehiculo)) {     $x1  = $idVehiculo;    }else{$x1  = '';}
-				if(isset($idTelemetria)) {   $x2  = $idTelemetria;  }else{$x2  = '';}
-				if(isset($idTrabajador)) {   $x3  = $idTrabajador;  }else{$x3  = '';}
-				
+				if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  = '';}
+				if(isset($idTelemetria)){   $x2  = $idTelemetria;  }else{$x2  = '';}
+				if(isset($idTrabajador)){   $x3  = $idTrabajador;  }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Tractor');
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Tractor','idTelemetria', $x2, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
@@ -534,17 +534,17 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tractor"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tractor"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['edit_Cuarteles']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['edit_Cuarteles'])){
 /***************************************************/
 // consulto los datos
 $SIS_query = 'idPredio, idCategoria, idProducto';
@@ -552,7 +552,7 @@ $SIS_join  = '';
 $SIS_where = 'idSolicitud ='.$_GET['view'];
 $row_data_ini = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data_ini');
 
-/***************************************************/	
+/***************************************************/
 // consulto los datos
 $SIS_query = 'idZona,Mojamiento,VelTractor,VelViento,TempMin,TempMax,HumTempMax';
 $SIS_join  = '';
@@ -563,30 +563,30 @@ $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_lista
 //Verifico el tipo de usuario que esta ingresando
 $z ="idPredio=".$row_data_ini['idPredio'];
 $z.=" AND idEstado=1 ";
-if(isset($row_data_ini['idCategoria'])&&$row_data_ini['idCategoria']!=0){ $z.= " AND idCategoria=".$row_data_ini['idCategoria'];}
-if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){   $z.= " AND idProducto=".$row_data_ini['idProducto'];}
+if(isset($row_data_ini['idCategoria'])&&$row_data_ini['idCategoria']!=0){$z.= " AND idCategoria=".$row_data_ini['idCategoria'];}
+if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){$z.= " AND idProducto=".$row_data_ini['idProducto'];}
 		
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Cuartel</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idZona)) {         $x1  = $idZona;        }else{$x1  = $row_data['idZona'];}
-				if(isset($Mojamiento)) {     $x2  = $Mojamiento;    }else{$x2  = $row_data['Mojamiento'];}
-				if(isset($VelTractor)) {     $x3  = $VelTractor;    }else{$x3  = $row_data['VelTractor'];}
-				if(isset($VelViento)) {      $x4  = $VelViento;     }else{$x4  = $row_data['VelViento'];}
-				if(isset($TempMin)) {        $x5  = $TempMin;       }else{$x5  = $row_data['TempMin'];}
-				if(isset($TempMax)) {        $x6  = $TempMax;       }else{$x6  = $row_data['TempMax'];}
-				if(isset($HumTempMax)) {     $x7  = $HumTempMax;    }else{$x7  = $row_data['HumTempMax'];}
-				
+				if(isset($idZona)){         $x1  = $idZona;        }else{$x1  = $row_data['idZona'];}
+				if(isset($Mojamiento)){     $x2  = $Mojamiento;    }else{$x2  = $row_data['Mojamiento'];}
+				if(isset($VelTractor)){     $x3  = $VelTractor;    }else{$x3  = $row_data['VelTractor'];}
+				if(isset($VelViento)){      $x4  = $VelViento;     }else{$x4  = $row_data['VelViento'];}
+				if(isset($TempMin)){        $x5  = $TempMin;       }else{$x5  = $row_data['TempMin'];}
+				if(isset($TempMax)){        $x6  = $TempMax;       }else{$x6  = $row_data['TempMax'];}
+				if(isset($HumTempMax)){     $x7  = $HumTempMax;    }else{$x7  = $row_data['HumTempMax'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Identificación cuartel');
@@ -606,17 +606,17 @@ if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){   $z.= "
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_cuartel"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_cuartel"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addCuartel']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addCuartel'])){ 
 // consulto los datos
 $SIS_query = 'idPredio, idCategoria, idProducto, Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax';
 $SIS_join  = '';
@@ -639,12 +639,12 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 //Verifico el tipo de usuario que esta ingresando
 $z = "idPredio=".$row_data['idPredio'];
 $z.= " AND idEstado=1 ";
-if(isset($row_data['idCategoria'])&&$row_data['idCategoria']!=0){ $z.= " AND idCategoria=".$row_data['idCategoria'];}
-if(isset($row_data['idProducto'])&&$row_data['idProducto']!=0){   $z.= " AND idProducto=".$row_data['idProducto'];}
+if(isset($row_data['idCategoria'])&&$row_data['idCategoria']!=0){$z.= " AND idCategoria=".$row_data['idCategoria'];}
+if(isset($row_data['idProducto'])&&$row_data['idProducto']!=0){$z.= " AND idProducto=".$row_data['idProducto'];}
 //otros filtros
 $x = "idEstado=1 ";
 $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
-$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
@@ -656,30 +656,30 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Cuartel</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idZona)) {         $x1  = $idZona;        }else{$x1  = '';}
-				if(isset($Mojamiento)) {     $x2  = $Mojamiento;    }else{$x2  = $row_data['Mojamiento'];}
-				if(isset($VelTractor)) {     $x3  = $VelTractor;    }else{$x3  = $row_data['VelTractor'];}
-				if(isset($VelViento)) {      $x4  = $VelViento;     }else{$x4  = $row_data['VelViento'];}
-				if(isset($TempMin)) {        $x5  = $TempMin;       }else{$x5  = $row_data['TempMin'];}
-				if(isset($TempMax)) {        $x6  = $TempMax;       }else{$x6  = $row_data['TempMax'];}
-				if(isset($HumTempMax)) {     $x7  = $HumTempMax;    }else{$x7  = $row_data['HumTempMax'];}
-				if(isset($idVehiculo)) {     $x8  = $idVehiculo;    }else{$x8  = '';}
-				if(isset($idTelemetria)) {   $x9  = $idTelemetria;  }else{$x9  = '';}
-				if(isset($idTrabajador)) {   $x10 = $idTrabajador;  }else{$x10 = '';}
-				if(isset($idProducto)) {     $x11 = $idProducto;    }else{$x11 = '';}
-				if(isset($DosisAplicar)) {   $x12 = $DosisAplicar;  }else{$x12 = '';}
-				if(isset($Objetivo)) {       $x13 = $Objetivo;      }else{$x13 = '';}
+				if(isset($idZona)){         $x1  = $idZona;        }else{$x1  = '';}
+				if(isset($Mojamiento)){     $x2  = $Mojamiento;    }else{$x2  = $row_data['Mojamiento'];}
+				if(isset($VelTractor)){     $x3  = $VelTractor;    }else{$x3  = $row_data['VelTractor'];}
+				if(isset($VelViento)){      $x4  = $VelViento;     }else{$x4  = $row_data['VelViento'];}
+				if(isset($TempMin)){        $x5  = $TempMin;       }else{$x5  = $row_data['TempMin'];}
+				if(isset($TempMax)){        $x6  = $TempMax;       }else{$x6  = $row_data['TempMax'];}
+				if(isset($HumTempMax)){     $x7  = $HumTempMax;    }else{$x7  = $row_data['HumTempMax'];}
+				if(isset($idVehiculo)){     $x8  = $idVehiculo;    }else{$x8  = '';}
+				if(isset($idTelemetria)){   $x9  = $idTelemetria;  }else{$x9  = '';}
+				if(isset($idTrabajador)){   $x10 = $idTrabajador;  }else{$x10 = '';}
+				if(isset($idProducto)){     $x11 = $idProducto;    }else{$x11 = '';}
+				if(isset($DosisAplicar)){   $x12 = $DosisAplicar;  }else{$x12 = '';}
+				if(isset($Objetivo)){       $x13 = $Objetivo;      }else{$x13 = '';}
 				
 			
 				//se dibujan los inputs
@@ -697,7 +697,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				
 				$Form_Inputs->form_tittle(3, 'Tractor');
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x9, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x9, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Tractor','idTelemetria', $x9, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
@@ -713,7 +713,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x13, 1);
 				
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
-				?>				
+				?>			
 				
 				<script>
 					<?php
@@ -744,31 +744,31 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				</script>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_cuartel"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_cuartel"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addMaterial']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addMaterial'])){ ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Material de Seguridad</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idMatSeguridad)) {     $x1  = $idMatSeguridad;    }else{$x1  = '';}
-				
+				if(isset($idMatSeguridad)){     $x1  = $idMatSeguridad;    }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Material de Seguridad','idMatSeguridad', $x1, 2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1', '', $dbConn);
@@ -779,17 +779,17 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_material"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_material"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['modBase']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['modBase'])){
 // consulto los datos
 $SIS_query = 'idPredio, idTemporada, idEstadoFen, idCategoria, idProducto, f_programacion, horaProg, idSistema, idEstado, f_ejecucion, f_termino, horaEjecucion, horaTermino, Mojamiento, VelTractor, VelViento, TempMin, TempMax, idPrioridad, f_programacion_fin, horaProg_fin, f_ejecucion_fin, horaEjecucion_fin, f_termino_fin, horaTermino_fin, idDosificador, HumTempMax, NSolicitud';
 $SIS_join  = '';
@@ -798,49 +798,49 @@ $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_lista
 	 	 
 //Verifico el tipo de usuario que esta ingresando
 $y = "idEstado=1";
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
-$m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+$m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar la Solicitud de Aplicacion</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idPrioridad)) {          $x0  = $idPrioridad;          }else{$x0  = $row_data['idPrioridad'];}
-				if(isset($idPredio)) {             $x1  = $idPredio;             }else{$x1  = $row_data['idPredio'];}
-				if(isset($idTemporada)) {          $x2  = $idTemporada;          }else{$x2  = $row_data['idTemporada'];}
-				if(isset($idEstadoFen)) {          $x3  = $idEstadoFen;          }else{$x3  = $row_data['idEstadoFen'];}
-				if(isset($idCategoria)) {          $x4  = $idCategoria;          }else{$x4  = $row_data['idCategoria'];}
-				if(isset($idProducto)) {           $x5  = $idProducto;           }else{$x5  = $row_data['idProducto'];}
-				if(isset($f_programacion)) {       $x6  = $f_programacion;       }else{$x6  = $row_data['f_programacion'];}
-				if(isset($horaProg)) {             $x7  = $horaProg;             }else{$x7  = $row_data['horaProg'];}
-				if(isset($f_ejecucion)) {          $x8  = $f_ejecucion;          }else{$x8  = $row_data['f_ejecucion'];}
-				if(isset($horaEjecucion)) {        $x9  = $horaEjecucion;        }else{$x9  = $row_data['horaEjecucion'];}
-				if(isset($f_termino)) {            $x10 = $f_termino;            }else{$x10 = $row_data['f_termino'];}
-				if(isset($horaTermino)) {          $x11 = $horaTermino;          }else{$x11 = $row_data['horaTermino'];}
-				if(isset($Mojamiento)) {           $x13 = $Mojamiento;           }else{$x13 = Cantidades_decimales_justos($row_data['Mojamiento']);}
-				if(isset($VelTractor)) {           $x14 = $VelTractor;           }else{$x14 = Cantidades_decimales_justos($row_data['VelTractor']);}
-				if(isset($VelViento)) {            $x15 = $VelViento;            }else{$x15 = Cantidades_decimales_justos($row_data['VelViento']);}
-				if(isset($TempMin)) {              $x16 = $TempMin;              }else{$x16 = Cantidades_decimales_justos($row_data['TempMin']);}
-				if(isset($TempMax)) {              $x17 = $TempMax;              }else{$x17 = Cantidades_decimales_justos($row_data['TempMax']);}
-				if(isset($f_programacion_fin)) {   $x18 = $f_programacion_fin;   }else{$x18 = $row_data['f_programacion_fin'];}
-				if(isset($horaProg_fin)) {         $x19 = $horaProg_fin;         }else{$x19 = $row_data['horaProg_fin'];}
-				if(isset($f_ejecucion_fin)) {      $x20 = $f_ejecucion_fin;      }else{$x20 = $row_data['f_ejecucion_fin'];}
-				if(isset($horaEjecucion_fin)) {    $x21 = $horaEjecucion_fin;    }else{$x21 = $row_data['horaEjecucion_fin'];}
-				if(isset($f_termino_fin)) {        $x22 = $f_termino_fin;        }else{$x22 = $row_data['f_termino_fin'];}
-				if(isset($horaTermino_fin)) {      $x23 = $horaTermino_fin;      }else{$x23 = $row_data['horaTermino_fin'];}
-				if(isset($idDosificador)) {        $x24 = $idDosificador;        }else{$x24 = $row_data['idDosificador'];}
-				if(isset($HumTempMax)) {           $x25 = $HumTempMax;           }else{$x25 = Cantidades_decimales_justos($row_data['HumTempMax']);}
-				if(isset($NSolicitud)) {           $x26 = $NSolicitud;           }else{$x26 = $row_data['NSolicitud'];}
-				
+				if(isset($idPrioridad)){          $x0  = $idPrioridad;          }else{$x0  = $row_data['idPrioridad'];}
+				if(isset($idPredio)){             $x1  = $idPredio;             }else{$x1  = $row_data['idPredio'];}
+				if(isset($idTemporada)){          $x2  = $idTemporada;          }else{$x2  = $row_data['idTemporada'];}
+				if(isset($idEstadoFen)){          $x3  = $idEstadoFen;          }else{$x3  = $row_data['idEstadoFen'];}
+				if(isset($idCategoria)){          $x4  = $idCategoria;          }else{$x4  = $row_data['idCategoria'];}
+				if(isset($idProducto)){           $x5  = $idProducto;           }else{$x5  = $row_data['idProducto'];}
+				if(isset($f_programacion)){       $x6  = $f_programacion;       }else{$x6  = $row_data['f_programacion'];}
+				if(isset($horaProg)){             $x7  = $horaProg;             }else{$x7  = $row_data['horaProg'];}
+				if(isset($f_ejecucion)){          $x8  = $f_ejecucion;          }else{$x8  = $row_data['f_ejecucion'];}
+				if(isset($horaEjecucion)){        $x9  = $horaEjecucion;        }else{$x9  = $row_data['horaEjecucion'];}
+				if(isset($f_termino)){            $x10 = $f_termino;            }else{$x10 = $row_data['f_termino'];}
+				if(isset($horaTermino)){          $x11 = $horaTermino;          }else{$x11 = $row_data['horaTermino'];}
+				if(isset($Mojamiento)){           $x13 = $Mojamiento;           }else{$x13 = Cantidades_decimales_justos($row_data['Mojamiento']);}
+				if(isset($VelTractor)){           $x14 = $VelTractor;           }else{$x14 = Cantidades_decimales_justos($row_data['VelTractor']);}
+				if(isset($VelViento)){            $x15 = $VelViento;            }else{$x15 = Cantidades_decimales_justos($row_data['VelViento']);}
+				if(isset($TempMin)){              $x16 = $TempMin;              }else{$x16 = Cantidades_decimales_justos($row_data['TempMin']);}
+				if(isset($TempMax)){              $x17 = $TempMax;              }else{$x17 = Cantidades_decimales_justos($row_data['TempMax']);}
+				if(isset($f_programacion_fin)){   $x18 = $f_programacion_fin;   }else{$x18 = $row_data['f_programacion_fin'];}
+				if(isset($horaProg_fin)){         $x19 = $horaProg_fin;         }else{$x19 = $row_data['horaProg_fin'];}
+				if(isset($f_ejecucion_fin)){      $x20 = $f_ejecucion_fin;      }else{$x20 = $row_data['f_ejecucion_fin'];}
+				if(isset($horaEjecucion_fin)){    $x21 = $horaEjecucion_fin;    }else{$x21 = $row_data['horaEjecucion_fin'];}
+				if(isset($f_termino_fin)){        $x22 = $f_termino_fin;        }else{$x22 = $row_data['f_termino_fin'];}
+				if(isset($horaTermino_fin)){      $x23 = $horaTermino_fin;      }else{$x23 = $row_data['horaTermino_fin'];}
+				if(isset($idDosificador)){        $x24 = $idDosificador;        }else{$x24 = $row_data['idDosificador'];}
+				if(isset($HumTempMax)){           $x25 = $HumTempMax;           }else{$x25 = Cantidades_decimales_justos($row_data['HumTempMax']);}
+				if(isset($NSolicitud)){           $x26 = $NSolicitud;           }else{$x26 = $row_data['NSolicitud'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				//Verifico el estado
@@ -892,7 +892,7 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						$Form_Inputs->form_date('Fecha termino cierre','f_termino_fin', $x22, 2);
 						$Form_Inputs->form_time('Hora termino cierre','horaTermino_fin', $x23, 2, 1);
 						break;
-				}		 
+				} 
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -900,16 +900,16 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>					
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+</div>	
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  } else { 
 /**********************************************/
 // consulto los datos
@@ -976,7 +976,7 @@ LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTr
 $SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$_GET['view'];
 $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
-/*****************************************/				
+/*****************************************/
 //Cuarteles
 $SIS_query = '
 cross_solicitud_aplicacion_listado_cuarteles.idCuarteles,
@@ -1002,7 +1002,7 @@ $SIS_order = 'cross_predios_listado_zonas.Nombre ASC';
 $arrCuarteles = array();
 $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_cuarteles', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCuarteles');
 
-/*****************************************/	
+/*****************************************/
 //Se trae un listado con los Tractores	
 $SIS_query = '
 cross_solicitud_aplicacion_listado_tractores.idTractores,
@@ -1021,7 +1021,7 @@ $SIS_order = 'telemetria_listado.Nombre ASC';
 $arrTractores = array();
 $arrTractores = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTractores');
 
-/*****************************************/	
+/*****************************************/
 //Se trae un listado con los productos	
 $SIS_query = '
 cross_solicitud_aplicacion_listado_productos.idProdQuim,
@@ -1039,7 +1039,7 @@ $SIS_order = 'productos_listado.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con el historial
 $SIS_query = '
 cross_solicitud_aplicacion_listado_historial.Creacion_fecha, 
@@ -1054,7 +1054,7 @@ $SIS_order = 'cross_solicitud_aplicacion_listado_historial.idHistorial ASC';
 $arrHistorial = array();
 $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
 
-/*****************************************/	
+/*****************************************/
 //Se trae un listado con los productos	
 $SIS_query = '
 cross_solicitud_aplicacion_listado_materiales.idMatSeg,
@@ -1066,7 +1066,7 @@ $SIS_order = 'cross_checking_materiales_seguridad.Nombre ASC';
 $arrMateriales = array();
 $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_materiales', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMateriales');
 
-/*****************************************/	
+/*****************************************/
 $arrTrac = array();
 foreach ($arrTractores as $prod) {
 	$arrTrac[$prod['idCuarteles']][$prod['idTractores']]['idTractores']     = $prod['idTractores'];
@@ -1075,7 +1075,7 @@ foreach ($arrTractores as $prod) {
 	$arrTrac[$prod['idCuarteles']][$prod['idTractores']]['Trabajador']      = $prod['Rut'].' - '.$prod['Nombre'].' '.$prod['ApellidoPat'];
 }
 
-/*****************************************/	
+/*****************************************/
 $arrProd = array();
 foreach ($arrProductos as $prod) {
 	$arrProd[$prod['idCuarteles']][$prod['idProdQuim']]['idProdQuim']       = $prod['idProdQuim'];
@@ -1092,12 +1092,12 @@ foreach ($arrProductos as $prod) {
 
 	<div id="page-wrap">
 		<div id="header"> SOLICITUD DE APLICACIONES N° <?php echo n_doc($row_data['NSolicitud'], 5); ?></div>
-		<div id="customer"> 
-			<table id="meta" class="fleft otdata">
+		<div id="customer">
+			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Prioridad</td>
@@ -1115,7 +1115,7 @@ foreach ($arrProductos as $prod) {
 						<td class="meta-head">Estado Fenológico</td>
 						<td><?php echo $row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre']?></td>
 					</tr>
-					<?php if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){ ?>
+					<?php if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){?>
 						<tr>
 							<td class="meta-head">Especie - Variedad</td>
 							<td>
@@ -1182,7 +1182,7 @@ foreach ($arrProductos as $prod) {
 						<td class="meta-head">Fecha termino requerido</td>
 						<td><?php echo fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin']?></td>
 					</tr>
-					<?php if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){ ?>
+					<?php if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){?>
 						<tr>
 							<td class="meta-head">Fecha inicio programación</td>
 							<td><?php echo fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion']?></td>
@@ -1192,7 +1192,7 @@ foreach ($arrProductos as $prod) {
 							<td><?php echo fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin']?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){ ?>
+					<?php if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){?>
 						<tr>
 							<td class="meta-head">Fecha inicio ejecución</td>
 							<td><?php echo fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino']?></td>
@@ -1202,7 +1202,7 @@ foreach ($arrProductos as $prod) {
 							<td><?php echo fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin']?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ ?>
+					<?php if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){?>
 						<tr>
 							<td class="meta-head">Dosificador</td>
 							<td><?php echo $row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat']?></td>
@@ -1220,7 +1220,7 @@ foreach ($arrProductos as $prod) {
 					<th width="160">Acciones</th>
 				</tr>
 					  
-				<?php /**********************************************************************************/ ?> 
+				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td colspan="6"><strong>Materiales de Seguridad</strong></td>
 					<td colspan="2"><strong>Codigo</strong></td>
@@ -1231,7 +1231,7 @@ foreach ($arrProductos as $prod) {
 				<?php 
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrMateriales!=false && !empty($arrMateriales) && $arrMateriales!='') {
-						foreach ($arrMateriales as $prod) { ?>
+						foreach ($arrMateriales as $prod) {?>
 						
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="6"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Nombre'];?></td>
@@ -1246,11 +1246,11 @@ foreach ($arrProductos as $prod) {
 										<?php } ?>
 									</div>
 								</td>
-							</tr> 
-					<?php } ?>	
+							</tr>
+					<?php } ?>
 				<?php } ?>
 
-				<?php /**********************************************************************************/ ?> 
+				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td><strong>Cuarteles</strong></td>
 					<td><strong>Variedad - Especie</strong></td>
@@ -1262,7 +1262,7 @@ foreach ($arrProductos as $prod) {
 					<td><strong>Hum Temp Max</strong></td>
 					<td>
 						<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3){ ?><a href="<?php echo $location.'&addCuartel=true' ?>" title="Agregar Cuartel" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Cuartel</a><?php } ?>
-					</td>				
+					</td>			
 				</tr>
 				<?php 
 					//recorro el lsiatdo entregado por la base de datos
@@ -1295,7 +1295,7 @@ foreach ($arrProductos as $prod) {
 										<?php } ?>
 									</div>
 								</td>
-							</tr> 
+							</tr>
 							<?php 
 							if($arrTrac[$cuartel['idCuarteles']]){
 								//Se recorren los tractores
@@ -1316,7 +1316,7 @@ foreach ($arrProductos as $prod) {
 												<?php } ?>
 											</div>
 										</td>
-									</tr> 
+									</tr>
 								<?php
 								}
 							}
@@ -1345,7 +1345,7 @@ foreach ($arrProductos as $prod) {
 												<?php } ?>
 											</div>
 										</td>
-								</tr> 
+								</tr>
 							
 								<?php
 								}
@@ -1374,7 +1374,7 @@ foreach ($arrProductos as $prod) {
 					<th width="160">Estado</th>
 					<th width="260">Usuario</th>
 					<th colspan="6">Observacion</th>
-				</tr>		  
+				</tr>
 				
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
@@ -1382,7 +1382,7 @@ foreach ($arrProductos as $prod) {
 						<td><?php echo $doc['Estado']; ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
 						<td colspan="6"><?php echo $doc['Observacion']; ?></td>
-					</tr> 
+					</tr>
 				<?php } ?>
 
 			</tbody>

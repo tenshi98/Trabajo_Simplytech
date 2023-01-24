@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "bodegas_insumos_egreso.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,9 +18,9 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idBodega']) && $_GET['idBodega'] != ''){                  $location .= "&idBodega=".$_GET['idBodega'];                    $search .= "&idBodega=".$_GET['idBodega'];}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){          $location .= "&idTrabajador=".$_GET['idTrabajador'];            $search .= "&idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){        $location .= "&Observaciones=".$_GET['Observaciones'];          $search .= "&Observaciones=".$_GET['Observaciones'];}
+if(isset($_GET['idBodega']) && $_GET['idBodega']!=''){           $location .= "&idBodega=".$_GET['idBodega'];                    $search .= "&idBodega=".$_GET['idBodega'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){   $location .= "&idTrabajador=".$_GET['idTrabajador'];            $search .= "&idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Observaciones']) && $_GET['Observaciones']!=''){ $location .= "&Observaciones=".$_GET['Observaciones'];          $search .= "&Observaciones=".$_GET['Observaciones'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -28,66 +28,66 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
-	$form_trabajo= 'new_egreso'; 
+	$form_trabajo= 'new_egreso';
 	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_modBase']) )  { 
+if (!empty($_POST['submit_modBase'])){
 	//Llamamos al formulario
 	$form_trabajo= 'modBase_egr';
 	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';
 }
 //formulario para editar
-if ( !empty($_GET['clear_all']) )  { 
+if (!empty($_GET['clear_all'])){
 	//Llamamos al formulario
 	$form_trabajo= 'clear_all_egr';
 	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_modCentroCosto']) )  { 
+if (!empty($_POST['submit_modCentroCosto'])){
 	//Llamamos al formulario
 	$form_trabajo= 'modCentroCosto_egr';
 	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_prod']) )  { 
+if (!empty($_POST['submit_prod'])){
 	//Llamamos al formulario
 	$form_trabajo= 'new_prod_egr';
 	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_edit_prod']) )  { 
+if (!empty($_POST['submit_edit_prod'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_prod_egr';
 	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_prod']) )     {
+if (!empty($_GET['del_prod'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_prod_egr';
-	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_file']) )  { 
+if (!empty($_POST['submit_file'])){
 	//Llamamos al formulario
 	$form_trabajo= 'new_file_egr';
 	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_file']) )     {
+if (!empty($_GET['del_file'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_file_egr';
-	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';
 }
 /**********************************************/
-if ( !empty($_GET['egr_bodega']) )     {
+if (!empty($_GET['egr_bodega'])){
 	//Llamamos al formulario
 	$form_trabajo= 'egr_bodega';
-	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_bodega_insumos.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -102,58 +102,57 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Entrega Modificada cor
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Entrega borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['addFile']) ) { ?>
- 
-<div class="col-sm-8 fcenter">
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['addFile'])){ ?>
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
-			
-				<?php           
+
+				<?php
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
-					
-				?> 
+
+				?>
 
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file">
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>              
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['editProd']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['editProd'])){
 //Traspaso la variable de bodega
-$query = "SELECT 
-insumos_listado.idProducto,  
-sistema_productos_uml.Nombre AS Unimed, 
+$query = "SELECT
+insumos_listado.idProducto,
+sistema_productos_uml.Nombre AS Unimed,
 insumos_listado.ValorIngreso,
-	(SELECT 
+	(SELECT
 	SUM(Cantidad_ing) AS ingreso
 	FROM `bodegas_insumos_facturacion_existencias`
-	WHERE idProducto = insumos_listado.idProducto 
+	WHERE idProducto = insumos_listado.idProducto
 	AND idBodega=".$_SESSION['insumos_egr_basicos']['idBodega']." LIMIT 1) AS ingreso,
-				
-	(SELECT 
+	(SELECT
 	SUM(Cantidad_eg) AS egreso
 	FROM `bodegas_insumos_facturacion_existencias`
-	WHERE idProducto = insumos_listado.idProducto 
+	WHERE idProducto = insumos_listado.idProducto
 	AND idBodega=".$_SESSION['insumos_egr_basicos']['idBodega']." LIMIT 1) AS egreso
-	
+
 FROM `insumos_listado`
 LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-WHERE insumos_listado.idProducto='".$_SESSION['insumos_egr_productos'][$_GET['editProd']]['idProducto']."' 
+WHERE insumos_listado.idProducto='".$_SESSION['insumos_egr_productos'][$_GET['editProd']]['idProducto']."'
 AND insumos_listado.idEstado=1";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
@@ -161,14 +160,14 @@ $resultado = mysqli_query ($dbConn, $query);
 if(!$resultado){
 	//Genero numero aleatorio
 	$vardata = genera_password(8,'alfanumerico');
-					
+
 	//Guardo el error en una variable temporal
 	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+
 }
-$row_data = mysqli_fetch_assoc ($resultado);	
+$row_data = mysqli_fetch_assoc ($resultado);
 
 $Total_existencias = $row_data['ingreso'] - $row_data['egreso'];
 
@@ -185,14 +184,14 @@ $resultado = mysqli_query ($dbConn, $query);
 if(!$resultado){
 	//Genero numero aleatorio
 	$vardata = genera_password(8,'alfanumerico');
-					
+
 	//Guardo el error en una variable temporal
 	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -201,49 +200,48 @@ foreach ($arrPermisos as $prod) {
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Insumos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($idProducto)) {       $x1  = $idProducto;      }else{$x1  = $_SESSION['insumos_egr_productos'][$_GET['editProd']]['idProducto'];}
-				if(isset($Number)) {           $x2  = $Number;          }else{$x2  = $_SESSION['insumos_egr_productos'][$_GET['editProd']]['Number'];}
-				
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $_SESSION['insumos_egr_productos'][$_GET['editProd']]['idProducto'];}
+				if(isset($Number)){           $x2  = $Number;          }else{$x2  = $_SESSION['insumos_egr_productos'][$_GET['editProd']]['Number'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
-				
+
 				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
 				$Form_Inputs->form_input_disabled('Valor Unitario','Unitario', Cantidades_decimales_justos($row_data['ValorIngreso']));
 				$Form_Inputs->form_input_disabled('Existencias','Existencias', Cantidades_decimales_justos($Total_existencias));
 				$Form_Inputs->form_input_hidden('ValorIngreso', Cantidades_decimales_justos($row_data['ValorIngreso']), 2);
-				
+
 				echo prod_print_venta($_SESSION['insumos_egr_basicos']['idBodega'], 'ValorIngreso', 'insumos_listado','bodegas_insumos_facturacion_existencias', 
-									  'idProducto', 'unimed', 'Unitario', 'Existencias', 'ValorIngreso', $dbConn); 
-				
-				
+									  'idProducto', 'unimed', 'Unitario', 'Existencias', 'ValorIngreso', $dbConn);
+
 				$Form_Inputs->form_input_hidden('oldItemID', $_GET['editProd'], 2);
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod">
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addProd']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['addProd'])){
 //Traspaso la variable de bodega
 //filtro
 $zx2 = "insumos_listado.idProducto=0";
@@ -258,14 +256,14 @@ $resultado = mysqli_query ($dbConn, $query);
 if(!$resultado){
 	//Genero numero aleatorio
 	$vardata = genera_password(8,'alfanumerico');
-					
+
 	//Guardo el error en una variable temporal
 	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -274,38 +272,38 @@ foreach ($arrPermisos as $prod) {
 
 $Form_Inputs = new Inputs();
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Insumos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<div class="col-sm-12 breadcrumb-bar" style="margin-bottom:10px;">
-					<a onclick="producto_add();"  class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Nuevo</a>
+
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
+					<a onclick="producto_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Nuevo</a>
 				</div>
-				<div class="clearfix"></div> 
+				<div class="clearfix"></div>
 				<div id="insert_producto"></div>
-				
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod">
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-				
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 <div class="clearfix"></div>
 
-<div style="display: none;"> 
-	<div id="clone_producto" class="prod_container"> 	
+<div style="display: none;">
+	<div id="clone_producto" class="prod_container">
 		<div class="col-sm-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select_change('Insumo','idProducto[]', 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2,'', 'OnSelectionChange',$dbConn); ?>	
+				<?php $Form_Inputs->select_change('Insumo','idProducto[]', 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2,'', 'OnSelectionChange',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-sm-2 nopadding">
@@ -335,18 +333,17 @@ $Form_Inputs = new Inputs();
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	
+
 </div>
 <div class="clearfix"></div>
 
-					
 <script>
-	
+
 	let room = 0;
-	
+
 	/**********************************************************/
 	//Se agrega producto
-	function producto_add() { 
+	function producto_add(){
 		//se incrementa en 1
 		room++;
 		//se estancian los objetos a clonar
@@ -354,11 +351,11 @@ $Form_Inputs = new Inputs();
 		let objclone = document.getElementById('clone_producto'),
 		//se clonan los div
 		clone_producto = objclone.cloneNode(true);
-		clone_producto.id = 'new_producto_'+room; 
+		clone_producto.id = 'new_producto_'+room;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_producto);
-    } 
-   
+    }
+
 	//se eliminan filas
 	$(document).on('click', '.remove_producto', function(e) {
 		e.preventDefault();
@@ -371,24 +368,23 @@ $Form_Inputs = new Inputs();
 		<?php
 		//Imprimo las variables
 		$arrTipo = array();
-		$query = "SELECT 
-		insumos_listado.idProducto, 
+		$query = "SELECT
+		insumos_listado.idProducto,
 		insumos_listado.ValorIngreso,
 		sistema_productos_uml.Nombre AS Unimed,
-		
-		(SELECT 
+
+		(SELECT
 		SUM(Cantidad_ing) AS ingreso
 		FROM `bodegas_insumos_facturacion_existencias`
-		WHERE idProducto = insumos_listado.idProducto 
+		WHERE idProducto = insumos_listado.idProducto
 		AND idBodega=".$_SESSION['insumos_egr_basicos']['idBodega']." LIMIT 1) AS ingreso,
-					
-		(SELECT 
+
+		(SELECT
 		SUM(Cantidad_eg) AS egreso
 		FROM `bodegas_insumos_facturacion_existencias`
-		WHERE idProducto = insumos_listado.idProducto 
+		WHERE idProducto = insumos_listado.idProducto
 		AND idBodega=".$_SESSION['insumos_egr_basicos']['idBodega']." LIMIT 1) AS egreso
-		
-		
+
 		FROM `insumos_listado`
 		LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml   = insumos_listado.idUml
 		WHERE ".$zx2."
@@ -399,25 +395,25 @@ $Form_Inputs = new Inputs();
 		if(!$resultado){
 			//Genero numero aleatorio
 			$vardata = genera_password(8,'alfanumerico');
-									
+
 			//Guardo el error en una variable temporal
 			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
+
 		}
-		while ( $row = mysqli_fetch_assoc ($resultado)) {
+		while ( $row = mysqli_fetch_assoc ($resultado)){
 		array_push( $arrTipo,$row );
 		}
-				
+
 		foreach ($arrTipo as $tipo) {
 			$Total_existencias = $tipo['ingreso'] - $tipo['egreso'];
 			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorIngreso']).'";';	
-			echo 'let id_exist_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';			
+			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorIngreso']).'";';
+			echo 'let id_exist_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';
 		}
 		?>
-		
+
 		let Componente = select.options[select.selectedIndex].value;
 		if (Componente != "") {
 			//escribo dentro del input
@@ -428,133 +424,132 @@ $Form_Inputs = new Inputs();
     }
 </script>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['modCentroCosto']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['modCentroCosto'])){
 //sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Centro de Costo</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	 
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($idCentroCosto)) {  $x1  = $idCentroCosto;  }else{$x1  = $_SESSION['insumos_egr_basicos']['idCentroCosto'];}
-				if(isset($idLevel_1)) {      $x2  = $idLevel_1;      }else{$x2  = $_SESSION['insumos_egr_basicos']['idLevel_1'];}
-				if(isset($idLevel_2)) {      $x3  = $idLevel_2;      }else{$x3  = $_SESSION['insumos_egr_basicos']['idLevel_2'];}
-				if(isset($idLevel_3)) {      $x4  = $idLevel_3;      }else{$x4  = $_SESSION['insumos_egr_basicos']['idLevel_3'];}
-				if(isset($idLevel_4)) {      $x5  = $idLevel_4;      }else{$x5  = $_SESSION['insumos_egr_basicos']['idLevel_4'];}
-				if(isset($idLevel_5)) {      $x6  = $idLevel_5;      }else{$x6  = $_SESSION['insumos_egr_basicos']['idLevel_5'];}
-				
+				if(isset($idCentroCosto)){  $x1  = $idCentroCosto;  }else{$x1  = $_SESSION['insumos_egr_basicos']['idCentroCosto'];}
+				if(isset($idLevel_1)){      $x2  = $idLevel_1;      }else{$x2  = $_SESSION['insumos_egr_basicos']['idLevel_1'];}
+				if(isset($idLevel_2)){      $x3  = $idLevel_2;      }else{$x3  = $_SESSION['insumos_egr_basicos']['idLevel_2'];}
+				if(isset($idLevel_3)){      $x4  = $idLevel_3;      }else{$x4  = $_SESSION['insumos_egr_basicos']['idLevel_3'];}
+				if(isset($idLevel_4)){      $x5  = $idLevel_4;      }else{$x5  = $_SESSION['insumos_egr_basicos']['idLevel_4'];}
+				if(isset($idLevel_5)){      $x6  = $idLevel_5;      }else{$x6  = $_SESSION['insumos_egr_basicos']['idLevel_5'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend5('Centro de Costo', 'idCentroCosto',  $x1,  2,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  $z,   0,
-							             'Nivel 1', 'idLevel_1',  $x2,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
+							             'Nivel 1', 'idLevel_1',  $x2,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0,
 							             'Nivel 2', 'idLevel_2',  $x3,  1,  'idLevel_2',  'Nombre',  'centrocosto_listado_level_2',  0,   0,
 							             'Nivel 3', 'idLevel_3',  $x4,  1,  'idLevel_3',  'Nombre',  'centrocosto_listado_level_3',  0,   0,
 							             'Nivel 4', 'idLevel_4',  $x5,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
 							             'Nivel 5', 'idLevel_5',  $x6,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
 							             $dbConn, 'form1');
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modCentroCosto"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modCentroCosto">
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['modBase']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['modBase'])){
 $z1 = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z1.=" AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
-} 
+	$z1.=" AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
+}
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Datos Basicos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($idBodega)) {         $x1  = $idBodega;       }else{$x1  = $_SESSION['insumos_egr_basicos']['idBodega'];}
-				if(isset($idTrabajador)) {     $x2  = $idTrabajador;   }else{$x2  = $_SESSION['insumos_egr_basicos']['idTrabajador'];}
-				if(isset($Observaciones)) {    $x3  = $Observaciones;  }else{$x3  = $_SESSION['insumos_egr_basicos']['Observaciones'];}
-				
+				if(isset($idBodega)){         $x1  = $idBodega;       }else{$x1  = $_SESSION['insumos_egr_basicos']['idBodega'];}
+				if(isset($idTrabajador)){     $x2  = $idTrabajador;   }else{$x2  = $_SESSION['insumos_egr_basicos']['idTrabajador'];}
+				if(isset($Observaciones)){    $x3  = $Observaciones;  }else{$x3  = $_SESSION['insumos_egr_basicos']['Observaciones'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodega', $x1, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z1, $dbConn);
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x2, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z2, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 2);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				$Form_Inputs->form_input_hidden('idTipo', 3, 2);			
+				$Form_Inputs->form_input_hidden('idTipo', 3, 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['view']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['view'])){?>
 
-<div class="col-sm-12" style="margin-bottom:30px">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&clear_all=true';
 		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger dialogBox"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
 		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&view=true&egr_bodega=true';
 		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?<br/>Revise si los <strong>montos</strong> y <strong>cantidades</strong> coinciden con el documento ingresado.';?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary dialogBox"><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>	
 
 	</div>
 	<div class="clearfix"></div>
-</div> 
+</div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> <?php echo $_SESSION['insumos_egr_basicos']['TipoDocumento']; ?></div>
-		<div id="customer"> 
-			<table id="meta" class="fleft otdata">
+		<div id="customer">
+			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary fright tooltip" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary pull-right tooltip" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Bodega Origen</td>
@@ -566,7 +561,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					</tr>
 					<tr>
 						<td class="meta-head"><strong>Centro de Costo</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modCentroCosto=true' ?>" title="Modificar Centro de Costo" class="btn btn-xs btn-primary fright tooltip" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modCentroCosto=true' ?>" title="Modificar Centro de Costo" class="btn btn-xs btn-primary pull-right tooltip" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Centro de Costo</td>
@@ -585,16 +580,16 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
-				</tr>		  
+				</tr>
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Insumos a Consumir</td>
 					<td><a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Insumo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Insumo</a></td>
 				</tr>
-				<?php 
+				<?php
 				if (isset($_SESSION['insumos_egr_productos'])){
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($_SESSION['insumos_egr_productos'] as $key => $producto){?>
@@ -608,20 +603,20 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<a href="<?php echo $location.'&editProd='.$producto['idProducto']; ?>" title="Editar" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 									$ubicacion = $location.'&del_prod='.$producto['idProducto'];
 									$dialogo   = '¿Realmente deseas eliminar el registro '.str_replace('"','',$producto['Nombre']).'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								</div>
 							</td>
-						</tr> 
+						</tr>
 				<?php }
 				}?>
-				
+
 			</tbody>
 		</table>
     </div>
-    
+
     <div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
@@ -631,13 +626,13 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 	<table id="items" style="margin-bottom: 20px;">
         <tbody>
-            
+
 			<tr>
                 <th colspan="5">Archivos Adjuntos</th>
                 <th width="160"><a href="<?php echo $location.'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></th>
-            </tr>		  
-            
-			<?php 
+            </tr>
+
+			<?php
 			if (isset($_SESSION['insumos_egr_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
@@ -647,16 +642,16 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del_file='.$producto['idFile'];
 								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 							</div>
 						</td>
 					</tr>
-					 
-				 <?php 
-				$numeral++;	
+
+				 <?php
+				$numeral++;
 				}
 			}?>
 
@@ -670,78 +665,68 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
-$z1 = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";  
+$z1 = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z1 .= " AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$z1 .= " AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Entrega</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($idBodega)) {         $x1  = $idBodega;       }else{$x1  = '';}
-				if(isset($idTrabajador)) {     $x2  = $idTrabajador;   }else{$x2  = '';}
-				if(isset($Observaciones)) {    $x3  = $Observaciones;  }else{$x3  = '';}
-				
+				if(isset($idBodega)){         $x1  = $idBodega;       }else{$x1  = '';}
+				if(isset($idTrabajador)){     $x2  = $idTrabajador;   }else{$x2  = '';}
+				if(isset($Observaciones)){    $x3  = $Observaciones;  }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodega', $x1, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z1, $dbConn);
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x2, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z2, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 2);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				$Form_Inputs->form_input_hidden('idTipo', 3, 2);			
+				$Form_Inputs->form_input_hidden('idTipo', 3, 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 				?>
-				
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -750,7 +735,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'bodega_desc':  $order_by = 'bodegas_insumos_listado.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Bodega Descendente';break;
 		case 'fecha_asc':    $order_by = 'bodegas_insumos_facturacion.Creacion_fecha ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';break;
 		case 'fecha_desc':   $order_by = 'bodegas_insumos_facturacion.Creacion_fecha DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		
+
 		default: $order_by = 'bodegas_insumos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -758,28 +743,28 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$z1 = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z1 = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z1.=" AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$z1.=" AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
-	
+
 /**********************************************************/
 //Variable con la ubicacion
 $SIS_where = "bodegas_insumos_facturacion.idTipo=3";//Solo gastos
-$SIS_where.= " AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	//Verifico el tipo de usuario que esta ingresando
+$SIS_where.= " AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idBodega']) && $_GET['idBodega'] != ''){              $SIS_where .= " AND bodegas_insumos_facturacion.idBodegaDestino=".$_GET['idBodega'];}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){      $SIS_where .= " AND bodegas_insumos_facturacion.idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['Observaciones']) && $_GET['Observaciones'] != ''){    $SIS_where .= " AND bodegas_insumos_facturacion.Observaciones LIKE '%".$_GET['Observaciones']."%'";}
+if(isset($_GET['idBodega']) && $_GET['idBodega']!=''){       $SIS_where .= " AND bodegas_insumos_facturacion.idBodegaDestino=".$_GET['idBodega'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){      $SIS_where .= " AND bodegas_insumos_facturacion.idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Observaciones']) && $_GET['Observaciones']!=''){    $SIS_where .= " AND bodegas_insumos_facturacion.Observaciones LIKE '%".EstandarizarInput($_GET['Observaciones'])."%'";}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idFacturacion', 'bodegas_insumos_facturacion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 bodegas_insumos_facturacion.idFacturacion,
@@ -795,74 +780,73 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){ ?>
 		<?php if (isset($_SESSION['insumos_egr_basicos']['idBodega'])&&$_SESSION['insumos_egr_basicos']['idBodega']!=''){?>
-			
-			<?php 
+
+			<?php
 			$ubicacion = $location.'&clear_all=true';
 			$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
-			<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</a>
-			
-			<a href="<?php echo $location; ?>&view=true" class="btn btn-default fright margin_width" ><i class="fa fa-arrow-right" aria-hidden="true"></i> Continuar Entrega</a>
+			<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</a>
+
+			<a href="<?php echo $location; ?>&view=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-arrow-right" aria-hidden="true"></i> Continuar Entrega</a>
 		<?php }else{ ?>
-			<a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Entrega</a>
+			<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Entrega</a>
 		<?php } ?>
 	<?php }?>
 </div>
-<div class="clearfix"></div>                       
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
-				if(isset($idBodega)) {         $x1  = $idBodega;       }else{$x1  = '';}
-				if(isset($idTrabajador)) {     $x2  = $idTrabajador;   }else{$x2  = '';}
-				if(isset($Observaciones)) {    $x3  = $Observaciones;  }else{$x3  = '';}
-				
+				if(isset($idBodega)){         $x1  = $idBodega;       }else{$x1  = '';}
+				if(isset($idTrabajador)){     $x2  = $idTrabajador;   }else{$x2  = '';}
+				if(isset($Observaciones)){    $x3  = $Observaciones;  }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodega', $x1, 1, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z1, $dbConn);
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x2, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z2, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1);
-				
-				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
-                      
-			</form> 
+
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
-                                 
-<div class="col-sm-12">
+<div class="clearfix"></div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Entregas</h5>
 			<div class="toolbar">
-				<?php 
+				<?php
 				//se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -883,7 +867,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrTipo as $tipo) { ?>
 					<tr class="odd">
@@ -896,12 +880,12 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
-			<?php 
+		<div class="pagrow">
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
@@ -909,7 +893,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 </div>
 
 <?php widget_modal(80, 95); ?>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

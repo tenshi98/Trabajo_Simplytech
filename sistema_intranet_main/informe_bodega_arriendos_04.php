@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_bodega_arriendos_04.php";
 $location = $original;    
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,13 +22,13 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
              
   
 
 //Se limitan los permisos a las bodegas asignadas
-$x1 ="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$x1 ="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $x2 ="idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 //Variables
 $join_3  = "INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion_existencias.idBodega";
@@ -60,7 +60,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrExistencias,$row );
 }
 
@@ -78,7 +78,7 @@ foreach ($arrExistencias as $existencias) {
 		case 2:
 			$mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'] = $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'] + $existencias['Valor'];
 			break;
-	}								
+	}	
 }
 								
 $xmes = mes_actual();
@@ -89,8 +89,8 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 	if($xmes>0){
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
-		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1']; }else{$grafico[$xcontador]['tipo1'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2']; }else{$grafico[$xcontador]['tipo2'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
 									
 	}else{
 		$xmes = 12;
@@ -98,8 +98,8 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
 		
-		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1']; }else{$grafico[$xcontador]['tipo1'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2']; }else{$grafico[$xcontador]['tipo2'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
 			
 	}
 	$xmes = $xmes-1;								
@@ -116,7 +116,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>	
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -129,15 +129,15 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 					<ul class="dropdown-menu" role="menu">
 						<?php if($s_Ventas=='true'){ ?>            <li class=""><a href="#tab_arr_3" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ventas</a></li><?php } ?>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="tab_arr_1">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-						<div class="col-sm-12" style="margin-top:5px;">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:5px;">
 							<?php
 							//Se dibujan los graficos, los widget y las tablas
 							$trans_1='';				     
@@ -195,7 +195,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 								var chart1 = new google.visualization.LineChart(document.getElementById('chart_arr_1'));
 								chart1.draw(data_arr_1, options);
 							}
-						</script> 
+						</script>
 						<div id="chart_arr_1" style="height: 500px; width: 100%;"></div>
 					</div>
 				</div>
@@ -247,7 +247,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_arr_2'));
 									chart1.draw(data_arr_2, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_arr_2" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -256,7 +256,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 				</div>
 			<?php } ?>
 
-        </div>	
+        </div>
 	</div>
 </div>         
 

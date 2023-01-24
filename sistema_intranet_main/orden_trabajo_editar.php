@@ -10,102 +10,102 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "orden_trabajo_editar.php";
 $location = $original;
 //Se agregan ubicaciones
 $location .='?view='.$_GET['view'];
-if(isset($_GET['ter']) && $_GET['ter'] != ''){    $location .= "&ter=".$_GET['ter']; 	}
+if(isset($_GET['ter']) && $_GET['ter']!=''){    $location .= "&ter=".$_GET['ter']; 	}
 
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //se modifican los datos basicos
-if ( !empty($_POST['submit_editBase']) )  { 
+if (!empty($_POST['submit_editBase'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_ot_list';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 //se modifican los datos basicos
-if ( !empty($_POST['submit_editObs']) )  { 
+if (!empty($_POST['submit_editObs'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_ot_list';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 /*************************************************************************/
 //se agrega un trabajo
-if ( !empty($_POST['submit_trab']) )  { 
+if (!empty($_POST['submit_trab'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_addTrab';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 //se agrega un trabajo
-if ( !empty($_POST['submit_edittrab']) )  { 
+if (!empty($_POST['submit_edittrab'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_editTrab';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 //se borra un trabajo
-if ( !empty($_GET['del_trab']) )     {
+if (!empty($_GET['del_trab'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_delTrab';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 /*************************************************************************/
 //se agrega un insumo
-if ( !empty($_POST['submit_ins']) )     {
+if (!empty($_POST['submit_ins'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_addIns';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 //se agrega un insumo
-if ( !empty($_POST['submit_editins']) )     {
+if (!empty($_POST['submit_editins'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_editIns';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 //se elimina un insumo
-if ( !empty($_GET['del_ins']) )     {
+if (!empty($_GET['del_ins'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_delIns';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 /*************************************************************************/
 //se agrega un producto
-if ( !empty($_POST['submit_prod']) )     {
+if (!empty($_POST['submit_prod'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_addProd';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 //se agrega un producto
-if ( !empty($_POST['submit_editprod']) )     {
+if (!empty($_POST['submit_editprod'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_editProd';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 //se elimina un producto
-if ( !empty($_GET['del_prod']) )     {
+if (!empty($_GET['del_prod'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_delProd';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 /*************************************************************************/
 //se elimina un subcomponente
-if ( !empty($_GET['del_tarea_row']) )     {
+if (!empty($_GET['del_tarea_row'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_tarea_row';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 /*************************************************************************/
 //se agrega un componente
-if ( !empty($_POST['submit_itemizado_row']) )  { 
+if (!empty($_POST['submit_itemizado_row'])){
 	//Llamamos al formulario
 	$form_trabajo= 'submit_itemizado_row';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 /*************************************************************************/
 //se agrega un producto
-if ( !empty($_POST['submit_producto_row']) )  { 
+if (!empty($_POST['submit_producto_row'])){
 	//Llamamos al formulario
 	$form_trabajo= 'submit_producto_row';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
@@ -113,33 +113,33 @@ if ( !empty($_POST['submit_producto_row']) )  {
 /*************************************************************************/
 /*************************************************************************/
 //se agrega un subcomponente
-if ( !empty($_POST['submit_tarea']) )  { 
+if (!empty($_POST['submit_tarea'])){
 	//Llamamos al formulario
 	$form_trabajo= 'submit_tarea_edit';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 //se elimina un subcomponente
-if ( !empty($_GET['del_tarea']) )     {
+if (!empty($_GET['del_tarea'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_tarea_edit';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 //se elimina un subcomponente
-if ( !empty($_GET['aproTrab']) )     {
+if (!empty($_GET['aproTrab'])){
 	//Llamamos al formulario
 	$form_trabajo= 'aprobar_trabajo';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 /*************************************************************************/
 //se agrega un componente
-if ( !empty($_POST['submit_itemizado']) )  { 
+if (!empty($_POST['submit_itemizado'])){
 	//Llamamos al formulario
 	$form_trabajo= 'submit_itemizado_edit';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 /*************************************************************************/
 //se agrega un producto
-if ( !empty($_POST['submit_producto']) )  { 
+if (!empty($_POST['submit_producto'])){
 	//Llamamos al formulario
 	$form_trabajo= 'submit_producto_edit';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
@@ -147,17 +147,17 @@ if ( !empty($_POST['submit_producto']) )  {
 /*************************************************************************/
 /*************************************************************************/
 //se agrega un producto
-if ( !empty($_POST['submit_editTrabajo']) )  { 
+if (!empty($_POST['submit_editTrabajo'])){
 	//Llamamos al formulario
 	$form_trabajo= 'submit_editTrabajo';
 	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 /*************************************************************************/
 //se cierra la OT
-if ( !empty($_GET['cerrar_ot']) )     {
+if (!empty($_GET['cerrar_ot'])){
 	//Llamamos al formulario
 	$form_trabajo= 'cerrar_ot';
-	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_orden_trabajo.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -183,8 +183,8 @@ if (isset($_GET['deltarea'])){   $error['deltarea']   = 'sucess/Tarea borrada co
 
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['editobservacion_row']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['editobservacion_row'])){ 
 //Se traen los datos de la ot
 $query = "SELECT Observacion
 FROM `orden_trabajo_listado_trabajos`
@@ -205,19 +205,19 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Observacion del trabajo</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Observacion)) {    $x1  = $Observacion;    }else{$x1  = $rowdata['Observacion'];}
-				
+				if(isset($Observacion)){    $x1  = $Observacion;    }else{$x1  = $rowdata['Observacion'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observaciones','Observacion', $x1, 2);
@@ -227,17 +227,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editTrabajo"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editTrabajo"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['editanalisis_row']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['editanalisis_row'])){ 
 //Se traen los datos de la ot
 $query = "SELECT idAnalisis
 FROM `orden_trabajo_listado_trabajos`
@@ -258,19 +258,19 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar analisis del trabajo</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idAnalisis)) {    $x1  = $idAnalisis;    }else{$x1  = $rowdata['idAnalisis'];}
-				
+				if(isset($idAnalisis)){    $x1  = $idAnalisis;    }else{$x1  = $rowdata['idAnalisis'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_number('N° Analisis','idAnalisis', $x1, 2);
@@ -279,17 +279,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editTrabajo"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editTrabajo"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['editproducto']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['editproducto'])){ 
 //filtro
 $zx1 = "idProducto=0";
 //Se revisan los permisos a los productos
@@ -310,7 +310,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -318,25 +318,25 @@ foreach ($arrPermisos as $prod) {
 }	 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Productos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         		
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idSubTipo)) {            $x1 = $idSubTipo;              }else{$x1 = $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['idSubTipo'];}
-				if(isset($idProducto)) {           $x2 = $idProducto;             }else{$x2 = $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['idProducto'];}
-				if(isset($Grasa_inicial)) {        $x3 = $Grasa_inicial;          }else{$x3 = Cantidades_decimales_justos($_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['Grasa_inicial']);}
-				if(isset($Grasa_relubricacion)) {  $x4 = $Grasa_relubricacion;    }else{$x4 = Cantidades_decimales_justos($_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['Grasa_relubricacion']);}
-				if(isset($Aceite)) {               $x5 = $Aceite;                 }else{$x5 = Cantidades_decimales_justos($_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['Aceite']);}
-				if(isset($Cantidad)) {             $x6 = $Cantidad;               }else{$x6 = Cantidades_decimales_justos($_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['Cantidad']);}
-				if(isset($idUml_fake)) {           $x7 = $idUml_fake;             }else{$x7 = $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['Unimed'];}
-				
+				if(isset($idSubTipo)){            $x1 = $idSubTipo;              }else{$x1 = $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['idSubTipo'];}
+				if(isset($idProducto)){           $x2 = $idProducto;             }else{$x2 = $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['idProducto'];}
+				if(isset($Grasa_inicial)){        $x3 = $Grasa_inicial;          }else{$x3 = Cantidades_decimales_justos($_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['Grasa_inicial']);}
+				if(isset($Grasa_relubricacion)){  $x4 = $Grasa_relubricacion;    }else{$x4 = Cantidades_decimales_justos($_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['Grasa_relubricacion']);}
+				if(isset($Aceite)){               $x5 = $Aceite;                 }else{$x5 = Cantidades_decimales_justos($_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['Aceite']);}
+				if(isset($Cantidad)){             $x6 = $Cantidad;               }else{$x6 = Cantidades_decimales_justos($_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['Cantidad']);}
+				if(isset($idUml_fake)){           $x7 = $idUml_fake;             }else{$x7 = $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['Unimed'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Tareas Relacionadas','idSubTipo', $x1, 2, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, 0,
@@ -344,8 +344,8 @@ foreach ($arrPermisos as $prod) {
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_number('Grasa inicial','Grasa_inicial', $x3, 2);
 				$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x4, 2);
-				$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x5, 2);		
-				$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x6, 2);				
+				$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x5, 2);
+				$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x6, 2);	
 				$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7);
 				
 					
@@ -354,7 +354,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
 				$Form_Inputs->form_input_hidden('idUml', $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['idUml'], 2);
-				
+
 				/***********************************************************************/
 				//Imprimo las variables
 				$arrTipo = array();
@@ -379,7 +379,7 @@ foreach ($arrPermisos as $prod) {
 					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									
 				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
+				while ( $row = mysqli_fetch_assoc ($resultado)){
 				array_push( $arrTipo,$row );
 				}
 				
@@ -393,7 +393,7 @@ foreach ($arrPermisos as $prod) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';	
 				}
-				?> 
+				?>
 				</script>
 				<script>
 				
@@ -423,7 +423,7 @@ foreach ($arrPermisos as $prod) {
 						document.getElementById('div_Grasa_inicial').style.display = '';
 						document.getElementById('div_Grasa_relubricacion').style.display = '';
 						document.getElementById('div_Aceite').style.display = 'none';
-						document.getElementById('div_Cantidad').style.display = 'none';							
+						document.getElementById('div_Cantidad').style.display = 'none';	
 						document.getElementById('div_idProducto').style.display = '';
 						//Reseteo los valores a 0
 						document.getElementById('Aceite').value = "0";
@@ -474,18 +474,18 @@ foreach ($arrPermisos as $prod) {
 						let modelSelected = $(this).val(); 
 				
 						//si es grasa
-						if(modelSelected == 1){ 
+						if(modelSelected == 1){
 							document.getElementById('div_Grasa_inicial').style.display = '';
 							document.getElementById('div_Grasa_relubricacion').style.display = '';
 							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';	
+							document.getElementById('div_Cantidad').style.display = 'none';
 							document.getElementById('div_idProducto').style.display = '';
 							//Reseteo los valores a 0
 							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";					
+							document.getElementById('Cantidad').value = "0";
 							
 						//si es aceite
-						} else if(modelSelected == 2){ 
+						} else if(modelSelected == 2){
 							document.getElementById('div_Grasa_inicial').style.display = 'none';
 							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
 							document.getElementById('div_Aceite').style.display = '';
@@ -494,10 +494,10 @@ foreach ($arrPermisos as $prod) {
 							//Reseteo los valores a 0
 							document.getElementById('Grasa_inicial').value = "0";
 							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Cantidad').value = "0";	
+							document.getElementById('Cantidad').value = "0";
 							
 						//si es normal
-						} else if(modelSelected == 3){ 
+						} else if(modelSelected == 3){
 							document.getElementById('div_Grasa_inicial').style.display = 'none';
 							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
 							document.getElementById('div_Aceite').style.display = 'none';
@@ -506,7 +506,7 @@ foreach ($arrPermisos as $prod) {
 							//Reseteo los valores a 0
 							document.getElementById('Grasa_inicial').value = "0";
 							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";	
+							document.getElementById('Aceite').value = "0";
 						//si es otro
 						} else if(modelSelected == 4){ 
 							document.getElementById('div_Grasa_inicial').style.display = 'none';
@@ -520,7 +520,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
 						//el resto
-						} else { 
+						} else {
 							document.getElementById('div_Grasa_inicial').style.display = 'none';
 							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
 							document.getElementById('div_Aceite').style.display = 'none';
@@ -540,34 +540,34 @@ foreach ($arrPermisos as $prod) {
 				
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_producto"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_producto"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['addItemizado']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['addItemizado'])){ ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Itemizado</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         		
 				<?php 
 				//variables
 				$tablamad = $_GET['addItemizado'] + 1;
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {               $x1  = $Nombre;                 }else{$x1  = '';}
-				
+				if(isset($Nombre)){               $x1  = $Nombre;                 }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Itemizado','idItemizado', $x1, 1, 'idLevel_'.$tablamad, 'Nombre', 'licitacion_listado_level_'.$tablamad, 'idLevel_'.$_GET['addItemizado'].'='.$_GET['lvl'], '', $dbConn);
@@ -578,21 +578,21 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_hidden('tablaitem', $tablamad, 2);
 				
 				
-				?> 
+				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_itemizado"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_itemizado"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['addtrabajo']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['addtrabajo'])){ 
 //Se traen los datos de la ot
 $query = "SELECT idMaquina
 FROM `orden_trabajo_listado`
@@ -615,42 +615,42 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 $z="idMaquina={$rowdata['idMaquina']}";	
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Tarea</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idLevel_1)) {        $x1  = $idLevel_1;        }else{$x1  = '';}
-				if(isset($idLevel_2)) {        $x2  = $idLevel_2;        }else{$x2  = '';}
-				if(isset($idLevel_3)) {        $x3  = $idLevel_3;        }else{$x3  = '';}
-				if(isset($idLevel_4)) {        $x4  = $idLevel_4;        }else{$x4  = '';}
-				if(isset($idLevel_5)) {        $x5  = $idLevel_5;        }else{$x5  = '';}
-				if(isset($idLevel_6)) {        $x6  = $idLevel_6;        }else{$x6  = '';}
-				if(isset($idLevel_7)) {        $x7  = $idLevel_7;        }else{$x7  = '';}
-				if(isset($idLevel_8)) {        $x8  = $idLevel_8;        }else{$x8  = '';}
-				if(isset($idLevel_9)) {        $x9  = $idLevel_9;        }else{$x9  = '';}
-				if(isset($idLevel_10)) {       $x10  = $idLevel_10;      }else{$x10  = '';}
-				if(isset($idLevel_11)) {       $x11  = $idLevel_11;      }else{$x11  = '';}
-				if(isset($idLevel_12)) {       $x12  = $idLevel_12;      }else{$x12  = '';}
-				if(isset($idLevel_13)) {       $x13  = $idLevel_13;      }else{$x13  = '';}
-				if(isset($idLevel_14)) {       $x14  = $idLevel_14;      }else{$x14  = '';}
-				if(isset($idLevel_15)) {       $x15  = $idLevel_15;      }else{$x15  = '';}
-				if(isset($idLevel_16)) {       $x16  = $idLevel_16;      }else{$x16  = '';}
-				if(isset($idLevel_17)) {       $x17  = $idLevel_17;      }else{$x17  = '';}
-				if(isset($idLevel_18)) {       $x18  = $idLevel_18;      }else{$x18  = '';}
-				if(isset($idLevel_19)) {       $x19  = $idLevel_19;      }else{$x19  = '';}
-				if(isset($idLevel_20)) {       $x20  = $idLevel_20;      }else{$x20  = '';}
-				if(isset($idLevel_21)) {       $x21  = $idLevel_21;      }else{$x21  = '';}
-				if(isset($idLevel_22)) {       $x22  = $idLevel_22;      }else{$x22  = '';}
-				if(isset($idLevel_23)) {       $x23  = $idLevel_23;      }else{$x23  = '';}
-				if(isset($idLevel_24)) {       $x24  = $idLevel_24;      }else{$x24  = '';}
-				if(isset($idLevel_25)) {       $x25  = $idLevel_25;      }else{$x25  = '';}
+				if(isset($idLevel_1)){        $x1  = $idLevel_1;        }else{$x1  = '';}
+				if(isset($idLevel_2)){        $x2  = $idLevel_2;        }else{$x2  = '';}
+				if(isset($idLevel_3)){        $x3  = $idLevel_3;        }else{$x3  = '';}
+				if(isset($idLevel_4)){        $x4  = $idLevel_4;        }else{$x4  = '';}
+				if(isset($idLevel_5)){        $x5  = $idLevel_5;        }else{$x5  = '';}
+				if(isset($idLevel_6)){        $x6  = $idLevel_6;        }else{$x6  = '';}
+				if(isset($idLevel_7)){        $x7  = $idLevel_7;        }else{$x7  = '';}
+				if(isset($idLevel_8)){        $x8  = $idLevel_8;        }else{$x8  = '';}
+				if(isset($idLevel_9)){        $x9  = $idLevel_9;        }else{$x9  = '';}
+				if(isset($idLevel_10)){       $x10  = $idLevel_10;      }else{$x10  = '';}
+				if(isset($idLevel_11)){       $x11  = $idLevel_11;      }else{$x11  = '';}
+				if(isset($idLevel_12)){       $x12  = $idLevel_12;      }else{$x12  = '';}
+				if(isset($idLevel_13)){       $x13  = $idLevel_13;      }else{$x13  = '';}
+				if(isset($idLevel_14)){       $x14  = $idLevel_14;      }else{$x14  = '';}
+				if(isset($idLevel_15)){       $x15  = $idLevel_15;      }else{$x15  = '';}
+				if(isset($idLevel_16)){       $x16  = $idLevel_16;      }else{$x16  = '';}
+				if(isset($idLevel_17)){       $x17  = $idLevel_17;      }else{$x17  = '';}
+				if(isset($idLevel_18)){       $x18  = $idLevel_18;      }else{$x18  = '';}
+				if(isset($idLevel_19)){       $x19  = $idLevel_19;      }else{$x19  = '';}
+				if(isset($idLevel_20)){       $x20  = $idLevel_20;      }else{$x20  = '';}
+				if(isset($idLevel_21)){       $x21  = $idLevel_21;      }else{$x21  = '';}
+				if(isset($idLevel_22)){       $x22  = $idLevel_22;      }else{$x22  = '';}
+				if(isset($idLevel_23)){       $x23  = $idLevel_23;      }else{$x23  = '';}
+				if(isset($idLevel_24)){       $x24  = $idLevel_24;      }else{$x24  = '';}
+				if(isset($idLevel_25)){       $x25  = $idLevel_25;      }else{$x25  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -682,20 +682,20 @@ $z="idMaquina={$rowdata['idMaquina']}";
 										  $dbConn, 'form1');
 
 			
-				?> 
+				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tarea"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tarea"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['editproducto_row']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['editproducto_row'])){ 
 //Se traen los datos de la ot
 $query = "SELECT 
 orden_trabajo_listado_trabajos.idSubTipo, 
@@ -744,7 +744,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -752,29 +752,29 @@ foreach ($arrPermisos as $prod) {
 }
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Productos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         		
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idSubTipo)) {            $x1 = $idSubTipo;              }else{$x1 = $rowdata['idSubTipo'];}
-				if(isset($idProducto)) {           $x2 = $idProducto;             }else{$x2 = $rowdata['idProducto'];}
-				if(isset($Grasa_inicial)) {        $x3 = $Grasa_inicial;          }else{$x3 = Cantidades_decimales_justos($rowdata['Grasa_inicial']);}
-				if(isset($Grasa_relubricacion)) {  $x4 = $Grasa_relubricacion;    }else{$x4 = Cantidades_decimales_justos($rowdata['Grasa_relubricacion']);}
-				if(isset($Aceite)) {               $x5 = $Aceite;                 }else{$x5 = Cantidades_decimales_justos($rowdata['Aceite']);}
-				if(isset($Cantidad)) {             $x6 = $Cantidad;               }else{$x6 = Cantidades_decimales_justos($rowdata['Cantidad']);}
-				if(isset($idUml_fake)) {           $x7 = $idUml_fake;             }else{$x7 = $rowdata['Unimed'];}
-				
+				if(isset($idSubTipo)){            $x1 = $idSubTipo;              }else{$x1 = $rowdata['idSubTipo'];}
+				if(isset($idProducto)){           $x2 = $idProducto;             }else{$x2 = $rowdata['idProducto'];}
+				if(isset($Grasa_inicial)){        $x3 = $Grasa_inicial;          }else{$x3 = Cantidades_decimales_justos($rowdata['Grasa_inicial']);}
+				if(isset($Grasa_relubricacion)){  $x4 = $Grasa_relubricacion;    }else{$x4 = Cantidades_decimales_justos($rowdata['Grasa_relubricacion']);}
+				if(isset($Aceite)){               $x5 = $Aceite;                 }else{$x5 = Cantidades_decimales_justos($rowdata['Aceite']);}
+				if(isset($Cantidad)){             $x6 = $Cantidad;               }else{$x6 = Cantidades_decimales_justos($rowdata['Cantidad']);}
+				if(isset($idUml_fake)){           $x7 = $idUml_fake;             }else{$x7 = $rowdata['Unimed'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Producto utilizado','idProducto', $x2, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				
+
 				//Se ejecuta si se hace un cambio en el tipo de tarea
 				switch ($rowdata['idSubTipo']) {
 					case 1: //Grasa
@@ -800,7 +800,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
 				$Form_Inputs->form_input_hidden('idUml', $rowdata['idUml'], 2);
-				
+
 				/***********************************************************************/
 				//Imprimo las variables
 				$arrTipo = array();
@@ -825,7 +825,7 @@ foreach ($arrPermisos as $prod) {
 					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									
 				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
+				while ( $row = mysqli_fetch_assoc ($resultado)){
 				array_push( $arrTipo,$row );
 				}
 				
@@ -839,7 +839,7 @@ foreach ($arrPermisos as $prod) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';	
 				}
-				?> 
+				?>
 				</script>
 				<script>
 				
@@ -858,33 +858,33 @@ foreach ($arrPermisos as $prod) {
 				
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_producto_row"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_producto_row"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['addItemizado_row']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['addItemizado_row'])){ ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Itemizado</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         		
 				<?php 
 				//variables
 				$tablamad = $_GET['addItemizado_row'] + 1;
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {               $x1  = $Nombre;                 }else{$x1  = '';}
-				
+				if(isset($Nombre)){               $x1  = $Nombre;                 }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Itemizado','idItemizado', $x1, 1, 'idLevel_'.$tablamad, 'Nombre', 'licitacion_listado_level_'.$tablamad, 'idLevel_'.$_GET['addItemizado_row'].'='.$_GET['lvl'], '', $dbConn);
@@ -895,21 +895,21 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_hidden('tablaitem', $tablamad, 2);
 				
 				
-				?> 
+				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_itemizado_row"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_itemizado_row"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addProd']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['addProd'])){
 //Se traen los datos de la ot
 $query = "SELECT idSistema, idMaquina, idEstado, idPrioridad, idTipo, f_programacion
 FROM `orden_trabajo_listado`
@@ -948,7 +948,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -956,28 +956,28 @@ foreach ($arrPermisos as $prod) {
 }
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Productos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProducto)) {       $x1  = $idProducto;      }else{$x1  = '';}
-				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = '';}
-				
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
-					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
-					<div class="col-sm-8">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
@@ -1014,7 +1014,7 @@ foreach ($arrPermisos as $prod) {
 					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									
 				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
+				while ( $row = mysqli_fetch_assoc ($resultado)){
 				array_push( $arrTipo,$row );
 				}
 				
@@ -1038,17 +1038,17 @@ foreach ($arrPermisos as $prod) {
 				</script>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Agregar" name="submit_prod"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_prod"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_prod']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_prod'])){ 
 //Se traen los datos de la ot
 $query = "SELECT 
 orden_trabajo_listado_productos.idProducto, 
@@ -1092,7 +1092,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -1100,28 +1100,28 @@ foreach ($arrPermisos as $prod) {
 }
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Productos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProducto)) {       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
-				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
-				
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
-					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
-					<div class="col-sm-8">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
@@ -1151,7 +1151,7 @@ foreach ($arrPermisos as $prod) {
 					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									
 				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
+				while ( $row = mysqli_fetch_assoc ($resultado)){
 				array_push( $arrTipo,$row );
 				}
 				
@@ -1176,17 +1176,17 @@ foreach ($arrPermisos as $prod) {
 				</script>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Editar" name="submit_editprod"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_editprod"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addIns']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addIns'])){ 
 //Se traen los datos de la ot
 $query = "SELECT idSistema, idMaquina, idEstado, idPrioridad, idTipo, f_programacion
 FROM `orden_trabajo_listado`
@@ -1225,7 +1225,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -1234,28 +1234,28 @@ foreach ($arrPermisos as $prod) {
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Insumos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProducto)) {       $x1  = $idProducto;      }else{$x1  = '';}
-				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = '';}
-				
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
-					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
-					<div class="col-sm-8">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
@@ -1294,7 +1294,7 @@ foreach ($arrPermisos as $prod) {
 					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									
 				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
+				while ( $row = mysqli_fetch_assoc ($resultado)){
 				array_push( $arrTipo,$row );
 				}
 				
@@ -1318,17 +1318,17 @@ foreach ($arrPermisos as $prod) {
 				</script>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Agregar" name="submit_ins"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_ins"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_ins']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_ins'])){ 
 //Se traen los datos de la ot
 $query = "SELECT 
 orden_trabajo_listado_insumos.idProducto, 
@@ -1372,7 +1372,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -1381,28 +1381,28 @@ foreach ($arrPermisos as $prod) {
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Insumos</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProducto)) {       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
-				if(isset($Cantidad)) {         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
-				
+				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
+				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				
 				echo '<div class="form-group" id="div_">
-					<label class="control-label col-sm-4" id="label_">Unidad de Medida</label>
-					<div class="col-sm-8">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
@@ -1433,7 +1433,7 @@ foreach ($arrPermisos as $prod) {
 					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									
 				}
-				while ( $row = mysqli_fetch_assoc ($resultado)) {
+				while ( $row = mysqli_fetch_assoc ($resultado)){
 				array_push( $arrTipo,$row );
 				}
 				
@@ -1457,19 +1457,19 @@ foreach ($arrPermisos as $prod) {
 				</script>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Editar" name="submit_editins"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_editins"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addTrab']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addTrab'])){ 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Se traen los datos de la ot
 $query = "SELECT idSistema, idMaquina, idEstado, idPrioridad, idTipo, f_programacion
 FROM `orden_trabajo_listado`
@@ -1490,18 +1490,18 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Trabajador</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)) {     $x1  = $idTrabajador;    }else{$x1  = '';}
+				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
 
 				
 				//se dibujan los inputs
@@ -1520,20 +1520,20 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Agregar" name="submit_trab"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_trab"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_trab']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_trab'])){ 
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Se traen los datos de la ot
 $query = "SELECT idTrabajador
 FROM `orden_trabajo_listado_responsable`
@@ -1554,18 +1554,18 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Trabajador</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)) {     $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
+				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -1576,17 +1576,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Editar" name="submit_edittrab"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_edittrab"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_obs']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_obs'])){ 
 //Se traen los datos de la ot
 $query = "SELECT Observaciones
 FROM `orden_trabajo_listado`
@@ -1607,19 +1607,19 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos de la OT</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Observaciones)) {    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
-				
+				if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observacion','Observaciones', $x1, 1);
@@ -1628,19 +1628,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editObs"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editObs"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['modBase']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['modBase'])){
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Se traen los datos de la ot
 $query = "SELECT idEstado, idPrioridad, idTipo, f_programacion, idSistema,f_termino,horaInicio,
 horaTermino,horaProg, idSupervisor
@@ -1663,25 +1663,25 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 	
 								
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos de la OT</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idPrioridad)) {      $x1  = $idPrioridad;      }else{$x1  = $rowdata['idPrioridad'];}
-				if(isset($idTipo)) {           $x2  = $idTipo;           }else{$x2  = $rowdata['idTipo'];}
-				if(isset($f_programacion)) {   $x3  = $f_programacion;   }else{$x3  = $rowdata['f_programacion'];}
-				if(isset($f_termino)) {        $x4  = $f_termino;        }else{$x4  = $rowdata['f_termino'];}
-				if(isset($horaInicio)) {       $x5  = $horaInicio;       }else{$x5  = $rowdata['horaInicio'];}
-				if(isset($horaTermino)) {      $x6  = $horaTermino;      }else{$x6  = $rowdata['horaTermino'];}
-				if(isset($horaProg)) {         $x7  = $horaProg;         }else{$x7  = $rowdata['horaProg'];}
-				if(isset($idSupervisor)) {     $x9  = $idSupervisor;     }else{$x9  = $rowdata['idSupervisor'];}
+				if(isset($idPrioridad)){      $x1  = $idPrioridad;      }else{$x1  = $rowdata['idPrioridad'];}
+				if(isset($idTipo)){           $x2  = $idTipo;           }else{$x2  = $rowdata['idTipo'];}
+				if(isset($f_programacion)){   $x3  = $f_programacion;   }else{$x3  = $rowdata['f_programacion'];}
+				if(isset($f_termino)){        $x4  = $f_termino;        }else{$x4  = $rowdata['f_termino'];}
+				if(isset($horaInicio)){       $x5  = $horaInicio;       }else{$x5  = $rowdata['horaInicio'];}
+				if(isset($horaTermino)){      $x6  = $horaTermino;      }else{$x6  = $rowdata['horaTermino'];}
+				if(isset($horaProg)){         $x7  = $horaProg;         }else{$x7  = $rowdata['horaProg'];}
+				if(isset($idSupervisor)){     $x9  = $idSupervisor;     }else{$x9  = $rowdata['idSupervisor'];}
 				
 			
 			
@@ -1690,7 +1690,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x1, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x2, 2, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x3, 2);
-				
+
 				//Si la OT solo esta programada
 				if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){
 					if(isset($_GET['ter'])&&$_GET['ter']!=''&&$_GET['ter']=='true'){
@@ -1707,7 +1707,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_time('Hora inicio','horaInicio', $x5, 2, 1);
 					$Form_Inputs->form_time('Hora termino','horaTermino', $x6, 2, 1);
 					$Form_Inputs->form_time('Tiempo Programado','horaProg', $x7, 2, 1);
-				}			
+				}
 							
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -1715,17 +1715,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 				?>
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editBase"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editBase"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>					
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['view']) ) { 
+</div>	
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['view'])){
 // Se trae un listado con todos los elementos
 $query = "SELECT 
 orden_trabajo_listado.idOT,
@@ -1797,7 +1797,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTrabajadores,$row );
 }
 
@@ -1830,7 +1830,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
+	while ( $row = mysqli_fetch_assoc ($resultado)){
 	array_push( $arrInsumos,$row );
 	}
 	
@@ -1860,7 +1860,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
+	while ( $row = mysqli_fetch_assoc ($resultado)){
 	array_push( $arrProductos,$row );
 	} 
 
@@ -1893,7 +1893,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
+	while ( $row = mysqli_fetch_assoc ($resultado)){
 	array_push( $arrInsumos,$row );
 	}
 	
@@ -1923,7 +1923,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
+	while ( $row = mysqli_fetch_assoc ($resultado)){
 	array_push( $arrProductos,$row );
 	}
 }
@@ -1969,7 +1969,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTrabajo,$row );
 }
 
@@ -1980,13 +1980,13 @@ array_push( $arrTrabajo,$row );
  
 
 
-<?php if(isset($_GET['ter'])&&$_GET['ter']!=''){ ?>
-	<div class="col-sm-12" >
+<?php if(isset($_GET['ter'])&&$_GET['ter']!=''){?>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 
 		<?php 
 		$ubicacion = $location.'&cerrar_ot=true';
 		$dialogo   = '¿Desea cerrar el documento?';?>
-		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary fright margin_width"><i class="fa fa-check-square-o" aria-hidden="true"></i> Cerrar Documento</a>								
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-check-square-o" aria-hidden="true"></i> Cerrar Documento</a>								
 		
 		<div class="clearfix"></div>
 	</div>
@@ -1997,11 +1997,11 @@ array_push( $arrTrabajo,$row );
 	
 		<div id="customer">
 			
-			<table id="meta" class="fleft otdata">
+			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<?php if(isset($rowdata['NombreCliente'])&&$rowdata['NombreCliente']!=''){?>
 						<tr>
@@ -2031,7 +2031,7 @@ array_push( $arrTrabajo,$row );
 							<td class="meta-head">Supervisor</td>
 							<td><?php echo $rowdata['NombreTrab'].' '.$rowdata['ApellidoPat']?></td>
 						</tr>
-					<?php }elseif(isset($_GET['ter'])&&$_GET['ter']!=''){ ?>
+					<?php }elseif(isset($_GET['ter'])&&$_GET['ter']!=''){?>
 						<tr>
 							<td class="meta-head">Supervisor</td>
 							<td><strong style="color:red;">Modificar datos basicos</strong></td>
@@ -2063,7 +2063,7 @@ array_push( $arrTrabajo,$row );
 							<td class="meta-head">Fecha termino</td>
 							<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);}?></td>
 						</tr>
-					<?php }elseif(isset($_GET['ter'])&&$_GET['ter']!=''){ ?>
+					<?php }elseif(isset($_GET['ter'])&&$_GET['ter']!=''){?>
 						<tr>
 							<td class="meta-head">Fecha termino</td>
 							<td><strong style="color:red;">Modificar datos basicos</strong></td>
@@ -2100,10 +2100,10 @@ array_push( $arrTrabajo,$row );
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
-				</tr>		  
+				</tr>
 				
 
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Trabajadores Encargados</td>
 						<td>
@@ -2127,10 +2127,10 @@ array_push( $arrTrabajo,$row );
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
-						</tr> 
-					<?php }?>	
+						</tr>
+					<?php }?>
 					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php /**********************************************************************************/  ?>
+				<?php /**********************************************************************************/ ?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td>
 						<td>
@@ -2144,7 +2144,7 @@ array_push( $arrTrabajo,$row );
 						if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="4"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
-								<td class="item-name"><?php echo $insumos['Cantidad'].' '.$insumos['UnidadMedida']; ?></td>	
+								<td class="item-name"><?php echo $insumos['Cantidad'].' '.$insumos['UnidadMedida']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<?php //Si la OT solo esta programada
@@ -2157,12 +2157,12 @@ array_push( $arrTrabajo,$row );
 										<?php } ?>
 									</div>
 								</td>
-							</tr> 
+							</tr>
 						<?php
 						} 
 					} ?>
 					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td>
 						<td>
@@ -2172,11 +2172,11 @@ array_push( $arrTrabajo,$row );
 							<?php } ?>
 						</td>
 					</tr>
-					<?php foreach ($arrProductos as $prod) { 
+					<?php foreach ($arrProductos as $prod) {
 						if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="4"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
-								<td class="item-name"><?php echo $prod['Cantidad'].' '.$prod['UnidadMedida']; ?></td>	
+								<td class="item-name"><?php echo $prod['Cantidad'].' '.$prod['UnidadMedida']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<?php //Si la OT solo esta programada
@@ -2189,12 +2189,12 @@ array_push( $arrTrabajo,$row );
 										<?php } ?>
 									</div>
 								</td>
-							</tr> 
+							</tr>
 						<?php 
 						}
 					} ?>
 					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';}?></td>
 						<td>
@@ -2222,8 +2222,8 @@ array_push( $arrTrabajo,$row );
 									//El tipo de maquina que es
 									switch ($trab['idSubTipo']) {
 										case 1: //Grasa
-											if(isset($trab['Grasa_inicial'])&&$trab['Grasa_inicial']!=0){             echo Cantidades_decimales_justos($trab['Grasa_inicial']);}
-											if(isset($trab['Grasa_relubricacion'])&&$trab['Grasa_relubricacion']!=0){ echo Cantidades_decimales_justos($trab['Grasa_relubricacion']);}
+											if(isset($trab['Grasa_inicial'])&&$trab['Grasa_inicial']!=0){         echo Cantidades_decimales_justos($trab['Grasa_inicial']);}
+											if(isset($trab['Grasa_relubricacion'])&&$trab['Grasa_relubricacion']!=0){echo Cantidades_decimales_justos($trab['Grasa_relubricacion']);}
 											break;
 										case 2: //Aceite
 											echo Cantidades_decimales_justos($trab['Aceite']);
@@ -2271,13 +2271,13 @@ array_push( $arrTrabajo,$row );
 										}
 									}
 									echo '<a onClick="dialogBox(\''.$ubicacion.'&del_tarea_row=true\', \''.$dialogo.'\')" title="Borrar Trabajo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';	
-									?>		
+									?>	
 								</div>
-							</td>		
-						</tr> 
+							</td>
+						</tr>
 					<?php } ?>
 					
-					<?php /**********************************************************************************/ ?>
+					<?php /**********************************************************************************/?>
 					<?php 
 					if (isset($_SESSION['ot_trabajos_temp'])){
 						$n_trabajos=0;
@@ -2297,7 +2297,7 @@ array_push( $arrTrabajo,$row );
 								<td>';
 								//Si la OT solo esta programada
 								if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){
-									echo '<a href="'.$location.'&aproTrab=true" class="btn btn-xs btn-success fright">Aprobar Trabajos Temp</a>';
+									echo '<a href="'.$location.'&aproTrab=true" class="btn btn-xs btn-success pull-right">Aprobar Trabajos Temp</a>';
 								}
 							echo '</td>
 						
@@ -2340,7 +2340,7 @@ array_push( $arrTrabajo,$row );
 											}
 										}else{
 											echo '<td colspan="2"><span style="color:red;">Sin itemizado asignado</span></td><td></td>';
-										}	
+										}
 										echo '	
 											<td>
 												<div class="btn-group" style="width: 70px;" >';
@@ -2357,15 +2357,15 @@ array_push( $arrTrabajo,$row );
 												</div>
 											</td>
 										</tr>';
-									} 
-								} 
+									}
+								}
 							} 
 						}
 					}
 						?>
 					
 					<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 
 				
 				<tr>
@@ -2380,7 +2380,7 @@ array_push( $arrTrabajo,$row );
 				
 			</tbody>
 		</table>
-		<div class="clearfix"></div>	
+		<div class="clearfix"></div>
 	</div>
 </div>
 

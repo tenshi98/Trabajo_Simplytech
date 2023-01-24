@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -54,7 +54,7 @@ LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna   
 $SIS_where = 'solicitud_listado.idSolicitud ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'solicitud_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-/*****************************************/				
+/*****************************************/
 //Insumos
 $SIS_query = '
 insumos_listado.Nombre,
@@ -68,7 +68,7 @@ $SIS_order = 'insumos_listado.Nombre ASC';
 $arrInsumos = array();
 $arrInsumos = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
 
-/*****************************************/				
+/*****************************************/
 //Productos
 $SIS_query = '
 productos_listado.Nombre,
@@ -82,7 +82,7 @@ $SIS_order = 'productos_listado.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-/*****************************************/				
+/*****************************************/
 //Arriendos
 $SIS_query = '
 equipos_arriendo_listado.Nombre,
@@ -96,7 +96,7 @@ $SIS_order = 'equipos_arriendo_listado.Nombre ASC';
 $arrArriendos = array();
 $arrArriendos = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_arriendos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArriendos');
 
-/*****************************************/				
+/*****************************************/
 //Servicios
 $SIS_query = '
 servicios_listado.Nombre,
@@ -110,7 +110,7 @@ $SIS_order = 'servicios_listado.Nombre ASC';
 $arrServicios = array();
 $arrServicios = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_servicios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrServicios');
 
-/*****************************************/				
+/*****************************************/
 //Otros
 $SIS_query = '
 solicitud_listado_existencias_otros.Nombre,
@@ -132,7 +132,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 				<i class="fa fa-globe" aria-hidden="true"></i> Solicitud de Productos.
 				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha'])?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">
@@ -163,7 +163,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 				<tbody>
 					<?php if ($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Insumos</strong></td></tr>
-						<?php foreach ($arrInsumos as $prod) { ?>
+						<?php foreach ($arrInsumos as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
@@ -172,7 +172,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 					<?php } ?>
 					<?php if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Productos</strong></td></tr>
-						<?php foreach ($arrProductos as $prod) { ?>
+						<?php foreach ($arrProductos as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
@@ -181,7 +181,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 					<?php } ?>
 					<?php if ($arrArriendos!=false && !empty($arrArriendos) && $arrArriendos!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Arriendos</strong></td></tr>
-						<?php foreach ($arrArriendos as $prod) { ?>
+						<?php foreach ($arrArriendos as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -190,7 +190,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 					<?php } ?>
 					<?php if ($arrServicios!=false && !empty($arrServicios) && $arrServicios!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Servicios</strong></td></tr>
-						<?php foreach ($arrServicios as $prod) { ?>
+						<?php foreach ($arrServicios as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -199,7 +199,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 					<?php } ?>
 					<?php if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Otros</strong></td></tr>
-						<?php foreach ($arrOtros as $prod) { ?>
+						<?php foreach ($arrOtros as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -222,12 +222,12 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -238,12 +238,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
  
 <?php

@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistemas.php";
 $location = $original;
 $new_location = "core_sistemas_datos_imagen.php";
@@ -23,7 +23,7 @@ $location .='?pagina='.$_GET['pagina'];
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -32,13 +32,13 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_img']) )     {
+if (!empty($_GET['del_img'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_img';
-	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';	
+	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -53,22 +53,22 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sistema editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$SIS_query = 'Nombre, Config_imgLogo';
+$SIS_query = 'Nombre,Config_imgLogo';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Logo');?>
 </div>
 <div class="clearfix"></div>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -91,19 +91,19 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 				
 				<?php if(isset($rowdata['Config_imgLogo'])&&$rowdata['Config_imgLogo']!=''){?>
         
 					<div class="col-sm-10 fcenter">
-						<img src="upload/<?php echo $rowdata['Config_imgLogo'] ?>" width="100%" class="img-thumbnail" > 
+						<img src="upload/<?php echo $rowdata['Config_imgLogo'] ?>" width="100%" class="img-thumbnail" >
 						<br/>
-						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_img='.$_GET['id']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
-					</div> 
+						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_img='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
+					</div>
 					<div class="clearfix"></div>
 					
 				<?php }else{?>
@@ -116,26 +116,26 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','Config_imgLogo', 1, '"jpg", "png", "gif", "jpeg"');
 						$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					
-						?> 
+						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf093; Subir Archivo" name="submit_edit"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf093; Subir Archivo" name="submit_edit">
 						</div>
 							  
 					</form>
-					<?php widget_validator(); ?> 
-				<?php }?> 
+					<?php widget_validator(); ?>
+				<?php } ?>
 				
 				
 				
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

@@ -10,16 +10,16 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "principal.php";
 $location = $original;
 /**********************************************************************************************************************************/
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -27,11 +27,11 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -111,7 +111,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 	   
 		<div id="customer">
 
-			<table id="meta" class="fleft otdata">
+			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
 						<td class="meta-head" colspan="2"><strong>DATOS BASICOS</strong></td>
@@ -143,7 +143,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 			<tbody>
 				<tr>
 					<th colspan="5">Detalle</th>
-				</tr>	
+				</tr>
 				<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
 					<td class="item-name"><strong>Vehiculo</strong></td>
 					<td class="item-name"><strong>Apoderado</strong></td>
@@ -154,7 +154,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 				<?php 
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrHijos as $hijo) { 
-					if(isset($hijo['Vehiculo_1_Nombre'])&&$hijo['Vehiculo_1_Nombre']!=''){ ?>
+					if(isset($hijo['Vehiculo_1_Nombre'])&&$hijo['Vehiculo_1_Nombre']!=''){?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $hijo['Vehiculo_1_Nombre'].' Patente '.$hijo['Vehiculo_1_Patente']; ?></td>
 							<td class="item-name"><?php echo $hijo['ApoderadoNombre'].' '.$hijo['ApoderadoApellidoPat'].' '.$hijo['ApoderadoApellidoMat']; ?></td>
@@ -165,9 +165,9 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($hijo['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php") ?>" title="Ver Datos Apoderado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
-						</tr>	
+						</tr>
 					<?php }
-					if(isset($hijo['Vehiculo_2_Nombre'])&&$hijo['Vehiculo_2_Nombre']!=''){ ?>
+					if(isset($hijo['Vehiculo_2_Nombre'])&&$hijo['Vehiculo_2_Nombre']!=''){?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $hijo['Vehiculo_2_Nombre'].' Patente '.$hijo['Vehiculo_2_Patente']; ?></td>
 							<td class="item-name"><?php echo $hijo['ApoderadoNombre'].' '.$hijo['ApoderadoApellidoPat'].' '.$hijo['ApoderadoApellidoMat']; ?></td>
@@ -178,9 +178,9 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($hijo['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php") ?>" title="Ver Datos Apoderado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
-						</tr>	
+						</tr>
 					<?php }
-					if(isset($hijo['Vehiculo_3_Nombre'])&&$hijo['Vehiculo_3_Nombre']!=''){ ?>
+					if(isset($hijo['Vehiculo_3_Nombre'])&&$hijo['Vehiculo_3_Nombre']!=''){?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $hijo['Vehiculo_3_Nombre'].' Patente '.$hijo['Vehiculo_3_Patente']; ?></td>
 							<td class="item-name"><?php echo $hijo['ApoderadoNombre'].' '.$hijo['ApoderadoApellidoPat'].' '.$hijo['ApoderadoApellidoMat']; ?></td>
@@ -191,9 +191,9 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($hijo['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php") ?>" title="Ver Datos Apoderado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
-						</tr>	
+						</tr>
 					<?php }
-					if(isset($hijo['Vehiculo_4_Nombre'])&&$hijo['Vehiculo_4_Nombre']!=''){ ?>
+					if(isset($hijo['Vehiculo_4_Nombre'])&&$hijo['Vehiculo_4_Nombre']!=''){?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $hijo['Vehiculo_4_Nombre'].' Patente '.$hijo['Vehiculo_4_Patente']; ?></td>
 							<td class="item-name"><?php echo $hijo['ApoderadoNombre'].' '.$hijo['ApoderadoApellidoPat'].' '.$hijo['ApoderadoApellidoMat']; ?></td>
@@ -204,9 +204,9 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($hijo['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php") ?>" title="Ver Datos Apoderado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
-						</tr>	
+						</tr>
 					<?php }
-					if(isset($hijo['Vehiculo_5_Nombre'])&&$hijo['Vehiculo_5_Nombre']!=''){ ?>
+					if(isset($hijo['Vehiculo_5_Nombre'])&&$hijo['Vehiculo_5_Nombre']!=''){?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $hijo['Vehiculo_5_Nombre'].' Patente '.$hijo['Vehiculo_5_Patente']; ?></td>
 							<td class="item-name"><?php echo $hijo['ApoderadoNombre'].' '.$hijo['ApoderadoApellidoPat'].' '.$hijo['ApoderadoApellidoMat']; ?></td>
@@ -217,7 +217,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 									<a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($hijo['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php") ?>" title="Ver Boleta" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
-						</tr>	
+						</tr>
 					<?php 
 					}
 				} ?>
@@ -245,12 +245,12 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -261,12 +261,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

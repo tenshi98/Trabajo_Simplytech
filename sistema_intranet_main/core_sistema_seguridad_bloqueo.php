@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistema_seguridad_bloqueo.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -21,22 +21,22 @@ $location .='?pagina='.$_GET['pagina'];
 /*                                               Ejecucion de los formularios                                                     */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/sistema_seguridad_bloqueo_ip.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/sistema_seguridad_bloqueo_ip.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/sistema_seguridad_bloqueo_ip.php';	
+	require_once 'A1XRXS_sys/xrxs_form/sistema_seguridad_bloqueo_ip.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -51,8 +51,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Bloqueo Modificado cor
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Bloqueo borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 // consulto los datos
 $query = "SELECT Fecha, Hora, IP_Client, Motivo
 FROM `sistema_seguridad_bloqueo_ip`
@@ -73,22 +73,22 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
  
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion de IP Bloqueada</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {      $x1  = $Fecha;      }else{$x1  = $rowdata['Fecha'];}
-				if(isset($Hora)) {       $x2  = $Hora;       }else{$x2  = $rowdata['Hora'];}
-				if(isset($IP_Client)) {  $x3  = $IP_Client;  }else{$x3  = $rowdata['IP_Client'];}
-				if(isset($Motivo)) {     $x4  = $Motivo;     }else{$x4  = $rowdata['Motivo'];}
-				
+				if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = $rowdata['Fecha'];}
+				if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = $rowdata['Hora'];}
+				if(isset($IP_Client)){  $x3  = $IP_Client;  }else{$x3  = $rowdata['IP_Client'];}
+				if(isset($Motivo)){     $x4  = $Motivo;     }else{$x4  = $rowdata['Motivo'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
@@ -100,12 +100,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
@@ -113,25 +113,25 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Nueva IP Bloqueada</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {      $x1  = $Fecha;      }else{$x1  = '';}
-				if(isset($Hora)) {       $x2  = $Hora;       }else{$x2  = '';}
-				if(isset($IP_Client)) {  $x3  = $IP_Client;  }else{$x3  = '';}
-				if(isset($Motivo)) {     $x4  = $Motivo;     }else{$x4  = '';}
-				
+				if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = '';}
+				if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = '';}
+				if(isset($IP_Client)){  $x3  = $IP_Client;  }else{$x3  = '';}
+				if(isset($Motivo)){     $x4  = $Motivo;     }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
@@ -141,41 +141,32 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				?>
 	 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idBloqueo', 'sistema_seguridad_bloqueo_ip', '', '', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = 'idBloqueo, Fecha, Hora,IP_Client,Motivo';
 $SIS_join  = '';
@@ -187,12 +178,12 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'sistema_seguridad_bloqueo_ip'
 $search='';
 ?>
 
-<div class="col-sm-12">
-	<a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear IP Bloqueada</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear IP Bloqueada</a>
 </div>
-<div class="clearfix"></div>                       
+<div class="clearfix"></div>
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de IP Bloqueadas</h5>
@@ -202,7 +193,7 @@ $search='';
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive">    
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -227,22 +218,22 @@ $search='';
 								<?php 
 								$ubicacion = $location.'&del='.simpleEncode($bloqueo['idBloqueo'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro '.$bloqueo['IP_Client'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//paginacion
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

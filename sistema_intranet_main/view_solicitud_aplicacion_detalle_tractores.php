@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -38,12 +38,12 @@ if (validarNumero($_GET['view'])){
 $SIS_where = "cross_solicitud_aplicacion_listado.idSolicitud!=0";
 $SIS_where .= " AND cross_solicitud_aplicacion_listado.idEstado=3";//solo terminadas
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idSolicitud']) && $_GET['idSolicitud'] != ''){ $SIS_where .= " AND cross_solicitud_aplicacion_listado.idSolicitud=".simpleDecode($_GET['idSolicitud'], fecha_actual());}
-if(isset($_GET['idPredio']) && $_GET['idPredio'] != ''){       $SIS_where .= " AND cross_solicitud_aplicacion_listado.idPredio=".simpleDecode($_GET['idPredio'], fecha_actual());}
-if(isset($_GET['idZona']) && $_GET['idZona'] != ''){           $SIS_where .= " AND cross_solicitud_aplicacion_listado_cuarteles.idZona=".simpleDecode($_GET['idZona'], fecha_actual());}
+if(isset($_GET['idSolicitud']) && $_GET['idSolicitud']!=''){ $SIS_where .= " AND cross_solicitud_aplicacion_listado.idSolicitud=".simpleDecode($_GET['idSolicitud'], fecha_actual());}
+if(isset($_GET['idPredio']) && $_GET['idPredio']!=''){$SIS_where .= " AND cross_solicitud_aplicacion_listado.idPredio=".simpleDecode($_GET['idPredio'], fecha_actual());}
+if(isset($_GET['idZona']) && $_GET['idZona']!=''){    $SIS_where .= " AND cross_solicitud_aplicacion_listado_cuarteles.idZona=".simpleDecode($_GET['idZona'], fecha_actual());}
 /**********************************************************/
 // Se trae un listado con todos los datos separados por tractores
 $SIS_query = '
@@ -94,9 +94,9 @@ filtrar($arrOTS, 'idTelemetria');
 
 ?>
 
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Detalle Tractores</h5>
 			<ul class="nav nav-tabs pull-right">
 				<?php 
@@ -107,7 +107,7 @@ filtrar($arrOTS, 'idTelemetria');
 			</ul>
 
 		</header>
-		<div id="div-3" class="tab-content">
+		<div class="tab-content">
 			
 			<?php 
 			$ssx = 0;
@@ -151,7 +151,7 @@ filtrar($arrOTS, 'idTelemetria');
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($subcategorias as $ot) { ?>
-									<tr class="odd">		
+									<tr class="odd">
 										<td><?php echo n_doc($ot['NSolicitud'], 5); ?></td>
 										<td><?php echo Fecha_estandar($ot['f_cierre']); ?></td>
 										<td><?php echo $ot['PredioNombre']; ?></td>
@@ -174,9 +174,9 @@ filtrar($arrOTS, 'idTelemetria');
 										<td><?php echo Cantidades(((($ot['CuartelDistanciaPlant']*$ot['CuartelCantPlantas']) - ($ot['GeoDistance']*1000))/$ot['CuartelDistanciaPlant']), 0); ?></td>
 											
 									</tr>
-								<?php } ?>                    
+								<?php } ?>
 							</tbody>
-						</table>	
+						</table>
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 								
 							<thead>
@@ -211,7 +211,7 @@ filtrar($arrOTS, 'idTelemetria');
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($subcategorias as $ot) { ?>
-									<tr class="odd">		
+									<tr class="odd">
 										<td><?php echo n_doc($ot['NSolicitud'], 5); ?></td>
 										<td><?php echo Fecha_estandar($ot['f_cierre']); ?></td>
 										<td><?php echo $ot['PredioNombre']; ?></td>
@@ -230,7 +230,7 @@ filtrar($arrOTS, 'idTelemetria');
 										<td><?php echo Cantidades($ot['Sensor_out_2_Sum'], 2); ?></td>
 	
 									</tr>
-								<?php } ?>                    
+								<?php } ?>
 							</tbody>
 						</table>
 					</div>
@@ -246,12 +246,12 @@ filtrar($arrOTS, 'idTelemetria');
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -262,12 +262,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 <?php
 /**********************************************************************************************************************************/

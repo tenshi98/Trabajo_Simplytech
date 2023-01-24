@@ -2,41 +2,41 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridQuizad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-268).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idQuiz']) )            $idQuiz              = $_POST['idQuiz'];
-	if ( !empty($_POST['idSistema']) )         $idSistema           = $_POST['idSistema'];
-	if ( isset($_POST['Nombre']) )             $Nombre 	            = $_POST['Nombre'];
-	if ( !empty($_POST['Header_texto']) )      $Header_texto        = $_POST['Header_texto'];
-	if ( !empty($_POST['Header_fecha']) )      $Header_fecha        = $_POST['Header_fecha'];
-	if ( !empty($_POST['Footer_texto']) )      $Footer_texto        = $_POST['Footer_texto'];
-	if ( isset($_POST['Texto_Inicio']) )       $Texto_Inicio        = $_POST['Texto_Inicio'];
-	if ( !empty($_POST['idEstado']) )          $idEstado            = $_POST['idEstado'];
-	if ( !empty($_POST['idEscala']) )          $idEscala            = $_POST['idEscala'];
-	if ( !empty($_POST['Porcentaje_apro']) )   $Porcentaje_apro     = $_POST['Porcentaje_apro'];
-	if ( !empty($_POST['idTipoEvaluacion']) )  $idTipoEvaluacion    = $_POST['idTipoEvaluacion'];
-	if ( !empty($_POST['idTipoQuiz']) )        $idTipoQuiz          = $_POST['idTipoQuiz'];
-	
-	if ( !empty($_POST['idPregunta']) )        $idPregunta          = $_POST['idPregunta'];
-	if ( !empty($_POST['idTipo']) )            $idTipo 	            = $_POST['idTipo'];
-	if ( isset($_POST['Opcion_1']) )           $Opcion_1 	        = $_POST['Opcion_1'];
-	if ( isset($_POST['Opcion_2']) )           $Opcion_2 	        = $_POST['Opcion_2'];
-	if ( isset($_POST['Opcion_3']) )           $Opcion_3 	        = $_POST['Opcion_3'];
-	if ( isset($_POST['Opcion_4']) )           $Opcion_4 	        = $_POST['Opcion_4'];
-	if ( isset($_POST['Opcion_5']) )           $Opcion_5 	        = $_POST['Opcion_5'];
-	if ( isset($_POST['Opcion_6']) )           $Opcion_6 	        = $_POST['Opcion_6'];
-	if ( isset($_POST['OpcionCorrecta']) )     $OpcionCorrecta      = $_POST['OpcionCorrecta'];
-	if ( !empty($_POST['idCategoria']) )       $idCategoria         = $_POST['idCategoria'];
+	if (!empty($_POST['idQuiz']))            $idQuiz              = $_POST['idQuiz'];
+	if (!empty($_POST['idSistema']))         $idSistema           = $_POST['idSistema'];
+	if ( isset($_POST['Nombre']))             $Nombre 	            = $_POST['Nombre'];
+	if (!empty($_POST['Header_texto']))      $Header_texto        = $_POST['Header_texto'];
+	if (!empty($_POST['Header_fecha']))      $Header_fecha        = $_POST['Header_fecha'];
+	if (!empty($_POST['Footer_texto']))      $Footer_texto        = $_POST['Footer_texto'];
+	if ( isset($_POST['Texto_Inicio']))       $Texto_Inicio        = $_POST['Texto_Inicio'];
+	if (!empty($_POST['idEstado']))          $idEstado            = $_POST['idEstado'];
+	if (!empty($_POST['idEscala']))          $idEscala            = $_POST['idEscala'];
+	if (!empty($_POST['Porcentaje_apro']))   $Porcentaje_apro     = $_POST['Porcentaje_apro'];
+	if (!empty($_POST['idTipoEvaluacion']))  $idTipoEvaluacion    = $_POST['idTipoEvaluacion'];
+	if (!empty($_POST['idTipoQuiz']))        $idTipoQuiz          = $_POST['idTipoQuiz'];
+
+	if (!empty($_POST['idPregunta']))        $idPregunta          = $_POST['idPregunta'];
+	if (!empty($_POST['idTipo']))            $idTipo 	            = $_POST['idTipo'];
+	if ( isset($_POST['Opcion_1']))           $Opcion_1 	        = $_POST['Opcion_1'];
+	if ( isset($_POST['Opcion_2']))           $Opcion_2 	        = $_POST['Opcion_2'];
+	if ( isset($_POST['Opcion_3']))           $Opcion_3 	        = $_POST['Opcion_3'];
+	if ( isset($_POST['Opcion_4']))           $Opcion_4 	        = $_POST['Opcion_4'];
+	if ( isset($_POST['Opcion_5']))           $Opcion_5 	        = $_POST['Opcion_5'];
+	if ( isset($_POST['Opcion_6']))           $Opcion_6 	        = $_POST['Opcion_6'];
+	if ( isset($_POST['OpcionCorrecta']))     $OpcionCorrecta      = $_POST['OpcionCorrecta'];
+	if (!empty($_POST['idCategoria']))       $idCategoria         = $_POST['idCategoria'];
 						
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -61,7 +61,7 @@ require_once '0_validate_user_1.php';
 			case 'Porcentaje_apro':   if(empty($Porcentaje_apro)){   $error['Porcentaje_apro']    = 'error/No ha seleccionado el porcentaje de aprobacion';}break;
 			case 'idTipoEvaluacion':  if(empty($idTipoEvaluacion)){  $error['idTipoEvaluacion']   = 'error/No ha seleccionado el tipo de evaluacion';}break;
 			case 'idTipoQuiz':        if(empty($idTipoQuiz)){        $error['idTipoQuiz']         = 'error/No ha seleccionado el tipo de quiz';}break;
-			
+
 			case 'idPregunta':        if(empty($idPregunta)){        $error['idPregunta']         = 'error/No ha ingresado la id de la pregunta';}break;
 			case 'idTipo':            if(empty($idTipo)){            $error['idTipo']             = 'error/No ha seleccionado el tipo de pregunta';}break;
 			case 'Opcion_1':          if(!isset($Opcion_1)){         $error['Opcion_1']           = 'error/No ha ingresado la opcion 1';}break;
@@ -72,36 +72,36 @@ require_once '0_validate_user_1.php';
 			case 'Opcion_6':          if(!isset($Opcion_6)){         $error['Opcion_6']           = 'error/No ha ingresado la opcion 6';}break;
 			case 'OpcionCorrecta':    if(!isset($OpcionCorrecta)){   $error['OpcionCorrecta']     = 'error/No ha ingresado la opcion correcta';}break;
 			case 'idCategoria':       if(empty($idCategoria)){       $error['idCategoria']        = 'error/No ha seleccionado la categoria';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Nombre) && $Nombre != ''){             $Nombre       = EstandarizarInput($Nombre); }
-	if(isset($Header_texto) && $Header_texto != ''){ $Header_texto = EstandarizarInput($Header_texto); }
-	if(isset($Footer_texto) && $Footer_texto != ''){ $Footer_texto = EstandarizarInput($Footer_texto); }
-	if(isset($Texto_Inicio) && $Texto_Inicio != ''){ $Texto_Inicio = EstandarizarInput($Texto_Inicio); }
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre) && $Nombre!=''){            $Nombre       = EstandarizarInput($Nombre);}
+	if(isset($Header_texto) && $Header_texto!=''){ $Header_texto = EstandarizarInput($Header_texto);}
+	if(isset($Footer_texto) && $Footer_texto!=''){ $Footer_texto = EstandarizarInput($Footer_texto);}
+	if(isset($Texto_Inicio) && $Texto_Inicio!=''){ $Texto_Inicio = EstandarizarInput($Texto_Inicio);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){              $error['Nombre']       = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	if(isset($Header_texto)&&contar_palabras_censuradas($Header_texto)!=0){  $error['Header_texto'] = 'error/Edita Header_texto, contiene palabras no permitidas'; }	
-	if(isset($Footer_texto)&&contar_palabras_censuradas($Footer_texto)!=0){  $error['Footer_texto'] = 'error/Edita Footer_texto, contiene palabras no permitidas'; }	
-	if(isset($Texto_Inicio)&&contar_palabras_censuradas($Texto_Inicio)!=0){  $error['Texto_Inicio'] = 'error/Edita Texto_Inicio, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){              $error['Nombre']       = 'error/Edita Nombre,contiene palabras no permitidas';}
+	if(isset($Header_texto)&&contar_palabras_censuradas($Header_texto)!=0){  $error['Header_texto'] = 'error/Edita Header_texto, contiene palabras no permitidas';}
+	if(isset($Footer_texto)&&contar_palabras_censuradas($Footer_texto)!=0){  $error['Footer_texto'] = 'error/Edita Footer_texto, contiene palabras no permitidas';}
+	if(isset($Texto_Inicio)&&contar_palabras_censuradas($Texto_Inicio)!=0){  $error['Texto_Inicio'] = 'error/Edita Texto_Inicio, contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert_quiz':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -114,28 +114,27 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){               $SIS_data  = "'".$idSistema."'" ;          }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre != ''){                     $SIS_data .= ",'".$Nombre."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($Header_texto) && $Header_texto != ''){         $SIS_data .= ",'".$Header_texto."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($Header_fecha) && $Header_fecha != ''){         $SIS_data .= ",'".$Header_fecha."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($Footer_texto) && $Footer_texto != ''){         $SIS_data .= ",'".$Footer_texto."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($Texto_Inicio) && $Texto_Inicio != ''){         $SIS_data .= ",'".$Texto_Inicio."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){                 $SIS_data .= ",'".$idEstado."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($idEscala) && $idEscala != ''){                 $SIS_data .= ",'".$idEscala."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($Porcentaje_apro) && $Porcentaje_apro != ''){   $SIS_data .= ",'".$Porcentaje_apro."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($idTipoEvaluacion) && $idTipoEvaluacion != ''){ $SIS_data .= ",'".$idTipoEvaluacion."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($idTipoQuiz) && $idTipoQuiz != ''){             $SIS_data .= ",'".$idTipoQuiz."'" ;        }else{$SIS_data .= ",''";}
-				
+				if(isset($idSistema) && $idSistema!=''){               $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",'".$Nombre."'";            }else{$SIS_data .= ",''";}
+				if(isset($Header_texto) && $Header_texto!=''){         $SIS_data .= ",'".$Header_texto."'";      }else{$SIS_data .= ",''";}
+				if(isset($Header_fecha) && $Header_fecha!=''){         $SIS_data .= ",'".$Header_fecha."'";      }else{$SIS_data .= ",''";}
+				if(isset($Footer_texto) && $Footer_texto!=''){         $SIS_data .= ",'".$Footer_texto."'";      }else{$SIS_data .= ",''";}
+				if(isset($Texto_Inicio) && $Texto_Inicio!=''){         $SIS_data .= ",'".$Texto_Inicio."'";      }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",'".$idEstado."'";          }else{$SIS_data .= ",''";}
+				if(isset($idEscala) && $idEscala!=''){                 $SIS_data .= ",'".$idEscala."'";          }else{$SIS_data .= ",''";}
+				if(isset($Porcentaje_apro) && $Porcentaje_apro!=''){   $SIS_data .= ",'".$Porcentaje_apro."'";   }else{$SIS_data .= ",''";}
+				if(isset($idTipoEvaluacion) && $idTipoEvaluacion!=''){ $SIS_data .= ",'".$idTipoEvaluacion."'";  }else{$SIS_data .= ",''";}
+				if(isset($idTipoQuiz) && $idTipoQuiz!=''){             $SIS_data .= ",'".$idTipoQuiz."'";        }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, Nombre, Header_texto, Header_fecha, Footer_texto, Texto_Inicio, idEstado, idEscala, Porcentaje_apro, idTipoEvaluacion, idTipoQuiz';
+				$SIS_columns = 'idSistema, Nombre,Header_texto, Header_fecha, Footer_texto, Texto_Inicio, idEstado, idEscala, Porcentaje_apro, idTipoEvaluacion, idTipoQuiz';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'rrhh_quiz_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -143,55 +142,53 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-	
-		break;	
-/*******************************************************************************************************************/		
-		case 'update_quiz':	
-			
+
+		break;
+/*******************************************************************************************************************/
+		case 'update_quiz':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idQuiz='".$idQuiz."'" ;
-				if(isset($idSistema) && $idSistema != ''){               $SIS_data .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                     $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Header_texto) && $Header_texto != ''){         $SIS_data .= ",Header_texto='".$Header_texto."'" ;}
-				if(isset($Header_fecha) && $Header_fecha != ''){         $SIS_data .= ",Header_fecha='".$Header_fecha."'" ;}
-				if(isset($Footer_texto) && $Footer_texto != ''){         $SIS_data .= ",Footer_texto='".$Footer_texto."'" ;}
-				if(isset($Texto_Inicio) && $Texto_Inicio != ''){         $SIS_data .= ",Texto_Inicio='".$Texto_Inicio."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                 $SIS_data .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idEscala) && $idEscala != ''){                 $SIS_data .= ",idEscala='".$idEscala."'" ;}
-				if(isset($Porcentaje_apro) && $Porcentaje_apro != ''){   $SIS_data .= ",Porcentaje_apro='".$Porcentaje_apro."'" ;}
-				if(isset($idTipoEvaluacion) && $idTipoEvaluacion != ''){ $SIS_data .= ",idTipoEvaluacion='".$idTipoEvaluacion."'" ;}
-				if(isset($idTipoQuiz) && $idTipoQuiz != ''){             $SIS_data .= ",idTipoQuiz='".$idTipoQuiz."'" ;}
-				
+				$SIS_data = "idQuiz='".$idQuiz."'";
+				if(isset($idSistema) && $idSistema!=''){               $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Header_texto) && $Header_texto!=''){         $SIS_data .= ",Header_texto='".$Header_texto."'";}
+				if(isset($Header_fecha) && $Header_fecha!=''){         $SIS_data .= ",Header_fecha='".$Header_fecha."'";}
+				if(isset($Footer_texto) && $Footer_texto!=''){         $SIS_data .= ",Footer_texto='".$Footer_texto."'";}
+				if(isset($Texto_Inicio) && $Texto_Inicio!=''){         $SIS_data .= ",Texto_Inicio='".$Texto_Inicio."'";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEscala) && $idEscala!=''){                 $SIS_data .= ",idEscala='".$idEscala."'";}
+				if(isset($Porcentaje_apro) && $Porcentaje_apro!=''){   $SIS_data .= ",Porcentaje_apro='".$Porcentaje_apro."'";}
+				if(isset($idTipoEvaluacion) && $idTipoEvaluacion!=''){ $SIS_data .= ",idTipoEvaluacion='".$idTipoEvaluacion."'";}
+				if(isset($idTipoQuiz) && $idTipoQuiz!=''){             $SIS_data .= ",idTipoQuiz='".$idTipoQuiz."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'rrhh_quiz_listado', 'idQuiz = "'.$idQuiz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
-		break;	
 
-						
+		break;
+
 /*******************************************************************************************************************/
-		case 'del_quiz':	
+		case 'del_quiz':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del_quiz']) OR !validaEntero($_GET['del_quiz']))&&$_GET['del_quiz']!=''){
 				$indice = simpleDecode($_GET['del_quiz'], fecha_actual());
@@ -199,66 +196,64 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del_quiz'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado_1 = db_delete_data (false, 'rrhh_quiz_listado', 'idQuiz = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$resultado_2 = db_delete_data (false, 'rrhh_quiz_listado_preguntas', 'idQuiz = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado_1==true OR $resultado_2==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-		break;							
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'insert_pregunta':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idQuiz) && $idQuiz != ''){                      $SIS_data  = "'".$idQuiz."'" ;               }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre != ''){                      $SIS_data .= ",'".$Nombre."'" ;              }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo != ''){                      $SIS_data .= ",'".$idTipo."'" ;              }else{$SIS_data .= ",''";}
-				if(isset($Opcion_1) && $Opcion_1 != ''){                  $SIS_data .= ",'".$Opcion_1."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($Opcion_2) && $Opcion_2 != ''){                  $SIS_data .= ",'".$Opcion_2."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($Opcion_3) && $Opcion_3 != ''){                  $SIS_data .= ",'".$Opcion_3."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($Opcion_4) && $Opcion_4 != ''){                  $SIS_data .= ",'".$Opcion_4."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($Opcion_5) && $Opcion_5 != ''){                  $SIS_data .= ",'".$Opcion_5."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($Opcion_6) && $Opcion_6 != ''){                  $SIS_data .= ",'".$Opcion_6."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($OpcionCorrecta) && $OpcionCorrecta != ''){      $SIS_data .= ",'".$OpcionCorrecta."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($idCategoria) && $idCategoria != ''){            $SIS_data .= ",'".$idCategoria."'" ;         }else{$SIS_data .= ",''";}
-				
+				if(isset($idQuiz) && $idQuiz!=''){                      $SIS_data  = "'".$idQuiz."'";               }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){                     $SIS_data .= ",'".$Nombre."'";              }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                     $SIS_data .= ",'".$idTipo."'";              }else{$SIS_data .= ",''";}
+				if(isset($Opcion_1) && $Opcion_1!=''){                  $SIS_data .= ",'".$Opcion_1."'";            }else{$SIS_data .= ",''";}
+				if(isset($Opcion_2) && $Opcion_2!=''){                  $SIS_data .= ",'".$Opcion_2."'";            }else{$SIS_data .= ",''";}
+				if(isset($Opcion_3) && $Opcion_3!=''){                  $SIS_data .= ",'".$Opcion_3."'";            }else{$SIS_data .= ",''";}
+				if(isset($Opcion_4) && $Opcion_4!=''){                  $SIS_data .= ",'".$Opcion_4."'";            }else{$SIS_data .= ",''";}
+				if(isset($Opcion_5) && $Opcion_5!=''){                  $SIS_data .= ",'".$Opcion_5."'";            }else{$SIS_data .= ",''";}
+				if(isset($Opcion_6) && $Opcion_6!=''){                  $SIS_data .= ",'".$Opcion_6."'";            }else{$SIS_data .= ",''";}
+				if(isset($OpcionCorrecta) && $OpcionCorrecta!=''){      $SIS_data .= ",'".$OpcionCorrecta."'";      }else{$SIS_data .= ",''";}
+				if(isset($idCategoria) && $idCategoria!=''){            $SIS_data .= ",'".$idCategoria."'";         }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idQuiz, Nombre, idTipo, Opcion_1, Opcion_2, Opcion_3, Opcion_4, Opcion_5, Opcion_6, OpcionCorrecta, idCategoria';
+				$SIS_columns = 'idQuiz, Nombre,idTipo, Opcion_1, Opcion_2, Opcion_3, Opcion_4, Opcion_5, Opcion_6, OpcionCorrecta, idCategoria';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'rrhh_quiz_listado_preguntas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -266,55 +261,53 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-	
-		break;	
-/*******************************************************************************************************************/		
-		case 'update_pregunta':	
-			
+
+		break;
+/*******************************************************************************************************************/
+		case 'update_pregunta':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idPregunta='".$idPregunta."'" ;
-				if(isset($idQuiz) && $idQuiz != ''){                    $SIS_data .= ",idQuiz='".$idQuiz."'" ;                }else{$SIS_data .= ",idQuiz='".$idQuiz."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                    $SIS_data .= ",Nombre='".$Nombre."'" ;                  }else{$SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($idTipo) && $idTipo != ''){                    $SIS_data .= ",idTipo='".$idTipo."'" ;                  }else{$SIS_data .= ",idTipo='".$idTipo."'" ;}
-				if(isset($Opcion_1) && $Opcion_1 != ''){                $SIS_data .= ",Opcion_1='".$Opcion_1."'" ;              }else{$SIS_data .= ",Opcion_1='".$Opcion_1."'" ;}
-				if(isset($Opcion_2) && $Opcion_2 != ''){                $SIS_data .= ",Opcion_2='".$Opcion_2."'" ;              }else{$SIS_data .= ",Opcion_2='".$Opcion_2."'" ;}
-				if(isset($Opcion_3) && $Opcion_3 != ''){                $SIS_data .= ",Opcion_3='".$Opcion_3."'" ;              }else{$SIS_data .= ",Opcion_3='".$Opcion_3."'" ;}
-				if(isset($Opcion_4) && $Opcion_4 != ''){                $SIS_data .= ",Opcion_4='".$Opcion_4."'" ;              }else{$SIS_data .= ",Opcion_4='".$Opcion_4."'" ;}
-				if(isset($Opcion_5) && $Opcion_5 != ''){                $SIS_data .= ",Opcion_5='".$Opcion_5."'" ;              }else{$SIS_data .= ",Opcion_5='".$Opcion_5."'" ;}
-				if(isset($Opcion_6) && $Opcion_6 != ''){                $SIS_data .= ",Opcion_6='".$Opcion_6."'" ;              }else{$SIS_data .= ",Opcion_6='".$Opcion_6."'" ;}
-				if(isset($OpcionCorrecta) && $OpcionCorrecta != ''){    $SIS_data .= ",OpcionCorrecta='".$OpcionCorrecta."'" ;  }else{$SIS_data .= ",OpcionCorrecta='".$OpcionCorrecta."'" ;}
-				if(isset($idCategoria) && $idCategoria != ''){          $SIS_data .= ",idCategoria='".$idCategoria."'" ;  }else{$SIS_data .= ",OpcionCorrecta='".$OpcionCorrecta."'" ;}
-				
+				$SIS_data = "idPregunta='".$idPregunta."'";
+				if(isset($idQuiz) && $idQuiz!=''){                    $SIS_data .= ",idQuiz='".$idQuiz."'";                }else{$SIS_data .= ",idQuiz='".$idQuiz."'";}
+				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",Nombre='".$Nombre."'";                  }else{$SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idTipo) && $idTipo!=''){                   $SIS_data .= ",idTipo='".$idTipo."'";                  }else{$SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($Opcion_1) && $Opcion_1!=''){                $SIS_data .= ",Opcion_1='".$Opcion_1."'";              }else{$SIS_data .= ",Opcion_1='".$Opcion_1."'";}
+				if(isset($Opcion_2) && $Opcion_2!=''){                $SIS_data .= ",Opcion_2='".$Opcion_2."'";              }else{$SIS_data .= ",Opcion_2='".$Opcion_2."'";}
+				if(isset($Opcion_3) && $Opcion_3!=''){                $SIS_data .= ",Opcion_3='".$Opcion_3."'";              }else{$SIS_data .= ",Opcion_3='".$Opcion_3."'";}
+				if(isset($Opcion_4) && $Opcion_4!=''){                $SIS_data .= ",Opcion_4='".$Opcion_4."'";              }else{$SIS_data .= ",Opcion_4='".$Opcion_4."'";}
+				if(isset($Opcion_5) && $Opcion_5!=''){                $SIS_data .= ",Opcion_5='".$Opcion_5."'";              }else{$SIS_data .= ",Opcion_5='".$Opcion_5."'";}
+				if(isset($Opcion_6) && $Opcion_6!=''){                $SIS_data .= ",Opcion_6='".$Opcion_6."'";              }else{$SIS_data .= ",Opcion_6='".$Opcion_6."'";}
+				if(isset($OpcionCorrecta) && $OpcionCorrecta!=''){    $SIS_data .= ",OpcionCorrecta='".$OpcionCorrecta."'";  }else{$SIS_data .= ",OpcionCorrecta='".$OpcionCorrecta."'";}
+				if(isset($idCategoria) && $idCategoria!=''){          $SIS_data .= ",idCategoria='".$idCategoria."'";  }else{$SIS_data .= ",OpcionCorrecta='".$OpcionCorrecta."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'rrhh_quiz_listado_preguntas', 'idPregunta = "'.$idPregunta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
-		break;	
 
-						
+		break;
+
 /*******************************************************************************************************************/
-		case 'del_pregunta':	
-			
+		case 'del_pregunta':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del_pregunta']) OR !validaEntero($_GET['del_pregunta']))&&$_GET['del_pregunta']!=''){
 				$indice = simpleDecode($_GET['del_pregunta'], fecha_actual());
@@ -322,39 +315,37 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del_pregunta'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'rrhh_quiz_listado_preguntas', 'idPregunta = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-		break;				
+		break;
 /*******************************************************************************************************************/
 	}
 ?>

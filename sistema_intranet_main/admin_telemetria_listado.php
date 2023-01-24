@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "admin_telemetria_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,10 +18,10 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Identificador']) && $_GET['Identificador'] != ''){   $location .= "&Identificador=".$_GET['Identificador'];   $search .= "&Identificador=".$_GET['Identificador'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                 $location .= "&Nombre=".$_GET['Nombre'];                 $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){            $location .= "&idEstado=".$_GET['idEstado'];            $search .= "&idEstado=".$_GET['idEstado'];}
-if(isset($_GET['id_Geo']) && $_GET['id_Geo'] != ''){                $location .= "&id_Geo=".$_GET['id_Geo'];                $search .= "&id_Geo=".$_GET['id_Geo'];}
+if(isset($_GET['Identificador']) && $_GET['Identificador']!=''){   $location .= "&Identificador=".$_GET['Identificador'];   $search .= "&Identificador=".$_GET['Identificador'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){          $location .= "&Nombre=".$_GET['Nombre'];                 $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){     $location .= "&idEstado=".$_GET['idEstado'];            $search .= "&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['id_Geo']) && $_GET['id_Geo']!=''){         $location .= "&id_Geo=".$_GET['id_Geo'];                $search .= "&id_Geo=".$_GET['id_Geo'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -38,8 +38,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Equipo editado correct
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Equipo borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -86,16 +86,16 @@ $arrOpciones = db_select_array (false, 'idOpciones,Nombre', 'core_sistemas_opcio
 //recorro
 $arrFinalOpciones = array();
 
-foreach ($arrOpciones as $sen) { $arrFinalOpciones[$sen['idOpciones']] = $sen['Nombre']; }
+foreach ($arrOpciones as $sen) { $arrFinalOpciones[$sen['idOpciones']] = $sen['Nombre'];}
 $arrFinalOpciones[0]  = 'No Asignado';
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Resumen');?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -120,22 +120,22 @@ $arrFinalOpciones[0]  = 'No Asignado';
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					
-					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 						<?php }?>
 					</div>
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos del Equipo</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -165,7 +165,7 @@ $arrFinalOpciones[0]  = 'No Asignado';
 							<?php } ?>
 							
 							
-						</p>	
+						</p>
 						
 						
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Jornada Laboral</h2>
@@ -178,38 +178,30 @@ $arrFinalOpciones[0]  = 'No Asignado';
 						</p>
 						
 
-					</div>	
+					</div>
 					<div class="clearfix"></div>
 			
 				</div>
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -236,17 +228,17 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Identificador']) && $_GET['Identificador'] != ''){  $SIS_where .= " AND telemetria_listado.Identificador LIKE '%".$_GET['Identificador']."%'";}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                $SIS_where .= " AND telemetria_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){            $SIS_where .= " AND telemetria_listado.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['id_Geo']) && $_GET['id_Geo'] != ''){                $SIS_where .= " AND telemetria_listado.id_Geo=".$_GET['id_Geo'];}
+if(isset($_GET['Identificador']) && $_GET['Identificador']!=''){  $SIS_where .= " AND telemetria_listado.Identificador LIKE '%".EstandarizarInput($_GET['Identificador'])."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $SIS_where .= " AND telemetria_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){     $SIS_where .= " AND telemetria_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['id_Geo']) && $_GET['id_Geo']!=''){         $SIS_where .= " AND telemetria_listado.id_Geo=".$_GET['id_Geo'];}
 $SIS_where.= " GROUP BY telemetria_listado.idTelemetria";
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'telemetria_listado.idTelemetria', 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 telemetria_listado.idTelemetria,
@@ -264,29 +256,29 @@ $arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join,
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Identificador)) {   $x1  = $Identificador;    }else{$x1  = '';}
-				if(isset($Nombre)) {          $x2  = $Nombre;           }else{$x2  = '';}
-				if(isset($idEstado)) {        $x3  = $idEstado;         }else{$x3  = '';}
-				if(isset($id_Geo)) {          $x4  = $id_Geo;           }else{$x4  = '';}
-				
+				if(isset($Identificador)){   $x1  = $Identificador;    }else{$x1  = '';}
+				if(isset($Nombre)){          $x2  = $Nombre;           }else{$x2  = '';}
+				if(isset($idEstado)){        $x3  = $idEstado;         }else{$x3  = '';}
+				if(isset($id_Geo)){          $x4  = $id_Geo;           }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_icon('Identificador', 'Identificador', $x1, 1,'fa fa-flag');
@@ -294,32 +286,32 @@ $arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join,
 				$Form_Inputs->form_select('Estado','idEstado', $x3, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				$Form_Inputs->form_select('Geolocalizacion','id_Geo', $x4, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div>                       
+<div class="clearfix"></div>
                               
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Equipos</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
-			</div>	
+			</div>
 		</header>
-		<div class="table-responsive">    
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -349,12 +341,12 @@ $arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join,
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrUsers as $usuarios) { ?>
-					<tr class="odd">		
-						<td><?php echo $usuarios['Nombre']; ?></td>	
-						<td><?php echo $usuarios['Identificador']; ?></td>		
-						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['Estado']; ?></label></td>	
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>			
+					<?php foreach ($arrUsers as $usuarios){ ?>
+					<tr class="odd">
+						<td><?php echo $usuarios['Nombre']; ?></td>
+						<td><?php echo $usuarios['Identificador']; ?></td>
+						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['Estado']; ?></label></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria_admin.php?view='.simpleEncode($usuarios['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -362,11 +354,11 @@ $arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join,
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>

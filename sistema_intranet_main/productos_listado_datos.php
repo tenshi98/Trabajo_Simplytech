@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "productos_listado.php";
 $location = $original;
 $new_location = "productos_listado_datos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$location.='&id='.$_GET['id'];
 	$form_trabajo= 'update';
@@ -38,7 +38,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Se traen todos los datos del producto
 $SIS_query = 'Nombre,idTipo,idCategoria,Marca,idUml,idTipoProducto, Codigo,idTipoReceta,idOpciones_1
 idOpciones_2,IngredienteActivo, Carencia, DosisRecomendada, EfectoResidual, EfectoRetroactivo,
@@ -49,12 +49,12 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -83,30 +83,30 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 						<?php } ?>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post"  id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post"  id="form1" name="form1" novalidate>
 					
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Nombre)) {              $x1  = $Nombre;                }else{$x1  = $rowdata['Nombre'];}
-					if(isset($idTipo)) {              $x2  = $idTipo;                }else{$x2  = $rowdata['idTipo'];}
-					if(isset($idCategoria)) {         $x3  = $idCategoria;           }else{$x3  = $rowdata['idCategoria'];}
-					if(isset($Marca)) {               $x4  = $Marca;                 }else{$x4  = $rowdata['Marca'];}
-					if(isset($idUml)) {               $x5  = $idUml;                 }else{$x5  = $rowdata['idUml'];}
-					if(isset($idTipoProducto)) {      $x6  = $idTipoProducto;        }else{$x6  = $rowdata['idTipoProducto'];}
-					if(isset($idTipoReceta)) {        $x7  = $idTipoReceta;          }else{$x7  = $rowdata['idTipoReceta'];}
-					if(isset($Codigo)) {              $x8  = $Codigo;                }else{$x8  = $rowdata['Codigo'];}
-					if(isset($IngredienteActivo)) {   $x9  = $IngredienteActivo;     }else{$x9  = $rowdata['IngredienteActivo'];}
-					if(isset($DosisRecomendada)) {    $x10 = $DosisRecomendada;      }else{$x10 = Cantidades_decimales_justos($rowdata['DosisRecomendada']);}
-					if(isset($CarenciaExportador)) {  $x11 = $CarenciaExportador;    }else{$x11 = Cantidades_decimales_justos($rowdata['CarenciaExportador']);}
-					if(isset($Carencia)) {            $x12 = $Carencia;              }else{$x12 = $rowdata['Carencia'];}
-					if(isset($EfectoResidual)) {      $x13 = $EfectoResidual;        }else{$x13 = Cantidades_decimales_justos($rowdata['EfectoResidual']);}
-					if(isset($EfectoRetroactivo)) {   $x14 = $EfectoRetroactivo;     }else{$x14 = Cantidades_decimales_justos($rowdata['EfectoRetroactivo']);}
-					if(isset($AporteNutricional)) {   $x15 = $AporteNutricional;     }else{$x15 = $rowdata['AporteNutricional'];}
+					if(isset($Nombre)){              $x1  = $Nombre;                }else{$x1  = $rowdata['Nombre'];}
+					if(isset($idTipo)){              $x2  = $idTipo;                }else{$x2  = $rowdata['idTipo'];}
+					if(isset($idCategoria)){         $x3  = $idCategoria;           }else{$x3  = $rowdata['idCategoria'];}
+					if(isset($Marca)){               $x4  = $Marca;                 }else{$x4  = $rowdata['Marca'];}
+					if(isset($idUml)){               $x5  = $idUml;                 }else{$x5  = $rowdata['idUml'];}
+					if(isset($idTipoProducto)){      $x6  = $idTipoProducto;        }else{$x6  = $rowdata['idTipoProducto'];}
+					if(isset($idTipoReceta)){        $x7  = $idTipoReceta;          }else{$x7  = $rowdata['idTipoReceta'];}
+					if(isset($Codigo)){              $x8  = $Codigo;                }else{$x8  = $rowdata['Codigo'];}
+					if(isset($IngredienteActivo)){   $x9  = $IngredienteActivo;     }else{$x9  = $rowdata['IngredienteActivo'];}
+					if(isset($DosisRecomendada)){    $x10 = $DosisRecomendada;      }else{$x10 = Cantidades_decimales_justos($rowdata['DosisRecomendada']);}
+					if(isset($CarenciaExportador)){  $x11 = $CarenciaExportador;    }else{$x11 = Cantidades_decimales_justos($rowdata['CarenciaExportador']);}
+					if(isset($Carencia)){            $x12 = $Carencia;              }else{$x12 = $rowdata['Carencia'];}
+					if(isset($EfectoResidual)){      $x13 = $EfectoResidual;        }else{$x13 = Cantidades_decimales_justos($rowdata['EfectoResidual']);}
+					if(isset($EfectoRetroactivo)){   $x14 = $EfectoRetroactivo;     }else{$x14 = Cantidades_decimales_justos($rowdata['EfectoRetroactivo']);}
+					if(isset($AporteNutricional)){   $x15 = $AporteNutricional;     }else{$x15 = $rowdata['AporteNutricional'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -133,19 +133,19 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 					<script>
 						document.getElementById('div_idTipoReceta').style.display = 'none';
 						
-						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 							
 							let tipo_val= $("#idTipoProducto").val();
-						
+
 							//Seleccion Unica
-							if(tipo_val == 1){ 
+							if(tipo_val == 1){
 								document.getElementById('div_idTipoReceta').style.display = 'none';
-							
+
 							//Seleccion Multiple		
-							} else if(tipo_val == 2){ 
+							} else if(tipo_val == 2){
 								document.getElementById('div_idTipoReceta').style.display = '';
 	
-							} else { 
+							} else {
 								document.getElementById('div_idTipoReceta').style.display = 'none';
 									
 							}
@@ -156,7 +156,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 								
 								
 								//Materia prima
-								if(modelSelected == 1){ 
+								if(modelSelected == 1){
 									document.getElementById('div_idTipoReceta').style.display = 'none';
 									
 									//lo vacio
@@ -165,7 +165,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 									document.getElementById('idTipoReceta').options[0].text = "Seleccione una Opcion"
 								
 								//Producto Terminado	
-								} else if(modelSelected == 2){ 
+								}else if(modelSelected == 2){
 									document.getElementById('div_idTipoReceta').style.display = '';
 									
 									//lo vacio
@@ -177,29 +177,29 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 									document.getElementById('idTipoReceta').options[2].value = "2"
 									document.getElementById('idTipoReceta').options[2].text = "Libre"
 									
-								} else { 
+								}else {
 									document.getElementById('div_idTipoReceta').style.display = 'none';
 									
 								}
 							
-							}); 
-						}); 
+							});
+						});
 						
 					</script>
 				  
-					<div class="form-group">			
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">	
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

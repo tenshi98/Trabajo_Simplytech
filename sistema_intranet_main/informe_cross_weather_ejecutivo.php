@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_cross_weather_ejecutivo.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -20,7 +20,7 @@ if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_has
 	$search .="&fecha_desde=".$_GET['fecha_desde'];
 	$search .="&fecha_hasta=".$_GET['fecha_hasta'];
 }
-if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ $search .="&idTelemetria=".$_GET['idTelemetria']; }
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){$search .="&idTelemetria=".$_GET['idTelemetria'];}
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -30,11 +30,11 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 //Seleccionar la tabla
-if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$x_table = 'telemetria_listado_aux_equipo';
 }else{
 	$x_table = 'telemetria_listado_aux';
@@ -47,7 +47,7 @@ $SIS_where = $x_table.".idSistema=".$_SESSION['usuario']['basic_data']['idSistem
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
 	$SIS_where.= " AND ".$x_table.".Fecha BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
-if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where.= " AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
 }
 /**********************************************************/
@@ -80,15 +80,15 @@ $arrData  = array();
 foreach ($arrMediciones as $med) {
 	//verifico que exista fecha
 	if(isset($med['Fecha'])&&$med['Fecha']!='0000-00-00'){
-		
+
 		//Se obtiene la fecha
 		$Temp_1 .= "'".Fecha_estandar($med['Fecha'])." - ".$med['Hora']."',";
 		
-		if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){ $arrData[1]['Value'] .= ", ".$med['Temperatura'];    }else{ $arrData[1]['Value'] = $med['Temperatura']; }
-		if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){ $arrData[2]['Value'] .= ", ".$med['PuntoRocio'];     }else{ $arrData[2]['Value'] = $med['PuntoRocio']; }
-		if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){ $arrData[3]['Value'] .= ", ".$med['PresionAtmos'];   }else{ $arrData[3]['Value'] = $med['PresionAtmos']; }
-		if(isset($arrData[4]['Value'])&&$arrData[4]['Value']!=''){ $arrData[4]['Value'] .= ", ".$med['UnidadesFrio'];   }else{ $arrData[4]['Value'] = $med['UnidadesFrio']; }
-		if(isset($arrData[5]['Value'])&&$arrData[5]['Value']!=''){ $arrData[5]['Value'] .= ", ".$med['Dias_acumulado']; }else{ $arrData[5]['Value'] = $med['Dias_acumulado']; }
+		if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){$arrData[1]['Value'] .= ", ".$med['Temperatura'];    }else{ $arrData[1]['Value'] = $med['Temperatura'];}
+		if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){$arrData[2]['Value'] .= ", ".$med['PuntoRocio'];     }else{ $arrData[2]['Value'] = $med['PuntoRocio'];}
+		if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){$arrData[3]['Value'] .= ", ".$med['PresionAtmos'];   }else{ $arrData[3]['Value'] = $med['PresionAtmos'];}
+		if(isset($arrData[4]['Value'])&&$arrData[4]['Value']!=''){$arrData[4]['Value'] .= ", ".$med['UnidadesFrio'];   }else{ $arrData[4]['Value'] = $med['UnidadesFrio'];}
+		if(isset($arrData[5]['Value'])&&$arrData[5]['Value']!=''){$arrData[5]['Value'] .= ", ".$med['Dias_acumulado'];}else{ $arrData[5]['Value'] = $med['Dias_acumulado'];}
 		
 		//verifico cambio de dia
 		if((isset($arrMed[$counter]['Fecha'])&&$arrMed[$counter]['Fecha']!=$med['Fecha']) OR $counter==0){
@@ -140,27 +140,27 @@ $arrData[5]['Name'] = "'Acumulado Dias Grado'";
 document.getElementById("loading").style.display = "none";
 </script>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Informe Ejecutivo', $_SESSION['usuario']['basic_data']['RazonSocial'], 'De '.Fecha_completa($_GET['fecha_desde']).' a '.Fecha_completa($_GET['fecha_hasta']));?>
 	<div class="col-md-6 col-sm-6 col-xs-12 clearfix">
 		<a target="new" href="<?php echo 'informe_cross_weather_ejecutivo_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	
-		<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>	
+		<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 			<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>
 		<?php }else{ ?>
 			<a target="new" href="<?php echo 'informe_cross_weather_ejecutivo_to_pdf.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 		<?php } ?>
 		
-	</div>	
+	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen</h5>
 		</header>
-		<div class="table-responsive">    
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -199,20 +199,20 @@ document.getElementById("loading").style.display = "none";
 						}
 						
 						?>
-						<tr class="odd">		
-							<td><?php echo numero_a_mes(fecha2NMes($med['Fecha'])); ?></td>	
-							<td><?php echo fecha2NdiaMes($med['Fecha']); ?></td>		
+						<tr class="odd">
+							<td><?php echo numero_a_mes(fecha2NMes($med['Fecha'])); ?></td>
+							<td><?php echo fecha2NdiaMes($med['Fecha']); ?></td>
 							<td><?php echo $helada; ?></td>
-							<td><?php echo $med['Temp_Min']; ?></td>		
-							<td><?php echo $med['Temp_Max']; ?></td>		
-							<td><?php echo minutos2horas($med['Tiempo_Helada']*60); ?></td>		
-							<td><?php echo cantidades($unfrio, 0); ?></td>		
-							<td><?php echo cantidades($med['UnidadesFrio'], 0); ?></td>		
-							<td><?php echo cantidades($diaAcum, 0); ?></td>		
-							<td><?php echo cantidades($med['DiasAcum'], 0); ?></td>		
+							<td><?php echo $med['Temp_Min']; ?></td>
+							<td><?php echo $med['Temp_Max']; ?></td>
+							<td><?php echo minutos2horas($med['Tiempo_Helada']*60); ?></td>
+							<td><?php echo cantidades($unfrio, 0); ?></td>
+							<td><?php echo cantidades($med['UnidadesFrio'], 0); ?></td>
+							<td><?php echo cantidades($diaAcum, 0); ?></td>
+							<td><?php echo cantidades($med['DiasAcum'], 0); ?></td>
 							
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -223,14 +223,14 @@ document.getElementById("loading").style.display = "none";
 //Se verifica si se pidieron los graficos
 if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 	
-	<div class="col-sm-12">
-		<div class="box">	
-			<header>		
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Graficos</h5>
 			</header>
-			<div class="table-responsive"> 
-				<div class="col-sm-12" id="grf">
+			<div class="table-responsive">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="grf">
 					<?php
 					/*******************************************************************************/
 					//las fechas
@@ -318,11 +318,11 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 					echo GraphLinear_1('graphLinear_4', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
 									
 					
-					?>	
+					?>
 				</div>
 						
 						
-				<div class="col-sm-12" style="display: none;">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none;">
 
 					<form method="post" id="make_pdf" action="informe_cross_weather_ejecutivo_to_pdf.php">
 						<input type="hidden" name="img_adj" id="img_adj" />
@@ -330,7 +330,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 						<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
 						<input type="hidden" name="fecha_desde"   id="fecha_desde"  value="<?php echo $_GET['fecha_desde']; ?>" />
 						<input type="hidden" name="fecha_hasta"   id="fecha_hasta"  value="<?php echo $_GET['fecha_hasta']; ?>" />
-						<?php if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ ?>
+						<?php if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){?>
 							<input type="hidden" name="idTelemetria"   id="idTelemetria"  value="<?php echo $_GET['idTelemetria']; ?>" />
 						<?php }?>
 						
@@ -338,7 +338,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 					
 					</form>
 
-					<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>		
+					<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>
 					<script>
 						var node = document.getElementById('grf');
 								
@@ -372,10 +372,10 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 							, 3000);
 						}
 					</script>	
-				</div>	
+				</div>
 			</div>
 		</div>
-	</div>	
+	</div>
 	
 <?php } ?>
 
@@ -383,18 +383,18 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else  {
 //Filtro de busqueda
 $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
@@ -402,41 +402,41 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 }	 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($fecha_desde)) {    $x1  = $fecha_desde;    }else{$x1  = '';}
-				if(isset($fecha_hasta)) {    $x2  = $fecha_hasta;    }else{$x2  = '';}
-				if(isset($idGrafico)) {      $x3  = $idGrafico;      }else{$x3  = '';}
-				if(isset($idTelemetria)) {   $x4  = $idTelemetria;   }else{$x4  = '';}
-				
+				if(isset($fecha_desde)){    $x1  = $fecha_desde;    }else{$x1  = '';}
+				if(isset($fecha_hasta)){    $x2  = $fecha_hasta;    }else{$x2  = '';}
+				if(isset($idGrafico)){      $x3  = $idGrafico;      }else{$x3  = '';}
+				if(isset($idTelemetria)){   $x4  = $idTelemetria;   }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Desde','fecha_desde', $x1, 2);
 				$Form_Inputs->form_date('Fecha Hasta','fecha_hasta', $x2, 2);
-				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x3, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
+				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x3, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x4, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x4, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x4, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
-				}		
-				?> 
+				}
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

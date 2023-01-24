@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "comunicaciones_videoconferencia_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,11 +18,11 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $location .= "&Nombre=".$_GET['Nombre'];         $search .= "&Nombre=".$_GET['Nombre']; }
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){          $location .= "&Fecha=".$_GET['Fecha'];           $search .= "&Fecha=".$_GET['Fecha'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){    $location .= "&idEstado=".$_GET['idEstado'];     $search .= "&idEstado=".$_GET['idEstado'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){        $location .= "&idTipo=".$_GET['idTipo'];         $search .= "&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $location .= "&idUsuario=".$_GET['idUsuario'];   $search .= "&idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){ $location .= "&Nombre=".$_GET['Nombre'];         $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){   $location .= "&Fecha=".$_GET['Fecha'];           $search .= "&Fecha=".$_GET['Fecha'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){    $location .= "&idEstado=".$_GET['idEstado'];     $search .= "&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){ $location .= "&idTipo=".$_GET['idTipo'];         $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){  $location .= "&idUsuario=".$_GET['idUsuario'];   $search .= "&idUsuario=".$_GET['idUsuario'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -30,16 +30,16 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/comunicaciones_videoconferencia_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/comunicaciones_videoconferencia_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/comunicaciones_videoconferencia_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -54,13 +54,13 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/VideoConferencia Modif
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/VideoConferencia borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
 $query = "SELECT 
-comunicaciones_videoconferencia_listado.Nombre, 
+comunicaciones_videoconferencia_listado.Nombre,
 comunicaciones_videoconferencia_listado.Fecha,
 comunicaciones_videoconferencia_listado.HoraInicio,
 comunicaciones_videoconferencia_listado.HoraTermino,
@@ -116,33 +116,33 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrUsuarios,$row );
 }
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'VideoConferencia', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="<?php echo 'comunicaciones_videoconferencia_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'comunicaciones_videoconferencia_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="<?php echo 'comunicaciones_videoconferencia_listado_usuarios.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Usuarios</a></li>         
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					
-					<div class="col-sm-4">
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 					</div>
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 						<p class="text-muted">
 							<strong>Tipo : </strong><?php echo $rowdata['Tipo']; ?><br/>
@@ -179,47 +179,47 @@ array_push( $arrUsuarios,$row );
 						
 						<div class="row">
 								
-						</div>		
+						</div>
 						<div class="clearfix"></div>
 
 						
-					</div>	
+					</div>
 					<div class="clearfix"></div>
 			
 				</div>
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);  ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear VideoConferencia</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipo)) {       $x1  = $idTipo;        }else{$x1  = '';}
-				if(isset($Nombre)) {       $x2  = $Nombre;        }else{$x2  = '';}
-				if(isset($Fecha)) {        $x3  = $Fecha;         }else{$x3  = '';}
-				if(isset($HoraInicio)) {   $x4  = $HoraInicio;    }else{$x4  = '';}
-				if(isset($HoraTermino)) {  $x5  = $HoraTermino;   }else{$x5  = '';}
-				
+				if(isset($idTipo)){       $x1  = $idTipo;        }else{$x1  = '';}
+				if(isset($Nombre)){       $x2  = $Nombre;        }else{$x2  = '';}
+				if(isset($Fecha)){        $x3  = $Fecha;         }else{$x3  = '';}
+				if(isset($HoraInicio)){   $x4  = $HoraInicio;    }else{$x4  = '';}
+				if(isset($HoraTermino)){  $x5  = $HoraTermino;   }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
@@ -237,37 +237,37 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);  ?>
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //Variable de busqueda
 $z = "WHERE comunicaciones_videoconferencia_listado.idEstado!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND comunicaciones_videoconferencia_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z.=" AND comunicaciones_videoconferencia_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $z .= " AND comunicaciones_videoconferencia_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){          $z .= " AND comunicaciones_videoconferencia_listado.Fecha='".$_GET['Fecha']."'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){    $z .= " AND comunicaciones_videoconferencia_listado.idEstado='".$_GET['idEstado']."'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){        $z .= " AND comunicaciones_videoconferencia_listado.idTipo='".$_GET['idTipo']."'";}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $z .= " AND comunicaciones_videoconferencia_listado.idUsuario='".$_GET['idUsuario']."'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){ $z .= " AND comunicaciones_videoconferencia_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){   $z .= " AND comunicaciones_videoconferencia_listado.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){    $z .= " AND comunicaciones_videoconferencia_listado.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){ $z .= " AND comunicaciones_videoconferencia_listado.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){  $z .= " AND comunicaciones_videoconferencia_listado.idUsuario='".$_GET['idUsuario']."'";}
 /**********************************************************/
 // Se trae un listado con todos los elementos
 $arrVideoConferencia = array();
 $query = "SELECT 
 comunicaciones_videoconferencia_listado.idVideoConferencia,
-comunicaciones_videoconferencia_listado.Nombre, 
+comunicaciones_videoconferencia_listado.Nombre,
 comunicaciones_videoconferencia_listado.Fecha,
 comunicaciones_videoconferencia_listado.HoraInicio,
 comunicaciones_videoconferencia_listado.HoraTermino,
@@ -306,66 +306,66 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrVideoConferencia,$row );
 }
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default">Listado</li>	
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear VideoConferencia</a><?php } ?>	
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear VideoConferencia</a><?php } ?>
 
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;      }else{$x1  = '';}
-				if(isset($Fecha)) {       $x2  = $Fecha;       }else{$x2  = '';}
-				if(isset($idEstado)) {    $x3  = $idEstado;    }else{$x3  = '';}
-				if(isset($idTipo)) {      $x4  = $idTipo;      }else{$x4  = '';}
-				if(isset($idUsuario)) {   $x5  = $idUsuario;   }else{$x5  = '';}
-				
+				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = '';}
+				if(isset($Fecha)){       $x2  = $Fecha;       }else{$x2  = '';}
+				if(isset($idEstado)){    $x3  = $idEstado;    }else{$x3  = '';}
+				if(isset($idTipo)){      $x4  = $idTipo;      }else{$x4  = '';}
+				if(isset($idUsuario)){   $x5  = $idUsuario;   }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
 				$Form_Inputs->form_date('Fecha','Fecha', $x2, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x3, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo','idTipo', $x4, 1, 'idTipo', 'Nombre', 'core_tipo_videoconferencia', 0, '', $dbConn);
-				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x5, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x5, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de VideoConferencias</h5>
@@ -383,7 +383,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
 					filtrar($arrVideoConferencia, 'idVideoConferencia');  
@@ -435,21 +435,21 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 													$ubicacion = $location.'&del='.simpleEncode($VideoConferencia, fecha_actual());
 													$dialogo   = '¿Realmente deseas eliminar la videoconferencia '.$Conferencia[0]['Nombre'].'?';?>
 													<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-												<?php } ?>	
-											<?php } ?>							
+												<?php } ?>
+											<?php } ?>	
 										</div>
 									</td>
 								</tr>
 							<?php } ?>
 						<?php } ?>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

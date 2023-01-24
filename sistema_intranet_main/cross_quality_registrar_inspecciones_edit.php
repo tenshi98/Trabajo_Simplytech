@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "cross_quality_registrar_inspecciones.php";
 $location = $original;
 $new_location = "cross_quality_registrar_inspecciones_edit.php";
@@ -22,7 +22,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_modBase']) )  { 
+if (!empty($_POST['submit_modBase'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -31,7 +31,7 @@ if ( !empty($_POST['submit_modBase']) )  {
 }
 /*************************************************************************/
 //se agrega un trabajo
-if ( !empty($_POST['submit_trab']) )  { 
+if (!empty($_POST['submit_trab'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -39,16 +39,16 @@ if ( !empty($_POST['submit_trab']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';
 }
 //se borra un trabajo
-if ( !empty($_GET['del_trab']) )     {
+if (!empty($_GET['del_trab'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
 	$form_trabajo= 'del_trab_edit';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';
 }
 /*************************************************************************/
 //se agrega un trabajo
-if ( !empty($_POST['submit_maq']) )  { 
+if (!empty($_POST['submit_maq'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -56,16 +56,16 @@ if ( !empty($_POST['submit_maq']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';
 }
 //se borra un trabajo
-if ( !empty($_GET['del_maq']) )     {
+if (!empty($_GET['del_maq'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
 	$form_trabajo= 'del_maq_edit';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_file']) )  { 
+if (!empty($_POST['submit_file'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -73,16 +73,16 @@ if ( !empty($_POST['submit_file']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_file']) )     {
+if (!empty($_GET['del_file'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
 	$form_trabajo= 'del_file_ing_edit';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_muestra']) )  { 
+if (!empty($_POST['submit_muestra'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -90,7 +90,7 @@ if ( !empty($_POST['submit_muestra']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_edit_muestra']) )  { 
+if (!empty($_POST['submit_edit_muestra'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -98,21 +98,21 @@ if ( !empty($_POST['submit_edit_muestra']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_muestra']) )     {
+if (!empty($_GET['del_muestra'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
 	$form_trabajo= 'del_muestra_edit';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';
 }
 /**********************************************/
 //se hace el ingreso a bodega
-if ( !empty($_GET['ing_Doc']) )     {
+if (!empty($_GET['ing_Doc'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
 	$form_trabajo= 'ing_Doc_edit';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_quality_registrar_inspecciones.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -127,8 +127,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ingreso Modificado cor
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ingreso borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['addFile']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['addFile'])){ 
 // Se traen todos los datos del analisis
 $SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
 $SIS_join  = '';
@@ -137,16 +137,16 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecci
 
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php           
+				<?php 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
@@ -166,22 +166,22 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecci
 				if(isset($row_data['idUbicacion_lvl_3'])&&$row_data['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $row_data['idUbicacion_lvl_3'], 2);}
 				if(isset($row_data['idUbicacion_lvl_4'])&&$row_data['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $row_data['idUbicacion_lvl_4'], 2);}
 				if(isset($row_data['idUbicacion_lvl_5'])&&$row_data['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $row_data['idUbicacion_lvl_5'], 2);}
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>              
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['cloneMuestra']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['cloneMuestra'])){ 
 //Armo cadena
-$SIS_query  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
+$SIS_query  = 'Nombre,idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
 for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 	$SIS_query .= ',PuntoNombre_'.$i;
 	$SIS_query .= ',PuntoidTipo_'.$i;
@@ -224,26 +224,384 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProductor)) {     $x1  = $idProductor;     }else{$x1  = $rowMuestras['idProductor'];}
-				if(isset($n_folio_pallet)) {  $x2  = $n_folio_pallet;  }else{$x2  = $rowMuestras['n_folio_pallet'];}
-				if(isset($idTipo)) {          $x3  = $idTipo;          }else{$x3  = $rowMuestras['idTipo'];}
-				if(isset($lote)) {            $x4  = $lote;            }else{$x4  = $rowMuestras['lote'];}
-				if(isset($f_embalaje)) {      $x5  = $f_embalaje;      }else{$x5  = $rowMuestras['f_embalaje'];}
-				if(isset($f_cosecha)) {       $x6  = $f_cosecha;       }else{$x6  = $rowMuestras['f_cosecha'];}
-				if(isset($H_inspeccion)) {    $x7  = $H_inspeccion;    }else{$x7  = $rowMuestras['H_inspeccion'];}
-				if(isset($cantidad)) {        $x8  = $cantidad;        }else{$x8  = $rowMuestras['cantidad'];}
-				if(isset($peso)) {            $x9  = $peso;            }else{$x9  = $rowMuestras['peso'];}
+				if(isset($idProductor)){     $x1  = $idProductor;     }else{$x1  = $rowMuestras['idProductor'];}
+				if(isset($n_folio_pallet)){  $x2  = $n_folio_pallet;  }else{$x2  = $rowMuestras['n_folio_pallet'];}
+				if(isset($idTipo)){          $x3  = $idTipo;          }else{$x3  = $rowMuestras['idTipo'];}
+				if(isset($lote)){            $x4  = $lote;            }else{$x4  = $rowMuestras['lote'];}
+				if(isset($f_embalaje)){      $x5  = $f_embalaje;      }else{$x5  = $rowMuestras['f_embalaje'];}
+				if(isset($f_cosecha)){       $x6  = $f_cosecha;       }else{$x6  = $rowMuestras['f_cosecha'];}
+				if(isset($H_inspeccion)){    $x7  = $H_inspeccion;    }else{$x7  = $rowMuestras['H_inspeccion'];}
+				if(isset($cantidad)){        $x8  = $cantidad;        }else{$x8  = $rowMuestras['cantidad'];}
+				if(isset($peso)){            $x9  = $peso;            }else{$x9  = $rowMuestras['peso'];}
+
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_select_filter('Productor','idProductor', $x1, 2, 'idProductor', 'Codigo,Nombre', 'productores_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_text('N° Folio / Pallet', 'n_folio_pallet', $x2, 2);
+				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x3, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);
+				$Form_Inputs->form_input_text('Lote', 'lote', $x4, 2);
+				$Form_Inputs->form_date('Fecha Embalaje','f_embalaje', $x5, 2);
+				$Form_Inputs->form_date('Fecha Cosecha','f_cosecha', $x6, 2);
+				$Form_Inputs->form_time_popover('Hora Inspeccion','H_inspeccion', $x7, 1, 1, 24);
+				$Form_Inputs->form_input_number('N° Cajas/Bolsas/Racimos', 'cantidad', $x8, 2);
+				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
 				
+				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
+					
+				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
+				foreach ($arrGrupo as $grupo) {
+					//Cuento si hay items dentro de la categoria
+					$x_con = 0;
+					for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+						if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+							$x_con++;
+						}
+					}
+					
+					//si hay items se muestra todo
+					if($x_con!=0){
+						
+						echo '<h4>'.$grupo['Nombre'].'</h4>';
+					
+						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+								//Verifico el tipo de dato
+								switch ($rowdata['PuntoidTipo_'.$i]) {
+									//Medicion (Decimal) con parametros limitantes
+									case 1:
+										$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+										break;
+									//Medicion (Decimal) sin parametros limitantes
+									case 2:
+										$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+										break;
+									//Medicion (Enteros) con parametros limitantes
+									case 3:
+										$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+										break;
+									//Medicion (Enteros) sin parametros limitantes
+									case 4:
+										$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
+										break;
+									//Fecha
+									case 5:
+										$Form_Inputs->form_date($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
+										break;
+									//Hora
+									case 6:
+										$Form_Inputs->form_time_popover($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 24);
+										break;
+									//Texto Libre
+									case 7:
+										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
+										break;
+									//Seleccion 1 a 3
+									case 8:
+										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 3);
+										break;
+									//Seleccion 1 a 5
+									case 9:
+										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 5);
+										break;
+									//Seleccion 1 a 10
+									case 10:
+										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 10);
+										break;
+									//Texto Libre con Validacion
+									case 11:
+										$Form_Inputs->form_input_validate($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, $rowdata['Validacion_'.$i]);
+										break;
+								
+									
+								}
+							}
+						}
+					}
+				}
+				/*************************************************************/
+				$Form_Inputs->form_tittle(3, 'Decision');
+				//Verifico esta activo el dato 1
+				if(isset($rowdata['idNota_1'])&&$rowdata['idNota_1']==1){
+					echo print_select($rowdata['idNotaTipo_1'], 'Nota Calidad', 'Resolucion_1', '', $rowdata['Validar_1']);
+				}
+				//Verifico esta activo el dato 2
+				if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
+					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condicion', 'Resolucion_2', '', $rowdata['Validar_2']);
+				}
+				//Verifico esta activo el dato 3
+				if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
+					echo print_select($rowdata['idNotaTipo_3'], 'Calificacion', 'Resolucion_3', '', $rowdata['Validar_3']);
+				}
+
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_muestra">
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form>
+            <?php widget_validator(); ?>
+		</div>
+	</div>
+</div>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['editMuestra'])){
+//Armo cadena
+$SIS_query  = 'Nombre,idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
+for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+	$SIS_query .= ',PuntoNombre_'.$i;
+	$SIS_query .= ',PuntoidTipo_'.$i;
+	$SIS_query .= ',PuntoidGrupo_'.$i;
+	$SIS_query .= ',Validacion_'.$i;
+}
+
+// consulto los datos
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$_GET['idCalidad'];
+$rowBorrame = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowBorrame');
+
+/***********************************************/
+// Se trae un listado con todos los grupos
+$SIS_query = 'idGrupo, Nombre';
+$SIS_join  = '';
+$SIS_where = '';
+$SIS_order = 'Nombre ASC';
+$arrGrupo = array();
+$arrGrupo = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
+
+/***********************************************/
+//Armo cadena
+$subquery  = '';
+for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+	$subquery .= ',cross_quality_registrar_inspecciones_muestras.Medida_'.$i;
+}
+// consulto los datos
+$SIS_query = 'idMuestras,n_folio_pallet,lote,f_embalaje,f_cosecha,H_inspeccion,cantidad,peso,Resolucion_1,Resolucion_2,Resolucion_3,idProductor,idTipo'.$subquery;
+$SIS_join  = '';
+$SIS_where = 'idMuestras ='.$_GET['editMuestra'];
+$rowMuestras = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones_muestras', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMuestras');
+
+/*****************************************************/
+// Se traen todos los datos del analisis
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idAnalisis ='.$_GET['edit'];
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+
+/*****************************************************/
+//Verifico el tipo de usuario que esta ingresando
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
+?>
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
+		</header>
+		<div class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idProductor)){     $x1  = $idProductor;     }else{$x1  = $rowMuestras['idProductor'];}
+				if(isset($n_folio_pallet)){  $x2  = $n_folio_pallet;  }else{$x2  = $rowMuestras['n_folio_pallet'];}
+				if(isset($idTipo)){          $x3  = $idTipo;          }else{$x3  = $rowMuestras['idTipo'];}
+				if(isset($lote)){            $x4  = $lote;            }else{$x4  = $rowMuestras['lote'];}
+				if(isset($f_embalaje)){      $x5  = $f_embalaje;      }else{$x5  = $rowMuestras['f_embalaje'];}
+				if(isset($f_cosecha)){       $x6  = $f_cosecha;       }else{$x6  = $rowMuestras['f_cosecha'];}
+				if(isset($H_inspeccion)){    $x7  = $H_inspeccion;    }else{$x7  = $rowMuestras['H_inspeccion'];}
+				if(isset($cantidad)){        $x8  = $cantidad;        }else{$x8  = $rowMuestras['cantidad'];}
+				if(isset($peso)){            $x9  = $peso;            }else{$x9  = $rowMuestras['peso'];}
+				if(isset($Resolucion_1)){    $x10 = $Resolucion_1;    }else{$x10 = $rowMuestras['Resolucion_1'];}
+				if(isset($Resolucion_2)){    $x11 = $Resolucion_2;    }else{$x11 = $rowMuestras['Resolucion_2'];}
+				if(isset($Resolucion_3)){    $x12 = $Resolucion_3;    }else{$x12 = $rowMuestras['Resolucion_3'];}
+
+				//se dibujan los inputs
+				$Form_Inputs = new Form_Inputs();
+				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_select_filter('Productor','idProductor', $x1, 2, 'idProductor', 'Codigo,Nombre', 'productores_listado', $w, '', $dbConn);
+				$Form_Inputs->form_input_text('N° Folio / Pallet', 'n_folio_pallet', $x2, 2);
+				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x3, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);	
+				$Form_Inputs->form_input_text('Lote', 'lote', $x4, 2);
+				$Form_Inputs->form_date('Fecha Embalaje','f_embalaje', $x5, 2);
+				$Form_Inputs->form_date('Fecha Cosecha','f_cosecha', $x6, 2);
+				$Form_Inputs->form_time_popover('Hora Inspeccion','H_inspeccion', $x7, 1, 1, 24);
+				$Form_Inputs->form_input_number('N° Cajas/Bolsas/Racimos', 'cantidad', $x8, 2);
+				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
+				
+				$Form_Inputs->form_input_hidden('idMuestras', $rowMuestras['idMuestras'], 2);
+				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
+					
+				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
+				foreach ($arrGrupo as $grupo) {
+					//Cuento si hay items dentro de la categoria
+					$x_con = 0;
+					for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+						if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+							$x_con++;
+						}
+					}
+					
+					//si hay items se muestra todo
+					if($x_con!=0){
+						
+						echo '<h4>'.$grupo['Nombre'].'</h4>';
+					
+						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
+								//Verifico el tipo de dato
+								switch ($rowdata['PuntoidTipo_'.$i]) {
+									//Medicion (Decimal) con parametros limitantes
+									case 1:
+										$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+										break;
+									//Medicion (Decimal) sin parametros limitantes
+									case 2:
+										$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+										break;
+									//Medicion (Enteros) con parametros limitantes
+									case 3:
+										$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+										break;
+									//Medicion (Enteros) sin parametros limitantes
+									case 4:
+										$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+										break;
+									//Fecha
+									case 5:
+										$Form_Inputs->form_date($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+										break;
+									//Hora
+									case 6:
+										$Form_Inputs->form_time_popover($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 24);
+										break;
+									//Texto Libre
+									case 7:
+										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
+										break;
+									//Seleccion 1 a 3
+									case 8:
+										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 3);
+										break;
+									//Seleccion 1 a 5
+									case 9:
+										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 5);
+										break;
+									//Seleccion 1 a 10
+									case 10:
+										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 10);
+										break;
+									//Texto Libre con Validacion
+									case 11:
+										$Form_Inputs->form_input_validate($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, $rowdata['Validacion_'.$i]);
+										break;
+								
+									
+								}
+							}
+						}
+					}
+				}
+				/*************************************************************/
+				$Form_Inputs->form_tittle(3, 'Decision');
+				//Verifico esta activo el dato 1
+				if(isset($rowdata['idNota_1'])&&$rowdata['idNota_1']==1){
+					echo print_select($rowdata['idNotaTipo_1'], 'Nota Calidad', 'Resolucion_1', $x10, $rowdata['Validar_1']);
+				}
+				//Verifico esta activo el dato 2
+				if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
+					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condicion', 'Resolucion_2', $x11, $rowdata['Validar_2']);
+				}
+				//Verifico esta activo el dato 3
+				if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
+					echo print_select($rowdata['idNotaTipo_3'], 'Calificacion', 'Resolucion_3', $x12, $rowdata['Validar_3']);
+				}
+
+				?>
+				
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_muestra">
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+				</div>
+                      
+			</form>
+            <?php widget_validator(); ?>
+		</div>
+	</div>
+</div>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addMuestra'])){ 
+//Armo cadena
+$SIS_query  = 'Nombre,idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
+for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
+	$SIS_query .= ',PuntoNombre_'.$i;
+	$SIS_query .= ',PuntoidTipo_'.$i;
+	$SIS_query .= ',PuntoidGrupo_'.$i;
+	$SIS_query .= ',Validacion_'.$i;
+}
+
+// consulto los datos
+$SIS_join  = '';
+$SIS_where = 'idMatriz ='.$_GET['idCalidad'];
+$rowBorrame = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowBorrame');
+
+/*****************************************************/
+// Se trae un listado con todos los grupos
+$SIS_query = 'idGrupo, Nombre';
+$SIS_join  = '';
+$SIS_where = '';
+$SIS_order = 'Nombre ASC';
+$arrGrupo = array();
+$arrGrupo = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
+
+/*****************************************************/
+// Se traen todos los datos del analisis
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idAnalisis ='.$_GET['edit'];
+$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
+
+/*****************************************************/
+//Verifico el tipo de usuario que esta ingresando
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
+?>
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
+		</header>
+		<div class="body">
+			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<?php 
+				//Se verifican si existen los datos
+				if(isset($idProductor)){     $x1  = $idProductor;     }else{$x1  = '';}
+				if(isset($n_folio_pallet)){  $x2  = $n_folio_pallet;  }else{$x2  = '';}
+				if(isset($idTipo)){          $x3  = $idTipo;          }else{$x3  = '';}
+				if(isset($lote)){            $x4  = $lote;            }else{$x4  = '';}
+				if(isset($f_embalaje)){      $x5  = $f_embalaje;      }else{$x5  = '';}
+				if(isset($f_cosecha)){       $x6  = $f_cosecha;       }else{$x6  = '';}
+				if(isset($H_inspeccion)){    $x7  = $H_inspeccion;    }else{$x7  = '';}
+				if(isset($cantidad)){        $x8  = $cantidad;        }else{$x8  = '';}
+				if(isset($peso)){            $x9  = $peso;            }else{$x9  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
@@ -327,7 +685,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								}
 							}
 						}
-					}	
+					}
 				}
 				/*************************************************************/
 				$Form_Inputs->form_tittle(3, 'Decision');
@@ -347,375 +705,17 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_muestra">
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_muestra">
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>               
-		</div>
-	</div>
-</div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['editMuestra']) ) {
-//Armo cadena
-$SIS_query  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
-for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-	$SIS_query .= ',PuntoNombre_'.$i;
-	$SIS_query .= ',PuntoidTipo_'.$i;
-	$SIS_query .= ',PuntoidGrupo_'.$i;
-	$SIS_query .= ',Validacion_'.$i;
-}
-
-// consulto los datos
-$SIS_join  = '';
-$SIS_where = 'idMatriz ='.$_GET['idCalidad'];
-$rowBorrame = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowBorrame');
-
-/***********************************************/
-// Se trae un listado con todos los grupos
-$SIS_query = 'idGrupo, Nombre';
-$SIS_join  = '';
-$SIS_where = '';
-$SIS_order = 'Nombre ASC';
-$arrGrupo = array();
-$arrGrupo = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
-
-/***********************************************/
-//Armo cadena
-$subquery  = '';
-for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-	$subquery .= ',cross_quality_registrar_inspecciones_muestras.Medida_'.$i;
-}
-// consulto los datos
-$SIS_query = 'idMuestras,n_folio_pallet,lote,f_embalaje,f_cosecha,H_inspeccion,cantidad,peso,Resolucion_1,Resolucion_2,Resolucion_3,idProductor,idTipo'.$subquery;
-$SIS_join  = '';
-$SIS_where = 'idMuestras ='.$_GET['editMuestra'];
-$rowMuestras = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones_muestras', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMuestras');
-
-/*****************************************************/
-// Se traen todos los datos del analisis
-$SIS_query = 'idProducto';
-$SIS_join  = '';
-$SIS_where = 'idAnalisis ='.$_GET['edit'];
-$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
-
-/*****************************************************/
-//Verifico el tipo de usuario que esta ingresando
-$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-
-?>
-
-<div class="col-sm-8 fcenter">
-	<div class="box dark">
-		<header>
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
-		</header>
-		<div id="div-1" class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				<?php 
-				//Se verifican si existen los datos
-				if(isset($idProductor)) {     $x1  = $idProductor;     }else{$x1  = $rowMuestras['idProductor'];}
-				if(isset($n_folio_pallet)) {  $x2  = $n_folio_pallet;  }else{$x2  = $rowMuestras['n_folio_pallet'];}
-				if(isset($idTipo)) {          $x3  = $idTipo;          }else{$x3  = $rowMuestras['idTipo'];}
-				if(isset($lote)) {            $x4  = $lote;            }else{$x4  = $rowMuestras['lote'];}
-				if(isset($f_embalaje)) {      $x5  = $f_embalaje;      }else{$x5  = $rowMuestras['f_embalaje'];}
-				if(isset($f_cosecha)) {       $x6  = $f_cosecha;       }else{$x6  = $rowMuestras['f_cosecha'];}
-				if(isset($H_inspeccion)) {    $x7  = $H_inspeccion;    }else{$x7  = $rowMuestras['H_inspeccion'];}
-				if(isset($cantidad)) {        $x8  = $cantidad;        }else{$x8  = $rowMuestras['cantidad'];}
-				if(isset($peso)) {            $x9  = $peso;            }else{$x9  = $rowMuestras['peso'];}
-				if(isset($Resolucion_1)) {    $x10 = $Resolucion_1;    }else{$x10 = $rowMuestras['Resolucion_1'];}
-				if(isset($Resolucion_2)) {    $x11 = $Resolucion_2;    }else{$x11 = $rowMuestras['Resolucion_2'];}
-				if(isset($Resolucion_3)) {    $x12 = $Resolucion_3;    }else{$x12 = $rowMuestras['Resolucion_3'];}
-				
-				//se dibujan los inputs
-				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
-				$Form_Inputs->form_select_filter('Productor','idProductor', $x1, 2, 'idProductor', 'Codigo,Nombre', 'productores_listado', $w, '', $dbConn);
-				$Form_Inputs->form_input_text('N° Folio / Pallet', 'n_folio_pallet', $x2, 2);
-				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x3, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);		
-				$Form_Inputs->form_input_text('Lote', 'lote', $x4, 2);
-				$Form_Inputs->form_date('Fecha Embalaje','f_embalaje', $x5, 2);
-				$Form_Inputs->form_date('Fecha Cosecha','f_cosecha', $x6, 2);
-				$Form_Inputs->form_time_popover('Hora Inspeccion','H_inspeccion', $x7, 1, 1, 24);
-				$Form_Inputs->form_input_number('N° Cajas/Bolsas/Racimos', 'cantidad', $x8, 2);
-				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
-				
-				$Form_Inputs->form_input_hidden('idMuestras', $rowMuestras['idMuestras'], 2);
-				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
-					
-				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
-				foreach ($arrGrupo as $grupo) {
-					//Cuento si hay items dentro de la categoria
-					$x_con = 0;
-					for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-						if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
-							$x_con++;
-						}
-					}
-					
-					//si hay items se muestra todo
-					if($x_con!=0){
-						
-						echo '<h4>'.$grupo['Nombre'].'</h4>';
-					
-						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
-								//Verifico el tipo de dato
-								switch ($rowdata['PuntoidTipo_'.$i]) {
-									//Medicion (Decimal) con parametros limitantes
-									case 1:
-										$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
-										break;
-									//Medicion (Decimal) sin parametros limitantes
-									case 2:
-										$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
-										break;
-									//Medicion (Enteros) con parametros limitantes
-									case 3:
-										$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
-										break;
-									//Medicion (Enteros) sin parametros limitantes
-									case 4:
-										$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
-										break;
-									//Fecha
-									case 5:
-										$Form_Inputs->form_date($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
-										break;
-									//Hora
-									case 6:
-										$Form_Inputs->form_time_popover($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 24);
-										break;
-									//Texto Libre
-									case 7:
-										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1);
-										break;
-									//Seleccion 1 a 3
-									case 8:
-										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 3);
-										break;
-									//Seleccion 1 a 5
-									case 9:
-										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 5);
-										break;
-									//Seleccion 1 a 10
-									case 10:
-										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, 1, 10);
-										break;
-									//Texto Libre con Validacion
-									case 11:
-										$Form_Inputs->form_input_validate($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, $rowdata['Validacion_'.$i]);
-										break;
-								
-									
-								}
-							}
-						}
-					}	
-				}
-				/*************************************************************/
-				$Form_Inputs->form_tittle(3, 'Decision');
-				//Verifico esta activo el dato 1
-				if(isset($rowdata['idNota_1'])&&$rowdata['idNota_1']==1){
-					echo print_select($rowdata['idNotaTipo_1'], 'Nota Calidad', 'Resolucion_1', $x10, $rowdata['Validar_1']);
-				}
-				//Verifico esta activo el dato 2
-				if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condicion', 'Resolucion_2', $x11, $rowdata['Validar_2']);
-				}
-				//Verifico esta activo el dato 3
-				if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
-					echo print_select($rowdata['idNotaTipo_3'], 'Calificacion', 'Resolucion_3', $x12, $rowdata['Validar_3']);
-				}
-
-				?>
-				
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit_muestra">
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>               
-		</div>
-	</div>
-</div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addMuestra']) ) { 
-//Armo cadena
-$SIS_query  = 'Nombre, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
-for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-	$SIS_query .= ',PuntoNombre_'.$i;
-	$SIS_query .= ',PuntoidTipo_'.$i;
-	$SIS_query .= ',PuntoidGrupo_'.$i;
-	$SIS_query .= ',Validacion_'.$i;
-}
-
-// consulto los datos
-$SIS_join  = '';
-$SIS_where = 'idMatriz ='.$_GET['idCalidad'];
-$rowBorrame = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowBorrame');
-
-/*****************************************************/
-// Se trae un listado con todos los grupos
-$SIS_query = 'idGrupo, Nombre';
-$SIS_join  = '';
-$SIS_where = '';
-$SIS_order = 'Nombre ASC';
-$arrGrupo = array();
-$arrGrupo = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
-
-/*****************************************************/
-// Se traen todos los datos del analisis
-$SIS_query = 'idProducto';
-$SIS_join  = '';
-$SIS_where = 'idAnalisis ='.$_GET['edit'];
-$row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
-
-/*****************************************************/
-//Verifico el tipo de usuario que esta ingresando
-$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-
-?>
-
-<div class="col-sm-8 fcenter">
-	<div class="box dark">
-		<header>
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
-		</header>
-		<div id="div-1" class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				<?php 
-				//Se verifican si existen los datos
-				if(isset($idProductor)) {     $x1  = $idProductor;     }else{$x1  = '';}
-				if(isset($n_folio_pallet)) {  $x2  = $n_folio_pallet;  }else{$x2  = '';}
-				if(isset($idTipo)) {          $x3  = $idTipo;          }else{$x3  = '';}
-				if(isset($lote)) {            $x4  = $lote;            }else{$x4  = '';}
-				if(isset($f_embalaje)) {      $x5  = $f_embalaje;      }else{$x5  = '';}
-				if(isset($f_cosecha)) {       $x6  = $f_cosecha;       }else{$x6  = '';}
-				if(isset($H_inspeccion)) {    $x7  = $H_inspeccion;    }else{$x7  = '';}
-				if(isset($cantidad)) {        $x8  = $cantidad;        }else{$x8  = '';}
-				if(isset($peso)) {            $x9  = $peso;            }else{$x9  = '';}
-				
-				//se dibujan los inputs
-				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
-				$Form_Inputs->form_select_filter('Productor','idProductor', $x1, 2, 'idProductor', 'Codigo,Nombre', 'productores_listado', $w, '', $dbConn);
-				$Form_Inputs->form_input_text('N° Folio / Pallet', 'n_folio_pallet', $x2, 2);
-				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x3, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);		
-				$Form_Inputs->form_input_text('Lote', 'lote', $x4, 2);
-				$Form_Inputs->form_date('Fecha Embalaje','f_embalaje', $x5, 2);
-				$Form_Inputs->form_date('Fecha Cosecha','f_cosecha', $x6, 2);
-				$Form_Inputs->form_time_popover('Hora Inspeccion','H_inspeccion', $x7, 1, 1, 24);
-				$Form_Inputs->form_input_number('N° Cajas/Bolsas/Racimos', 'cantidad', $x8, 2);
-				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
-				
-				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
-					
-				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
-				foreach ($arrGrupo as $grupo) {
-					//Cuento si hay items dentro de la categoria
-					$x_con = 0;
-					for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-						if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
-							$x_con++;
-						}
-					}
-					
-					//si hay items se muestra todo
-					if($x_con!=0){
-						
-						echo '<h4>'.$grupo['Nombre'].'</h4>';
-					
-						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
-							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
-								//Verifico el tipo de dato
-								switch ($rowdata['PuntoidTipo_'.$i]) {
-									//Medicion (Decimal) con parametros limitantes
-									case 1:
-										$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
-										break;
-									//Medicion (Decimal) sin parametros limitantes
-									case 2:
-										$Form_Inputs->form_input_number($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
-										break;
-									//Medicion (Enteros) con parametros limitantes
-									case 3:
-										$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
-										break;
-									//Medicion (Enteros) sin parametros limitantes
-									case 4:
-										$Form_Inputs->form_input_number_integer($rowdata['PuntoNombre_'.$i], 'Medida_'.$i, '', 1);
-										break;
-									//Fecha
-									case 5:
-										$Form_Inputs->form_date($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
-										break;
-									//Hora
-									case 6:
-										$Form_Inputs->form_time_popover($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 24);
-										break;
-									//Texto Libre
-									case 7:
-										$Form_Inputs->form_textarea($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1);
-										break;
-									//Seleccion 1 a 3
-									case 8:
-										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 3);
-										break;
-									//Seleccion 1 a 5
-									case 9:
-										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 5);
-										break;
-									//Seleccion 1 a 10
-									case 10:
-										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 10);
-										break;
-									//Texto Libre con Validacion
-									case 11:
-										$Form_Inputs->form_input_validate($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, $rowdata['Validacion_'.$i]);
-										break;
-								
-									
-								}
-							}
-						}
-					}	
-				}
-				/*************************************************************/
-				$Form_Inputs->form_tittle(3, 'Decision');
-				//Verifico esta activo el dato 1
-				if(isset($rowdata['idNota_1'])&&$rowdata['idNota_1']==1){
-					echo print_select($rowdata['idNotaTipo_1'], 'Nota Calidad', 'Resolucion_1', '', $rowdata['Validar_1']);
-				}
-				//Verifico esta activo el dato 2
-				if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condicion', 'Resolucion_2', '', $rowdata['Validar_2']);
-				}
-				//Verifico esta activo el dato 3
-				if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
-					echo print_select($rowdata['idNotaTipo_3'], 'Calificacion', 'Resolucion_3', '', $rowdata['Validar_3']);
-				}
-
-				?>
-				
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_muestra">
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>               
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addMaquina']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addMaquina'])){ 
 // Se traen todos los datos del analisis
 $SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
 $SIS_join  = '';
@@ -727,19 +727,19 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecci
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Maquina</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idMaquina)) {        $x1  = $idMaquina;        }else{$x1  = '';}
-				
+				if(isset($idMaquina)){        $x1  = $idMaquina;        }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Codigo,Nombre', 'maquinas_listado', $z, '', $dbConn);
@@ -762,17 +762,17 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_maq"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_maq"> 
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addTrab']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addTrab'])){ 
 // Se traen todos los datos del analisis
 $SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
 $SIS_join  = '';
@@ -781,21 +781,21 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecci
 
 /*****************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Trabajador</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
         	<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)) {     $x1  = $idTrabajador;    }else{$x1  = '';}
+				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
 
 				
 				//se dibujan los inputs
@@ -821,17 +821,17 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_trab"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_trab"> 
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['modBase']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['modBase'])){
 // Se traen todos los datos del analisis
 $SIS_query = 'Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,Observaciones,idSistema';
 $SIS_join  = '';
@@ -868,33 +868,33 @@ foreach ($arrPermisos2 as $prod) {
 }	
 
 //verifico que sea un administrador
-$z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
+$z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Inspeccion</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Creacion_fecha)) {      $x1  = $Creacion_fecha;    }else{$x1  = $row_data['Creacion_fecha'];}
-				if(isset($idTipo)) {              $x2  = $idTipo;            }else{$x2  = $row_data['idTipo'];}
-				if(isset($Temporada)) {           $x3  = $Temporada;         }else{$x3  = $row_data['Temporada'];}
-				if(isset($idCategoria)) {         $x4  = $idCategoria;       }else{$x4  = $row_data['idCategoria'];}
-				if(isset($idProducto)) {          $x5  = $idProducto;        }else{$x5  = $row_data['idProducto'];}
-				if(isset($idUbicacion)) {         $x6  = $idUbicacion;       }else{$x6  = $row_data['idUbicacion'];}
-				
-				if(isset($row_data['idUbicacion_lvl_1'])&&$row_data['idUbicacion_lvl_1']!=''){if(isset($idUbicacion_lvl_1)) {   $x7  = $idUbicacion_lvl_1; }else{$x7  = $row_data['idUbicacion_lvl_1'];}}
-				if(isset($row_data['idUbicacion_lvl_2'])&&$row_data['idUbicacion_lvl_2']!=''){if(isset($idUbicacion_lvl_2)) {   $x8  = $idUbicacion_lvl_2; }else{$x8  = $row_data['idUbicacion_lvl_2'];}}
-				if(isset($row_data['idUbicacion_lvl_3'])&&$row_data['idUbicacion_lvl_3']!=''){if(isset($idUbicacion_lvl_3)) {   $x9  = $idUbicacion_lvl_3; }else{$x9  = $row_data['idUbicacion_lvl_3'];}}
-				if(isset($row_data['idUbicacion_lvl_4'])&&$row_data['idUbicacion_lvl_4']!=''){if(isset($idUbicacion_lvl_4)) {   $x10 = $idUbicacion_lvl_4; }else{$x10 = $row_data['idUbicacion_lvl_4'];}}
-				if(isset($row_data['idUbicacion_lvl_5'])&&$row_data['idUbicacion_lvl_5']!=''){if(isset($idUbicacion_lvl_5)) {   $x11 = $idUbicacion_lvl_5; }else{$x11 = $row_data['idUbicacion_lvl_5'];}}
-				if(isset($Observaciones)) {       $x12 = $Observaciones;     }else{$x12 = $row_data['Observaciones'];}
+				if(isset($Creacion_fecha)){      $x1  = $Creacion_fecha;    }else{$x1  = $row_data['Creacion_fecha'];}
+				if(isset($idTipo)){              $x2  = $idTipo;            }else{$x2  = $row_data['idTipo'];}
+				if(isset($Temporada)){           $x3  = $Temporada;         }else{$x3  = $row_data['Temporada'];}
+				if(isset($idCategoria)){         $x4  = $idCategoria;       }else{$x4  = $row_data['idCategoria'];}
+				if(isset($idProducto)){          $x5  = $idProducto;        }else{$x5  = $row_data['idProducto'];}
+				if(isset($idUbicacion)){         $x6  = $idUbicacion;       }else{$x6  = $row_data['idUbicacion'];}
+
+				if(isset($row_data['idUbicacion_lvl_1'])&&$row_data['idUbicacion_lvl_1']!=''){if(isset($idUbicacion_lvl_1)){   $x7  = $idUbicacion_lvl_1; }else{$x7  = $row_data['idUbicacion_lvl_1'];}}
+				if(isset($row_data['idUbicacion_lvl_2'])&&$row_data['idUbicacion_lvl_2']!=''){if(isset($idUbicacion_lvl_2)){   $x8  = $idUbicacion_lvl_2; }else{$x8  = $row_data['idUbicacion_lvl_2'];}}
+				if(isset($row_data['idUbicacion_lvl_3'])&&$row_data['idUbicacion_lvl_3']!=''){if(isset($idUbicacion_lvl_3)){   $x9  = $idUbicacion_lvl_3; }else{$x9  = $row_data['idUbicacion_lvl_3'];}}
+				if(isset($row_data['idUbicacion_lvl_4'])&&$row_data['idUbicacion_lvl_4']!=''){if(isset($idUbicacion_lvl_4)){   $x10 = $idUbicacion_lvl_4; }else{$x10 = $row_data['idUbicacion_lvl_4'];}}
+				if(isset($row_data['idUbicacion_lvl_5'])&&$row_data['idUbicacion_lvl_5']!=''){if(isset($idUbicacion_lvl_5)){   $x11 = $idUbicacion_lvl_5; }else{$x11 = $row_data['idUbicacion_lvl_5'];}}
+				if(isset($Observaciones)){       $x12 = $Observaciones;     }else{$x12 = $row_data['Observaciones'];}
 				
 
 				//se dibujan los inputs
@@ -920,20 +920,20 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
 				
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit'])){
 // Se traen todos los datos del analisis
 $SIS_query = '
 cross_quality_registrar_inspecciones.fecha_auto,
@@ -989,13 +989,13 @@ LEFT JOIN `ubicacion_listado_level_5`              ON ubicacion_listado_level_5.
 $SIS_where = 'cross_quality_registrar_inspecciones.idAnalisis ='.$_GET['edit'];
 $row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
-/***************************************************/				
+/***************************************************/
 // Se trae un listado con todos los trabajadores
 $SIS_query = '
 cross_quality_registrar_inspecciones_trabajador.idTrabajadores,
-trabajadores_listado.Nombre, 
+trabajadores_listado.Nombre,
 trabajadores_listado.ApellidoPat, 
-trabajadores_listado.ApellidoMat, 
+trabajadores_listado.ApellidoMat,
 trabajadores_listado.Cargo, 
 trabajadores_listado.Rut';
 $SIS_join  = 'LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador = cross_quality_registrar_inspecciones_trabajador.idTrabajador';
@@ -1004,7 +1004,7 @@ $SIS_order = 'trabajadores_listado.ApellidoPat ASC';
 $arrTrabajadores = array();
 $arrTrabajadores = db_select_array (false, $SIS_query, 'cross_quality_registrar_inspecciones_trabajador', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTrabajadores');
 
-/***************************************************/				
+/***************************************************/
 // Se trae un listado con todas las maquinas
 $SIS_query = '
 cross_quality_registrar_inspecciones_maquina.idMaquinas,
@@ -1016,7 +1016,7 @@ $SIS_order = 'maquinas_listado.Nombre ASC';
 $arrMaquinas = array();
 $arrMaquinas = db_select_array (false, $SIS_query, 'cross_quality_registrar_inspecciones_maquina', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMaquinas');
 
-/***************************************************/				
+/***************************************************/
 // Se trae un listado con todas las muestras
 $SIS_query = '
 cross_quality_registrar_inspecciones_muestras.idMuestras, 
@@ -1029,7 +1029,7 @@ $SIS_order = 'productores_listado.Nombre ASC';
 $arrMuestras = array();
 $arrMuestras = db_select_array (false, $SIS_query, 'cross_quality_registrar_inspecciones_muestras', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMuestras');
 
-/***************************************************/				
+/***************************************************/
 // Se trae un listado con todos los archivos
 $SIS_query = 'idArchivo, Nombre';
 $SIS_join  = '';
@@ -1040,18 +1040,18 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 						
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> <?php echo $row_data['TipoAnalisis']?></div>
 
 		<div id="customer">
 			
-			<table id="meta" class="fleft otdata">
+			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $new_location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $new_location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Producto</td>
@@ -1091,9 +1091,9 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
-				</tr>		  
+				</tr>
 				
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Trabajadores Encargados</td>
 					<td>
@@ -1114,13 +1114,13 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
-						</tr> 
+						</tr>
 				<?php }
 				}else{
 					echo '<tr class="item-row linea_punteada"><td colspan="6">No hay trabajadores asignados</td></tr>';
 				}?>
 				<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Maquinas a Utilizar</td>
 					<td>
@@ -1140,13 +1140,13 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
-						</tr> 
+						</tr>
 					<?php }
 				}else{
 					echo '<tr class="item-row linea_punteada"><td colspan="6">No hay maquinas asignadas</td></tr>';
 				} ?>
 				<tr id="hiderow"><td colspan="6"></td></tr>
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Muestras</td>
 					<td>
@@ -1177,7 +1177,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								</div>
 							</td>
-						</tr> 
+						</tr>
 				<?php }
 				}else{
 					echo '<tr class="item-row linea_punteada"><td colspan="6">No hay muestras asignadas</td></tr>';
@@ -1203,7 +1203,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td colspan="5">Archivos Adjuntos</td>
                 <td width="160"><a href="<?php echo $new_location.'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></td>
-            </tr>		  
+            </tr>
             
 			<?php 
 			if ($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!=''){
@@ -1237,12 +1237,12 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 <div class="clearfix"></div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location.'?pagina=1' ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location.'?pagina=1' ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

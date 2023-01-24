@@ -2,22 +2,22 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-051).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idTurnos']) )  $idTurnos   = $_POST['idTurnos'];
-	if ( !empty($_POST['Nombre']) )    $Nombre     = $_POST['Nombre'];
-	if ( !empty($_POST['Valor']) )     $Valor      = $_POST['Valor'];
-	
+	if (!empty($_POST['idTurnos']))  $idTurnos   = $_POST['idTurnos'];
+	if (!empty($_POST['Nombre']))    $Nombre     = $_POST['Nombre'];
+	if (!empty($_POST['Valor']))     $Valor      = $_POST['Valor'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -32,30 +32,30 @@ require_once '0_validate_user_1.php';
 			case 'idTurnos':  if(empty($idTurnos)){  $error['idTurnos']  = 'error/No ha ingresado el id';}break;
 			case 'Nombre':    if(empty($Nombre)){    $error['Nombre']    = 'error/No ha ingresado el nombre';}break;
 			case 'Valor':     if(empty($Valor)){     $error['Valor']     = 'error/No ha ingresado el valor';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Nombre) && $Nombre != ''){  $Nombre = EstandarizarInput($Nombre); }
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre) && $Nombre!=''){ $Nombre = EstandarizarInput($Nombre);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre,contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -66,37 +66,35 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($Nombre) && $Nombre != ''){  $SIS_data  = "'".$Nombre."'" ;  }else{$SIS_data  = "''";}
-				if(isset($Valor) && $Valor != ''){    $SIS_data .= ",'".$Valor."'" ;  }else{$SIS_data .= ",''";}
-				
+				if(isset($Nombre) && $Nombre!=''){ $SIS_data  = "'".$Nombre."'";  }else{$SIS_data  = "''";}
+				if(isset($Valor) && $Valor!=''){    $SIS_data .= ",'".$Valor."'";  }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'Nombre, Valor';
+				$SIS_columns = 'Nombre,Valor';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'core_horas_extras_turnos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
+
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -107,38 +105,37 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idTurnos='".$idTurnos."'" ;
-				if(isset($Nombre) && $Nombre != ''){  $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Valor) && $Valor != ''){    $SIS_data .= ",Valor='".$Valor."'" ;}
-				
+				$SIS_data = "idTurnos='".$idTurnos."'";
+				if(isset($Nombre) && $Nombre!=''){ $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Valor) && $Valor!=''){    $SIS_data .= ",Valor='".$Valor."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'core_horas_extras_turnos', 'idTurnos = "'.$idTurnos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
-		break;	
-						
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del':	
+		case 'del':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -146,42 +143,38 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'core_horas_extras_turnos', 'idTurnos = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-			
+		break;
 
-		break;							
-						
 /*******************************************************************************************************************/
 	}
 ?>

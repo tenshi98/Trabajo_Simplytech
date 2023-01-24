@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "aguas_mediciones_tasas_interes.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,10 +18,10 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                   $location .= "&Fecha=".$_GET['Fecha'];                   $search .= "&Fecha=".$_GET['Fecha'];}
-if(isset($_GET['TasaCorriente']) && $_GET['TasaCorriente'] != ''){   $location .= "&TasaCorriente=".$_GET['TasaCorriente'];   $search .= "&TasaCorriente=".$_GET['TasaCorriente'];}
-if(isset($_GET['TasaDia']) && $_GET['TasaDia'] != ''){               $location .= "&TasaDia=".$_GET['TasaDia'];               $search .= "&TasaDia=".$_GET['TasaDia'];}
-if(isset($_GET['MC']) && $_GET['MC'] != ''){                         $location .= "&MC=".$_GET['MC'];                         $search .= "&MC=".$_GET['MC'];}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){            $location .= "&Fecha=".$_GET['Fecha'];                   $search .= "&Fecha=".$_GET['Fecha'];}
+if(isset($_GET['TasaCorriente']) && $_GET['TasaCorriente']!=''){   $location .= "&TasaCorriente=".$_GET['TasaCorriente'];   $search .= "&TasaCorriente=".$_GET['TasaCorriente'];}
+if(isset($_GET['TasaDia']) && $_GET['TasaDia']!=''){        $location .= "&TasaDia=".$_GET['TasaDia'];               $search .= "&TasaDia=".$_GET['TasaDia'];}
+if(isset($_GET['MC']) && $_GET['MC']!=''){                  $location .= "&MC=".$_GET['MC'];                         $search .= "&MC=".$_GET['MC'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -29,22 +29,22 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/aguas_mediciones_tasas_interes.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/aguas_mediciones_tasas_interes.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/aguas_mediciones_tasas_interes.php';	
+	require_once 'A1XRXS_sys/xrxs_form/aguas_mediciones_tasas_interes.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -59,8 +59,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tasa de Interes Modifi
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tasa de Interes borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -82,22 +82,22 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion de Tasa de Interes</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {          $x1  = $Fecha;          }else{$x1  = $rowdata['Fecha'];}
-				if(isset($TasaCorriente)) {  $x2  = $TasaCorriente;  }else{$x2  = Cantidades_decimales_justos($rowdata['TasaCorriente']);}
-				if(isset($TasaDia)) {        $x3  = $TasaDia;        }else{$x3  = Cantidades_decimales_justos($rowdata['TasaDia']);}
-				if(isset($MC)) {             $x4  = $MC;             }else{$x4  = Cantidades_decimales_justos($rowdata['MC']);}
-				
+				if(isset($Fecha)){$x1  = $Fecha;          }else{$x1  = $rowdata['Fecha'];}
+				if(isset($TasaCorriente)){  $x2  = $TasaCorriente;  }else{$x2  = Cantidades_decimales_justos($rowdata['TasaCorriente']);}
+				if(isset($TasaDia)){        $x3  = $TasaDia;        }else{$x3  = Cantidades_decimales_justos($rowdata['TasaDia']);}
+				if(isset($MC)){             $x4  = $MC;             }else{$x4  = Cantidades_decimales_justos($rowdata['MC']);}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
@@ -112,37 +112,37 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Tasa de Interes</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {          $x1  = $Fecha;          }else{$x1  = '';}
-				if(isset($TasaCorriente)) {  $x2  = $TasaCorriente;  }else{$x2  = '';}
-				if(isset($TasaDia)) {        $x3  = $TasaDia;        }else{$x3  = '';}
-				if(isset($MC)) {             $x4  = $MC;             }else{$x4  = '';}
-				
+				if(isset($Fecha)){$x1  = $Fecha;          }else{$x1  = '';}
+				if(isset($TasaCorriente)){  $x2  = $TasaCorriente;  }else{$x2  = '';}
+				if(isset($TasaDia)){        $x3  = $TasaDia;        }else{$x3  = '';}
+				if(isset($MC)){             $x4  = $MC;             }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
@@ -157,35 +157,26 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -216,16 +207,16 @@ $SIS_where = "aguas_mediciones_tasas_interes.idTasasInteres!=0";
 $SIS_where.= " AND aguas_mediciones_tasas_interes.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Fecha']) && $_GET['Fecha'] != ''){                   $SIS_where .= " AND aguas_mediciones_tasas_interes.Fecha='".$_GET['Fecha']."'";}
-if(isset($_GET['TasaCorriente']) && $_GET['TasaCorriente'] != ''){   $SIS_where .= " AND aguas_mediciones_tasas_interes.TasaCorriente='".$_GET['TasaCorriente']."'";}
-if(isset($_GET['TasaDia']) && $_GET['TasaDia'] != ''){               $SIS_where .= " AND aguas_mediciones_tasas_interes.TasaDia='".$_GET['TasaDia']."'";}
-if(isset($_GET['MC']) && $_GET['MC'] != ''){                         $SIS_where .= " AND aguas_mediciones_tasas_interes.MC='".$_GET['MC']."'";}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){            $SIS_where .= " AND aguas_mediciones_tasas_interes.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['TasaCorriente']) && $_GET['TasaCorriente']!=''){   $SIS_where .= " AND aguas_mediciones_tasas_interes.TasaCorriente='".$_GET['TasaCorriente']."'";}
+if(isset($_GET['TasaDia']) && $_GET['TasaDia']!=''){        $SIS_where .= " AND aguas_mediciones_tasas_interes.TasaDia='".$_GET['TasaDia']."'";}
+if(isset($_GET['MC']) && $_GET['MC']!=''){                  $SIS_where .= " AND aguas_mediciones_tasas_interes.MC='".$_GET['MC']."'";}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idTasasInteres', 'aguas_mediciones_tasas_interes', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 aguas_mediciones_tasas_interes.idTasasInteres,
@@ -246,31 +237,31 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_tasas_interes', 
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Tasa de Interes</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Tasa de Interes</a><?php } ?>
 	
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {          $x1  = $Fecha;          }else{$x1  = '';}
-				if(isset($TasaCorriente)) {  $x2  = $TasaCorriente;  }else{$x2  = '';}
-				if(isset($TasaDia)) {        $x3  = $TasaDia;        }else{$x3  = '';}
-				if(isset($MC)) {             $x4  = $MC;             }else{$x4  = '';}
-				
+				if(isset($Fecha)){$x1  = $Fecha;          }else{$x1  = '';}
+				if(isset($TasaCorriente)){  $x2  = $TasaCorriente;  }else{$x2  = '';}
+				if(isset($TasaDia)){        $x3  = $TasaDia;        }else{$x3  = '';}
+				if(isset($MC)){             $x4  = $MC;             }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 1);
@@ -278,23 +269,23 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_tasas_interes', 
 				$Form_Inputs->form_input_number('Tasa Dia', 'TasaDia', $x3, 1);
 				$Form_Inputs->form_input_number('MC', 'MC', $x4, 1);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                      
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Tasa de Interes</h5>
@@ -371,7 +362,7 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_tasas_interes', 
 						<td><?php echo Cantidades_decimales_justos($uml['TasaCorriente']); ?></td>
 						<td><?php echo Cantidades_decimales_justos($uml['TasaDia']); ?></td>
 						<td><?php echo Cantidades_decimales_justos($uml['MC']); ?></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>			
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idTasasInteres']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -379,22 +370,22 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_tasas_interes', 
 									$ubicacion = $location.'&del='.simpleEncode($uml['idTasasInteres'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la Tasa de Interes?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

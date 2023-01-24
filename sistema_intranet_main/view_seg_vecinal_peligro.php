@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -61,7 +61,7 @@ LEFT JOIN `seg_vecinal_clientes_listado`  ON seg_vecinal_clientes_listado.idClie
 LEFT JOIN `core_seguridad_validacion`     ON core_seguridad_validacion.idValidado   = seg_vecinal_peligros_listado.idValidado';
 $SIS_where = 'seg_vecinal_peligros_listado.idPeligro ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_peligros_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
-	
+
 /**************************************************************/
 //Se traen las rutas
 $SIS_query = 'idArchivo, Nombre';
@@ -96,7 +96,7 @@ foreach ($arrArchivos as $zona) {
 }
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -106,14 +106,14 @@ foreach ($arrArchivos as $zona) {
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-flag" aria-hidden="true"></i> Datos</a></li>
 				<li class=""><a href="#archivos" data-toggle="tab"><span class="label label-danger"><?php echo $N_Archivos; ?></span> <i class="fa fa-file-archive-o" aria-hidden="true"></i> Archivos Adjuntos</a></li>
 				<li class=""><a href="#comentarios" data-toggle="tab"><i class="fa fa-comment-o" aria-hidden="true"></i> Comentarios</a></li>
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
-						<div class="col-sm-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de la Zona de Peligro</h2>
 							<p class="text-muted word_break">
 								<strong>Vecino : </strong><?php echo $rowdata['Vecino']; ?><br/>
@@ -136,7 +136,7 @@ foreach ($arrArchivos as $zona) {
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php 
 							//se arma la direccion
@@ -172,10 +172,10 @@ foreach ($arrArchivos as $zona) {
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrArchivos as $zona) { ?>
-									<tr class="odd">		
-										<td><?php echo $zona['Nombre']; ?></td>	
+									<tr class="odd">
+										<td><?php echo $zona['Nombre']; ?></td>
 									</tr>
-								<?php } ?>                    
+								<?php } ?>
 							</tbody>
 						</table>
 					</div>
@@ -196,7 +196,7 @@ foreach ($arrArchivos as $zona) {
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrComentarios as $comment) { ?>
-									<tr class="odd">		
+									<tr class="odd">
 										<td>
 											<div class="header">
 												<small class="text-muted" style="margin-left: 0px !important;"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $comment['Fecha'].' '.$comment['Hora']; ?></small>
@@ -207,7 +207,7 @@ foreach ($arrArchivos as $zona) {
 										
 										</td>
 									</tr>
-								<?php } ?>                    
+								<?php } ?>
 							</tbody>
 						</table>
 					</div>
@@ -216,19 +216,19 @@ foreach ($arrArchivos as $zona) {
 			</div>
 			
 			
-        </div>	
+        </div>
 	</div>
 </div>
 
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -239,12 +239,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

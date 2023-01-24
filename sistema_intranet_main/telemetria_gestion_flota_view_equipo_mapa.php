@@ -15,7 +15,7 @@ require_once 'core/Web.Header.Views.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 // consulto los datos
-$SIS_query = 'Nombre, IdentificadorEmpresa, LimiteVelocidad, cantSensores, id_Geo, id_Sensores, Direccion_img, TiempoFueraLinea, TiempoDetencion, GeoLatitud, GeoLongitud';
+$SIS_query = 'Nombre,IdentificadorEmpresa, LimiteVelocidad, cantSensores, id_Geo, id_Sensores, Direccion_img, TiempoFueraLinea, TiempoDetencion, GeoLatitud, GeoLongitud';
 $SIS_join  = '';
 $SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
@@ -83,7 +83,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -100,9 +100,9 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 				<?php if($arrFlinea!=false && !empty($arrFlinea) && $arrFlinea!=''){ ?>
 					<li class=""><a href="#flinea" data-toggle="tab"><i class="fa fa-power-off" aria-hidden="true"></i> Fuera de Linea</a></li>
 				<?php } ?>
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				
@@ -134,17 +134,17 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<?php if(isset($rowMed['id_Geo'])&&$rowMed['id_Geo']!=''&&$rowMed['id_Geo']==1){ ?>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default fright margin_width fmrbtn" >Ver Ultima Ubicacion</a>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_1.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default fright margin_width fmrbtn" >Informe Medicion Sensores</a>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_velocidad.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default fright margin_width fmrbtn" >Informe Medicion Velocidades</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicacion</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_1.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_velocidad.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Velocidades</a>
 								<?php }elseif(isset($rowMed['id_Geo'])&&$rowMed['id_Geo']!=''&&$rowMed['id_Geo']==2){ ?>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default fright margin_width fmrbtn" >Ver Ultima Ubicacion</a>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default fright margin_width fmrbtn" >Informe Medicion Sensores</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicacion</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 								<?php } ?>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 							
-							<?php if(isset($rowdata['LimiteVelocidad'])&&$rowdata['LimiteVelocidad']!=0){ ?>
+							<?php if(isset($rowdata['LimiteVelocidad'])&&$rowdata['LimiteVelocidad']!=0){?>
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 									<thead>
 										<tr role="row">
@@ -156,9 +156,9 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all">
 										<tr class="odd <?php if($rowMed['GeoVelocidad'] > $rowdata['LimiteVelocidad']){echo 'danger';}?>">		
-											<td>Velocidad</td>	
+											<td>Velocidad</td>
 											<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
-											<td><?php echo Cantidades($rowMed['GeoVelocidad'], 0).' KM/h'; ?></td>		
+											<td><?php echo Cantidades($rowMed['GeoVelocidad'], 0).' KM/h'; ?></td>
 											<td><?php echo Cantidades($rowdata['LimiteVelocidad'], 0).' KM/h'; ?></td>
 										</tr>
 														   
@@ -181,20 +181,20 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 											//solo sensores activos
 											if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){ 
 												$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]];?>
-												<tr class="odd">		
+												<tr class="odd">
 													<td><?php echo 's'.$i ?></td>
-													<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>	
+													<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
 													<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
 													<td><?php 
 													if(isset($rowMed['SensoresMedActual_'.$i])&&$rowMed['SensoresMedActual_'.$i]<99900){
 														echo Cantidades_decimales_justos($rowMed['SensoresMedActual_'.$i]).$unimed;
 													}else{
 														echo 'Sin Datos';
-													} ?>
+													}?>
 													</td>
 												</tr>
 											<?php } ?>
-										<?php } ?>                    
+										<?php } ?>
 									</tbody>
 								</table>
 						
@@ -210,7 +210,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default fright margin_width fmrbtn" >Abrir Reporte</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 							
@@ -225,7 +225,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<th>Max</th>
 										<?php if($rowdata['id_Geo']==1){ ?>
 											<th>Ubicacion</th> 
-										<?php } ?> 
+										<?php } ?>
 									</tr>
 								</thead>
 								
@@ -246,9 +246,9 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 														<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'_view.php?view='.$error['idErrores']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 													</div>
 												</td>
-											<?php } ?> 		
+											<?php } ?>
 										</tr>
-									<?php } ?>                    
+									<?php } ?>
 								</tbody>
 							</table>
 	
@@ -257,14 +257,14 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 				</div>
 			<?php } ?>
 			
-			<?php if($arrFlinea!=false && !empty($arrFlinea) && $arrFlinea!=''){ ?>	
+			<?php if($arrFlinea!=false && !empty($arrFlinea) && $arrFlinea!=''){ ?>
 				<div class="tab-pane fade" id="flinea">
 					<div class="wmd-panel">
 						
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default fright margin_width fmrbtn" >Abrir Reporte</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 							
@@ -279,7 +279,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<th>Tiempo</th>
 										<?php if($rowdata['id_Geo']==1){ ?>
 											<th>Ubicacion</th> 
-										<?php } ?> 
+										<?php } ?>
 									</tr>
 								</thead>
 								
@@ -297,9 +297,9 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 														<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'_view.php?view='.$error['idFueraLinea']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 													</div>
 												</td>
-											<?php } ?> 		
+											<?php } ?>
 										</tr>
-									<?php } ?>                    
+									<?php } ?>
 								</tbody>
 							</table>
 	
@@ -309,7 +309,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 			<?php } ?>
 			
 			
-        </div>	
+        </div>
 	</div>
 </div>
 

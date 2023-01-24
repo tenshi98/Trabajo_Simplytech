@@ -2,7 +2,7 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-272).');
 }
 /*******************************************************************************************************************/
@@ -14,17 +14,17 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['email']) )            $email             = $_POST['email'];
-	if ( !empty($_POST['texto']) )            $texto             = $_POST['texto'];
-	if ( !empty($_POST['email_principal']) )  $email_principal   = $_POST['email_principal'];
-	if ( !empty($_POST['GmailUsuario']) )     $GmailUsuario      = $_POST['GmailUsuario'];
-	if ( !empty($_POST['GmailPassword']) )    $GmailPassword     = $_POST['GmailPassword'];
-	if ( !empty($_POST['Token']) )            $Token             = $_POST['Token'];
-	if ( !empty($_POST['InstanceId']) )       $InstanceId        = $_POST['InstanceId'];
-	if ( !empty($_POST['fono']) )             $fono              = $_POST['fono'];
-	if ( !empty($_POST['grupo']) )            $grupo             = $_POST['grupo'];
-	if ( !empty($_POST['mensaje']) )          $mensaje           = $_POST['mensaje'];
-	
+	if (!empty($_POST['email']))            $email             = $_POST['email'];
+	if (!empty($_POST['texto']))            $texto             = $_POST['texto'];
+	if (!empty($_POST['email_principal']))  $email_principal   = $_POST['email_principal'];
+	if (!empty($_POST['GmailUsuario']))     $GmailUsuario      = $_POST['GmailUsuario'];
+	if (!empty($_POST['GmailPassword']))    $GmailPassword     = $_POST['GmailPassword'];
+	if (!empty($_POST['Token']))            $Token             = $_POST['Token'];
+	if (!empty($_POST['InstanceId']))       $InstanceId        = $_POST['InstanceId'];
+	if (!empty($_POST['fono']))             $fono              = $_POST['fono'];
+	if (!empty($_POST['grupo']))            $grupo             = $_POST['grupo'];
+	if (!empty($_POST['mensaje']))          $mensaje           = $_POST['mensaje'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -46,26 +46,26 @@ require_once '0_validate_user_1.php';
 			case 'fono':             if(empty($fono)){              $error['fono']               = 'error/No ha ingresado el fono';}break;
 			case 'grupo':            if(empty($grupo)){             $error['grupo']              = 'error/No ha ingresado el grupo';}break;
 			case 'mensaje':          if(empty($mensaje)){           $error['mensaje']            = 'error/No ha ingresado el mensaje';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($email) && $email != ''){                     $email           = EstandarizarInput($email); }
-	if(isset($texto) && $texto != ''){                     $texto           = EstandarizarInput($texto); }
-	if(isset($email_principal) && $email_principal != ''){ $email_principal = EstandarizarInput($email_principal); }
-	if(isset($GmailUsuario) && $GmailUsuario != ''){       $GmailUsuario    = EstandarizarInput($GmailUsuario); }
-	if(isset($GmailPassword) && $GmailPassword != ''){     $GmailPassword   = EstandarizarInput($GmailPassword); }
-	
+/*******************************************************************************************************************/
+	if(isset($email) && $email!=''){                     $email           = EstandarizarInput($email);}
+	if(isset($texto) && $texto!=''){                     $texto           = EstandarizarInput($texto);}
+	if(isset($email_principal) && $email_principal!=''){ $email_principal = EstandarizarInput($email_principal);}
+	if(isset($GmailUsuario) && $GmailUsuario!=''){       $GmailUsuario    = EstandarizarInput($GmailUsuario);}
+	if(isset($GmailPassword) && $GmailPassword!=''){     $GmailPassword   = EstandarizarInput($GmailPassword);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($email)&&contar_palabras_censuradas($email)!=0){                      $error['email']           = 'error/Edita email, contiene palabras no permitidas'; }	
-	if(isset($texto)&&contar_palabras_censuradas($texto)!=0){                      $error['texto']           = 'error/Edita texto, contiene palabras no permitidas'; }	
-	if(isset($email_principal)&&contar_palabras_censuradas($email_principal)!=0){  $error['email_principal'] = 'error/Edita email principal, contiene palabras no permitidas'; }	
-	if(isset($GmailUsuario)&&contar_palabras_censuradas($GmailUsuario)!=0){        $error['GmailUsuario']    = 'error/Edita Gmail Usuario, contiene palabras no permitidas'; }	
-	if(isset($GmailPassword)&&contar_palabras_censuradas($GmailPassword)!=0){      $error['GmailPassword']   = 'error/Edita Gmail Password, contiene palabras no permitidas'; }	
+/*******************************************************************************************************************/
+	if(isset($email)&&contar_palabras_censuradas($email)!=0){                      $error['email']           = 'error/Edita email, contiene palabras no permitidas';}
+	if(isset($texto)&&contar_palabras_censuradas($texto)!=0){                      $error['texto']           = 'error/Edita texto, contiene palabras no permitidas';}
+	if(isset($email_principal)&&contar_palabras_censuradas($email_principal)!=0){  $error['email_principal'] = 'error/Edita email principal, contiene palabras no permitidas';}
+	if(isset($GmailUsuario)&&contar_palabras_censuradas($GmailUsuario)!=0){        $error['GmailUsuario']    = 'error/Edita Gmail Usuario, contiene palabras no permitidas';}
+	if(isset($GmailPassword)&&contar_palabras_censuradas($GmailPassword)!=0){      $error['GmailPassword']   = 'error/Edita Gmail Password, contiene palabras no permitidas';}
 					
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -78,7 +78,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-		case 'send_mail':	
+		case 'send_mail':
 			//Envio de correo
 			$rmail = tareas_envio_correo($email_principal, DB_EMPRESA_NAME, 
                                          $email, 'Receptor', 
@@ -106,15 +106,15 @@ require_once '0_validate_user_1.php';
 				die;
 			}
 
-		break;	
+		break;
 /*******************************************************************************************************************/
 		case 'send_mail_img':
-			
+
 			//Se agrega el header
 			$Body  = '<img src="https://ci5.googleusercontent.com/proxy/uvRum7CA9Vi7WvNJjqf_y54g4AUlv-IhOZjDs6FB7pxptaprx772Cvql1rIGozXC3JOgoRZm3uleuzyFN1KnFodh6PtcRSeJJGW-pgR6DBg=s0-d-e1-ft#https://parquedelrecuerdo.cl/app/images/portal-email_head.jpg" class="CToWUd a6T" tabindex="0" width="800">';
 			$Body .= '<br/><br/><br/>';
 			$Body .= $texto;
-			
+
 			//Envio de correo
 			$rmail = tareas_envio_correo($email_principal, 'Exilon360', 
                                          $email, 'Receptor', 
@@ -140,14 +140,14 @@ require_once '0_validate_user_1.php';
 
 		break;
 /*******************************************************************************************************************/
-		case 'del_error':	
+		case 'del_error':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del_error']) OR !validaEntero($_GET['del_error']))&&$_GET['del_error']!=''){
 				$indice = simpleDecode($_GET['del_error'], fecha_actual());
@@ -155,37 +155,35 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del_error'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'error_log', 'idErrorLog = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
 		break;
 /*******************************************************************************************************************/
@@ -209,7 +207,7 @@ require_once '0_validate_user_1.php';
 					var_dump($rmail);
 					echo (extension_loaded('openssl')?'SSL loaded':'SSL not loaded')."\n";
 				echo '</pre>';
-				
+
 				//header( 'Location: '.$location.'?error='.$rmail );
 				//die;
 			} else {
@@ -220,14 +218,14 @@ require_once '0_validate_user_1.php';
 
 		break;
 /*******************************************************************************************************************/
-		case 'send_whatsapp':	
+		case 'send_whatsapp':
 		
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//envio mensaje
 				if(isset($fono)&&$fono!=''){
 					$resultado =  WhatsappSendMessage($Token, $InstanceId, $fono, $mensaje);
@@ -250,7 +248,7 @@ require_once '0_validate_user_1.php';
 			}
 		
 			
-		break;			
+		break;
 /*******************************************************************************************************************/
 	}
 ?>

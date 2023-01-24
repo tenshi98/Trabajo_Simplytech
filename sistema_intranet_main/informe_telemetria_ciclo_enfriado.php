@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_telemetria_ciclo_enfriado.php";
 $location = $original;
 /********************************************************************/
@@ -23,22 +23,22 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "telemetria_ciclo_enfriado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''){              $SIS_where .= " AND telemetria_ciclo_enfriado.f_inicio='".$_GET['f_inicio']."'";}
-if(isset($_GET['f_termino']) && $_GET['f_termino'] != ''){            $SIS_where .= " AND telemetria_ciclo_enfriado.f_termino='".$_GET['f_termino']."'";}
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''){              $SIS_where .= " AND telemetria_ciclo_enfriado.h_inicio='".$_GET['h_inicio']."'";}
-if(isset($_GET['h_termino']) && $_GET['h_termino'] != ''){            $SIS_where .= " AND telemetria_ciclo_enfriado.h_termino='".$_GET['h_termino']."'";}
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){      $SIS_where .= " AND telemetria_ciclo_enfriado.idTelemetria='".$_GET['idTelemetria']."'";}
-if(isset($_GET['idGrupo']) && $_GET['idGrupo'] != ''){                $SIS_where .= " AND telemetria_ciclo_enfriado.idGrupo='".$_GET['idGrupo']."'";}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){        $SIS_where .= " AND telemetria_ciclo_enfriado.idCategoria='".$_GET['idCategoria']."'";}
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){          $SIS_where .= " AND telemetria_ciclo_enfriado.idProducto='".$_GET['idProducto']."'";}
-if(isset($_GET['CantidadPallet']) && $_GET['CantidadPallet'] != ''){  $SIS_where .= " AND telemetria_ciclo_enfriado.CantidadPallet LIKE '%".$_GET['CantidadPallet']."%'";}
+if(isset($_GET['f_inicio']) && $_GET['f_inicio']!=''){       $SIS_where .= " AND telemetria_ciclo_enfriado.f_inicio='".$_GET['f_inicio']."'";}
+if(isset($_GET['f_termino']) && $_GET['f_termino']!=''){     $SIS_where .= " AND telemetria_ciclo_enfriado.f_termino='".$_GET['f_termino']."'";}
+if(isset($_GET['h_inicio']) && $_GET['h_inicio']!=''){       $SIS_where .= " AND telemetria_ciclo_enfriado.h_inicio='".$_GET['h_inicio']."'";}
+if(isset($_GET['h_termino']) && $_GET['h_termino']!=''){     $SIS_where .= " AND telemetria_ciclo_enfriado.h_termino='".$_GET['h_termino']."'";}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){      $SIS_where .= " AND telemetria_ciclo_enfriado.idTelemetria='".$_GET['idTelemetria']."'";}
+if(isset($_GET['idGrupo']) && $_GET['idGrupo']!=''){         $SIS_where .= " AND telemetria_ciclo_enfriado.idGrupo='".$_GET['idGrupo']."'";}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria']!=''){ $SIS_where .= " AND telemetria_ciclo_enfriado.idCategoria='".$_GET['idCategoria']."'";}
+if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){   $SIS_where .= " AND telemetria_ciclo_enfriado.idProducto='".$_GET['idProducto']."'";}
+if(isset($_GET['CantidadPallet']) && $_GET['CantidadPallet']!=''){  $SIS_where .= " AND telemetria_ciclo_enfriado.CantidadPallet LIKE '%".EstandarizarInput($_GET['CantidadPallet'])."%'";}
 
 /**********************************************************/
 // Se trae un listado con todos los elementos
@@ -67,8 +67,8 @@ $arrCategorias = array();
 $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_ciclo_enfriado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCategorias');
 
 ?>
-	                       
-<div class="col-sm-12">
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Ciclos de Enfriado</h5>
@@ -88,7 +88,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_ciclo_enfriado'
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrCategorias as $cat) { ?>
 						<tr class="odd">
@@ -102,7 +102,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_ciclo_enfriado'
 							<td><?php echo $cat['CantidadPallet']; ?></td>
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $cat['RazonSocial']; ?></td><?php } ?>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -110,51 +110,51 @@ $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_ciclo_enfriado'
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-			
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  {  
+
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Filtro de busqueda
 $z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=2";//CrossC			
+	$z .= " AND telemetria_listado.idTab=2";//CrossC
 }
 
-?>	
-		
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Filtro de busqueda</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+?>
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Filtro de busqueda</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($idTelemetria)) {    $x1 = $idTelemetria;   }else{$x1 = '';}
-				if(isset($f_inicio)) {        $x2 = $f_inicio;       }else{$x2 = '';}
-				if(isset($h_inicio)) {        $x3 = $h_inicio;       }else{$x3 = '';}
-				if(isset($f_termino)) {       $x4 = $f_termino;      }else{$x4 = '';}
-				if(isset($h_termino)) {       $x5 = $h_termino;      }else{$x5 = '';}
-				if(isset($idCategoria)) {     $x6 = $idCategoria;    }else{$x6 = '';}
-				if(isset($idProducto)) {      $x7 = $idProducto;     }else{$x7 = '';}
-				if(isset($CantidadPallet)) {  $x8 = $CantidadPallet; }else{$x8 = '';}
-				
+				if(isset($idTelemetria)){    $x1 = $idTelemetria;   }else{$x1 = '';}
+				if(isset($f_inicio)){        $x2 = $f_inicio;       }else{$x2 = '';}
+				if(isset($h_inicio)){        $x3 = $h_inicio;       }else{$x3 = '';}
+				if(isset($f_termino)){       $x4 = $f_termino;      }else{$x4 = '';}
+				if(isset($h_termino)){       $x5 = $h_termino;      }else{$x5 = '';}
+				if(isset($idCategoria)){     $x6 = $idCategoria;    }else{$x6 = '';}
+				if(isset($idProducto)){      $x7 = $idProducto;     }else{$x7 = '';}
+				if(isset($CantidadPallet)){  $x8 = $CantidadPallet; }else{$x8 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x1, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
@@ -164,23 +164,22 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 1);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x5, 1, 1);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x6, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_text('CantidadPallet', 'CantidadPallet', $x8, 1);
-				
-				?>        
-	   
-				
+
+				?>
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 <?php } ?>
-      
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "sistema_rrhh_tabla_seguro_cesantia.php";
 $location = $original;
 /********************************************************************/
@@ -20,7 +20,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/z_sistema_rrhh_tabla_seguro_cesantia.php';
@@ -38,8 +38,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tabla Seguro de cesant
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tabla Seguro de cesantia borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -61,21 +61,21 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del seguro de cesantia</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipoContrato)) {   $x1  = $idTipoContrato;     }else{$x1  = $rowdata['idTipoContrato'];}
-				if(isset($Porc_Empleador)) {   $x2  = $Porc_Empleador;     }else{$x2  = $rowdata['Porc_Empleador'];}
-				if(isset($Porc_Trabajador)) {  $x3  = $Porc_Trabajador;    }else{$x3  = $rowdata['Porc_Trabajador'];}
-				
+				if(isset($idTipoContrato)){   $x1  = $idTipoContrato;     }else{$x1  = $rowdata['idTipoContrato'];}
+				if(isset($Porc_Empleador)){   $x2  = $Porc_Empleador;     }else{$x2  = $rowdata['Porc_Empleador'];}
+				if(isset($Porc_Trabajador)){  $x3  = $Porc_Trabajador;    }else{$x3  = $rowdata['Porc_Trabajador'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo de Sueldo','idTipoContrato', $x1, 2, 'idTipoContrato', 'Nombre', 'core_tipos_contrato', 0, '', $dbConn);
@@ -86,20 +86,20 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 $arrAmonestacion = array();
 $query = "SELECT 
@@ -124,12 +124,12 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrAmonestacion,$row );
 }?>
                    
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Seguro Cesantia</h5>
@@ -143,7 +143,7 @@ array_push( $arrAmonestacion,$row );
 						<th>Trabajador</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>				  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrAmonestacion as $amon) { ?>
 					<tr class="odd">
@@ -156,13 +156,13 @@ array_push( $arrAmonestacion,$row );
 							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -23,13 +23,13 @@ require_once '../A1XRXS_sys/xrxs_configuracion/config.php';
 	</head>
 	<body <?php echo $body_style.$direction?>>
 	
-		<div class="col-sm-12 breadcrumb-bar">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 			<?php echo $breadcrumbs?>
-			<?php echo $search ?>	
+			<?php echo $search ?>
 		</div>
-		<div class="clearfix"></div> 
+		<div class="clearfix"></div>
 
-		<div class="col-sm-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="box">
 					<header>
 						<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Archivos</h5>
@@ -71,7 +71,7 @@ require_once '../A1XRXS_sys/xrxs_configuracion/config.php';
 							</div>
 							<div class="modal-body"></div>
 							<div class="modal-footer">
-								<?php if (($options['general']['enable_highlight'])) { ?>
+								<?php if (($options['general']['enable_highlight'])){ ?>
 								<div class="pull-<?php echo $left?>">
 									<button type="button" class="btn <?php echo $btn_highlight ?> highlight hidden"><?php echo _('Apply syntax highlighting')?></button>
 								</div>
@@ -116,6 +116,6 @@ require_once '../A1XRXS_sys/xrxs_configuracion/config.php';
 					<?php echo $kudos?>
 				</div>
 			</footer>
-		<?php } ?> 
+		<?php } ?>
 	</body>
 </html>

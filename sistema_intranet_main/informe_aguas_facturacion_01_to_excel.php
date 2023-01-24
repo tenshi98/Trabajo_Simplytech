@@ -17,14 +17,14 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /*******************************************************/
 $SIS_query = '
@@ -173,31 +173,31 @@ $TotalPagado    = 0;
 //arreglo
 foreach ($arrFacturacion as $fact) { 
 	
-	if($fact['DetalleVisitaCorte']!=0){                  $DetalleVisitaCorte       = $fact['DetalleVisitaCorte'];                                                  }else{$DetalleVisitaCorte       = "";}
-	if($fact['DetalleCorte1Fecha']!='0000-00-00'){       $DetalleCorte1Fecha       = $fact['DetalleCorte1Fecha'];                                                  }else{$DetalleCorte1Fecha       = "";}
-	if($fact['DetalleCorte1Valor']!=0){                  $DetalleCorte1Valor       = $fact['DetalleCorte1Valor'];                                                  }else{$DetalleCorte1Valor       = "";}
-	if($fact['DetalleCorte2Fecha']!='0000-00-00'){       $DetalleCorte2Fecha       = $fact['DetalleCorte2Fecha'];                                                  }else{$DetalleCorte2Fecha       = "";}
-	if($fact['DetalleCorte2Valor']!=0){                  $DetalleCorte2Valor       = $fact['DetalleCorte2Valor'];                                                  }else{$DetalleCorte2Valor       = "";}
-	if($fact['DetalleReposicion1Fecha']!='0000-00-00'){  $DetalleReposicion1Fecha  = $fact['DetalleReposicion1Fecha'];                                             }else{$DetalleReposicion1Fecha  = "";}
-	if($fact['DetalleReposicion1Valor']!=0){             $DetalleReposicion1Valor  = $fact['DetalleReposicion1Valor'];                                             }else{$DetalleReposicion1Valor  = "";}
-	if($fact['DetalleReposicion2Fecha']!='0000-00-00'){  $DetalleReposicion2Fecha  = $fact['DetalleReposicion2Fecha'];                                             }else{$DetalleReposicion2Fecha  = "";}
-	if($fact['DetalleReposicion2Valor']!=0){             $DetalleReposicion2Valor  = $fact['DetalleReposicion2Valor'];                                             }else{$DetalleReposicion2Valor  = "";}
-	if($fact['DetalleInteresDeuda']!=0){                 $DetalleInteresDeuda      = $fact['DetalleInteresDeuda'];                                                 }else{$DetalleInteresDeuda      = "";}
-	if($fact['DetalleSaldoFavor']!=0){                   $DetalleSaldoFavor        = $fact['DetalleSaldoFavor'];                                                   }else{$DetalleSaldoFavor        = "";}
-	if($fact['DetalleSaldoAnterior']!=0){                $DetalleSaldoAnterior     = $fact['DetalleSaldoAnterior'];                                                }else{$DetalleSaldoAnterior     = "";}
-	if($fact['DetalleOtrosCargos1Fecha']!='0000-00-00'){ $DetalleOtrosCargos1      = $fact['DetalleOtrosCargos1Texto'].' ('.$fact['DetalleOtrosCargos1Fecha'].')'; }else{$DetalleOtrosCargos1      = "";}
-	if($fact['DetalleOtrosCargos2Fecha']!='0000-00-00'){ $DetalleOtrosCargos2      = $fact['DetalleOtrosCargos2Texto'].' ('.$fact['DetalleOtrosCargos2Fecha'].')'; }else{$DetalleOtrosCargos2      = "";}
-	if($fact['DetalleOtrosCargos3Fecha']!='0000-00-00'){ $DetalleOtrosCargos3      = $fact['DetalleOtrosCargos3Texto'].' ('.$fact['DetalleOtrosCargos3Fecha'].')'; }else{$DetalleOtrosCargos3      = "";}
-	if($fact['DetalleOtrosCargos4Fecha']!='0000-00-00'){ $DetalleOtrosCargos4      = $fact['DetalleOtrosCargos4Texto'].' ('.$fact['DetalleOtrosCargos4Fecha'].')'; }else{$DetalleOtrosCargos4      = "";}
-	if($fact['DetalleOtrosCargos5Fecha']!='0000-00-00'){ $DetalleOtrosCargos5      = $fact['DetalleOtrosCargos5Texto'].' ('.$fact['DetalleOtrosCargos5Fecha'].')'; }else{$DetalleOtrosCargos5      = "";}
-	if($fact['DetalleOtrosCargos1Valor']!=0){            $DetalleOtrosCargos1Valor = $fact['DetalleOtrosCargos1Valor'];                                            }else{$DetalleOtrosCargos1Valor = "";}
-	if($fact['DetalleOtrosCargos2Valor']!=0){            $DetalleOtrosCargos2Valor = $fact['DetalleOtrosCargos2Valor'];                                            }else{$DetalleOtrosCargos2Valor = "";}
-	if($fact['DetalleOtrosCargos3Valor']!=0){            $DetalleOtrosCargos3Valor = $fact['DetalleOtrosCargos3Valor'];                                            }else{$DetalleOtrosCargos3Valor = "";}
-	if($fact['DetalleOtrosCargos4Valor']!=0){            $DetalleOtrosCargos4Valor = $fact['DetalleOtrosCargos4Valor'];                                            }else{$DetalleOtrosCargos4Valor = "";}
-	if($fact['DetalleOtrosCargos5Valor']!=0){            $DetalleOtrosCargos5Valor = $fact['DetalleOtrosCargos5Valor'];                                            }else{$DetalleOtrosCargos5Valor = "";}
-	if($fact['fechaPago']!='0000-00-00'){                $fechaPago                = $fact['fechaPago'];                                                           }else{$fechaPago                = "";}
-	if($fact['montoPago']!=0){                           $montoPago                = $fact['montoPago'];                                                           }else{$montoPago                = "";}
-	if($fact['SII_NDoc']!=0){                            $SII_NDoc                 = $fact['SII_NDoc'];                                                            }else{$SII_NDoc                 = "";}
+	if($fact['DetalleVisitaCorte']!=0){              $DetalleVisitaCorte       = $fact['DetalleVisitaCorte'];                                                  }else{$DetalleVisitaCorte       = "";}
+	if($fact['DetalleCorte1Fecha']!='0000-00-00'){      $DetalleCorte1Fecha       = $fact['DetalleCorte1Fecha'];                                                  }else{$DetalleCorte1Fecha       = "";}
+	if($fact['DetalleCorte1Valor']!=0){              $DetalleCorte1Valor       = $fact['DetalleCorte1Valor'];                                                  }else{$DetalleCorte1Valor       = "";}
+	if($fact['DetalleCorte2Fecha']!='0000-00-00'){      $DetalleCorte2Fecha       = $fact['DetalleCorte2Fecha'];                                                  }else{$DetalleCorte2Fecha       = "";}
+	if($fact['DetalleCorte2Valor']!=0){              $DetalleCorte2Valor       = $fact['DetalleCorte2Valor'];                                                  }else{$DetalleCorte2Valor       = "";}
+	if($fact['DetalleReposicion1Fecha']!='0000-00-00'){ $DetalleReposicion1Fecha  = $fact['DetalleReposicion1Fecha'];                                             }else{$DetalleReposicion1Fecha  = "";}
+	if($fact['DetalleReposicion1Valor']!=0){         $DetalleReposicion1Valor  = $fact['DetalleReposicion1Valor'];                                             }else{$DetalleReposicion1Valor  = "";}
+	if($fact['DetalleReposicion2Fecha']!='0000-00-00'){ $DetalleReposicion2Fecha  = $fact['DetalleReposicion2Fecha'];                                             }else{$DetalleReposicion2Fecha  = "";}
+	if($fact['DetalleReposicion2Valor']!=0){         $DetalleReposicion2Valor  = $fact['DetalleReposicion2Valor'];                                             }else{$DetalleReposicion2Valor  = "";}
+	if($fact['DetalleInteresDeuda']!=0){             $DetalleInteresDeuda      = $fact['DetalleInteresDeuda'];                                                 }else{$DetalleInteresDeuda      = "";}
+	if($fact['DetalleSaldoFavor']!=0){               $DetalleSaldoFavor        = $fact['DetalleSaldoFavor'];                                                   }else{$DetalleSaldoFavor        = "";}
+	if($fact['DetalleSaldoAnterior']!=0){            $DetalleSaldoAnterior     = $fact['DetalleSaldoAnterior'];                                                }else{$DetalleSaldoAnterior     = "";}
+	if($fact['DetalleOtrosCargos1Fecha']!='0000-00-00'){$DetalleOtrosCargos1      = $fact['DetalleOtrosCargos1Texto'].' ('.$fact['DetalleOtrosCargos1Fecha'].')';}else{$DetalleOtrosCargos1      = "";}
+	if($fact['DetalleOtrosCargos2Fecha']!='0000-00-00'){$DetalleOtrosCargos2      = $fact['DetalleOtrosCargos2Texto'].' ('.$fact['DetalleOtrosCargos2Fecha'].')';}else{$DetalleOtrosCargos2      = "";}
+	if($fact['DetalleOtrosCargos3Fecha']!='0000-00-00'){$DetalleOtrosCargos3      = $fact['DetalleOtrosCargos3Texto'].' ('.$fact['DetalleOtrosCargos3Fecha'].')';}else{$DetalleOtrosCargos3      = "";}
+	if($fact['DetalleOtrosCargos4Fecha']!='0000-00-00'){$DetalleOtrosCargos4      = $fact['DetalleOtrosCargos4Texto'].' ('.$fact['DetalleOtrosCargos4Fecha'].')';}else{$DetalleOtrosCargos4      = "";}
+	if($fact['DetalleOtrosCargos5Fecha']!='0000-00-00'){$DetalleOtrosCargos5      = $fact['DetalleOtrosCargos5Texto'].' ('.$fact['DetalleOtrosCargos5Fecha'].')';}else{$DetalleOtrosCargos5      = "";}
+	if($fact['DetalleOtrosCargos1Valor']!=0){        $DetalleOtrosCargos1Valor = $fact['DetalleOtrosCargos1Valor'];                                            }else{$DetalleOtrosCargos1Valor = "";}
+	if($fact['DetalleOtrosCargos2Valor']!=0){        $DetalleOtrosCargos2Valor = $fact['DetalleOtrosCargos2Valor'];                                            }else{$DetalleOtrosCargos2Valor = "";}
+	if($fact['DetalleOtrosCargos3Valor']!=0){        $DetalleOtrosCargos3Valor = $fact['DetalleOtrosCargos3Valor'];                                            }else{$DetalleOtrosCargos3Valor = "";}
+	if($fact['DetalleOtrosCargos4Valor']!=0){        $DetalleOtrosCargos4Valor = $fact['DetalleOtrosCargos4Valor'];                                            }else{$DetalleOtrosCargos4Valor = "";}
+	if($fact['DetalleOtrosCargos5Valor']!=0){        $DetalleOtrosCargos5Valor = $fact['DetalleOtrosCargos5Valor'];                                            }else{$DetalleOtrosCargos5Valor = "";}
+	if($fact['fechaPago']!='0000-00-00'){               $fechaPago                = $fact['fechaPago'];                                                           }else{$fechaPago                = "";}
+	if($fact['montoPago']!=0){                       $montoPago                = $fact['montoPago'];                                                           }else{$montoPago                = "";}
+	if($fact['SII_NDoc']!=0){                        $SII_NDoc                 = $fact['SII_NDoc'];                                                            }else{$SII_NDoc                 = "";}
 	
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($fact['ClienteNombre']))

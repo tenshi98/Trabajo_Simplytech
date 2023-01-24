@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -27,9 +27,9 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 $SIS_where = "usuarios_accesos.idAcceso>0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){            $SIS_where .= " AND usuarios_accesos.idUsuario=".$_GET['idUsuario'];}
-if(isset($_GET['Rango_Inicio']) && $_GET['Rango_Inicio'] != ''&&isset($_GET['Rango_Termino']) && $_GET['Rango_Termino'] != ''){  
-	$SIS_where .= " AND usuarios_accesos.Fecha BETWEEN '".$_GET['Rango_Inicio']."' AND '".$_GET['Rango_Termino']."'" ;
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){     $SIS_where .= " AND usuarios_accesos.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['Rango_Inicio']) && $_GET['Rango_Inicio'] != ''&&isset($_GET['Rango_Termino']) && $_GET['Rango_Termino']!=''){  
+	$SIS_where .= " AND usuarios_accesos.Fecha BETWEEN '".$_GET['Rango_Inicio']."' AND '".$_GET['Rango_Termino']."'";
 }
 
 /*******************************************************/
@@ -81,7 +81,7 @@ foreach ($arrAccesos as $acceso) {
 				->setCellValue('D'.$nn, $acceso['Hora'])
 				->setCellValue('E'.$nn, $acceso['IP_Client'])
 				->setCellValue('F'.$nn, DeSanitizar($acceso['Agent_Transp']));
-	$nn++;           
+	$nn++;
    
 } 
 

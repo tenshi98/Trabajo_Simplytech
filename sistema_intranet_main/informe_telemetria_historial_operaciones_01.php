@@ -10,13 +10,13 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_telemetria_historial_operaciones_01.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
 $location .= "?submit_filter=Filtrar";
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){      $location .= "&idTelemetria=".$_GET['idTelemetria'];      $search .= "&idTelemetria=".$_GET['idTelemetria'];}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){      $location .= "&idTelemetria=".$_GET['idTelemetria'];      $search .= "&idTelemetria=".$_GET['idTelemetria'];}
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
 	$search .="&fecha_desde=".$_GET['fecha_desde'];
 	$search .="&fecha_hasta=".$_GET['fecha_hasta'];
@@ -30,8 +30,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTabla!=0";
@@ -69,7 +69,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$SIS_where.=" AND Sensor_".$rowdata['SensorActivacionID']." = '".$rowdata['SensorActivacionValor']."'";
 	}else{
 		//Se escribe el dato
-		echo '<div class="col-sm-12">';
+		echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 			$Alert_Text  = 'El sensor de activacion no esta configurado, por lo tanto se estan mostrando todas las mediciones.';
 			alert_post_data(2,1,1, $Alert_Text);
 		echo '</div>';
@@ -160,13 +160,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 
 
-	<div class="col-sm-12">
-		<div class="box">	
-			<header>		
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Historial Operaciones de <?php echo $rowdata['Nombre']; ?></h5>
 			</header>
 			<div class="row">
-				<div class="col-sm-6">  
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">  
 					<div style="height: 550px;">
 						<div class="giro btn-group btn-group-xs" role="group" aria-label="...">
 							<button type="button" id="giro_left"  class="btn btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
@@ -297,8 +297,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						</div>
 					</div>
 					<div class="clearfix"></div>
-				</div> 
-				<div class="col-sm-6">
+				</div>
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="table-wrapper-scroll-y my-custom-scrollbar">
 						<div class="table-responsive">
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -328,8 +328,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										}
 										 ?>
 										<tr class="odd <?php echo $data_x; ?>"  <?php echo $data_s; ?> >
-											<td><?php echo $med['FechaSistema']; ?></td>	
-											<td><?php echo $med['HoraSistema']; ?></td>		
+											<td><?php echo $med['FechaSistema']; ?></td>
+											<td><?php echo $med['HoraSistema']; ?></td>
 											<td>
 												<?php
 												foreach ($arrOperaciones as $oper) {
@@ -343,7 +343,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												?>
 											</td>
 										</tr>
-									<?php } ?>                    
+									<?php } ?>
 								</tbody>
 							</table>
 						</div>
@@ -464,18 +464,18 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //filtros
 $w  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $w .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 } 
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
@@ -486,27 +486,27 @@ $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesit
 alert_post_data(2,1,1, $Alert_Text);
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTelemetria)) {    $x1  = $idTelemetria;  }else{$x1  = '';}
-				if(isset($fecha_desde)) {     $x2  = $fecha_desde;   }else{$x2  = '';}
-				if(isset($h_inicio)) {        $x3  = $h_inicio;      }else{$x3  = '';}
-				if(isset($fecha_hasta)) {     $x4  = $fecha_hasta;   }else{$x4  = '';}
-				if(isset($h_termino)) {       $x5  = $h_termino;     }else{$x5  = '';}
-				
+				if(isset($idTelemetria)){    $x1  = $idTelemetria;  }else{$x1  = '';}
+				if(isset($fecha_desde)){     $x2  = $fecha_desde;   }else{$x2  = '';}
+				if(isset($h_inicio)){        $x3  = $h_inicio;      }else{$x3  = '';}
+				if(isset($fecha_hasta)){     $x4  = $fecha_hasta;   }else{$x4  = '';}
+				if(isset($h_termino)){       $x5  = $h_termino;     }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
@@ -516,14 +516,14 @@ alert_post_data(2,1,1, $Alert_Text);
 				$Form_Inputs->form_date('Fecha Hasta','fecha_hasta', $x4, 2);
 				$Form_Inputs->form_time('Hora Hasta','h_termino', $x5, 1, 1);
 						
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

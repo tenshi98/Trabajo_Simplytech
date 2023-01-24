@@ -2,72 +2,72 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-245).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Formulario para licitaciones
-	if ( !empty($_POST['idLicitacion']) )        $idLicitacion         = $_POST['idLicitacion'];
-	if ( !empty($_POST['idSistema']) )           $idSistema            = $_POST['idSistema'];
-	if ( !empty($_POST['Codigo']) )              $Codigo               = $_POST['Codigo'];
-	if ( !empty($_POST['Nombre']) )              $Nombre               = $_POST['Nombre'];
-	if ( !empty($_POST['FechaInicio']) )         $FechaInicio          = $_POST['FechaInicio'];
-	if ( !empty($_POST['FechaTermino']) )        $FechaTermino         = $_POST['FechaTermino'];
-	if ( isset($_POST['Presupuesto']) )          $Presupuesto          = $_POST['Presupuesto'];
-	if ( !empty($_POST['idEstado']) )            $idEstado             = $_POST['idEstado'];
-	if ( !empty($_POST['idBodegaProd']) )        $idBodegaProd         = $_POST['idBodegaProd'];
-	if ( !empty($_POST['idBodegaIns']) )         $idBodegaIns          = $_POST['idBodegaIns'];
-	if ( !empty($_POST['idAprobado']) )          $idAprobado           = $_POST['idAprobado'];
-	if ( !empty($_POST['idCliente']) )           $idCliente            = $_POST['idCliente'];
-	if ( !empty($_POST['idTipoLicitacion']) )    $idTipoLicitacion     = $_POST['idTipoLicitacion'];
-	if ( isset($_POST['ValorMensual']) )         $ValorMensual         = $_POST['ValorMensual'];
-	if ( !empty($_POST['idOpcionItem']) )        $idOpcionItem         = $_POST['idOpcionItem'];
-	
-	if ( !empty($_POST['idUtilizable']) )        $idUtilizable         = $_POST['idUtilizable'];
-	if ( isset($_POST['idFrecuencia']) )         $idFrecuencia         = $_POST['idFrecuencia'];
-	if ( isset($_POST['Cantidad']) )             $Cantidad             = $_POST['Cantidad'];
-	if ( isset($_POST['Valor']) )                $Valor                = $_POST['Valor'];
-	if ( isset($_POST['ValorTotal']) )           $ValorTotal           = $_POST['ValorTotal'];
-	if ( !empty($_POST['TiempoProgramado']) )    $TiempoProgramado     = $_POST['TiempoProgramado'];
-	if ( !empty($_POST['idTrabajo']) )           $idTrabajo            = $_POST['idTrabajo'];
-	
-	if ( !empty($_POST['lvl']) )                 $lvl                  = $_POST['lvl'];
+	if (!empty($_POST['idLicitacion']))        $idLicitacion         = $_POST['idLicitacion'];
+	if (!empty($_POST['idSistema']))           $idSistema            = $_POST['idSistema'];
+	if (!empty($_POST['Codigo']))              $Codigo               = $_POST['Codigo'];
+	if (!empty($_POST['Nombre']))              $Nombre               = $_POST['Nombre'];
+	if (!empty($_POST['FechaInicio']))         $FechaInicio          = $_POST['FechaInicio'];
+	if (!empty($_POST['FechaTermino']))        $FechaTermino         = $_POST['FechaTermino'];
+	if ( isset($_POST['Presupuesto']))          $Presupuesto          = $_POST['Presupuesto'];
+	if (!empty($_POST['idEstado']))            $idEstado             = $_POST['idEstado'];
+	if (!empty($_POST['idBodegaProd']))        $idBodegaProd         = $_POST['idBodegaProd'];
+	if (!empty($_POST['idBodegaIns']))         $idBodegaIns          = $_POST['idBodegaIns'];
+	if (!empty($_POST['idAprobado']))          $idAprobado           = $_POST['idAprobado'];
+	if (!empty($_POST['idCliente']))           $idCliente            = $_POST['idCliente'];
+	if (!empty($_POST['idTipoLicitacion']))    $idTipoLicitacion     = $_POST['idTipoLicitacion'];
+	if ( isset($_POST['ValorMensual']))         $ValorMensual         = $_POST['ValorMensual'];
+	if (!empty($_POST['idOpcionItem']))        $idOpcionItem         = $_POST['idOpcionItem'];
+
+	if (!empty($_POST['idUtilizable']))        $idUtilizable         = $_POST['idUtilizable'];
+	if ( isset($_POST['idFrecuencia']))         $idFrecuencia         = $_POST['idFrecuencia'];
+	if ( isset($_POST['Cantidad']))             $Cantidad             = $_POST['Cantidad'];
+	if ( isset($_POST['Valor']))                $Valor                = $_POST['Valor'];
+	if ( isset($_POST['ValorTotal']))           $ValorTotal           = $_POST['ValorTotal'];
+	if (!empty($_POST['TiempoProgramado']))    $TiempoProgramado     = $_POST['TiempoProgramado'];
+	if (!empty($_POST['idTrabajo']))           $idTrabajo            = $_POST['idTrabajo'];
+
+	if (!empty($_POST['lvl']))                 $lvl                  = $_POST['lvl'];
 	
 	//formulariopara el itemizado
 	//Traspaso de valores input a variables
 	$idLevel = array();
-	if ( !empty($_POST['idLevel_1']) )      $idLevel[1]      = $_POST['idLevel_1'];
-	if ( !empty($_POST['idLevel_2']) )      $idLevel[2]      = $_POST['idLevel_2'];
-	if ( !empty($_POST['idLevel_3']) )      $idLevel[3]      = $_POST['idLevel_3'];
-	if ( !empty($_POST['idLevel_4']) )      $idLevel[4]      = $_POST['idLevel_4'];
-	if ( !empty($_POST['idLevel_5']) )      $idLevel[5]      = $_POST['idLevel_5'];
-	if ( !empty($_POST['idLevel_6']) )      $idLevel[6]      = $_POST['idLevel_6'];
-	if ( !empty($_POST['idLevel_7']) )      $idLevel[7]      = $_POST['idLevel_7'];
-	if ( !empty($_POST['idLevel_8']) )      $idLevel[8]      = $_POST['idLevel_8'];
-	if ( !empty($_POST['idLevel_9']) )      $idLevel[9]      = $_POST['idLevel_9'];
-	if ( !empty($_POST['idLevel_10']) )     $idLevel[10]     = $_POST['idLevel_10'];
-	if ( !empty($_POST['idLevel_11']) )     $idLevel[11]     = $_POST['idLevel_11'];
-	if ( !empty($_POST['idLevel_12']) )     $idLevel[12]     = $_POST['idLevel_12'];
-	if ( !empty($_POST['idLevel_13']) )     $idLevel[13]     = $_POST['idLevel_13'];
-	if ( !empty($_POST['idLevel_14']) )     $idLevel[14]     = $_POST['idLevel_14'];
-	if ( !empty($_POST['idLevel_15']) )     $idLevel[15]     = $_POST['idLevel_15'];
-	if ( !empty($_POST['idLevel_16']) )     $idLevel[16]     = $_POST['idLevel_16'];
-	if ( !empty($_POST['idLevel_17']) )     $idLevel[17]     = $_POST['idLevel_17'];
-	if ( !empty($_POST['idLevel_18']) )     $idLevel[18]     = $_POST['idLevel_18'];
-	if ( !empty($_POST['idLevel_19']) )     $idLevel[19]     = $_POST['idLevel_19'];
-	if ( !empty($_POST['idLevel_20']) )     $idLevel[20]     = $_POST['idLevel_20'];
-	if ( !empty($_POST['idLevel_21']) )     $idLevel[21]     = $_POST['idLevel_21'];
-	if ( !empty($_POST['idLevel_22']) )     $idLevel[22]     = $_POST['idLevel_22'];
-	if ( !empty($_POST['idLevel_23']) )     $idLevel[23]     = $_POST['idLevel_23'];
-	if ( !empty($_POST['idLevel_24']) )     $idLevel[24]     = $_POST['idLevel_24'];
-	if ( !empty($_POST['idLevel_25']) )     $idLevel[25]     = $_POST['idLevel_25'];
+	if (!empty($_POST['idLevel_1']))      $idLevel[1]      = $_POST['idLevel_1'];
+	if (!empty($_POST['idLevel_2']))      $idLevel[2]      = $_POST['idLevel_2'];
+	if (!empty($_POST['idLevel_3']))      $idLevel[3]      = $_POST['idLevel_3'];
+	if (!empty($_POST['idLevel_4']))      $idLevel[4]      = $_POST['idLevel_4'];
+	if (!empty($_POST['idLevel_5']))      $idLevel[5]      = $_POST['idLevel_5'];
+	if (!empty($_POST['idLevel_6']))      $idLevel[6]      = $_POST['idLevel_6'];
+	if (!empty($_POST['idLevel_7']))      $idLevel[7]      = $_POST['idLevel_7'];
+	if (!empty($_POST['idLevel_8']))      $idLevel[8]      = $_POST['idLevel_8'];
+	if (!empty($_POST['idLevel_9']))      $idLevel[9]      = $_POST['idLevel_9'];
+	if (!empty($_POST['idLevel_10']))     $idLevel[10]     = $_POST['idLevel_10'];
+	if (!empty($_POST['idLevel_11']))     $idLevel[11]     = $_POST['idLevel_11'];
+	if (!empty($_POST['idLevel_12']))     $idLevel[12]     = $_POST['idLevel_12'];
+	if (!empty($_POST['idLevel_13']))     $idLevel[13]     = $_POST['idLevel_13'];
+	if (!empty($_POST['idLevel_14']))     $idLevel[14]     = $_POST['idLevel_14'];
+	if (!empty($_POST['idLevel_15']))     $idLevel[15]     = $_POST['idLevel_15'];
+	if (!empty($_POST['idLevel_16']))     $idLevel[16]     = $_POST['idLevel_16'];
+	if (!empty($_POST['idLevel_17']))     $idLevel[17]     = $_POST['idLevel_17'];
+	if (!empty($_POST['idLevel_18']))     $idLevel[18]     = $_POST['idLevel_18'];
+	if (!empty($_POST['idLevel_19']))     $idLevel[19]     = $_POST['idLevel_19'];
+	if (!empty($_POST['idLevel_20']))     $idLevel[20]     = $_POST['idLevel_20'];
+	if (!empty($_POST['idLevel_21']))     $idLevel[21]     = $_POST['idLevel_21'];
+	if (!empty($_POST['idLevel_22']))     $idLevel[22]     = $_POST['idLevel_22'];
+	if (!empty($_POST['idLevel_23']))     $idLevel[23]     = $_POST['idLevel_23'];
+	if (!empty($_POST['idLevel_24']))     $idLevel[24]     = $_POST['idLevel_24'];
+	if (!empty($_POST['idLevel_25']))     $idLevel[25]     = $_POST['idLevel_25'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -95,7 +95,7 @@ require_once '0_validate_user_1.php';
 			case 'idTipoLicitacion':    if(empty($idTipoLicitacion)){     $error['idTipoLicitacion']      = 'error/No ha seleccionado el tipo de contrato';}break;
 			case 'ValorMensual':        if(!isset($ValorMensual)){        $error['ValorMensual']          = 'error/No ha ingresado el valor mensual';}break;
 			case 'idOpcionItem':        if(empty($idOpcionItem)){         $error['idOpcionItem']          = 'error/No ha seleccionado la opcion de mostrar itemizado';}break;
-			
+
 			case 'idUtilizable':        if(empty($idUtilizable)){         $error['idUtilizable']          = 'error/No ha seleccionado si es utilizable';}break;
 			case 'idFrecuencia':        if(!isset($idFrecuencia)){        $error['idFrecuencia']          = 'error/No ha seleccionado la unidad de medida';}break;
 			case 'Cantidad':            if(!isset($Cantidad)){            $error['Cantidad']              = 'error/No ha ingresado la cantidad';}break;
@@ -104,7 +104,7 @@ require_once '0_validate_user_1.php';
 			case 'TiempoProgramado':    if(empty($TiempoProgramado)){     $error['TiempoProgramado']      = 'error/No ha ingresado el tiempo programado';}break;
 			case 'idTrabajo':           if(empty($idTrabajo)){            $error['idTrabajo']             = 'error/No ha seleccionado el tipo de trabajo';}break;
 			case 'lvl':                 if(empty($lvl)){                  $error['lvl']                   = 'error/No ha ingresado el nivel';}break;
-			
+
 			case 'idLevel_1':           if(empty($idLevel[1])){           $error['idLevel_1']             = 'error/No ha ingresado el idLevel_1';}break;
 			case 'idLevel_2':           if(empty($idLevel[2])){           $error['idLevel_2']             = 'error/No ha ingresado el idLevel_2';}break;
 			case 'idLevel_3':           if(empty($idLevel[3])){           $error['idLevel_3']             = 'error/No ha ingresado el idLevel_3';}break;
@@ -135,27 +135,27 @@ require_once '0_validate_user_1.php';
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Codigo) && $Codigo != ''){ $Codigo = EstandarizarInput($Codigo); }
-	if(isset($Nombre) && $Nombre != ''){ $Nombre = EstandarizarInput($Nombre); }
-	
+/*******************************************************************************************************************/
+	if(isset($Codigo) && $Codigo!=''){ $Codigo = EstandarizarInput($Codigo);}
+	if(isset($Nombre) && $Nombre!=''){$Nombre = EstandarizarInput($Nombre);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Codigo)&&contar_palabras_censuradas($Codigo)!=0){  $error['Codigo'] = 'error/Edita Codigo, contiene palabras no permitidas'; }	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Codigo)&&contar_palabras_censuradas($Codigo)!=0){  $error['Codigo'] = 'error/Edita Codigo, contiene palabras no permitidas';}
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre,contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
-		case 'createBasicData':	
-			
+/*******************************************************************************************************************/
+		case 'createBasicData':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -166,35 +166,35 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre de la licitacion ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                $SIS_data  = "'".$idSistema."'" ;         }else{$SIS_data  = "''";}
-				if(isset($Codigo) && $Codigo != ''){                      $SIS_data .= ",'".$Codigo."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                      $SIS_data .= ",'".$Nombre."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($FechaInicio) && $FechaInicio != ''){            $SIS_data .= ",'".$FechaInicio."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($FechaTermino) && $FechaTermino != ''){          $SIS_data .= ",'".$FechaTermino."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($Presupuesto) && $Presupuesto != ''){            $SIS_data .= ",'".$Presupuesto."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){                  $SIS_data .= ",'".$idEstado."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($idBodegaProd) && $idBodegaProd != ''){          $SIS_data .= ",'".$idBodegaProd."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($idBodegaIns) && $idBodegaIns != ''){            $SIS_data .= ",'".$idBodegaIns."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($idAprobado) && $idAprobado != ''){              $SIS_data .= ",'".$idAprobado."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($idCliente) && $idCliente != ''){                $SIS_data .= ",'".$idCliente."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($idTipoLicitacion) && $idTipoLicitacion != ''){  $SIS_data .= ",'".$idTipoLicitacion."'" ; }else{$SIS_data .= ",''";}
-				if(isset($ValorMensual) && $ValorMensual != ''){          $SIS_data .= ",'".$ValorMensual."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($idOpcionItem) && $idOpcionItem != ''){          $SIS_data .= ",'".$idOpcionItem."'" ;     }else{$SIS_data .= ",''";}
-				
+				if(isset($idSistema) && $idSistema!=''){                $SIS_data  = "'".$idSistema."'";         }else{$SIS_data  = "''";}
+				if(isset($Codigo) && $Codigo!=''){                      $SIS_data .= ",'".$Codigo."'";           }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                     $SIS_data .= ",'".$Nombre."'";           }else{$SIS_data .= ",''";}
+				if(isset($FechaInicio) && $FechaInicio!=''){            $SIS_data .= ",'".$FechaInicio."'";      }else{$SIS_data .= ",''";}
+				if(isset($FechaTermino) && $FechaTermino!=''){          $SIS_data .= ",'".$FechaTermino."'";     }else{$SIS_data .= ",''";}
+				if(isset($Presupuesto) && $Presupuesto!=''){            $SIS_data .= ",'".$Presupuesto."'";      }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                 $SIS_data .= ",'".$idEstado."'";         }else{$SIS_data .= ",''";}
+				if(isset($idBodegaProd) && $idBodegaProd!=''){          $SIS_data .= ",'".$idBodegaProd."'";     }else{$SIS_data .= ",''";}
+				if(isset($idBodegaIns) && $idBodegaIns!=''){            $SIS_data .= ",'".$idBodegaIns."'";      }else{$SIS_data .= ",''";}
+				if(isset($idAprobado) && $idAprobado!=''){              $SIS_data .= ",'".$idAprobado."'";       }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente!=''){                $SIS_data .= ",'".$idCliente."'";        }else{$SIS_data .= ",''";}
+				if(isset($idTipoLicitacion) && $idTipoLicitacion!=''){  $SIS_data .= ",'".$idTipoLicitacion."'"; }else{$SIS_data .= ",''";}
+				if(isset($ValorMensual) && $ValorMensual!=''){          $SIS_data .= ",'".$ValorMensual."'";     }else{$SIS_data .= ",''";}
+				if(isset($idOpcionItem) && $idOpcionItem!=''){          $SIS_data .= ",'".$idOpcionItem."'";     }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto, idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente, idTipoLicitacion, ValorMensual, idOpcionItem';
+				$SIS_columns = 'idSistema, Codigo, Nombre,FechaInicio, FechaTermino, Presupuesto, idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente, idTipoLicitacion, ValorMensual, idOpcionItem';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guarda en historial la accion
-					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
+					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
 					$SIS_data .= ",'".fecha_actual()."'";
 					$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion del documento'";                               //Observacion
@@ -208,15 +208,14 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-		
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'updateBasicData':	
-			
+/*******************************************************************************************************************/
+		case 'updateBasicData':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -227,45 +226,45 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre de la licitacion ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
-				$rowdata = db_select_data (false, 'Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns, idSistema, idAprobado, idCliente, idEstado, idTipoLicitacion, ValorMensual, idOpcionItem', 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata = db_select_data (false, 'Codigo, Nombre,FechaInicio, FechaTermino, Presupuesto, idBodegaProd, idBodegaIns, idSistema, idAprobado, idCliente, idEstado, idTipoLicitacion, ValorMensual, idOpcionItem', 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
-				$SIS_data = "idLicitacion='".$idLicitacion."'" ;
-				if(isset($idSistema) && $idSistema != ''){                $SIS_data .= ",idSistema='".$idSistema."'" ;}
-				if(isset($Codigo) && $Codigo != ''){                      $SIS_data .= ",Codigo='".$Codigo."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                      $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($FechaInicio) && $FechaInicio != ''){            $SIS_data .= ",FechaInicio='".$FechaInicio."'" ;}
-				if(isset($FechaTermino) && $FechaTermino != ''){          $SIS_data .= ",FechaTermino='".$FechaTermino."'" ;}
-				if(isset($Presupuesto) && $Presupuesto != ''){            $SIS_data .= ",Presupuesto='".$Presupuesto."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                  $SIS_data .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idBodegaProd) && $idBodegaProd != ''){          $SIS_data .= ",idBodegaProd='".$idBodegaProd."'" ;}
-				if(isset($idBodegaIns) && $idBodegaIns != ''){            $SIS_data .= ",idBodegaIns='".$idBodegaIns."'" ;}
-				if(isset($idAprobado) && $idAprobado != ''){              $SIS_data .= ",idAprobado='".$idAprobado."'" ;}
-				if(isset($idCliente) && $idCliente != ''){                $SIS_data .= ",idCliente='".$idCliente."'" ;}
-				if(isset($idTipoLicitacion) && $idTipoLicitacion != ''){  $SIS_data .= ",idTipoLicitacion='".$idTipoLicitacion."'" ;}
-				if(isset($ValorMensual) && $ValorMensual != ''){          $SIS_data .= ",ValorMensual='".$ValorMensual."'" ;}
-				if(isset($idOpcionItem) && $idOpcionItem != ''){          $SIS_data .= ",idOpcionItem='".$idOpcionItem."'" ;}
-				
+				$SIS_data = "idLicitacion='".$idLicitacion."'";
+				if(isset($idSistema) && $idSistema!=''){                $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($Codigo) && $Codigo!=''){                      $SIS_data .= ",Codigo='".$Codigo."'";}
+				if(isset($Nombre) && $Nombre!=''){                     $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($FechaInicio) && $FechaInicio!=''){            $SIS_data .= ",FechaInicio='".$FechaInicio."'";}
+				if(isset($FechaTermino) && $FechaTermino!=''){          $SIS_data .= ",FechaTermino='".$FechaTermino."'";}
+				if(isset($Presupuesto) && $Presupuesto!=''){            $SIS_data .= ",Presupuesto='".$Presupuesto."'";}
+				if(isset($idEstado) && $idEstado!=''){                 $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idBodegaProd) && $idBodegaProd!=''){          $SIS_data .= ",idBodegaProd='".$idBodegaProd."'";}
+				if(isset($idBodegaIns) && $idBodegaIns!=''){            $SIS_data .= ",idBodegaIns='".$idBodegaIns."'";}
+				if(isset($idAprobado) && $idAprobado!=''){              $SIS_data .= ",idAprobado='".$idAprobado."'";}
+				if(isset($idCliente) && $idCliente!=''){                $SIS_data .= ",idCliente='".$idCliente."'";}
+				if(isset($idTipoLicitacion) && $idTipoLicitacion!=''){  $SIS_data .= ",idTipoLicitacion='".$idTipoLicitacion."'";}
+				if(isset($ValorMensual) && $ValorMensual!=''){          $SIS_data .= ",ValorMensual='".$ValorMensual."'";}
+				if(isset($idOpcionItem) && $idOpcionItem!=''){          $SIS_data .= ",idOpcionItem='".$idOpcionItem."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					/*****************************************************/
 					//se crean el mensaje
 					$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
-					
+
 					if(isset($idSistema) && $idSistema != $rowdata['idSistema']){                      $hist_Observacion .= '-Se cambia el sistema<br/>';}
 					if(isset($Codigo) && $Codigo != $rowdata['Codigo']){                               $hist_Observacion .= '-Se cambia el Codigo, de <strong>'.$rowdata['Codigo'].'</strong> a <strong>'.$Codigo.'</strong><br/>';}
-					if(isset($Nombre) && $Nombre != $rowdata['Nombre']){                               $hist_Observacion .= '-Se cambia el Nombre, de <strong>'.$rowdata['Nombre'].'</strong> a <strong>'.$Nombre.'</strong><br/>';}
+					if(isset($Nombre) && $Nombre != $rowdata['Nombre']){                               $hist_Observacion .= '-Se cambia el Nombre,de <strong>'.$rowdata['Nombre'].'</strong> a <strong>'.$Nombre.'</strong><br/>';}
 					if(isset($FechaInicio) && $FechaInicio != $rowdata['FechaInicio']){                $hist_Observacion .= '-Se cambia la Fecha de Inicio, de <strong>'.fecha_estandar($rowdata['FechaInicio']).'</strong> a <strong>'.fecha_estandar($FechaInicio).'</strong><br/>';}
 					if(isset($FechaTermino) && $FechaTermino != $rowdata['FechaTermino']){             $hist_Observacion .= '-Se cambia la Fecha de Termino, de <strong>'.fecha_estandar($rowdata['FechaTermino']).'</strong> a <strong>'.fecha_estandar($FechaTermino).'</strong><br/>';}
 					if(isset($Presupuesto) && $Presupuesto != $rowdata['Presupuesto']){                $hist_Observacion .= '-Se cambia el Presupuesto, de <strong>'.valores($rowdata['Presupuesto'], 0).'</strong> a <strong>'.valores($Presupuesto, 0).'</strong><br/>';}
@@ -292,27 +291,26 @@ require_once '0_validate_user_1.php';
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
 					
 
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
+
 		break;
 /*******************************************************************************************************************/
-		case 'delBasicData':	
-			
+		case 'delBasicData':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -320,49 +318,48 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//maximo de registros
 				$nmax = 25;
-				
+
 				//se borran los datos
 				$resultado = db_delete_data (false, 'licitacion_listado', 'idLicitacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//se borran los datos relacionados
 				for ($i = 1; $i <= $nmax; $i++) {
 					$resultado = db_delete_data (false, 'licitacion_listado_level_'.$i, 'idLicitacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 					
-				//redirijo			
+				//redirijo
 				header( 'Location: '.$location.'&deleted=true' );
 				die;
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
 
-		break;	
-				
-/*******************************************************************************************************************/		
+		break;
+
+/*******************************************************************************************************************/
 		case 'insert_item':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Verifico otros datos
 			/*******************************************************************/
 			//variables
@@ -376,43 +373,43 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			
 			// si no hay errores ejecuto el Nombre	
-			if ( empty($error) ) {
-				
+			if(empty($error)){
+
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                $SIS_data  = "'".$idSistema."'" ;          }else{$SIS_data  = "''";}
-				if(isset($idLicitacion) && $idLicitacion != ''){          $SIS_data .= ",'".$idLicitacion."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($idUtilizable) && $idUtilizable != ''){          $SIS_data .= ",'".$idUtilizable."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                      $SIS_data .= ",'".$Nombre."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($Codigo) && $Codigo != ''){                      $SIS_data .= ",'".$Codigo."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){          $SIS_data .= ",'".$idFrecuencia."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($Cantidad) && $Cantidad != ''){                  $SIS_data .= ",'".$Cantidad."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($Valor) && $Valor != ''){                        $SIS_data .= ",'".$Valor."'" ;             }else{$SIS_data .= ",''";}
-				if(isset($ValorTotal) && $ValorTotal != ''){              $SIS_data .= ",'".$ValorTotal."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($TiempoProgramado) && $TiempoProgramado != ''){  $SIS_data .= ",'".$TiempoProgramado."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($idTrabajo) && $idTrabajo != ''){                $SIS_data .= ",'".$idTrabajo."'" ;         }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){                $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
+				if(isset($idLicitacion) && $idLicitacion!=''){          $SIS_data .= ",'".$idLicitacion."'";      }else{$SIS_data .= ",''";}
+				if(isset($idUtilizable) && $idUtilizable!=''){          $SIS_data .= ",'".$idUtilizable."'";      }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                     $SIS_data .= ",'".$Nombre."'";            }else{$SIS_data .= ",''";}
+				if(isset($Codigo) && $Codigo!=''){                      $SIS_data .= ",'".$Codigo."'";            }else{$SIS_data .= ",''";}
+				if(isset($idFrecuencia) && $idFrecuencia!=''){          $SIS_data .= ",'".$idFrecuencia."'";      }else{$SIS_data .= ",''";}
+				if(isset($Cantidad) && $Cantidad!=''){                  $SIS_data .= ",'".$Cantidad."'";          }else{$SIS_data .= ",''";}
+				if(isset($Valor) && $Valor!=''){                        $SIS_data .= ",'".$Valor."'";             }else{$SIS_data .= ",''";}
+				if(isset($ValorTotal) && $ValorTotal!=''){              $SIS_data .= ",'".$ValorTotal."'";        }else{$SIS_data .= ",''";}
+				if(isset($TiempoProgramado) && $TiempoProgramado!=''){  $SIS_data .= ",'".$TiempoProgramado."'";  }else{$SIS_data .= ",''";}
+				if(isset($idTrabajo) && $idTrabajo!=''){                $SIS_data .= ",'".$idTrabajo."'";         }else{$SIS_data .= ",''";}
 				
 				$xbla = '';
 				for ($i = 2; $i <= $lvl; $i++) {
 					//Ubico correctamente el puntero
 					$point = $i - 1;
 					//Valor a insertar
-					if(isset($idLevel[$point]) && $idLevel[$point] != ''){   $SIS_data .= ",'".$idLevel[$point]."'" ;   }else{$SIS_data .=",''";}
+					if(isset($idLevel[$point]) && $idLevel[$point]!=''){   $SIS_data .= ",'".$idLevel[$point]."'";   }else{$SIS_data .=",''";}
 					//donde insertar
 					$xbla .= ',idLevel_'.$point;
 				}
-			
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema,idLicitacion, idUtilizable,Nombre,Codigo,idFrecuencia,Cantidad,Valor,ValorTotal,TiempoProgramado, idTrabajo '.$xbla;
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_level_'.$lvl, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 				
 					/*****************************************************/
 					//se crean el mensaje
 					$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
-					
-					if(isset($Nombre) && $Nombre != ''){    $hist_Observacion .= '-Se crea el itemizado '.$Nombre.'<br/>';}
+
+					if(isset($Nombre) && $Nombre!=''){   $hist_Observacion .= '-Se crea el itemizado '.$Nombre.'<br/>';}
 				
 					/*****************************************************/
 					//se guarda el registro
@@ -427,42 +424,42 @@ require_once '0_validate_user_1.php';
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
 				
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update_item':	
-			
+/*******************************************************************************************************************/
+		case 'update_item':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			// si no hay errores ejecuto el Nombre	
-			if ( empty($error) ) {
+			if(empty($error)){
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
-				$rowdata = db_select_data (false, 'idSistema, idLicitacion, idUtilizable, Nombre, Codigo, idFrecuencia, Cantidad, Valor, ValorTotal, TiempoProgramado, idTrabajo', 'licitacion_listado_level_'.$lvl, '', 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata = db_select_data (false, 'idSistema, idLicitacion, idUtilizable, Nombre,Codigo, idFrecuencia, Cantidad, Valor, ValorTotal, TiempoProgramado, idTrabajo', 'licitacion_listado_level_'.$lvl, '', 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 				/*****************************************************/
 				//Filtros
-				$SIS_data = "idLevel_".$lvl."='".$idLevel[$lvl]."'" ;
-				if(isset($idSistema) && $idSistema != ''){                 $SIS_data .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idLicitacion) && $idLicitacion != ''){           $SIS_data .= ",idLicitacion='".$idLicitacion."'" ;}
-				if(isset($idUtilizable) && $idUtilizable != ''){           $SIS_data .= ",idUtilizable='".$idUtilizable."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                       $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Codigo) && $Codigo != ''){                       $SIS_data .= ",Codigo='".$Codigo."'" ;}
-				if(isset($idFrecuencia) && $idFrecuencia != ''){           $SIS_data .= ",idFrecuencia='".$idFrecuencia."'" ;}
-				if(isset($Cantidad) && $Cantidad != ''){                   $SIS_data .= ",Cantidad='".$Cantidad."'" ;}
-				if(isset($Valor) && $Valor != ''){                         $SIS_data .= ",Valor='".$Valor."'" ;}
-				if(isset($ValorTotal) && $ValorTotal != ''){               $SIS_data .= ",ValorTotal='".$ValorTotal."'" ;}
-				if(isset($TiempoProgramado) && $TiempoProgramado != ''){   $SIS_data .= ",TiempoProgramado='".$TiempoProgramado."'" ;}
-				if(isset($idTrabajo) && $idTrabajo != ''){                 $SIS_data .= ",idTrabajo='".$idTrabajo."'" ;}
-				
+				$SIS_data = "idLevel_".$lvl."='".$idLevel[$lvl]."'";
+				if(isset($idSistema) && $idSistema!=''){                 $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idLicitacion) && $idLicitacion!=''){           $SIS_data .= ",idLicitacion='".$idLicitacion."'";}
+				if(isset($idUtilizable) && $idUtilizable!=''){           $SIS_data .= ",idUtilizable='".$idUtilizable."'";}
+				if(isset($Nombre) && $Nombre!=''){                      $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Codigo) && $Codigo!=''){                       $SIS_data .= ",Codigo='".$Codigo."'";}
+				if(isset($idFrecuencia) && $idFrecuencia!=''){           $SIS_data .= ",idFrecuencia='".$idFrecuencia."'";}
+				if(isset($Cantidad) && $Cantidad!=''){                   $SIS_data .= ",Cantidad='".$Cantidad."'";}
+				if(isset($Valor) && $Valor!=''){                         $SIS_data .= ",Valor='".$Valor."'";}
+				if(isset($ValorTotal) && $ValorTotal!=''){               $SIS_data .= ",ValorTotal='".$ValorTotal."'";}
+				if(isset($TiempoProgramado) && $TiempoProgramado!=''){   $SIS_data .= ",TiempoProgramado='".$TiempoProgramado."'";}
+				if(isset($idTrabajo) && $idTrabajo!=''){                 $SIS_data .= ",idTrabajo='".$idTrabajo."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'licitacion_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$idLevel[$lvl].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -484,7 +481,7 @@ require_once '0_validate_user_1.php';
 					if(isset($ValorTotal) && $ValorTotal != $rowdata['ValorTotal']){                    $hist_Observacion .= '-Se cambia el valor total del item '.$rowdata['Nombre'].', de <strong>'.valores($rowdata['ValorTotal'], 0).'</strong> a <strong>'.valores($ValorTotal, 0).'</strong><br/>';}
 					if(isset($TiempoProgramado) && $TiempoProgramado != $rowdata['TiempoProgramado']){  $hist_Observacion .= '-Se cambia el tiempo programado del item '.$rowdata['Nombre'].', de <strong>'.$rowdata['TiempoProgramado'].'</strong> a <strong>'.$TiempoProgramado.'</strong><br/>';}
 					if(isset($idTrabajo) && $idTrabajo != $rowdata['idTrabajo']){                       $hist_Observacion .= '-Se cambia el tipo de trabajo del item '.$rowdata['Nombre'].'<br/>';}
-					
+
 					/*****************************************************/
 					//se guarda el registro
 					if(isset($hist_Observacion)&&$hist_Observacion!='<strong>Modificaciones:</strong><br/>'){
@@ -498,28 +495,27 @@ require_once '0_validate_user_1.php';
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
 				
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			
 			}
-		
-	
-		break;	
-							
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del_item':	
-			
+		case 'del_item':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del_idLevel']) OR !validaEntero($_GET['del_idLevel']))&&$_GET['del_idLevel']!=''){
 				$indice = simpleDecode($_GET['del_idLevel'], fecha_actual());
@@ -527,20 +523,20 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del_idLevel'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				for ($i = $_GET['lvl']; $i <= $_GET['nmax']; $i++) {
@@ -571,26 +567,25 @@ require_once '0_validate_user_1.php';
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idLicitacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
 				}
 					
-				//redirijo			
+				//redirijo
 				header( 'Location: '.$location.'&deleted=true' );
 				die;
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
 
-		break;							
+		break;
 /*******************************************************************************************************************/
-		case 'estado':	
-			
+		case 'estado':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			$idLicitacion  = $_GET['id'];
 			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
 			
@@ -600,7 +595,7 @@ require_once '0_validate_user_1.php';
 					
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "idEstado='".$idEstado."'" ;
+			$SIS_data = "idEstado='".$idEstado."'";
 			$resultado = db_update_data (false, $SIS_data, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -610,7 +605,7 @@ require_once '0_validate_user_1.php';
 				$hist_Observacion = '<strong>Modificaciones:</strong><br/>';
 					
 				if(isset($idEstado) && $idEstado != $rowdata['idEstado']){   $hist_Observacion .= '-Se cambia el Estado<br/>';}
-				
+
 				/*****************************************************/
 				//se guarda el registro
 				if(isset($hist_Observacion)&&$hist_Observacion!='<strong>Modificaciones:</strong><br/>'){
@@ -629,19 +624,19 @@ require_once '0_validate_user_1.php';
 					
 				header( 'Location: '.$location.'&edited=true' );
 				die;
-				
+
 			}
 
 			
 
 
-		break;		
-/*******************************************************************************************************************/		
-		case 'createBasicDataContrato':	
-			
+		break;
+/*******************************************************************************************************************/
+		case 'createBasicDataContrato':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -652,62 +647,61 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre de la licitacion ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){         $SIS_data  = "'".$idSistema."'" ;      }else{$SIS_data  = "''";}
-				if(isset($Codigo) && $Codigo != ''){               $SIS_data .= ",'".$Codigo."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){               $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($FechaInicio) && $FechaInicio != ''){     $SIS_data .= ",'".$FechaInicio."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($FechaTermino) && $FechaTermino != ''){   $SIS_data .= ",'".$FechaTermino."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($Presupuesto) && $Presupuesto != ''){     $SIS_data .= ",'".$Presupuesto."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){           $SIS_data .= ",'".$idEstado."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($idBodegaProd) && $idBodegaProd != ''){   $SIS_data .= ",'".$idBodegaProd."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($idBodegaIns) && $idBodegaIns != ''){     $SIS_data .= ",'".$idBodegaIns."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($idAprobado) && $idAprobado != ''){       $SIS_data .= ",'".$idAprobado."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($idCliente) && $idCliente != ''){         $SIS_data .= ",'".$idCliente."'" ;     }else{$SIS_data .= ",''";}
-				
+				if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
+				if(isset($Codigo) && $Codigo!=''){               $SIS_data .= ",'".$Codigo."'";        }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
+				if(isset($FechaInicio) && $FechaInicio!=''){     $SIS_data .= ",'".$FechaInicio."'";   }else{$SIS_data .= ",''";}
+				if(isset($FechaTermino) && $FechaTermino!=''){   $SIS_data .= ",'".$FechaTermino."'";  }else{$SIS_data .= ",''";}
+				if(isset($Presupuesto) && $Presupuesto!=''){     $SIS_data .= ",'".$Presupuesto."'";   }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){          $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
+				if(isset($idBodegaProd) && $idBodegaProd!=''){   $SIS_data .= ",'".$idBodegaProd."'";  }else{$SIS_data .= ",''";}
+				if(isset($idBodegaIns) && $idBodegaIns!=''){     $SIS_data .= ",'".$idBodegaIns."'";   }else{$SIS_data .= ",''";}
+				if(isset($idAprobado) && $idAprobado!=''){       $SIS_data .= ",'".$idAprobado."'";    }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente!=''){         $SIS_data .= ",'".$idCliente."'";     }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, Codigo, Nombre, FechaInicio, FechaTermino, Presupuesto, idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente';
+				$SIS_columns = 'idSistema, Codigo, Nombre,FechaInicio, FechaTermino, Presupuesto, idEstado, idBodegaProd, idBodegaIns, idAprobado, idCliente';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'licitacion_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
-				
+
 			}
-		
-	
+
 		break;
 /*******************************************************************************************************************/
-		case 'estadoContrato':	
-			
+		case 'estadoContrato':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			$idLicitacion  = $_GET['status'];
 			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "idEstado='".$idEstado."'" ;
+			$SIS_data = "idEstado='".$idEstado."'";
 			$resultado = db_update_data (false, $SIS_data, 'licitacion_listado', 'idLicitacion = "'.$idLicitacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
-				
+				//redirijo
 				header( 'Location: '.$location.'&edited=true' );
-				die; 
-				
+				die;
+
 			}
 
 			
 
 
-		break;			
+		break;
 /*******************************************************************************************************************/
 	}
 ?>

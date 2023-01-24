@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "alumnos_videoconferencia_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,8 +18,8 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idCurso']) && $_GET['idCurso'] != ''){      $location .= "&idCurso=".$_GET['idCurso'];       $search .= "&idCurso=".$_GET['idCurso'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $location .= "&idUsuario=".$_GET['idUsuario'];   $search .= "&idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idCurso']) && $_GET['idCurso']!=''){      $location .= "&idCurso=".$_GET['idCurso'];       $search .= "&idCurso=".$_GET['idCurso'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){  $location .= "&idUsuario=".$_GET['idUsuario'];   $search .= "&idUsuario=".$_GET['idUsuario'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -36,7 +36,7 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/VideoConferencia Modif
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/VideoConferencia borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**********************************************************/
 //obtengo el numero del dia de la semana
@@ -44,7 +44,7 @@ $idDia = fecha2NDiaSemana(fecha_actual());
 //Variable de busqueda
 $z = "WHERE cursos_listado_videoconferencia.idVideoConferencia!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.= " AND cursos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z.= " AND cursos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $z.= " AND cursos_listado_videoconferencia.idDia_".$idDia." = 2";
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
@@ -53,8 +53,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCurso']) && $_GET['idCurso'] != ''){      $z .= " AND cursos_listado.idCurso='".$_GET['idCurso']."'";}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $z .= " AND cursos_listado_videoconferencia.idUsuario='".$_GET['idUsuario']."'";}
+if(isset($_GET['idCurso']) && $_GET['idCurso']!=''){      $z .= " AND cursos_listado.idCurso='".$_GET['idCurso']."'";}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){  $z .= " AND cursos_listado_videoconferencia.idUsuario='".$_GET['idUsuario']."'";}
 /**********************************************************/
 // Se trae un listado con todos los elementos
 $arrVideoConferencia = array();
@@ -88,60 +88,60 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrVideoConferencia,$row );
 }
 //filtro de los cursos
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default">Listado de Videoconferencias</li>	
 	</ul>
 	
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCurso)) {     $x1  = $idCurso;     }else{$x1  = '';}
-				if(isset($idUsuario)) {   $x2  = $idUsuario;   }else{$x2  = '';}
-				
+				if(isset($idCurso)){     $x1  = $idCurso;     }else{$x1  = '';}
+				if(isset($idUsuario)){   $x2  = $idUsuario;   }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cursos Alumnos','idCurso', $x1, 1, 'idCurso', 'Nombre', 'cursos_listado', $y, '', $dbConn);
-				$Form_Inputs->form_select_join_filter('Profesor','idUsuario', $x2, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('Profesor','idUsuario', $x2, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de VideoConferencias dia <?php echo numero_nombreDia($idDia); ?></h5>
@@ -172,7 +172,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>

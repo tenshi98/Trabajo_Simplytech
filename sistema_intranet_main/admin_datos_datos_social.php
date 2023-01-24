@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "admin_datos.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -19,7 +19,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$location.='?id='.$_SESSION['usuario']['basic_data']['idSistema'];
 	$form_trabajo= 'update';
@@ -34,12 +34,12 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$SIS_query = 'Nombre, Social_idUso, Social_facebook, Social_twitter, Social_instagram, Social_linkedin, Social_rss, Social_youtube, Social_tumblr';
+$SIS_query = 'Nombre,Social_idUso, Social_facebook, Social_twitter, Social_instagram, Social_linkedin, Social_rss, Social_youtube, Social_tumblr';
 $SIS_join  = '';
 $SIS_where = 'core_sistemas.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /******************************************************/
 //Accesos a bodegas de productos
@@ -76,31 +76,31 @@ $trans_37 = "cross_shipping_consolidacion_aprobar_auto.php";
 /************************************/
 //realizo la consulta
 $SIS_query = '
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_1."'  AND visualizacion!=9999 LIMIT 1) AS tran_1,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_2."'  AND visualizacion!=9999 LIMIT 1) AS tran_2,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_3."'  AND visualizacion!=9999 LIMIT 1) AS tran_3,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_4."'  AND visualizacion!=9999 LIMIT 1) AS tran_4,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_5."'  AND visualizacion!=9999 LIMIT 1) AS tran_5,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_1.'"  AND visualizacion!=9999 LIMIT 1) AS tran_1,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_2.'"  AND visualizacion!=9999 LIMIT 1) AS tran_2,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_3.'"  AND visualizacion!=9999 LIMIT 1) AS tran_3,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_4.'"  AND visualizacion!=9999 LIMIT 1) AS tran_4,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_5.'"  AND visualizacion!=9999 LIMIT 1) AS tran_5,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_11."'  AND visualizacion!=9999 LIMIT 1) AS tran_11,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_12."'  AND visualizacion!=9999 LIMIT 1) AS tran_12,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_13."'  AND visualizacion!=9999 LIMIT 1) AS tran_13,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_14."'  AND visualizacion!=9999 LIMIT 1) AS tran_14,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_15."'  AND visualizacion!=9999 LIMIT 1) AS tran_15,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_11.'"  AND visualizacion!=9999 LIMIT 1) AS tran_11,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_12.'"  AND visualizacion!=9999 LIMIT 1) AS tran_12,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_13.'"  AND visualizacion!=9999 LIMIT 1) AS tran_13,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_14.'"  AND visualizacion!=9999 LIMIT 1) AS tran_14,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_15.'"  AND visualizacion!=9999 LIMIT 1) AS tran_15,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_21."'  AND visualizacion!=9999 LIMIT 1) AS tran_21,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_22."'  AND visualizacion!=9999 LIMIT 1) AS tran_22,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_21.'"  AND visualizacion!=9999 LIMIT 1) AS tran_21,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_22.'"  AND visualizacion!=9999 LIMIT 1) AS tran_22,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_26."'  AND visualizacion!=9999 LIMIT 1) AS tran_26,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_27."'  AND visualizacion!=9999 LIMIT 1) AS tran_27,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_26.'"  AND visualizacion!=9999 LIMIT 1) AS tran_26,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_27.'"  AND visualizacion!=9999 LIMIT 1) AS tran_27,
 
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_31."'  AND visualizacion!=9999 LIMIT 1) AS tran_31,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_32."'  AND visualizacion!=9999 LIMIT 1) AS tran_32,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_33."'  AND visualizacion!=9999 LIMIT 1) AS tran_33,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_34."'  AND visualizacion!=9999 LIMIT 1) AS tran_34,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_35."'  AND visualizacion!=9999 LIMIT 1) AS tran_35,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_36."'  AND visualizacion!=9999 LIMIT 1) AS tran_36,
-(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ='".$trans_37."'  AND visualizacion!=9999 LIMIT 1) AS tran_37,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_31.'"  AND visualizacion!=9999 LIMIT 1) AS tran_31,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_32.'"  AND visualizacion!=9999 LIMIT 1) AS tran_32,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_33.'"  AND visualizacion!=9999 LIMIT 1) AS tran_33,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_34.'"  AND visualizacion!=9999 LIMIT 1) AS tran_34,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_35.'"  AND visualizacion!=9999 LIMIT 1) AS tran_35,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_36.'"  AND visualizacion!=9999 LIMIT 1) AS tran_36,
+(SELECT COUNT(idAdmpm) FROM core_permisos_listado WHERE Direccionbase ="'.$trans_37.'"  AND visualizacion!=9999 LIMIT 1) AS tran_37,
 
 idUsuario';
 $SIS_join  = '';
@@ -128,12 +128,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -169,13 +169,13 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<?php } ?>
 						<li class="active"><a href="<?php echo 'admin_datos_datos_social.php'; ?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			<?php
 			echo '<br/>';
-			echo '<div class="col-sm-12">';
+			echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 				//facebook
 				$Alert_Text  = 'Obtener el ID de una página de Facebook';
 				$Alert_Text .= '<a target="_blank" rel="noopener noreferrer" href="https://www.bufa.es/id-pagina-facebook/" title="Obtener ID" class="btn btn-primary btn-sm pull-right margin_width" ><i class="fa fa-facebook" aria-hidden="true"></i> Obtener ID</a>';
@@ -183,26 +183,26 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				//Linkedin
 				$Alert_Text  = 'Para obtener el <strong>Identificador</strong> de Linkedin, debes iniciar sesion, en el tab donde dice <strong>YO</strong> presionarlo y luego presionar el boton <strong> Ver Perfil</strong>, una vez dentro del perfil ver la barra de direcciones del navegador y copiar lo que viene despues de <strong>https://www.linkedin.com/in/</strong> sin copiar los <strong>/</strong>';
 				alert_post_data(2,1,2, $Alert_Text);
-			
+
 			echo '</div>';
 			?>
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
-			
-					<?php 
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+
+					<?php
 					//Se verifican si existen los datos
-					if(isset($Social_idUso)) {         $x1 = $Social_idUso;         }else{$x1 = $rowdata['Social_idUso'];}
-					if(isset($Social_facebook)) {      $x2 = $Social_facebook;      }else{$x2 = $rowdata['Social_facebook'];}
-					if(isset($Social_twitter)) {       $x3 = $Social_twitter;       }else{$x3 = $rowdata['Social_twitter'];}
-					if(isset($Social_instagram)) {     $x4 = $Social_instagram;     }else{$x4 = $rowdata['Social_instagram'];}
-					if(isset($Social_linkedin)) {      $x5 = $Social_linkedin;      }else{$x5 = $rowdata['Social_linkedin'];}
-					if(isset($Social_rss)) {           $x6 = $Social_rss;           }else{$x6 = $rowdata['Social_rss'];}
-					if(isset($Social_youtube)) {       $x7 = $Social_youtube;       }else{$x7 = $rowdata['Social_youtube'];}
-					if(isset($Social_tumblr)) {        $x8 = $Social_tumblr;        }else{$x8 = $rowdata['Social_tumblr'];}
-					
+					if(isset($Social_idUso)){         $x1 = $Social_idUso;         }else{$x1 = $rowdata['Social_idUso'];}
+					if(isset($Social_facebook)){      $x2 = $Social_facebook;      }else{$x2 = $rowdata['Social_facebook'];}
+					if(isset($Social_twitter)){       $x3 = $Social_twitter;       }else{$x3 = $rowdata['Social_twitter'];}
+					if(isset($Social_instagram)){     $x4 = $Social_instagram;     }else{$x4 = $rowdata['Social_instagram'];}
+					if(isset($Social_linkedin)){      $x5 = $Social_linkedin;      }else{$x5 = $rowdata['Social_linkedin'];}
+					if(isset($Social_rss)){           $x6 = $Social_rss;           }else{$x6 = $rowdata['Social_rss'];}
+					if(isset($Social_youtube)){       $x7 = $Social_youtube;       }else{$x7 = $rowdata['Social_youtube'];}
+					if(isset($Social_tumblr)){        $x8 = $Social_tumblr;        }else{$x8 = $rowdata['Social_tumblr'];}
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_select('Uso de widget Sociales','Social_idUso', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+					$Form_Inputs->form_select('Uso de widget Sociales','Social_idUso', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_input_icon('Facebook - ID de la pagina', 'Social_facebook', $x2, 1,'fa fa-facebook');
 					$Form_Inputs->form_input_icon('Twitter - Direccion Web', 'Social_twitter', $x3, 1,'fa fa-twitter');
 					//$Form_Inputs->form_input_icon('Instagram', 'Social_instagram', $x4, 1,'fa fa-instagram');
@@ -210,19 +210,18 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					$Form_Inputs->form_input_icon('Rss - Direccion Feed', 'Social_rss', $x6, 1,'fa fa-rss');
 					//$Form_Inputs->form_input_icon('ApiKey (Youtube)', 'Social_youtube', $x7, 1,'fa fa-youtube');
 					//$Form_Inputs->form_input_icon('ApiKey (Tumblr)', 'Social_tumblr', $x8, 1,'fa fa-tumblr');
-					
-					          
+
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 

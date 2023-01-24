@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -110,9 +110,9 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 
 
 /*********************************************************/
-if(isset($rowdata['Cancelador'])&&$rowdata['Cancelador']!=''){ ?>
+if(isset($rowdata['Cancelador'])&&$rowdata['Cancelador']!=''){?>
 
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="bs-callout bs-callout-danger" >
 			<h4>Tarea Pendiente cancelada</h4>
 			<p>
@@ -128,20 +128,20 @@ if(isset($rowdata['Cancelador'])&&$rowdata['Cancelador']!=''){ ?>
 <?php
 //Agrego el boton crear solo si se tiene acceso a la transaccion o es superadministrador
 if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1) {
-	echo '<div class="col-sm-12 breadcrumb-bar" style="margin-top:15px;">';
-		echo '<a target="_blank" rel="noopener noreferrer" href="tareas_pendientes_listado_editar.php?view='.$_GET['view'].'" class="btn btn-success fright margin_width fmrbtn" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Tarea</a>';
+	echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-top:15px;">';
+		echo '<a target="_blank" rel="noopener noreferrer" href="tareas_pendientes_listado_editar.php?view='.$_GET['view'].'" class="btn btn-success pull-right margin_width fmrbtn" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar Tarea</a>';
 	echo '</div>';
 	echo '<div class="clearfix"></div>';
 } ?>
 		
 <div class="col-sm-12 table-responsive" style="margin-bottom:30px!important;margin-top:30px!important;">
 	
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div id="page-wrap">
 			<div id="header"> TAREAS PENDIENTES</div>
 		
 			<div id="customer">
-				<table id="meta" class="fleft otdata">
+				<table id="meta" class="pull-left otdata">
 					<tbody>
 						<tr>
 							<td class="meta-head"><strong>DATOS BASICOS</strong></td>
@@ -179,7 +179,7 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 							<td class="meta-head">Fecha Creacion</td>
 							<td><?php echo Fecha_estandar($rowdata['f_creacion'])?></td>
 						</tr>
-						<?php if(isset($rowdata['f_termino'])&&$rowdata['f_termino']!='0000-00-00'){ ?>
+						<?php if(isset($rowdata['f_termino'])&&$rowdata['f_termino']!='0000-00-00'){?>
 							<tr>
 								<td class="meta-head">Fecha Termino</td>
 								<td><?php echo Fecha_estandar($rowdata['f_termino'])?></td>
@@ -193,32 +193,32 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 					
 					<tr><th colspan="6">Detalle</th></tr>
 					<?php 
-					/**********************************************************************************/ ?>		  
+					/**********************************************************************************/?>
 					<tr class="item-row fact_tittle"><td colspan="6">Tarea</td></tr>
 					<tr class="item-row linea_punteada" style="white-space: initial;">
 						<td colspan="6"><?php echo $rowdata['Observaciones'];?></td>
-					</tr> 
+					</tr>
 					<?php 
-					/**********************************************************************************/ 
+					/**********************************************************************************/
 					if($arrRepresentantes!=false && !empty($arrRepresentantes) && $arrRepresentantes!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Responsables</td></tr>
 						<?php foreach ($arrRepresentantes as $trab) {  ?>
 							<tr class="item-row linea_punteada">
 								<td colspan="6"><?php echo $trab['Nombre'];?></td>
-							</tr> 
-						<?php }?>	
+							</tr>
+						<?php }?>
 					<?php } 
-					/**********************************************************************************/ 
+					/**********************************************************************************/
 					if($arrTareas!=false && !empty($arrTareas) && $arrTareas!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajos a Realizar</td></tr>
 						<?php foreach ($arrTareas as $trab) {  ?>
 							<tr class="item-row linea_punteada">
 								<td colspan="5"><?php echo '<strong>'.$trab['Usuario'].': </strong>'.$trab['Observacion']; ?></td>
 								<td width="160"><?php echo $trab['EstadoTarea'];?></td>
-							</tr> 
+							</tr>
 						<?php } ?>
 					<?php } 
-					/**********************************************************************************/ 
+					/**********************************************************************************/
 					if($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Archivos Adjuntos</td></tr>
 						<?php foreach ($arrArchivos as $producto){?>
@@ -236,11 +236,11 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 					
 				</tbody>
 			</table>
-			<div class="clearfix"></div>	
+			<div class="clearfix"></div>
 		</div>
 	</div>
 	
-	<div class="col-xs-12" style="margin-bottom:15px;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 		<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 			<table id="items">
 				<tbody>
@@ -251,13 +251,13 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 						<th width="120">Fecha</th>
 						<th>Usuario</th>
 						<th>Observacion</th>
-					</tr>			  
+					</tr>
 					<?php foreach ($arrHistorial as $doc){?>
 						<tr class="">
 							<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 							<td><?php echo $doc['Usuario']; ?></td>
 							<td><?php echo '<i class="'.$doc['FonAwesome'].'" aria-hidden="true"></i> '.$doc['Observacion']; ?></td>
-						</tr> 
+						</tr>
 					<?php } ?>
 				</tbody>
 			</table>
@@ -270,12 +270,12 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -286,12 +286,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 

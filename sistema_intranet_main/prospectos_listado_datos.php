@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "prospectos_listado.php";
 $location = $original;
 $new_location = "prospectos_listado_datos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$location.='&id='.$_GET['id'];
 	$form_trabajo= 'update';
@@ -38,9 +38,9 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$query = "SELECT idTipo, Nombre, fNacimiento, idCiudad, idComuna, Direccion, idSistema,
+$query = "SELECT idTipo, Nombre,fNacimiento, idCiudad, idComuna, Direccion, idSistema,
 idTab_1, idTab_2, idTab_3, idTab_4, idTab_5, idTab_6, idTab_7, idTab_8, idTab_8, idTab_9, 
 idTab_10, idTab_11, idTab_12, idTab_13, idTab_14, idTab_15
 FROM `prospectos_listado`
@@ -60,12 +60,12 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -83,36 +83,36 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						<li class=""><a href="<?php echo 'prospectos_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'prospectos_listado_crear_cliente.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Crear Cliente</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($idTipo)) {           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Nombre)) {           $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
-					if(isset($fNacimiento)) {      $x3  = $fNacimiento;       }else{$x3  = $rowdata['fNacimiento'];}
-					if(isset($idCiudad)) {         $x4  = $idCiudad;          }else{$x4  = $rowdata['idCiudad'];}
-					if(isset($idComuna)) {         $x5  = $idComuna;          }else{$x5  = $rowdata['idComuna'];}
-					if(isset($Direccion)) {        $x6  = $Direccion;         }else{$x6  = $rowdata['Direccion'];}
-					if(isset($idTab_1)) {          $x7  = $idTab_1;           }else{$x7  = $rowdata['idTab_1'];}
-					if(isset($idTab_2)) {          $x7 .= ','.$idTab_2;       }else{$x7 .= ','.$rowdata['idTab_2'];}
-					if(isset($idTab_3)) {          $x7 .= ','.$idTab_3;       }else{$x7 .= ','.$rowdata['idTab_3'];}
-					if(isset($idTab_4)) {          $x7 .= ','.$idTab_4;       }else{$x7 .= ','.$rowdata['idTab_4'];}
-					if(isset($idTab_5)) {          $x7 .= ','.$idTab_5;       }else{$x7 .= ','.$rowdata['idTab_5'];}
-					if(isset($idTab_6)) {          $x7 .= ','.$idTab_6;       }else{$x7 .= ','.$rowdata['idTab_6'];}
-					if(isset($idTab_7)) {          $x7 .= ','.$idTab_7;       }else{$x7 .= ','.$rowdata['idTab_7'];}
-					if(isset($idTab_8)) {          $x7 .= ','.$idTab_8;       }else{$x7 .= ','.$rowdata['idTab_8'];}
-					if(isset($idTab_9)) {          $x7 .= ','.$idTab_9;       }else{$x7 .= ','.$rowdata['idTab_9'];}
-					if(isset($idTab_10)) {         $x7 .= ','.$idTab_10;      }else{$x7 .= ','.$rowdata['idTab_10'];}
-					if(isset($idTab_11)) {         $x7 .= ','.$idTab_11;      }else{$x7 .= ','.$rowdata['idTab_11'];}
-					if(isset($idTab_12)) {         $x7 .= ','.$idTab_12;      }else{$x7 .= ','.$rowdata['idTab_12'];}
-					if(isset($idTab_13)) {         $x7 .= ','.$idTab_13;      }else{$x7 .= ','.$rowdata['idTab_13'];}
-					if(isset($idTab_14)) {         $x7 .= ','.$idTab_14;      }else{$x7 .= ','.$rowdata['idTab_14'];}
-					if(isset($idTab_15)) {         $x7 .= ','.$idTab_15;      }else{$x7 .= ','.$rowdata['idTab_15'];}
+					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
+					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
+					if(isset($fNacimiento)){      $x3  = $fNacimiento;       }else{$x3  = $rowdata['fNacimiento'];}
+					if(isset($idCiudad)){         $x4  = $idCiudad;          }else{$x4  = $rowdata['idCiudad'];}
+					if(isset($idComuna)){         $x5  = $idComuna;          }else{$x5  = $rowdata['idComuna'];}
+					if(isset($Direccion)){        $x6  = $Direccion;         }else{$x6  = $rowdata['Direccion'];}
+					if(isset($idTab_1)){          $x7  = $idTab_1;           }else{$x7  = $rowdata['idTab_1'];}
+					if(isset($idTab_2)){          $x7 .= ','.$idTab_2;       }else{$x7 .= ','.$rowdata['idTab_2'];}
+					if(isset($idTab_3)){          $x7 .= ','.$idTab_3;       }else{$x7 .= ','.$rowdata['idTab_3'];}
+					if(isset($idTab_4)){          $x7 .= ','.$idTab_4;       }else{$x7 .= ','.$rowdata['idTab_4'];}
+					if(isset($idTab_5)){          $x7 .= ','.$idTab_5;       }else{$x7 .= ','.$rowdata['idTab_5'];}
+					if(isset($idTab_6)){          $x7 .= ','.$idTab_6;       }else{$x7 .= ','.$rowdata['idTab_6'];}
+					if(isset($idTab_7)){          $x7 .= ','.$idTab_7;       }else{$x7 .= ','.$rowdata['idTab_7'];}
+					if(isset($idTab_8)){          $x7 .= ','.$idTab_8;       }else{$x7 .= ','.$rowdata['idTab_8'];}
+					if(isset($idTab_9)){          $x7 .= ','.$idTab_9;       }else{$x7 .= ','.$rowdata['idTab_9'];}
+					if(isset($idTab_10)){         $x7 .= ','.$idTab_10;      }else{$x7 .= ','.$rowdata['idTab_10'];}
+					if(isset($idTab_11)){         $x7 .= ','.$idTab_11;      }else{$x7 .= ','.$rowdata['idTab_11'];}
+					if(isset($idTab_12)){         $x7 .= ','.$idTab_12;      }else{$x7 .= ','.$rowdata['idTab_12'];}
+					if(isset($idTab_13)){         $x7 .= ','.$idTab_13;      }else{$x7 .= ','.$rowdata['idTab_13'];}
+					if(isset($idTab_14)){         $x7 .= ','.$idTab_14;      }else{$x7 .= ','.$rowdata['idTab_14'];}
+					if(isset($idTab_15)){         $x7 .= ','.$idTab_15;      }else{$x7 .= ','.$rowdata['idTab_15'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -121,7 +121,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_input_text('Nombre Fantasia', 'Nombre', $x2, 2);
 					$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x3, 1);
 					$Form_Inputs->form_select_depend1('Region','idCiudad', $x4, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-											'Comuna','idComuna', $x5, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+											'Comuna','idComuna', $x5, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x6, 1,'fa fa-map');	 
 					//Solo para plataforma Intranet
@@ -132,25 +132,25 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-					$Form_Inputs->form_input_hidden('idProspecto', $_GET['id'], 2);		
+					$Form_Inputs->form_input_hidden('idProspecto', $_GET['id'], 2);
 					$Form_Inputs->form_input_hidden('FModificacion', fecha_actual(), 2);
 					$Form_Inputs->form_input_hidden('HModificacion', hora_actual(), 2);
 					$Form_Inputs->form_input_hidden('idUsuarioMod', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

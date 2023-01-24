@@ -1,21 +1,12 @@
 <?php 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 //Variable con la ubicacion
 $SIS_where  = "principal_notificaciones_ver.idNoti>=0";
 $SIS_where2 = "principal_notificaciones_ver.idNoti>=0";
@@ -33,7 +24,7 @@ $SIS_where2.=" AND principal_notificaciones_ver.idSistema=".$_SESSION['usuario']
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_where .=" AND principal_notificaciones_ver.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
-	$SIS_where2.=" AND principal_notificaciones_ver.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$SIS_where2.=" AND principal_notificaciones_ver.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 $SIS_where2.=" GROUP BY usuarios_listado.Nombre";
 
@@ -41,7 +32,7 @@ $SIS_where2.=" GROUP BY usuarios_listado.Nombre";
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'principal_notificaciones_ver.idNoti', 'principal_notificaciones_ver', 'LEFT JOIN `principal_notificaciones_listado`  ON principal_notificaciones_listado.idNotificaciones   = principal_notificaciones_ver.idNotificaciones', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 principal_notificaciones_ver.idNoti,
@@ -97,14 +88,14 @@ echo '
 		</tbody>
 	</table>';
 									
-}									
+}		
 
 ?>
   
 
 <div class="row inbox">
   						
-	<div class="col-sm-8">
+	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Notificaciones</h5>
@@ -124,7 +115,7 @@ echo '
 							<th>Estado</th>
 							<th width="10">Acciones</th>
 						</tr>
-					</thead>			  
+					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrNotificaciones as $tipo) { ?>
 						<tr class="odd">
@@ -137,16 +128,16 @@ echo '
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 					</tbody>
 				</table>
 			</div>
 			
-			<div class="pagrow">	
+			<div class="pagrow">
 				<?php 
 				//Paginador
 				echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-			</div> 
+			</div>
 			
 		</div>
 	</div>  
@@ -160,7 +151,7 @@ echo '
 					$todos = $todos + $cat['cuenta'];
 				} ?>
 					
-				<div class="list-group-item">Filtro</div>	
+				<div class="list-group-item">Filtro</div>
 				<a href="<?php echo $original.'?pagina=1'; ?>" class="list-group-item">
 					<i class="fa fa-inbox" aria-hidden="true"></i> 
 					Mostrar Todos
@@ -168,19 +159,19 @@ echo '
 				</a>
 					
 			<?php foreach ($arrCategorias as $cat) { ?>
-				<?php if($cat['usuario']!=''){ ?>
+				<?php if($cat['usuario']!=''){?>
 					<a href="<?php echo $original.'?pagina=1&filtersender='.$cat['idusuario']; ?>" class="list-group-item">
 						<i class="fa fa-inbox" aria-hidden="true"></i> 
 						<?php echo $cat['usuario']; ?>
-						<span class="badge  bg-primary"><?php echo $cat['cuenta']; ?></span> 
+						<span class="badge bg-primary"><?php echo $cat['cuenta']; ?></span>
 					</a>
 				<?php }else{ ?>
 					<a href="<?php echo $original.'?pagina=1&filtersender=admin'; ?>" class="list-group-item">
 						<i class="fa fa-inbox" aria-hidden="true"></i> 
 						Administrador
-						<span class="badge  bg-primary"><?php echo $cat['cuenta']; ?></span> 
+						<span class="badge bg-primary"><?php echo $cat['cuenta']; ?></span>
 					</a>
-				<?php } ?>	
+				<?php } ?>
 			<?php } ?>
 					
 					

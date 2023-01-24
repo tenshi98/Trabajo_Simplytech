@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "aguas_facturacion_listado_ing_boletas.php";
 $location = $original;
 /********************************************************************/
@@ -20,7 +20,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_boleta']) )  { 
+if (!empty($_POST['submit_boleta'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_boleta';
 	require_once 'A1XRXS_sys/xrxs_form/aguas_facturacion_listado.php';
@@ -38,8 +38,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Medicion Modificada co
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Medicion borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) {  
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //Obtengo los datos de los clientes
 $arrFacturacion = array();
 $query = "SELECT 
@@ -68,7 +68,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrFacturacion,$row );
 }	
 //se dibujan los inputs
@@ -76,13 +76,13 @@ $Form_Inputs = new Inputs();
 ?>
 
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box dark">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Ingreso Numeros de Boletas de <?php echo fecha_estandar($arrFacturacion[0]['Fecha']) ?></h5>
 			</header>
-			<div id="div-1" class="body">
+			<div class="body">
 				
 				
 
@@ -143,12 +143,12 @@ $Form_Inputs = new Inputs();
 
 				
 					<div class="form-group" style="margin-top:10px;">
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_boleta"> 
-						<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_boleta"> 
+						<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 					</div>
 						  
-				</form> 
-				<?php widget_validator(); ?>         
+				</form>
+				<?php widget_validator(); ?>
 			</div>
 		</div>
 	</div>
@@ -156,24 +156,24 @@ $Form_Inputs = new Inputs();
 <div class="clearfix"></div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //filtro por sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Seleccionar Facturacion</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idFacturacion)) {   $x1  = $idFacturacion;  }else{$x1  = '';}
-				
+				if(isset($idFacturacion)){   $x1  = $idFacturacion;  }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Facturacion','idFacturacion', $x1, 2, 'idFacturacion', 'Fecha', 'aguas_facturacion_listado', $z, 'ORDER BY Fecha DESC', $dbConn);
@@ -182,17 +182,17 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 <?php widget_modal(80, 95); ?>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -2,33 +2,33 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridTicketad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-236).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idTicket']) )                $idTicket                 = $_POST['idTicket'];
-	if ( !empty($_POST['idSistema']) )               $idSistema                = $_POST['idSistema'];
-	if ( !empty($_POST['idCliente']) )               $idCliente                = $_POST['idCliente'];
-	if ( !empty($_POST['idTipoTicket']) )            $idTipoTicket             = $_POST['idTipoTicket'];
-	if ( !empty($_POST['Titulo']) )                  $Titulo                   = $_POST['Titulo'];
-	if ( !empty($_POST['Descripcion']) )             $Descripcion              = $_POST['Descripcion'];
-	if ( !empty($_POST['idEstado']) )                $idEstado                 = $_POST['idEstado'];
-	if ( !empty($_POST['idPrioridad']) )             $idPrioridad              = $_POST['idPrioridad'];
-	if ( !empty($_POST['FechaCreacion']) )           $FechaCreacion            = $_POST['FechaCreacion'];
-	if ( !empty($_POST['FechaCierre']) )             $FechaCierre              = $_POST['FechaCierre'];
-	if ( !empty($_POST['idUsuarioAsignado']) )       $idUsuarioAsignado        = $_POST['idUsuarioAsignado'];
-	if ( !empty($_POST['idArea']) )                  $idArea                   = $_POST['idArea'];
-	if ( !empty($_POST['DescripcionCierre']) )       $DescripcionCierre        = $_POST['DescripcionCierre'];
-	if ( !empty($_POST['FechaCancelacion']) )        $FechaCancelacion         = $_POST['FechaCancelacion'];
-	if ( !empty($_POST['DescripcionCancelacion']) )  $DescripcionCancelacion   = $_POST['DescripcionCancelacion'];
+	if (!empty($_POST['idTicket']))                $idTicket                 = $_POST['idTicket'];
+	if (!empty($_POST['idSistema']))               $idSistema                = $_POST['idSistema'];
+	if (!empty($_POST['idCliente']))               $idCliente                = $_POST['idCliente'];
+	if (!empty($_POST['idTipoTicket']))            $idTipoTicket             = $_POST['idTipoTicket'];
+	if (!empty($_POST['Titulo']))                  $Titulo                   = $_POST['Titulo'];
+	if (!empty($_POST['Descripcion']))             $Descripcion              = $_POST['Descripcion'];
+	if (!empty($_POST['idEstado']))                $idEstado                 = $_POST['idEstado'];
+	if (!empty($_POST['idPrioridad']))             $idPrioridad              = $_POST['idPrioridad'];
+	if (!empty($_POST['FechaCreacion']))           $FechaCreacion            = $_POST['FechaCreacion'];
+	if (!empty($_POST['FechaCierre']))             $FechaCierre              = $_POST['FechaCierre'];
+	if (!empty($_POST['idUsuarioAsignado']))       $idUsuarioAsignado        = $_POST['idUsuarioAsignado'];
+	if (!empty($_POST['idArea']))                  $idArea                   = $_POST['idArea'];
+	if (!empty($_POST['DescripcionCierre']))       $DescripcionCierre        = $_POST['DescripcionCierre'];
+	if (!empty($_POST['FechaCancelacion']))        $FechaCancelacion         = $_POST['FechaCancelacion'];
+	if (!empty($_POST['DescripcionCancelacion']))  $DescripcionCancelacion   = $_POST['DescripcionCancelacion'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -56,63 +56,62 @@ require_once '0_validate_user_1.php';
 			case 'DescripcionCierre':       if(empty($DescripcionCierre)){        $error['DescripcionCierre']        = 'error/No ha ingresado la descripcion de cierre del ticket';}break;
 			case 'FechaCancelacion':        if(empty($FechaCancelacion)){         $error['FechaCancelacion']         = 'error/No ha ingresado la fecha de cancelacion';}break;
 			case 'DescripcionCancelacion':  if(empty($DescripcionCancelacion)){   $error['DescripcionCancelacion']   = 'error/No ha ingresado la descripcion de cancelacion del ticket';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Titulo) && $Titulo != ''){                                 $Titulo                 = EstandarizarInput($Titulo); }
-	if(isset($Descripcion) && $Descripcion != ''){                       $Descripcion            = EstandarizarInput($Descripcion); }
-	if(isset($DescripcionCierre) && $DescripcionCierre != ''){           $DescripcionCierre      = EstandarizarInput($DescripcionCierre); }
-	if(isset($DescripcionCancelacion) && $DescripcionCancelacion != ''){ $DescripcionCancelacion = EstandarizarInput($DescripcionCancelacion); }
-	
+/*******************************************************************************************************************/
+	if(isset($Titulo) && $Titulo!=''){                                 $Titulo                 = EstandarizarInput($Titulo);}
+	if(isset($Descripcion) && $Descripcion!=''){                       $Descripcion            = EstandarizarInput($Descripcion);}
+	if(isset($DescripcionCierre) && $DescripcionCierre!=''){           $DescripcionCierre      = EstandarizarInput($DescripcionCierre);}
+	if(isset($DescripcionCancelacion) && $DescripcionCancelacion!=''){ $DescripcionCancelacion = EstandarizarInput($DescripcionCancelacion);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Titulo)&&contar_palabras_censuradas($Titulo)!=0){                                  $error['Titulo']                  = 'error/Edita Titulo, contiene palabras no permitidas'; }	
-	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){                        $error['Descripcion']             = 'error/Edita Descripcion, contiene palabras no permitidas'; }	
-	if(isset($DescripcionCierre)&&contar_palabras_censuradas($DescripcionCierre)!=0){            $error['DescripcionCierre']       = 'error/Edita Descripcion Cierre, contiene palabras no permitidas'; }	
-	if(isset($DescripcionCancelacion)&&contar_palabras_censuradas($DescripcionCancelacion)!=0){  $error['DescripcionCancelacion']  = 'error/Edita Descripcion Cancelacion, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Titulo)&&contar_palabras_censuradas($Titulo)!=0){                                  $error['Titulo']                  = 'error/Edita Titulo, contiene palabras no permitidas';}
+	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){                        $error['Descripcion']             = 'error/Edita Descripcion, contiene palabras no permitidas';}
+	if(isset($DescripcionCierre)&&contar_palabras_censuradas($DescripcionCierre)!=0){            $error['DescripcionCierre']       = 'error/Edita Descripcion Cierre, contiene palabras no permitidas';}
+	if(isset($DescripcionCancelacion)&&contar_palabras_censuradas($DescripcionCancelacion)!=0){  $error['DescripcionCancelacion']  = 'error/Edita Descripcion Cancelacion, contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){                             $SIS_data  = "'".$idSistema."'" ;                }else{$SIS_data  = "''";}
-				if(isset($idCliente) && $idCliente != ''){                             $SIS_data .= ",'".$idCliente."'" ;               }else{$SIS_data .= ",''";}
-				if(isset($idTipoTicket) && $idTipoTicket != ''){                       $SIS_data .= ",'".$idTipoTicket."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($Titulo) && $Titulo != ''){                                   $SIS_data .= ",'".$Titulo."'" ;                  }else{$SIS_data .= ",''";}
-				if(isset($Descripcion) && $Descripcion != ''){                         $SIS_data .= ",'".$Descripcion."'" ;             }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){                               $SIS_data .= ",'".$idEstado."'" ;                }else{$SIS_data .= ",''";}
-				if(isset($idPrioridad) && $idPrioridad != ''){                         $SIS_data .= ",'".$idPrioridad."'" ;             }else{$SIS_data .= ",''";}
-				if(isset($FechaCreacion) && $FechaCreacion != ''){                     $SIS_data .= ",'".$FechaCreacion."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($FechaCierre) && $FechaCierre != ''){                         $SIS_data .= ",'".$FechaCierre."'" ;             }else{$SIS_data .= ",''";}
-				if(isset($idUsuarioAsignado) && $idUsuarioAsignado != ''){             $SIS_data .= ",'".$idUsuarioAsignado."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($idArea) && $idArea != ''){                                   $SIS_data .= ",'".$idArea."'" ;                  }else{$SIS_data .= ",''";}
-				if(isset($DescripcionCierre) && $DescripcionCierre != ''){             $SIS_data .= ",'".$DescripcionCierre."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($FechaCancelacion) && $FechaCancelacion != ''){               $SIS_data .= ",'".$FechaCancelacion."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($DescripcionCancelacion) && $DescripcionCancelacion != ''){   $SIS_data .= ",'".$DescripcionCancelacion."'" ;  }else{$SIS_data .= ",''";}
-				
+				if(isset($idSistema) && $idSistema!=''){           $SIS_data  = "'".$idSistema."'";                }else{$SIS_data  = "''";}
+				if(isset($idCliente) && $idCliente!=''){                             $SIS_data .= ",'".$idCliente."'";               }else{$SIS_data .= ",''";}
+				if(isset($idTipoTicket) && $idTipoTicket!=''){                       $SIS_data .= ",'".$idTipoTicket."'";            }else{$SIS_data .= ",''";}
+				if(isset($Titulo) && $Titulo!=''){                                   $SIS_data .= ",'".$Titulo."'";                  }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){                         $SIS_data .= ",'".$Descripcion."'";           }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                              $SIS_data .= ",'".$idEstado."'";                }else{$SIS_data .= ",''";}
+				if(isset($idPrioridad) && $idPrioridad!=''){                        $SIS_data .= ",'".$idPrioridad."'";             }else{$SIS_data .= ",''";}
+				if(isset($FechaCreacion) && $FechaCreacion!=''){                     $SIS_data .= ",'".$FechaCreacion."'";           }else{$SIS_data .= ",''";}
+				if(isset($FechaCierre) && $FechaCierre!=''){                         $SIS_data .= ",'".$FechaCierre."'";             }else{$SIS_data .= ",''";}
+				if(isset($idUsuarioAsignado) && $idUsuarioAsignado!=''){             $SIS_data .= ",'".$idUsuarioAsignado."'";       }else{$SIS_data .= ",''";}
+				if(isset($idArea) && $idArea!=''){                                   $SIS_data .= ",'".$idArea."'";                  }else{$SIS_data .= ",''";}
+				if(isset($DescripcionCierre) && $DescripcionCierre!=''){             $SIS_data .= ",'".$DescripcionCierre."'";       }else{$SIS_data .= ",''";}
+				if(isset($FechaCancelacion) && $FechaCancelacion!=''){               $SIS_data .= ",'".$FechaCancelacion."'";        }else{$SIS_data .= ",''";}
+				if(isset($DescripcionCancelacion) && $DescripcionCancelacion!=''){   $SIS_data .= ",'".$DescripcionCancelacion."'";  }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, idCliente, 
 				idTipoTicket, Titulo, Descripcion, idEstado, idPrioridad, FechaCreacion, 
 				FechaCierre, idUsuarioAsignado, idArea, DescripcionCierre, FechaCancelacion,
 				DescripcionCancelacion';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'crosstech_gestion_tickets', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//solo se envian los tickets
@@ -128,27 +127,27 @@ require_once '0_validate_user_1.php';
 						$SIS_order  = 'crosstech_gestion_tickets_area_correos.idUsuario ASC';
 						$arrUsuario = array();
 						$arrUsuario = db_select_array (false, $SIS_query, 'crosstech_gestion_tickets_area_correos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 						//datos empresa
 						$SIS_query = '
-						core_sistemas.Nombre AS EmpresaNombre, 
+						core_sistemas.Nombre AS EmpresaNombre,
 						core_sistemas.email_principal AS EmpresaEmail, 
 						core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, 
 						core_sistemas.Config_Gmail_Password AS Gmail_Password';
 						$SIS_where = 'core_sistemas.idSistema ='.$idSistema;
-						$rowEmpresa = db_select_data (false, $SIS_query, 'core_sistemas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+						$rowEmpresa = db_select_data (false, $SIS_query, 'core_sistemas','', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 						//Prioridad
 						$rowPrioridad = db_select_data (false, 'Nombre', 'core_ot_prioridad', '', 'idPrioridad='.$idPrioridad, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 						//Area
 						$rowArea = db_select_data (false, 'Nombre', 'crosstech_gestion_tickets_area', '', 'idArea='.$idArea, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 						//Cliente
 						$rowCliente = db_select_data (false, 'Nombre,RazonSocial,email', 'clientes_listado', '', 'idCliente='.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						
 						/*********************************************************************/
-						//Se crea el cuerpo	del correo al cliente
+						//Se crea el cuerpodel correo al cliente
 						$BodyMail_Cliente  = '<div style="background-color: #D9D9D9; padding: 10px;">';
 						$BodyMail_Cliente .= '<img src="http://clientes.crosstech.cl/img/login_logo.png" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
 						$BodyMail_Cliente .= '<h3 style="text-align: center;font-size: 30px;">';
@@ -166,8 +165,8 @@ require_once '0_validate_user_1.php';
 						$BodyMail_Cliente .= '<br/>';
 						$BodyMail_Cliente .= '<p style="text-align: left;font-size: 14px;">Este correo se ha enviado automáticamente, no responder.</p>';
 						$BodyMail_Cliente .= '</div>';
-						
-						//Se crea el cuerpo	del correo al usuario			
+
+						//Se crea el cuerpodel correo al usuario			
 						$BodyMail_Usuario  = '<div style="background-color: #D9D9D9; padding: 10px;">';
 						$BodyMail_Usuario .= '<img src="http://clientes.crosstech.cl/img/login_logo.png" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
 						$BodyMail_Usuario .= '<h3 style="text-align: center;font-size: 30px;">';
@@ -215,12 +214,12 @@ require_once '0_validate_user_1.php';
 							foreach($arrUsuario as $usuario) {
 								
 								/***********************************************/
-								if(isset($idSistema) && $idSistema != ''){                         $SIS_data  = "'".$idSistema."'" ;               }else{$SIS_data  = "''";}
-								if(isset($usuario['idUsuario']) && $usuario['idUsuario'] != ''){   $SIS_data .= ",'".$usuario['idUsuario']."'" ;   }else{$SIS_data .= ",''";}
-								if(isset($Notificacion) && $Notificacion != ''){                   $SIS_data .= ",'".$Notificacion."'" ;           }else{$SIS_data .= ",''";}
-								if(isset($Creacion_fecha) && $Creacion_fecha != ''){               $SIS_data .= ",'".$Creacion_fecha."'" ;         }else{$SIS_data .= ",''";}
-								if(isset($Estado) && $Estado != ''){                               $SIS_data .= ",'".$Estado."'" ;                 }else{$SIS_data .= ",''";}
-								$SIS_data .= ",'".hora_actual()."'" ;
+								if(isset($idSistema) && $idSistema!=''){       $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
+								if(isset($usuario['idUsuario']) && $usuario['idUsuario']!=''){   $SIS_data .= ",'".$usuario['idUsuario']."'";   }else{$SIS_data .= ",''";}
+								if(isset($Notificacion) && $Notificacion!=''){                   $SIS_data .= ",'".$Notificacion."'";           }else{$SIS_data .= ",''";}
+								if(isset($Creacion_fecha) && $Creacion_fecha!=''){               $SIS_data .= ",'".$Creacion_fecha."'";         }else{$SIS_data .= ",''";}
+								if(isset($Estado) && $Estado!=''){                               $SIS_data .= ",'".$Estado."'";                 }else{$SIS_data .= ",''";}
+								$SIS_data .= ",'".hora_actual()."'";
 								
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idSistema,idUsuario,Notificacion, Fecha, idEstado, Hora';
@@ -248,42 +247,42 @@ require_once '0_validate_user_1.php';
 					//se redirecciona
 					header( 'Location: '.$location.'&created=true' );
 					die;
-					
+
 				}
 			}
-	
-		break;	
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+
+		break;
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idTicket='".$idTicket."'" ;
-				if(isset($idSistema) && $idSistema != ''){                             $SIS_data .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idCliente) && $idCliente != ''){                             $SIS_data .= ",idCliente='".$idCliente."'" ;}
-				if(isset($idTipoTicket) && $idTipoTicket != ''){                       $SIS_data .= ",idTipoTicket='".$idTipoTicket."'" ;}
-				if(isset($Titulo) && $Titulo != ''){                                   $SIS_data .= ",Titulo='".$Titulo."'" ;}
-				if(isset($Descripcion) && $Descripcion != ''){                         $SIS_data .= ",Descripcion='".$Descripcion."'" ;}
-				if(isset($idEstado) && $idEstado != ''){                               $SIS_data .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idPrioridad) && $idPrioridad != ''){                         $SIS_data .= ",idPrioridad='".$idPrioridad."'" ;}
-				if(isset($FechaCreacion) && $FechaCreacion != ''){                     $SIS_data .= ",FechaCreacion='".$FechaCreacion."'" ;}
-				if(isset($FechaCierre) && $FechaCierre != ''){                         $SIS_data .= ",FechaCierre='".$FechaCierre."'" ;}
-				if(isset($idUsuarioAsignado) && $idUsuarioAsignado != ''){             $SIS_data .= ",idUsuarioAsignado='".$idUsuarioAsignado."'" ;}
-				if(isset($idArea) && $idArea != ''){                                   $SIS_data .= ",idArea='".$idArea."'" ;}
-				if(isset($DescripcionCierre) && $DescripcionCierre != ''){             $SIS_data .= ",DescripcionCierre='".$DescripcionCierre."'" ;}
-				if(isset($FechaCancelacion) && $FechaCancelacion != ''){               $SIS_data .= ",FechaCancelacion='".$FechaCancelacion."'" ;}
-				if(isset($DescripcionCancelacion) && $DescripcionCancelacion != ''){   $SIS_data .= ",DescripcionCancelacion='".$DescripcionCancelacion."'" ;}
-				
+				$SIS_data = "idTicket='".$idTicket."'";
+				if(isset($idSistema) && $idSistema!=''){           $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idCliente) && $idCliente!=''){                             $SIS_data .= ",idCliente='".$idCliente."'";}
+				if(isset($idTipoTicket) && $idTipoTicket!=''){                       $SIS_data .= ",idTipoTicket='".$idTipoTicket."'";}
+				if(isset($Titulo) && $Titulo!=''){                                   $SIS_data .= ",Titulo='".$Titulo."'";}
+				if(isset($Descripcion) && $Descripcion!=''){                         $SIS_data .= ",Descripcion='".$Descripcion."'";}
+				if(isset($idEstado) && $idEstado!=''){                              $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idPrioridad) && $idPrioridad!=''){                        $SIS_data .= ",idPrioridad='".$idPrioridad."'";}
+				if(isset($FechaCreacion) && $FechaCreacion!=''){                     $SIS_data .= ",FechaCreacion='".$FechaCreacion."'";}
+				if(isset($FechaCierre) && $FechaCierre!=''){                         $SIS_data .= ",FechaCierre='".$FechaCierre."'";}
+				if(isset($idUsuarioAsignado) && $idUsuarioAsignado!=''){             $SIS_data .= ",idUsuarioAsignado='".$idUsuarioAsignado."'";}
+				if(isset($idArea) && $idArea!=''){                                   $SIS_data .= ",idArea='".$idArea."'";}
+				if(isset($DescripcionCierre) && $DescripcionCierre!=''){             $SIS_data .= ",DescripcionCierre='".$DescripcionCierre."'";}
+				if(isset($FechaCancelacion) && $FechaCancelacion!=''){               $SIS_data .= ",FechaCancelacion='".$FechaCancelacion."'";}
+				if(isset($DescripcionCancelacion) && $DescripcionCancelacion!=''){   $SIS_data .= ",DescripcionCancelacion='".$DescripcionCancelacion."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'crosstech_gestion_tickets', 'idTicket = "'.$idTicket.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					/*********************************************************************/
 					//Ticket
 					$SIS_query = '
@@ -302,7 +301,7 @@ require_once '0_validate_user_1.php';
 					crosstech_gestion_tickets_area.Nombre AS Area,
 					clientes_listado.Nombre AS ClienteNombre,
 					clientes_listado.email AS ClienteEmail,
-					core_sistemas.Nombre AS EmpresaNombre, 
+					core_sistemas.Nombre AS EmpresaNombre,
 					core_sistemas.email_principal AS EmpresaEmail, 
 					core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, 
 					core_sistemas.Config_Gmail_Password AS Gmail_Password
@@ -350,17 +349,17 @@ require_once '0_validate_user_1.php';
 						$SIS_order  = 'crosstech_gestion_tickets_area_correos.idUsuario ASC';
 						$arrUsuario = array();
 						$arrUsuario = db_select_array (false, $SIS_query, 'crosstech_gestion_tickets_area_correos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 						//datos	
 						switch ($idEstado) {
-							case 1: $Mensaje = 'Ticket N°'.n_doc($idTicket, 8).' Modificado'; $Detalles = '';                       $fMod = fecha_actual();     break;//Abierto
+							case 1: $Mensaje = 'Ticket N°'.n_doc($idTicket, 8).' Modificado'; $Detalles = '';                  $fMod = fecha_actual();     break;//Abierto
 							case 2: $Mensaje = 'Ticket N°'.n_doc($idTicket, 8).' Cerrado';    $Detalles = $DescripcionCierre;       $fMod = $FechaCierre;       break;//Ejecutado
 							case 3: $Mensaje = 'Ticket N°'.n_doc($idTicket, 8).' Cancelado';  $Detalles = $DescripcionCancelacion;  $fMod = $FechaCancelacion;  break;//Cancelado
 						
-						}	
-						
+						}
+
 						/*********************************************************************/
-						//Se crea el cuerpo	del correo al cliente
+						//Se crea el cuerpodel correo al cliente
 						$BodyMail_top     = '<div style="background-color: #D9D9D9; padding: 10px;">';
 						$BodyMail_top    .= '<img src="http://clientes.crosstech.cl/img/login_logo.png" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
 						$BodyMail_top    .= '<h3 style="text-align: center;font-size: 30px;">';
@@ -396,8 +395,8 @@ require_once '0_validate_user_1.php';
 							$BodyMail .= $BodyMail_cliente;
 							$BodyMail .= $BodyMail_bottom;
 							//envio del correo
-							$rmail = tareas_envio_correo($EmpresaEmail, $EmpresaNombre, 
-														$ClienteEmail, $ClienteNombre, 
+							$rmail = tareas_envio_correo($EmpresaEmail, $EmpresaNombre,
+														$ClienteEmail, $ClienteNombre,
 														'', '', 
 														$Mensaje, 
 														$BodyMail,'', 
@@ -409,19 +408,19 @@ require_once '0_validate_user_1.php';
 							log_response(1, $rmail, $ClienteEmail.' (Asunto:'.$Mensaje.')');							
 								
 						}
-						
+
 						/*********************************************************************/
 						//Se envia mensaje a los usuarios relacionados al area
 						if ($arrUsuario!=false && !empty($arrUsuario) && $arrUsuario!='') {
 							foreach($arrUsuario as $usuario) {
 								
 								/***********************************************/
-								if(isset($idSistema) && $idSistema != ''){                         $SIS_data  = "'".$idSistema."'" ;               }else{$SIS_data  = "''";}
-								if(isset($usuario['idUsuario']) && $usuario['idUsuario'] != ''){   $SIS_data .= ",'".$usuario['idUsuario']."'" ;   }else{$SIS_data .= ",''";}
-								if(isset($Notificacion) && $Notificacion != ''){                   $SIS_data .= ",'".$Notificacion."'" ;           }else{$SIS_data .= ",''";}
-								if(isset($Creacion_fecha) && $Creacion_fecha != ''){               $SIS_data .= ",'".$Creacion_fecha."'" ;         }else{$SIS_data .= ",''";}
-								if(isset($Estado) && $Estado != ''){                               $SIS_data .= ",'".$Estado."'" ;                 }else{$SIS_data .= ",''";}
-								$SIS_data .= ",'".hora_actual()."'" ;
+								if(isset($idSistema) && $idSistema!=''){       $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
+								if(isset($usuario['idUsuario']) && $usuario['idUsuario']!=''){   $SIS_data .= ",'".$usuario['idUsuario']."'";   }else{$SIS_data .= ",''";}
+								if(isset($Notificacion) && $Notificacion!=''){                   $SIS_data .= ",'".$Notificacion."'";           }else{$SIS_data .= ",''";}
+								if(isset($Creacion_fecha) && $Creacion_fecha!=''){               $SIS_data .= ",'".$Creacion_fecha."'";         }else{$SIS_data .= ",''";}
+								if(isset($Estado) && $Estado!=''){                               $SIS_data .= ",'".$Estado."'";                 }else{$SIS_data .= ",''";}
+								$SIS_data .= ",'".hora_actual()."'";
 								
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idSistema,idUsuario,Notificacion, Fecha, idEstado, Hora';
@@ -435,7 +434,7 @@ require_once '0_validate_user_1.php';
 									$BodyMail .= $BodyMail_user;
 									$BodyMail .= $BodyMail_bottom;
 									//envio del correo
-									$rmail = tareas_envio_correo($EmpresaEmail, $EmpresaNombre, 
+									$rmail = tareas_envio_correo($EmpresaEmail, $EmpresaNombre,
 																$usuario['UsuarioEmail'], $usuario['UsuarioNombre'], 
 																'', '', 
 																$Mensaje, 
@@ -457,23 +456,21 @@ require_once '0_validate_user_1.php';
 					//se redirecciona
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
-		break;	
 
-						
+		break;
+
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -481,41 +478,38 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'crosstech_gestion_tickets', 'idTicket = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-			
 
-		break;							
-				
+		break;
+
 /*******************************************************************************************************************/
 	}
 ?>

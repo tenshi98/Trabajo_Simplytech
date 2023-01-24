@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_gerencial_20.php";
 $location = $original;  
 //Se agregan ubicaciones
@@ -24,10 +24,10 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) {            
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){          
 //Consulto el nombre del cliente
-$query = "SELECT Nombre, RazonSocial
+$query = "SELECT Nombre,RazonSocial
 FROM `clientes_listado`
 WHERE idCliente=".$_GET['idCliente'];
 //Consulta
@@ -76,7 +76,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCountOT,$row );
 } 
 
@@ -106,7 +106,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCountType,$row );
 } 
 
@@ -134,7 +134,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCountMaq,$row );
 }
 
@@ -180,7 +180,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrOT,$row );
 } 
 
@@ -218,7 +218,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrOT2,$row );
 }
 
@@ -256,7 +256,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrInsumos,$row );
 }
 
@@ -292,7 +292,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrInsumos2,$row );
 }
 ?>
@@ -300,7 +300,7 @@ array_push( $arrInsumos2,$row );
 <h2 align="center">Resumen entre fechas <?php echo fecha_estandar($_GET['f_inicio']).' al '.fecha_estandar($_GET['f_termino']).' del cliente '.$rowCliente['Nombre']; ?></h2>
 
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen por Estado</h5>
@@ -323,18 +323,18 @@ array_push( $arrInsumos2,$row );
 								<td><?php echo $count['Estado']; ?></td>
 								<td><?php echo $count['Cuenta']; ?></td>
 							</tr>
-						<?php } ?>  
+						<?php } ?>
 						<tr class="odd">
 							<td>Total de OT</td>
 							<td><?php echo $total; ?></td>
-						</tr>                  
+						</tr>
 					</tbody>
 				</table>
-			</div>	
+			</div>
 		</div>
 	</div>
 	
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Graficos</h5>
@@ -362,7 +362,7 @@ array_push( $arrInsumos2,$row );
 				  }
 				</script>
 				<div id="piechart_3d_1" style="width: 100%; height: 300px;"></div>
-			</div>	
+			</div>
 		</div>
 	</div>
 </div>	
@@ -370,7 +370,7 @@ array_push( $arrInsumos2,$row );
 
 
 <div class="row">	
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen por Tipo</h5>
@@ -394,18 +394,18 @@ array_push( $arrInsumos2,$row );
 							<td><?php echo $count['Tipo']; ?></td>
 							<td><?php echo $count['Cuenta']; ?></td>
 						</tr>
-						<?php } ?>  
+						<?php } ?>
 						<tr class="odd">
 							<td colspan="2">Total de OT</td>
 							<td><?php echo $total; ?></td>
-						</tr>                  
+						</tr>
 					</tbody>
 				</table>
-			</div>	
+			</div>
 		</div>
 	</div>
 	
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Graficos</h5>
@@ -432,7 +432,7 @@ array_push( $arrInsumos2,$row );
 				</script>
 				<div id="piechart_3d_2" style="width: 100%; height: 300px;"></div>
 				
-			</div>	
+			</div>
 		</div>
 	</div>
 </div>
@@ -440,7 +440,7 @@ array_push( $arrInsumos2,$row );
 
 
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen por Maquina</h5>
@@ -464,18 +464,18 @@ array_push( $arrInsumos2,$row );
 							<td><?php echo $count['Maquina']; ?></td>
 							<td><?php echo $count['Cuenta']; ?></td>
 						</tr>
-						<?php } ?>  
+						<?php } ?>
 						<tr class="odd">
 							<td colspan="2">Total de OT</td>
 							<td><?php echo $total; ?></td>
-						</tr>                  
+						</tr>
 					</tbody>
 				</table>
-			</div>	
+			</div>
 		</div>
 	</div>
 	
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen</h5>
@@ -502,7 +502,7 @@ array_push( $arrInsumos2,$row );
 				</script>
 				<div id="piechart_3d_3" style="width: 100%; height: 300px;"></div>
 				
-			</div>	
+			</div>
 		</div>
 	</div>
 </div>
@@ -510,7 +510,7 @@ array_push( $arrInsumos2,$row );
 
 
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo General de Productos Valorizado</h5>
@@ -529,10 +529,10 @@ array_push( $arrInsumos2,$row );
 						<?php 
 						foreach ($arrOT as $consumos) { 
 							$cantidad = 0;
-							if(isset($consumos['Grasa_inicial'])&&$consumos['Grasa_inicial']!=0){              $cantidad = $consumos['Grasa_inicial'];}
-							if(isset($consumos['Grasa_relubricacion'])&&$consumos['Grasa_relubricacion']!=0){  $cantidad = $consumos['Grasa_relubricacion'];}
-							if(isset($consumos['Aceite'])&&$consumos['Aceite']!=0){                            $cantidad = $consumos['Aceite'];}
-							if(isset($consumos['Cantidad'])&&$consumos['Cantidad']!=0){                        $cantidad = $consumos['Cantidad'];}
+							if(isset($consumos['Grasa_inicial'])&&$consumos['Grasa_inicial']!=0){          $cantidad = $consumos['Grasa_inicial'];}
+							if(isset($consumos['Grasa_relubricacion'])&&$consumos['Grasa_relubricacion']!=0){ $cantidad = $consumos['Grasa_relubricacion'];}
+							if(isset($consumos['Aceite'])&&$consumos['Aceite']!=0){                        $cantidad = $consumos['Aceite'];}
+							if(isset($consumos['Cantidad'])&&$consumos['Cantidad']!=0){                    $cantidad = $consumos['Cantidad'];}
 								
 							if($cantidad!=0){ ?>
 								<tr class="odd">
@@ -542,14 +542,14 @@ array_push( $arrInsumos2,$row );
 								</tr>
 						<?php 
 							} 
-						} ?>                    
+						} ?>        
 					</tbody>
 				</table>
-			</div>	
+			</div>
 		</div>
 	</div>
 	
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen</h5>
@@ -562,10 +562,10 @@ array_push( $arrInsumos2,$row );
 					  ['Ordenes', 'Valor']
 					  <?php foreach ($arrOT as $consumos) {  
 							$cantidad = 0;
-							if(isset($consumos['Grasa_inicial'])&&$consumos['Grasa_inicial']!=0){              $cantidad = $consumos['Grasa_inicial'];}
-							if(isset($consumos['Grasa_relubricacion'])&&$consumos['Grasa_relubricacion']!=0){  $cantidad = $consumos['Grasa_relubricacion'];}
-							if(isset($consumos['Aceite'])&&$consumos['Aceite']!=0){                            $cantidad = $consumos['Aceite'];}
-							if(isset($consumos['Cantidad'])&&$consumos['Cantidad']!=0){                        $cantidad = $consumos['Cantidad'];}
+							if(isset($consumos['Grasa_inicial'])&&$consumos['Grasa_inicial']!=0){          $cantidad = $consumos['Grasa_inicial'];}
+							if(isset($consumos['Grasa_relubricacion'])&&$consumos['Grasa_relubricacion']!=0){ $cantidad = $consumos['Grasa_relubricacion'];}
+							if(isset($consumos['Aceite'])&&$consumos['Aceite']!=0){                        $cantidad = $consumos['Aceite'];}
+							if(isset($consumos['Cantidad'])&&$consumos['Cantidad']!=0){                    $cantidad = $consumos['Cantidad'];}
 							
 							if($cantidad!=0){ ?>
 							
@@ -586,14 +586,14 @@ array_push( $arrInsumos2,$row );
 				</script>
 				<div id="piechart_3d_4" style="width: 100%; height: 300px;"></div>
 				
-			</div>	
+			</div>
 		</div>
 	</div>
 </div>
 
 <?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?> 
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
 				<header>
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo de Productos Detallado</h5>
@@ -616,10 +616,10 @@ array_push( $arrInsumos2,$row );
 								echo '<tr class="odd" ><td colspan="5"  style="background-color:#DDD">Area : '.$consumo[0]['Area'].'</td></tr>';
 								foreach ($consumo as $consumos) { 
 									$cantidad = 0;
-									if(isset($consumos['Grasa_inicial'])&&$consumos['Grasa_inicial']!=0){              $cantidad = $consumos['Grasa_inicial'];}
-									if(isset($consumos['Grasa_relubricacion'])&&$consumos['Grasa_relubricacion']!=0){  $cantidad = $consumos['Grasa_relubricacion'];}
-									if(isset($consumos['Aceite'])&&$consumos['Aceite']!=0){                            $cantidad = $consumos['Aceite'];}
-									if(isset($consumos['Cantidad'])&&$consumos['Cantidad']!=0){                        $cantidad = $consumos['Cantidad'];}
+									if(isset($consumos['Grasa_inicial'])&&$consumos['Grasa_inicial']!=0){          $cantidad = $consumos['Grasa_inicial'];}
+									if(isset($consumos['Grasa_relubricacion'])&&$consumos['Grasa_relubricacion']!=0){ $cantidad = $consumos['Grasa_relubricacion'];}
+									if(isset($consumos['Aceite'])&&$consumos['Aceite']!=0){                        $cantidad = $consumos['Aceite'];}
+									if(isset($consumos['Cantidad'])&&$consumos['Cantidad']!=0){                    $cantidad = $consumos['Cantidad'];}
 									
 									if($cantidad!=0){ ?>
 										<tr class="odd">
@@ -629,14 +629,14 @@ array_push( $arrInsumos2,$row );
 											<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>
 								<?php 
-									} 
+									}
 								}
 							} 
 							
-							?>                    
+							?>          
 						</tbody>
 					</table>
-				</div>	
+				</div>
 			</div>
 		</div>
 	</div>
@@ -644,7 +644,7 @@ array_push( $arrInsumos2,$row );
 
 
 <div class="row">
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo General de Insumos Valorizado</h5>
@@ -671,11 +671,11 @@ array_push( $arrInsumos2,$row );
 						<?php }  ?>                    
 					</tbody>
 				</table>
-			</div>	
+			</div>
 		</div>
 	</div>
 	
-	<div class="col-sm-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resumen</h5>
@@ -702,14 +702,14 @@ array_push( $arrInsumos2,$row );
 				</script>
 				<div id="piechart_3d_5" style="width: 100%; height: 300px;"></div>
 				
-			</div>	
+			</div>
 		</div>
 	</div>
 </div>
  
 <?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?> 
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
 				<header>
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consumo de Insumos Detallado</h5>
@@ -744,55 +744,55 @@ array_push( $arrInsumos2,$row );
 								}
 							} 
 							
-							?>                    
+							?>          
 						</tbody>
 					</table>
-				</div>	
+				</div>
 			</div>
 		</div>
 	</div>
 <?php } ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;    }else{$x1  = '';}
-				if(isset($f_termino)) {     $x2  = $f_termino;   }else{$x2  = '';}
-				if(isset($idCliente)) {     $x3  = $idCliente;   }else{$x3  = '';}
-				
+				if(isset($f_inicio)){      $x1  = $f_inicio;    }else{$x1  = '';}
+				if(isset($f_termino)){     $x2  = $f_termino;   }else{$x2  = '';}
+				if(isset($idCliente)){     $x3  = $idCliente;   }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x3, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 						
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
 						  
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

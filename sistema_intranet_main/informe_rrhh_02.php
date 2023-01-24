@@ -10,13 +10,13 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_rrhh_02.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){         $search .="&idCliente=".$_GET['idCliente'];}
-if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){                 $search .="&N_Doc=".$_GET['N_Doc'];}
+if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){ $search .="&idCliente=".$_GET['idCliente'];}
+if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){         $search .="&N_Doc=".$_GET['N_Doc'];}
 if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
 	$search .="&f_creacion_inicio=".$_GET['f_creacion_inicio'];
 	$search .="&f_creacion_termino=".$_GET['f_creacion_termino'];
@@ -30,19 +30,19 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 //Variable de busqueda
 $z1 = "rrhh_sueldos_facturacion_trabajadores.idFactTrab!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z1.=" AND rrhh_sueldos_facturacion_trabajadores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z1.=" AND rrhh_sueldos_facturacion_trabajadores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //filtrado por estado
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){   
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){  
 	$z1.=" AND rrhh_sueldos_facturacion_trabajadores.idEstado=".$_GET['idEstado'];
 }
 //filtrado por trabajador
-if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){   
+if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){  
 	$z1.=" AND rrhh_sueldos_facturacion_trabajadores.idTrabajador=".$_GET['idTrabajador'];
 }
 //filtrado por fecha de facturacion
@@ -50,11 +50,11 @@ if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GE
 	$z1.=" AND rrhh_sueldos_facturacion_trabajadores.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
 }
 //filtrado por año
-if(isset($_GET['Creacion_ano'])&&$_GET['Creacion_ano']!=''){   
+if(isset($_GET['Creacion_ano'])&&$_GET['Creacion_ano']!=''){  
 	$z1.=" AND rrhh_sueldos_facturacion_trabajadores.Creacion_ano=".$_GET['Creacion_ano'];
 }
 //filtrado por mes
-if(isset($_GET['Creacion_mes'])&&$_GET['Creacion_mes']!=''){   
+if(isset($_GET['Creacion_mes'])&&$_GET['Creacion_mes']!=''){  
 	$z1.=" AND rrhh_sueldos_facturacion_trabajadores.idTrabajador=".$_GET['Creacion_mes'];
 }
 				
@@ -65,12 +65,12 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Liquidaciones</h5>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -107,7 +107,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 						<?php 
 								}
 						} 
-					?>           
+					?>  
 				</tbody>
 			</table>
 		</div>
@@ -116,33 +116,33 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idEstado)) {             $x1 = $idEstado;            }else{$x1 = '';}
-				if(isset($idTrabajador)) {         $x2 = $idTrabajador;        }else{$x2 = '';}
-				if(isset($f_creacion_inicio)) {    $x3 = $f_creacion_inicio;   }else{$x3 = '';}
-				if(isset($f_creacion_termino)) {   $x4 = $f_creacion_termino;  }else{$x4 = '';}
-				if(isset($Creacion_ano)) {         $x5 = $Creacion_ano;        }else{$x5 = '';}
-				if(isset($Creacion_mes)) {         $x6 = $Creacion_mes;        }else{$x6 = '';}
-				
+				if(isset($idEstado)){             $x1 = $idEstado;            }else{$x1 = '';}
+				if(isset($idTrabajador)){         $x2 = $idTrabajador;        }else{$x2 = '';}
+				if(isset($f_creacion_inicio)){    $x3 = $f_creacion_inicio;   }else{$x3 = '';}
+				if(isset($f_creacion_termino)){   $x4 = $f_creacion_termino;  }else{$x4 = '';}
+				if(isset($Creacion_ano)){         $x5 = $Creacion_ano;        }else{$x5 = '';}
+				if(isset($Creacion_mes)){         $x6 = $Creacion_mes;        }else{$x6 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Estado','idEstado', $x1, 1, 'idEstado', 'Nombre', 'core_estado_facturacion', 'idEstado!=3', '', $dbConn);
@@ -152,14 +152,14 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_n_auto('Año','Creacion_ano', $x5, 1, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Mes','Creacion_mes', $x6, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 						
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

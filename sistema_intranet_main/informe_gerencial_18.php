@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_gerencial_18.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -24,15 +24,15 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /*************************************************************/
 //se traen los datos basicos de la licitacion
 $query = "SELECT 
 licitacion_listado.idEstado,
 licitacion_listado.idSistema,
 licitacion_listado.Codigo,
-licitacion_listado.Nombre, 
+licitacion_listado.Nombre,
 licitacion_listado.FechaInicio, 
 licitacion_listado.FechaTermino, 
 core_estado_aprobacion.Nombre AS Estado,
@@ -115,7 +115,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrLicitacion,$row );
 }
 
@@ -311,7 +311,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrUML,$row );
 }
 $UML = array();
@@ -346,7 +346,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrOTRealizadas,$row );
 }	
 $OTRealizadas = array();
@@ -389,7 +389,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrFlujo,$row );
 }
 //otras variables
@@ -443,7 +443,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCompProd,$row );
 }
 //arreglo	
@@ -490,7 +490,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCompIns,$row );
 }
 //arreglo	
@@ -544,7 +544,7 @@ if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''&&$rowdata['idCliente'
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
+	while ( $row = mysqli_fetch_assoc ($resultado)){
 	array_push( $arrFacCliente,$row );
 	}
 	//arreglo	
@@ -563,7 +563,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
     foreach ($array as $key => $value){
 		
 	
-        if (isset($value['Nombre'])) {
+        if (isset($value['Nombre'])){
 			echo '<tr>';
 				//agrego los espacios a la izquierda
 				for ($zxi = 1; $zxi < $value['lvl']; $zxi++) {
@@ -571,13 +571,13 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 				}
 				$cols = $nmax-$zxi+1;
 				echo '<td colspan="'.$cols.'">'.$value['Codigo'].' - '.$value['Nombre'].'</td>';
-				if($value['Cantidad']!=0){   echo '<td align="right">'.$value['Cantidad'].'</td>';               }else{echo '<td></td>';}
-				if($value['Valor']!=0){      echo '<td align="right">'.valores($value['Valor'], 0).'</td>';      }else{echo '<td></td>';}
-				if($value['ValorTotal']!=0){ echo '<td align="right">'.valores($value['ValorTotal'], 0).'</td>'; }else{echo '<td></td>';}
-				
+				if($value['Cantidad']!=0){echo '<td align="right">'.$value['Cantidad'].'</td>';               }else{echo '<td></td>';}
+				if($value['Valor']!=0){  echo '<td align="right">'.valores($value['Valor'], 0).'</td>';      }else{echo '<td></td>';}
+				if($value['ValorTotal']!=0){echo '<td align="right">'.valores($value['ValorTotal'], 0).'</td>';}else{echo '<td></td>';}
+
 				if(isset($OTRealizadas[$value['lvl']][$value['id']]['Cuenta'])&&$OTRealizadas[$value['lvl']][$value['id']]['Cuenta']!=0){
 					echo '<td align="right">'.$OTRealizadas[$value['lvl']][$value['id']]['Cuenta'].'</td>';
-					if($value['Valor']!=0){      
+					if($value['Valor']!=0){  
 						//Se hacen calculos
 						$total = $value['Valor']*$OTRealizadas[$value['lvl']][$value['id']]['Cuenta'];
 						$porcentaje = ($total*100)/$value['ValorTotal'];
@@ -619,7 +619,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
     foreach ($array as $key => $value){
 		
 	
-        if (isset($value['Nombre'])) {
+        if (isset($value['Nombre'])){
 			echo '<tr>';
 				//agrego los espacios a la izquierda
 				for ($zxi = 1; $zxi < $value['lvl']; $zxi++) {
@@ -627,7 +627,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 				}
 				$cols = $nmax-$zxi+1;
 				echo '<td colspan="'.$cols.'">'.$value['Codigo'].' - '.$value['Nombre'].'</td>';
-				
+
 				//Recorro los años
 				$interruptor_mes = 0;
 				
@@ -639,7 +639,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 						for ($z_mes = $mes_min; $z_mes <= 12; $z_mes++) {
 							if(isset($FlujoMensual[$value['lvl']][$value['id']][$z_ano][$z_mes]['Cuenta'])&&$FlujoMensual[$value['lvl']][$value['id']][$z_ano][$z_mes]['Cuenta']!=0){
 					
-								if($value['Valor']!=0){      
+								if($value['Valor']!=0){  
 									//Se hacen calculos
 									$total = $value['Valor']*$FlujoMensual[$value['lvl']][$value['id']][$z_ano][$z_mes]['Cuenta'];
 									$suma_real = $suma_real + $total;
@@ -660,7 +660,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 						for ($z_mes = 1; $z_mes <= 12; $z_mes++) {
 							if(isset($FlujoMensual[$value['lvl']][$value['id']][$z_ano][$z_mes]['Cuenta'])&&$FlujoMensual[$value['lvl']][$value['id']][$z_ano][$z_mes]['Cuenta']!=0){
 					
-								if($value['Valor']!=0){      
+								if($value['Valor']!=0){  
 									//Se hacen calculos
 									$total = $value['Valor']*$FlujoMensual[$value['lvl']][$value['id']][$z_ano][$z_mes]['Cuenta'];
 									$suma_real = $suma_real + $total;
@@ -680,13 +680,13 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 					}
 					
 					//Total Programado
-					if($value['ValorTotal']!=0){ echo '<td align="right">'.valores($value['ValorTotal'], 0).'</td>'; }else{echo '<td></td>';}
+					if($value['ValorTotal']!=0){echo '<td align="right">'.valores($value['ValorTotal'], 0).'</td>';}else{echo '<td></td>';}
 					
 					//Total real
 					echo '<td align="right">'.valores($suma_real, 0).'</td>';
 					
 					//porcentaje cumplimiento
-					if($value['ValorTotal']!=0){ 
+					if($value['ValorTotal']!=0){
 						
 						$porcentaje = 0;
 						if(isset($suma_real)&&$suma_real!=0){
@@ -718,13 +718,13 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Cumplimiento del Contrato</h5>	
+			<h5>Cumplimiento del Contrato</h5>
 		</header>
-		<div id="div-3" class="tab-content">
+		<div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
@@ -745,7 +745,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 								<td><?php echo $rowdata['Sistema'];?></td>
 							</tr>
 							
-							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
+							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
 								<tr class="odd">
 									<td>Cliente</td>
 									<td><?php echo $rowdata['Cliente'];?></td>
@@ -770,10 +770,10 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 							</tr>
 							
 						</tbody>
-					</table>	
+					</table>
 						
 						
-					<div class="table-responsive">		
+					<div class="table-responsive">	
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 											  
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -810,18 +810,18 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 	</div>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Flujo Mensual Cumplimiento del Contrato</h5>	
+			<h5>Flujo Mensual Cumplimiento del Contrato</h5>
 		</header>
-		<div id="div-3" class="tab-content">
+		<div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 						
-					<div class="table-responsive">		
+					<div class="table-responsive">	
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 											  
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -888,7 +888,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 								<?php 
 								/******************************************************************************/
 								//Verifico si hay resultados
-								if($CompProd){ ?>	
+								if($CompProd){ ?>
 									<tr>
 										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Productos Utilizados</td>
 										<?php
@@ -915,7 +915,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
 									
-									<?php foreach ($CompProd as $prod) {  ?>
+									<?php foreach ($CompProd as $prod) { ?>
 										<tr>
 											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
 											
@@ -958,7 +958,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 								}
 								/******************************************************************************/
 								//Verifico si hay resultados
-								if($CompIns){ ?>	
+								if($CompIns){ ?>
 									<tr>
 										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Insumos Utilizados</td>
 										<?php
@@ -985,7 +985,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
 									
-									<?php foreach ($CompIns as $prod) {  ?>
+									<?php foreach ($CompIns as $prod) { ?>
 										<tr>
 											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
 											
@@ -1028,7 +1028,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 								}
 								/******************************************************************************/
 								//Verifico si hay resultados
-								if($CompCliente){ ?>	
+								if($CompCliente){ ?>
 									<tr>
 										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Pagos Clientes</td>
 										<?php
@@ -1055,7 +1055,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
 									
-									<?php foreach ($CompCliente as $prod) {  ?>
+									<?php foreach ($CompCliente as $prod) { ?>
 										<tr>
 											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
 											
@@ -1110,25 +1110,25 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 	</div>
 </div>
 	
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Gasto Materiales</h5>	
+			<h5>Gasto Materiales</h5>
 		</header>
-		<div id="div-3" class="tab-content">
+		<div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 						
-					<div class="table-responsive">		
+					<div class="table-responsive">	
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 											  
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php 
 								/******************************************************************************/
 								//Verifico si hay resultados
-								if($CompProd){ ?>	
+								if($CompProd){ ?>
 									<tr>
 										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Productos Utilizados</td>
 										<?php
@@ -1155,7 +1155,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
 									
-									<?php foreach ($CompProd as $prod) {  ?>
+									<?php foreach ($CompProd as $prod) { ?>
 										<tr>
 											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
 											
@@ -1198,7 +1198,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 								}
 								/******************************************************************************/
 								//Verifico si hay resultados
-								if($CompIns){ ?>	
+								if($CompIns){ ?>
 									<tr>
 										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Insumos Utilizados</td>
 										<?php
@@ -1225,7 +1225,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
 									
-									<?php foreach ($CompIns as $prod) {  ?>
+									<?php foreach ($CompIns as $prod) { ?>
 										<tr>
 											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
 											
@@ -1265,7 +1265,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 											<td colspan="1" align="center"></td>
 										</tr>
 									<?php }
-								} ?>
+								}?>
 							</tbody>
 						</table>
 					</div>
@@ -1277,25 +1277,25 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 	</div>
 </div>
 	
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Pagos del Cliente</h5>	
+			<h5>Pagos del Cliente</h5>
 		</header>
-		<div id="div-3" class="tab-content">
+		<div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 						
-					<div class="table-responsive">		
+					<div class="table-responsive">	
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 											  
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php 
 								/******************************************************************************/
 								//Verifico si hay resultados
-								if($CompCliente){ ?>	
+								if($CompCliente){ ?>
 									<tr>
 										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Pagos Clientes</td>
 										<?php
@@ -1322,7 +1322,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
 									
-									<?php foreach ($CompCliente as $prod) {  ?>
+									<?php foreach ($CompCliente as $prod) { ?>
 										<tr>
 											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
 											
@@ -1379,31 +1379,31 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 	
     
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //sistema
 $y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";	
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {       $x0  = $idCliente;     }else{$x0  = '';}
-				if(isset($idLicitacion)) {    $x1  = $idLicitacion;  }else{$x1  = '';}
-				
+				if(isset($idCliente)){       $x0  = $idCliente;     }else{$x0  = '';}
+				if(isset($idLicitacion)){    $x1  = $idLicitacion;  }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				if($_SESSION['usuario']['basic_data']['idSistema']==11){
@@ -1411,16 +1411,16 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 											 'Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $w, 0, 
 										      $dbConn, 'form1');
 				}else{
-					$Form_Inputs->form_select_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $y, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $y, '', $dbConn);
 				}
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>          
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_documentos_pagar_01.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -18,12 +18,12 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /********************************************************************/
 //Variables para filtro y paginacion
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idCajaChica']) && $_GET['idCajaChica'] != ''){                            $location .= "&idCajaChica=".$_GET['idCajaChica'];                            $search .= "&idCajaChica=".$_GET['idCajaChica'];}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){                          $location .= "&idTrabajador=".$_GET['idTrabajador'];                          $search .= "&idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){                      $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];                      $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
-if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada'] != ''){  $location .= "&idFacturacionRelacionada=".$_GET['idFacturacionRelacionada'];  $search .= "&idFacturacionRelacionada=".$_GET['idFacturacionRelacionada'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                                      $location .= "&idTipo=".$_GET['idTipo'];                                      $search .= "&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                                  $location .= "&idEstado=".$_GET['idEstado'];                                  $search .= "&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idCajaChica']) && $_GET['idCajaChica']!=''){                     $location .= "&idCajaChica=".$_GET['idCajaChica'];                            $search .= "&idCajaChica=".$_GET['idCajaChica'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){                   $location .= "&idTrabajador=".$_GET['idTrabajador'];                          $search .= "&idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){               $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];                      $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
+if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada']!=''){  $location .= "&idFacturacionRelacionada=".$_GET['idFacturacionRelacionada'];  $search .= "&idFacturacionRelacionada=".$_GET['idFacturacionRelacionada'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                               $location .= "&idTipo=".$_GET['idTipo'];                                      $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){                           $location .= "&idEstado=".$_GET['idEstado'];                                  $search .= "&idEstado=".$_GET['idEstado'];}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -31,14 +31,14 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Se definen las variables
-if(isset($_GET["Mes"])){   $Mes = $_GET["Mes"];   } else { $Mes  = mes_actual(); }
-if(isset($_GET["Ano"])){   $Ano = $_GET["Ano"];   } else { $Ano  = ano_actual(); }
+if(isset($_GET['Mes'])){   $Mes = $_GET['Mes'];   } else { $Mes  = mes_actual();}
+if(isset($_GET['Ano'])){   $Ano = $_GET['Ano'];   } else { $Ano  = ano_actual();}
 $diaActual = dia_actual();
 
 //calculo de los dias del mes, cuando inicia y cuando termina
-$diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
+$diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7;
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
 //todas las empresas
@@ -85,25 +85,25 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCheques,$row );
 }
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
-	<a target="_blank" rel="noopener noreferrer" href="principal_datos_documentos_pago.php" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Configurar Documentos</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
+	<a target="_blank" rel="noopener noreferrer" href="principal_datos_documentos_pago.php" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Configurar Documentos</a>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                  
                                  
-<div class="col-sm-12">
-	<div class="box">	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
 		<header>
 			<?php
-			if(isset($_GET["Ano"])){
-				$Ano_a  = $_GET["Ano"];
-				$Ano_b  = $_GET["Ano"];	
+			if(isset($_GET['Ano'])){
+				$Ano_a  = $_GET['Ano'];
+				$Ano_b  = $_GET['Ano'];
 			} else {
 				$Ano_a  = date("Y");
 				$Ano_b  = date("Y");
@@ -111,13 +111,13 @@ array_push( $arrCheques,$row );
 			if (($Mes-1)==0)  {$mes_atras=12;   $Ano_a=$Ano_a-1;}else{$mes_atras=$Mes-1; }
 			if (($Mes+1)==13) {$mes_adelante=1; $Ano_b=$Ano_b+1;}else{$mes_adelante=$Mes+1; }
 			?>
-			<div class="btn-group fleft" style="width: 35px;" >
+			<div class="btn-group pull-left" style="width: 35px;" >
 				<a href="<?php echo $original.'?Mes='.$mes_atras.'&Ano='.$Ano_a ?>" class="btn btn-default">‹</a>
 			</div>
 			<div class="fcenter" >
 				<h5>Listado de Documentos por pagar <?php echo $meses[$Mes]." ".$Ano?></h5>
 			</div>
-			<div class="btn-group fright" style="width: 35px;" >
+			<div class="btn-group pull-right" style="width: 35px;" >
 				<a href="<?php echo $original.'?Mes='.$mes_adelante.'&Ano='.$Ano_b ?>" class="btn btn-default">›</a>
 			</div>
 			
@@ -143,13 +143,13 @@ array_push( $arrCheques,$row );
 						echo '<tr class="odd" ><td colspan="7"  style="background-color:#DDD"><strong>'.$categoria.'</strong></td></tr>';
 						$subtotal = 0;
 						foreach ($permisos as $cheques) {  ?>
-							<tr class="odd">		
-								<td><?php echo ' N°'.$cheques['N_DocPago']; ?></td>		
-								<td align="right"><?php echo valores($cheques['MontoPagado'], 0);$subtotal = $subtotal + $cheques['MontoPagado'];$total = $total + $cheques['MontoPagado']; ?></td>		
-								<td><?php echo fecha_estandar($cheques['F_Pago']); ?></td>		
-								<td><?php echo $cheques['Proveedor']; ?></td>		
-								<td><?php echo $cheques['TipoDoc']; ?></td>		
-								<td><?php echo $cheques['Sistema']; ?></td>		
+							<tr class="odd">
+								<td><?php echo ' N°'.$cheques['N_DocPago']; ?></td>
+								<td align="right"><?php echo valores($cheques['MontoPagado'], 0);$subtotal = $subtotal + $cheques['MontoPagado'];$total = $total + $cheques['MontoPagado']; ?></td>
+								<td><?php echo fecha_estandar($cheques['F_Pago']); ?></td>
+								<td><?php echo $cheques['Proveedor']; ?></td>
+								<td><?php echo $cheques['TipoDoc']; ?></td>
+								<td><?php echo $cheques['Sistema']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
 										<?php
@@ -176,7 +176,7 @@ array_push( $arrCheques,$row );
 										?>
 										
 									</div>
-								</td>	
+								</td>
 							</tr>
 						<?php }
 						echo '
@@ -194,7 +194,7 @@ array_push( $arrCheques,$row );
 					</tr>'; ?>                  
 				</tbody>
 			</table>
-		</div>  
+		</div> 
 	</div>
 </div>
 

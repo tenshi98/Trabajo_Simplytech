@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistemas.php";
 $location = $original;
 /**********************************************************************************************************************************/
@@ -28,16 +28,16 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sistema editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Inputs Test</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
@@ -47,16 +47,16 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 				
 				/******************************************************************/
 				$Form_Inputs->form_tittle(3, 'SQL Normal');
-				if ( !empty($_POST['submit_test']) )  { 
+				if (!empty($_POST['submit_test'])){
 					
-					if ( !empty($_POST['usuario']) )    $usuario_1   = $_POST['usuario'];
-					if ( !empty($_POST['password']) )   $password_1  = $_POST['password'];
+					if (!empty($_POST['usuario']))    $usuario_1   = $_POST['usuario'];
+					if (!empty($_POST['password']))   $password_1  = $_POST['password'];
 					
 					// consulto los datos
 					$query = "SELECT  
 					usuarios_listado.password, 
-					usuarios_listado.usuario, 
-					usuarios_listado.Nombre, 
+					usuarios_listado.usuario,
+					usuarios_listado.Nombre,
 					usuarios_tipos.Nombre AS Usuario_Tipo
 
 					FROM `usuarios_listado`
@@ -76,22 +76,22 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 						var_dump($_POST);
 					echo '</pre>';
 				}
-				
+
 				/******************************************************************/
 				$Form_Inputs->form_tittle(3, 'SQL Sanitizado');
 				//se sanitiza
 				$_POST = SanitizarDatos($_POST);
 				
-				if ( !empty($_POST['submit_test']) )  { 
+				if (!empty($_POST['submit_test'])){
 					
-					if ( !empty($_POST['usuario']) )    $usuario_2    = $_POST['usuario'];
-					if ( !empty($_POST['password']) )   $password_2   = $_POST['password'];
+					if (!empty($_POST['usuario']))    $usuario_2    = $_POST['usuario'];
+					if (!empty($_POST['password']))   $password_2   = $_POST['password'];
 					
 					// consulto los datos
 					$query = "SELECT  
 					usuarios_listado.password, 
-					usuarios_listado.usuario, 
-					usuarios_listado.Nombre, 
+					usuarios_listado.usuario,
+					usuarios_listado.Nombre,
 					usuarios_tipos.Nombre AS Usuario_Tipo
 
 					FROM `usuarios_listado`
@@ -121,14 +121,14 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 				$Form_Inputs->form_input_text('Password', 'password', $x2, 2);
 				
 			
-				?> 
+				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Ejecutar" name="submit_test"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Ejecutar" name="submit_test"> 
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>

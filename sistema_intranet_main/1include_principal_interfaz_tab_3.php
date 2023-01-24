@@ -8,11 +8,11 @@ if($temp!=0){
 		echo '</script>';
 	
 	echo '<div class="tab-pane fade" id="Menu_tab_3">';
-		echo '<div class="col-sm-12">';
-	
+		echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
+
 			//Si es gerente puede ver todas las bodegas
 			if($prm_x[1]=='1' OR $idTipoUsuario==1) {
-			
+
 				//Bodega de Productos
 				echo widget_bodega('Bodega de Productos',
 								   'bodegas_productos_listado', 'bodegas_productos_facturacion_existencias', 'bodegas_productos_facturacion_tipo', 
@@ -59,7 +59,7 @@ if($temp!=0){
 					
 				}
 			}
-		echo '</div>';	
+		echo '</div>';
 	echo '</div>';
 }
 

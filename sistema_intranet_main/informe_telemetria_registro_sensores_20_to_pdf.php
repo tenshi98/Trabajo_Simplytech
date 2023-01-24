@@ -11,16 +11,16 @@ require_once 'core/Load.Utils.PDF.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 				
 //Se buscan la imagen i el tipo de PDF
 if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
-	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 
 //se verifica si se ingreso la hora, es un dato optativo
@@ -75,14 +75,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$Grupo[$sen['idGrupo']] = $sen['Nombre'];
 	}
 
-	/****************************************************************/				
+	/****************************************************************/
 	//Variables
 	$m_table_title  = '';
 	$m_table        = '';
 	$arrTableTemp   = array();
 	$arrTable       = array();
 	
-	/****************************************************************/				
+	/****************************************************************/
 	//titulo de la tabla
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 		//Verifico la unidad de medida
@@ -149,7 +149,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$horaInicio  = $arrTable[$anterior]['HoraHasta'];
 			$horaTermino = $fac['HoraSistema'];
 			$HorasTrans  = horas_transcurridas($diaInicio, $diaTermino, $horaInicio, $horaTermino);
-				
+
 			//recorro
 			$arrTable[$posit]['FechaDesde'] = $diaInicio;
 			$arrTable[$posit]['FechaHasta'] = $diaTermino;
@@ -157,15 +157,15 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$arrTable[$posit]['HoraHasta']  = $horaTermino;
 			$arrTable[$posit]['Duracion']   = $HorasTrans;
 			$arrTable[$posit]['Contenido']  = $table;
-			
+
 			//cuento
 			$posit++;
-			
+
 			//Guardo el ultimo registro
 			$Ult_diaInicio   = $fac['FechaSistema'];
 			$Ult_horaInicio  = $fac['HoraSistema'];
 			
-		}										
+		}
 		
 		//Guardo el ultimo registro
 		$Ult_diaTermino  = $fac['FechaSistema'];
@@ -291,7 +291,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 				// set some language-dependent strings (optional)
-				if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+				if (@file_exists(dirname(__FILE__).'/lang/eng.php')){
 					require_once(dirname(__FILE__).'/lang/eng.php');
 					$pdf->setLanguageArray($l);
 				}

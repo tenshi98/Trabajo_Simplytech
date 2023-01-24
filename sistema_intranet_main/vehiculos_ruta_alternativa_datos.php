@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "vehiculos_ruta_alternativa.php";
 $location = $original;
 $new_location = "vehiculos_ruta_alternativa_datos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -39,7 +39,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $query = "SELECT idRuta, idSistema, idTipo, Fecha, idDia, HoraInicio, HoraTermino, Nombre
 FROM `vehiculos_ruta_alternativa`
@@ -60,15 +60,15 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 
 //sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta Alternativa', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -76,21 +76,21 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				<li class="active"><a href="<?php echo 'vehiculos_ruta_alternativa_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 				
-			</ul>	
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($idRuta)) {          $x1  = $idRuta;           }else{$x1  = $rowdata["idRuta"];}
-					if(isset($idTipo)) {          $x2  = $idTipo;           }else{$x2  = $rowdata["idTipo"];}
-					if(isset($Fecha)) {           $x3  = $Fecha;            }else{$x3  = $rowdata["Fecha"];}
-					if(isset($idDia)) {           $x4  = $idDia;            }else{$x4  = $rowdata["idDia"];}
-					if(isset($HoraInicio)) {      $x5  = $HoraInicio;       }else{$x5  = $rowdata["HoraInicio"];}
-					if(isset($HoraTermino)) {     $x6  = $HoraTermino;      }else{$x6  = $rowdata["HoraTermino"];}
-					if(isset($Nombre)) {          $x7  = $Nombre;           }else{$x7  = $rowdata["Nombre"];}
+					if(isset($idRuta)){          $x1  = $idRuta;           }else{$x1  = $rowdata["idRuta"];}
+					if(isset($idTipo)){          $x2  = $idTipo;           }else{$x2  = $rowdata["idTipo"];}
+					if(isset($Fecha)){ $x3  = $Fecha;            }else{$x3  = $rowdata["Fecha"];}
+					if(isset($idDia)){           $x4  = $idDia;            }else{$x4  = $rowdata["idDia"];}
+					if(isset($HoraInicio)){      $x5  = $HoraInicio;       }else{$x5  = $rowdata["HoraInicio"];}
+					if(isset($HoraTermino)){     $x6  = $HoraTermino;      }else{$x6  = $rowdata["HoraTermino"];}
+					if(isset($Nombre)){          $x7  = $Nombre;           }else{$x7  = $rowdata["Nombre"];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -113,50 +113,50 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						document.getElementById('div_Fecha').style.display = 'none';
 						document.getElementById('div_idDia').style.display = 'none';
 						
-						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 							
 							let tipo_val= $("#idTipo").val();
 							//si es SI
-							if(tipo_val == 1){ 
+							if(tipo_val == 1){
 								document.getElementById('div_Fecha').style.display = 'none';
-								document.getElementById('div_idDia').style.display = '';							
+								document.getElementById('div_idDia').style.display = '';
 								
 							//si es NO
-							} else if(tipo_val == 2){ 
-								document.getElementById('div_Fecha').style.display = '';	
+							} else if(tipo_val == 2){
+								document.getElementById('div_Fecha').style.display = '';
 								document.getElementById('div_idDia').style.display = 'none';
 							}
-						}); 
+						});
 						
 						$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 							let modelSelected = $(this).val(); //Asignamos el valor seleccionado
 					
 							//si es SI
-							if(modelSelected == 1){ 
+							if(modelSelected == 1){
 								document.getElementById('div_Fecha').style.display = 'none';
 								document.getElementById('div_idDia').style.display = '';
 															
 							//si es NO
-							} else if(modelSelected == 2){ 
+							} else if(modelSelected == 2){
 								document.getElementById('div_Fecha').style.display = '';
 								document.getElementById('div_idDia').style.display = 'none';
 							}
 						});
 					</script>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -31,18 +31,18 @@ $SIS_where.= " AND telemetria_listado.id_Geo='2'";
 $SIS_where.= " AND telemetria_listado_errores.idSistema=".$_GET['idSistema'];	
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$SIS_where .= " AND telemetria_listado.idTab=6";//CrossCrane			
+	$SIS_where .= " AND telemetria_listado.idTab=6";//CrossCrane	
 }
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 	$SIS_where.= " AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 //verifico si se selecciono un equipo
-if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ $SIS_where.= " AND telemetria_listado_errores.idTelemetria='".$_GET['idTelemetria']."'"; }
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){$SIS_where.= " AND telemetria_listado_errores.idTelemetria='".$_GET['idTelemetria']."'"; }
 //verifico el tipo de error
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){ $SIS_where.= " AND telemetria_listado_errores.idTipo='".$_GET['idTipo']."'"; }
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){$SIS_where.= " AND telemetria_listado_errores.idTipo='".$_GET['idTipo']."'"; }
 //verifico si esta leido
-if(isset($_GET['idLeido'])&&$_GET['idLeido']!=''){ $SIS_where.= " AND telemetria_listado_errores.idLeido='".$_GET['idLeido']."'"; }
+if(isset($_GET['idLeido'])&&$_GET['idLeido']!=''){$SIS_where.= " AND telemetria_listado_errores.idLeido='".$_GET['idLeido']."'"; }
 //Verifico el tipo de usuario que esta ingresando
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
@@ -120,7 +120,7 @@ foreach ($arrErrores as $error) {
 				->setCellValue('F'.$nn, $error['Valor_min'])
 				->setCellValue('G'.$nn, $error['Valor_max'])
 				->setCellValue('H'.$nn, $arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]]);
-	$nn++;           
+	$nn++;
    
 } 
 

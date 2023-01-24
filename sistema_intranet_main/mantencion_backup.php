@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "mantencion_backup.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,7 +18,7 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){
 	$location .= "&Nombre=".$_GET['Nombre'];
 	$search .= "&Nombre=".$_GET['Nombre'];  	
 }
@@ -30,10 +30,10 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //se hace la mantencion
-if ( !empty($_GET['backup']) )     {
+if (!empty($_GET['backup'])){
 	
 	function __backup_mysql_database($params,$location,$dbConn){
-		
+
 		//time limit execution	
 		set_time_limit(36000);
 		
@@ -106,7 +106,7 @@ if ( !empty($_GET['backup']) )     {
 			}
 		}
 	   
-		if (!is_dir ( $params['db_backup_path'] )) {
+		if (!is_dir ( $params['db_backup_path'] )){
 			mkdir ( $params['db_backup_path'], 0777, true );
 		}
 	   
@@ -120,19 +120,19 @@ if ( !empty($_GET['backup']) )     {
 		//$backup_file_name = "sql-backup-".date( "d-m-Y--h-i-s").".sql";
 			 
 		$fp = fopen($params['db_backup_path'].$FileName ,'w+');
-		if (($result = fwrite($fp, $contents))) {
+		if (($result = fwrite($fp, $contents))){
 			//echo "Backup file created '--$backup_file_name' ($result)";
 		}
 		fclose($fp);
     
 		//Se guarda el registro en la ba
-		$a  = "'".$Nombre."'" ;       
-		$a .= ",'".$FileName."'" ;              
-		$a .= ",'".$Fecha."'" ;              
-		$a .= ",'".$Hora2."'" ;              
+		$a  = "'".$Nombre."'";       
+		$a .= ",'".$FileName."'";              
+		$a .= ",'".$Fecha."'";              
+		$a .= ",'".$Hora2."'";              
 
 		// inserto los datos de registro en la db
-		$query  = "INSERT INTO `mantencion_backup` (Nombre, FileName, Fecha, Hora) 
+		$query  = "INSERT INTO `mantencion_backup` (Nombre,FileName, Fecha, Hora) 
 		VALUES (".$a.")";
 		//Consulta
 		$resultado = mysqli_query ($dbConn, $query);
@@ -181,32 +181,23 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Respaldo Modificado co
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Respaldo borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 
 
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -230,7 +221,7 @@ $SIS_where = "mantencion_backup.idBackup!=0";
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idBackup', 'mantencion_backup', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = 'idBackup, Nombre,FileName,Fecha,Hora';
 $SIS_join  = '';
@@ -240,20 +231,20 @@ $arrBackup = db_select_array (false, $SIS_query, 'mantencion_backup', $SIS_join,
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
-		<li class="btn btn-default"><?php echo $bread_order; ?></li>	
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&backup=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Backup</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&backup=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Backup</a><?php } ?>
 
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                     
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Backups</h5>
@@ -290,7 +281,7 @@ $arrBackup = db_select_array (false, $SIS_query, 'mantencion_backup', $SIS_join,
 						</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrBackup as $back) { ?>
 					<tr class="odd">
@@ -299,23 +290,23 @@ $arrBackup = db_select_array (false, $SIS_query, 'mantencion_backup', $SIS_join,
 						<td><?php echo $back['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo '1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($back['FileName'], fecha_actual()); ?>" title="Descargar Backup" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a><?php } ?>								
+								<?php if ($rowlevel['level']>=1){?><a href="<?php echo '1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($back['FileName'], fecha_actual()); ?>" title="Descargar Backup" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div> 
+		</div>
 	</div>
 </div>
 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

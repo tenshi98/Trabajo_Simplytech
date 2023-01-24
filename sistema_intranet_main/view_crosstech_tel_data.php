@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,7 +23,7 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 /**************************************************************/
 //variables
-$HoraSistema    = hora_actual(); 
+$HoraSistema    = hora_actual();
 $FechaSistema   = fecha_actual();
 $eq_fueralinea  = 0;
 $idTelemetria   = simpleDecode($_GET['idTelemetria'], fecha_actual());
@@ -62,7 +62,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 }	
 
 //Listar los datos
-$SIS_query = 'Nombre, TiempoFueraLinea, LastUpdateFecha, LastUpdateHora,GeoLatitud, GeoLongitud, cantSensores, id_Sensores'.$subquery;
+$SIS_query = 'Nombre,TiempoFueraLinea, LastUpdateFecha, LastUpdateHora,GeoLatitud, GeoLongitud, cantSensores, id_Sensores'.$subquery;
 $SIS_join  = '';
 $rowTel = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowTel');
 
@@ -73,7 +73,7 @@ $SIS_query = 'Helada, UnidadesFrio, CrossTech_FechaUnidadFrio, HorasSobreGrados,
 $SIS_join  = '';
 $SIS_where = 'idTelemetria='.$idTelemetria.' ORDER BY idAuxiliar DESC';
 $rowAux = db_select_data (false, $SIS_query, 'telemetria_listado_aux_equipo', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowAux');
-				
+
 /*************************************************************/
 //Se traen todas las unidades de medida
 $arrUnimed = array();
@@ -103,7 +103,7 @@ $Time_Tiempo     = horas2segundos($Tiempo);
 $Time_Tiempo_FL  = horas2segundos($rowTel['TiempoFueraLinea']);
 $Time_Tiempo_Max = horas2segundos('48:00:00');
 //comparacion
-if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
 	$in_eq_fueralinea++;
 }
 
@@ -116,7 +116,7 @@ $Total_Presion     = $rowTel['SensoresMedActual_4'];
 
 //verifico que este midiendo
 if($in_eq_fueralinea!=0){
-	echo '<div class="col-sm-12" style="margin-top:10px;">';
+	echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">';
 		$Alert_Text  = 'Este equipo se encuentra fuera de linea, los datos mostrados no corresponden al estado actual real.';
 		alert_post_data(4,2,2, $Alert_Text);
 	echo '</div>';
@@ -133,11 +133,11 @@ if($in_eq_fueralinea!=0){
 .float_table table{margin-right: auto !important;margin-left: auto !important;float: none !important;}
 </style>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Ver Datos de <?php echo $rowTel['Nombre']; ?></h5>	
+			<h5>Ver Datos de <?php echo $rowTel['Nombre']; ?></h5>
 		</header>
 		<div class="tab-content">
 			
@@ -163,17 +163,17 @@ if($in_eq_fueralinea!=0){
 			$CrossTech_FechaDiasTempMin   = 0;
 					
 			//declaracion
-			if(isset($rowAux['Helada'])&&$rowAux['Helada']!=''){                                          $Helada                       = $rowAux['Helada'];}
-			if(isset($rowAux['UnidadesFrio'])&&$rowAux['UnidadesFrio']!=''){                              $UnidadFrio                   = $rowAux['UnidadesFrio'];}
-			if(isset($rowAux['CrossTech_FechaUnidadFrio'])&&$rowAux['CrossTech_FechaUnidadFrio']!=''){    $CrossTech_FechaUnidadFrio    = $rowAux['CrossTech_FechaUnidadFrio'];}
-			if(isset($rowAux['HorasSobreGrados'])&&$rowAux['HorasSobreGrados']!=''){                      $HoraSobre                    = $rowAux['HorasSobreGrados'];}
-			if(isset($rowAux['CrossTech_TempMax'])&&$rowAux['CrossTech_TempMax']!=''){                    $CrossTech_TempMax            = cantidades($rowAux['CrossTech_TempMax'], 0);}
-			if(isset($rowAux['CrossTech_FechaTempMax'])&&$rowAux['CrossTech_FechaTempMax']!=''){          $CrossTech_FechaTempMax       = $rowAux['CrossTech_FechaTempMax'];}
-			if(isset($rowAux['Dias_acumulado'])&&$rowAux['Dias_acumulado']!=''){                          $Dias_acumulado               = cantidades($rowAux['Dias_acumulado'], 0);}
-			if(isset($rowAux['Dias_anterior'])&&$rowAux['Dias_anterior']!=''){                            $Dias_anterior                = cantidades($rowAux['Dias_anterior'], 0);}
-			if(isset($rowAux['CrossTech_DiasTempMin'])&&$rowAux['CrossTech_DiasTempMin']!=''){            $CrossTech_DiasTempMin        = cantidades($rowAux['CrossTech_DiasTempMin'], 0);}
-			if(isset($rowAux['CrossTech_FechaDiasTempMin'])&&$rowAux['CrossTech_FechaDiasTempMin']!=''){  $CrossTech_FechaDiasTempMin   = $rowAux['CrossTech_FechaDiasTempMin'];}
-				
+			if(isset($rowAux['Helada'])&&$rowAux['Helada']!=''){                                  $Helada                       = $rowAux['Helada'];}
+			if(isset($rowAux['UnidadesFrio'])&&$rowAux['UnidadesFrio']!=''){                      $UnidadFrio                   = $rowAux['UnidadesFrio'];}
+			if(isset($rowAux['CrossTech_FechaUnidadFrio'])&&$rowAux['CrossTech_FechaUnidadFrio']!=''){   $CrossTech_FechaUnidadFrio    = $rowAux['CrossTech_FechaUnidadFrio'];}
+			if(isset($rowAux['HorasSobreGrados'])&&$rowAux['HorasSobreGrados']!=''){              $HoraSobre                    = $rowAux['HorasSobreGrados'];}
+			if(isset($rowAux['CrossTech_TempMax'])&&$rowAux['CrossTech_TempMax']!=''){            $CrossTech_TempMax            = cantidades($rowAux['CrossTech_TempMax'], 0);}
+			if(isset($rowAux['CrossTech_FechaTempMax'])&&$rowAux['CrossTech_FechaTempMax']!=''){  $CrossTech_FechaTempMax       = $rowAux['CrossTech_FechaTempMax'];}
+			if(isset($rowAux['Dias_acumulado'])&&$rowAux['Dias_acumulado']!=''){                  $Dias_acumulado               = cantidades($rowAux['Dias_acumulado'], 0);}
+			if(isset($rowAux['Dias_anterior'])&&$rowAux['Dias_anterior']!=''){                    $Dias_anterior                = cantidades($rowAux['Dias_anterior'], 0);}
+			if(isset($rowAux['CrossTech_DiasTempMin'])&&$rowAux['CrossTech_DiasTempMin']!=''){    $CrossTech_DiasTempMin        = cantidades($rowAux['CrossTech_DiasTempMin'], 0);}
+			if(isset($rowAux['CrossTech_FechaDiasTempMin'])&&$rowAux['CrossTech_FechaDiasTempMin']!=''){ $CrossTech_FechaDiasTempMin   = $rowAux['CrossTech_FechaDiasTempMin'];}
+
 			//Dependiendo del valor de la helada se cambia el icono y el color
 			if($Helada>3){
 				$helIcon = '<span style="color:#00a65a;"><i class="fa fa-thermometer-full" aria-hidden="true"></i></span>';
@@ -219,11 +219,11 @@ if($in_eq_fueralinea!=0){
 						</div>
 					</div>
 				</div>
-				<div class="clearfix"></div>		
+				<div class="clearfix"></div>
 			</div>
 			<div class="">
 						
-				<div class="col-sm-4">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<div title="Horas acumuladas sobre '.$CrossTech_TempMax.'°C desde la fecha '.fecha_estandar($CrossTech_FechaTempMax).'" class="box box-blue box-solid tooltip">
 						<div class="box-header with-border text-center">
 							<h3 class="box-title">Horas <i class="fa fa-arrow-up" aria-hidden="true"></i> '.$CrossTech_TempMax.'°C</h3>
@@ -237,7 +237,7 @@ if($in_eq_fueralinea!=0){
 					</div>
 				</div>
 						
-				<div class="col-sm-8">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<div class="box box-blue box-solid">
 						<div class="box-header with-border text-center">
 							<h3 class="box-title">Dias - Grados C°</h3>
@@ -286,7 +286,7 @@ if($in_eq_fueralinea!=0){
 				var options_gauge_2               = "";
 				var options_gauge_3               = "";
 				var options_gauge_4               = "";
-				
+
 				//carga de los graficos
 				google.charts.setOnLoadCallback(Chart_correccion_1);
 				google.charts.setOnLoadCallback(Chart_correccion_2);
@@ -500,7 +500,7 @@ if($in_eq_fueralinea!=0){
 										
 					//Ubicacion de los distintos dispositivos
 					var locations = [ ';
-						
+
 						//burbuja
 						$explanation  = '<div class="iw-subTitle">Equipo: '.$rowTel['Nombre'].'</div>';
 						$explanation .= 'Actualizado: '.fecha_estandar($rowTel['LastUpdateFecha']).' - '.$rowTel['LastUpdateHora'].'</p>';
@@ -528,7 +528,7 @@ if($in_eq_fueralinea!=0){
 							$GPS .= $rowTel['GeoLatitud'];
 							$GPS .= ", ".$rowTel['GeoLongitud'];
 							$GPS .= ", '".$explanation."'";
-						$GPS .= "], ";					
+						$GPS .= "], ";
 						
 					$GPS .= '];
 					
@@ -542,21 +542,21 @@ if($in_eq_fueralinea!=0){
 					var marker, i, last_latitude, last_longitude;
 					
 					for (i = 0; i < locations.length; i++) {
-						
+
 						//defino ubicacion y datos
 						var latitude   = locations[i][0];
 						var longitude  = locations[i][1];
 						var data       = locations[i][2];
-						
+
 						//guardo las ultimas ubicaciones
 						last_latitude   = locations[i][0];
 						last_longitude  = locations[i][1];
 						
 						latlngset = new google.maps.LatLng(latitude, longitude);
-						
+
 						//se crea marcador
 						var marker = new google.maps.Marker({
-							map         : map, 
+							map         : map,
 							position    : latlngset,
 							icon      	: "'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png"
 						});
@@ -575,12 +575,12 @@ if($in_eq_fueralinea!=0){
 						var infowindow = new google.maps.InfoWindow();
 
 						//se agrega funcion de click a infowindow
-						google.maps.event.addListener(marker,\'click\', (function(marker,content,infowindow){ 
+						google.maps.event.addListener(marker,\'click\', (function(marker,content,infowindow){
 							return function() {
 								infowindow.setContent(content);
 								infowindow.open(map,marker);
 							};
-						})(marker,content,infowindow)); 
+						})(marker,content,infowindow));
 
 					}
 					if(optc==1){
@@ -637,12 +637,12 @@ if($in_eq_fueralinea!=0){
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -653,12 +653,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

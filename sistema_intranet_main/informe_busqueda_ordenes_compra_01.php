@@ -10,15 +10,15 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_busqueda_ordenes_compra_01.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor=".$_GET['idProveedor'];}
-if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){   $search .="&idLicitacion=".$_GET['idLicitacion'];}
-if(isset($_GET['idOcompra'])&&$_GET['idOcompra']!=''){             $search .="&idOcompra=".$_GET['idOcompra'];}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){           $search .="&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){    $search .="&idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){  $search .="&idLicitacion=".$_GET['idLicitacion'];}
+if(isset($_GET['idOcompra'])&&$_GET['idOcompra']!=''){     $search .="&idOcompra=".$_GET['idOcompra'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){   $search .="&idEstado=".$_GET['idEstado'];}
 if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
 	$search .="&f_creacion_inicio=".$_GET['f_creacion_inicio'];
 	$search .="&f_creacion_termino=".$_GET['f_creacion_termino'];
@@ -33,24 +33,15 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -71,19 +62,19 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $SIS_where = "ocompra_listado.idOcompra>=0";
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where.= " AND ocompra_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND ocompra_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $SIS_where.= " AND ocompra_listado.idProveedor=".$_GET['idProveedor'];}
-if(isset($_GET['idOcompra'])&&$_GET['idOcompra']!=''){       $SIS_where.= " AND ocompra_listado.idOcompra=".$_GET['idOcompra'];}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){         $SIS_where.= " AND ocompra_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $SIS_where.= " AND ocompra_listado.idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idOcompra'])&&$_GET['idOcompra']!=''){      $SIS_where.= " AND ocompra_listado.idOcompra=".$_GET['idOcompra'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){ $SIS_where.= " AND ocompra_listado.idEstado=".$_GET['idEstado'];}
 if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
 	$SIS_where.= " AND ocompra_listado.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
-}				
+}	
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'ocompra_listado.idOcompra', 'ocompra_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 ocompra_listado.idOcompra,
@@ -99,18 +90,18 @@ $search='';
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
-		<li class="btn btn-default"><?php echo $bread_order; ?></li>	
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
 	
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Ordenes de Compra</h5>
@@ -120,7 +111,7 @@ $search='';
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -147,7 +138,7 @@ $search='';
 						</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrOrdenes as $orden) { ?>
 					<tr class="odd">
@@ -160,11 +151,11 @@ $search='';
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//paginacion
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
@@ -174,33 +165,33 @@ $search='';
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProveedor)) {          $x1  = $idProveedor;         }else{$x1  = '';}
-				if(isset($idOcompra)) {            $x2  = $idOcompra;           }else{$x2  = '';}
-				if(isset($f_creacion_inicio)) {    $x3  = $f_creacion_inicio;   }else{$x3  = '';}
-				if(isset($f_creacion_termino)) {   $x4  = $f_creacion_termino;  }else{$x4  = '';}
-				if(isset($idEstado)) {             $x5  = $idEstado;            }else{$x5  = '';}
-				
+				if(isset($idProveedor)){          $x1  = $idProveedor;         }else{$x1  = '';}
+				if(isset($idOcompra)){            $x2  = $idOcompra;           }else{$x2  = '';}
+				if(isset($f_creacion_inicio)){    $x3  = $f_creacion_inicio;   }else{$x3  = '';}
+				if(isset($f_creacion_termino)){   $x4  = $f_creacion_termino;  }else{$x4  = '';}
+				if(isset($idEstado)){             $x5  = $idEstado;            }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Emision');
@@ -209,14 +200,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_date('Fecha Creacion Desde','f_creacion_inicio', $x3, 1);
 				$Form_Inputs->form_date('Fecha Creacion Hasta','f_creacion_termino', $x4, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x5, 1, 'idEstado', 'Nombre', 'core_estado_aprobacion', 0, '', $dbConn);
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

@@ -2,28 +2,28 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-257).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idCliente']) )       $idCliente       = $_POST['idCliente'];
-	if ( !empty($_POST['idDocPago']) )       $idDocPago       = $_POST['idDocPago'];
-	if ( !empty($_POST['N_DocPago']) )       $N_DocPago       = $_POST['N_DocPago'];
-	if ( !empty($_POST['F_Pago']) )          $F_Pago          = $_POST['F_Pago'];
-	if ( !empty($_POST['MontoPagado']) )     $MontoPagado     = $_POST['MontoPagado'];
-	if ( !empty($_POST['idSistema']) )       $idSistema       = $_POST['idSistema'];
-	if ( !empty($_POST['idUsuario']) )       $idUsuario       = $_POST['idUsuario'];
-	if ( !empty($_POST['total_pagar']) )     $total_pagar     = $_POST['total_pagar'];
-	if ( !empty($_POST['idFacturacion']) )   $idFacturacion   = $_POST['idFacturacion'];
-	if ( !empty($_POST['montoPactado']) )    $montoPactado    = $_POST['montoPactado'];
+	if (!empty($_POST['idCliente']))       $idCliente       = $_POST['idCliente'];
+	if (!empty($_POST['idDocPago']))       $idDocPago       = $_POST['idDocPago'];
+	if (!empty($_POST['N_DocPago']))       $N_DocPago       = $_POST['N_DocPago'];
+	if (!empty($_POST['F_Pago']))          $F_Pago          = $_POST['F_Pago'];
+	if (!empty($_POST['MontoPagado']))     $MontoPagado     = $_POST['MontoPagado'];
+	if (!empty($_POST['idSistema']))       $idSistema       = $_POST['idSistema'];
+	if (!empty($_POST['idUsuario']))       $idUsuario       = $_POST['idUsuario'];
+	if (!empty($_POST['total_pagar']))     $total_pagar     = $_POST['total_pagar'];
+	if (!empty($_POST['idFacturacion']))   $idFacturacion   = $_POST['idFacturacion'];
+	if (!empty($_POST['montoPactado']))    $montoPactado    = $_POST['montoPactado'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -46,7 +46,7 @@ require_once '0_validate_user_1.php';
 			case 'total_pagar':    if(empty($total_pagar)){     $error['total_pagar']    = 'error/No ha ingresado el total a pagar';}break;
 			case 'idFacturacion':  if(empty($idFacturacion)){   $error['idFacturacion']  = 'error/No ha seleccionado la facturacion';}break;
 			case 'montoPactado':   if(empty($montoPactado)){    $error['montoPactado']   = 'error/No ha ingresado el monto pactado';}break;
-			
+
 		}
 	}
 					
@@ -60,57 +60,57 @@ require_once '0_validate_user_1.php';
 /*                                                  Pago Masivo                                                    */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_insumo_ex':
 		
 			//Borro todas las sesiones
 			unset($_SESSION['pago_clientes_insumos'][$_GET['del_insumo_ex']]);
-			
+
 			header( 'Location: '.$location.'&next=true' );
 			die;
 		
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_producto_ex':
 		
 			//Borro todas las sesiones
 			unset($_SESSION['pago_clientes_productos'][$_GET['del_producto_ex']]);
-			
+
 			header( 'Location: '.$location.'&next=true' );
 			die;
 		
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_arriendo_ex':
 		
 			//Borro todas las sesiones
 			unset($_SESSION['pago_clientes_arriendo'][$_GET['del_arriendo_ex']]);
-			
+
 			header( 'Location: '.$location.'&next=true' );
 			die;
 		
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_servicio_ex':
 		
 			//Borro todas las sesiones
 			unset($_SESSION['pago_clientes_servicio'][$_GET['del_servicio_ex']]);
-			
+
 			header( 'Location: '.$location.'&next=true' );
 			die;
 		
 		break;
-/*******************************************************************************************************************/		
-		case 'pago_general':	
+/*******************************************************************************************************************/
+		case 'pago_general':
 			
 			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				if(!isset($N_DocPago) OR $N_DocPago == ''){
 					$N_DocPago = time();//clave unica
 				}
-				
+
 				//verifico si existe documento de pago
 				if(isset($idDocPago)&&$idDocPago!=''){
 					//Verifico el documento de pago
@@ -137,22 +137,22 @@ require_once '0_validate_user_1.php';
 								$idCliente      = $tipo['idCliente'];
 								
 								//Filtros
-								$SIS_data = "idFacturacion='".$idFacturacion."'" ;
-								if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuarioPago='".$idUsuario."'" ;}
-								if(isset($idDocPago) && $idDocPago != ''){       $SIS_data .= ",idDocPago='".$idDocPago."'" ;}
-								if(isset($N_DocPago) && $N_DocPago != ''){       $SIS_data .= ",N_DocPago='".$N_DocPago."'" ;}
-								if(isset($F_Pago) && $F_Pago != ''){  
-									$SIS_data .= ",F_Pago='".$F_Pago."'" ;
-									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'" ;
+								$SIS_data = "idFacturacion='".$idFacturacion."'";
+								if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuarioPago='".$idUsuario."'";}
+								if(isset($idDocPago) && $idDocPago!=''){       $SIS_data .= ",idDocPago='".$idDocPago."'";}
+								if(isset($N_DocPago) && $N_DocPago!=''){       $SIS_data .= ",N_DocPago='".$N_DocPago."'";}
+								if(isset($F_Pago) && $F_Pago!=''){  
+									$SIS_data .= ",F_Pago='".$F_Pago."'";
+									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'";
 								}else{
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 								}
-								if(isset($ValorPagado) &&$ValorPagado!= ''){   $SIS_data .= ",MontoPagado='".$MontoPagado."'" ;}
+								if(isset($ValorPagado) &&$ValorPagado!= ''){   $SIS_data .= ",MontoPagado='".$MontoPagado."'";}
 								if($MontoPactado<=$ValorPagado){
 									//Si la NC es igual a la Fac la anula
 									if($ValorNC==$ValorTotal){
@@ -169,7 +169,7 @@ require_once '0_validate_user_1.php';
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_insumos_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 								
-								/*********************************************************************/		
+								/*********************************************************************/
 								//Se crea la observacion
 								if(isset($idDocPago)&&$idDocPago!=''){
 									$exp_xxs  = 'Pago del documento con el documento '.$rowDoc['Nombre'];
@@ -180,8 +180,8 @@ require_once '0_validate_user_1.php';
 									$exp_xxs  = 'Se utiliza una nota de credito para cerrar la factura por un valor de'.Valores($ValorNC, 0);
 								}
 								//Se guarda en historial la accion
-								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $SIS_data  = "'".$tipo['idFacturacion']."'" ;  }else{$SIS_data  = "''";}
-								if(isset($F_Pago) && $F_Pago != ''){                                  $SIS_data .= ",'".$F_Pago."'" ;                }else{$SIS_data .= ",''";}
+								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion']!=''){    $SIS_data  = "'".$tipo['idFacturacion']."'";  }else{$SIS_data  = "''";}
+								if(isset($F_Pago) && $F_Pago!=''){                                  $SIS_data .= ",'".$F_Pago."'";                }else{$SIS_data .= ",''";}
 								$SIS_data .= ",'1'";                                                     //Creacion Satisfactoria
 								$SIS_data .= ",'".$exp_xxs."'";                                          //Observacion
 								$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
@@ -195,15 +195,15 @@ require_once '0_validate_user_1.php';
 								if($ValorNC!=$ValorTotal){
 									//Agrego el pago al historial de pagos
 									$SIS_data = "'1'"; //se indica que el pago es de productos
-									if(isset($idFacturacion) && $idFacturacion != ''){  $SIS_data .= ",'".$idFacturacion."'" ;  }else{ $SIS_data .= ",''"; }
-									if(isset($idDocPago) && $idDocPago != ''){          $SIS_data .= ",'".$idDocPago."'" ;      }else{ $SIS_data .= ",''"; }
-									if(isset($N_DocPago) && $N_DocPago != ''){          $SIS_data .= ",'".$N_DocPago."'" ;      }else{ $SIS_data .= ",''"; }
-									if(isset($F_Pago) && $F_Pago != ''){  
-										$SIS_data .= ",'".$F_Pago."'" ;
-										$SIS_data .= ",'".fecha2NdiaMes($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2NSemana($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2NMes($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2Ano($F_Pago)."'" ;
+									if(isset($idFacturacion) && $idFacturacion!=''){  $SIS_data .= ",'".$idFacturacion."'";  }else{ $SIS_data .= ",''"; }
+									if(isset($idDocPago) && $idDocPago!=''){          $SIS_data .= ",'".$idDocPago."'";      }else{ $SIS_data .= ",''"; }
+									if(isset($N_DocPago) && $N_DocPago!=''){          $SIS_data .= ",'".$N_DocPago."'";      }else{ $SIS_data .= ",''"; }
+									if(isset($F_Pago) && $F_Pago!=''){  
+										$SIS_data .= ",'".$F_Pago."'";
+										$SIS_data .= ",'".fecha2NdiaMes($F_Pago)."'";
+										$SIS_data .= ",'".fecha2NSemana($F_Pago)."'";
+										$SIS_data .= ",'".fecha2NMes($F_Pago)."'";
+										$SIS_data .= ",'".fecha2Ano($F_Pago)."'";
 									}else{
 										$SIS_data .= ",''";
 										$SIS_data .= ",''";
@@ -211,11 +211,11 @@ require_once '0_validate_user_1.php';
 										$SIS_data .= ",''";
 										$SIS_data .= ",''";
 									}
-									if(isset($ValorReal) && $ValorReal != ''){             $SIS_data .= ",'".$ValorReal."'" ;       }else{ $SIS_data .= ",''"; }
-									if(isset($MontoPactado) && $MontoPactado != ''){       $SIS_data .= ",'".$MontoPactado."'" ;    }else{ $SIS_data .= ",''"; }
-									if(isset($idUsuario) && $idUsuario != ''){             $SIS_data .= ",'".$idUsuario."'" ;       }else{ $SIS_data .= ",''"; }
-									if(isset($idSistema) && $idSistema != ''){             $SIS_data .= ",'".$idSistema."'" ;       }else{ $SIS_data .= ",''"; }
-									if(isset($idCliente) && $idCliente != ''){             $SIS_data .= ",'".$idCliente."'" ;       }else{ $SIS_data .= ",''"; }
+									if(isset($ValorReal) && $ValorReal!=''){             $SIS_data .= ",'".$ValorReal."'";       }else{ $SIS_data .= ",''"; }
+									if(isset($MontoPactado) && $MontoPactado!=''){       $SIS_data .= ",'".$MontoPactado."'";    }else{ $SIS_data .= ",''"; }
+									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";       }else{ $SIS_data .= ",''"; }
+									if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",'".$idSistema."'";       }else{ $SIS_data .= ",''"; }
+									if(isset($idCliente) && $idCliente!=''){             $SIS_data .= ",'".$idCliente."'";       }else{ $SIS_data .= ",''"; }
 									
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idTipo, idFacturacion, idDocPago, N_DocPago, F_Pago, F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idCliente';
@@ -230,13 +230,13 @@ require_once '0_validate_user_1.php';
 								$idFacRelacionada  = $tipo['idFacRelacionada'];
 								
 								//Filtros
-								$SIS_data = "idFacturacion='".$idFacturacion."'" ;
-								if(isset($idFacRelacionada) && $idFacRelacionada != ''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'" ;}
-								if(isset($F_Pago) && $F_Pago != ''){  
-									$SIS_data .= ",F_Pago='".$F_Pago."'" ;
-									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'" ;
+								$SIS_data = "idFacturacion='".$idFacturacion."'";
+								if(isset($idFacRelacionada) && $idFacRelacionada!=''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'";}
+								if(isset($F_Pago) && $F_Pago!=''){  
+									$SIS_data .= ",F_Pago='".$F_Pago."'";
+									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'";
 								}else{
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
@@ -271,22 +271,22 @@ require_once '0_validate_user_1.php';
 								$idCliente      = $tipo['idCliente'];
 								
 								//Filtros
-								$SIS_data = "idFacturacion='".$idFacturacion."'" ;
-								if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuarioPago='".$idUsuario."'" ;}
-								if(isset($idDocPago) && $idDocPago != ''){       $SIS_data .= ",idDocPago='".$idDocPago."'" ;}
-								if(isset($N_DocPago) && $N_DocPago != ''){       $SIS_data .= ",N_DocPago='".$N_DocPago."'" ;}
-								if(isset($F_Pago) && $F_Pago != ''){  
-									$SIS_data .= ",F_Pago='".$F_Pago."'" ;
-									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'" ;
+								$SIS_data = "idFacturacion='".$idFacturacion."'";
+								if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuarioPago='".$idUsuario."'";}
+								if(isset($idDocPago) && $idDocPago!=''){       $SIS_data .= ",idDocPago='".$idDocPago."'";}
+								if(isset($N_DocPago) && $N_DocPago!=''){       $SIS_data .= ",N_DocPago='".$N_DocPago."'";}
+								if(isset($F_Pago) && $F_Pago!=''){  
+									$SIS_data .= ",F_Pago='".$F_Pago."'";
+									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'";
 								}else{
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 								}
-								if(isset($ValorPagado) &&$ValorPagado!= ''){   $SIS_data .= ",MontoPagado='".$MontoPagado."'" ;}
+								if(isset($ValorPagado) &&$ValorPagado!= ''){   $SIS_data .= ",MontoPagado='".$MontoPagado."'";}
 								if($MontoPactado<=$ValorPagado){
 									//Si la NC es igual a la Fac la anula
 									if($ValorNC==$ValorTotal){
@@ -303,7 +303,7 @@ require_once '0_validate_user_1.php';
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_productos_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 								
-								/*********************************************************************/		
+								/*********************************************************************/
 								//Se crea la observacion
 								if(isset($idDocPago)&&$idDocPago!=''){
 									$exp_xxs  = 'Pago del documento con el documento '.$rowDoc['Nombre'];
@@ -314,8 +314,8 @@ require_once '0_validate_user_1.php';
 									$exp_xxs  = 'Se utiliza una nota de credito para cerrar la factura por un valor de'.Valores($ValorNC, 0);
 								}
 								//Se guarda en historial la accion
-								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $SIS_data  = "'".$tipo['idFacturacion']."'" ;  }else{$SIS_data  = "''";}
-								if(isset($F_Pago) && $F_Pago != ''){                                  $SIS_data .= ",'".$F_Pago."'" ;                }else{$SIS_data .= ",''";}
+								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion']!=''){    $SIS_data  = "'".$tipo['idFacturacion']."'";  }else{$SIS_data  = "''";}
+								if(isset($F_Pago) && $F_Pago!=''){                                  $SIS_data .= ",'".$F_Pago."'";                }else{$SIS_data .= ",''";}
 								$SIS_data .= ",'1'";                                                     //Creacion Satisfactoria
 								$SIS_data .= ",'".$exp_xxs."'";                                          //Observacion
 								$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
@@ -329,15 +329,15 @@ require_once '0_validate_user_1.php';
 								if($ValorNC!=$ValorTotal){
 									//Agrego el pago al historial de pagos
 									$SIS_data = "'2'"; //se indica que el pago es de productos
-									if(isset($idFacturacion) && $idFacturacion != ''){  $SIS_data .= ",'".$idFacturacion."'" ;  }else{ $SIS_data .= ",''"; }
-									if(isset($idDocPago) && $idDocPago != ''){          $SIS_data .= ",'".$idDocPago."'" ;      }else{ $SIS_data .= ",''"; }
-									if(isset($N_DocPago) && $N_DocPago != ''){          $SIS_data .= ",'".$N_DocPago."'" ;      }else{ $SIS_data .= ",''"; }
-									if(isset($F_Pago) && $F_Pago != ''){  
-										$SIS_data .= ",'".$F_Pago."'" ;
-										$SIS_data .= ",'".fecha2NdiaMes($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2NSemana($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2NMes($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2Ano($F_Pago)."'" ;
+									if(isset($idFacturacion) && $idFacturacion!=''){  $SIS_data .= ",'".$idFacturacion."'";  }else{ $SIS_data .= ",''"; }
+									if(isset($idDocPago) && $idDocPago!=''){          $SIS_data .= ",'".$idDocPago."'";      }else{ $SIS_data .= ",''"; }
+									if(isset($N_DocPago) && $N_DocPago!=''){          $SIS_data .= ",'".$N_DocPago."'";      }else{ $SIS_data .= ",''"; }
+									if(isset($F_Pago) && $F_Pago!=''){  
+										$SIS_data .= ",'".$F_Pago."'";
+										$SIS_data .= ",'".fecha2NdiaMes($F_Pago)."'";
+										$SIS_data .= ",'".fecha2NSemana($F_Pago)."'";
+										$SIS_data .= ",'".fecha2NMes($F_Pago)."'";
+										$SIS_data .= ",'".fecha2Ano($F_Pago)."'";
 									}else{
 										$SIS_data .= ",''";
 										$SIS_data .= ",''";
@@ -345,11 +345,11 @@ require_once '0_validate_user_1.php';
 										$SIS_data .= ",''";
 										$SIS_data .= ",''";
 									}
-									if(isset($ValorReal) && $ValorReal != ''){             $SIS_data .= ",'".$ValorReal."'" ;       }else{ $SIS_data .= ",''"; }
-									if(isset($MontoPactado) && $MontoPactado != ''){       $SIS_data .= ",'".$MontoPactado."'" ;    }else{ $SIS_data .= ",''"; }
-									if(isset($idUsuario) && $idUsuario != ''){             $SIS_data .= ",'".$idUsuario."'" ;       }else{ $SIS_data .= ",''"; }
-									if(isset($idSistema) && $idSistema != ''){             $SIS_data .= ",'".$idSistema."'" ;       }else{ $SIS_data .= ",''"; }
-									if(isset($idCliente) && $idCliente != ''){             $SIS_data .= ",'".$idCliente."'" ;       }else{ $SIS_data .= ",''"; }
+									if(isset($ValorReal) && $ValorReal!=''){             $SIS_data .= ",'".$ValorReal."'";       }else{ $SIS_data .= ",''"; }
+									if(isset($MontoPactado) && $MontoPactado!=''){       $SIS_data .= ",'".$MontoPactado."'";    }else{ $SIS_data .= ",''"; }
+									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";       }else{ $SIS_data .= ",''"; }
+									if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",'".$idSistema."'";       }else{ $SIS_data .= ",''"; }
+									if(isset($idCliente) && $idCliente!=''){             $SIS_data .= ",'".$idCliente."'";       }else{ $SIS_data .= ",''"; }
 									
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idTipo, idFacturacion, idDocPago, N_DocPago, F_Pago, F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idCliente';
@@ -363,13 +363,13 @@ require_once '0_validate_user_1.php';
 								$idFacRelacionada  = $tipo['idFacRelacionada'];
 								
 								//Filtros
-								$SIS_data = "idFacturacion='".$idFacturacion."'" ;
-								if(isset($idFacRelacionada) && $idFacRelacionada != ''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'" ;}
-								if(isset($F_Pago) && $F_Pago != ''){  
-									$SIS_data .= ",F_Pago='".$F_Pago."'" ;
-									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'" ;
+								$SIS_data = "idFacturacion='".$idFacturacion."'";
+								if(isset($idFacRelacionada) && $idFacRelacionada!=''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'";}
+								if(isset($F_Pago) && $F_Pago!=''){  
+									$SIS_data .= ",F_Pago='".$F_Pago."'";
+									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'";
 								}else{
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
@@ -404,22 +404,22 @@ require_once '0_validate_user_1.php';
 								$idCliente      = $tipo['idCliente'];
 								
 								//Filtros
-								$SIS_data = "idFacturacion='".$idFacturacion."'" ;
-								if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuarioPago='".$idUsuario."'" ;}
-								if(isset($idDocPago) && $idDocPago != ''){       $SIS_data .= ",idDocPago='".$idDocPago."'" ;}
-								if(isset($N_DocPago) && $N_DocPago != ''){       $SIS_data .= ",N_DocPago='".$N_DocPago."'" ;}
-								if(isset($F_Pago) && $F_Pago != ''){  
-									$SIS_data .= ",F_Pago='".$F_Pago."'" ;
-									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'" ;
+								$SIS_data = "idFacturacion='".$idFacturacion."'";
+								if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuarioPago='".$idUsuario."'";}
+								if(isset($idDocPago) && $idDocPago!=''){       $SIS_data .= ",idDocPago='".$idDocPago."'";}
+								if(isset($N_DocPago) && $N_DocPago!=''){       $SIS_data .= ",N_DocPago='".$N_DocPago."'";}
+								if(isset($F_Pago) && $F_Pago!=''){  
+									$SIS_data .= ",F_Pago='".$F_Pago."'";
+									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'";
 								}else{
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 								}
-								if(isset($ValorPagado) &&$ValorPagado!= ''){   $SIS_data .= ",MontoPagado='".$MontoPagado."'" ;}
+								if(isset($ValorPagado) &&$ValorPagado!= ''){   $SIS_data .= ",MontoPagado='".$MontoPagado."'";}
 								if($MontoPactado<=$ValorPagado){
 									//Si la NC es igual a la Fac la anula
 									if($ValorNC==$ValorTotal){
@@ -436,7 +436,7 @@ require_once '0_validate_user_1.php';
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_arriendos_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 								
-								/*********************************************************************/		
+								/*********************************************************************/
 								//Se crea la observacion
 								if(isset($idDocPago)&&$idDocPago!=''){
 									$exp_xxs  = 'Pago del documento con el documento '.$rowDoc['Nombre'];
@@ -447,8 +447,8 @@ require_once '0_validate_user_1.php';
 									$exp_xxs  = 'Se utiliza una nota de credito para cerrar la factura por un valor de'.Valores($ValorNC, 0);
 								}
 								//Se guarda en historial la accion
-								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $SIS_data  = "'".$tipo['idFacturacion']."'" ;  }else{$SIS_data  = "''";}
-								if(isset($F_Pago) && $F_Pago != ''){                                  $SIS_data .= ",'".$F_Pago."'" ;                }else{$SIS_data .= ",''";}
+								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion']!=''){    $SIS_data  = "'".$tipo['idFacturacion']."'";  }else{$SIS_data  = "''";}
+								if(isset($F_Pago) && $F_Pago!=''){                                  $SIS_data .= ",'".$F_Pago."'";                }else{$SIS_data .= ",''";}
 								$SIS_data .= ",'1'";                                                     //Creacion Satisfactoria
 								$SIS_data .= ",'".$exp_xxs."'";                                          //Observacion
 								$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
@@ -462,15 +462,15 @@ require_once '0_validate_user_1.php';
 								if($ValorNC!=$ValorTotal){
 									//Agrego el pago al historial de pagos
 									$SIS_data = "'4'"; //se indica que el pago es de productos
-									if(isset($idFacturacion) && $idFacturacion != ''){  $SIS_data .= ",'".$idFacturacion."'" ;  }else{ $SIS_data .= ",''"; }
-									if(isset($idDocPago) && $idDocPago != ''){          $SIS_data .= ",'".$idDocPago."'" ;      }else{ $SIS_data .= ",''"; }
-									if(isset($N_DocPago) && $N_DocPago != ''){          $SIS_data .= ",'".$N_DocPago."'" ;      }else{ $SIS_data .= ",''"; }
-									if(isset($F_Pago) && $F_Pago != ''){  
-										$SIS_data .= ",'".$F_Pago."'" ;
-										$SIS_data .= ",'".fecha2NdiaMes($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2NSemana($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2NMes($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2Ano($F_Pago)."'" ;
+									if(isset($idFacturacion) && $idFacturacion!=''){  $SIS_data .= ",'".$idFacturacion."'";  }else{ $SIS_data .= ",''"; }
+									if(isset($idDocPago) && $idDocPago!=''){          $SIS_data .= ",'".$idDocPago."'";      }else{ $SIS_data .= ",''"; }
+									if(isset($N_DocPago) && $N_DocPago!=''){          $SIS_data .= ",'".$N_DocPago."'";      }else{ $SIS_data .= ",''"; }
+									if(isset($F_Pago) && $F_Pago!=''){  
+										$SIS_data .= ",'".$F_Pago."'";
+										$SIS_data .= ",'".fecha2NdiaMes($F_Pago)."'";
+										$SIS_data .= ",'".fecha2NSemana($F_Pago)."'";
+										$SIS_data .= ",'".fecha2NMes($F_Pago)."'";
+										$SIS_data .= ",'".fecha2Ano($F_Pago)."'";
 									}else{
 										$SIS_data .= ",''";
 										$SIS_data .= ",''";
@@ -478,11 +478,11 @@ require_once '0_validate_user_1.php';
 										$SIS_data .= ",''";
 										$SIS_data .= ",''";
 									}
-									if(isset($ValorReal) && $ValorReal != ''){             $SIS_data .= ",'".$ValorPagado."'" ;     }else{ $SIS_data .= ",''"; }
-									if(isset($MontoPactado) && $MontoPactado != ''){       $SIS_data .= ",'".$MontoPactado."'" ;    }else{ $SIS_data .= ",''"; }
-									if(isset($idUsuario) && $idUsuario != ''){             $SIS_data .= ",'".$idUsuario."'" ;       }else{ $SIS_data .= ",''"; }
-									if(isset($idSistema) && $idSistema != ''){             $SIS_data .= ",'".$idSistema."'" ;       }else{ $SIS_data .= ",''"; }
-									if(isset($idCliente) && $idCliente != ''){             $SIS_data .= ",'".$idCliente."'" ;       }else{ $SIS_data .= ",''"; }
+									if(isset($ValorReal) && $ValorReal!=''){             $SIS_data .= ",'".$ValorPagado."'";     }else{ $SIS_data .= ",''"; }
+									if(isset($MontoPactado) && $MontoPactado!=''){       $SIS_data .= ",'".$MontoPactado."'";    }else{ $SIS_data .= ",''"; }
+									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";       }else{ $SIS_data .= ",''"; }
+									if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",'".$idSistema."'";       }else{ $SIS_data .= ",''"; }
+									if(isset($idCliente) && $idCliente!=''){             $SIS_data .= ",'".$idCliente."'";       }else{ $SIS_data .= ",''"; }
 									
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idTipo, idFacturacion, idDocPago, N_DocPago, F_Pago, F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idCliente';
@@ -497,13 +497,13 @@ require_once '0_validate_user_1.php';
 								$idFacRelacionada  = $tipo['idFacRelacionada'];
 								
 								//Filtros
-								$SIS_data = "idFacturacion='".$idFacturacion."'" ;
-								if(isset($idFacRelacionada) && $idFacRelacionada != ''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'" ;}
-								if(isset($F_Pago) && $F_Pago != ''){  
-									$SIS_data .= ",F_Pago='".$F_Pago."'" ;
-									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'" ;
+								$SIS_data = "idFacturacion='".$idFacturacion."'";
+								if(isset($idFacRelacionada) && $idFacRelacionada!=''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'";}
+								if(isset($F_Pago) && $F_Pago!=''){  
+									$SIS_data .= ",F_Pago='".$F_Pago."'";
+									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'";
 								}else{
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
@@ -516,7 +516,7 @@ require_once '0_validate_user_1.php';
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_arriendos_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
-							}	
+							}
 						}
 					}
 				}
@@ -538,22 +538,22 @@ require_once '0_validate_user_1.php';
 								$idCliente      = $tipo['idCliente'];
 								
 								//Filtros
-								$SIS_data = "idFacturacion='".$idFacturacion."'" ;
-								if(isset($idUsuario) && $idUsuario != ''){       $SIS_data .= ",idUsuarioPago='".$idUsuario."'" ;}
-								if(isset($idDocPago) && $idDocPago != ''){       $SIS_data .= ",idDocPago='".$idDocPago."'" ;}
-								if(isset($N_DocPago) && $N_DocPago != ''){       $SIS_data .= ",N_DocPago='".$N_DocPago."'" ;}
-								if(isset($F_Pago) && $F_Pago != ''){  
-									$SIS_data .= ",F_Pago='".$F_Pago."'" ;
-									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'" ;
+								$SIS_data = "idFacturacion='".$idFacturacion."'";
+								if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuarioPago='".$idUsuario."'";}
+								if(isset($idDocPago) && $idDocPago!=''){       $SIS_data .= ",idDocPago='".$idDocPago."'";}
+								if(isset($N_DocPago) && $N_DocPago!=''){       $SIS_data .= ",N_DocPago='".$N_DocPago."'";}
+								if(isset($F_Pago) && $F_Pago!=''){  
+									$SIS_data .= ",F_Pago='".$F_Pago."'";
+									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'";
 								}else{
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
 								}
-								if(isset($ValorPagado) &&$ValorPagado!= ''){   $SIS_data .= ",MontoPagado='".$MontoPagado."'" ;}
+								if(isset($ValorPagado) &&$ValorPagado!= ''){   $SIS_data .= ",MontoPagado='".$MontoPagado."'";}
 								if($MontoPactado<=$ValorPagado){
 									//Si la NC es igual a la Fac la anula
 									if($ValorNC==$ValorTotal){
@@ -570,7 +570,7 @@ require_once '0_validate_user_1.php';
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_servicios_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 								
-								/*********************************************************************/		
+								/*********************************************************************/
 								//Se crea la observacion
 								if(isset($idDocPago)&&$idDocPago!=''){
 									$exp_xxs  = 'Pago del documento con el documento '.$rowDoc['Nombre'];
@@ -581,8 +581,8 @@ require_once '0_validate_user_1.php';
 									$exp_xxs  = 'Se utiliza una nota de credito para cerrar la factura por un valor de'.Valores($ValorNC, 0);
 								}
 								//Se guarda en historial la accion
-								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion'] != ''){    $SIS_data  = "'".$tipo['idFacturacion']."'" ;  }else{$SIS_data  = "''";}
-								if(isset($F_Pago) && $F_Pago != ''){                                  $SIS_data .= ",'".$F_Pago."'" ;                }else{$SIS_data .= ",''";}
+								if(isset($tipo['idFacturacion']) && $tipo['idFacturacion']!=''){    $SIS_data  = "'".$tipo['idFacturacion']."'";  }else{$SIS_data  = "''";}
+								if(isset($F_Pago) && $F_Pago!=''){                                  $SIS_data .= ",'".$F_Pago."'";                }else{$SIS_data .= ",''";}
 								$SIS_data .= ",'1'";                                                       //Creacion Satisfactoria
 								$SIS_data .= ",'".$exp_xxs."'";                                            //Observacion
 								$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";     //idUsuario
@@ -596,15 +596,15 @@ require_once '0_validate_user_1.php';
 								if($ValorNC!=$ValorTotal){
 									//Agrego el pago al historial de pagos
 									$SIS_data = "'3'"; //se indica que el pago es de productos
-									if(isset($idFacturacion) && $idFacturacion != ''){  $SIS_data .= ",'".$idFacturacion."'" ;  }else{ $SIS_data .= ",''"; }
-									if(isset($idDocPago) && $idDocPago != ''){          $SIS_data .= ",'".$idDocPago."'" ;      }else{ $SIS_data .= ",''"; }
-									if(isset($N_DocPago) && $N_DocPago != ''){          $SIS_data .= ",'".$N_DocPago."'" ;      }else{ $SIS_data .= ",''"; }
-									if(isset($F_Pago) && $F_Pago != ''){  
-										$SIS_data .= ",'".$F_Pago."'" ;
-										$SIS_data .= ",'".fecha2NdiaMes($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2NSemana($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2NMes($F_Pago)."'" ;
-										$SIS_data .= ",'".fecha2Ano($F_Pago)."'" ;
+									if(isset($idFacturacion) && $idFacturacion!=''){  $SIS_data .= ",'".$idFacturacion."'";  }else{ $SIS_data .= ",''"; }
+									if(isset($idDocPago) && $idDocPago!=''){          $SIS_data .= ",'".$idDocPago."'";      }else{ $SIS_data .= ",''"; }
+									if(isset($N_DocPago) && $N_DocPago!=''){          $SIS_data .= ",'".$N_DocPago."'";      }else{ $SIS_data .= ",''"; }
+									if(isset($F_Pago) && $F_Pago!=''){  
+										$SIS_data .= ",'".$F_Pago."'";
+										$SIS_data .= ",'".fecha2NdiaMes($F_Pago)."'";
+										$SIS_data .= ",'".fecha2NSemana($F_Pago)."'";
+										$SIS_data .= ",'".fecha2NMes($F_Pago)."'";
+										$SIS_data .= ",'".fecha2Ano($F_Pago)."'";
 									}else{
 										$SIS_data .= ",''";
 										$SIS_data .= ",''";
@@ -612,11 +612,11 @@ require_once '0_validate_user_1.php';
 										$SIS_data .= ",''";
 										$SIS_data .= ",''";
 									}
-									if(isset($ValorReal) && $ValorReal != ''){             $SIS_data .= ",'".$ValorReal."'" ;       }else{ $SIS_data .= ",''"; }
-									if(isset($MontoPactado) && $MontoPactado != ''){       $SIS_data .= ",'".$MontoPactado."'" ;    }else{ $SIS_data .= ",''"; }
-									if(isset($idUsuario) && $idUsuario != ''){             $SIS_data .= ",'".$idUsuario."'" ;       }else{ $SIS_data .= ",''"; }
-									if(isset($idSistema) && $idSistema != ''){             $SIS_data .= ",'".$idSistema."'" ;       }else{ $SIS_data .= ",''"; }
-									if(isset($idCliente) && $idCliente != ''){             $SIS_data .= ",'".$idCliente."'" ;       }else{ $SIS_data .= ",''"; }
+									if(isset($ValorReal) && $ValorReal!=''){             $SIS_data .= ",'".$ValorReal."'";       }else{ $SIS_data .= ",''"; }
+									if(isset($MontoPactado) && $MontoPactado!=''){       $SIS_data .= ",'".$MontoPactado."'";    }else{ $SIS_data .= ",''"; }
+									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";       }else{ $SIS_data .= ",''"; }
+									if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",'".$idSistema."'";       }else{ $SIS_data .= ",''"; }
+									if(isset($idCliente) && $idCliente!=''){             $SIS_data .= ",'".$idCliente."'";       }else{ $SIS_data .= ",''"; }
 									
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idTipo, idFacturacion, idDocPago, N_DocPago, F_Pago, F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idCliente';
@@ -630,13 +630,13 @@ require_once '0_validate_user_1.php';
 								$idFacRelacionada  = $tipo['idFacRelacionada'];
 								
 								//Filtros
-								$SIS_data = "idFacturacion='".$idFacturacion."'" ;
-								if(isset($idFacRelacionada) && $idFacRelacionada != ''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'" ;}
-								if(isset($F_Pago) && $F_Pago != ''){  
-									$SIS_data .= ",F_Pago='".$F_Pago."'" ;
-									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'" ;
-									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'" ;
+								$SIS_data = "idFacturacion='".$idFacturacion."'";
+								if(isset($idFacRelacionada) && $idFacRelacionada!=''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'";}
+								if(isset($F_Pago) && $F_Pago!=''){  
+									$SIS_data .= ",F_Pago='".$F_Pago."'";
+									$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'";
+									$SIS_data .= ",F_Pago_ano='".fecha2Ano($F_Pago)."'";
 								}else{
 									$SIS_data .= ",''";
 									$SIS_data .= ",''";
@@ -651,7 +651,7 @@ require_once '0_validate_user_1.php';
 								
 							}
 						}
-					}	
+					}
 				}
 				
 				
@@ -661,7 +661,7 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['pago_clientes_productos']);
 				unset($_SESSION['pago_clientes_arriendo']);
 				unset($_SESSION['pago_clientes_servicio']);
-				
+
 				//redirijo
 				header( 'Location: '.$location.'?pay=true' );
 				die;

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_administrador_05.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -31,7 +31,7 @@ require_once 'core/Web.Header.Main.php';
        location.reload(true);
     }
 </script>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
              
   
@@ -43,11 +43,11 @@ require_once 'core/Web.Header.Main.php';
 function conectarDB ($servidor, $usuario, $password, $base_datos) {
 	$db_con = mysqli_connect($servidor, $usuario, $password, $base_datos);
 	$db_con->set_charset("utf8");
-	return $db_con; 
+	return $db_con;
 }
 
 //Bases de Datos
-$BasesDatos = array();	
+$BasesDatos = array();
 $BasesDatos[1] = 'crosstech_pe_intranet';
 
 $DB_Servidor = 'localhost';

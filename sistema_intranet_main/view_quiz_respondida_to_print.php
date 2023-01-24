@@ -11,19 +11,19 @@ require_once 'core/Load.Utils.Print.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -107,7 +107,7 @@ require_once 'core/Web.Header.Print.php';
  
 <?php if(isset($count)&&$count==0){ ?>
 		
-	<div class="col-sm-12" style="margin-top:20px;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 		<?php
 		$Alert_Text  = 'No tiene preguntas asignadas a la Quiz';
 		alert_post_data(4,1,1, $Alert_Text);
@@ -115,15 +115,15 @@ require_once 'core/Web.Header.Print.php';
 	</div>
 
 <?php } ?>
-<div class="clearfix"></div>  
+<div class="clearfix"></div>
 
 
-	<div class="col-sm-12">
-		<div class="box">	
-			<header>		
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos Basicos</h5>
 			</header>
-			<div class="table-responsive">    
+			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<tr>
@@ -137,7 +137,7 @@ require_once 'core/Web.Header.Print.php';
 						<tr>
 							<td class="meta-head">Fecha Cabecera</td>
 							<td colspan="3"><?php echo fecha_estandar($rowdata['Header_fecha']); ?></td>
-						</tr> 
+						</tr>
 						<tr>
 							<td class="meta-head">Texto Contenido</td>
 							<td colspan="3"><?php echo $rowdata['Texto_Inicio']; ?></td>
@@ -151,7 +151,7 @@ require_once 'core/Web.Header.Print.php';
 							<td><?php echo $rowdata['sistema']; ?></td>
 							<td class="meta-head">Estado</td>
 							<td><?php echo $rowdata['Estado']; ?></td>
-						</tr> 
+						</tr>
 						<tr>
 							<td class="meta-head">Tipo Puntuacion</td>
 							<?php
@@ -182,24 +182,24 @@ require_once 'core/Web.Header.Print.php';
 							//Si
 							if(isset($rowdata['idLimiteTiempo'])&&$rowdata['idLimiteTiempo']==1){
 								echo '<td colspan="3">Limitado a '.$rowdata['Tiempo'].' hrs.</td>';
-							//No	
+							//no
 							}else{
 								echo '<td colspan="3">Sin Limite de Tiempo</td>';
 							}
 							?>
-						</tr>                  
+						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 
-	<div class="col-sm-12">
-		<div class="box">	
-			<header>		
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Preguntas</h5>
 			</header>
-			<div class="table-responsive">    
+			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						
@@ -225,9 +225,9 @@ require_once 'core/Web.Header.Print.php';
 										if(isset($preg['Opcion_4'])&&$preg['Opcion_4']!=''){$tex = '';$r_ini = '';$r_fin = '';if($preg['OpcionCorrecta']==$resp_correct){$tex = ' <strong>-> correcta</strong>';};if($rowdata['Respuesta_'.$i]==$resp_correct){$r_ini = '<span class="color-green">';$r_fin = '</span>';};echo $r_ini.' - '.$preg['Opcion_4'].$r_fin.$tex.'<br/>';$resp_correct++;}
 										if(isset($preg['Opcion_5'])&&$preg['Opcion_5']!=''){$tex = '';$r_ini = '';$r_fin = '';if($preg['OpcionCorrecta']==$resp_correct){$tex = ' <strong>-> correcta</strong>';};if($rowdata['Respuesta_'.$i]==$resp_correct){$r_ini = '<span class="color-green">';$r_fin = '</span>';};echo $r_ini.' - '.$preg['Opcion_5'].$r_fin.$tex.'<br/>';$resp_correct++;}
 										if(isset($preg['Opcion_6'])&&$preg['Opcion_6']!=''){$tex = '';$r_ini = '';$r_fin = '';if($preg['OpcionCorrecta']==$resp_correct){$tex = ' <strong>-> correcta</strong>';};if($rowdata['Respuesta_'.$i]==$resp_correct){$r_ini = '<span class="color-green">';$r_fin = '</span>';};echo $r_ini.' - '.$preg['Opcion_6'].$r_fin.$tex.'<br/>';$resp_correct++;}
-										?>	
+										?>
 						
-									</td>			
+									</td>	
 								</tr>
 							
 							
@@ -236,8 +236,8 @@ require_once 'core/Web.Header.Print.php';
 						
 
 								<?php } ?>
-							<?php } ?> 
-						<?php } ?> 
+							<?php } ?>
+						<?php } ?>
 						                  
 					</tbody>
 				</table>

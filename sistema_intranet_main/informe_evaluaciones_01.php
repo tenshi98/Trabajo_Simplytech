@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_evaluaciones_01.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -25,20 +25,20 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
              
   
 //Solo las que correspondan		
 $z     = "WHERE quiz_realizadas.idQuizRealizadas!=0"; 
 //Tipo de usuario
-$z.= " AND quiz_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-if(isset($_GET['idCurso'])&&$_GET['idCurso']!=''){                     $z.=" AND alumnos_listado.idCurso=".$_GET['idCurso'];}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){                   $z.=" AND quiz_listado.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['idQuiz'])&&$_GET['idQuiz']!=''){                       $z.=" AND quiz_realizadas.idQuiz=".$_GET['idQuiz'];}
-if(isset($_GET['idTipoEvaluacion'])&&$_GET['idTipoEvaluacion']!=''){   $z.=" AND quiz_listado.idTipoEvaluacion=".$_GET['idTipoEvaluacion'];}
-if(isset($_GET['idTipoQuiz'])&&$_GET['idTipoQuiz']!=''){               $z.=" AND quiz_listado.idTipoQuiz=".$_GET['idTipoQuiz'];}
-if(isset($_GET['idLimiteTiempo'])&&$_GET['idLimiteTiempo']!=''){       $z.=" AND quiz_listado.idLimiteTiempo=".$_GET['idLimiteTiempo'];}
+$z.= " AND quiz_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+if(isset($_GET['idCurso'])&&$_GET['idCurso']!=''){             $z.=" AND alumnos_listado.idCurso=".$_GET['idCurso'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){           $z.=" AND quiz_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idQuiz'])&&$_GET['idQuiz']!=''){               $z.=" AND quiz_realizadas.idQuiz=".$_GET['idQuiz'];}
+if(isset($_GET['idTipoEvaluacion'])&&$_GET['idTipoEvaluacion']!=''){  $z.=" AND quiz_listado.idTipoEvaluacion=".$_GET['idTipoEvaluacion'];}
+if(isset($_GET['idTipoQuiz'])&&$_GET['idTipoQuiz']!=''){       $z.=" AND quiz_listado.idTipoQuiz=".$_GET['idTipoQuiz'];}
+if(isset($_GET['idLimiteTiempo'])&&$_GET['idLimiteTiempo']!=''){      $z.=" AND quiz_listado.idLimiteTiempo=".$_GET['idLimiteTiempo'];}
 			
 /*************************************************************************************************/
 //Evaluaciones
@@ -88,7 +88,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal,$row );
 }
 
@@ -126,7 +126,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrAlumnos,$row );
 }
 /******************************************/
@@ -142,15 +142,15 @@ foreach ($arrTemporal as $temp) {
 }
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Generales</a></li>
 				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Informacion Alumnos</a></li>          
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 			<script type="text/javascript">google.charts.load('current', {'packages':['corechart']});</script>	
 
@@ -177,7 +177,7 @@ foreach ($arrTemporal as $temp) {
 					  }
 
 
-				</script> 
+				</script>
 				<div id="piechart" style="height: 500px; width: 100%;"></div>		
 				
 				<div class="table-responsive">
@@ -198,19 +198,19 @@ foreach ($arrTemporal as $temp) {
 						</thead>
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<?php foreach ($arrTemporal as $eva) { ?>
-							<tr class="odd">		
-								<td><?php echo $eva['NombreEvaluacion']; ?></td>		
-								<td><?php echo fecha_estandar($eva['Programada_fecha']); ?></td>		
-								<td><?php echo $eva['Total_Preguntas']; ?></td>		
-								<td><?php echo $eva['Duracion_Max']; ?></td>		
-								<td><?php echo Cantidades($eva['PromRespondido'], 1); ?></td>		
-								<td><?php echo Cantidades($eva['PromCorrectas'], 1); ?></td>		
-								<td><?php echo Cantidades($eva['PromRendimiento'], 2).'%'; ?></td>		
-								<td><?php echo $eva['NoAprobado']; ?></td>		
-								<td><?php echo $eva['Aprobado']; ?></td>		
-								<td><?php echo $eva['Reintentado']; ?></td>		
+							<tr class="odd">
+								<td><?php echo $eva['NombreEvaluacion']; ?></td>
+								<td><?php echo fecha_estandar($eva['Programada_fecha']); ?></td>
+								<td><?php echo $eva['Total_Preguntas']; ?></td>
+								<td><?php echo $eva['Duracion_Max']; ?></td>
+								<td><?php echo Cantidades($eva['PromRespondido'], 1); ?></td>
+								<td><?php echo Cantidades($eva['PromCorrectas'], 1); ?></td>
+								<td><?php echo Cantidades($eva['PromRendimiento'], 2).'%'; ?></td>
+								<td><?php echo $eva['NoAprobado']; ?></td>
+								<td><?php echo $eva['Aprobado']; ?></td>
+								<td><?php echo $eva['Reintentado']; ?></td>
 							</tr>
-							<?php } ?>                    
+							<?php } ?>
 						</tbody>
 					</table>
 				</div>
@@ -234,59 +234,59 @@ foreach ($arrTemporal as $temp) {
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php foreach ($arrAlumnos as $eva) { ?>
-							<tr class="odd">		
-								<td><?php echo $eva['NombreEvaluacion']; ?></td>		
-								<td><?php echo $eva['AlumnoNombre'].' '.$eva['AlumnoApellidoPat']; ?></td>		
-								<td><?php echo fecha_estandar($eva['Programada_fecha']); ?></td>		
-								<td><?php echo $eva['Total_Preguntas']; ?></td>		
-								<td><?php echo $eva['Duracion_Max']; ?></td>		
-								<td><?php echo Cantidades($eva['PromRespondido'], 1); ?></td>		
-								<td><?php echo Cantidades($eva['PromCorrectas'], 1); ?></td>		
-								<td><?php echo Cantidades($eva['PromRendimiento'], 2).'%'; ?></td>		
-								<td><?php echo $eva['Evaluacion']; ?></td>			
+							<tr class="odd">
+								<td><?php echo $eva['NombreEvaluacion']; ?></td>
+								<td><?php echo $eva['AlumnoNombre'].' '.$eva['AlumnoApellidoPat']; ?></td>
+								<td><?php echo fecha_estandar($eva['Programada_fecha']); ?></td>
+								<td><?php echo $eva['Total_Preguntas']; ?></td>
+								<td><?php echo $eva['Duracion_Max']; ?></td>
+								<td><?php echo Cantidades($eva['PromRespondido'], 1); ?></td>
+								<td><?php echo Cantidades($eva['PromCorrectas'], 1); ?></td>
+								<td><?php echo Cantidades($eva['PromRendimiento'], 2).'%'; ?></td>
+								<td><?php echo $eva['Evaluacion']; ?></td>	
 							</tr>
-						<?php } ?>                    
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 
  
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 	
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {        $x1  = $idCliente;         }else{$x1  = '';}
-				if(isset($idCurso)) {          $x2  = $idCurso;           }else{$x2  = '';}
-				if(isset($idEstado)) {         $x3  = $idEstado;          }else{$x3  = '';}
-				if(isset($idQuiz)) {           $x4  = $idQuiz;            }else{$x4  = '';}
-				if(isset($idTipoEvaluacion)) { $x5  = $idTipoEvaluacion;  }else{$x5  = '';}
-				if(isset($idTipoQuiz)) {       $x6  = $idTipoQuiz;        }else{$x6  = '';}
-				if(isset($idLimiteTiempo)) {   $x7  = $idLimiteTiempo;    }else{$x7  = '';}
-				
+				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = '';}
+				if(isset($idCurso)){          $x2  = $idCurso;           }else{$x2  = '';}
+				if(isset($idEstado)){         $x3  = $idEstado;          }else{$x3  = '';}
+				if(isset($idQuiz)){           $x4  = $idQuiz;            }else{$x4  = '';}
+				if(isset($idTipoEvaluacion)){ $x5  = $idTipoEvaluacion;  }else{$x5  = '';}
+				if(isset($idTipoQuiz)){       $x6  = $idTipoQuiz;        }else{$x6  = '';}
+				if(isset($idLimiteTiempo)){   $x7  = $idLimiteTiempo;    }else{$x7  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Clientes','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $z, 0,
@@ -299,14 +299,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x6, 1, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tiempo Limite','idLimiteTiempo', $x7, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 								
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

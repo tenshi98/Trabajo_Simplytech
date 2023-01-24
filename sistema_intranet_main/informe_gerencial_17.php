@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_gerencial_17.php";
 $location = $original;
 
@@ -24,11 +24,11 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Variables
 $titulo_cuadro  = 'Ultimas Mediciones';
 $seguimiento    = 2;
-$HoraSistema    = hora_actual(); 
+$HoraSistema    = hora_actual();
 $FechaSistema   = fecha_actual();
 
 //Variable
@@ -37,14 +37,14 @@ $SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
 	$SIS_where .= " AND telemetria_listado.id_Geo = ".$seguimiento;
 }
-//Filtro el sistema al cual pertenece	
+//Filtro el sistema al cual pertenece
 $SIS_where .= " AND telemetria_listado.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 
 
 //Verifico el tipo de usuario que esta ingresando y el id
 $SIS_join = "LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema";	
 if(isset($_SESSION['usuario']['basic_data']['idTipoUsuario'])&&$_SESSION['usuario']['basic_data']['idTipoUsuario']!=1&&isset($_SESSION['usuario']['basic_data']['idUsuario'])&&$_SESSION['usuario']['basic_data']['idUsuario']!=0){
-	$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";	
+	$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 
@@ -53,7 +53,7 @@ $SIS_query = '
 telemetria_listado.idTelemetria,
 telemetria_listado.Nombre,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.LastUpdateFecha, 
+telemetria_listado.LastUpdateFecha,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores';
 $SIS_order = 'telemetria_listado.Nombre ASC';
@@ -73,10 +73,10 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 	</div>
 		
 	<div class="row">
-		<div class="col-sm-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo_cuadro.'</h5>	
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo_cuadro.'</h5>
 				</header>
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -111,7 +111,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 								$Time_Tiempo_FL  = horas2segundos($equip['TiempoFueraLinea']);
 								$Time_Tiempo_Max = horas2segundos('48:00:00');
 								//comparacion
-								if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+								if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
 									$in_eq_fueralinea++;
 								}
 								
@@ -134,24 +134,24 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 										
 								/*******************************************************/
 								//imprimo
-								$GPS .= '	
-								<tr class="odd">		
-									<td>'.$danger.'</td>	
-									<td>'.$equip['Nombre'].'</td>	
-									<td>'.fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs</td>	
-									<td><div class="btn-group" >'.$eq_ok.'</div></td>			
+								$GPS .= '
+								<tr class="odd">
+									<td>'.$danger.'</td>
+									<td>'.$equip['Nombre'].'</td>
+									<td>'.fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs</td>
+									<td><div class="btn-group" >'.$eq_ok.'</div></td>		
 									<td>
 										<div class="btn-group" style="width: 35px;" >
 											<a href="telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';
-							}					
-							$GPS .= '       
+							}
+							$GPS .= '
 						</tbody>
 					</table>
-				</div>	
-			</div>	
+				</div>
+			</div>
 		</div>
 	</div>';
 
@@ -165,16 +165,16 @@ $GPS .= '
 		//Examples of how to assign the Colorbox event to elements
 		$(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
 		$(".callbacks").colorbox({
-			onOpen:function(){ alert(\'onOpen: colorbox is about to open\'); },
-			onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\'); },
-			onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\'); },
-			onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\'); },
-			onClosed:function(){ alert(\'onClosed: colorbox has completely closed\'); }
+			onOpen:function(){ alert(\'onOpen: colorbox is about to open\');},
+			onLoad:function(){ alert(\'onLoad: colorbox has started to load the targeted content\');},
+			onComplete:function(){ alert(\'onComplete: colorbox has displayed the loaded content\');},
+			onCleanup:function(){ alert(\'onCleanup: colorbox has begun the close process\');},
+			onClosed:function(){ alert(\'onClosed: colorbox has completely closed\');}
 		});
 
 				
 		//Example of preserving a JavaScript event for inline calls.
-		$("#click").click(function(){ 
+		$("#click").click(function(){
 			$(\'#click\').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
 			return false;
 		});

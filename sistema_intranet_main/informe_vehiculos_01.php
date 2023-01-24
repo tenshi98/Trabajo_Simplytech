@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_vehiculos_01.php";
 $location = $original;  
 //Se agregan ubicaciones
@@ -24,8 +24,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) {
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /*******************************************************************************************/
 //Variable
 $z = " WHERE vehiculos_listado.idEstado=1 AND vehiculos_listado.idOpciones_4=1";
@@ -34,7 +34,7 @@ $d2 = "";
 $data = "";
 $n_meses = 1;
 //Verifico el tipo de usuario que esta ingresando
-$z.=" AND vehiculos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z.=" AND vehiculos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if (isset($_GET['Ano'])&&$_GET['Ano']!=''&&isset($_GET['idMes'])&&$_GET['idMes']!=''){
 	$d1.=" AND Creacion_mes='".$_GET['idMes']."' AND Creacion_ano='".$_GET['Ano']."'";	
 	$d2.=" AND idMes='".$_GET['idMes']."' AND Ano='".$_GET['Ano']."'";
@@ -66,7 +66,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCostos,$row );
 }
 $costos = "";
@@ -83,7 +83,7 @@ foreach ($arrCostos as $costo) {
 $arrVehiculos = array();
 $query = "SELECT 
 vehiculos_listado.idVehiculo,
-vehiculos_listado.Nombre, 
+vehiculos_listado.Nombre,
 vehiculos_listado.Marca, 
 vehiculos_listado.Modelo,
 vehiculos_tipo.Nombre AS Tipo,
@@ -127,7 +127,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrVehiculos,$row );
 }
 
@@ -139,7 +139,7 @@ array_push( $arrVehiculos,$row );
 
                     
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Calculos <?php echo $data; ?></h5>
@@ -153,7 +153,7 @@ array_push( $arrVehiculos,$row );
 						<th class="text-center" colspan="<?php echo $cost+2; ?>">Costos</th>
 						<th class="text-center" colspan="2">Resultado</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr role="row">
 						<td style="background-color: #ccc;">Nombre</td>
@@ -167,7 +167,7 @@ array_push( $arrVehiculos,$row );
 						<td style="background-color: #ccc;">Sueldo Chofer</td>
 						<?php foreach ($arrCostos as $cost) { 
 							echo '<td style="background-color: #ccc;">'.$cost['Nombre'].'</td>';
-						} ?>	
+						} ?>
 						<td style="background-color: #ccc;">Total Costos</td>
 						
 						
@@ -237,8 +237,8 @@ array_push( $arrVehiculos,$row );
 						</tr>
 					<?php } ?>
 					<tr class="odd">
-						<td colspan="<?php echo 10+$cost?>"></td>	
-					</tr> 
+						<td colspan="<?php echo 10+$cost?>"></td>
+					</tr>
 					<tr class="odd">
 						<td align="right" colspan="<?php echo 9+$cost?>">Total Planificado</td>
 						<td align="right"><?php echo valores($total_prog,0); ?></td>
@@ -258,34 +258,34 @@ array_push( $arrVehiculos,$row );
 				                   
 				</tbody>
 			</table>
-		</div> 
+		</div>
 	</div>
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				
 				//Se verifican si existen los datos
-				if(isset($Ano)) {       $x1  = $Ano;       }else{$x1  = '';}
-				if(isset($idMes)) {     $x2  = $idMes;     }else{$x2  = '';}
-				if(isset($fInicio)) {   $x3  = $fInicio;   }else{$x3  = '';}
-				if(isset($fTermino)) {  $x4  = $fTermino;  }else{$x4  = '';}
+				if(isset($Ano)){       $x1  = $Ano;       }else{$x1  = '';}
+				if(isset($idMes)){     $x2  = $idMes;     }else{$x2  = '';}
+				if(isset($fInicio)){   $x3  = $fInicio;   }else{$x3  = '';}
+				if(isset($fTermino)){  $x4  = $fTermino;  }else{$x4  = '';}
 						
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -301,14 +301,14 @@ array_push( $arrVehiculos,$row );
 						
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>

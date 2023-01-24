@@ -2,63 +2,63 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-224).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idProveedor']) )           $idProveedor           = $_POST['idProveedor'];
-	if ( !empty($_POST['idDocumentos']) )          $idDocumentos          = $_POST['idDocumentos'];
-	if ( !empty($_POST['N_Doc']) )                 $N_Doc                 = $_POST['N_Doc'];
-	if ( !empty($_POST['Creacion_fecha']) )        $Creacion_fecha        = $_POST['Creacion_fecha'];
-	if ( !empty($_POST['Observaciones']) )         $Observaciones         = $_POST['Observaciones'];
-	if ( !empty($_POST['idSistema']) )             $idSistema             = $_POST['idSistema'];
-	if ( !empty($_POST['idUsuario']) )             $idUsuario             = $_POST['idUsuario'];
-	if ( !empty($_POST['idTipo']) )                $idTipo                = $_POST['idTipo'];
-	if ( !empty($_POST['idEquipo']) )              $idEquipo              = $_POST['idEquipo'];
-	if ( !empty($_POST['ValorTotal']) )            $ValorTotal            = $_POST['ValorTotal'];
-	if ( !empty($_POST['oldItemID']) )             $oldItemID             = $_POST['oldItemID'];
-	if ( !empty($_POST['idImpuesto']) )            $idImpuesto            = $_POST['idImpuesto'];
-	if ( !empty($_POST['idDocPago']) )             $idDocPago             = $_POST['idDocPago'];
-	if ( !empty($_POST['N_DocPago']) )             $N_DocPago             = $_POST['N_DocPago'];
-	if ( !empty($_POST['F_Pago']) )                $F_Pago                = $_POST['F_Pago'];
-	if ( !empty($_POST['MontoPagado']) )           $MontoPagado           = $_POST['MontoPagado'];
-	if ( !empty($_POST['montoPactado']) )          $montoPactado          = $_POST['montoPactado'];
-	if ( !empty($_POST['idFacturacion']) )         $idFacturacion         = $_POST['idFacturacion'];
-	if ( !empty($_POST['idCliente']) )             $idCliente             = $_POST['idCliente'];
-	if ( !empty($_POST['idTrabajador']) )          $idTrabajador          = $_POST['idTrabajador'];
-	if ( !empty($_POST['fecha_auto']) )            $fecha_auto            = $_POST['fecha_auto'];
-	if ( !empty($_POST['idBodega']) )              $idBodega              = $_POST['idBodega'];
-	if ( !empty($_POST['Devolucion_fecha']) )      $Devolucion_fecha      = $_POST['Devolucion_fecha'];
-	if ( !empty($_POST['Nombre']) )                $Nombre                = $_POST['Nombre'];
-	if ( !empty($_POST['vTotal']) )                $vTotal                = $_POST['vTotal'];
-	if ( !empty($_POST['oldidProducto']) )         $oldidProducto         = $_POST['oldidProducto'];
-	if ( !empty($_POST['idOcompra']) )             $idOcompra             = $_POST['idOcompra'];
-	if ( !empty($_POST['Cantidad_ing']) )          $Cantidad_ing          = $_POST['Cantidad_ing'];
-	if ( !empty($_POST['Cantidad_eg']) )           $Cantidad_eg           = $_POST['Cantidad_eg'];
-	if ( !empty($_POST['idFrecuencia']) )          $idFrecuencia          = $_POST['idFrecuencia'];
-	if ( !empty($_POST['vUnitario']) )             $vUnitario             = $_POST['vUnitario'];
-	if ( !empty($_POST['idEstadoDevolucion']) )    $idEstadoDevolucion    = $_POST['idEstadoDevolucion'];
-	if ( !empty($_POST['FechaDevolucionReal']) )   $FechaDevolucionReal   = $_POST['FechaDevolucionReal'];
-	if ( !empty($_POST['idUsuarioDevolucion']) )   $idUsuarioDevolucion   = $_POST['idUsuarioDevolucion'];
-	if ( !empty($_POST['OC_Ventas']) )             $OC_Ventas             = $_POST['OC_Ventas'];
-	if ( !empty($_POST['idGuia']) )                $idGuia                = $_POST['idGuia'];
-	if ( !empty($_POST['idCentroCosto']) )         $idCentroCosto         = $_POST['idCentroCosto'];
-	if ( !empty($_POST['idLevel_1']) )             $idLevel_1             = $_POST['idLevel_1'];
-	if ( !empty($_POST['idLevel_2']) )             $idLevel_2             = $_POST['idLevel_2'];
-	if ( !empty($_POST['idLevel_3']) )             $idLevel_3             = $_POST['idLevel_3'];
-	if ( !empty($_POST['idLevel_4']) )             $idLevel_4             = $_POST['idLevel_4'];
-	if ( !empty($_POST['idLevel_5']) )             $idLevel_5             = $_POST['idLevel_5'];
-	if ( !empty($_POST['fecha_fact_desde']) )      $fecha_fact_desde      = $_POST['fecha_fact_desde'];
-	if ( !empty($_POST['fecha_fact_hasta']) )      $fecha_fact_hasta      = $_POST['fecha_fact_hasta'];
-	if ( !empty($_POST['idUsoIVA']) )              $idUsoIVA              = $_POST['idUsoIVA'];
-					
+	if (!empty($_POST['idProveedor']))           $idProveedor           = $_POST['idProveedor'];
+	if (!empty($_POST['idDocumentos']))          $idDocumentos          = $_POST['idDocumentos'];
+	if (!empty($_POST['N_Doc']))                 $N_Doc                 = $_POST['N_Doc'];
+	if (!empty($_POST['Creacion_fecha']))        $Creacion_fecha        = $_POST['Creacion_fecha'];
+	if (!empty($_POST['Observaciones']))         $Observaciones         = $_POST['Observaciones'];
+	if (!empty($_POST['idSistema']))             $idSistema             = $_POST['idSistema'];
+	if (!empty($_POST['idUsuario']))             $idUsuario             = $_POST['idUsuario'];
+	if (!empty($_POST['idTipo']))                $idTipo                = $_POST['idTipo'];
+	if (!empty($_POST['idEquipo']))              $idEquipo              = $_POST['idEquipo'];
+	if (!empty($_POST['ValorTotal']))            $ValorTotal            = $_POST['ValorTotal'];
+	if (!empty($_POST['oldItemID']))             $oldItemID             = $_POST['oldItemID'];
+	if (!empty($_POST['idImpuesto']))            $idImpuesto            = $_POST['idImpuesto'];
+	if (!empty($_POST['idDocPago']))             $idDocPago             = $_POST['idDocPago'];
+	if (!empty($_POST['N_DocPago']))             $N_DocPago             = $_POST['N_DocPago'];
+	if (!empty($_POST['F_Pago']))                $F_Pago                = $_POST['F_Pago'];
+	if (!empty($_POST['MontoPagado']))           $MontoPagado           = $_POST['MontoPagado'];
+	if (!empty($_POST['montoPactado']))          $montoPactado          = $_POST['montoPactado'];
+	if (!empty($_POST['idFacturacion']))         $idFacturacion         = $_POST['idFacturacion'];
+	if (!empty($_POST['idCliente']))             $idCliente             = $_POST['idCliente'];
+	if (!empty($_POST['idTrabajador']))          $idTrabajador          = $_POST['idTrabajador'];
+	if (!empty($_POST['fecha_auto']))            $fecha_auto            = $_POST['fecha_auto'];
+	if (!empty($_POST['idBodega']))              $idBodega              = $_POST['idBodega'];
+	if (!empty($_POST['Devolucion_fecha']))      $Devolucion_fecha      = $_POST['Devolucion_fecha'];
+	if (!empty($_POST['Nombre']))                $Nombre                = $_POST['Nombre'];
+	if (!empty($_POST['vTotal']))                $vTotal                = $_POST['vTotal'];
+	if (!empty($_POST['oldidProducto']))         $oldidProducto         = $_POST['oldidProducto'];
+	if (!empty($_POST['idOcompra']))             $idOcompra             = $_POST['idOcompra'];
+	if (!empty($_POST['Cantidad_ing']))          $Cantidad_ing          = $_POST['Cantidad_ing'];
+	if (!empty($_POST['Cantidad_eg']))           $Cantidad_eg           = $_POST['Cantidad_eg'];
+	if (!empty($_POST['idFrecuencia']))          $idFrecuencia          = $_POST['idFrecuencia'];
+	if (!empty($_POST['vUnitario']))             $vUnitario             = $_POST['vUnitario'];
+	if (!empty($_POST['idEstadoDevolucion']))    $idEstadoDevolucion    = $_POST['idEstadoDevolucion'];
+	if (!empty($_POST['FechaDevolucionReal']))   $FechaDevolucionReal   = $_POST['FechaDevolucionReal'];
+	if (!empty($_POST['idUsuarioDevolucion']))   $idUsuarioDevolucion   = $_POST['idUsuarioDevolucion'];
+	if (!empty($_POST['OC_Ventas']))             $OC_Ventas             = $_POST['OC_Ventas'];
+	if (!empty($_POST['idGuia']))                $idGuia                = $_POST['idGuia'];
+	if (!empty($_POST['idCentroCosto']))         $idCentroCosto         = $_POST['idCentroCosto'];
+	if (!empty($_POST['idLevel_1']))             $idLevel_1             = $_POST['idLevel_1'];
+	if (!empty($_POST['idLevel_2']))             $idLevel_2             = $_POST['idLevel_2'];
+	if (!empty($_POST['idLevel_3']))             $idLevel_3             = $_POST['idLevel_3'];
+	if (!empty($_POST['idLevel_4']))             $idLevel_4             = $_POST['idLevel_4'];
+	if (!empty($_POST['idLevel_5']))             $idLevel_5             = $_POST['idLevel_5'];
+	if (!empty($_POST['fecha_fact_desde']))      $fecha_fact_desde      = $_POST['fecha_fact_desde'];
+	if (!empty($_POST['fecha_fact_hasta']))      $fecha_fact_hasta      = $_POST['fecha_fact_hasta'];
+	if (!empty($_POST['idUsoIVA']))              $idUsoIVA              = $_POST['idUsoIVA'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -106,7 +106,7 @@ require_once '0_validate_user_1.php';
 			case 'idUsuarioDevolucion':   if(empty($idUsuarioDevolucion)){  $error['idUsuarioDevolucion']  = 'error/No ha ingresado el usuario de devolucion';}break;
 			case 'OC_Ventas':             if(empty($OC_Ventas)){            $error['OC_Ventas']            = 'error/No ha ingresado la OC Relacionada';}break;
 			case 'idGuia':                if(empty($idGuia)){               $error['idGuia']               = 'error/No ha seleccionado la guia relacionada';}break;
-			
+
 			case 'idCentroCosto':         if(empty($idCentroCosto)){        $error['idCentroCosto']        = 'error/No ha seleccionado el Centro de Costo';}break;
 			case 'idLevel_1':             if(empty($idLevel_1)){            $error['idLevel_1']            = 'error/No ha seleccionado el Nivel 1';}break;
 			case 'idLevel_2':             if(empty($idLevel_2)){            $error['idLevel_2']            = 'error/No ha seleccionado el Nivel 2';}break;
@@ -116,21 +116,21 @@ require_once '0_validate_user_1.php';
 			case 'fecha_fact_desde':      if(empty($fecha_fact_desde)){     $error['fecha_fact_desde']     = 'error/No ha ingresado la fecha desde de facturacion';}break;
 			case 'fecha_fact_hasta':      if(empty($fecha_fact_hasta)){     $error['fecha_fact_hasta']     = 'error/No ha ingresado la fecha hasta de facturacion';}break;
 			case 'idUsoIVA':              if(empty($idUsoIVA)){             $error['idUsoIVA']             = 'error/No ha seleccionado el uso del IVA';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Observaciones) && $Observaciones != ''){ $Observaciones = EstandarizarInput($Observaciones); }
-	if(isset($Nombre) && $Nombre != ''){               $Nombre        = EstandarizarInput($Nombre); }
-	
+/*******************************************************************************************************************/
+	if(isset($Observaciones) && $Observaciones!=''){ $Observaciones = EstandarizarInput($Observaciones);}
+	if(isset($Nombre) && $Nombre!=''){              $Nombre        = EstandarizarInput($Nombre);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas'; }	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Observaciones)&&contar_palabras_censuradas($Observaciones)!=0){  $error['Observaciones'] = 'error/Edita Observaciones, contiene palabras no permitidas';}
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre,contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -141,13 +141,13 @@ require_once '0_validate_user_1.php';
 /*                                                       INGRESOS                                                  */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
-/*******************************************************************************************************************/	
+/*******************************************************************************************************************/
 	
 		case 'new_ingreso':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -158,13 +158,13 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Condiciono la variable observaciones
 				if(empty($Observaciones)){ $Observaciones= "Sin observaciones";}
-				
+
 				//Borro todas las sesiones
 				unset($_SESSION['arriendos_ing_basicos']);
 				unset($_SESSION['arriendos_ing_productos']);
@@ -180,33 +180,32 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/'.$producto['Nombre']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 				}
 				unset($_SESSION['arriendos_ing_archivos']);
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idProveedor) && $idProveedor != ''){             $_SESSION['arriendos_ing_basicos']['idProveedor']       = $idProveedor;       }else{$_SESSION['arriendos_ing_basicos']['idProveedor']       = '';}
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['arriendos_ing_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['arriendos_ing_basicos']['idDocumentos']      = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['arriendos_ing_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['arriendos_ing_basicos']['N_Doc']             = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['arriendos_ing_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['arriendos_ing_basicos']['Creacion_fecha']    = '';}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['arriendos_ing_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['arriendos_ing_basicos']['Observaciones']     = '';}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['arriendos_ing_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['arriendos_ing_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['arriendos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['arriendos_ing_basicos']['idUsuario']         = '';}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['arriendos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['arriendos_ing_basicos']['idTipo']            = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['arriendos_ing_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['arriendos_ing_basicos']['fecha_auto']        = '';}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['arriendos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['arriendos_ing_basicos']['idBodega']          = '';}
-				if(isset($Devolucion_fecha) && $Devolucion_fecha != ''){   $_SESSION['arriendos_ing_basicos']['Devolucion_fecha']  = $Devolucion_fecha;  }else{$_SESSION['arriendos_ing_basicos']['Devolucion_fecha']  = '';}
-				if(isset($fecha_fact_desde) && $fecha_fact_desde != ''){   $_SESSION['arriendos_ing_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']  = '';}
-				if(isset($fecha_fact_hasta) && $fecha_fact_hasta != ''){   $_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;  }else{$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']  = '';}
-				if(isset($idUsoIVA) && $idUsoIVA != ''){                   $_SESSION['arriendos_ing_basicos']['idUsoIVA']          = $idUsoIVA;          }else{$_SESSION['arriendos_ing_basicos']['idUsoIVA']          = '';}
+				if(isset($idProveedor) && $idProveedor!=''){             $_SESSION['arriendos_ing_basicos']['idProveedor']       = $idProveedor;       }else{$_SESSION['arriendos_ing_basicos']['idProveedor']       = '';}
+				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['arriendos_ing_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['arriendos_ing_basicos']['idDocumentos']      = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['arriendos_ing_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['arriendos_ing_basicos']['N_Doc']             = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['arriendos_ing_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['arriendos_ing_basicos']['Creacion_fecha']    = '';}
+				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['arriendos_ing_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['arriendos_ing_basicos']['Observaciones']     = '';}
+				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['arriendos_ing_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['arriendos_ing_basicos']['idSistema']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['arriendos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['arriendos_ing_basicos']['idUsuario']         = '';}
+				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['arriendos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['arriendos_ing_basicos']['idTipo']            = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['arriendos_ing_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['arriendos_ing_basicos']['fecha_auto']        = '';}
+				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['arriendos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['arriendos_ing_basicos']['idBodega']          = '';}
+				if(isset($Devolucion_fecha) && $Devolucion_fecha!=''){   $_SESSION['arriendos_ing_basicos']['Devolucion_fecha']  = $Devolucion_fecha;  }else{$_SESSION['arriendos_ing_basicos']['Devolucion_fecha']  = '';}
+				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){   $_SESSION['arriendos_ing_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']  = '';}
+				if(isset($fecha_fact_hasta) && $fecha_fact_hasta!=''){   $_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;  }else{$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']  = '';}
+				if(isset($idUsoIVA) && $idUsoIVA!=''){                   $_SESSION['arriendos_ing_basicos']['idUsoIVA']          = $idUsoIVA;          }else{$_SESSION['arriendos_ing_basicos']['idUsoIVA']          = '';}
 				//datos basicos vacios
 				$_SESSION['arriendos_ing_basicos']['Pago_fecha']       = '0000-00-00';
 				$_SESSION['arriendos_ing_basicos']['idOcompra']        = '';
-				
-				
+
 				/***********************************/
 				//Centro de Costo vacio
 				$_SESSION['arriendos_ing_basicos']['CentroCosto']   = 'Sin Centro de Costo Asignado';
@@ -216,26 +215,26 @@ require_once '0_validate_user_1.php';
 				$_SESSION['arriendos_ing_basicos']['idLevel_3']     = 0;
 				$_SESSION['arriendos_ing_basicos']['idLevel_4']     = 0;
 				$_SESSION['arriendos_ing_basicos']['idLevel_5']     = 0;
-				
+
 				//En caso de que no sea una factura, eliminar los datos previamente rellenados
 				if(isset($idDocumentos) && $idDocumentos != ''&& $idDocumentos != 2){
 					$_SESSION['arriendos_ing_basicos']['fecha_fact_desde'] = '0000-00-00';
 					$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta'] = '0000-00-00';
 				}
-				
+
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
 					// consulto los datos
-					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowImpuesto = db_select_data (false, 'Nombre,Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['arriendos_ing_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
 					$_SESSION['arriendos_ing_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
 					$_SESSION['arriendos_ing_impuestos'][1]['idImpuesto'] = 1;
 				}
-				
+
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos != ''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){ 
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -244,7 +243,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['Documento'] = '';
 				}
 				/****************************************************/
-				if(isset($idTipo) && $idTipo != ''){ 
+				if(isset($idTipo) && $idTipo!=''){
 					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_arriendos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -253,7 +252,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idBodega) && $idBodega != ''){ 
+				if(isset($idBodega) && $idBodega!=''){
 					// consulto los datos
 					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_arriendos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -262,7 +261,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['Bodega'] = '';
 				}
 				/****************************************************/
-				if(isset($idProveedor) && $idProveedor != ''){ 
+				if(isset($idProveedor) && $idProveedor!=''){ 
 					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -277,22 +276,21 @@ require_once '0_validate_user_1.php';
 				die;
 			
 			}
-			
-	
+
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'clear_all_ing':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_ing_basicos']);
 			unset($_SESSION['arriendos_ing_productos']);
 			unset($_SESSION['arriendos_ing_impuestos']);
 			unset($_SESSION['arriendos_ing_descuentos']);
 			unset($_SESSION['arriendos_ing_guias']);
-			
+
 			//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 			if (isset($_SESSION['arriendos_ing_archivos'])){
 				foreach ($_SESSION['arriendos_ing_archivos'] as $key => $producto){
@@ -302,7 +300,7 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$producto['Nombre']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
@@ -314,12 +312,12 @@ require_once '0_validate_user_1.php';
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'modBase_ing':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -330,55 +328,55 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Elimino los datos por seguridad
 				unset($_SESSION['arriendos_ing_productos']);
 				unset($_SESSION['arriendos_ing_guias']);
 				unset($_SESSION['arriendos_ing_impuestos']);
 				unset($_SESSION['arriendos_ing_descuentos']);
 				unset($_SESSION['arriendos_ing_guias']);
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idProveedor) && $idProveedor != ''){             $_SESSION['arriendos_ing_basicos']['idProveedor']       = $idProveedor;       }else{$_SESSION['arriendos_ing_basicos']['idProveedor']       = '';}
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['arriendos_ing_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['arriendos_ing_basicos']['idDocumentos']      = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['arriendos_ing_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['arriendos_ing_basicos']['N_Doc']             = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['arriendos_ing_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['arriendos_ing_basicos']['Creacion_fecha']    = '';}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['arriendos_ing_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['arriendos_ing_basicos']['Observaciones']     = '';}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['arriendos_ing_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['arriendos_ing_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['arriendos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['arriendos_ing_basicos']['idUsuario']         = '';}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['arriendos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['arriendos_ing_basicos']['idTipo']            = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['arriendos_ing_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['arriendos_ing_basicos']['fecha_auto']        = '';}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['arriendos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['arriendos_ing_basicos']['idBodega']          = '';}
-				if(isset($Devolucion_fecha) && $Devolucion_fecha != ''){   $_SESSION['arriendos_ing_basicos']['Devolucion_fecha']  = $Devolucion_fecha;  }else{$_SESSION['arriendos_ing_basicos']['Devolucion_fecha']  = '';}
-				if(isset($fecha_fact_desde) && $fecha_fact_desde != ''){   $_SESSION['arriendos_ing_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']  = '';}
-				if(isset($fecha_fact_hasta) && $fecha_fact_hasta != ''){   $_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;  }else{$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']  = '';}
-				if(isset($idUsoIVA) && $idUsoIVA != ''){                   $_SESSION['arriendos_ing_basicos']['idUsoIVA']          = $idUsoIVA;          }else{$_SESSION['arriendos_ing_basicos']['idUsoIVA']          = '';}
+				if(isset($idProveedor) && $idProveedor!=''){             $_SESSION['arriendos_ing_basicos']['idProveedor']       = $idProveedor;       }else{$_SESSION['arriendos_ing_basicos']['idProveedor']       = '';}
+				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['arriendos_ing_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['arriendos_ing_basicos']['idDocumentos']      = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['arriendos_ing_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['arriendos_ing_basicos']['N_Doc']             = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['arriendos_ing_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['arriendos_ing_basicos']['Creacion_fecha']    = '';}
+				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['arriendos_ing_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['arriendos_ing_basicos']['Observaciones']     = '';}
+				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['arriendos_ing_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['arriendos_ing_basicos']['idSistema']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['arriendos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['arriendos_ing_basicos']['idUsuario']         = '';}
+				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['arriendos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['arriendos_ing_basicos']['idTipo']            = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['arriendos_ing_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['arriendos_ing_basicos']['fecha_auto']        = '';}
+				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['arriendos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['arriendos_ing_basicos']['idBodega']          = '';}
+				if(isset($Devolucion_fecha) && $Devolucion_fecha!=''){   $_SESSION['arriendos_ing_basicos']['Devolucion_fecha']  = $Devolucion_fecha;  }else{$_SESSION['arriendos_ing_basicos']['Devolucion_fecha']  = '';}
+				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){   $_SESSION['arriendos_ing_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']  = '';}
+				if(isset($fecha_fact_hasta) && $fecha_fact_hasta!=''){   $_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;  }else{$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']  = '';}
+				if(isset($idUsoIVA) && $idUsoIVA!=''){                   $_SESSION['arriendos_ing_basicos']['idUsoIVA']          = $idUsoIVA;          }else{$_SESSION['arriendos_ing_basicos']['idUsoIVA']          = '';}
 				//datos basicos vacios
 				$_SESSION['arriendos_ing_basicos']['Pago_fecha']       = '0000-00-00';
 				$_SESSION['arriendos_ing_basicos']['idOcompra']        = '';
-				
+
 				//En caso de que no sea una factura, eliminar los datos previamente rellenados
 				if(isset($idDocumentos) && $idDocumentos != ''&& $idDocumentos != 2){
 					$_SESSION['arriendos_ing_basicos']['fecha_fact_desde'] = '0000-00-00';
 					$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta'] = '0000-00-00';
 				}
-				
+
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
 					// consulto los datos
-					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowImpuesto = db_select_data (false, 'Nombre,Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['arriendos_ing_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
 					$_SESSION['arriendos_ing_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
 					$_SESSION['arriendos_ing_impuestos'][1]['idImpuesto'] = 1;
 				}
-				
+
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos != ''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){ 
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -387,7 +385,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['Documento'] = '';
 				}
 				/****************************************************/
-				if(isset($idTipo) && $idTipo != ''){ 
+				if(isset($idTipo) && $idTipo!=''){
 					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_arriendos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -396,7 +394,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idBodega) && $idBodega != ''){ 
+				if(isset($idBodega) && $idBodega!=''){
 					// consulto los datos
 					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_arriendos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -405,7 +403,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['Bodega'] = '';
 				}
 				/****************************************************/
-				if(isset($idProveedor) && $idProveedor != ''){ 
+				if(isset($idProveedor) && $idProveedor!=''){ 
 					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -413,28 +411,26 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['arriendos_ing_basicos']['Proveedor'] = '';
 				}
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
-			
-	
-		break;	
-/*******************************************************************************************************************/		
+
+		break;
+/*******************************************************************************************************************/
 		case 'modCentroCosto_ing':
 		
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Centro de Costo vacio
 				$_SESSION['arriendos_ing_basicos']['CentroCosto']   = 'Sin Centro de Costo Asignado';
-				
-				
+
 				/****************************************************/
-				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
+				if(isset($idCentroCosto) && $idCentroCosto!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -442,7 +438,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['idCentroCosto'] = $idCentroCosto;
 				}
 				/****************************************************/
-				if(isset($idLevel_1) && $idLevel_1 != ''){ 
+				if(isset($idLevel_1) && $idLevel_1!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -450,7 +446,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['idLevel_1']    = $idLevel_1;
 				}
 				/****************************************************/
-				if(isset($idLevel_2) && $idLevel_2 != ''){ 
+				if(isset($idLevel_2) && $idLevel_2!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -458,7 +454,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['idLevel_2']    = $idLevel_2;
 				}
 				/****************************************************/
-				if(isset($idLevel_3) && $idLevel_3 != ''){ 
+				if(isset($idLevel_3) && $idLevel_3!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -466,7 +462,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['idLevel_3']    = $idLevel_3;
 				}
 				/****************************************************/
-				if(isset($idLevel_4) && $idLevel_4 != ''){ 
+				if(isset($idLevel_4) && $idLevel_4!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -474,7 +470,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['idLevel_4']    = $idLevel_4;
 				}
 				/****************************************************/
-				if(isset($idLevel_5) && $idLevel_5 != ''){ 
+				if(isset($idLevel_5) && $idLevel_5!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -488,24 +484,24 @@ require_once '0_validate_user_1.php';
 				die;
 			
 			}
-		break;			
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'addfpago':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			$valor    = $_GET['val_select'];
-			
+
 			//Se comprueba las fechas
 			if($_SESSION['arriendos_ing_basicos']['Creacion_fecha']>$valor){
 				$error['ndata_1'] = 'error/La fecha de vencimiento es anterior a la fecha de creacion';
 			}
-			
+
 			//valido que no esten vacios
 			if(empty($valor)){  $error['valor']  = 'error/No ha ingresado una fecha de vencimiento';}
 
-			if ( empty($error) ) {
+			if(empty($error)){
 				
 				$_SESSION['arriendos_ing_basicos']['Pago_fecha'] = $valor;
 			
@@ -513,14 +509,14 @@ require_once '0_validate_user_1.php';
 				die;
 			}
 
-		break;		
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'delfpago':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			if ( empty($error) ) {
+			if(empty($error)){
 				
 				$_SESSION['arriendos_ing_basicos']['Pago_fecha'] = '0000-00-00';
 			
@@ -529,23 +525,23 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_prod_ing':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el producto ya existe
 			if(isset($_SESSION['arriendos_ing_productos'][$idEquipo])&&$_SESSION['arriendos_ing_productos'][$idEquipo]>0){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				// Se trae un listado con todos los frecuencias
 				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia = "'.$idFrecuencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				// Se trae un listado con todos los servicios
 				$rowEquipo = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo = "'.$idEquipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 										
@@ -561,17 +557,17 @@ require_once '0_validate_user_1.php';
 				
 			
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_prod_ing':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_ing_productos'][$idEquipo])&&$_SESSION['arriendos_ing_productos'][$idEquipo]>0&&$_SESSION['arriendos_ing_productos'][$idEquipo]!=$_SESSION['arriendos_ing_productos'][$oldItemID]){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
@@ -583,15 +579,15 @@ require_once '0_validate_user_1.php';
 				}
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				// Se trae un listado con todos los frecuencias
 				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia = "'.$idFrecuencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				// Se trae un listado con todos los servicios
 				$rowEquipo = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo = "'.$idEquipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Guardo variables si existe una OC
 				$temp_idExistencia     = 0;
 				$temp_idFrecuencia     = 0;
@@ -604,7 +600,7 @@ require_once '0_validate_user_1.php';
 					$temp_cant_ingresada   = $_SESSION['arriendos_ing_productos'][$oldItemID]['cant_ingresada'];
 					$temp_cant_max         = $_SESSION['arriendos_ing_productos'][$oldItemID]['cant_max'];
 				}
-				
+
 				//Borro el producto
 				unset($_SESSION['arriendos_ing_productos'][$oldItemID]); 
 			
@@ -625,145 +621,144 @@ require_once '0_validate_user_1.php';
 				
 				
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_prod_ing':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro el producto
 			unset($_SESSION['arriendos_ing_productos'][$_GET['del_prod']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'new_guia':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_ing_guias'][$idGuia])&&$_SESSION['arriendos_ing_guias'][$idGuia]>0){
 				$error['productos'] = 'error/La guia que trata de ingresar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Se traen los datos de la guia seleccionada
 				$rowGuia = db_select_data (false, 'N_Doc, ValorNeto', 'bodegas_arriendos_facturacion', '', 'idFacturacion = "'.$idGuia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				$_SESSION['arriendos_ing_guias'][$idGuia]['idGuia']     = $idGuia;
 				$_SESSION['arriendos_ing_guias'][$idGuia]['N_Doc']      = $rowGuia['N_Doc'];
 				$_SESSION['arriendos_ing_guias'][$idGuia]['ValorNeto']  = $rowGuia['ValorNeto'];
-				
-				header( 'Location: '.$location.'&view=true' );
-				die;	
-			}
 
-
-		break;	
-/*******************************************************************************************************************/		
-		case 'del_guia':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			//Borro todas las sesiones
-			unset($_SESSION['arriendos_ing_guias'][$_GET['del_guia']]);
-			
-			header( 'Location: '.$location.'&view=true' );
-			die;
-
-		break;	
-/*******************************************************************************************************************/		
-		case 'new_impuesto':
-			
-			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			//verificar si el subcomponente ya existe
-			if(isset($_SESSION['arriendos_ing_impuestos'][$idImpuesto])&&$_SESSION['arriendos_ing_impuestos'][$idImpuesto]>0){
-				$error['productos'] = 'error/Impuesto que trata de ingresar ya existe';
-			}
-
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
-				$_SESSION['arriendos_ing_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
-				
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
-		case 'del_impuesto':
-			
+		break;
+/*******************************************************************************************************************/
+		case 'del_guia':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
-			unset($_SESSION['arriendos_ing_impuestos'][$_GET['del_impuesto']]);
-			
+			unset($_SESSION['arriendos_ing_guias'][$_GET['del_guia']]);
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
-/*******************************************************************************************************************/		
-		case 'new_file_ing':
-			
+		break;
+/*******************************************************************************************************************/
+		case 'new_impuesto':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
+			//verificar si el subcomponente ya existe
+			if(isset($_SESSION['arriendos_ing_impuestos'][$idImpuesto])&&$_SESSION['arriendos_ing_impuestos'][$idImpuesto]>0){
+				$error['productos'] = 'error/Impuesto que trata de ingresar ya existe';
+			}
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+				
+				$_SESSION['arriendos_ing_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
+
+				header( 'Location: '.$location.'&view=true' );
+				die;
+			}
+
+
+		break;
+/*******************************************************************************************************************/
+		case 'del_impuesto':
+
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+
+			//Borro todas las sesiones
+			unset($_SESSION['arriendos_ing_impuestos'][$_GET['del_impuesto']]);
+
+			header( 'Location: '.$location.'&view=true' );
+			die;
+
+		break;
+/*******************************************************************************************************************/
+		case 'new_file_ing':
+
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+
 			//se inicializa variable
 			$idInterno = 0;
-			
+
 			//verificar la cantidad de trabajos
 			if(isset($_SESSION['arriendos_ing_archivos'])){
 				foreach ($_SESSION['arriendos_ing_archivos'] as $key => $trabajos){
 					if($idInterno<$trabajos['idFile']){$idInterno = $trabajos['idFile'];}
 				}
 			}
-			
-			if ( empty($error) ) {
-				
-				
+
+			if(empty($error)){
+
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
-					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
+					if ($_FILES["exFile"]["error"] > 0){
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
 											"application/vnd.ms-word",
-											"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-									
+											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+
 											"application/msexcel",
 											"application/vnd.ms-excel",
 											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-											
+
 											"application/mspowerpoint",
 											"application/vnd.ms-powerpoint",
 											"application/vnd.openxmlformats-officedocument.presentationml.presentation",
-											
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
 											"application/vnd.adobe.xfdf",
 											"application/vnd.fdf",
 											"binary/octet-stream",
-											
-											"image/jpg", 
-											"image/jpeg", 
-											"image/gif", 
+
+											"image/jpg",
+											"image/jpeg",
+											"image/gif",
 											"image/png"
 
 											);
@@ -771,7 +766,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'arriendos_ingreso_'.genera_password_unica().'_';
-					  
+
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['exFile']['name'];
@@ -780,38 +775,38 @@ require_once '0_validate_user_1.php';
 								//Se mueve el archivo a la carpeta previamente configurada
 								$move_result = @move_uploaded_file($_FILES["exFile"]["tmp_name"], $ruta);
 								if ($move_result){
-									
+
 									//se guarda en el indice siguiente
 									$idInterno = $idInterno+1;
 									//Se guarda el trabajo asignado
 									$_SESSION['arriendos_ing_archivos'][$idInterno]['idFile'] = $idInterno;
 									$_SESSION['arriendos_ing_archivos'][$idInterno]['Nombre'] = $sufijo.$_FILES['exFile']['name'];
-										
+
 									header( 'Location: '.$location.'&view=true' );
 									die;
-			
-								} else {
-									$error['exFile']     = 'error/Ocurrio un error al mover el archivo'; 
+
+								}else {
+									$error['exFile']     = 'error/Ocurrio un error al mover el archivo';
 								}
 							} else {
-								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe'; 
+								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe';
 							}
 						} else {
-							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 						}
-					}				
-				}	
-				
+					}
+				}
+
 			}
 
-		break;	
-		
+		break;
+
 /*******************************************************************************************************************/
-		case 'del_file_ing':	
-			
+		case 'del_file_ing':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			try {
 				if(!is_writable('upload/'.$_SESSION['arriendos_ing_archivos'][$_GET['del_file']]['Nombre'])){
 					//throw new Exception('File not writable');
@@ -819,22 +814,22 @@ require_once '0_validate_user_1.php';
 					unlink('upload/'.$_SESSION['arriendos_ing_archivos'][$_GET['del_file']]['Nombre']);
 					unset($_SESSION['arriendos_ing_archivos'][$_GET['del_file']]);
 				}
-			}catch(Exception $e) { 
+			}catch(Exception $e) {
 					//guardar el dato en un archivo log
 			}
-			
-			//Redirijo			
+
+			//redirijo
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_desc_ing':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['arriendos_ing_descuentos'])){
 				$idInterno = 1;
@@ -842,55 +837,55 @@ require_once '0_validate_user_1.php';
 				$idInterno = 1;
 				foreach ($_SESSION['arriendos_ing_descuentos'] as $key => $producto){
 					$idInterno++;
-				}	
+				}
 			}
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_ing_descuentos'][$idInterno]['idDescuento'] = $idInterno;
 				$_SESSION['arriendos_ing_descuentos'][$idInterno]['Nombre']      = $Nombre;
 				$_SESSION['arriendos_ing_descuentos'][$idInterno]['vTotal']      = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_desc_ing':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//se crea el nuevo producto
 				$_SESSION['arriendos_ing_descuentos'][$oldidProducto]['idDescuento'] = $oldidProducto;
 				$_SESSION['arriendos_ing_descuentos'][$oldidProducto]['Nombre'] = $Nombre;
 				$_SESSION['arriendos_ing_descuentos'][$oldidProducto]['vTotal'] = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_desc_ing':
 
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_ing_descuentos'][$_GET['del_descuento']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'add_OC':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			//Se verifica si existe la orden de compra
@@ -909,13 +904,13 @@ require_once '0_validate_user_1.php';
 			}
 
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Se borran los productos
 				unset($_SESSION['arriendos_ing_productos']);
-				
+
 				//Se traen los productos utilizados
 				$SIS_query = '
 				ocompra_listado_existencias_arriendos.idExistencia, 
@@ -939,7 +934,7 @@ require_once '0_validate_user_1.php';
 				
 				//Guardo la OC
 				$_SESSION['arriendos_ing_basicos']['idOcompra'] = $idOcompra;
-				
+
 				//Se guardan los datos
 				foreach ($arrProductos as $prod) {
 					$_SESSION['arriendos_ing_productos'][$prod['idEquipo']]['idExistencia']    = $prod['idExistencia'];
@@ -956,20 +951,20 @@ require_once '0_validate_user_1.php';
 					
 				//redirijo
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'ing_bodega':
-	
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			/*********************************************************************/
 			//variables
 			$n_data1 = 0;
 			$n_data2 = 0;
-				
+
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['arriendos_ing_basicos'])){
@@ -988,7 +983,7 @@ require_once '0_validate_user_1.php';
 				}
 				//se verifica el uso del iva
 				if(isset($_SESSION['arriendos_ing_basicos']['idUsoIVA'])&&$_SESSION['arriendos_ing_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['arriendos_ing_impuestos']) ){     
+					if(!isset($_SESSION['arriendos_ing_impuestos'])){     
 						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -1019,35 +1014,35 @@ require_once '0_validate_user_1.php';
 			}
 			
 			/*********************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Se guardan los datos basicos
-				if(isset($_SESSION['arriendos_ing_basicos']['idBodega']) && $_SESSION['arriendos_ing_basicos']['idBodega'] != ''){              $SIS_data  = "'".$_SESSION['arriendos_ing_basicos']['idBodega']."'" ;       }else{$SIS_data  = "''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idSistema']) && $_SESSION['arriendos_ing_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idUsuario']) && $_SESSION['arriendos_ing_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_basicos']['Creacion_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Creacion_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_ing_basicos']['idBodega']) && $_SESSION['arriendos_ing_basicos']['idBodega']!=''){       $SIS_data  = "'".$_SESSION['arriendos_ing_basicos']['idBodega']."'";       }else{$SIS_data  = "''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idSistema']) && $_SESSION['arriendos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idUsuario']) && $_SESSION['arriendos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_basicos']['Creacion_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Creacion_fecha']."'";  
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['arriendos_ing_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_basicos']['idDocumentos'] != ''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idDocumentos']."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['N_Doc']) && $_SESSION['arriendos_ing_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['N_Doc']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idTipo']) && $_SESSION['arriendos_ing_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idTipo']."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['Observaciones']) && $_SESSION['arriendos_ing_basicos']['Observaciones'] != ''){    $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Observaciones']."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idProveedor']) && $_SESSION['arriendos_ing_basicos']['idProveedor'] != ''){        $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idProveedor']."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['Devolucion_fecha']) && $_SESSION['arriendos_ing_basicos']['Devolucion_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Devolucion_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_ing_basicos']['Devolucion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_basicos']['Devolucion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Devolucion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Devolucion_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_ing_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idDocumentos']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['N_Doc']) && $_SESSION['arriendos_ing_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idTipo']) && $_SESSION['arriendos_ing_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['Observaciones']) && $_SESSION['arriendos_ing_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idProveedor']) && $_SESSION['arriendos_ing_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idProveedor']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['Devolucion_fecha']) && $_SESSION['arriendos_ing_basicos']['Devolucion_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Devolucion_fecha']."'";  
+					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_ing_basicos']['Devolucion_fecha'])."'";
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_basicos']['Devolucion_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Devolucion_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Devolucion_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
@@ -1055,12 +1050,12 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['arriendos_ing_basicos']['Pago_fecha']) && $_SESSION['arriendos_ing_basicos']['Pago_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Pago_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_ing_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Pago_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_ing_basicos']['Pago_fecha']) && $_SESSION['arriendos_ing_basicos']['Pago_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Pago_fecha']."'";  
+					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_ing_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Pago_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
@@ -1070,31 +1065,31 @@ require_once '0_validate_user_1.php';
 				}
 				$SIS_data .= ",'1'";
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['arriendos_ing_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_basicos']['fecha_auto'] != ''){               $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['fecha_auto']."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_ing_basicos']['valor_neto_fact']!=''){         $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['valor_neto_fact']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_ing_basicos']['valor_neto_imp']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['valor_neto_imp']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['valor_total_fact'])&&$_SESSION['arriendos_ing_basicos']['valor_total_fact']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['valor_total_fact']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_impuestos'][1]['valor'])&&$_SESSION['arriendos_ing_impuestos'][1]['valor']!=''){                   $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][1]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_impuestos'][2]['valor'])&&$_SESSION['arriendos_ing_impuestos'][2]['valor']!=''){                   $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][2]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_impuestos'][3]['valor'])&&$_SESSION['arriendos_ing_impuestos'][3]['valor']!=''){                   $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][3]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_impuestos'][4]['valor'])&&$_SESSION['arriendos_ing_impuestos'][4]['valor']!=''){                   $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][4]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_impuestos'][5]['valor'])&&$_SESSION['arriendos_ing_impuestos'][5]['valor']!=''){                   $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][5]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_impuestos'][6]['valor'])&&$_SESSION['arriendos_ing_impuestos'][6]['valor']!=''){                   $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][6]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_impuestos'][7]['valor'])&&$_SESSION['arriendos_ing_impuestos'][7]['valor']!=''){                   $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][7]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_impuestos'][8]['valor'])&&$_SESSION['arriendos_ing_impuestos'][8]['valor']!=''){                   $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][8]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_impuestos'][9]['valor'])&&$_SESSION['arriendos_ing_impuestos'][9]['valor']!=''){                   $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][9]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_impuestos'][10]['valor'])&&$_SESSION['arriendos_ing_impuestos'][10]['valor']!=''){                 $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][10]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idOcompra']) && $_SESSION['arriendos_ing_basicos']['idOcompra'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idOcompra']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idCentroCosto']) && $_SESSION['arriendos_ing_basicos']['idCentroCosto'] != ''){         $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idCentroCosto']."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idLevel_1']) && $_SESSION['arriendos_ing_basicos']['idLevel_1'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idLevel_1']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idLevel_2']) && $_SESSION['arriendos_ing_basicos']['idLevel_2'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idLevel_2']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idLevel_3']) && $_SESSION['arriendos_ing_basicos']['idLevel_3'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idLevel_3']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idLevel_4']) && $_SESSION['arriendos_ing_basicos']['idLevel_4'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idLevel_4']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idLevel_5']) && $_SESSION['arriendos_ing_basicos']['idLevel_5'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idLevel_5']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['fecha_fact_desde']) && $_SESSION['arriendos_ing_basicos']['fecha_fact_desde'] != ''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']) && $_SESSION['arriendos_ing_basicos']['fecha_fact_hasta'] != ''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_basicos']['idUsoIVA']) && $_SESSION['arriendos_ing_basicos']['idUsoIVA'] != ''){                   $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idUsoIVA']."'" ;           }else{$SIS_data .= ",''";}
-				
+				if(isset($_SESSION['arriendos_ing_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_basicos']['fecha_auto']!=''){        $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_ing_basicos']['valor_neto_fact']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['valor_neto_fact']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_ing_basicos']['valor_neto_imp']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['valor_neto_imp']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['valor_total_fact'])&&$_SESSION['arriendos_ing_basicos']['valor_total_fact']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['valor_total_fact']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_impuestos'][1]['valor'])&&$_SESSION['arriendos_ing_impuestos'][1]['valor']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][1]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_impuestos'][2]['valor'])&&$_SESSION['arriendos_ing_impuestos'][2]['valor']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][2]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_impuestos'][3]['valor'])&&$_SESSION['arriendos_ing_impuestos'][3]['valor']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][3]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_impuestos'][4]['valor'])&&$_SESSION['arriendos_ing_impuestos'][4]['valor']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][4]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_impuestos'][5]['valor'])&&$_SESSION['arriendos_ing_impuestos'][5]['valor']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][5]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_impuestos'][6]['valor'])&&$_SESSION['arriendos_ing_impuestos'][6]['valor']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][6]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_impuestos'][7]['valor'])&&$_SESSION['arriendos_ing_impuestos'][7]['valor']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][7]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_impuestos'][8]['valor'])&&$_SESSION['arriendos_ing_impuestos'][8]['valor']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][8]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_impuestos'][9]['valor'])&&$_SESSION['arriendos_ing_impuestos'][9]['valor']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][9]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_impuestos'][10]['valor'])&&$_SESSION['arriendos_ing_impuestos'][10]['valor']!=''){         $SIS_data .= ",'".$_SESSION['arriendos_ing_impuestos'][10]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idOcompra']) && $_SESSION['arriendos_ing_basicos']['idOcompra']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idOcompra']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idCentroCosto']) && $_SESSION['arriendos_ing_basicos']['idCentroCosto']!=''){  $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idCentroCosto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idLevel_1']) && $_SESSION['arriendos_ing_basicos']['idLevel_1']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idLevel_1']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idLevel_2']) && $_SESSION['arriendos_ing_basicos']['idLevel_2']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idLevel_2']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idLevel_3']) && $_SESSION['arriendos_ing_basicos']['idLevel_3']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idLevel_3']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idLevel_4']) && $_SESSION['arriendos_ing_basicos']['idLevel_4']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idLevel_4']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idLevel_5']) && $_SESSION['arriendos_ing_basicos']['idLevel_5']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idLevel_5']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['fecha_fact_desde']) && $_SESSION['arriendos_ing_basicos']['fecha_fact_desde']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']) && $_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_basicos']['idUsoIVA']) && $_SESSION['arriendos_ing_basicos']['idUsoIVA']!=''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idUsoIVA']."'";           }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_Semana, Creacion_mes,
 				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idProveedor, Devolucion_fecha, Devolucion_dia, Devolucion_Semana, 
@@ -1103,51 +1098,51 @@ require_once '0_validate_user_1.php';
 				Impuesto_08, Impuesto_09, Impuesto_10, idOcompra, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, 
 				fecha_fact_desde, fecha_fact_hasta, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
 					if(isset($_SESSION['arriendos_ing_productos'])){		
 						foreach ($_SESSION['arriendos_ing_productos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                      $SIS_data  = "'".$ultimo_id."'" ;                                           }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['idBodega']) && $_SESSION['arriendos_ing_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['idSistema']) && $_SESSION['arriendos_ing_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['idUsuario']) && $_SESSION['arriendos_ing_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['idBodega']) && $_SESSION['arriendos_ing_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['idSistema']) && $_SESSION['arriendos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['idUsuario']) && $_SESSION['arriendos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($_SESSION['arriendos_ing_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_basicos']['idDocumentos'] != ''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idDocumentos']."'" ;       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['N_Doc']) && $_SESSION['arriendos_ing_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['N_Doc']."'" ;              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['idTipo']) && $_SESSION['arriendos_ing_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idTipo']."'" ;             }else{$SIS_data .= ",''";}
-							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){                                                                $SIS_data .= ",'".$producto['idEquipo']."'" ;                                    }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing'] != ''){                                                        $SIS_data .= ",'".$producto['Cantidad_ing']."'" ;                                }else{$SIS_data .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){                                                        $SIS_data .= ",'".$producto['idFrecuencia']."'" ;                                }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''){                                                        $SIS_data .= ",'".$producto['ValorIngreso']."'" ;                                }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal'] != ''){                                                            $SIS_data .= ",'".$producto['ValorTotal']."'" ;                                  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['idProveedor']) && $_SESSION['arriendos_ing_basicos']['idProveedor'] != ''){        $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idProveedor']."'" ;        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['fecha_auto']."'" ;         }else{$SIS_data .= ",''";}
-						
+							if(isset($_SESSION['arriendos_ing_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idDocumentos']."'";       }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['N_Doc']) && $_SESSION['arriendos_ing_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['idTipo']) && $_SESSION['arriendos_ing_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($producto['idEquipo']) && $producto['idEquipo']!=''){                                                         $SIS_data .= ",'".$producto['idEquipo']."'";                                    }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing']!=''){                                                 $SIS_data .= ",'".$producto['Cantidad_ing']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia']!=''){                                                 $SIS_data .= ",'".$producto['idFrecuencia']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                 $SIS_data .= ",'".$producto['ValorIngreso']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                     $SIS_data .= ",'".$producto['ValorTotal']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['idProveedor']) && $_SESSION['arriendos_ing_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, 
 							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idEquipo, Cantidad_ing, 
 							idFrecuencia, Valor, ValorTotal, idProveedor, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 							/*******************************************************************/
 							//Actualizo el valor de los productos
-							$SIS_data = "idEquipo='".$producto['idEquipo']."'" ;
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''&&isset($_SESSION['arriendos_ing_basicos']['idProveedor']) && $_SESSION['arriendos_ing_basicos']['idProveedor'] != ''){     
-								$SIS_data .= ",idProveedor='".$_SESSION['arriendos_ing_basicos']['idProveedor']."'" ;
-								$SIS_data .= ",ValorIngreso='".$producto['ValorIngreso']."'" ;
+							$SIS_data = "idEquipo='".$producto['idEquipo']."'";
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''&&isset($_SESSION['arriendos_ing_basicos']['idProveedor']) && $_SESSION['arriendos_ing_basicos']['idProveedor']!=''){     
+								$SIS_data .= ",idProveedor='".$_SESSION['arriendos_ing_basicos']['idProveedor']."'";
+								$SIS_data .= ",ValorIngreso='".$producto['ValorIngreso']."'";
 							}
 							
 							/*******************************************************/
@@ -1159,8 +1154,8 @@ require_once '0_validate_user_1.php';
 							//Actualizo lo entregado de la solicitud de la OC si esta existe
 							if(isset($_SESSION['arriendos_ing_basicos']['idOcompra'])&&$_SESSION['arriendos_ing_basicos']['idOcompra']){
 								$nueva_cant = $producto['cant_ingresada'] + $producto['Cantidad_ing'];
-								$SIS_data = "idExistencia='".$producto['idExistencia']."'" ;
-								$SIS_data .= ",cant_ingresada='".$nueva_cant."'" ;
+								$SIS_data = "idExistencia='".$producto['idExistencia']."'";
+								$SIS_data .= ",cant_ingresada='".$nueva_cant."'";
 								
 								/*******************************************************/
 								//se actualizan los datos
@@ -1169,15 +1164,15 @@ require_once '0_validate_user_1.php';
 							}
 						}
 					}
-					
+
 					/*********************************************************************/
 					//Se actualizan las guias a un estado de pago y con relacion al documento recien generado
 					if (isset($_SESSION['arriendos_ing_guias'])){
 						foreach ($_SESSION['arriendos_ing_guias'] as $key => $guias){
 							//filtro
-							if(isset($ultimo_id) && $ultimo_id != ''){ 
+							if(isset($ultimo_id) && $ultimo_id!=''){ 
 								
-								$SIS_data  = "DocRel='".$ultimo_id."'" ;    
+								$SIS_data  = "DocRel='".$ultimo_id."'";    
 								$SIS_data .= ",idEstado='2'";
 								
 								/*******************************************************/
@@ -1188,70 +1183,70 @@ require_once '0_validate_user_1.php';
 							}
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Descuento
 					if(isset($_SESSION['arriendos_ing_descuentos'])){
 						foreach ($_SESSION['arriendos_ing_descuentos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                      $SIS_data  = "'".$ultimo_id."'" ;                                           }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['idSistema']) && $_SESSION['arriendos_ing_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['idUsuario']) && $_SESSION['arriendos_ing_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['idSistema']) && $_SESSION['arriendos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['idUsuario']) && $_SESSION['arriendos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){    $SIS_data .= ",'".$producto['vTotal']."'" ;     }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){    $SIS_data .= ",'".$producto['Nombre']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){    $SIS_data .= ",'".$producto['vTotal']."'";     }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idSistema, idUsuario, Creacion_fecha,
-							Creacion_mes, Creacion_ano, Nombre, vTotal';
+							Creacion_mes, Creacion_ano, Nombre,vTotal';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_descuentos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Archivos
 					if(isset($_SESSION['arriendos_ing_archivos'])){
 						foreach ($_SESSION['arriendos_ing_archivos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                      $SIS_data  = "'".$ultimo_id."'" ;                                           }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['idBodega']) && $_SESSION['arriendos_ing_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['idSistema']) && $_SESSION['arriendos_ing_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['idUsuario']) && $_SESSION['arriendos_ing_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['idBodega']) && $_SESSION['arriendos_ing_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['idSistema']) && $_SESSION['arriendos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['idUsuario']) && $_SESSION['arriendos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){    $SIS_data .= ",'".$producto['Nombre']."'";     }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Se guarda en historial la accion
-					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['arriendos_ing_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_basicos']['Creacion_fecha'] != ''){  
-						$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Creacion_fecha']."'" ;  
+					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
+					if(isset($_SESSION['arriendos_ing_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_basicos']['Creacion_fecha']!=''){  
+						$SIS_data .= ",'".$_SESSION['arriendos_ing_basicos']['Creacion_fecha']."'";  
 					}else{
 						$SIS_data .= ",''";
 					}
@@ -1275,24 +1270,23 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
-				
-				
-			}	
+
+			}
 	
 
-		break;	
+		break;
 
 /*******************************************************************************************************************/
 /*                                                                                                                 */
 /*                                                        EGRESOS                                                  */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_egreso':
-	
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-		
+
 			//Se verifica si el dato existe
 			/*******************************************************************/
 			//variables
@@ -1306,12 +1300,12 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Condiciono la variable observaciones
 				if(empty($Observaciones)){ $Observaciones= "Sin observaciones";}
-				
+
 				//Borro todas las sesiones
 				unset($_SESSION['arriendos_egr_basicos']);
 				unset($_SESSION['arriendos_egr_productos']);
@@ -1319,7 +1313,7 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['arriendos_egr_guias']);
 				unset($_SESSION['arriendos_egr_impuestos']);
 				unset($_SESSION['arriendos_egr_descuentos']);
-				
+
 				//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 				if (isset($_SESSION['arriendos_egr_archivos'])){
 					foreach ($_SESSION['arriendos_egr_archivos'] as $key => $producto){
@@ -1329,33 +1323,33 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/'.$producto['Nombre']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 				}
 				unset($_SESSION['arriendos_egr_archivos']);
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['arriendos_egr_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['arriendos_egr_basicos']['idDocumentos']      = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['arriendos_egr_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['arriendos_egr_basicos']['N_Doc']             = '';}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['arriendos_egr_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['arriendos_egr_basicos']['Observaciones']     = '';}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['arriendos_egr_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['arriendos_egr_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['arriendos_egr_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['arriendos_egr_basicos']['idUsuario']         = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['arriendos_egr_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['arriendos_egr_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['arriendos_egr_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['arriendos_egr_basicos']['idTipo']            = '';}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['arriendos_egr_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['arriendos_egr_basicos']['idCliente']         = '';}
-				if(isset($idTrabajador) && $idTrabajador != ''){           $_SESSION['arriendos_egr_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['arriendos_egr_basicos']['idTrabajador']      = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['arriendos_egr_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['arriendos_egr_basicos']['fecha_auto']        = '';}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['arriendos_egr_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['arriendos_egr_basicos']['idBodega']          = '';}
-				if(isset($OC_Ventas) && $OC_Ventas != ''){                 $_SESSION['arriendos_egr_basicos']['OC_Ventas']         = $OC_Ventas;         }else{$_SESSION['arriendos_egr_basicos']['OC_Ventas']         = '';}
-				if(isset($Devolucion_fecha) && $Devolucion_fecha != ''){   $_SESSION['arriendos_egr_basicos']['Devolucion_fecha']  = $Devolucion_fecha;  }else{$_SESSION['arriendos_egr_basicos']['Devolucion_fecha']  = '';}
-				if(isset($fecha_fact_desde) && $fecha_fact_desde != ''){   $_SESSION['arriendos_egr_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['arriendos_egr_basicos']['fecha_fact_desde']  = '';}
-				if(isset($fecha_fact_hasta) && $fecha_fact_hasta != ''){   $_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;  }else{$_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']  = '';}
-				if(isset($idUsoIVA) && $idUsoIVA != ''){                   $_SESSION['arriendos_egr_basicos']['idUsoIVA']          = $idUsoIVA;          }else{$_SESSION['arriendos_egr_basicos']['idUsoIVA']          = '';}
+				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['arriendos_egr_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['arriendos_egr_basicos']['idDocumentos']      = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['arriendos_egr_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['arriendos_egr_basicos']['N_Doc']             = '';}
+				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['arriendos_egr_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['arriendos_egr_basicos']['Observaciones']     = '';}
+				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['arriendos_egr_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['arriendos_egr_basicos']['idSistema']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['arriendos_egr_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['arriendos_egr_basicos']['idUsuario']         = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['arriendos_egr_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['arriendos_egr_basicos']['Creacion_fecha']    = '';}
+				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['arriendos_egr_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['arriendos_egr_basicos']['idTipo']            = '';}
+				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['arriendos_egr_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['arriendos_egr_basicos']['idCliente']         = '';}
+				if(isset($idTrabajador) && $idTrabajador!=''){          $_SESSION['arriendos_egr_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['arriendos_egr_basicos']['idTrabajador']      = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['arriendos_egr_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['arriendos_egr_basicos']['fecha_auto']        = '';}
+				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['arriendos_egr_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['arriendos_egr_basicos']['idBodega']          = '';}
+				if(isset($OC_Ventas) && $OC_Ventas!=''){                 $_SESSION['arriendos_egr_basicos']['OC_Ventas']         = $OC_Ventas;         }else{$_SESSION['arriendos_egr_basicos']['OC_Ventas']         = '';}
+				if(isset($Devolucion_fecha) && $Devolucion_fecha!=''){   $_SESSION['arriendos_egr_basicos']['Devolucion_fecha']  = $Devolucion_fecha;  }else{$_SESSION['arriendos_egr_basicos']['Devolucion_fecha']  = '';}
+				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){   $_SESSION['arriendos_egr_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['arriendos_egr_basicos']['fecha_fact_desde']  = '';}
+				if(isset($fecha_fact_hasta) && $fecha_fact_hasta!=''){   $_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;  }else{$_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']  = '';}
+				if(isset($idUsoIVA) && $idUsoIVA!=''){                   $_SESSION['arriendos_egr_basicos']['idUsoIVA']          = $idUsoIVA;          }else{$_SESSION['arriendos_egr_basicos']['idUsoIVA']          = '';}
 				//datos basicos vacios
 				$_SESSION['arriendos_egr_basicos']['Pago_fecha'] = '0000-00-00';
-				
+
 				/***********************************/
 				//Centro de Costo vacio
 				$_SESSION['arriendos_egr_basicos']['CentroCosto']   = 'Sin Centro de Costo Asignado';
@@ -1365,26 +1359,26 @@ require_once '0_validate_user_1.php';
 				$_SESSION['arriendos_egr_basicos']['idLevel_3']     = 0;
 				$_SESSION['arriendos_egr_basicos']['idLevel_4']     = 0;
 				$_SESSION['arriendos_egr_basicos']['idLevel_5']     = 0;
-				
+
 				//En caso de que no sea una factura, eliminar los datos previamente rellenados
 				if(isset($idDocumentos) && $idDocumentos != ''&& $idDocumentos != 2){
 					$_SESSION['arriendos_egr_basicos']['fecha_fact_desde'] = '0000-00-00';
 					$_SESSION['arriendos_egr_basicos']['fecha_fact_hasta'] = '0000-00-00';
 				}
-				
+
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
 					// consulto los datos
-					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowImpuesto = db_select_data (false, 'Nombre,Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['arriendos_egr_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
 					$_SESSION['arriendos_egr_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
 					$_SESSION['arriendos_egr_impuestos'][1]['idImpuesto'] = 1;
 				}
-				
+
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos != ''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){ 
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1393,7 +1387,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['Documento'] = '';
 				}
 				/****************************************************/
-				if(isset($idTipo) && $idTipo != ''){ 
+				if(isset($idTipo) && $idTipo!=''){
 					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_arriendos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1402,7 +1396,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idBodega) && $idBodega != ''){ 
+				if(isset($idBodega) && $idBodega!=''){
 					// consulto los datos
 					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_arriendos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1411,7 +1405,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['Bodega'] = '';
 				}
 				/****************************************************/
-				if(isset($idCliente) && $idCliente != ''){ 
+				if(isset($idCliente) && $idCliente!=''){ 
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1420,9 +1414,9 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['Cliente'] = '';
 				}
 				/****************************************************/
-				if(isset($idTrabajador) && $idTrabajador != ''){ 
+				if(isset($idTrabajador) && $idTrabajador!=''){
 					// consulto los datos
-					$rowVendedor = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowVendedor = db_select_data (false, 'Nombre,ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['arriendos_egr_basicos']['Vendedor'] = $rowVendedor['Nombre'].' '.$rowVendedor['ApellidoPat'].' '.$rowVendedor['ApellidoMat'];
 				}else{
@@ -1432,17 +1426,17 @@ require_once '0_validate_user_1.php';
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
-				
+
 			}
 
 	
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'clear_all_egr':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_basicos']);
 			unset($_SESSION['arriendos_egr_productos']);
@@ -1450,7 +1444,7 @@ require_once '0_validate_user_1.php';
 			unset($_SESSION['arriendos_egr_guias']);
 			unset($_SESSION['arriendos_egr_impuestos']);
 			unset($_SESSION['arriendos_egr_descuentos']);
-				
+
 			//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 			if (isset($_SESSION['arriendos_egr_archivos'])){
 				foreach ($_SESSION['arriendos_egr_archivos'] as $key => $producto){
@@ -1460,26 +1454,26 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$producto['Nombre']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
 			}
 			unset($_SESSION['arriendos_egr_archivos']);
-			
+
 			header( 'Location: '.$location );
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'modBase_egr':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Borro todas las sesiones
 				unset($_SESSION['arriendos_egr_temporal']);
 				//Elimino los datos por seguridad
@@ -1487,46 +1481,46 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['arriendos_egr_guias']);
 				unset($_SESSION['arriendos_egr_impuestos']);
 				unset($_SESSION['arriendos_egr_descuentos']);
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['arriendos_egr_basicos']['idDocumentos']      = $idDocumentos;       }else{$_SESSION['arriendos_egr_basicos']['idDocumentos']      = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['arriendos_egr_basicos']['N_Doc']             = $N_Doc;              }else{$_SESSION['arriendos_egr_basicos']['N_Doc']             = '';}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['arriendos_egr_basicos']['Observaciones']     = $Observaciones;      }else{$_SESSION['arriendos_egr_basicos']['Observaciones']     = '';}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['arriendos_egr_basicos']['idSistema']         = $idSistema;          }else{$_SESSION['arriendos_egr_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['arriendos_egr_basicos']['idUsuario']         = $idUsuario;          }else{$_SESSION['arriendos_egr_basicos']['idUsuario']         = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['arriendos_egr_basicos']['Creacion_fecha']    = $Creacion_fecha;     }else{$_SESSION['arriendos_egr_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['arriendos_egr_basicos']['idTipo']            = $idTipo;             }else{$_SESSION['arriendos_egr_basicos']['idTipo']            = '';}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['arriendos_egr_basicos']['idCliente']         = $idCliente;          }else{$_SESSION['arriendos_egr_basicos']['idCliente']         = '';}
-				if(isset($idTrabajador) && $idTrabajador != ''){           $_SESSION['arriendos_egr_basicos']['idTrabajador']      = $idTrabajador;       }else{$_SESSION['arriendos_egr_basicos']['idTrabajador']      = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['arriendos_egr_basicos']['fecha_auto']        = $fecha_auto;         }else{$_SESSION['arriendos_egr_basicos']['fecha_auto']        = '';}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['arriendos_egr_basicos']['idBodega']          = $idBodega;           }else{$_SESSION['arriendos_egr_basicos']['idBodega']          = '';}
-				if(isset($OC_Ventas) && $OC_Ventas != ''){                 $_SESSION['arriendos_egr_basicos']['OC_Ventas']         = $OC_Ventas;          }else{$_SESSION['arriendos_egr_basicos']['OC_Ventas']         = '';}
-				if(isset($Devolucion_fecha) && $Devolucion_fecha != ''){   $_SESSION['arriendos_egr_basicos']['Devolucion_fecha']  = $Devolucion_fecha;   }else{$_SESSION['arriendos_egr_basicos']['Devolucion_fecha']  = '';}
-				if(isset($fecha_fact_desde) && $fecha_fact_desde != ''){   $_SESSION['arriendos_egr_basicos']['fecha_fact_desde']  = $fecha_fact_desde;   }else{$_SESSION['arriendos_egr_basicos']['fecha_fact_desde']  = '';}
-				if(isset($fecha_fact_hasta) && $fecha_fact_hasta != ''){   $_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;   }else{$_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']  = '';}
-				if(isset($idUsoIVA) && $idUsoIVA != ''){                   $_SESSION['arriendos_egr_basicos']['idUsoIVA']          = $idUsoIVA;           }else{$_SESSION['arriendos_egr_basicos']['idUsoIVA']          = '';}
+				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['arriendos_egr_basicos']['idDocumentos']      = $idDocumentos;       }else{$_SESSION['arriendos_egr_basicos']['idDocumentos']      = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['arriendos_egr_basicos']['N_Doc']             = $N_Doc;              }else{$_SESSION['arriendos_egr_basicos']['N_Doc']             = '';}
+				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['arriendos_egr_basicos']['Observaciones']     = $Observaciones;      }else{$_SESSION['arriendos_egr_basicos']['Observaciones']     = '';}
+				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['arriendos_egr_basicos']['idSistema']         = $idSistema;          }else{$_SESSION['arriendos_egr_basicos']['idSistema']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['arriendos_egr_basicos']['idUsuario']         = $idUsuario;          }else{$_SESSION['arriendos_egr_basicos']['idUsuario']         = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['arriendos_egr_basicos']['Creacion_fecha']    = $Creacion_fecha;     }else{$_SESSION['arriendos_egr_basicos']['Creacion_fecha']    = '';}
+				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['arriendos_egr_basicos']['idTipo']            = $idTipo;             }else{$_SESSION['arriendos_egr_basicos']['idTipo']            = '';}
+				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['arriendos_egr_basicos']['idCliente']         = $idCliente;          }else{$_SESSION['arriendos_egr_basicos']['idCliente']         = '';}
+				if(isset($idTrabajador) && $idTrabajador!=''){          $_SESSION['arriendos_egr_basicos']['idTrabajador']      = $idTrabajador;       }else{$_SESSION['arriendos_egr_basicos']['idTrabajador']      = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['arriendos_egr_basicos']['fecha_auto']        = $fecha_auto;         }else{$_SESSION['arriendos_egr_basicos']['fecha_auto']        = '';}
+				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['arriendos_egr_basicos']['idBodega']          = $idBodega;           }else{$_SESSION['arriendos_egr_basicos']['idBodega']          = '';}
+				if(isset($OC_Ventas) && $OC_Ventas!=''){                 $_SESSION['arriendos_egr_basicos']['OC_Ventas']         = $OC_Ventas;          }else{$_SESSION['arriendos_egr_basicos']['OC_Ventas']         = '';}
+				if(isset($Devolucion_fecha) && $Devolucion_fecha!=''){   $_SESSION['arriendos_egr_basicos']['Devolucion_fecha']  = $Devolucion_fecha;   }else{$_SESSION['arriendos_egr_basicos']['Devolucion_fecha']  = '';}
+				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){   $_SESSION['arriendos_egr_basicos']['fecha_fact_desde']  = $fecha_fact_desde;   }else{$_SESSION['arriendos_egr_basicos']['fecha_fact_desde']  = '';}
+				if(isset($fecha_fact_hasta) && $fecha_fact_hasta!=''){   $_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']  = $fecha_fact_hasta;   }else{$_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']  = '';}
+				if(isset($idUsoIVA) && $idUsoIVA!=''){                   $_SESSION['arriendos_egr_basicos']['idUsoIVA']          = $idUsoIVA;           }else{$_SESSION['arriendos_egr_basicos']['idUsoIVA']          = '';}
 				//datos basicos vacios
 				$_SESSION['arriendos_egr_basicos']['Pago_fecha'] = '0000-00-00';
-				
+
 				//En caso de que no sea una factura, eliminar los datos previamente rellenados
 				if(isset($idDocumentos) && $idDocumentos != ''&& $idDocumentos != 2){
 					$_SESSION['arriendos_egr_basicos']['fecha_fact_desde'] = '0000-00-00';
 					$_SESSION['arriendos_egr_basicos']['fecha_fact_hasta'] = '0000-00-00';
 				}
-				
+
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
 					// consulto los datos
-					$rowImpuesto = db_select_data (false, 'Nombre, Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowImpuesto = db_select_data (false, 'Nombre,Porcentaje', 'sistema_impuestos', '', 'idImpuesto = 1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['arriendos_egr_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
 					$_SESSION['arriendos_egr_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
 					$_SESSION['arriendos_egr_impuestos'][1]['idImpuesto'] = 1;
 				}
-				
+
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos != ''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){ 
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1535,7 +1529,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['Documento'] = '';
 				}
 				/****************************************************/
-				if(isset($idTipo) && $idTipo != ''){ 
+				if(isset($idTipo) && $idTipo!=''){
 					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'bodegas_arriendos_facturacion_tipo', '', 'idTipo = "'.$idTipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1544,7 +1538,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idBodega) && $idBodega != ''){ 
+				if(isset($idBodega) && $idBodega!=''){
 					// consulto los datos
 					$rowBodega = db_select_data (false, 'Nombre', 'bodegas_arriendos_listado', '', 'idBodega = "'.$idBodega.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1553,7 +1547,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['Bodega'] = '';
 				}
 				/****************************************************/
-				if(isset($idCliente) && $idCliente != ''){ 
+				if(isset($idCliente) && $idCliente!=''){ 
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1562,36 +1556,35 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['Cliente'] = '';
 				}
 				/****************************************************/
-				if(isset($idTrabajador) && $idTrabajador != ''){ 
+				if(isset($idTrabajador) && $idTrabajador!=''){
 					// consulto los datos
-					$rowVendedor = db_select_data (false, 'Nombre, ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$rowVendedor = db_select_data (false, 'Nombre,ApellidoPat, ApellidoMat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['arriendos_egr_basicos']['Vendedor'] = $rowVendedor['Nombre'].' '.$rowVendedor['ApellidoPat'].' '.$rowVendedor['ApellidoMat'];
 				}else{
 					$_SESSION['arriendos_egr_basicos']['Vendedor'] = '';
 				}
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			
 			}
-	
-		break;	
-/*******************************************************************************************************************/		
+
+		break;
+/*******************************************************************************************************************/
 		case 'modCentroCosto_venta':
 		
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Centro de Costo vacio
 				$_SESSION['arriendos_egr_basicos']['CentroCosto']   = 'Sin Centro de Costo Asignado';
-				
-				
+
 				/****************************************************/
-				if(isset($idCentroCosto) && $idCentroCosto != ''){ 
+				if(isset($idCentroCosto) && $idCentroCosto!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1599,7 +1592,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['idCentroCosto'] = $idCentroCosto;
 				}
 				/****************************************************/
-				if(isset($idLevel_1) && $idLevel_1 != ''){ 
+				if(isset($idLevel_1) && $idLevel_1!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1607,7 +1600,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['idLevel_1']    = $idLevel_1;
 				}
 				/****************************************************/
-				if(isset($idLevel_2) && $idLevel_2 != ''){ 
+				if(isset($idLevel_2) && $idLevel_2!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1615,7 +1608,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['idLevel_2']    = $idLevel_2;
 				}
 				/****************************************************/
-				if(isset($idLevel_3) && $idLevel_3 != ''){ 
+				if(isset($idLevel_3) && $idLevel_3!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1623,7 +1616,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['idLevel_3']    = $idLevel_3;
 				}
 				/****************************************************/
-				if(isset($idLevel_4) && $idLevel_4 != ''){ 
+				if(isset($idLevel_4) && $idLevel_4!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1631,7 +1624,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['idLevel_4']    = $idLevel_4;
 				}
 				/****************************************************/
-				if(isset($idLevel_5) && $idLevel_5 != ''){ 
+				if(isset($idLevel_5) && $idLevel_5!=''){ 
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1645,21 +1638,21 @@ require_once '0_validate_user_1.php';
 				die;
 			
 			}
-		break;			
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'new_guia_venta':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_egr_guias'][$idGuia])&&$_SESSION['arriendos_egr_guias'][$idGuia]>0){
 				$error['productos'] = 'error/La guia que trata de ingresar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Se traen los datos de la guia seleccionada
 				$rowGuia = db_select_data (false, 'N_Doc, ValorNeto', 'bodegas_arriendos_facturacion', '', 'idFacturacion = "'.$idGuia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
@@ -1669,76 +1662,76 @@ require_once '0_validate_user_1.php';
 				
 				
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'del_guia_venta':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_guias'][$_GET['del_guia']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_impuesto_venta':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_egr_impuestos'][$idImpuesto])&&$_SESSION['arriendos_egr_impuestos'][$idImpuesto]>0){
 				$error['productos'] = 'error/Impuesto que trata de ingresar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_egr_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'del_impuesto_venta':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_impuestos'][$_GET['del_impuesto']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'addfpagoVenta':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			$valor    = $_GET['val_select'];
-			
+
 			//Se comprueba las fechas
 			if($_SESSION['arriendos_egr_basicos']['Creacion_fecha']>$valor){
 				$error['ndata_1'] = 'error/La fecha de vencimiento es anterior a la fecha de creacion';
 			}
-			
+
 			//valido que no esten vacios
 			if(empty($valor)){  $error['valor']  = 'error/No ha ingresado una fecha de vencimiento';}
 
-			if ( empty($error) ) {
+			if(empty($error)){
 				
 				$_SESSION['arriendos_egr_basicos']['Pago_fecha'] = $valor;
 			
@@ -1746,14 +1739,14 @@ require_once '0_validate_user_1.php';
 				die;
 			}
 
-		break;		
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'delfpagoVenta':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
-			if ( empty($error) ) {
+			if(empty($error)){
 				
 				$_SESSION['arriendos_egr_basicos']['Pago_fecha'] = '0000-00-00';
 			
@@ -1762,23 +1755,23 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_prod_egr':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_egr_productos'][$idEquipo])&&$_SESSION['arriendos_egr_productos'][$idEquipo]>0){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				// Se trae un listado con todos los frecuencias
 				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia = "'.$idFrecuencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				// Se trae un listado con todos los servicios
 				$rowEquipo = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo = "'.$idEquipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 										
@@ -1793,34 +1786,34 @@ require_once '0_validate_user_1.php';
 
 				
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_prod_egr':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_egr_productos'][$idEquipo])&&$_SESSION['arriendos_egr_productos'][$idEquipo]>0&&$_SESSION['arriendos_egr_productos'][$idEquipo]!=$_SESSION['arriendos_egr_productos'][$oldItemID]){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
 			}
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Borro el producto
 				unset($_SESSION['arriendos_egr_productos'][$oldItemID]); 
 				
 				// Se trae un listado con todos los frecuencias
 				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia = "'.$idFrecuencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				// Se trae un listado con todos los servicios
 				$rowEquipo = db_select_data (false, 'Nombre', 'equipos_arriendo_listado', '', 'idEquipo = "'.$idEquipo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//creo el producto
 				$_SESSION['arriendos_egr_productos'][$idEquipo]['idEquipo']      = $idEquipo;
 				$_SESSION['arriendos_egr_productos'][$idEquipo]['Cantidad_eg']   = $Cantidad_eg;
@@ -1829,73 +1822,72 @@ require_once '0_validate_user_1.php';
 				$_SESSION['arriendos_egr_productos'][$idEquipo]['idFrecuencia']  = $idFrecuencia;
 				$_SESSION['arriendos_egr_productos'][$idEquipo]['EquipoNombre']  = $rowEquipo['Nombre'];
 				$_SESSION['arriendos_egr_productos'][$idEquipo]['Frecuencia']    = $rowFrecuencia['Nombre'];
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_prod_egr':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_productos'][$_GET['del_prod']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
+		break;
 
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_file_egr':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//se inicializa variable
 			$idInterno = 0;
-			
+
 			//verificar la cantidad de trabajos
 			if(isset($_SESSION['arriendos_egr_archivos'])){
 				foreach ($_SESSION['arriendos_egr_archivos'] as $key => $trabajos){
 					if($idInterno<$trabajos['idFile']){$idInterno = $trabajos['idFile'];}
 				}
 			}
-			
-			if ( empty($error) ) {
-				
-				
+
+			if(empty($error)){
+
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
-					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
+					if ($_FILES["exFile"]["error"] > 0){
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
 											"application/vnd.ms-word",
-											"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-									
+											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+
 											"application/msexcel",
 											"application/vnd.ms-excel",
 											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-											
+
 											"application/mspowerpoint",
 											"application/vnd.ms-powerpoint",
 											"application/vnd.openxmlformats-officedocument.presentationml.presentation",
-											
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
 											"application/vnd.adobe.xfdf",
 											"application/vnd.fdf",
 											"binary/octet-stream",
-											
-											"image/jpg", 
-											"image/jpeg", 
-											"image/gif", 
+
+											"image/jpg",
+											"image/jpeg",
+											"image/gif",
 											"image/png"
 
 											);
@@ -1903,7 +1895,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'arriendos_egreso_'.genera_password_unica().'_';
-					  
+
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['exFile']['name'];
@@ -1912,38 +1904,38 @@ require_once '0_validate_user_1.php';
 								//Se mueve el archivo a la carpeta previamente configurada
 								$move_result = @move_uploaded_file($_FILES["exFile"]["tmp_name"], $ruta);
 								if ($move_result){
-									
+
 									//se guarda en el indice siguiente
 									$idInterno = $idInterno+1;
 									//Se guarda el trabajo asignado
 									$_SESSION['arriendos_egr_archivos'][$idInterno]['idFile'] = $idInterno;
 									$_SESSION['arriendos_egr_archivos'][$idInterno]['Nombre'] = $sufijo.$_FILES['exFile']['name'];
-										
+
 									header( 'Location: '.$location.'&view=true' );
 									die;
-			
-								} else {
-									$error['exFile']     = 'error/Ocurrio un error al mover el archivo'; 
+
+								}else {
+									$error['exFile']     = 'error/Ocurrio un error al mover el archivo';
 								}
 							} else {
-								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe'; 
+								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe';
 							}
 						} else {
-							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 						}
-					}				
-				}	
-				
+					}
+				}
+
 			}
 
-		break;	
-		
+		break;
+
 /*******************************************************************************************************************/
-		case 'del_file_egr':	
-			
+		case 'del_file_egr':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			try {
 				if(!is_writable('upload/'.$_SESSION['arriendos_egr_archivos'][$_GET['del_file']]['Nombre'])){
 					//throw new Exception('File not writable');
@@ -1951,17 +1943,17 @@ require_once '0_validate_user_1.php';
 					unlink('upload/'.$_SESSION['arriendos_egr_archivos'][$_GET['del_file']]['Nombre']);
 					unset($_SESSION['arriendos_egr_archivos'][$_GET['del_file']]);
 				}
-			}catch(Exception $e) { 
+			}catch(Exception $e) {
 					//guardar el dato en un archivo log
 			}
-			
-			//Redirijo			
+
+			//redirijo
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_desc_egr':
 
 			//verificar si existe algun otro dato
@@ -1971,50 +1963,50 @@ require_once '0_validate_user_1.php';
 				$idInterno = 1;
 				foreach ($_SESSION['arriendos_egr_descuentos'] as $key => $producto){
 					$idInterno++;
-				}	
+				}
 			}
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_egr_descuentos'][$idInterno]['idDescuento'] = $idInterno;
 				$_SESSION['arriendos_egr_descuentos'][$idInterno]['Nombre']      = $Nombre;
 				$_SESSION['arriendos_egr_descuentos'][$idInterno]['vTotal']      = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_desc_egr':
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//se crea el nuevo producto
 				$_SESSION['arriendos_egr_descuentos'][$oldidProducto]['idDescuento'] = $oldidProducto;
 				$_SESSION['arriendos_egr_descuentos'][$oldidProducto]['Nombre'] = $Nombre;
 				$_SESSION['arriendos_egr_descuentos'][$oldidProducto]['vTotal'] = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_desc_egr':
 
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_descuentos'][$_GET['del_descuento']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 		break;
 
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'egr_bodega':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			/*********************************************************************/
@@ -2042,10 +2034,10 @@ require_once '0_validate_user_1.php';
 				}
 				//se verifica el uso del iva
 				if(isset($_SESSION['arriendos_egr_basicos']['idUsoIVA'])&&$_SESSION['arriendos_egr_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['arriendos_egr_impuestos']) ){     
+					if(!isset($_SESSION['arriendos_egr_impuestos'])){     
 						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto';
 					}
-				}	
+				}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al documento';
 			}
@@ -2072,34 +2064,34 @@ require_once '0_validate_user_1.php';
 			}
 			
 			/*********************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Se guardan los datos basicos
-				if(isset($_SESSION['arriendos_egr_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_basicos']['idDocumentos'] != ''){      $SIS_data  = "'".$_SESSION['arriendos_egr_basicos']['idDocumentos']."'" ;   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['N_Doc']) && $_SESSION['arriendos_egr_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['N_Doc']."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['Observaciones']) && $_SESSION['arriendos_egr_basicos']['Observaciones'] != ''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Observaciones']."'" ; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idBodega']) && $_SESSION['arriendos_egr_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idSistema']) && $_SESSION['arriendos_egr_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idUsuario']) && $_SESSION['arriendos_egr_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idTipo']) && $_SESSION['arriendos_egr_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idTipo']."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_basicos']['Creacion_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Creacion_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_egr_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['arriendos_egr_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['N_Doc']) && $_SESSION['arriendos_egr_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['Observaciones']) && $_SESSION['arriendos_egr_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idBodega']) && $_SESSION['arriendos_egr_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idSistema']) && $_SESSION['arriendos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idUsuario']) && $_SESSION['arriendos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idTipo']) && $_SESSION['arriendos_egr_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_basicos']['Creacion_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Creacion_fecha']."'";  
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['arriendos_egr_basicos']['Devolucion_fecha']) && $_SESSION['arriendos_egr_basicos']['Devolucion_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Devolucion_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_egr_basicos']['Devolucion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_basicos']['Devolucion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Devolucion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Devolucion_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_egr_basicos']['Devolucion_fecha']) && $_SESSION['arriendos_egr_basicos']['Devolucion_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Devolucion_fecha']."'";  
+					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_egr_basicos']['Devolucion_fecha'])."'";
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_basicos']['Devolucion_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Devolucion_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Devolucion_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
@@ -2107,28 +2099,28 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['arriendos_egr_basicos']['idCliente']) && $_SESSION['arriendos_egr_basicos']['idCliente'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idCliente']."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idTrabajador']) && $_SESSION['arriendos_egr_basicos']['idTrabajador'] != ''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idTrabajador']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['fecha_auto']."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_egr_basicos']['valor_neto_fact']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_egr_basicos']['valor_neto_imp']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['valor_total_fact'])&&$_SESSION['arriendos_egr_basicos']['valor_total_fact']!=''){  $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_impuestos'][1]['valor'])&&$_SESSION['arriendos_egr_impuestos'][1]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_impuestos'][2]['valor'])&&$_SESSION['arriendos_egr_impuestos'][2]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_impuestos'][3]['valor'])&&$_SESSION['arriendos_egr_impuestos'][3]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_impuestos'][4]['valor'])&&$_SESSION['arriendos_egr_impuestos'][4]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_impuestos'][5]['valor'])&&$_SESSION['arriendos_egr_impuestos'][5]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_impuestos'][6]['valor'])&&$_SESSION['arriendos_egr_impuestos'][6]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_impuestos'][7]['valor'])&&$_SESSION['arriendos_egr_impuestos'][7]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_impuestos'][8]['valor'])&&$_SESSION['arriendos_egr_impuestos'][8]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_impuestos'][9]['valor'])&&$_SESSION['arriendos_egr_impuestos'][9]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_impuestos'][10]['valor'])&&$_SESSION['arriendos_egr_impuestos'][10]['valor']!=''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['Pago_fecha']) && $_SESSION['arriendos_egr_basicos']['Pago_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Pago_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_egr_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Pago_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_egr_basicos']['idCliente']) && $_SESSION['arriendos_egr_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idCliente']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idTrabajador']) && $_SESSION['arriendos_egr_basicos']['idTrabajador']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idTrabajador']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_egr_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_egr_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['valor_total_fact'])&&$_SESSION['arriendos_egr_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_impuestos'][1]['valor'])&&$_SESSION['arriendos_egr_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_impuestos'][2]['valor'])&&$_SESSION['arriendos_egr_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_impuestos'][3]['valor'])&&$_SESSION['arriendos_egr_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_impuestos'][4]['valor'])&&$_SESSION['arriendos_egr_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_impuestos'][5]['valor'])&&$_SESSION['arriendos_egr_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_impuestos'][6]['valor'])&&$_SESSION['arriendos_egr_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_impuestos'][7]['valor'])&&$_SESSION['arriendos_egr_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_impuestos'][8]['valor'])&&$_SESSION['arriendos_egr_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_impuestos'][9]['valor'])&&$_SESSION['arriendos_egr_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_impuestos'][10]['valor'])&&$_SESSION['arriendos_egr_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['Pago_fecha']) && $_SESSION['arriendos_egr_basicos']['Pago_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Pago_fecha']."'";  
+					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_egr_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Pago_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
@@ -2138,17 +2130,17 @@ require_once '0_validate_user_1.php';
 				}
 				$SIS_data .= ",'1'";
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['arriendos_egr_basicos']['OC_Ventas']) && $_SESSION['arriendos_egr_basicos']['OC_Ventas'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['OC_Ventas']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idCentroCosto']) && $_SESSION['arriendos_egr_basicos']['idCentroCosto'] != ''){         $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idCentroCosto']."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idLevel_1']) && $_SESSION['arriendos_egr_basicos']['idLevel_1'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idLevel_1']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idLevel_2']) && $_SESSION['arriendos_egr_basicos']['idLevel_2'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idLevel_2']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idLevel_3']) && $_SESSION['arriendos_egr_basicos']['idLevel_3'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idLevel_3']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idLevel_4']) && $_SESSION['arriendos_egr_basicos']['idLevel_4'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idLevel_4']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idLevel_5']) && $_SESSION['arriendos_egr_basicos']['idLevel_5'] != ''){                 $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idLevel_5']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['fecha_fact_desde']) && $_SESSION['arriendos_egr_basicos']['fecha_fact_desde'] != ''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['fecha_fact_desde']."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']) && $_SESSION['arriendos_egr_basicos']['fecha_fact_hasta'] != ''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_basicos']['idUsoIVA']) && $_SESSION['arriendos_egr_basicos']['idUsoIVA'] != ''){                   $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idUsoIVA']."'" ;           }else{$SIS_data .= ",''";}
-				
+				if(isset($_SESSION['arriendos_egr_basicos']['OC_Ventas']) && $_SESSION['arriendos_egr_basicos']['OC_Ventas']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['OC_Ventas']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idCentroCosto']) && $_SESSION['arriendos_egr_basicos']['idCentroCosto']!=''){  $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idCentroCosto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idLevel_1']) && $_SESSION['arriendos_egr_basicos']['idLevel_1']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idLevel_1']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idLevel_2']) && $_SESSION['arriendos_egr_basicos']['idLevel_2']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idLevel_2']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idLevel_3']) && $_SESSION['arriendos_egr_basicos']['idLevel_3']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idLevel_3']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idLevel_4']) && $_SESSION['arriendos_egr_basicos']['idLevel_4']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idLevel_4']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idLevel_5']) && $_SESSION['arriendos_egr_basicos']['idLevel_5']!=''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idLevel_5']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['fecha_fact_desde']) && $_SESSION['arriendos_egr_basicos']['fecha_fact_desde']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['fecha_fact_desde']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']) && $_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['fecha_fact_hasta']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_basicos']['idUsoIVA']) && $_SESSION['arriendos_egr_basicos']['idUsoIVA']!=''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idUsoIVA']."'";           }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idDocumentos,N_Doc, Observaciones, idBodega, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, 
 				Creacion_ano, Devolucion_fecha, Devolucion_dia, Devolucion_Semana, Devolucion_mes, Devolucion_ano, idCliente, idTrabajador, fecha_auto, ValorNeto, ValorNetoImp, 
@@ -2156,66 +2148,66 @@ require_once '0_validate_user_1.php';
 				Pago_Semana, Pago_mes,Pago_ano, idEstado, idEstadoDevolucion,OC_Ventas, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, fecha_fact_desde, 
 				fecha_fact_hasta, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
-					/*********************************************************************/		
+					/*********************************************************************/
 					//Se guardan los datos de los productos	
 					if(isset($_SESSION['arriendos_egr_productos'])){		
 						foreach ($_SESSION['arriendos_egr_productos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                      $SIS_data  = "'".$ultimo_id."'" ;                                           }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['idBodega']) && $_SESSION['arriendos_egr_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['idSistema']) && $_SESSION['arriendos_egr_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['idUsuario']) && $_SESSION['arriendos_egr_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['idBodega']) && $_SESSION['arriendos_egr_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['idSistema']) && $_SESSION['arriendos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['idUsuario']) && $_SESSION['arriendos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($_SESSION['arriendos_egr_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_basicos']['idDocumentos'] != ''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idDocumentos']."'" ;  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['N_Doc']) && $_SESSION['arriendos_egr_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['N_Doc']."'" ;         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['idTipo']) && $_SESSION['arriendos_egr_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idTipo']."'" ;        }else{$SIS_data .= ",''";}
-							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){                                                                $SIS_data .= ",'".$producto['idEquipo']."'" ;                               }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg'] != ''){                                                          $SIS_data .= ",'".$producto['Cantidad_eg']."'" ;                            }else{$SIS_data .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){                                                        $SIS_data .= ",'".$producto['idFrecuencia']."'" ;                           }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''){                                                        $SIS_data .= ",'".$producto['ValorIngreso']."'" ;                           }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal'] != ''){                                                            $SIS_data .= ",'".$producto['ValorTotal']."'" ;                             }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['idCliente']) && $_SESSION['arriendos_egr_basicos']['idCliente'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idCliente']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['fecha_auto']."'" ;    }else{$SIS_data .= ",''";}
-							
+							if(isset($_SESSION['arriendos_egr_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['N_Doc']) && $_SESSION['arriendos_egr_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['idTipo']) && $_SESSION['arriendos_egr_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idEquipo']) && $producto['idEquipo']!=''){                                                         $SIS_data .= ",'".$producto['idEquipo']."'";                               }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg']!=''){                                                   $SIS_data .= ",'".$producto['Cantidad_eg']."'";                            }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia']!=''){                                                 $SIS_data .= ",'".$producto['idFrecuencia']."'";                           }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                 $SIS_data .= ",'".$producto['ValorIngreso']."'";                           }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                     $SIS_data .= ",'".$producto['ValorTotal']."'";                             }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['idCliente']) && $_SESSION['arriendos_egr_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, 
 							idDocumentos, N_Doc, idTipo, idEquipo, Cantidad_eg, idFrecuencia, Valor,ValorTotal,	 idCliente, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 							/********************************************************************************/
 							//Actualizo el valor de los productos
-							$SIS_data = "idEquipo='".$producto['idEquipo']."'" ;
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal'] != ''){     
-								$SIS_data .= ",ValorEgreso='".$producto['ValorTotal']."'" ;
+							$SIS_data = "idEquipo='".$producto['idEquipo']."'";
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){     
+								$SIS_data .= ",ValorEgreso='".$producto['ValorTotal']."'";
 							}
 							
 							/*******************************************************/
 							//se actualizan los datos
 							$resultado = db_update_data (false, $SIS_data, 'equipos_arriendo_listado', 'idEquipo = "'.$producto['idEquipo'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
+
 					/*********************************************************************/
 					//Se actualizan las guias a un estado de pago y con relacion al documento recien generado
 					if (isset($_SESSION['arriendos_egr_guias'])){
 						foreach ($_SESSION['arriendos_egr_guias'] as $key => $guias){
 							//filtro
-							if(isset($ultimo_id) && $ultimo_id != ''){ 
+							if(isset($ultimo_id) && $ultimo_id!=''){ 
 								
-								$SIS_data  = "DocRel='".$ultimo_id."'" ;    
+								$SIS_data  = "DocRel='".$ultimo_id."'";    
 								$SIS_data .= ",idEstado='2'";
 								
 								/*******************************************************/
@@ -2225,69 +2217,69 @@ require_once '0_validate_user_1.php';
 							}
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Descuento
 					if(isset($_SESSION['arriendos_egr_descuentos'])){
 						foreach ($_SESSION['arriendos_egr_descuentos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                      $SIS_data  = "'".$ultimo_id."'" ;                                           }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['idSistema']) && $_SESSION['arriendos_egr_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['idUsuario']) && $_SESSION['arriendos_egr_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['idSistema']) && $_SESSION['arriendos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['idUsuario']) && $_SESSION['arriendos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){    $SIS_data .= ",'".$producto['vTotal']."'" ;     }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){    $SIS_data .= ",'".$producto['Nombre']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){    $SIS_data .= ",'".$producto['vTotal']."'";     }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idSistema, idUsuario, Creacion_fecha,
-							Creacion_mes, Creacion_ano, Nombre, vTotal';
+							Creacion_mes, Creacion_ano, Nombre,vTotal';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_descuentos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Archivos
 					if(isset($_SESSION['arriendos_egr_archivos'])){
 						foreach ($_SESSION['arriendos_egr_archivos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                      $SIS_data  = "'".$ultimo_id."'" ;                                           }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['idBodega']) && $_SESSION['arriendos_egr_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['idSistema']) && $_SESSION['arriendos_egr_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['idUsuario']) && $_SESSION['arriendos_egr_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['idBodega']) && $_SESSION['arriendos_egr_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['idSistema']) && $_SESSION['arriendos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['idUsuario']) && $_SESSION['arriendos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){    $SIS_data .= ",'".$producto['Nombre']."'";     }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					/*********************************************************************/		
+					/*********************************************************************/
 					//Se guarda en historial la accion
-					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_basicos']['Creacion_fecha'] != ''){  
-						$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Creacion_fecha']."'" ;  
+					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
+					if(isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_basicos']['Creacion_fecha']!=''){  
+						$SIS_data .= ",'".$_SESSION['arriendos_egr_basicos']['Creacion_fecha']."'";  
 					}else{
 						$SIS_data .= ",''";
 					}
@@ -2312,28 +2304,27 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
-				
-				
-			}	
+
+			}
 	
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'actualizar_devolucion':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			
 
 			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idFacturacion='".$idFacturacion."'" ;
-				if(isset($idEstadoDevolucion) && $idEstadoDevolucion != ''){     $SIS_data .= ",idEstadoDevolucion='".$idEstadoDevolucion."'" ;}
-				if(isset($FechaDevolucionReal) && $FechaDevolucionReal != ''){   $SIS_data .= ",FechaDevolucionReal='".$FechaDevolucionReal."'" ;}
-				if(isset($idUsuarioDevolucion) && $idUsuarioDevolucion != ''){   $SIS_data .= ",idUsuarioDevolucion='".$idUsuarioDevolucion."'" ;}
-				
+				$SIS_data = "idFacturacion='".$idFacturacion."'";
+				if(isset($idEstadoDevolucion) && $idEstadoDevolucion!=''){     $SIS_data .= ",idEstadoDevolucion='".$idEstadoDevolucion."'";}
+				if(isset($FechaDevolucionReal) && $FechaDevolucionReal!=''){   $SIS_data .= ",FechaDevolucionReal='".$FechaDevolucionReal."'";}
+				if(isset($idUsuarioDevolucion) && $idUsuarioDevolucion!=''){   $SIS_data .= ",idUsuarioDevolucion='".$idUsuarioDevolucion."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'bodegas_arriendos_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2349,13 +2340,13 @@ require_once '0_validate_user_1.php';
 /*                                                       INGRESOS ND                                                 */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
-/*******************************************************************************************************************/	
+/*******************************************************************************************************************/
 	
 		case 'new_ingreso_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -2366,20 +2357,20 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Condiciono la variable observaciones
 				if(empty($Observaciones)){ $Observaciones= "Sin observaciones";}
-				
+
 				//Borro todas las sesiones
 				unset($_SESSION['arriendos_ing_nd_basicos']);
 				unset($_SESSION['arriendos_ing_nd_productos']);
 				unset($_SESSION['arriendos_ing_nd_temporal']);
 				unset($_SESSION['arriendos_ing_nd_impuestos']);
 				unset($_SESSION['arriendos_ing_nd_otros']);
-				
+
 				//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 				if (isset($_SESSION['arriendos_ing_nd_archivos'])){
 					foreach ($_SESSION['arriendos_ing_nd_archivos'] as $key => $producto){
@@ -2389,49 +2380,48 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/'.$producto['Nombre']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 				}
 				unset($_SESSION['arriendos_ing_nd_archivos']);
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idProveedor) && $idProveedor != ''){        $_SESSION['arriendos_ing_nd_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['arriendos_ing_nd_basicos']['idProveedor']     = '';}
-				if(isset($idDocumentos) && $idDocumentos != ''){      $_SESSION['arriendos_ing_nd_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['arriendos_ing_nd_basicos']['idDocumentos']    = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                    $_SESSION['arriendos_ing_nd_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['arriendos_ing_nd_basicos']['N_Doc']           = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']  = '';}
-				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['arriendos_ing_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['arriendos_ing_nd_basicos']['Observaciones']   = '';}
-				if(isset($idSistema) && $idDocumentos != ''){         $_SESSION['arriendos_ing_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['arriendos_ing_nd_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['arriendos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['arriendos_ing_nd_basicos']['idUsuario']       = '';}
-				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['arriendos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['arriendos_ing_nd_basicos']['idTipo']          = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['arriendos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['arriendos_ing_nd_basicos']['fecha_auto']      = '';}
-				if(isset($idBodega) && $idBodega != ''){              $_SESSION['arriendos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['arriendos_ing_nd_basicos']['idBodega']        = '';}
+				if(isset($idProveedor) && $idProveedor!=''){        $_SESSION['arriendos_ing_nd_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['arriendos_ing_nd_basicos']['idProveedor']     = '';}
+				if(isset($idDocumentos) && $idDocumentos!=''){      $_SESSION['arriendos_ing_nd_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['arriendos_ing_nd_basicos']['idDocumentos']    = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                    $_SESSION['arriendos_ing_nd_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['arriendos_ing_nd_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['arriendos_ing_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['arriendos_ing_nd_basicos']['Observaciones']   = '';}
+				if(isset($idSistema) && $idDocumentos!=''){         $_SESSION['arriendos_ing_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['arriendos_ing_nd_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['arriendos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['arriendos_ing_nd_basicos']['idUsuario']       = '';}
+				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['arriendos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['arriendos_ing_nd_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['arriendos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['arriendos_ing_nd_basicos']['fecha_auto']      = '';}
+				if(isset($idBodega) && $idBodega!=''){             $_SESSION['arriendos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['arriendos_ing_nd_basicos']['idBodega']        = '';}
 				$_SESSION['arriendos_ing_nd_basicos']['Pago_fecha']      = '0000-00-00';
-				
+
 				//Se agrega el impuesto
 				$_SESSION['arriendos_ing_nd_impuestos'][1]['idImpuesto'] = 1;
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			
 			}
-			
-	
+
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'clear_all_ing_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_ing_nd_basicos']);
 			unset($_SESSION['arriendos_ing_nd_productos']);
 			unset($_SESSION['arriendos_ing_nd_temporal']);
 			unset($_SESSION['arriendos_ing_nd_impuestos']);
 			unset($_SESSION['arriendos_ing_nd_otros']);
-				
+
 			//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 			if (isset($_SESSION['arriendos_ing_nd_archivos'])){
 				foreach ($_SESSION['arriendos_ing_nd_archivos'] as $key => $producto){
@@ -2441,7 +2431,7 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$producto['Nombre']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
@@ -2453,12 +2443,12 @@ require_once '0_validate_user_1.php';
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'modBase_ing_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -2469,10 +2459,10 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Borro todas las sesiones
 				unset($_SESSION['arriendos_ing_nd_temporal']);
 				//Elimino los datos por seguridad
@@ -2480,42 +2470,41 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['arriendos_ing_nd_guias']);
 				unset($_SESSION['arriendos_ing_nd_impuestos']);
 				unset($_SESSION['arriendos_ing_nd_otros']);
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idProveedor) && $idProveedor != ''){        $_SESSION['arriendos_ing_nd_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['arriendos_ing_nd_basicos']['idProveedor']     = '';}
-				if(isset($idDocumentos) && $idDocumentos != ''){      $_SESSION['arriendos_ing_nd_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['arriendos_ing_nd_basicos']['idDocumentos']    = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                    $_SESSION['arriendos_ing_nd_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['arriendos_ing_nd_basicos']['N_Doc']           = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){  $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']  = '';}
-				if(isset($Observaciones) && $Observaciones != ''){    $_SESSION['arriendos_ing_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['arriendos_ing_nd_basicos']['Observaciones']   = '';}
-				if(isset($idSistema) && $idDocumentos != ''){         $_SESSION['arriendos_ing_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['arriendos_ing_nd_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario != ''){            $_SESSION['arriendos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['arriendos_ing_nd_basicos']['idUsuario']       = '';}
-				if(isset($idTipo) && $idTipo != ''){                  $_SESSION['arriendos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['arriendos_ing_nd_basicos']['idTipo']          = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){          $_SESSION['arriendos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['arriendos_ing_nd_basicos']['fecha_auto']      = '';}
-				if(isset($idBodega) && $idBodega != ''){              $_SESSION['arriendos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['arriendos_ing_nd_basicos']['idBodega']        = '';}
+				if(isset($idProveedor) && $idProveedor!=''){        $_SESSION['arriendos_ing_nd_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['arriendos_ing_nd_basicos']['idProveedor']     = '';}
+				if(isset($idDocumentos) && $idDocumentos!=''){      $_SESSION['arriendos_ing_nd_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['arriendos_ing_nd_basicos']['idDocumentos']    = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                    $_SESSION['arriendos_ing_nd_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['arriendos_ing_nd_basicos']['N_Doc']           = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['arriendos_ing_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['arriendos_ing_nd_basicos']['Observaciones']   = '';}
+				if(isset($idSistema) && $idDocumentos!=''){         $_SESSION['arriendos_ing_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['arriendos_ing_nd_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['arriendos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['arriendos_ing_nd_basicos']['idUsuario']       = '';}
+				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['arriendos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['arriendos_ing_nd_basicos']['idTipo']          = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['arriendos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['arriendos_ing_nd_basicos']['fecha_auto']      = '';}
+				if(isset($idBodega) && $idBodega!=''){             $_SESSION['arriendos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['arriendos_ing_nd_basicos']['idBodega']        = '';}
 				$_SESSION['arriendos_ing_nd_basicos']['Pago_fecha']      = '0000-00-00';
-				
+
 				//Se agrega el impuesto
 				$_SESSION['arriendos_ing_nd_impuestos'][1]['idImpuesto'] = 1;
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
-			
-	
-		break;	
-/*******************************************************************************************************************/		
+
+		break;
+/*******************************************************************************************************************/
 		case 'new_prod_ing_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el producto ya existe
 			if(isset($_SESSION['arriendos_ing_nd_productos'][$idEquipo])&&$_SESSION['arriendos_ing_nd_productos'][$idEquipo]>0){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_ing_nd_productos'][$idEquipo]['idEquipo']      = $idEquipo;
 				$_SESSION['arriendos_ing_nd_productos'][$idEquipo]['Cantidad_ing']  = $Cantidad_ing;
@@ -2525,25 +2514,25 @@ require_once '0_validate_user_1.php';
 				
 				
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_prod_ing_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_ing_nd_productos'][$idEquipo])&&$_SESSION['arriendos_ing_nd_productos'][$idEquipo]>0&&$_SESSION['arriendos_ing_nd_productos'][$idEquipo]!=$_SESSION['arriendos_ing_nd_productos'][$oldItemID]){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Borro el producto
 				unset($_SESSION['arriendos_ing_nd_productos'][$oldItemID]); 
 			
@@ -2556,29 +2545,29 @@ require_once '0_validate_user_1.php';
 
 				
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_prod_ing_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro el producto
 			unset($_SESSION['arriendos_ing_nd_productos'][$_GET['del_prod']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'new_otros_ing_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['arriendos_ing_nd_otros'])){
 				$idInterno = 1;
@@ -2586,136 +2575,134 @@ require_once '0_validate_user_1.php';
 				$idInterno = 1;
 				foreach ($_SESSION['arriendos_ing_nd_otros'] as $key => $producto){
 					$idInterno++;
-				}	
+				}
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_ing_nd_otros'][$idInterno]['idOtros']  = $idInterno;
 				$_SESSION['arriendos_ing_nd_otros'][$idInterno]['Nombre']   = $Nombre;
 				$_SESSION['arriendos_ing_nd_otros'][$idInterno]['vTotal']   = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_otros_ing_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//creo el producto
 				$_SESSION['arriendos_ing_nd_otros'][$oldidProducto]['idOtros']       = $oldidProducto;
 				$_SESSION['arriendos_ing_nd_otros'][$oldidProducto]['Nombre']        = $Nombre;
 				$_SESSION['arriendos_ing_nd_otros'][$oldidProducto]['vTotal']        = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_otros_ing_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_ing_nd_otros'][$_GET['del_otros']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_impuesto_ing_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_ing_nd_impuestos'][$idImpuesto])&&$_SESSION['arriendos_ing_nd_impuestos'][$idImpuesto]>0){
 				$error['productos'] = 'error/Impuesto que trata de ingresar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_ing_nd_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'del_impuesto_ing_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_ing_nd_impuestos'][$_GET['del_impuesto']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'new_file_ing_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//se inicializa variable
 			$idInterno = 0;
-			
+
 			//verificar la cantidad de trabajos
 			if(isset($_SESSION['arriendos_ing_nd_archivos'])){
 				foreach ($_SESSION['arriendos_ing_nd_archivos'] as $key => $trabajos){
 					if($idInterno<$trabajos['idFile']){$idInterno = $trabajos['idFile'];}
 				}
 			}
-			
-			if ( empty($error) ) {
-				
-				
+
+			if(empty($error)){
+
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
-					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
+					if ($_FILES["exFile"]["error"] > 0){
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
 											"application/vnd.ms-word",
-											"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-									
+											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+
 											"application/msexcel",
 											"application/vnd.ms-excel",
 											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-											
+
 											"application/mspowerpoint",
 											"application/vnd.ms-powerpoint",
 											"application/vnd.openxmlformats-officedocument.presentationml.presentation",
-											
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
 											"application/vnd.adobe.xfdf",
 											"application/vnd.fdf",
 											"binary/octet-stream",
-											
-											"image/jpg", 
-											"image/jpeg", 
-											"image/gif", 
+
+											"image/jpg",
+											"image/jpeg",
+											"image/gif",
 											"image/png"
 
 											);
@@ -2723,7 +2710,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'arriendos_ingreso_'.genera_password_unica().'_';
-					  
+
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['exFile']['name'];
@@ -2732,38 +2719,38 @@ require_once '0_validate_user_1.php';
 								//Se mueve el archivo a la carpeta previamente configurada
 								$move_result = @move_uploaded_file($_FILES["exFile"]["tmp_name"], $ruta);
 								if ($move_result){
-									
+
 									//se guarda en el indice siguiente
 									$idInterno = $idInterno+1;
 									//Se guarda el trabajo asignado
 									$_SESSION['arriendos_ing_nd_archivos'][$idInterno]['idFile'] = $idInterno;
 									$_SESSION['arriendos_ing_nd_archivos'][$idInterno]['Nombre'] = $sufijo.$_FILES['exFile']['name'];
-										
+
 									header( 'Location: '.$location.'&view=true' );
 									die;
-			
-								} else {
-									$error['exFile']     = 'error/Ocurrio un error al mover el archivo'; 
+
+								}else {
+									$error['exFile']     = 'error/Ocurrio un error al mover el archivo';
 								}
 							} else {
-								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe'; 
+								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe';
 							}
 						} else {
-							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 						}
-					}				
-				}	
-				
+					}
+				}
+
 			}
 
-		break;	
-		
+		break;
+
 /*******************************************************************************************************************/
-		case 'del_file_ing_nd':	
-			
+		case 'del_file_ing_nd':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			try {
 				if(!is_writable('upload/'.$_SESSION['arriendos_ing_nd_archivos'][$_GET['del_file']]['Nombre'])){
 					//throw new Exception('File not writable');
@@ -2771,27 +2758,27 @@ require_once '0_validate_user_1.php';
 					unlink('upload/'.$_SESSION['arriendos_ing_nd_archivos'][$_GET['del_file']]['Nombre']);
 					unset($_SESSION['arriendos_ing_nd_archivos'][$_GET['del_file']]);
 				}
-			}catch(Exception $e) { 
+			}catch(Exception $e) {
 					//guardar el dato en un archivo log
 			}
-			
-			//Redirijo			
+
+			//redirijo
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 
 		break;
 
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'ing_bodega_nd':
-	
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			/*********************************************************************/
 			//variables
 			$n_data1 = 0;
 			$n_data2 = 0;
-				
+
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['arriendos_ing_nd_basicos'])){
@@ -2804,10 +2791,10 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['arriendos_ing_nd_basicos']['idTipo']) OR $_SESSION['arriendos_ing_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
 				//compruebo que sea una factura y que tenga fecha de pago
 				if(isset($_SESSION['arriendos_ing_nd_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_nd_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['arriendos_ing_nd_impuestos']) ){     
+					if(!isset($_SESSION['arriendos_ing_nd_impuestos'])){     
 						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto para la factura';
 					}
-				}	
+				}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de bodega';
 			}
@@ -2834,35 +2821,35 @@ require_once '0_validate_user_1.php';
 			}
 			
 			/*********************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Se guardan los datos basicos
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['idBodega']) && $_SESSION['arriendos_ing_nd_basicos']['idBodega'] != ''){              $SIS_data  = "'".$_SESSION['arriendos_ing_nd_basicos']['idBodega']."'" ;       }else{$SIS_data  = "''";}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['idSistema']) && $_SESSION['arriendos_ing_nd_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nd_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['idBodega']) && $_SESSION['arriendos_ing_nd_basicos']['idBodega']!=''){       $SIS_data  = "'".$_SESSION['arriendos_ing_nd_basicos']['idBodega']."'";       }else{$SIS_data  = "''";}
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['idSistema']) && $_SESSION['arriendos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'";  
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_nd_basicos']['idDocumentos'] != ''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idDocumentos']."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['N_Doc']) && $_SESSION['arriendos_ing_nd_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['N_Doc']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['idTipo']) && $_SESSION['arriendos_ing_nd_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idTipo']."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['Observaciones']) && $_SESSION['arriendos_ing_nd_basicos']['Observaciones'] != ''){    $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Observaciones']."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['idProveedor']) && $_SESSION['arriendos_ing_nd_basicos']['idProveedor'] != ''){        $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idProveedor']."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['Pago_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Pago_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Pago_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_ing_nd_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_nd_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Pago_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idDocumentos']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['N_Doc']) && $_SESSION['arriendos_ing_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['idTipo']) && $_SESSION['arriendos_ing_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['Observaciones']) && $_SESSION['arriendos_ing_nd_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['idProveedor']) && $_SESSION['arriendos_ing_nd_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idProveedor']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['Pago_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Pago_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Pago_fecha']."'";  
+					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_ing_nd_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_nd_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Pago_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
@@ -2871,133 +2858,133 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_nd_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['fecha_auto']."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_ing_nd_basicos']['valor_neto_fact']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['valor_neto_fact']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_ing_nd_basicos']['valor_neto_imp']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['valor_neto_imp']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_basicos']['valor_total_fact'])&&$_SESSION['arriendos_ing_nd_basicos']['valor_total_fact']!=''){  $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['valor_total_fact']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_impuestos'][1]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][1]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_impuestos'][2]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][2]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_impuestos'][3]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][3]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_impuestos'][4]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][4]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_impuestos'][5]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][5]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_impuestos'][6]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][6]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_impuestos'][7]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][7]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_impuestos'][8]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][8]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_impuestos'][9]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][9]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nd_impuestos'][10]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][10]['valor']!=''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
-				
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_ing_nd_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['valor_neto_fact']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_ing_nd_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['valor_neto_imp']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_basicos']['valor_total_fact'])&&$_SESSION['arriendos_ing_nd_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['valor_total_fact']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_impuestos'][1]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_impuestos'][2]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_impuestos'][3]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_impuestos'][4]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_impuestos'][5]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_impuestos'][6]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_impuestos'][7]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_impuestos'][8]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_impuestos'][9]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nd_impuestos'][10]['valor'])&&$_SESSION['arriendos_ing_nd_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_Semana, Creacion_mes,
 				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idProveedor, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes, 
 				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, 
 				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
 					if(isset($_SESSION['arriendos_ing_nd_productos'])){		
 						foreach ($_SESSION['arriendos_ing_nd_productos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idBodega']) && $_SESSION['arriendos_ing_nd_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idSistema']) && $_SESSION['arriendos_ing_nd_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nd_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idBodega']) && $_SESSION['arriendos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idSistema']) && $_SESSION['arriendos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_nd_basicos']['idDocumentos'] != ''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idDocumentos']."'" ;       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['N_Doc']) && $_SESSION['arriendos_ing_nd_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['N_Doc']."'" ;              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idTipo']) && $_SESSION['arriendos_ing_nd_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idTipo']."'" ;             }else{$SIS_data .= ",''";}
-							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){                                                                      $SIS_data .= ",'".$producto['idEquipo']."'" ;                                       }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing'] != ''){                                                              $SIS_data .= ",'".$producto['Cantidad_ing']."'" ;                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){                                                              $SIS_data .= ",'".$producto['idFrecuencia']."'" ;                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''){                                                              $SIS_data .= ",'".$producto['ValorIngreso']."'" ;                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal'] != ''){                                                                  $SIS_data .= ",'".$producto['ValorTotal']."'" ;                                     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idProveedor']) && $_SESSION['arriendos_ing_nd_basicos']['idProveedor'] != ''){        $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idProveedor']."'" ;        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_nd_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['fecha_auto']."'" ;         }else{$SIS_data .= ",''";}
-						
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idDocumentos']."'";       }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['N_Doc']) && $_SESSION['arriendos_ing_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idTipo']) && $_SESSION['arriendos_ing_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($producto['idEquipo']) && $producto['idEquipo']!=''){                                                               $SIS_data .= ",'".$producto['idEquipo']."'";                                       }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing']!=''){                                                       $SIS_data .= ",'".$producto['Cantidad_ing']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia']!=''){                                                       $SIS_data .= ",'".$producto['idFrecuencia']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                       $SIS_data .= ",'".$producto['ValorIngreso']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                           $SIS_data .= ",'".$producto['ValorTotal']."'";                                     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idProveedor']) && $_SESSION['arriendos_ing_nd_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, 
 							Creacion_ano, idDocumentos, N_Doc, idTipo, idEquipo, Cantidad_ing, idFrecuencia, Valor, ValorTotal,
 							idProveedor, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Otros Motivos
 					if(isset($_SESSION['arriendos_ing_nd_otros'])){
 						foreach ($_SESSION['arriendos_ing_nd_otros'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idBodega']) && $_SESSION['arriendos_ing_nd_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idSistema']) && $_SESSION['arriendos_ing_nd_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nd_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idBodega']) && $_SESSION['arriendos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idSistema']) && $_SESSION['arriendos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){    $SIS_data .= ",'".$producto['vTotal']."'" ;     }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){    $SIS_data .= ",'".$producto['Nombre']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){    $SIS_data .= ",'".$producto['vTotal']."'";     }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
-							Creacion_mes, Creacion_ano, Nombre, vTotal';
+							Creacion_mes, Creacion_ano, Nombre,vTotal';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_otros', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Archivos
 					if(isset($_SESSION['arriendos_ing_nd_archivos'])){
 						foreach ($_SESSION['arriendos_ing_nd_archivos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idBodega']) && $_SESSION['arriendos_ing_nd_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idSistema']) && $_SESSION['arriendos_ing_nd_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nd_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idBodega']) && $_SESSION['arriendos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idSistema']) && $_SESSION['arriendos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){ $SIS_data .= ",'".$producto['Nombre']."'" ; }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){ $SIS_data .= ",'".$producto['Nombre']."'"; }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Se guarda en historial la accion
-					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'] != ''){  
-						$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'" ;  
+					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
+					if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']!=''){  
+						$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'";  
 					}else{
 						$SIS_data .= ",''";
 					}
@@ -3021,24 +3008,23 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
-				
-				
-			}	
+
+			}
 	
 
-		break;	
+		break;
 
 /*******************************************************************************************************************/
 /*                                                                                                                 */
 /*                                                        INGRESOS NC                                                  */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_ingreso_nc':
-	
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-		
+
 			//Se verifica si el dato existe
 			/*******************************************************************/
 			//variables
@@ -3052,19 +3038,19 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Condiciono la variable observaciones
 				if(empty($Observaciones)){ $Observaciones= "Sin observaciones";}
-				
+
 				//Borro todas las sesiones
 				unset($_SESSION['arriendos_ing_nc_basicos']);
 				unset($_SESSION['arriendos_ing_nc_productos']);
 				unset($_SESSION['arriendos_ing_nc_temporal']);
 				unset($_SESSION['arriendos_ing_nc_impuestos']);
 				unset($_SESSION['arriendos_ing_nc_otros']);
-				
+
 				//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 				if (isset($_SESSION['arriendos_ing_nc_archivos'])){
 					foreach ($_SESSION['arriendos_ing_nc_archivos'] as $key => $producto){
@@ -3074,50 +3060,50 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/'.$producto['Nombre']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 				}
 				unset($_SESSION['arriendos_ing_nc_archivos']);
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['arriendos_ing_nc_basicos']['idDocumentos']    = $idDocumentos;    }else{$_SESSION['arriendos_ing_nc_basicos']['idDocumentos']     = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['arriendos_ing_nc_basicos']['N_Doc']           = $N_Doc;           }else{$_SESSION['arriendos_ing_nc_basicos']['N_Doc']            = '';}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['arriendos_ing_nc_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['arriendos_ing_nc_basicos']['Observaciones']    = '';}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['arriendos_ing_nc_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['arriendos_ing_nc_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['arriendos_ing_nc_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['arriendos_ing_nc_basicos']['idUsuario']        = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['arriendos_ing_nc_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['arriendos_ing_nc_basicos']['idTipo']           = '';}
-				if(isset($idProveedor) && $idProveedor != ''){             $_SESSION['arriendos_ing_nc_basicos']['idProveedor']     = $idProveedor;     }else{$_SESSION['arriendos_ing_nc_basicos']['idProveedor']      = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['arriendos_ing_nc_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['arriendos_ing_nc_basicos']['fecha_auto']       = '';}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['arriendos_ing_nc_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['arriendos_ing_nc_basicos']['idBodega']         = '';}
+				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['arriendos_ing_nc_basicos']['idDocumentos']    = $idDocumentos;    }else{$_SESSION['arriendos_ing_nc_basicos']['idDocumentos']     = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['arriendos_ing_nc_basicos']['N_Doc']           = $N_Doc;           }else{$_SESSION['arriendos_ing_nc_basicos']['N_Doc']            = '';}
+				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['arriendos_ing_nc_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['arriendos_ing_nc_basicos']['Observaciones']    = '';}
+				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['arriendos_ing_nc_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['arriendos_ing_nc_basicos']['idSistema']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['arriendos_ing_nc_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['arriendos_ing_nc_basicos']['idUsuario']        = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']   = '';}
+				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['arriendos_ing_nc_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['arriendos_ing_nc_basicos']['idTipo']           = '';}
+				if(isset($idProveedor) && $idProveedor!=''){             $_SESSION['arriendos_ing_nc_basicos']['idProveedor']     = $idProveedor;     }else{$_SESSION['arriendos_ing_nc_basicos']['idProveedor']      = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['arriendos_ing_nc_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['arriendos_ing_nc_basicos']['fecha_auto']       = '';}
+				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['arriendos_ing_nc_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['arriendos_ing_nc_basicos']['idBodega']         = '';}
 				
 
 				
 				//Se agrega el impuesto
 				$_SESSION['arriendos_ing_nc_impuestos'][1]['idImpuesto'] = 1;
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
-				
+
 			}
 
 	
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'clear_all_ing_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_ing_nc_basicos']);
 			unset($_SESSION['arriendos_ing_nc_productos']);
 			unset($_SESSION['arriendos_ing_nc_temporal']);
 			unset($_SESSION['arriendos_ing_nc_impuestos']);
 			unset($_SESSION['arriendos_ing_nc_otros']);
-				
+
 			//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 			if (isset($_SESSION['arriendos_ing_nc_archivos'])){
 				foreach ($_SESSION['arriendos_ing_nc_archivos'] as $key => $producto){
@@ -3127,67 +3113,67 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$producto['Nombre']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
 			}
 			unset($_SESSION['arriendos_ing_nc_archivos']);
-			
+
 			header( 'Location: '.$location );
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'modBase_ing_nc':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Borro todas las sesiones
 				unset($_SESSION['arriendos_ing_nc_temporal']);
 				//Elimino los datos por seguridad
 				unset($_SESSION['arriendos_ing_nc_productos']);
 				unset($_SESSION['arriendos_ing_nc_impuestos']);
 				unset($_SESSION['arriendos_ing_nc_otros']);
-			
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['arriendos_ing_nc_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['arriendos_ing_nc_basicos']['idDocumentos']     = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['arriendos_ing_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['arriendos_ing_nc_basicos']['N_Doc']            = '';}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['arriendos_ing_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['arriendos_ing_nc_basicos']['Observaciones']    = '';}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['arriendos_ing_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['arriendos_ing_nc_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['arriendos_ing_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['arriendos_ing_nc_basicos']['idUsuario']        = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['arriendos_ing_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['arriendos_ing_nc_basicos']['idTipo']           = '';}
-				if(isset($idProveedor) && $idProveedor != ''){             $_SESSION['arriendos_ing_nc_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['arriendos_ing_nc_basicos']['idProveedor']      = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['arriendos_ing_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['arriendos_ing_nc_basicos']['fecha_auto']       = '';}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['arriendos_ing_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['arriendos_ing_nc_basicos']['idBodega']         = '';}
-				
+				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['arriendos_ing_nc_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['arriendos_ing_nc_basicos']['idDocumentos']     = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['arriendos_ing_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['arriendos_ing_nc_basicos']['N_Doc']            = '';}
+				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['arriendos_ing_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['arriendos_ing_nc_basicos']['Observaciones']    = '';}
+				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['arriendos_ing_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['arriendos_ing_nc_basicos']['idSistema']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['arriendos_ing_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['arriendos_ing_nc_basicos']['idUsuario']        = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']   = '';}
+				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['arriendos_ing_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['arriendos_ing_nc_basicos']['idTipo']           = '';}
+				if(isset($idProveedor) && $idProveedor!=''){             $_SESSION['arriendos_ing_nc_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['arriendos_ing_nc_basicos']['idProveedor']      = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['arriendos_ing_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['arriendos_ing_nc_basicos']['fecha_auto']       = '';}
+				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['arriendos_ing_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['arriendos_ing_nc_basicos']['idBodega']         = '';}
+
 				//Se agrega el impuesto
 				$_SESSION['arriendos_ing_nc_impuestos'][1]['idImpuesto'] = 1;
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			
 			}
-	
-		break;	
-/*******************************************************************************************************************/		
+
+		break;
+/*******************************************************************************************************************/
 		case 'new_prod_ing_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_ing_nc_productos'][$idEquipo])&&$_SESSION['arriendos_ing_nc_productos'][$idEquipo]>0){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_ing_nc_productos'][$idEquipo]['idEquipo']      = $idEquipo;
 				$_SESSION['arriendos_ing_nc_productos'][$idEquipo]['Cantidad_eg']   = $Cantidad_eg;
@@ -3197,25 +3183,25 @@ require_once '0_validate_user_1.php';
 
 				
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_prod_ing_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_ing_nc_productos'][$idEquipo])&&$_SESSION['arriendos_ing_nc_productos'][$idEquipo]>0&&$_SESSION['arriendos_ing_nc_productos'][$idEquipo]!=$_SESSION['arriendos_ing_nc_productos'][$oldItemID]){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
 			}
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Borro el producto
 				unset($_SESSION['arriendos_ing_nc_productos'][$oldItemID]); 
 			
@@ -3225,32 +3211,32 @@ require_once '0_validate_user_1.php';
 				$_SESSION['arriendos_ing_nc_productos'][$idEquipo]['ValorIngreso']  = $vUnitario;
 				$_SESSION['arriendos_ing_nc_productos'][$idEquipo]['ValorTotal']    = $ValorTotal;
 				$_SESSION['arriendos_ing_nc_productos'][$idEquipo]['idFrecuencia']  = $idFrecuencia;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
 
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_prod_ing_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_ing_nc_productos'][$_GET['del_prod']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'new_otros_ing_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['arriendos_ing_nc_otros'])){
 				$idInterno = 1;
@@ -3258,136 +3244,134 @@ require_once '0_validate_user_1.php';
 				$idInterno = 1;
 				foreach ($_SESSION['arriendos_ing_nc_otros'] as $key => $producto){
 					$idInterno++;
-				}	
+				}
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_ing_nc_otros'][$idInterno]['idOtros']  = $idInterno;
 				$_SESSION['arriendos_ing_nc_otros'][$idInterno]['Nombre']   = $Nombre;
 				$_SESSION['arriendos_ing_nc_otros'][$idInterno]['vTotal']   = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_otros_ing_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//creo el producto
 				$_SESSION['arriendos_ing_nc_otros'][$oldidProducto]['idOtros']       = $oldidProducto;
 				$_SESSION['arriendos_ing_nc_otros'][$oldidProducto]['Nombre']        = $Nombre;
 				$_SESSION['arriendos_ing_nc_otros'][$oldidProducto]['vTotal']        = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_otros_ing_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_ing_nc_otros'][$_GET['del_otros']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_impuesto_ing_nc':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_ing_nc_impuestos'][$idImpuesto])&&$_SESSION['arriendos_ing_nc_impuestos'][$idImpuesto]>0){
 				$error['productos'] = 'error/Impuesto que trata de ingresar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_ing_nc_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'del_impuesto_ing_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_ing_nc_impuestos'][$_GET['del_impuesto']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'new_file_ing_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//se inicializa variable
 			$idInterno = 0;
-			
+
 			//verificar la cantidad de trabajos
 			if(isset($_SESSION['arriendos_ing_nc_archivos'])){
 				foreach ($_SESSION['arriendos_ing_nc_archivos'] as $key => $trabajos){
 					if($idInterno<$trabajos['idFile']){$idInterno = $trabajos['idFile'];}
 				}
 			}
-			
-			if ( empty($error) ) {
-				
-				
+
+			if(empty($error)){
+
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
-					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
+					if ($_FILES["exFile"]["error"] > 0){
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
 											"application/vnd.ms-word",
-											"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-									
+											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+
 											"application/msexcel",
 											"application/vnd.ms-excel",
 											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-											
+
 											"application/mspowerpoint",
 											"application/vnd.ms-powerpoint",
 											"application/vnd.openxmlformats-officedocument.presentationml.presentation",
-											
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
 											"application/vnd.adobe.xfdf",
 											"application/vnd.fdf",
 											"binary/octet-stream",
-											
-											"image/jpg", 
-											"image/jpeg", 
-											"image/gif", 
+
+											"image/jpg",
+											"image/jpeg",
+											"image/gif",
 											"image/png"
 
 											);
@@ -3395,7 +3379,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'arriendos_egreso_'.genera_password_unica().'_';
-					  
+
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['exFile']['name'];
@@ -3404,38 +3388,38 @@ require_once '0_validate_user_1.php';
 								//Se mueve el archivo a la carpeta previamente configurada
 								$move_result = @move_uploaded_file($_FILES["exFile"]["tmp_name"], $ruta);
 								if ($move_result){
-									
+
 									//se guarda en el indice siguiente
 									$idInterno = $idInterno+1;
 									//Se guarda el trabajo asignado
 									$_SESSION['arriendos_ing_nc_archivos'][$idInterno]['idFile'] = $idInterno;
 									$_SESSION['arriendos_ing_nc_archivos'][$idInterno]['Nombre'] = $sufijo.$_FILES['exFile']['name'];
-										
+
 									header( 'Location: '.$location.'&view=true' );
 									die;
-			
-								} else {
-									$error['exFile']     = 'error/Ocurrio un error al mover el archivo'; 
+
+								}else {
+									$error['exFile']     = 'error/Ocurrio un error al mover el archivo';
 								}
 							} else {
-								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe'; 
+								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe';
 							}
 						} else {
-							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 						}
-					}				
-				}	
-				
+					}
+				}
+
 			}
 
-		break;	
-		
+		break;
+
 /*******************************************************************************************************************/
-		case 'del_file_ing_nc':	
-			
+		case 'del_file_ing_nc':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			try {
 				if(!is_writable('upload/'.$_SESSION['arriendos_ing_nc_archivos'][$_GET['del_file']]['Nombre'])){
 					//throw new Exception('File not writable');
@@ -3443,20 +3427,20 @@ require_once '0_validate_user_1.php';
 					unlink('upload/'.$_SESSION['arriendos_ing_nc_archivos'][$_GET['del_file']]['Nombre']);
 					unset($_SESSION['arriendos_ing_nc_archivos'][$_GET['del_file']]);
 				}
-			}catch(Exception $e) { 
+			}catch(Exception $e) {
 					//guardar el dato en un archivo log
 			}
-			
-			//Redirijo			
+
+			//redirijo
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 
 		break;
 
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'ing_bodega_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			/*********************************************************************/
@@ -3477,7 +3461,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['arriendos_ing_nc_basicos']['idProveedor']) OR $_SESSION['arriendos_ing_nc_basicos']['idProveedor']=='' ){           $error['idProveedor']        = 'error/No ha seleccionado el cliente';}
 				//compruebo que sea una factura y que tenga fecha de pago
 				if(isset($_SESSION['arriendos_ing_nc_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_nc_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['arriendos_ing_nc_impuestos']) ){     
+					if(!isset($_SESSION['arriendos_ing_nc_impuestos'])){     
 						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto para la factura';
 					}
 				}
@@ -3507,156 +3491,155 @@ require_once '0_validate_user_1.php';
 			}
 			
 			/*********************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Se guardan los datos basicos
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_nc_basicos']['idDocumentos'] != ''){      $SIS_data  = "'".$_SESSION['arriendos_ing_nc_basicos']['idDocumentos']."'" ;   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['N_Doc']) && $_SESSION['arriendos_ing_nc_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['N_Doc']."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['Observaciones']) && $_SESSION['arriendos_ing_nc_basicos']['Observaciones'] != ''){    $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['Observaciones']."'" ; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['idBodega']) && $_SESSION['arriendos_ing_nc_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['idSistema']) && $_SESSION['arriendos_ing_nc_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nc_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['idTipo']) && $_SESSION['arriendos_ing_nc_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idTipo']."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_nc_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['arriendos_ing_nc_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['N_Doc']) && $_SESSION['arriendos_ing_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['Observaciones']) && $_SESSION['arriendos_ing_nc_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['idBodega']) && $_SESSION['arriendos_ing_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['idSistema']) && $_SESSION['arriendos_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['idTipo']) && $_SESSION['arriendos_ing_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']."'";  
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['idProveedor']) && $_SESSION['arriendos_ing_nc_basicos']['idProveedor'] != ''){        $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idProveedor']."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_nc_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['fecha_auto']."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_ing_nc_basicos']['valor_neto_fact']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_ing_nc_basicos']['valor_neto_imp']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_basicos']['valor_total_fact'])&&$_SESSION['arriendos_ing_nc_basicos']['valor_total_fact']!=''){  $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_impuestos'][1]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][1]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_impuestos'][2]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][2]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_impuestos'][3]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][3]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_impuestos'][4]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][4]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_impuestos'][5]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][5]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_impuestos'][6]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][6]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_impuestos'][7]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][7]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_impuestos'][8]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][8]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_impuestos'][9]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][9]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_ing_nc_impuestos'][10]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][10]['valor']!=''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['idProveedor']) && $_SESSION['arriendos_ing_nc_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idProveedor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_ing_nc_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_ing_nc_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_basicos']['valor_total_fact'])&&$_SESSION['arriendos_ing_nc_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_impuestos'][1]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_impuestos'][2]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_impuestos'][3]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_impuestos'][4]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_impuestos'][5]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_impuestos'][6]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_impuestos'][7]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_impuestos'][8]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_impuestos'][9]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_ing_nc_impuestos'][10]['valor'])&&$_SESSION['arriendos_ing_nc_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
 				$SIS_data .= ",'1'";
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idDocumentos,N_Doc, Observaciones, idBodega, idSistema, idUsuario, idTipo, 
 				Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idProveedor, fecha_auto, ValorNeto, 
 				ValorNetoImp,ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, 
 				Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idEstado';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
-					/*********************************************************************/		
+					/*********************************************************************/
 					//Se guardan los datos de los productos	
 					if(isset($_SESSION['arriendos_ing_nc_productos'])){		
 						foreach ($_SESSION['arriendos_ing_nc_productos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['idBodega']) && $_SESSION['arriendos_ing_nc_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['idSistema']) && $_SESSION['arriendos_ing_nc_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nc_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['idBodega']) && $_SESSION['arriendos_ing_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['idSistema']) && $_SESSION['arriendos_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_nc_basicos']['idDocumentos'] != ''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idDocumentos']."'" ;  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['N_Doc']) && $_SESSION['arriendos_ing_nc_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['N_Doc']."'" ;         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['idTipo']) && $_SESSION['arriendos_ing_nc_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idTipo']."'" ;        }else{$SIS_data .= ",''";}
-							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){                                                                      $SIS_data .= ",'".$producto['idEquipo']."'" ;                                  }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg'] != ''){                                                                $SIS_data .= ",'".$producto['Cantidad_eg']."'" ;                               }else{$SIS_data .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){                                                              $SIS_data .= ",'".$producto['idFrecuencia']."'" ;                              }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''){                                                              $SIS_data .= ",'".$producto['ValorIngreso']."'" ;                              }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal'] != ''){                                                                  $SIS_data .= ",'".$producto['ValorTotal']."'" ;                                }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['idProveedor']) && $_SESSION['arriendos_ing_nc_basicos']['idProveedor'] != ''){        $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idProveedor']."'" ;   }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_nc_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['fecha_auto']."'" ;    }else{$SIS_data .= ",''";}
-							
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['idDocumentos']) && $_SESSION['arriendos_ing_nc_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['N_Doc']) && $_SESSION['arriendos_ing_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['idTipo']) && $_SESSION['arriendos_ing_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idEquipo']) && $producto['idEquipo']!=''){                                                               $SIS_data .= ",'".$producto['idEquipo']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg']!=''){                                                         $SIS_data .= ",'".$producto['Cantidad_eg']."'";                               }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia']!=''){                                                       $SIS_data .= ",'".$producto['idFrecuencia']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                       $SIS_data .= ",'".$producto['ValorIngreso']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                           $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['idProveedor']) && $_SESSION['arriendos_ing_nc_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idProveedor']."'";   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['fecha_auto']) && $_SESSION['arriendos_ing_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, 
 							idDocumentos, N_Doc, idTipo, idEquipo, Cantidad_eg, idFrecuencia, Valor,ValorTotal,	 idProveedor, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Otros Motivos
 					if(isset($_SESSION['arriendos_ing_nc_otros'])){
 						foreach ($_SESSION['arriendos_ing_nc_otros'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idBodega']) && $_SESSION['arriendos_ing_nd_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idSistema']) && $_SESSION['arriendos_ing_nd_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nd_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idBodega']) && $_SESSION['arriendos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idSistema']) && $_SESSION['arriendos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){    $SIS_data .= ",'".$producto['vTotal']."'" ;     }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){    $SIS_data .= ",'".$producto['Nombre']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){    $SIS_data .= ",'".$producto['vTotal']."'";     }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
-							Creacion_mes, Creacion_ano, Nombre, vTotal';
+							Creacion_mes, Creacion_ano, Nombre,vTotal';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_otros', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Archivos
 					if(isset($_SESSION['arriendos_ing_nc_archivos'])){
 						foreach ($_SESSION['arriendos_ing_nc_archivos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['idBodega']) && $_SESSION['arriendos_ing_nc_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['idSistema']) && $_SESSION['arriendos_ing_nc_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nc_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['idBodega']) && $_SESSION['arriendos_ing_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['idSistema']) && $_SESSION['arriendos_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['idUsuario']) && $_SESSION['arriendos_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){    $SIS_data .= ",'".$producto['Nombre']."'";     }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					/*********************************************************************/		
+					/*********************************************************************/
 					//Se guarda en historial la accion
-					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha'] != ''){  
-						$SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']."'" ;  
+					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
+					if(isset($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']!=''){  
+						$SIS_data .= ",'".$_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']."'";  
 					}else{
 						$SIS_data .= ",''";
 					}
@@ -3680,9 +3663,8 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
-				
-				
-			}	
+
+			}
 	
 
 		break;
@@ -3691,13 +3673,13 @@ require_once '0_validate_user_1.php';
 /*                                                       INGRESOS ND                                                 */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
-/*******************************************************************************************************************/	
+/*******************************************************************************************************************/
 	
 		case 'new_egreso_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -3708,20 +3690,20 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Condiciono la variable observaciones
 				if(empty($Observaciones)){ $Observaciones= "Sin observaciones";}
-				
+
 				//Borro todas las sesiones
 				unset($_SESSION['arriendos_egr_nd_basicos']);
 				unset($_SESSION['arriendos_egr_nd_productos']);
 				unset($_SESSION['arriendos_egr_nd_temporal']);
 				unset($_SESSION['arriendos_egr_nd_impuestos']);
 				unset($_SESSION['arriendos_egr_nd_otros']);
-				
+
 				//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 				if (isset($_SESSION['arriendos_egr_nd_archivos'])){
 					foreach ($_SESSION['arriendos_egr_nd_archivos'] as $key => $producto){
@@ -3731,49 +3713,48 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/'.$producto['Nombre']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 				}
 				unset($_SESSION['arriendos_egr_nd_archivos']);
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idCliente) && $idCliente != ''){             $_SESSION['arriendos_egr_nd_basicos']['idCliente']        = $idCliente;       }else{$_SESSION['arriendos_egr_nd_basicos']['idCliente']         = '';}
-				if(isset($idDocumentos) && $idDocumentos != ''){       $_SESSION['arriendos_egr_nd_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['arriendos_egr_nd_basicos']['idDocumentos']      = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                     $_SESSION['arriendos_egr_nd_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['arriendos_egr_nd_basicos']['N_Doc']             = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){   $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']    = '';}
-				if(isset($Observaciones) && $Observaciones != ''){     $_SESSION['arriendos_egr_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['arriendos_egr_nd_basicos']['Observaciones']     = '';}
-				if(isset($idSistema) && $idSistema != ''){             $_SESSION['arriendos_egr_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['arriendos_egr_nd_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario != ''){             $_SESSION['arriendos_egr_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['arriendos_egr_nd_basicos']['idUsuario']         = '';}
-				if(isset($idTipo) && $idTipo != ''){                   $_SESSION['arriendos_egr_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['arriendos_egr_nd_basicos']['idTipo']            = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){           $_SESSION['arriendos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['arriendos_egr_nd_basicos']['fecha_auto']        = '';}
-				if(isset($idBodega) && $idBodega != ''){               $_SESSION['arriendos_egr_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['arriendos_egr_nd_basicos']['idBodega']          = '';}
+				if(isset($idCliente) && $idCliente!=''){             $_SESSION['arriendos_egr_nd_basicos']['idCliente']        = $idCliente;       }else{$_SESSION['arriendos_egr_nd_basicos']['idCliente']         = '';}
+				if(isset($idDocumentos) && $idDocumentos!=''){       $_SESSION['arriendos_egr_nd_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['arriendos_egr_nd_basicos']['idDocumentos']      = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                     $_SESSION['arriendos_egr_nd_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['arriendos_egr_nd_basicos']['N_Doc']             = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){   $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']    = '';}
+				if(isset($Observaciones) && $Observaciones!=''){     $_SESSION['arriendos_egr_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['arriendos_egr_nd_basicos']['Observaciones']     = '';}
+				if(isset($idSistema) && $idSistema!=''){             $_SESSION['arriendos_egr_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['arriendos_egr_nd_basicos']['idSistema']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['arriendos_egr_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['arriendos_egr_nd_basicos']['idUsuario']         = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['arriendos_egr_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['arriendos_egr_nd_basicos']['idTipo']            = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){           $_SESSION['arriendos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['arriendos_egr_nd_basicos']['fecha_auto']        = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['arriendos_egr_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['arriendos_egr_nd_basicos']['idBodega']          = '';}
 				$_SESSION['arriendos_egr_nd_basicos']['Pago_fecha']      = '0000-00-00';
-				
+
 				//Se agrega el impuesto
 				$_SESSION['arriendos_egr_nd_impuestos'][1]['idImpuesto'] = 1;
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			
 			}
-			
-	
+
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'clear_all_egr_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_nd_basicos']);
 			unset($_SESSION['arriendos_egr_nd_productos']);
 			unset($_SESSION['arriendos_egr_nd_temporal']);
 			unset($_SESSION['arriendos_egr_nd_impuestos']);
 			unset($_SESSION['arriendos_egr_nd_otros']);
-				
+
 			//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 			if (isset($_SESSION['arriendos_egr_nd_archivos'])){
 				foreach ($_SESSION['arriendos_egr_nd_archivos'] as $key => $producto){
@@ -3783,7 +3764,7 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$producto['Nombre']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
@@ -3795,12 +3776,12 @@ require_once '0_validate_user_1.php';
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'modBase_egr_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -3811,10 +3792,10 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Borro todas las sesiones
 				unset($_SESSION['arriendos_egr_nd_temporal']);
 				//Elimino los datos por seguridad
@@ -3822,41 +3803,40 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['arriendos_egr_nd_guias']);
 				unset($_SESSION['arriendos_egr_nd_impuestos']);
 				unset($_SESSION['arriendos_egr_nd_otros']);
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){        $_SESSION['arriendos_egr_nd_basicos']['idDocumentos']     = $idDocumentos;   }else{$_SESSION['arriendos_egr_nd_basicos']['idDocumentos']    = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                      $_SESSION['arriendos_egr_nd_basicos']['N_Doc']            = $N_Doc;          }else{$_SESSION['arriendos_egr_nd_basicos']['N_Doc']           = '';}
-				if(isset($idSistema) && $idSistema != ''){              $_SESSION['arriendos_egr_nd_basicos']['idSistema']        = $idSistema;      }else{$_SESSION['arriendos_egr_nd_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario != ''){              $_SESSION['arriendos_egr_nd_basicos']['idUsuario']        = $idUsuario;      }else{$_SESSION['arriendos_egr_nd_basicos']['idUsuario']       = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){    $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha; }else{$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']  = '';}
-				if(isset($Observaciones) && $Observaciones != ''){      $_SESSION['arriendos_egr_nd_basicos']['Observaciones']    = $Observaciones;  }else{$_SESSION['arriendos_egr_nd_basicos']['Observaciones']   = '';}
-				if(isset($idTipo) && $idTipo != ''){                    $_SESSION['arriendos_egr_nd_basicos']['idTipo']           = $idTipo;         }else{$_SESSION['arriendos_egr_nd_basicos']['idTipo']          = '';}
-				if(isset($idCliente) && $idCliente != ''){              $_SESSION['arriendos_egr_nd_basicos']['idCliente']        = $idCliente;      }else{$_SESSION['arriendos_egr_nd_basicos']['idCliente']       = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){            $_SESSION['arriendos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;     }else{$_SESSION['arriendos_egr_nd_basicos']['fecha_auto']      = '';}
-				if(isset($idBodega) && $idBodega != ''){                $_SESSION['arriendos_egr_nd_basicos']['idBodega']         = $idBodega;       }else{$_SESSION['arriendos_egr_nd_basicos']['idBodega']        = '';}
-				
+				if(isset($idDocumentos) && $idDocumentos!=''){        $_SESSION['arriendos_egr_nd_basicos']['idDocumentos']     = $idDocumentos;   }else{$_SESSION['arriendos_egr_nd_basicos']['idDocumentos']    = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                      $_SESSION['arriendos_egr_nd_basicos']['N_Doc']            = $N_Doc;          }else{$_SESSION['arriendos_egr_nd_basicos']['N_Doc']           = '';}
+				if(isset($idSistema) && $idSistema!=''){              $_SESSION['arriendos_egr_nd_basicos']['idSistema']        = $idSistema;      }else{$_SESSION['arriendos_egr_nd_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario!=''){             $_SESSION['arriendos_egr_nd_basicos']['idUsuario']        = $idUsuario;      }else{$_SESSION['arriendos_egr_nd_basicos']['idUsuario']       = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha; }else{$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']  = '';}
+				if(isset($Observaciones) && $Observaciones!=''){      $_SESSION['arriendos_egr_nd_basicos']['Observaciones']    = $Observaciones;  }else{$_SESSION['arriendos_egr_nd_basicos']['Observaciones']   = '';}
+				if(isset($idTipo) && $idTipo!=''){                   $_SESSION['arriendos_egr_nd_basicos']['idTipo']           = $idTipo;         }else{$_SESSION['arriendos_egr_nd_basicos']['idTipo']          = '';}
+				if(isset($idCliente) && $idCliente!=''){              $_SESSION['arriendos_egr_nd_basicos']['idCliente']        = $idCliente;      }else{$_SESSION['arriendos_egr_nd_basicos']['idCliente']       = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){            $_SESSION['arriendos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;     }else{$_SESSION['arriendos_egr_nd_basicos']['fecha_auto']      = '';}
+				if(isset($idBodega) && $idBodega!=''){               $_SESSION['arriendos_egr_nd_basicos']['idBodega']         = $idBodega;       }else{$_SESSION['arriendos_egr_nd_basicos']['idBodega']        = '';}
+
 				//Se agrega el impuesto
 				$_SESSION['arriendos_egr_nd_impuestos'][1]['idImpuesto'] = 1;
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
-			
-	
-		break;	
-/*******************************************************************************************************************/		
+
+		break;
+/*******************************************************************************************************************/
 		case 'new_prod_egr_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el producto ya existe
 			if(isset($_SESSION['arriendos_egr_nd_productos'][$idEquipo])&&$_SESSION['arriendos_egr_nd_productos'][$idEquipo]>0){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_egr_nd_productos'][$idEquipo]['idEquipo']      = $idEquipo;
 				$_SESSION['arriendos_egr_nd_productos'][$idEquipo]['Cantidad_eg']  = $Cantidad_eg;
@@ -3866,25 +3846,25 @@ require_once '0_validate_user_1.php';
 				
 				
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_prod_egr_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_egr_nd_productos'][$idEquipo])&&$_SESSION['arriendos_egr_nd_productos'][$idEquipo]>0&&$_SESSION['arriendos_egr_nd_productos'][$idEquipo]!=$_SESSION['arriendos_egr_nd_productos'][$oldItemID]){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Borro el producto
 				unset($_SESSION['arriendos_egr_nd_productos'][$oldItemID]); 
 			
@@ -3897,29 +3877,29 @@ require_once '0_validate_user_1.php';
 
 				
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_prod_egr_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro el producto
 			unset($_SESSION['arriendos_egr_nd_productos'][$_GET['del_prod']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'new_otros_egr_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['arriendos_egr_nd_otros'])){
 				$idInterno = 1;
@@ -3927,136 +3907,134 @@ require_once '0_validate_user_1.php';
 				$idInterno = 1;
 				foreach ($_SESSION['arriendos_egr_nd_otros'] as $key => $producto){
 					$idInterno++;
-				}	
+				}
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_egr_nd_otros'][$idInterno]['idOtros']  = $idInterno;
 				$_SESSION['arriendos_egr_nd_otros'][$idInterno]['Nombre']   = $Nombre;
 				$_SESSION['arriendos_egr_nd_otros'][$idInterno]['vTotal']   = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_otros_egr_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//creo el producto
 				$_SESSION['arriendos_egr_nd_otros'][$oldidProducto]['idOtros']       = $oldidProducto;
 				$_SESSION['arriendos_egr_nd_otros'][$oldidProducto]['Nombre']        = $Nombre;
 				$_SESSION['arriendos_egr_nd_otros'][$oldidProducto]['vTotal']        = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_otros_egr_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_nd_otros'][$_GET['del_otros']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_impuesto_egr_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_egr_nd_impuestos'][$idImpuesto])&&$_SESSION['arriendos_egr_nd_impuestos'][$idImpuesto]>0){
 				$error['productos'] = 'error/Impuesto que trata de ingresar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_egr_nd_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'del_impuesto_egr_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_nd_impuestos'][$_GET['del_impuesto']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'new_file_egr_nd':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//se inicializa variable
 			$idInterno = 0;
-			
+
 			//verificar la cantidad de trabajos
 			if(isset($_SESSION['arriendos_egr_nd_archivos'])){
 				foreach ($_SESSION['arriendos_egr_nd_archivos'] as $key => $trabajos){
 					if($idInterno<$trabajos['idFile']){$idInterno = $trabajos['idFile'];}
 				}
 			}
-			
-			if ( empty($error) ) {
-				
-				
+
+			if(empty($error)){
+
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
-					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
+					if ($_FILES["exFile"]["error"] > 0){
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
 											"application/vnd.ms-word",
-											"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-									
+											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+
 											"application/msexcel",
 											"application/vnd.ms-excel",
 											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-											
+
 											"application/mspowerpoint",
 											"application/vnd.ms-powerpoint",
 											"application/vnd.openxmlformats-officedocument.presentationml.presentation",
-											
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
 											"application/vnd.adobe.xfdf",
 											"application/vnd.fdf",
 											"binary/octet-stream",
-											
-											"image/jpg", 
-											"image/jpeg", 
-											"image/gif", 
+
+											"image/jpg",
+											"image/jpeg",
+											"image/gif",
 											"image/png"
 
 											);
@@ -4064,7 +4042,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'arriendos_egreso_'.genera_password_unica().'_';
-					  
+
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['exFile']['name'];
@@ -4073,38 +4051,38 @@ require_once '0_validate_user_1.php';
 								//Se mueve el archivo a la carpeta previamente configurada
 								$move_result = @move_uploaded_file($_FILES["exFile"]["tmp_name"], $ruta);
 								if ($move_result){
-									
+
 									//se guarda en el indice siguiente
 									$idInterno = $idInterno+1;
 									//Se guarda el trabajo asignado
 									$_SESSION['arriendos_egr_nd_archivos'][$idInterno]['idFile'] = $idInterno;
 									$_SESSION['arriendos_egr_nd_archivos'][$idInterno]['Nombre'] = $sufijo.$_FILES['exFile']['name'];
-										
+
 									header( 'Location: '.$location.'&view=true' );
 									die;
-			
-								} else {
-									$error['exFile']     = 'error/Ocurrio un error al mover el archivo'; 
+
+								}else {
+									$error['exFile']     = 'error/Ocurrio un error al mover el archivo';
 								}
 							} else {
-								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe'; 
+								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe';
 							}
 						} else {
-							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 						}
-					}				
-				}	
-				
+					}
+				}
+
 			}
 
-		break;	
-		
+		break;
+
 /*******************************************************************************************************************/
-		case 'del_file_egr_nd':	
-			
+		case 'del_file_egr_nd':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			try {
 				if(!is_writable('upload/'.$_SESSION['arriendos_egr_nd_archivos'][$_GET['del_file']]['Nombre'])){
 					//throw new Exception('File not writable');
@@ -4112,27 +4090,27 @@ require_once '0_validate_user_1.php';
 					unlink('upload/'.$_SESSION['arriendos_egr_nd_archivos'][$_GET['del_file']]['Nombre']);
 					unset($_SESSION['arriendos_egr_nd_archivos'][$_GET['del_file']]);
 				}
-			}catch(Exception $e) { 
+			}catch(Exception $e) {
 					//guardar el dato en un archivo log
 			}
-			
-			//Redirijo			
+
+			//redirijo
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 
 		break;
 
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'egr_bodega_nd':
-	
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			/*********************************************************************/
 			//variables
 			$n_data1 = 0;
 			$n_data2 = 0;
-				
+
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['arriendos_egr_nd_basicos'])){
@@ -4145,10 +4123,10 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['arriendos_egr_nd_basicos']['idTipo']) OR $_SESSION['arriendos_egr_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
 				//compruebo que sea una factura y que tenga fecha de pago
 				if(isset($_SESSION['arriendos_egr_nd_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_nd_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['arriendos_egr_nd_impuestos']) ){     
+					if(!isset($_SESSION['arriendos_egr_nd_impuestos'])){     
 						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto para la factura';
 					}
-				}	
+				}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de bodega';
 			}
@@ -4175,35 +4153,35 @@ require_once '0_validate_user_1.php';
 			}
 			
 			/*********************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Se guardan los datos basicos
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['idBodega']) && $_SESSION['arriendos_egr_nd_basicos']['idBodega'] != ''){              $SIS_data  = "'".$_SESSION['arriendos_egr_nd_basicos']['idBodega']."'" ;       }else{$SIS_data  = "''";}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['idSistema']) && $_SESSION['arriendos_egr_nd_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nd_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['idBodega']) && $_SESSION['arriendos_egr_nd_basicos']['idBodega']!=''){       $SIS_data  = "'".$_SESSION['arriendos_egr_nd_basicos']['idBodega']."'";       }else{$SIS_data  = "''";}
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['idSistema']) && $_SESSION['arriendos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'";  
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_nd_basicos']['idDocumentos'] != ''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idDocumentos']."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['N_Doc']) && $_SESSION['arriendos_egr_nd_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['N_Doc']."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['idTipo']) && $_SESSION['arriendos_egr_nd_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idTipo']."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['Observaciones']) && $_SESSION['arriendos_egr_nd_basicos']['Observaciones'] != ''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Observaciones']."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['idCliente']) && $_SESSION['arriendos_egr_nd_basicos']['idCliente'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idCliente']."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['Pago_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Pago_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Pago_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_egr_nd_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_nd_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Pago_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Pago_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idDocumentos']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['N_Doc']) && $_SESSION['arriendos_egr_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['idTipo']) && $_SESSION['arriendos_egr_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['Observaciones']) && $_SESSION['arriendos_egr_nd_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['idCliente']) && $_SESSION['arriendos_egr_nd_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idCliente']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['Pago_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Pago_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Pago_fecha']."'";  
+					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['arriendos_egr_nd_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_nd_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Pago_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Pago_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
@@ -4212,135 +4190,134 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_nd_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['fecha_auto']."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_egr_nd_basicos']['valor_neto_fact']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['valor_neto_fact']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_egr_nd_basicos']['valor_neto_imp']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['valor_neto_imp']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_basicos']['valor_total_fact'])&&$_SESSION['arriendos_egr_nd_basicos']['valor_total_fact']!=''){  $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['valor_total_fact']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_impuestos'][1]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][1]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_impuestos'][2]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][2]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_impuestos'][3]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][3]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_impuestos'][4]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][4]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_impuestos'][5]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][5]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_impuestos'][6]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][6]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_impuestos'][7]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][7]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_impuestos'][8]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][8]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_impuestos'][9]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][9]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nd_impuestos'][10]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][10]['valor']!=''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
-				
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_egr_nd_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['valor_neto_fact']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_egr_nd_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['valor_neto_imp']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_basicos']['valor_total_fact'])&&$_SESSION['arriendos_egr_nd_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['valor_total_fact']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_impuestos'][1]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_impuestos'][2]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_impuestos'][3]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_impuestos'][4]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_impuestos'][5]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_impuestos'][6]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_impuestos'][7]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_impuestos'][8]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_impuestos'][9]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nd_impuestos'][10]['valor'])&&$_SESSION['arriendos_egr_nd_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_Semana, Creacion_mes,
 				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idCliente, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes, 
 				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, 
 				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
-					
+
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
 					if(isset($_SESSION['arriendos_egr_nd_productos'])){		
 						foreach ($_SESSION['arriendos_egr_nd_productos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idBodega']) && $_SESSION['arriendos_egr_nd_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idSistema']) && $_SESSION['arriendos_egr_nd_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nd_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idBodega']) && $_SESSION['arriendos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idSistema']) && $_SESSION['arriendos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_nd_basicos']['idDocumentos'] != ''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idDocumentos']."'" ;       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['N_Doc']) && $_SESSION['arriendos_egr_nd_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['N_Doc']."'" ;              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idTipo']) && $_SESSION['arriendos_egr_nd_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idTipo']."'" ;             }else{$SIS_data .= ",''";}
-							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){                                                                      $SIS_data .= ",'".$producto['idEquipo']."'" ;                                       }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg'] != ''){                                                                $SIS_data .= ",'".$producto['Cantidad_eg']."'" ;                                    }else{$SIS_data .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){                                                              $SIS_data .= ",'".$producto['idFrecuencia']."'" ;                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''){                                                              $SIS_data .= ",'".$producto['ValorIngreso']."'" ;                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal'] != ''){                                                                  $SIS_data .= ",'".$producto['ValorTotal']."'" ;                                     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idCliente']) && $_SESSION['arriendos_egr_nd_basicos']['idCliente'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idCliente']."'" ;          }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_nd_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['fecha_auto']."'" ;         }else{$SIS_data .= ",''";}
-						
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idDocumentos']."'";       }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['N_Doc']) && $_SESSION['arriendos_egr_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idTipo']) && $_SESSION['arriendos_egr_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($producto['idEquipo']) && $producto['idEquipo']!=''){                                                               $SIS_data .= ",'".$producto['idEquipo']."'";                                       }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg']!=''){                                                         $SIS_data .= ",'".$producto['Cantidad_eg']."'";                                    }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia']!=''){                                                       $SIS_data .= ",'".$producto['idFrecuencia']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                       $SIS_data .= ",'".$producto['ValorIngreso']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                           $SIS_data .= ",'".$producto['ValorTotal']."'";                                     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idCliente']) && $_SESSION['arriendos_egr_nd_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idCliente']."'";          }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, 
 							Creacion_ano, idDocumentos, N_Doc, idTipo, idEquipo, Cantidad_eg, idFrecuencia, Valor, ValorTotal,
 							idCliente, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Otros Motivos
 					if(isset($_SESSION['arriendos_egr_nd_otros'])){
 						foreach ($_SESSION['arriendos_egr_nd_otros'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idBodega']) && $_SESSION['arriendos_egr_nd_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idSistema']) && $_SESSION['arriendos_egr_nd_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nd_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idBodega']) && $_SESSION['arriendos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idSistema']) && $_SESSION['arriendos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){    $SIS_data .= ",'".$producto['vTotal']."'" ;     }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){    $SIS_data .= ",'".$producto['Nombre']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){    $SIS_data .= ",'".$producto['vTotal']."'";     }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
-							Creacion_mes, Creacion_ano, Nombre, vTotal';
+							Creacion_mes, Creacion_ano, Nombre,vTotal';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_otros', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Archivos
 					if(isset($_SESSION['arriendos_egr_nd_archivos'])){
 						foreach ($_SESSION['arriendos_egr_nd_archivos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idBodega']) && $_SESSION['arriendos_egr_nd_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idSistema']) && $_SESSION['arriendos_egr_nd_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nd_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idBodega']) && $_SESSION['arriendos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idSistema']) && $_SESSION['arriendos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){    $SIS_data .= ",'".$producto['Nombre']."'" ;     }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){    $SIS_data .= ",'".$producto['Nombre']."'";     }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Se guarda en historial la accion
-					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'] != ''){  
-						$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'" ;  
+					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
+					if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']!=''){  
+						$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'";  
 					}else{
 						$SIS_data .= ",''";
 					}
@@ -4364,20 +4341,20 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
-			}	
-		break;	
+			}
+		break;
 
 /*******************************************************************************************************************/
 /*                                                                                                                 */
 /*                                                        INGRESOS NC                                                  */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_egreso_nc':
-	
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-		
+
 			//Se verifica si el dato existe
 			/*******************************************************************/
 			//variables
@@ -4391,19 +4368,19 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Condiciono la variable observaciones
 				if(empty($Observaciones)){ $Observaciones= "Sin observaciones";}
-				
+
 				//Borro todas las sesiones
 				unset($_SESSION['arriendos_egr_nc_basicos']);
 				unset($_SESSION['arriendos_egr_nc_productos']);
 				unset($_SESSION['arriendos_egr_nc_temporal']);
 				unset($_SESSION['arriendos_egr_nc_impuestos']);
 				unset($_SESSION['arriendos_egr_nc_otros']);
-				
+
 				//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 				if (isset($_SESSION['arriendos_egr_nc_archivos'])){
 					foreach ($_SESSION['arriendos_egr_nc_archivos'] as $key => $producto){
@@ -4413,48 +4390,48 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/'.$producto['Nombre']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
 				}
 				unset($_SESSION['arriendos_egr_nc_archivos']);
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['arriendos_egr_nc_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['arriendos_egr_nc_basicos']['idDocumentos']    = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['arriendos_egr_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['arriendos_egr_nc_basicos']['N_Doc']           = '';}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['arriendos_egr_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['arriendos_egr_nc_basicos']['Observaciones']   = '';}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['arriendos_egr_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['arriendos_egr_nc_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['arriendos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['arriendos_egr_nc_basicos']['idUsuario']       = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']  = '';}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['arriendos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['arriendos_egr_nc_basicos']['idTipo']          = '';}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['arriendos_egr_nc_basicos']['idCliente']        = $idCliente;       }else{$_SESSION['arriendos_egr_nc_basicos']['idCliente']       = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['arriendos_egr_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['arriendos_egr_nc_basicos']['fecha_auto']      = '';}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['arriendos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['arriendos_egr_nc_basicos']['idBodega']        = '';}
-				
+				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['arriendos_egr_nc_basicos']['idDocumentos']     = $idDocumentos;    }else{$_SESSION['arriendos_egr_nc_basicos']['idDocumentos']    = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['arriendos_egr_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['arriendos_egr_nc_basicos']['N_Doc']           = '';}
+				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['arriendos_egr_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['arriendos_egr_nc_basicos']['Observaciones']   = '';}
+				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['arriendos_egr_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['arriendos_egr_nc_basicos']['idSistema']       = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['arriendos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['arriendos_egr_nc_basicos']['idUsuario']       = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']  = '';}
+				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['arriendos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['arriendos_egr_nc_basicos']['idTipo']          = '';}
+				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['arriendos_egr_nc_basicos']['idCliente']        = $idCliente;       }else{$_SESSION['arriendos_egr_nc_basicos']['idCliente']       = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['arriendos_egr_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['arriendos_egr_nc_basicos']['fecha_auto']      = '';}
+				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['arriendos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['arriendos_egr_nc_basicos']['idBodega']        = '';}
+
 				//Se agrega el impuesto
 				$_SESSION['arriendos_egr_nc_impuestos'][1]['idImpuesto'] = 1;
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
-				
+
 			}
 
 	
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'clear_all_egr_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_nc_basicos']);
 			unset($_SESSION['arriendos_egr_nc_productos']);
 			unset($_SESSION['arriendos_egr_nc_temporal']);
 			unset($_SESSION['arriendos_egr_nc_impuestos']);
 			unset($_SESSION['arriendos_egr_nc_otros']);
-				
+
 			//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 			if (isset($_SESSION['arriendos_egr_nc_archivos'])){
 				foreach ($_SESSION['arriendos_egr_nc_archivos'] as $key => $producto){
@@ -4464,67 +4441,67 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$producto['Nombre']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
 			}
 			unset($_SESSION['arriendos_egr_nc_archivos']);
-			
+
 			header( 'Location: '.$location );
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'modBase_egr_nc':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Borro todas las sesiones
 				unset($_SESSION['arriendos_egr_nc_temporal']);
 				//Elimino los datos por seguridad
 				unset($_SESSION['arriendos_egr_nc_productos']);
 				unset($_SESSION['arriendos_egr_nc_impuestos']);
 				unset($_SESSION['arriendos_egr_nc_otros']);
-			
+
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idDocumentos) && $idDocumentos != ''){           $_SESSION['arriendos_egr_nc_basicos']['idDocumentos']    = $idDocumentos;    }else{$_SESSION['arriendos_egr_nc_basicos']['idDocumentos']     = '';}
-				if(isset($N_Doc) && $N_Doc != ''){                         $_SESSION['arriendos_egr_nc_basicos']['N_Doc']           = $N_Doc;           }else{$_SESSION['arriendos_egr_nc_basicos']['N_Doc']            = '';}
-				if(isset($Observaciones) && $Observaciones != ''){         $_SESSION['arriendos_egr_nc_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['arriendos_egr_nc_basicos']['Observaciones']    = '';}
-				if(isset($idSistema) && $idSistema != ''){                 $_SESSION['arriendos_egr_nc_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['arriendos_egr_nc_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario != ''){                 $_SESSION['arriendos_egr_nc_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['arriendos_egr_nc_basicos']['idUsuario']        = '';}
-				if(isset($Creacion_fecha) && $Creacion_fecha != ''){       $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo != ''){                       $_SESSION['arriendos_egr_nc_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['arriendos_egr_nc_basicos']['idTipo']           = '';}
-				if(isset($idCliente) && $idCliente != ''){                 $_SESSION['arriendos_egr_nc_basicos']['idCliente']       = $idCliente;       }else{$_SESSION['arriendos_egr_nc_basicos']['idCliente']        = '';}
-				if(isset($fecha_auto) && $fecha_auto != ''){               $_SESSION['arriendos_egr_nc_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['arriendos_egr_nc_basicos']['fecha_auto']       = '';}
-				if(isset($idBodega) && $idBodega != ''){                   $_SESSION['arriendos_egr_nc_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['arriendos_egr_nc_basicos']['idBodega']         = '';}
-				
+				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['arriendos_egr_nc_basicos']['idDocumentos']    = $idDocumentos;    }else{$_SESSION['arriendos_egr_nc_basicos']['idDocumentos']     = '';}
+				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['arriendos_egr_nc_basicos']['N_Doc']           = $N_Doc;           }else{$_SESSION['arriendos_egr_nc_basicos']['N_Doc']            = '';}
+				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['arriendos_egr_nc_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['arriendos_egr_nc_basicos']['Observaciones']    = '';}
+				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['arriendos_egr_nc_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['arriendos_egr_nc_basicos']['idSistema']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['arriendos_egr_nc_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['arriendos_egr_nc_basicos']['idUsuario']        = '';}
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']   = '';}
+				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['arriendos_egr_nc_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['arriendos_egr_nc_basicos']['idTipo']           = '';}
+				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['arriendos_egr_nc_basicos']['idCliente']       = $idCliente;       }else{$_SESSION['arriendos_egr_nc_basicos']['idCliente']        = '';}
+				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['arriendos_egr_nc_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['arriendos_egr_nc_basicos']['fecha_auto']       = '';}
+				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['arriendos_egr_nc_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['arriendos_egr_nc_basicos']['idBodega']         = '';}
+
 				//Se agrega el impuesto
 				$_SESSION['arriendos_egr_nc_impuestos'][1]['idImpuesto'] = 1;
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			
 			}
-	
-		break;	
-/*******************************************************************************************************************/		
+
+		break;
+/*******************************************************************************************************************/
 		case 'new_prod_egr_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_egr_nc_productos'][$idEquipo])&&$_SESSION['arriendos_egr_nc_productos'][$idEquipo]>0){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_egr_nc_productos'][$idEquipo]['idEquipo']      = $idEquipo;
 				$_SESSION['arriendos_egr_nc_productos'][$idEquipo]['Cantidad_ing']   = $Cantidad_ing;
@@ -4534,25 +4511,25 @@ require_once '0_validate_user_1.php';
 
 				
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_prod_egr_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_egr_nc_productos'][$idEquipo])&&$_SESSION['arriendos_egr_nc_productos'][$idEquipo]>0&&$_SESSION['arriendos_egr_nc_productos'][$idEquipo]!=$_SESSION['arriendos_egr_nc_productos'][$oldItemID]){
 				$error['productos'] = 'error/El arriendo que intenta agregar ya existe';
 			}
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Borro el producto
 				unset($_SESSION['arriendos_egr_nc_productos'][$oldItemID]); 
 			
@@ -4562,32 +4539,32 @@ require_once '0_validate_user_1.php';
 				$_SESSION['arriendos_egr_nc_productos'][$idEquipo]['ValorIngreso']  = $vUnitario;
 				$_SESSION['arriendos_egr_nc_productos'][$idEquipo]['ValorTotal']    = $ValorTotal;
 				$_SESSION['arriendos_egr_nc_productos'][$idEquipo]['idFrecuencia']  = $idFrecuencia;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
 
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_prod_egr_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_nc_productos'][$_GET['del_prod']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'new_otros_egr_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si existe algun otro dato
 			if(!isset($_SESSION['arriendos_egr_nc_otros'])){
 				$idInterno = 1;
@@ -4595,137 +4572,135 @@ require_once '0_validate_user_1.php';
 				$idInterno = 1;
 				foreach ($_SESSION['arriendos_egr_nc_otros'] as $key => $producto){
 					$idInterno++;
-				}	
+				}
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_egr_nc_otros'][$idInterno]['idOtros']  = $idInterno;
 				$_SESSION['arriendos_egr_nc_otros'][$idInterno]['Nombre']   = $Nombre;
 				$_SESSION['arriendos_egr_nc_otros'][$idInterno]['vTotal']   = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'edit_otros_egr_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//creo el producto
 				$_SESSION['arriendos_egr_nc_otros'][$oldidProducto]['idOtros']       = $oldidProducto;
 				$_SESSION['arriendos_egr_nc_otros'][$oldidProducto]['Nombre']        = $Nombre;
 				$_SESSION['arriendos_egr_nc_otros'][$oldidProducto]['vTotal']        = $vTotal;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_otros_egr_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_nc_otros'][$_GET['del_otros']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_impuesto_egr_nc':
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verificar si el subcomponente ya existe
 			if(isset($_SESSION['arriendos_egr_nc_impuestos'][$idImpuesto])&&$_SESSION['arriendos_egr_nc_impuestos'][$idImpuesto]>0){
 				$error['productos'] = 'error/Impuesto que trata de ingresar ya existe';
 			}
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				$_SESSION['arriendos_egr_nc_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
-				
+
 				header( 'Location: '.$location.'&view=true' );
-				die;	
+				die;
 			}
 
 
-		break;	
-/*******************************************************************************************************************/		
+		break;
+/*******************************************************************************************************************/
 		case 'del_impuesto_egr_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Borro todas las sesiones
 			unset($_SESSION['arriendos_egr_nc_impuestos'][$_GET['del_impuesto']]);
-			
+
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
-		break;	
+		break;
 
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_file_egr_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//se inicializa variable
 			$idInterno = 0;
-			
+
 			//verificar la cantidad de trabajos
 			if(isset($_SESSION['arriendos_egr_nc_archivos'])){
 				foreach ($_SESSION['arriendos_egr_nc_archivos'] as $key => $trabajos){
 					if($idInterno<$trabajos['idFile']){$idInterno = $trabajos['idFile'];}
 				}
 			}
-			
-			if ( empty($error) ) {
-				
-				
+
+			if(empty($error)){
+
 				//Se verifica 
 				if(isset($_FILES["exFile"])){
-					if ($_FILES["exFile"]["error"] > 0){ 
-						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]); 
+					if ($_FILES["exFile"]["error"] > 0){
+						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
 					} else {
 						//Se verifican las extensiones de los archivos
 						$permitidos = array("application/msword",
 											"application/vnd.ms-word",
-											"application/vnd.openxmlformats-officedocument.wordprocessingml.document", 
-									
+											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+
 											"application/msexcel",
 											"application/vnd.ms-excel",
 											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-											
+
 											"application/mspowerpoint",
 											"application/vnd.ms-powerpoint",
 											"application/vnd.openxmlformats-officedocument.presentationml.presentation",
-											
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
 											"application/vnd.adobe.xfdf",
 											"application/vnd.fdf",
 											"binary/octet-stream",
-											
-											"image/jpg", 
-											"image/jpeg", 
-											"image/gif", 
+
+											"image/jpg",
+											"image/jpeg",
+											"image/gif",
 											"image/png"
 
 											);
@@ -4733,7 +4708,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'arriendos_egreso_'.genera_password_unica().'_';
-					  
+
 						if (in_array($_FILES['exFile']['type'], $permitidos) && $_FILES['exFile']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['exFile']['name'];
@@ -4742,38 +4717,38 @@ require_once '0_validate_user_1.php';
 								//Se mueve el archivo a la carpeta previamente configurada
 								$move_result = @move_uploaded_file($_FILES["exFile"]["tmp_name"], $ruta);
 								if ($move_result){
-									
+
 									//se guarda en el indice siguiente
 									$idInterno = $idInterno+1;
 									//Se guarda el trabajo asignado
 									$_SESSION['arriendos_egr_nc_archivos'][$idInterno]['idFile'] = $idInterno;
 									$_SESSION['arriendos_egr_nc_archivos'][$idInterno]['Nombre'] = $sufijo.$_FILES['exFile']['name'];
-										
+
 									header( 'Location: '.$location.'&view=true' );
 									die;
-			
-								} else {
-									$error['exFile']     = 'error/Ocurrio un error al mover el archivo'; 
+
+								}else {
+									$error['exFile']     = 'error/Ocurrio un error al mover el archivo';
 								}
 							} else {
-								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe'; 
+								$error['exFile']     = 'error/El archivo '.$_FILES['exFile']['name'].' ya existe';
 							}
 						} else {
-							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+							$error['exFile']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 						}
-					}				
-				}	
-				
+					}
+				}
+
 			}
 
-		break;	
-		
+		break;
+
 /*******************************************************************************************************************/
-		case 'del_file_egr_nc':	
-			
+		case 'del_file_egr_nc':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			try {
 				if(!is_writable('upload/'.$_SESSION['arriendos_egr_nc_archivos'][$_GET['del_file']]['Nombre'])){
 					//throw new Exception('File not writable');
@@ -4781,20 +4756,20 @@ require_once '0_validate_user_1.php';
 					unlink('upload/'.$_SESSION['arriendos_egr_nc_archivos'][$_GET['del_file']]['Nombre']);
 					unset($_SESSION['arriendos_egr_nc_archivos'][$_GET['del_file']]);
 				}
-			}catch(Exception $e) { 
+			}catch(Exception $e) {
 					//guardar el dato en un archivo log
 			}
-			
-			//Redirijo			
+
+			//redirijo
 			header( 'Location: '.$location.'&view=true' );
 			die;
 
 
 		break;
 
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'egr_bodega_nc':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 			/*********************************************************************/
@@ -4815,7 +4790,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['arriendos_egr_nc_basicos']['idCliente']) OR $_SESSION['arriendos_egr_nc_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
 				//compruebo que sea una factura y que tenga fecha de pago
 				if(isset($_SESSION['arriendos_egr_nc_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_nc_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['arriendos_egr_nc_impuestos']) ){     
+					if(!isset($_SESSION['arriendos_egr_nc_impuestos'])){     
 						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto para la factura';
 					}
 				}
@@ -4845,156 +4820,155 @@ require_once '0_validate_user_1.php';
 			}
 			
 			/*********************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//Se guardan los datos basicos
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_nc_basicos']['idDocumentos'] != ''){      $SIS_data  = "'".$_SESSION['arriendos_egr_nc_basicos']['idDocumentos']."'" ;   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['N_Doc']) && $_SESSION['arriendos_egr_nc_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['N_Doc']."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['Observaciones']) && $_SESSION['arriendos_egr_nc_basicos']['Observaciones'] != ''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['Observaciones']."'" ; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['idBodega']) && $_SESSION['arriendos_egr_nc_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['idSistema']) && $_SESSION['arriendos_egr_nc_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nc_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['idTipo']) && $_SESSION['arriendos_egr_nc_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idTipo']."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'] != ''){  
-					$SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']."'" ;  
-					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'" ;
-					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'" ;
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_nc_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['arriendos_egr_nc_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['N_Doc']) && $_SESSION['arriendos_egr_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['Observaciones']) && $_SESSION['arriendos_egr_nc_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['idBodega']) && $_SESSION['arriendos_egr_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['idSistema']) && $_SESSION['arriendos_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['idTipo']) && $_SESSION['arriendos_egr_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']!=''){  
+					$SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']."'";  
+					$SIS_data .= ",'".fecha2NSemana($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'";
+					$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['idCliente']) && $_SESSION['arriendos_egr_nc_basicos']['idCliente'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idCliente']."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_nc_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['fecha_auto']."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_egr_nc_basicos']['valor_neto_fact']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_egr_nc_basicos']['valor_neto_imp']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_basicos']['valor_total_fact'])&&$_SESSION['arriendos_egr_nc_basicos']['valor_total_fact']!=''){  $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_impuestos'][1]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][1]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_impuestos'][2]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][2]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_impuestos'][3]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][3]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_impuestos'][4]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][4]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_impuestos'][5]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][5]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_impuestos'][6]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][6]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_impuestos'][7]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][7]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_impuestos'][8]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][8]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_impuestos'][9]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][9]['valor']!=''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['arriendos_egr_nc_impuestos'][10]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][10]['valor']!=''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['idCliente']) && $_SESSION['arriendos_egr_nc_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idCliente']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['valor_neto_fact'])&&$_SESSION['arriendos_egr_nc_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['valor_neto_imp'])&&$_SESSION['arriendos_egr_nc_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_basicos']['valor_total_fact'])&&$_SESSION['arriendos_egr_nc_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_impuestos'][1]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_impuestos'][2]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_impuestos'][3]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_impuestos'][4]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_impuestos'][5]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_impuestos'][6]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_impuestos'][7]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_impuestos'][8]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_impuestos'][9]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['arriendos_egr_nc_impuestos'][10]['valor'])&&$_SESSION['arriendos_egr_nc_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
 				$SIS_data .= ",'1'";
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idDocumentos,N_Doc, Observaciones, idBodega, idSistema, idUsuario, idTipo, 
 				Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idCliente, fecha_auto, ValorNeto, 
 				ValorNetoImp,ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, 
 				Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idEstado';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
-					/*********************************************************************/		
+					/*********************************************************************/
 					//Se guardan los datos de los productos	
 					if(isset($_SESSION['arriendos_egr_nc_productos'])){		
 						foreach ($_SESSION['arriendos_egr_nc_productos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['idBodega']) && $_SESSION['arriendos_egr_nc_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['idSistema']) && $_SESSION['arriendos_egr_nc_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nc_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['idBodega']) && $_SESSION['arriendos_egr_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['idSistema']) && $_SESSION['arriendos_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_nc_basicos']['idDocumentos'] != ''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idDocumentos']."'" ;  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['N_Doc']) && $_SESSION['arriendos_egr_nc_basicos']['N_Doc'] != ''){                    $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['N_Doc']."'" ;         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['idTipo']) && $_SESSION['arriendos_egr_nc_basicos']['idTipo'] != ''){                  $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idTipo']."'" ;        }else{$SIS_data .= ",''";}
-							if(isset($producto['idEquipo']) && $producto['idEquipo'] != ''){                                                                      $SIS_data .= ",'".$producto['idEquipo']."'" ;                                  }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing'] != ''){                                                              $SIS_data .= ",'".$producto['Cantidad_ing']."'" ;                              }else{$SIS_data .= ",''";}
-							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia'] != ''){                                                              $SIS_data .= ",'".$producto['idFrecuencia']."'" ;                              }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''){                                                              $SIS_data .= ",'".$producto['ValorIngreso']."'" ;                              }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal'] != ''){                                                                  $SIS_data .= ",'".$producto['ValorTotal']."'" ;                                }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['idCliente']) && $_SESSION['arriendos_egr_nc_basicos']['idCliente'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idCliente']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_nc_basicos']['fecha_auto'] != ''){          $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['fecha_auto']."'" ;    }else{$SIS_data .= ",''";}
-							
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['idDocumentos']) && $_SESSION['arriendos_egr_nc_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['N_Doc']) && $_SESSION['arriendos_egr_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['idTipo']) && $_SESSION['arriendos_egr_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idEquipo']) && $producto['idEquipo']!=''){                                                               $SIS_data .= ",'".$producto['idEquipo']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing']!=''){                                                       $SIS_data .= ",'".$producto['Cantidad_ing']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia']!=''){                                                       $SIS_data .= ",'".$producto['idFrecuencia']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                       $SIS_data .= ",'".$producto['ValorIngreso']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                           $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['idCliente']) && $_SESSION['arriendos_egr_nc_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['fecha_auto']) && $_SESSION['arriendos_egr_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, 
 							idDocumentos, N_Doc, idTipo, idEquipo, Cantidad_ing, idFrecuencia, Valor,ValorTotal, idCliente, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Otros Motivos
 					if(isset($_SESSION['arriendos_egr_nc_otros'])){
 						foreach ($_SESSION['arriendos_egr_nc_otros'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idBodega']) && $_SESSION['arriendos_egr_nd_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idSistema']) && $_SESSION['arriendos_egr_nd_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nd_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idBodega']) && $_SESSION['arriendos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idSistema']) && $_SESSION['arriendos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nd_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){ $SIS_data .= ",'".$producto['Nombre']."'" ; }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal'] != ''){ $SIS_data .= ",'".$producto['vTotal']."'" ; }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){ $SIS_data .= ",'".$producto['Nombre']."'"; }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){ $SIS_data .= ",'".$producto['vTotal']."'"; }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
-							Creacion_mes, Creacion_ano, Nombre, vTotal';
+							Creacion_mes, Creacion_ano, Nombre,vTotal';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_otros', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					
-					
-					/*********************************************************************/		
+
+					/*********************************************************************/
 					//Archivos
 					if(isset($_SESSION['arriendos_egr_nc_archivos'])){
 						foreach ($_SESSION['arriendos_egr_nc_archivos'] as $key => $producto){
-						
+
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id != ''){                                                                                            $SIS_data  = "'".$ultimo_id."'" ;                                              }else{$SIS_data  = "''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['idBodega']) && $_SESSION['arriendos_egr_nc_basicos']['idBodega'] != ''){              $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idBodega']."'" ;      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['idSistema']) && $_SESSION['arriendos_egr_nc_basicos']['idSistema'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idSistema']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nc_basicos']['idUsuario'] != ''){            $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idUsuario']."'" ;     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'] != ''){  
-								$SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']."'" ;  
-								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'" ;
-								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'" ;
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['idBodega']) && $_SESSION['arriendos_egr_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['idSistema']) && $_SESSION['arriendos_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['idUsuario']) && $_SESSION['arriendos_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']!=''){  
+								$SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']."'";  
+								$SIS_data .= ",'".fecha2NMes($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'";
+								$SIS_data .= ",'".fecha2Ano($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])."'";
 							}else{
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre'] != ''){ $SIS_data .= ",'".$producto['Nombre']."'" ; }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){ $SIS_data .= ",'".$producto['Nombre']."'"; }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
 							Creacion_mes, Creacion_ano, Nombre';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
-					/*********************************************************************/		
+					/*********************************************************************/
 					//Se guarda en historial la accion
-					if(isset($ultimo_id) && $ultimo_id != ''){ $SIS_data  = "'".$ultimo_id."'" ;  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'] != ''){  
-						$SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']."'" ;  
+					if(isset($ultimo_id) && $ultimo_id!=''){ $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
+					if(isset($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']!=''){  
+						$SIS_data .= ",'".$_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']."'";  
 					}else{
 						$SIS_data .= ",''";
 					}
@@ -5018,9 +4992,8 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
-				
-				
-			}	
+
+			}
 	
 
 		break;

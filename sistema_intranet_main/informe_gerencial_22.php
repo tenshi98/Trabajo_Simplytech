@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_gerencial_22.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -25,8 +25,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //Solo compras pagadas totalmente
 $z1   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
 $z2   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";   
@@ -45,7 +45,7 @@ $z9_3 = "(idFactSocial!=0)";      //siempre pasa
 
 //variable
 $search = '?bla=bla';
-if(isset($_GET['idCentroCosto'])&&$_GET['idCentroCosto']!=''){ 
+if(isset($_GET['idCentroCosto'])&&$_GET['idCentroCosto']!=''){
 	// Se trae el dato seleccionado
 	$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$_GET['idCentroCosto'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'submit_filter');
 	//se crean cadenas
@@ -65,7 +65,7 @@ if(isset($_GET['idCentroCosto'])&&$_GET['idCentroCosto']!=''){
 	$z9_3.=" AND centrocosto_listado.Nombre='".$rowCentro['Nombre']."'";
 	$search .="&idCentroCosto=".$rowCentro['Nombre'];
 }
-if(isset($_GET['idLevel_1'])&&$_GET['idLevel_1']!=''){ 
+if(isset($_GET['idLevel_1'])&&$_GET['idLevel_1']!=''){
 	// Se trae el dato seleccionado
 	$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$_GET['idLevel_1'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'submit_filter');
 	//se crean cadenas
@@ -85,7 +85,7 @@ if(isset($_GET['idLevel_1'])&&$_GET['idLevel_1']!=''){
 	$z9_3.=" AND centrocosto_listado_level_1.Nombre='".$rowCentro['Nombre']."'";
 	$search .="&idLevel_1=".$rowCentro['Nombre'];
 }
-if(isset($_GET['idLevel_2'])&&$_GET['idLevel_2']!=''){ 
+if(isset($_GET['idLevel_2'])&&$_GET['idLevel_2']!=''){
 	// Se trae el dato seleccionado
 	$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$_GET['idLevel_2'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'submit_filter');
 	//se crean cadenas
@@ -104,8 +104,8 @@ if(isset($_GET['idLevel_2'])&&$_GET['idLevel_2']!=''){
 	$z9_2.=" AND centrocosto_listado_level_2.Nombre='".$rowCentro['Nombre']."'";
 	$z9_3.=" AND centrocosto_listado_level_2.Nombre='".$rowCentro['Nombre']."'";
 	$search .="&idLevel_2=".$rowCentro['Nombre'];
-}						
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ 
+}
+if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
@@ -159,7 +159,7 @@ function return_query($type, $table){
 			'.$table.'.idLevel_2,
 			'.$table.'.idLevel_3,
 			SUM('.$table.'.TotalAPagar) AS Total';
-			break;	
+			break;
 		case 4:
 			$data = '
 			'.$table.'.Creacion_ano,
@@ -179,7 +179,7 @@ function return_query($type, $table){
 			'.$table.'.IVA_idLevel_2 AS idLevel_2,
 			'.$table.'.IVA_idLevel_3 AS idLevel_3,
 			SUM('.$table.'.IVA_TotalSaldo) AS Total';
-			break;	
+			break;
 		case 6:
 			$data = '
 			'.$table.'.Pago_ano AS Creacion_ano,
@@ -219,7 +219,7 @@ function return_query($type, $table){
 			'.$table.'.AFP_idLevel_2 AS idLevel_2,
 			'.$table.'.AFP_idLevel_3 AS idLevel_3,
 			SUM('.$table.'.AFP_MontoPago) AS Total';
-			break;	
+			break;
 		case 10:
 			$data = '
 			'.$table.'.Pago_ano AS Creacion_ano,
@@ -239,7 +239,7 @@ function return_query($type, $table){
 			'.$table.'.SEGURIDAD_idLevel_2 AS idLevel_2,
 			'.$table.'.SEGURIDAD_idLevel_3 AS idLevel_3,
 			SUM('.$table.'.SEGURIDAD_MontoPago) AS Total';
-			break;		
+			break;
 	}
 
 	return $data;
@@ -1096,12 +1096,12 @@ foreach ($arrCentroCosto_lv1 as $trab) {
 foreach ($arrCentroCosto_lv2 as $trab) { 
 	$arrCC_lv2[$trab['idLevel_2']] = $trab['Nombre'];
 }
-?>	
+?>
 <div class="col-sm-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_22_to_excel.php'.$search?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Informe de rentabilidad de negocio</h5>
@@ -1144,7 +1144,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 						<th>%</th>
 						
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php
 					$total_ING_Telemetria       = 0;
@@ -1354,7 +1354,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
-							
+
 							//Totales
 							$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 							$total_margen_total  = $total_margen_total + $margen_total;
@@ -1391,7 +1391,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
-							
+
 							//Totales
 							$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 							$total_margen_total  = $total_margen_total + $margen_total;
@@ -1428,7 +1428,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
-							
+
 							//Totales
 							$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 							$total_margen_total  = $total_margen_total + $margen_total;
@@ -1465,7 +1465,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
-							
+
 							//Totales
 							$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 							$total_margen_total  = $total_margen_total + $margen_total;
@@ -1502,7 +1502,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
-							
+
 							//Totales
 							$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 							$total_margen_total  = $total_margen_total + $margen_total;
@@ -1539,7 +1539,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
-							
+
 							//Totales
 							$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 							$total_margen_total  = $total_margen_total + $margen_total;
@@ -1576,7 +1576,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
-							
+
 							//Totales
 							$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 							$total_margen_total  = $total_margen_total + $margen_total;
@@ -1613,7 +1613,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
-							
+
 							//Totales
 							$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 							$total_margen_total  = $total_margen_total + $margen_total;
@@ -1650,7 +1650,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
-							
+
 							//Totales
 							$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 							$total_margen_total  = $total_margen_total + $margen_total;
@@ -1687,7 +1687,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
-							
+
 							//Totales
 							$total_EG_Costos     = $total_EG_Costos + $trab['Total'];
 							$total_margen_total  = $total_margen_total + $margen_total;
@@ -1739,45 +1739,45 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 						<td align="right"><strong><?php if(isset($total_ING_ServicioTecnico)&&$total_ING_ServicioTecnico!=0){echo porcentaje($total_margen_serv/$total_ING_ServicioTecnico);}else{echo '0 %';} ?></strong></td>
 						<td align="right"><strong><span <?php if($total_margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($total_margen_total, 0); ?></strong></span></td>
 						<td align="right"><strong><?php if(isset($total_ing_total)&&$total_ing_total!=0){echo porcentaje($total_margen_total/$total_ing_total);}else{echo '0 %';} ?></strong></td>
-					</tr>	
+					</tr>
 					
 						                   
 				</tbody>
 			</table>
-		</div> 
+		</div>
 	</div>
 </div>
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {       $x1  = $f_inicio;       }else{$x1  = '';}
-				if(isset($f_termino)) {      $x2  = $f_termino;      }else{$x2  = '';}
-				if(isset($idCentroCosto)) {  $x3  = $idCentroCosto;  }else{$x3  = '';}
-				if(isset($idLevel_1)) {      $x4  = $idLevel_1;      }else{$x4  = '';}
-				if(isset($idLevel_2)) {      $x5  = $idLevel_2;      }else{$x5  = '';}
-				
+				if(isset($f_inicio)){       $x1  = $f_inicio;       }else{$x1  = '';}
+				if(isset($f_termino)){      $x2  = $f_termino;      }else{$x2  = '';}
+				if(isset($idCentroCosto)){  $x3  = $idCentroCosto;  }else{$x3  = '';}
+				if(isset($idLevel_1)){      $x4  = $idLevel_1;      }else{$x4  = '';}
+				if(isset($idLevel_2)){      $x5  = $idLevel_2;      }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 1);
@@ -1785,15 +1785,15 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_depend2('Area', 'idCentroCosto',  $x3,  1,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  0,   0,
 												  'Servicio', 'idLevel_1',  $x4,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
 												  'Cliente', 'idLevel_2',  $x5,  1,  'idLevel_2',  'Nombre',  'centrocosto_listado_level_2',  0,   0,
-												  $dbConn, 'form1');		
-				?> 
+												  $dbConn, 'form1');	
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

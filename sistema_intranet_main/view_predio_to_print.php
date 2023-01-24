@@ -11,19 +11,19 @@ require_once 'core/Load.Utils.Print.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -65,14 +65,14 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 /**************************************************************/
 //Se obtiene la ubicacion
 $Ubicacion = "";
-if(isset($arrZonas[0]['Direccion'])&&$arrZonas[0]['Direccion']!=''){ $Ubicacion.=' '.$arrZonas[0]['Direccion'];}
-if(isset($arrZonas[0]['Comuna'])&&$arrZonas[0]['Comuna']!=''){       $Ubicacion.=', '.$arrZonas[0]['Comuna'];}
-if(isset($arrZonas[0]['Ciudad'])&&$arrZonas[0]['Ciudad']!=''){       $Ubicacion.=', '.$arrZonas[0]['Ciudad'];}
+if(isset($arrZonas[0]['Direccion'])&&$arrZonas[0]['Direccion']!=''){$Ubicacion.=' '.$arrZonas[0]['Direccion'];}
+if(isset($arrZonas[0]['Comuna'])&&$arrZonas[0]['Comuna']!=''){      $Ubicacion.=', '.$arrZonas[0]['Comuna'];}
+if(isset($arrZonas[0]['Ciudad'])&&$arrZonas[0]['Ciudad']!=''){      $Ubicacion.=', '.$arrZonas[0]['Ciudad'];}
 //Si los puntos no existen
 if(isset($Ubicacion)&&$Ubicacion==''){
-	if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){ $Ubicacion.=' '.$rowdata['Direccion'];}
-	if(isset($rowdata['Comuna'])&&$rowdata['Comuna']!=''){       $Ubicacion.=', '.$rowdata['Comuna'];}
-	if(isset($rowdata['Ciudad'])&&$rowdata['Ciudad']!=''){       $Ubicacion.=', '.$rowdata['Ciudad'];}
+	if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){$Ubicacion.=' '.$rowdata['Direccion'];}
+	if(isset($rowdata['Comuna'])&&$rowdata['Comuna']!=''){      $Ubicacion.=', '.$rowdata['Comuna'];}
+	if(isset($rowdata['Ciudad'])&&$rowdata['Ciudad']!=''){      $Ubicacion.=', '.$rowdata['Ciudad'];}
 
 }
 
@@ -113,7 +113,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 			//echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
 			
 		////////////////////////////////////////////////////////////////////////////////
-		//si estoy en ambiente de produccion	
+		//si estoy en ambiente de produccion
 		}else{
 			echo '<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">';
 			echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
@@ -240,7 +240,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									mapTypeId: google.maps.MapTypeId.SATELLITE
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								map.setTilt(0); 
+								map.setTilt(0);
 								
 								dibuja_zona();
 
@@ -350,7 +350,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
 											echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');
 													map.setCenter(myLatlng);'; 
-									}else{ 
+									}else{
 										echo 'codeAddress();';
 									}
 								}
@@ -368,7 +368,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 										map.setCenter(myLatlng);
 										//marker.setPosition(myLatlng);  
 														  
-									} else {
+									}else {
 										alert('Geocode was not successful for the following reason: ' + status);
 									}
 								});
@@ -388,5 +388,5 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 require_once 'core/Web.Footer.Print.php';
 ?>
 <script>
-setTimeout(function(){ window.print(); }, 5000);
+setTimeout(function(){ window.print();}, 5000);
 </script>

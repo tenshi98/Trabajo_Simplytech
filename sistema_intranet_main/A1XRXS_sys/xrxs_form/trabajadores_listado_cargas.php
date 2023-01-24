@@ -2,27 +2,27 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-199).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idCarga']) )         $idCarga       = $_POST['idCarga'];
-	if ( !empty($_POST['idTrabajador']) )    $idTrabajador  = $_POST['idTrabajador'];
-	if ( !empty($_POST['Nombre']) )          $Nombre        = $_POST['Nombre'];
-	if ( !empty($_POST['ApellidoPat']) )     $ApellidoPat   = $_POST['ApellidoPat'];
-	if ( !empty($_POST['ApellidoMat']) )     $ApellidoMat   = $_POST['ApellidoMat'];
-	if ( !empty($_POST['idSexo']) )          $idSexo        = $_POST['idSexo'];
-	if ( !empty($_POST['FNacimiento']) )     $FNacimiento   = $_POST['FNacimiento'];
-	if ( !empty($_POST['idEstado']) )        $idEstado      = $_POST['idEstado'];
-	
+	if (!empty($_POST['idCarga']))         $idCarga       = $_POST['idCarga'];
+	if (!empty($_POST['idTrabajador']))    $idTrabajador  = $_POST['idTrabajador'];
+	if (!empty($_POST['Nombre']))          $Nombre        = $_POST['Nombre'];
+	if (!empty($_POST['ApellidoPat']))     $ApellidoPat   = $_POST['ApellidoPat'];
+	if (!empty($_POST['ApellidoMat']))     $ApellidoMat   = $_POST['ApellidoMat'];
+	if (!empty($_POST['idSexo']))          $idSexo        = $_POST['idSexo'];
+	if (!empty($_POST['FNacimiento']))     $FNacimiento   = $_POST['FNacimiento'];
+	if (!empty($_POST['idEstado']))        $idEstado      = $_POST['idEstado'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -42,34 +42,34 @@ require_once '0_validate_user_1.php';
 			case 'idSexo':         if(empty($idSexo)){        $error['idSexo']         = 'error/No ha seleccionado el sexo';}break;
 			case 'FNacimiento':    if(empty($FNacimiento)){   $error['FNacimiento']    = 'error/No ha ingresado la fecha de nacimiento';}break;
 			case 'idEstado':       if(empty($idEstado)){      $error['idEstado']       = 'error/No ha seleccionado el estado';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Nombre) && $Nombre != ''){           $Nombre      = EstandarizarInput($Nombre); }
-	if(isset($ApellidoPat) && $ApellidoPat != ''){ $ApellidoPat = EstandarizarInput($ApellidoPat); }
-	if(isset($ApellidoMat) && $ApellidoMat != ''){ $ApellidoMat = EstandarizarInput($ApellidoMat); }
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre) && $Nombre!=''){          $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($ApellidoPat) && $ApellidoPat!=''){ $ApellidoPat = EstandarizarInput($ApellidoPat);}
+	if(isset($ApellidoMat) && $ApellidoMat!=''){ $ApellidoMat = EstandarizarInput($ApellidoMat);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	if(isset($ApellidoPat)&&contar_palabras_censuradas($ApellidoPat)!=0){  $error['ApellidoPat'] = 'error/Edita Apellido Pat, contiene palabras no permitidas'; }	
-	if(isset($ApellidoMat)&&contar_palabras_censuradas($ApellidoMat)!=0){  $error['ApellidoMat'] = 'error/Edita Apellido Mat, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre,contiene palabras no permitidas';}
+	if(isset($ApellidoPat)&&contar_palabras_censuradas($ApellidoPat)!=0){  $error['ApellidoPat'] = 'error/Edita Apellido Pat, contiene palabras no permitidas';}
+	if(isset($ApellidoMat)&&contar_palabras_censuradas($ApellidoMat)!=0){  $error['ApellidoMat'] = 'error/Edita Apellido Mat, contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -80,39 +80,39 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idTrabajador) && $idTrabajador != ''){  $SIS_data  = "'".$idTrabajador."'" ;   }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre != ''){              $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){    $SIS_data .= ",'".$ApellidoPat."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){    $SIS_data .= ",'".$ApellidoMat."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($idSexo) && $idSexo != ''){              $SIS_data .= ",'".$idSexo."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($FNacimiento) && $FNacimiento != ''){    $SIS_data .= ",'".$FNacimiento."'" ;   }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){          $SIS_data .= ",'".$idEstado."'" ;      }else{$SIS_data .= ",''";}
-				
+				if(isset($idTrabajador) && $idTrabajador!=''){ $SIS_data  = "'".$idTrabajador."'";   }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
+				if(isset($ApellidoPat) && $ApellidoPat!=''){    $SIS_data .= ",'".$ApellidoPat."'";   }else{$SIS_data .= ",''";}
+				if(isset($ApellidoMat) && $ApellidoMat!=''){    $SIS_data .= ",'".$ApellidoMat."'";   }else{$SIS_data .= ",''";}
+				if(isset($idSexo) && $idSexo!=''){              $SIS_data .= ",'".$idSexo."'";        }else{$SIS_data .= ",''";}
+				if(isset($FNacimiento) && $FNacimiento!=''){    $SIS_data .= ",'".$FNacimiento."'";   }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idTrabajador, Nombre, ApellidoPat, ApellidoMat, idSexo, FNacimiento, idEstado';
+				$SIS_columns = 'idTrabajador, Nombre,ApellidoPat, ApellidoMat, idSexo, FNacimiento, idEstado';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_listado_cargas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
-				
+
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -123,42 +123,42 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
-				//Filtros
-				$SIS_data = "idCarga='".$idCarga."'" ;
-				if(isset($idTrabajador) && $idTrabajador != ''){    $SIS_data .= ",idTrabajador='".$idTrabajador."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){      $SIS_data .= ",ApellidoPat='".$ApellidoPat."'" ;}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){      $SIS_data .= ",ApellidoMat='".$ApellidoMat."'" ;}
-				if(isset($idSexo) && $idSexo != ''){                $SIS_data .= ",idSexo='".$idSexo."'" ;}
-				if(isset($FNacimiento) && $FNacimiento != ''){      $SIS_data .= ",FNacimiento='".$FNacimiento."'" ;}							
-				if(isset($idEstado) && $idEstado != ''){            $SIS_data .= ",idEstado='".$idEstado."'" ;}							
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
+				//filtros
+				$SIS_data = "idCarga='".$idCarga."'";
+				if(isset($idTrabajador) && $idTrabajador!=''){   $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+				if(isset($Nombre) && $Nombre!=''){               $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($ApellidoPat) && $ApellidoPat!=''){      $SIS_data .= ",ApellidoPat='".$ApellidoPat."'";}
+				if(isset($ApellidoMat) && $ApellidoMat!=''){      $SIS_data .= ",ApellidoMat='".$ApellidoMat."'";}
+				if(isset($idSexo) && $idSexo!=''){                $SIS_data .= ",idSexo='".$idSexo."'";}
+				if(isset($FNacimiento) && $FNacimiento!=''){      $SIS_data .= ",FNacimiento='".$FNacimiento."'";}
+				if(isset($idEstado) && $idEstado!=''){           $SIS_data .= ",idEstado='".$idEstado."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado_cargas', 'idCarga = "'.$idCarga.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
 
-		break;	
+		break;
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -166,39 +166,37 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'trabajadores_listado_cargas', 'idCarga = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-		break;				
+		break;
 /*******************************************************************************************************************/
 	}
 ?>

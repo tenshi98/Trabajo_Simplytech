@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_info_sistema.php";
 $location = $original;
 /**********************************************************************************************************************************/
@@ -31,13 +31,13 @@ $whitelist = array( 'localhost', '127.0.0.1', '::1' );
 //si estoy en ambiente de desarrollo
 if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 
-//si estoy en ambiente de produccion	
-}else{	
+//si estoy en ambiente de produccion
+}else{
 	/*    Global Variables    */
 	//Tiempo Maximo de la consulta, 40 minutos por defecto
-	if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+	if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 	//Memora RAM Maxima del servidor, 4GB por defecto
-	if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+	if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 }
 
 ?>
@@ -45,16 +45,16 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Servidor</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#data0" data-toggle="tab"><i class="fa fa-server" aria-hidden="true"></i> BD</a></li>
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			
 			<div class="tab-pane fade active in" id="data0">
@@ -68,7 +68,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 						if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 							$DB_NAME_1 = DB_COMPARE;
 							$DB_NAME_2 = DB_NAME;
-						//si estoy en ambiente de produccion	
+						//si estoy en ambiente de produccion
 						}else{
 							$DB_NAME_1 = DB_COMPARE;
 							$DB_NAME_2 = DB_NAME;
@@ -78,7 +78,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 						function conectar_ex ($servidor, $usuario, $password, $base_datos) {
 							$db_con = mysqli_connect($servidor, $usuario, $password, $base_datos);
 							$db_con->set_charset("utf8");
-							return $db_con; 
+							return $db_con;
 						}
 
 						//Conexiones
@@ -115,7 +115,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 										<th>T Datos Original</th>
 										<th>T Datos Sistema</th>
 									</tr>
-								</thead>			  
+								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all">';
 								
 								
@@ -164,7 +164,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 										<td class="'.$var_err2.'">'; if(isset($tableList_2[$x])){$widget .= $cnt2;}            $widget .= '</td>
 									</tr>';
 								}
-								$widget .= '                    
+								$widget .= '
 								</tbody>
 							</table>';
 
@@ -177,7 +177,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			</div>
 			
 			
-        </div>	
+        </div>
 	</div>
 </div>
 

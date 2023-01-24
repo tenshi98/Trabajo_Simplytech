@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_aguas_sis_PR14001.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,43 +22,43 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //Verifico el tipo de usuario que esta ingresando
-$z = "WHERE aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$n = "&idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "WHERE aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$n = "&idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Filtros
-if (isset($_GET['idSector']) && $_GET['idSector'] != ''){                
+if (isset($_GET['idSector']) && $_GET['idSector']!=''){         
 	$z .=" AND aguas_analisis_aguas.idSector='".$_GET['idSector']."'";
 	$n .="&idSector=".$_GET['idSector'];
 }
-if (isset($_GET['idPuntoMuestreo']) && $_GET['idPuntoMuestreo'] != ''){  
+if (isset($_GET['idPuntoMuestreo']) && $_GET['idPuntoMuestreo']!=''){  
 	$z .=" AND aguas_analisis_aguas.idPuntoMuestreo='".$_GET['idPuntoMuestreo']."'";
 	$n .="&idPuntoMuestreo=".$_GET['idPuntoMuestreo'];
 }
-if (isset($_GET['idTipoMuestra']) && $_GET['idTipoMuestra'] != ''){      
+if (isset($_GET['idTipoMuestra']) && $_GET['idTipoMuestra']!=''){      
 	$z .=" AND aguas_analisis_aguas.idTipoMuestra='".$_GET['idTipoMuestra']."'";
 	$n .="&idTipoMuestra=".$_GET['idTipoMuestra'];
 }
-if (isset($_GET['idParametros']) && $_GET['idParametros'] != ''){        
+if (isset($_GET['idParametros']) && $_GET['idParametros']!=''){ 
 	$z .=" AND aguas_analisis_aguas.idParametros='".$_GET['idParametros']."'";
 	$n .="&idParametros=".$_GET['idParametros'];
 }
-if (isset($_GET['idSigno']) && $_GET['idSigno'] != ''){                  
+if (isset($_GET['idSigno']) && $_GET['idSigno']!=''){           
 	$z .=" AND aguas_analisis_aguas.idSigno='".$_GET['idSigno']."'";
 	$n .="&idSigno=".$_GET['idSigno'];
 }
-if (isset($_GET['idLaboratorio']) && $_GET['idLaboratorio'] != ''){      
+if (isset($_GET['idLaboratorio']) && $_GET['idLaboratorio']!=''){      
 	$z .=" AND aguas_analisis_aguas.idLaboratorio='".$_GET['idLaboratorio']."'";
 	$n .="&idLaboratorio=".$_GET['idLaboratorio'];
 }
 
-if(isset($_GET['f_muestra_inicio']) && $_GET['f_muestra_inicio'] != ''&&isset($_GET['f_muestra_termino']) && $_GET['f_muestra_termino'] != ''){ 
-	$z .= " AND aguas_analisis_aguas.f_muestra BETWEEN '".$_GET['f_muestra_inicio']."' AND '".$_GET['f_muestra_termino']."'" ;
+if(isset($_GET['f_muestra_inicio']) && $_GET['f_muestra_inicio'] != ''&&isset($_GET['f_muestra_termino']) && $_GET['f_muestra_termino']!=''){ 
+	$z .= " AND aguas_analisis_aguas.f_muestra BETWEEN '".$_GET['f_muestra_inicio']."' AND '".$_GET['f_muestra_termino']."'";
 	$n .="&f_muestra_inicio=".$_GET['f_muestra_inicio']."&f_muestra_termino=".$_GET['f_muestra_termino'];
 }
-if(isset($_GET['f_recibida_inicio']) && $_GET['f_recibida_inicio'] != ''&&isset($_GET['f_recibida_termino']) && $_GET['f_recibida_termino'] != ''){ 
-	$z .= " AND aguas_analisis_aguas.f_recibida BETWEEN '".$_GET['f_recibida_inicio']."' AND '".$_GET['f_recibida_termino']."'" ;
+if(isset($_GET['f_recibida_inicio']) && $_GET['f_recibida_inicio'] != ''&&isset($_GET['f_recibida_termino']) && $_GET['f_recibida_termino']!=''){ 
+	$z .= " AND aguas_analisis_aguas.f_recibida BETWEEN '".$_GET['f_recibida_inicio']."' AND '".$_GET['f_recibida_termino']."'";
 	$n .="&f_recibida_inicio=".$_GET['f_recibida_inicio']."&f_recibida_termino=".$_GET['f_recibida_termino'];
 }
 
@@ -109,23 +109,23 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 } ?>
 
-<div class="col-sm-12 clearfix">		
+<div class="col-sm-12 clearfix">
 	<a target="new" href="<?php echo 'informe_aguas_sis_PR14001_to_excel.php?bla=bla'.$n ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	<a target="new" href="<?php echo 'informe_aguas_sis_PR14001_to_xml.php?bla=bla'.$n ; ?>" class="btn btn-sm btn-warning pull-right margin_width"><i class="fa fa-file-code-o" aria-hidden="true"></i> Exportar a XML</a>
 </div>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Informe de analisis</h5>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -167,7 +167,7 @@ array_push( $arrProductos,$row );
 							<td><?php echo $productos['UTM_norte']; ?></td>
 							<td><?php echo $productos['UTM_este']; ?></td>
 							<td><?php echo $productos['tipo_muestra']; ?></td>
-							<td><?php if($productos['periodo_remuestreo']!='0000-00-00'){echo fecha2Ano($productos['periodo_remuestreo']).fecha2NdiaMesCon0($productos['periodo_remuestreo']); } ?></td>
+							<td><?php if($productos['periodo_remuestreo']!='0000-00-00'){echo fecha2Ano($productos['periodo_remuestreo']).fecha2NdiaMesCon0($productos['periodo_remuestreo']);} ?></td>
 							<td><?php echo Fecha_estandar($productos['fecha_muestra']); ?></td>
 							<td><?php echo $productos['codigo_parametro']; ?></td>
 							<td><?php echo $productos['signo']; ?></td>
@@ -176,7 +176,7 @@ array_push( $arrProductos,$row );
 							<td><?php echo $productos['idLaboratorio']; ?></td>
 				
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -186,38 +186,38 @@ array_push( $arrProductos,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_muestra_inicio)) {       $x1  = $f_muestra_inicio;     }else{$x1  = '';}
-				if(isset($f_muestra_termino)) {      $x2  = $f_muestra_termino;    }else{$x2  = '';}
-				if(isset($f_recibida_inicio)) {      $x3  = $f_recibida_inicio;    }else{$x3  = '';}
-				if(isset($f_recibida_termino)) {     $x4  = $f_recibida_termino;   }else{$x4  = '';}
-				if(isset($idSector)) {               $x5  = $idSector;             }else{$x5  = '';}
-				if(isset($idPuntoMuestreo)) {        $x6  = $idPuntoMuestreo;      }else{$x6  = '';}
-				if(isset($idTipoMuestra)) {          $x7  = $idTipoMuestra;        }else{$x7  = '';}
-				if(isset($idParametros)) {           $x8  = $idParametros;         }else{$x8  = '';}
-				if(isset($idSigno)) {                $x9  = $idSigno;              }else{$x9  = '';}
-				if(isset($idLaboratorio)) {          $x10 = $idLaboratorio;        }else{$x10 = '';}
-				
+				if(isset($f_muestra_inicio)){       $x1  = $f_muestra_inicio;     }else{$x1  = '';}
+				if(isset($f_muestra_termino)){      $x2  = $f_muestra_termino;    }else{$x2  = '';}
+				if(isset($f_recibida_inicio)){      $x3  = $f_recibida_inicio;    }else{$x3  = '';}
+				if(isset($f_recibida_termino)){     $x4  = $f_recibida_termino;   }else{$x4  = '';}
+				if(isset($idSector)){               $x5  = $idSector;             }else{$x5  = '';}
+				if(isset($idPuntoMuestreo)){        $x6  = $idPuntoMuestreo;      }else{$x6  = '';}
+				if(isset($idTipoMuestra)){          $x7  = $idTipoMuestra;        }else{$x7  = '';}
+				if(isset($idParametros)){           $x8  = $idParametros;         }else{$x8  = '';}
+				if(isset($idSigno)){                $x9  = $idSigno;              }else{$x9  = '';}
+				if(isset($idLaboratorio)){          $x10 = $idLaboratorio;        }else{$x10 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de la muestra Inicio','f_muestra_inicio', $x1, 1);
@@ -231,18 +231,18 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Signo','idSigno', $x9, 1, 'idSigno', 'Nombre', 'aguas_analisis_aguas_signo', 0, 0, $dbConn);
 				$Form_Inputs->form_select_filter('Laboratorio','idLaboratorio', $x10, 1, 'idLaboratorio', 'Nombre', 'aguas_analisis_laboratorios', $z, 0, $dbConn);
 				
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

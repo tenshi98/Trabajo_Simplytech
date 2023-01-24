@@ -67,43 +67,43 @@ if($temp!=0) {
 	foreach ($arrCross as $cross) {
 		//Verifico que dato este configurado
 		if(isset($cross['Temp_optima_min'])&&$cross['Temp_optima_min']!=0&&isset($cross['Temp_optima_max'])&&$cross['Temp_optima_max']!=0&&isset($cross['Temp_optima_margen_critico'])&&$cross['Temp_optima_margen_critico']!=0){
-			
-			//Variables temporales
+
+				//Variables temporales
 			$temp_act       = $cross['Temperatura'];
 			$temp_min       = $cross['Temp_optima_min'];
 			$temp_max       = $cross['Temp_optima_max'];
 			$temp_crit_min  = $cross['Temp_optima_min'] - $cross['Temp_optima_margen_critico'];
 			$temp_crit_max  = $cross['Temp_optima_max'] + $cross['Temp_optima_margen_critico'];
-			
+
 			// Mercado
 			$arrCrossGeneral[$cross['idMercado']]['Cantidad']++;
-			
+
 			//Verifico si temperatura esta dentro de lo normal
 			if($temp_act>$temp_min&&$temp_act<$temp_max){
 				$arrCrossGeneral['Normal']++;
 				$arrCrossGeneral[$cross['Creacion_mes']]['Normal']++;
-				
+
 			//Si esta dentro de los margenes criticos superiores
 			}elseif($temp_act>$temp_max&&$temp_act<$temp_crit_max){
 				$arrCrossGeneral['Critico_sup']++;
 				$arrCrossGeneral[$cross['Creacion_mes']]['Critico_sup']++;
-				
+
 			//si esta fuera de rango superior
 			}elseif($temp_act>$temp_crit_max){
 				$arrCrossGeneral['Fuera_de_rango_sup']++;
 				$arrCrossGeneral[$cross['Creacion_mes']]['Fuera_de_rango_sup']++;
-				
+
 			//Si esta dentro de los margenes criticos inferiores
 			}elseif($temp_act<$temp_min&&$temp_act>$temp_crit_min){
 				$arrCrossGeneral['Critico_inf']++;
 				$arrCrossGeneral[$cross['Creacion_mes']]['Critico_inf']++;
-				
+
 			//si esta fuera de rango inferior
 			}elseif($temp_act<$temp_crit_min){
 				$arrCrossGeneral['Fuera_de_rango_inf']++;
 				$arrCrossGeneral[$cross['Creacion_mes']]['Fuera_de_rango_inf']++;
 				
-			}	
+			}
 		}
 	}
 	
@@ -135,7 +135,7 @@ if($temp!=0) {
 					/**************************************************************/
 					echo '
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 							<h5 style="color: #666;font-weight: 600 !important;">Estado Temperaturas
 								<small class="pull-right fw600 text-primary"></small>
 							</h5>
@@ -144,17 +144,17 @@ if($temp!=0) {
 								<tbody>';
 									/***************************************************************/
 									//Verifico existencias
-									if(isset($arrCrossGeneral['Normal'])&&$arrCrossGeneral['Normal']!=''){                          $Med_optimo       = $arrCrossGeneral['Normal'];              }else{$Med_optimo       = 0;}
-									if(isset($arrCrossGeneral['Critico_inf'])&&$arrCrossGeneral['Critico_inf']!=''){                $Med_critico_inf  = $arrCrossGeneral['Critico_inf'];         }else{$Med_critico_inf  = 0;}
-									if(isset($arrCrossGeneral['Critico_sup'])&&$arrCrossGeneral['Critico_sup']!=''){                $Med_critico_sup  = $arrCrossGeneral['Critico_sup'];         }else{$Med_critico_sup  = 0;}
-									if(isset($arrCrossGeneral['Fuera_de_rango_inf'])&&$arrCrossGeneral['Fuera_de_rango_inf']!=''){  $Med_fuera_inf    = $arrCrossGeneral['Fuera_de_rango_inf'];  }else{$Med_fuera_inf    = 0;}
-									if(isset($arrCrossGeneral['Fuera_de_rango_sup'])&&$arrCrossGeneral['Fuera_de_rango_sup']!=''){  $Med_fuera_sup    = $arrCrossGeneral['Fuera_de_rango_sup'];  }else{$Med_fuera_sup    = 0;}
+									if(isset($arrCrossGeneral['Normal'])&&$arrCrossGeneral['Normal']!=''){                  $Med_optimo       = $arrCrossGeneral['Normal'];              }else{$Med_optimo       = 0;}
+									if(isset($arrCrossGeneral['Critico_inf'])&&$arrCrossGeneral['Critico_inf']!=''){        $Med_critico_inf  = $arrCrossGeneral['Critico_inf'];         }else{$Med_critico_inf  = 0;}
+									if(isset($arrCrossGeneral['Critico_sup'])&&$arrCrossGeneral['Critico_sup']!=''){        $Med_critico_sup  = $arrCrossGeneral['Critico_sup'];         }else{$Med_critico_sup  = 0;}
+									if(isset($arrCrossGeneral['Fuera_de_rango_inf'])&&$arrCrossGeneral['Fuera_de_rango_inf']!=''){ $Med_fuera_inf    = $arrCrossGeneral['Fuera_de_rango_inf'];  }else{$Med_fuera_inf    = 0;}
+									if(isset($arrCrossGeneral['Fuera_de_rango_sup'])&&$arrCrossGeneral['Fuera_de_rango_sup']!=''){ $Med_fuera_sup    = $arrCrossGeneral['Fuera_de_rango_sup'];  }else{$Med_fuera_sup    = 0;}
 									$Med_critico  = $Med_critico_inf + $Med_critico_sup;
 									$Med_fuera    = $Med_fuera_inf + $Med_fuera_sup;
 									
 									/***************************************************************/
 									//se imprimen datos
-									echo '					
+									echo '		
 									<tr>
 										<td class="text-muted">
 											<a href="#" class="iframe"><i class="fa fa-database color-blue" aria-hidden="true"></i> Optimo</a>
@@ -173,11 +173,11 @@ if($temp!=0) {
 											<a href="#" class="iframe"><i class="fa fa-database color-red" aria-hidden="true"></i> Fuera Rango</a>
 										</td>
 										<td class="text-right color-red" style="font-weight: 700;"><i class="fa fa-arrow-down" aria-hidden="true"></i> '.$Med_fuera_inf.'/<i class="fa fa-arrow-up" aria-hidden="true"></i> '.$Med_fuera_sup.'</td>
-									</tr>	
+									</tr>
 								</tbody>
 							</table>
 						</div>
-						<div class="col-sm-8">
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 												
 							<script>
 												
@@ -203,11 +203,11 @@ if($temp!=0) {
 									chart_anual.draw(data, options);
 
 								}
-							</script> 
+							</script>
 							<div id="chart_anual" style="height: 200px; width: 100%;"></div>
 				
 						</div>
-					</div>					
+					</div>
 				</div>';
 				/***************************************************************************/
 				/***************************************************************************/
@@ -221,7 +221,7 @@ if($temp!=0) {
 					/**************************************************************/
 					echo '
 					<div class="row">
-						<div class="col-sm-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h5 style="color: #666;font-weight: 600 !important;">Estado Temperaturas
 								<small class="pull-right fw600 text-primary"></small>
 							</h5>
@@ -247,7 +247,7 @@ if($temp!=0) {
 									echo '<tr>';
 									echo '<td class="text-muted"><a href="#" class="iframe"><i class="fa fa-database color-blue" aria-hidden="true"></i> Optimo</a></td>';
 									for ($i = 1; $i <= 12; $i++) {
-										if(isset($arrCrossGeneral[$mes_ini]['Normal'])&&$arrCrossGeneral[$mes_ini]['Normal']!=''){ $Med_optimo = $arrCrossGeneral[$mes_ini]['Normal']; }else{$Med_optimo = 0;}
+										if(isset($arrCrossGeneral[$mes_ini]['Normal'])&&$arrCrossGeneral[$mes_ini]['Normal']!=''){$Med_optimo = $arrCrossGeneral[$mes_ini]['Normal'];}else{$Med_optimo = 0;}
 										echo '<td class="text-right color-blue" style="font-weight: 700;">'.$Med_optimo.'</td>';
 										$mes_ini++;
 										if($mes_ini==13){$mes_ini = 1;}
@@ -258,8 +258,8 @@ if($temp!=0) {
 									echo '<tr>';
 									echo '<td class="text-muted"><a href="#" class="iframe"><i class="fa fa-database color-yellow-light" aria-hidden="true"></i> Critico</a></td>';
 									for ($i = 1; $i <= 12; $i++) {
-										if(isset($arrCrossGeneral[$mes_ini]['Critico_inf'])&&$arrCrossGeneral[$mes_ini]['Critico_inf']!=''){                $Med_critico_inf  = $arrCrossGeneral[$mes_ini]['Critico_inf'];         }else{$Med_critico_inf  = 0;}
-										if(isset($arrCrossGeneral[$mes_ini]['Critico_sup'])&&$arrCrossGeneral[$mes_ini]['Critico_sup']!=''){                $Med_critico_sup  = $arrCrossGeneral[$mes_ini]['Critico_sup'];         }else{$Med_critico_sup  = 0;}
+										if(isset($arrCrossGeneral[$mes_ini]['Critico_inf'])&&$arrCrossGeneral[$mes_ini]['Critico_inf']!=''){        $Med_critico_inf  = $arrCrossGeneral[$mes_ini]['Critico_inf'];         }else{$Med_critico_inf  = 0;}
+										if(isset($arrCrossGeneral[$mes_ini]['Critico_sup'])&&$arrCrossGeneral[$mes_ini]['Critico_sup']!=''){        $Med_critico_sup  = $arrCrossGeneral[$mes_ini]['Critico_sup'];         }else{$Med_critico_sup  = 0;}
 										echo '<td class="text-right color-yellow-light" style="font-weight: 700;"><i class="fa fa-arrow-down" aria-hidden="true"></i> '.$Med_critico_inf.'/<i class="fa fa-arrow-up" aria-hidden="true"></i> '.$Med_critico_sup.'</td>';
 										$mes_ini++;
 										if($mes_ini==13){$mes_ini = 1;}
@@ -270,19 +270,19 @@ if($temp!=0) {
 									echo '<tr>';
 									echo '<td class="text-muted"><a href="#" class="iframe"><i class="fa fa-database color-red" aria-hidden="true"></i> Fuera Rango</a></td>';
 									for ($i = 1; $i <= 12; $i++) {
-										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf']!=''){  $Med_fuera_inf    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'];  }else{$Med_fuera_inf    = 0;}
-										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup']!=''){  $Med_fuera_sup    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'];  }else{$Med_fuera_sup    = 0;}
+										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf']!=''){ $Med_fuera_inf    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'];  }else{$Med_fuera_inf    = 0;}
+										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup']!=''){ $Med_fuera_sup    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'];  }else{$Med_fuera_sup    = 0;}
 										echo '<td class="text-right color-red" style="font-weight: 700;"><i class="fa fa-arrow-down" aria-hidden="true"></i> '.$Med_fuera_inf.'/<i class="fa fa-arrow-up" aria-hidden="true"></i> '.$Med_fuera_sup.'</td>';
 										$mes_ini++;
 										if($mes_ini==13){$mes_ini = 1;}
 									}
 									echo '</tr>';
 
-									echo '					
+									echo '		
 								</tbody>
 							</table>
 						</div>
-						<div class="col-sm-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 												
 							<script>
 								
@@ -299,11 +299,11 @@ if($temp!=0) {
 									/**********************************/
 									$mes_ini = mes_actual()+1;
 									for ($i = 1; $i <= 12; $i++) {
-										if(isset($arrCrossGeneral[$mes_ini]['Normal'])&&$arrCrossGeneral[$mes_ini]['Normal']!=''){                          $Med_optimo       = $arrCrossGeneral[$mes_ini]['Normal'];              }else{$Med_optimo       = 0;}
-										if(isset($arrCrossGeneral[$mes_ini]['Critico_inf'])&&$arrCrossGeneral[$mes_ini]['Critico_inf']!=''){                $Med_critico_inf  = $arrCrossGeneral[$mes_ini]['Critico_inf'];         }else{$Med_critico_inf  = 0;}
-										if(isset($arrCrossGeneral[$mes_ini]['Critico_sup'])&&$arrCrossGeneral[$mes_ini]['Critico_sup']!=''){                $Med_critico_sup  = $arrCrossGeneral[$mes_ini]['Critico_sup'];         }else{$Med_critico_sup  = 0;}
-										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf']!=''){  $Med_fuera_inf    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'];  }else{$Med_fuera_inf    = 0;}
-										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup']!=''){  $Med_fuera_sup    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'];  }else{$Med_fuera_sup    = 0;}
+										if(isset($arrCrossGeneral[$mes_ini]['Normal'])&&$arrCrossGeneral[$mes_ini]['Normal']!=''){                  $Med_optimo       = $arrCrossGeneral[$mes_ini]['Normal'];              }else{$Med_optimo       = 0;}
+										if(isset($arrCrossGeneral[$mes_ini]['Critico_inf'])&&$arrCrossGeneral[$mes_ini]['Critico_inf']!=''){        $Med_critico_inf  = $arrCrossGeneral[$mes_ini]['Critico_inf'];         }else{$Med_critico_inf  = 0;}
+										if(isset($arrCrossGeneral[$mes_ini]['Critico_sup'])&&$arrCrossGeneral[$mes_ini]['Critico_sup']!=''){        $Med_critico_sup  = $arrCrossGeneral[$mes_ini]['Critico_sup'];         }else{$Med_critico_sup  = 0;}
+										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf']!=''){ $Med_fuera_inf    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_inf'];  }else{$Med_fuera_inf    = 0;}
+										if(isset($arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'])&&$arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup']!=''){ $Med_fuera_sup    = $arrCrossGeneral[$mes_ini]['Fuera_de_rango_sup'];  }else{$Med_fuera_sup    = 0;}
 										$Med_critico  = $Med_critico_inf + $Med_critico_sup;
 										$Med_fuera    = $Med_fuera_inf + $Med_fuera_sup;
 										echo '[\''.$arrMes[$mes_ini]['Nombre'].'\', '.$Med_optimo.', '.$Med_critico.', '.$Med_fuera.'],';
@@ -335,11 +335,11 @@ if($temp!=0) {
 								}
     				
 								
-							</script> 
+							</script>
 							<div id="chart_div" style="height: 300px; width: 100%;"></div>
 				
 						</div>
-					</div>					
+					</div>
 				</div>';
 				
 				
@@ -364,7 +364,7 @@ if($temp!=0) {
 					/**************************************************************/
 					echo '
 					<div class="row">
-						<div class="col-sm-4">
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 							<h5 style="color: #666;font-weight: 600 !important;">Mercados destinos
 								<small class="pull-right fw600 text-primary"></small>
 							</h5>
@@ -376,7 +376,7 @@ if($temp!=0) {
 										
 										if(isset($arrCrossGeneral[$merc['idMercado']]['Cantidad'])&&$arrCrossGeneral[$merc['idMercado']]['Cantidad']!=''){
 											//se imprimen datos
-											echo '					
+											echo '		
 											<tr>
 												<td class="text-muted">
 													<a href="#" class="iframe"><i class="fa fa-database color-blue" aria-hidden="true"></i> '.$merc['Nombre'].'</a>
@@ -392,7 +392,7 @@ if($temp!=0) {
 								</tbody>
 							</table>
 						</div>
-						<div class="col-sm-8">
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 												
 							<script>
 												
@@ -422,11 +422,11 @@ if($temp!=0) {
 									chart_anual.draw(data, options);
 
 								}
-							</script> 
+							</script>
 							<div id="chart_anual" style="height: 200px; width: 100%;"></div>
 				
 						</div>
-					</div>					
+					</div>
 				</div>';
 				
 				
@@ -436,8 +436,8 @@ if($temp!=0) {
 				
 		echo '
 			</div>
-		</div>	
-	</div>';		
+		</div>
+	</div>';	
 	
 } ?>
 

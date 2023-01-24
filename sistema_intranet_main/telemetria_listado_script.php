@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_listado.php";
 $location = $original;
 $new_location = "telemetria_listado_script.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_script.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -41,22 +41,22 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_script.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_script.php';	
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_script.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_file']) )     {
+if (!empty($_GET['del_file'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_file';
-	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_script.php';	
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_script.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -71,8 +71,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Script editado correct
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Script borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['edit']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['edit'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -105,23 +105,23 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_
 
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Script Equipo <?php echo $rowdata['Nombre'];?></h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Script Equipo <?php echo $rowdata['Nombre'];?></h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
-				if(isset($idAPNListado)) {      $x1 = $idAPNListado;     }else{$x1 = $rowdata['idAPNListado'];}
-				if(isset($idPuertoSerial)) {    $x2 = $idPuertoSerial;   }else{$x2 = $rowdata['idPuertoSerial'];}
-				if(isset($pinMode)) {           $x3 = $pinMode;          }else{$x3 = $rowdata['pinMode'];}
-				if(isset($Observacion)) {       $x4 = $Observacion;      }else{$x4 = $rowdata['Observacion'];}
-				if(isset($idModificado)) {      $x5 = $idModificado;     }else{$x5 = $rowdata['idModificado'];}
-				
+				if(isset($idAPNListado)){      $x1 = $idAPNListado;     }else{$x1 = $rowdata['idAPNListado'];}
+				if(isset($idPuertoSerial)){    $x2 = $idPuertoSerial;   }else{$x2 = $rowdata['idPuertoSerial'];}
+				if(isset($pinMode)){           $x3 = $pinMode;          }else{$x3 = $rowdata['pinMode'];}
+				if(isset($Observacion)){       $x4 = $Observacion;      }else{$x4 = $rowdata['Observacion'];}
+				if(isset($idModificado)){      $x5 = $idModificado;     }else{$x5 = $rowdata['idModificado'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_disabled('Hardware','fake_emp', $rowdata['Dispositivo']);
@@ -131,45 +131,43 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_
 				$Form_Inputs->form_input_disabled('Sensores','fake_emp', $rowdata['Sensores']);
 				$Form_Inputs->form_input_disabled('Cantidad Sensores','fake_emp', $rowdata['cantSensores']);
 				//INPUTS
-				$Form_Inputs->form_select('Direccion APN','idAPNListado', $x1, 2, 'idAPNListado', 'Nombre', 'telemetria_listado_script_apn_listado', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Puerto Serial','idPuertoSerial', $x2, 2, 'idPuertoSerial', 'Nombre', 'telemetria_listado_script_puerto_serial', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Direccion APN','idAPNListado', $x1, 2, 'idAPNListado', 'Nombre', 'telemetria_listado_script_apn_listado', 0, '', $dbConn);
+				$Form_Inputs->form_select('Puerto Serial','idPuertoSerial', $x2, 2, 'idPuertoSerial', 'Nombre', 'telemetria_listado_script_puerto_serial', 0, '', $dbConn);
 				$Form_Inputs->form_input_number_spinner('pinMode','pinMode', $x3, 0, 70, '1', 0, 2);
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x4, 2);
-				$Form_Inputs->form_select('Modificado','idModificado', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				
-				
-				if(isset($rowdata['ScriptFile'])&&$rowdata['ScriptFile']!=''){ ?>
-        
+				$Form_Inputs->form_select('Modificado','idModificado', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+
+				if(isset($rowdata['ScriptFile'])&&$rowdata['ScriptFile']!=''){?>
+
 					<div class="col-sm-10 fcenter">
 						<h3>Archivo</h3>
 						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['ScriptFile'], ''); ?>
 						<br/>
-						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_file='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
-					</div> 
+						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_file='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
+					</div>
 					<div class="clearfix"></div>
-					
-				<?php }else{ 
+
+				<?php }else{
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','ScriptFile', 1, '"ino"');
 				}
-				
-					
+
 				$Form_Inputs->form_input_hidden('idScript', $_GET['edit'], 2);
 				?>
-				
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
- 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { 
+
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); 
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
@@ -207,22 +205,22 @@ $rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, 
 
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Script Equipo <?php echo $rowdata['Nombre'];?></h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Script Equipo <?php echo $rowdata['Nombre'];?></h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($idAPNListado)) {      $x1  = $idAPNListado;     }else{$x1  = '';}
-				if(isset($Observacion)) {       $x2  = $Observacion;      }else{$x2  = '';}
-				if(isset($pinMode)) {           $x3  = $pinMode;          }else{$x3  = '53';}
-				if(isset($Observacion)) {       $x4  = $Observacion;      }else{$x4  = '';}
-				
+				if(isset($idAPNListado)){      $x1  = $idAPNListado;     }else{$x1  = '';}
+				if(isset($Observacion)){       $x2  = $Observacion;      }else{$x2  = '';}
+				if(isset($pinMode)){           $x3  = $pinMode;          }else{$x3  = '53';}
+				if(isset($Observacion)){       $x4  = $Observacion;      }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_disabled('Hardware','fake_emp', $rowdata['Dispositivo']);
@@ -233,20 +231,17 @@ $rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, 
 				$Form_Inputs->form_input_disabled('Sensores','fake_emp', $rowdata['Sensores']);
 				$Form_Inputs->form_input_disabled('Cantidad Sensores','fake_emp', $rowdata['cantSensores']);
 				//INPUTS
-				$Form_Inputs->form_select('Direccion APN','idAPNListado', $x1, 2, 'idAPNListado', 'Nombre', 'telemetria_listado_script_apn_listado', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Puerto Serial','idPuertoSerial', $x2, 2, 'idPuertoSerial', 'Nombre', 'telemetria_listado_script_puerto_serial', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Direccion APN','idAPNListado', $x1, 2, 'idAPNListado', 'Nombre', 'telemetria_listado_script_apn_listado', 0, '', $dbConn);
+				$Form_Inputs->form_select('Puerto Serial','idPuertoSerial', $x2, 2, 'idPuertoSerial', 'Nombre', 'telemetria_listado_script_puerto_serial', 0, '', $dbConn);
 				$Form_Inputs->form_input_number_spinner('pinMode','pinMode', $x3, 0, 70, '1', 0, 2);
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x4, 2);
-				
-	
-
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
-				
+
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Fecha', fecha_actual(), 2);
-				
+
 				$Form_Inputs->form_input_hidden('idDispositivo', $rowdata['idDispositivo'], 2);
 				$Form_Inputs->form_input_hidden('idShield', $rowdata['idShield'], 2);
 				$Form_Inputs->form_input_hidden('idFormaEnvio', $rowdata['idFormaEnvio'], 2);
@@ -257,21 +252,21 @@ $rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, 
 				for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 					$Form_Inputs->form_input_hidden('SensoresTipo_'.$i, $rowdata['SensoresTipo_'.$i], 2);
 				}
-				$Form_Inputs->form_input_hidden('idModificado', 1, 2);	
-					
+				$Form_Inputs->form_input_hidden('idModificado', 1, 2);
+
 				?>
 
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
 $rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
@@ -294,17 +289,15 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Scripts');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Script</a><?php }?>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Script</a><?php }?>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-
-
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -333,9 +326,9 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class="active"><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
-						
+
 					</ul>
-                </li>           
+                </li>
 			</ul>
 		</header>
         <div class="table-responsive">
@@ -351,12 +344,12 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrScripts as $script) { ?>
-						<tr class="odd">		
-							<td><?php echo $script['Version']; ?></td>		
-							<td><?php echo fecha_estandar($script['Fecha']); ?></td>		
+						<tr class="odd">
+							<td><?php echo $script['Version']; ?></td>
+							<td><?php echo fecha_estandar($script['Fecha']); ?></td>
 							<td><?php echo $script['nombre_usuario']; ?></td>
 							<td>
-								<?php 
+								<?php
 								if(isset($script['idModificado'])&&$script['idModificado']==1){
 									echo '<span class="label label-danger">'.$script['Modificado'].'</span>';
 								}else{
@@ -371,20 +364,20 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($script['idScript'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la observacion del usuario '.$script['nombre_usuario'].'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>								
+									<?php } ?>
 								</div>
-							</td>	
+							</td>
 						</tr>
-					<?php } ?>                   
+					<?php } ?>
 				</tbody>
 			</table>
-		</div> 	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

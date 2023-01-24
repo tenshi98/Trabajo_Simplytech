@@ -21,7 +21,7 @@ if(isset($_GET['data_3'])&&isset($_GET['data_4'])&&isset($_GET['data_5'])&&isset
 	function conectarDB ($servidor, $usuario, $password, $base_datos) {
 		$db_con = mysqli_connect($servidor, $usuario, $password, $base_datos);
 		$db_con->set_charset("utf8");
-		return $db_con; 
+		return $db_con;
 	}	
 	//ejecuto conexion
 	$dbConn = conectarDB($_GET['data_3'], $_GET['data_4'], $_GET['data_5'], $_GET['data_6']);	
@@ -30,7 +30,7 @@ if(isset($_GET['data_3'])&&isset($_GET['data_4'])&&isset($_GET['data_5'])&&isset
 
 /*************************************************************************/
 // consulto los datos
-$query = "SELECT Nombre, cantSensores, Direccion_img
+$query = "SELECT Nombre,cantSensores, Direccion_img
 FROM `telemetria_listado`
 WHERE idTelemetria = ".simpleDecode($_GET['view'], fecha_actual());
 //Consulta
@@ -90,44 +90,44 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
-	<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_listado.php?pagina=1&id='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Editar Equipo</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
+	<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_listado.php?pagina=1&id='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Editar Equipo</a>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Equipo <?php echo $rowdata['Nombre']; ?></h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#uso" data-toggle="tab"><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="uso">
 				<div class="wmd-panel">
 					
-					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<?php if (isset($_GET['data_1'])&&$_GET['data_1']=='si') { ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo 'https://'.$_GET['data_2'].$rowdata['Direccion_img']; ?>">
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo 'https://'.$_GET['data_2'].$rowdata['Direccion_img']; ?>">
 							<?php }else{  ?>
-								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-							<?php }?>	
+								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<?php }?>
 						<?php }?>
 					</div>
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<?php
 						//verifico los resultados y muestro la tabla
 						if(isset($rowcount)&&$rowcount!=0){ ?>
-							<div class="col-sm-12">
-								<div class="box">	
-									<header>		
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+								<div class="box">
+									<header>
 										<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Sensores Supervisados</h5>
 									</header>
 									<div class="table-responsive">
@@ -153,17 +153,17 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 														<tr class="odd">
 															<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
 															<td><?php echo fecha_estandar($rowMed['SensoresFechaUso_'.$i]); ?></td>
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionC_'.$i]);?></td>		
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedC_'.$i]);?></td>		
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionC_'.$i]);?></td>	
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedC_'.$i]);?></td>	
 															<td><?php echo porcentaje($rowMed['SensoresAccionMedC_'.$i]/$rowMed['SensoresAccionC_'.$i]);?></td>
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionT_'.$i]/3600);?></td>		
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedT_'.$i]/3600);?></td>		
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionT_'.$i]/3600);?></td>	
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedT_'.$i]/3600);?></td>	
 															<td><?php echo porcentaje($rowMed['SensoresAccionMedT_'.$i]/$rowMed['SensoresAccionT_'.$i]);?></td>
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionAlerta_'.$i]);?></td>		
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionAlerta_'.$i]);?></td>	
 														</tr>
 													<?php 	
 													}
-												} ?>
+												}?>
 											</tbody>
 										</table>
 									</div>
@@ -177,7 +177,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 								?>
 							</div>
 						<?php } ?>
-					</div>	
+					</div>
 					<div class="clearfix"></div>
 					
 					
@@ -188,7 +188,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 			
 			
 			
-        </div>	
+        </div>
 	</div>
 </div>
 

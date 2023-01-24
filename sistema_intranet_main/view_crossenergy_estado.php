@@ -12,17 +12,17 @@ require_once 'core/Load.Utils.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "view_crossenergy_estado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -31,9 +31,9 @@ $location .='?view='.$X_Puntero;
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -47,10 +47,10 @@ require_once 'core/Web.Header.Views.php';
 $s_mes = mes_actual()-1;
 $s_ano = ano_actual();
 if($s_mes==0){$s_mes = 12;$s_ano = ano_actual()-1;}
-if($s_mes<10){$Mesx = '0'.$s_mes;}else{$Mesx = $s_mes;}
+$Mesx = numero_mes($s_mes);
 
 $mes_actual = mes_actual();
-if($mes_actual<10){$mes_actual = '0'.$mes_actual;}
+$mes_actual = numero_mes($mes_actual);
 
 $Habil_FechaInicio    = $s_ano.'-'.$Mesx.'-01';
 $Habil_HoraInicio     = '00:00:01';
@@ -89,7 +89,7 @@ $Demanda_HoraTermino    = hora_actual();
 
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre, cantSensores,idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia,
+$subquery_1 = 'Nombre,cantSensores,idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia,
 idGrupoConsumoMesHabil,idGrupoConsumoMesCurso';
 $subquery_2 = 'idTabla';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
@@ -105,20 +105,20 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 $rowdata            = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 $rowConsumoMesHabil = db_select_data (false, $subquery_2, 'telemetria_listado_crossenergy_dia', '', 'idTelemetria='.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Habil_FechaInicio.' '.$Habil_HoraInicio .'" AND "'.$Habil_FechaTermino.' '.$Habil_HoraTermino.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConsumoMesHabil');
 $rowConsumoMesCurso = db_select_data (false, $subquery_2, 'telemetria_listado_crossenergy_dia', '', 'idTelemetria='.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Curso_FechaInicio.' '.$Curso_HoraInicio .'" AND "'.$Curso_FechaTermino.' '.$Curso_HoraTermino.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConsumoMesCurso');
-$n_permisos         = db_select_data (false, 'idOpcionesGen_6', 'core_sistemas', '', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
+$n_permisos         = db_select_data (false, 'idOpcionesGen_6', 'core_sistemas','', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
-$SIS_query = 'Nombre, CrossEnergy_PeriodoInicio, CrossEnergy_PeriodoTermino, CrossEnergy_HorarioInicio, CrossEnergy_HorarioTermino';
+$SIS_query = 'Nombre,CrossEnergy_PeriodoInicio, CrossEnergy_PeriodoTermino, CrossEnergy_HorarioInicio, CrossEnergy_HorarioTermino';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'];
-$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSistema');
+$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSistema');
 
 //Grupo Sensores
-if(isset($rowdata['idGrupoDespliegue'])&&$rowdata['idGrupoDespliegue']!=''){            $idGrupoDespliegue       = $rowdata['idGrupoDespliegue'];       }else{$idGrupoDespliegue      = 106;}
-if(isset($rowdata['idGrupoVmonofasico'])&&$rowdata['idGrupoVmonofasico']!=''){          $idGrupoVmonofasico      = $rowdata['idGrupoVmonofasico'];      }else{$idGrupoVmonofasico     = 87;}
-if(isset($rowdata['idGrupoVTrifasico'])&&$rowdata['idGrupoVTrifasico']!=''){            $idGrupoVTrifasico       = $rowdata['idGrupoVTrifasico'];       }else{$idGrupoVTrifasico      = 106;}
-if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''){                $idGrupoPotencia         = $rowdata['idGrupoPotencia'];         }else{$idGrupoPotencia        = 99;}
-if(isset($rowdata['idGrupoConsumoMesHabil'])&&$rowdata['idGrupoConsumoMesHabil']!=''){  $idGrupoConsumoMesHabil  = $rowdata['idGrupoConsumoMesHabil'];  }else{$idGrupoConsumoMesHabil = 99;}
-if(isset($rowdata['idGrupoConsumoMesCurso'])&&$rowdata['idGrupoConsumoMesCurso']!=''){  $idGrupoConsumoMesCurso  = $rowdata['idGrupoConsumoMesCurso'];  }else{$idGrupoConsumoMesCurso = 99;}
+if(isset($rowdata['idGrupoDespliegue'])&&$rowdata['idGrupoDespliegue']!=''){    $idGrupoDespliegue       = $rowdata['idGrupoDespliegue'];       }else{$idGrupoDespliegue      = 106;}
+if(isset($rowdata['idGrupoVmonofasico'])&&$rowdata['idGrupoVmonofasico']!=''){  $idGrupoVmonofasico      = $rowdata['idGrupoVmonofasico'];      }else{$idGrupoVmonofasico     = 87;}
+if(isset($rowdata['idGrupoVTrifasico'])&&$rowdata['idGrupoVTrifasico']!=''){    $idGrupoVTrifasico       = $rowdata['idGrupoVTrifasico'];       }else{$idGrupoVTrifasico      = 106;}
+if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''){        $idGrupoPotencia         = $rowdata['idGrupoPotencia'];         }else{$idGrupoPotencia        = 99;}
+if(isset($rowdata['idGrupoConsumoMesHabil'])&&$rowdata['idGrupoConsumoMesHabil']!=''){ $idGrupoConsumoMesHabil  = $rowdata['idGrupoConsumoMesHabil'];  }else{$idGrupoConsumoMesHabil = 99;}
+if(isset($rowdata['idGrupoConsumoMesCurso'])&&$rowdata['idGrupoConsumoMesCurso']!=''){ $idGrupoConsumoMesCurso  = $rowdata['idGrupoConsumoMesCurso'];  }else{$idGrupoConsumoMesCurso = 99;}
 
 
 //Temporales
@@ -279,7 +279,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 $x_seg = 300000;//5 minutos
 
 
-/****************************************************************/				
+/****************************************************************/
 //Variables
 $Temp_1   = '';
 $Temp_2   = '';
@@ -290,8 +290,8 @@ $arrData  = array();
 if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGraficos!=''){
 	//recorro
 	foreach ($arrGraficos as $data) {
-		
-		//variables							
+
+		//Variables
 		$Temp_1 .= "'".$data['HoraSistema']."',";
 		//recorro
 		for ($x = 1; $x <= $CountSub; $x++) {
@@ -307,7 +307,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 			//unidad medida
 			if(isset($arrSensores[$x]['UniMed'])&&$arrSensores[$x]['UniMed']!=''){
 				$Temp_2 = $arrSensores[$x]['UniMed'];
-			}		
+			}
 		}
 	}
 
@@ -350,8 +350,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	$Graphics_texts      .= '];';
 	$Graphics_lineColors .= '];';
 	$Graphics_lineDash   .= '];';
-	$Graphics_lineWidth  .= '];';  
-				
+	$Graphics_lineWidth  .= '];';
+
 	/************************************/
 	//Ubtengo la unidad de medida
 	$SIS_query = 'Nombre';
@@ -367,28 +367,28 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	}, <?php echo $x_seg; ?>);
 </script>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Estado del Equipo <?php echo $rowdata['Nombre'].' (Hora Refresco: '.hora_actual().')'; ?></h5>
 		</header>
-        <div id="div-3" class="tab-content">
-			<div class="col-sm-12">
-				
+        <div class="tab-content">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
 				<div class="row">
-					<div class="col-sm-12">
-						<?php 
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<?php
 							//$Titulo = 'Potencia hora punta (Periodo: '.$Grafico_FechaInicio.' al '.$Grafico_FechaTermino.')';
 							$Titulo = '';
 							echo GraphLinear_1('graphLinear_1', $Titulo, 'Fecha', $rowUniMed['Nombre'], $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
 						?>
 					</div>
 				</div>
-				
+
 				<div class="row">
-					
-					<div class="col-sm-6">
+
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Consumo mes actual</h3>
@@ -403,8 +403,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_crossenergy_01.php?f_inicio='.$Curso_FechaInicio.'&f_termino='.$Curso_FechaTermino.'&h_inicio='.$Curso_HoraInicio.'&h_termino='.$Curso_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoConsumoMesCurso.'&idGrafico=1&submit_filter=Filtrar&inform_trans=Consumo mes actual&inform_tittle=Consumo kW/h.&inform_unimed=kW/h.'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-						
-					<div class="col-sm-6">
+
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Consumo mes anterior</h3>
@@ -419,12 +419,12 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_crossenergy_01.php?f_inicio='.$Habil_FechaInicio.'&f_termino='.$Habil_FechaTermino.'&h_inicio='.$Habil_HoraInicio.'&h_termino='.$Habil_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoConsumoMesHabil.'&idGrafico=1&submit_filter=Filtrar&inform_trans=Consumo últimos 30 días&inform_tittle=Consumo kW/h.&inform_unimed=kW/h.'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
+
 				</div>
-				
+
 				<div class="row">
-					
-					<div class="col-sm-6">
+
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Maxima Demanda Suministrada</h3>
@@ -439,8 +439,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_crossenergy_04.php?f_inicio='.$Informes_4_FechaInicio.'&f_termino='.$Informes_4_FechaTermino.'&h_inicio='.$Informes_4_HoraInicio.'&h_termino='.$Informes_4_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoPotencia.'&submit_filter=Filtrar'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-						
-					<div class="col-sm-6">
+
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Potencia Hora Punta</h3>
@@ -455,17 +455,13 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_crossenergy_03.php?f_inicio='.$Informes_3_FechaInicio.'&f_termino='.$Informes_3_FechaTermino.'&h_inicio='.$Informes_3_HoraInicio.'&h_termino='.$Informes_3_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoPotencia.'&submit_filter=Filtrar'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
-				
-
 
 				</div>
-				
-				
+
 				<div class="row">
-					
+
 					<?php /* ?>
-					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Voltaje Monofasico</h3>
@@ -481,8 +477,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_19.php?f_inicio='.$Informes_FechaInicio.'&f_termino='.$Informes_FechaTermino.'&h_inicio='.$Informes_HoraInicio.'&h_termino='.$Informes_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoVmonofasico.'&idGrafico=1&submit_filter=Filtrar&inform_tittle=Voltaje monofásico&inform_unimed=Volt'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
 					<?php */ ?>
-					
-					<div class="col-sm-6">
+
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Voltaje Trifasico</h3>
@@ -497,8 +493,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_19.php?f_inicio='.$Informes_FechaInicio.'&f_termino='.$Informes_FechaTermino.'&h_inicio='.$Informes_HoraInicio.'&h_termino='.$Informes_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoVTrifasico.'&idGrafico=1&submit_filter=Filtrar&inform_tittle=Voltaje trifásico&inform_unimed=Volt'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
-					<div class="col-sm-6">
+
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Potencia observada</h3>
@@ -513,50 +509,47 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_crossenergy_02.php?f_inicio='.$Informes_2_FechaInicio.'&h_inicio='.$Informes_2_HoraInicio.'&f_termino='.$Informes_2_FechaTermino.'&h_termino='.$Informes_2_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoPotencia.'&idGrafico=1&submit_filter=Filtrar'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-				
+
 				</div>
-				
-				
-			
-				
-			</div>	
-			<div class="clearfix"></div>	
-		</div>	
+
+			</div>
+			<div class="clearfix"></div>
+		</div>
 	</div>
 </div>
 <?php
 //Si no hay datos
 }else{
-	echo '<div class="col-sm-12" style="margin-top:10px;">';
+	echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">';
 		alert_post_data(4,2,2, 'No existen datos');
 	echo '</div>';
 }
 ?>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
-	<?php }		
+
+	<?php }
 } ?>
 
 <?php

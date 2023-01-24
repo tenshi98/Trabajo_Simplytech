@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "cross_solicitud_aplicacion_cerrar_cuartel.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -19,14 +19,14 @@ $location .='?view='.$_GET['view'];
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //se cierra un trabajo
-if ( !empty($_POST['submit_close_cuartel']) )     {
+if (!empty($_POST['submit_close_cuartel'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_close_Cuartel';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
 }
 /*************************************************************************/
 //se agrega un trabajo
-if ( !empty($_POST['submit_add_detalle']) )  { 
+if (!empty($_POST['submit_add_detalle'])){
 	//Llamamos al formulario
 	$form_trabajo= 'updt_adddetalle';
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_solicitud_aplicacion.php';
@@ -46,22 +46,22 @@ if (isset($_GET['not_adddetalle'])){   $error['not_adddetalle']   = 'sucess/Deta
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(isset($error1)&&$error1!=''){echo notifications_list($error1);};
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['addDetalle']) ) {?>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['addDetalle'])){?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Detalle</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Observacion)) {      $x1  = $Observacion;        }else{$x1  = '';}
-				
+				if(isset($Observacion)){      $x1  = $Observacion;        }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observacion','Observacion', $x1, 1);
@@ -74,36 +74,36 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_add_detalle"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_add_detalle"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['lock_cuartel']) ) {?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['lock_cuartel'])){?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Cerrar Cuartel</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php
 				//Se verifican si existen los datos
-				if(isset($f_cierre)) {          $x1  = $f_cierre;         }else{$x1  = '';}
-				if(isset($idEjecucion)) {       $x2  = $idEjecucion;      }else{$x2  = '';}
-				if(isset($GeoDistance)) {       $x3  = $GeoDistance;      }elseif(isset($_GET['distancia'])&&$_GET['distancia']!=''){$x3  = Cantidades(($_GET['distancia']/1000), 0);}else{$x3  = '';}
-				if(isset($VelPromedio)) {       $x4  = $VelPromedio;      }else{$x4  = '';}
-				if(isset($LitrosAplicados)) {   $x5  = $LitrosAplicados;  }else{$x5  = '';}
-				//if(isset($T_Aplicacion)) {      $x6  = $T_Aplicacion;     }else{$x6  = '';}
-				
+				if(isset($f_cierre)){          $x1  = $f_cierre;         }else{$x1  = '';}
+				if(isset($idEjecucion)){       $x2  = $idEjecucion;      }else{$x2  = '';}
+				if(isset($GeoDistance)){       $x3  = $GeoDistance;      }elseif(isset($_GET['distancia'])&&$_GET['distancia']!=''){$x3  = Cantidades(($_GET['distancia']/1000), 0);}else{$x3  = '';}
+				if(isset($VelPromedio)){       $x4  = $VelPromedio;      }else{$x4  = '';}
+				if(isset($LitrosAplicados)){   $x5  = $LitrosAplicados;  }else{$x5  = '';}
+				//if(isset($T_Aplicacion)){      $x6  = $T_Aplicacion;     }else{$x6  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Cierre Cuartel','f_cierre', $x1, 2);	
@@ -136,7 +136,7 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 							//document.getElementById('div_T_Aplicacion').style.display = '';
 													
 						//Para el resto
-						} else { 
+						} else {
 							document.getElementById('div_GeoDistance').style.display = 'none';
 							document.getElementById('div_VelPromedio').style.display = 'none';
 							document.getElementById('div_LitrosAplicados').style.display = 'none';
@@ -152,16 +152,16 @@ if ( ! empty($_GET['addDetalle']) ) {?>
 				</script>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_close_cuartel"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_close_cuartel"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>				
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+</div>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  } else { 
 /**********************************************/
 // consulto los datos
@@ -170,7 +170,7 @@ $SIS_join  = '';
 $SIS_where = 'idSolicitud = '.$_GET['view'];
 $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
-/*****************************************/				
+/*****************************************/
 //Cuarteles
 $SIS_query = '
 cross_solicitud_aplicacion_listado_cuarteles.idCuarteles,
@@ -196,7 +196,7 @@ $SIS_order = 'cross_predios_listado_zonas.Nombre ASC';
 $arrCuarteles = array();
 $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_cuarteles', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCuarteles');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con el historial
 $SIS_query = '
 cross_solicitud_aplicacion_listado_historial.Creacion_fecha, 
@@ -226,7 +226,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					<th width="160">Acciones</th>
 				</tr>
 				
-				<?php /**********************************************************************************/ ?> 
+				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td><strong>Cuarteles</strong></td>
 					<td><strong>Variedad - Especie</strong></td>
@@ -264,7 +264,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 										<?php } ?>
 									</div>
 								</td>
-							</tr> 
+							</tr>
 					<?php 	
 						}
 					}else{
@@ -291,7 +291,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					<th width="160">Estado</th>
 					<th width="260">Usuario</th>
 					<th colspan="6">Observacion</th>
-				</tr>		  
+				</tr>
 				
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
@@ -299,7 +299,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 						<td><?php echo $doc['Estado']; ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
 						<td colspan="6"><?php echo $doc['Observacion']; ?></td>
-					</tr> 
+					</tr>
 				<?php } ?>
 
 			</tbody>
@@ -310,12 +310,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-	<a href="cross_solicitud_aplicacion_ejecucion.php?pagina=1" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+	<a href="cross_solicitud_aplicacion_ejecucion.php?pagina=1" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
 </div>
 
-<?php } ?>      
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_analisis_maquina_02.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,8 +22,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 
              
   
@@ -33,19 +33,19 @@ $x = "WHERE maquinas_listado_matriz.idMatriz>=0";
 $y = "WHERE maquinas_listado.idMaquina>=0";
 $z = "WHERE analisis_listado.idAnalisis>=0";
 if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {     
-	$z .= " AND analisis_listado.idSistema = '".$_GET['idSistema']."'" ;
+	$z .= " AND analisis_listado.idSistema = '".$_GET['idSistema']."'";
 }
 if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {     
-	$y .= " AND maquinas_listado.idMaquina = '".$_GET['idMaquina']."'" ;
-	$z .= " AND analisis_listado.idMaquina = '".$_GET['idMaquina']."'" ;
+	$y .= " AND maquinas_listado.idMaquina = '".$_GET['idMaquina']."'";
+	$z .= " AND analisis_listado.idMaquina = '".$_GET['idMaquina']."'";
 }
 if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {       
-	$x .= " AND idMatriz = '".$_GET['idMatriz']."'" ;
-	$y .= " AND maquinas_listado_matriz.idMatriz = '".$_GET['idMaquina']."'" ;
-	$z .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'" ;
+	$x .= " AND idMatriz = '".$_GET['idMatriz']."'";
+	$y .= " AND maquinas_listado_matriz.idMatriz = '".$_GET['idMaquina']."'";
+	$z .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
-	$z .= " AND analisis_listado.f_muestreo BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'" ;
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+	$z .= " AND analisis_listado.f_muestreo BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /*********************************************************************/
 //Preconsulta
@@ -503,7 +503,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrResultados,$row );
 } 
 
@@ -526,7 +526,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrUnimed,$row );
 }
 /**********************************************************************/
@@ -548,7 +548,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrGrupo,$row );
 }
 /**********************************************************************/
@@ -570,7 +570,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProducto,$row );
 }
 /**********************************************************************/
@@ -592,7 +592,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrDispersancia,$row );
 }
 /**********************************************************************/
@@ -614,7 +614,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrFlashpoint,$row );
 }
 ?>
@@ -624,21 +624,21 @@ array_push( $arrFlashpoint,$row );
 	if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {     $zz .= '&idSistema='.$_GET['idSistema'];}else{$zz .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];}
 	if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {     $zz .= '&idMaquina='.$_GET['idMaquina'];}
 	if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {       $zz .= '&idMatriz='.$_GET['idMatriz'];}
-	if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
+	if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
 		$zz .= '&f_inicio='.$_GET['f_inicio'];
 		$zz .= '&f_termino='.$_GET['f_termino'];
 	}
-	?>			
+	?>		
 	<a target="new" href="<?php echo 'informe_analisis_maquina_02_to_excel.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 			
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $rowMaquina['Analisis_Nombre']?> <?php echo Fecha_estandar(fecha_actual())?></h5>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -655,19 +655,19 @@ array_push( $arrFlashpoint,$row );
 					<tr class="odd">
 						<td>
 							<?php echo 'Ubicacion: '.$rowMaquina['MaquinaUbicacion'];
-							if(isset($rowMaquina['MaquinaUbicacion_lvl_1'])&&$rowMaquina['MaquinaUbicacion_lvl_1']!=''){ 
+							if(isset($rowMaquina['MaquinaUbicacion_lvl_1'])&&$rowMaquina['MaquinaUbicacion_lvl_1']!=''){
 								echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_1'];
 							}
-							if(isset($rowMaquina['MaquinaUbicacion_lvl_2'])&&$rowMaquina['MaquinaUbicacion_lvl_2']!=''){ 
+							if(isset($rowMaquina['MaquinaUbicacion_lvl_2'])&&$rowMaquina['MaquinaUbicacion_lvl_2']!=''){
 								echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_2'];
 							}
-							if(isset($rowMaquina['MaquinaUbicacion_lvl_3'])&&$rowMaquina['MaquinaUbicacion_lvl_3']!=''){ 
+							if(isset($rowMaquina['MaquinaUbicacion_lvl_3'])&&$rowMaquina['MaquinaUbicacion_lvl_3']!=''){
 								echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_3'];
 							}
-							if(isset($rowMaquina['MaquinaUbicacion_lvl_4'])&&$rowMaquina['MaquinaUbicacion_lvl_4']!=''){ 
+							if(isset($rowMaquina['MaquinaUbicacion_lvl_4'])&&$rowMaquina['MaquinaUbicacion_lvl_4']!=''){
 								echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_4'];
 							}
-							if(isset($rowMaquina['MaquinaUbicacion_lvl_5'])&&$rowMaquina['MaquinaUbicacion_lvl_5']!=''){ 
+							if(isset($rowMaquina['MaquinaUbicacion_lvl_5'])&&$rowMaquina['MaquinaUbicacion_lvl_5']!=''){
 								echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_5'];
 							} ?>
 						</td>  
@@ -704,12 +704,12 @@ array_push( $arrFlashpoint,$row );
 							case 1:
 								//
 								echo '
-								<div class="col-sm-12">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 									<div class="box">
 										<header>
 											<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos '.$rowMaquina['PuntoNombre_'.$i].'</h5>
 										</header>
-										<div class="table-responsive"> 
+										<div class="table-responsive">
 											<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 												<thead>
 													<tr role="row">
@@ -765,7 +765,7 @@ array_push( $arrFlashpoint,$row );
 								$x_count++;
 							break;
 						}
-						
+
 					}
 				}
 			}
@@ -779,33 +779,33 @@ array_push( $arrFlashpoint,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
-$z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idMaquina)) {     $x1  = $idMaquina;   }else{$x1  = '';}
-				if(isset($idMatriz)) {      $x2  = $idMatriz;    }else{$x2  = '';}
-				if(isset($f_inicio)) {      $x3  = $f_inicio;    }else{$x3  = '';}
-				if(isset($f_termino)) {     $x4  = $f_termino;   }else{$x4  = '';}
-				
+				if(isset($idMaquina)){     $x1  = $idMaquina;   }else{$x1  = '';}
+				if(isset($idMatriz)){      $x2  = $idMatriz;    }else{$x2  = '';}
+				if(isset($f_inicio)){      $x3  = $f_inicio;    }else{$x3  = '';}
+				if(isset($f_termino)){     $x4  = $f_termino;   }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
@@ -817,18 +817,18 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

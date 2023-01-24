@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_listado.php";
 $location = $original;
 $new_location = "telemetria_listado_trabajo.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -39,7 +39,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = 'Nombre,Jornada_inicio,Jornada_termino,Colacion_inicio,Colacion_termino,Microparada,
 id_Geo, id_Sensores';
@@ -47,12 +47,12 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -81,53 +81,53 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
-						
+
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
-			
-					<?php  
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+
+					<?php
 					//Se verifican si existen los datos
-					if(isset($Jornada_inicio)) {    $x1 = $Jornada_inicio;      }else{$x1 = $rowdata['Jornada_inicio'];}
-					if(isset($Jornada_termino)) {   $x2 = $Jornada_termino;     }else{$x2 = $rowdata['Jornada_termino'];}
-					if(isset($Colacion_inicio)) {   $x3 = $Colacion_inicio;     }else{$x3 = $rowdata['Colacion_inicio'];}
-					if(isset($Colacion_termino)) {  $x4 = $Colacion_termino;    }else{$x4 = $rowdata['Colacion_termino'];}
-					if(isset($Microparada)) {       $x5 = $Microparada;         }else{$x5 = $rowdata['Microparada'];}
-					
+					if(isset($Jornada_inicio)){    $x1 = $Jornada_inicio;      }else{$x1 = $rowdata['Jornada_inicio'];}
+					if(isset($Jornada_termino)){   $x2 = $Jornada_termino;     }else{$x2 = $rowdata['Jornada_termino'];}
+					if(isset($Colacion_inicio)){   $x3 = $Colacion_inicio;     }else{$x3 = $rowdata['Colacion_inicio'];}
+					if(isset($Colacion_termino)){  $x4 = $Colacion_termino;    }else{$x4 = $rowdata['Colacion_termino'];}
+					if(isset($Microparada)){       $x5 = $Microparada;         }else{$x5 = $rowdata['Microparada'];}
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_post_data(2, 'Se define el horario de utilizacion de la maquina relacionada al equipo de telemetria, existen informes relacionados a esta opcion' );
 					$Form_Inputs->form_tittle(3, 'Horario Trabajo');
 					$Form_Inputs->form_time('Hora Inicio','Jornada_inicio', $x1, 2, 2);
 					$Form_Inputs->form_time('Hora Termino','Jornada_termino', $x2, 2, 2);
-					
+
 					$Form_Inputs->form_tittle(3, 'Horario Colacion');
 					$Form_Inputs->form_time('Hora Inicio','Colacion_inicio', $x3, 2, 2);
 					$Form_Inputs->form_time('Hora Termino','Colacion_termino', $x4, 2, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Ignorar Microparadas');
 					$Form_Inputs->form_time('Tiempo','Microparada', $x5, 2, 1);
-					
+
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

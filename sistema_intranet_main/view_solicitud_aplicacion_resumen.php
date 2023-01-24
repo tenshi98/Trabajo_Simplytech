@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -43,8 +43,8 @@ $SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idSolicitud ='.$X_Pun
 $SIS_order = 'cross_solicitud_aplicacion_listado_tractores.idTelemetria ASC';
 $arrTractores = array();
 $arrTractores = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTractores');
-				
-/*****************************************/	
+
+/*****************************************/
 //Variable para almacenar los recorridos
 $rec_x = '';			
 //Recorro las mediciones
@@ -80,7 +80,7 @@ foreach ($arrTractores as $trac) {
 	}
 }
 
-/********************************************/				
+/********************************************/
 //Se traen las rutas
 $SIS_query = '
 cross_predios_listado_zonas.idZona,
@@ -97,9 +97,9 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_list
 
 //Se obtiene la ubicacion
 $Ubicacion = "";
-if(isset($arrZonas[0]['Direccion'])&&$arrZonas[0]['Direccion']!=''){ $Ubicacion.=' '.$arrZonas[0]['Direccion'];}
-if(isset($arrZonas[0]['Comuna'])&&$arrZonas[0]['Comuna']!=''){       $Ubicacion.=', '.$arrZonas[0]['Comuna'];}
-if(isset($arrZonas[0]['Ciudad'])&&$arrZonas[0]['Ciudad']!=''){       $Ubicacion.=', '.$arrZonas[0]['Ciudad'];}
+if(isset($arrZonas[0]['Direccion'])&&$arrZonas[0]['Direccion']!=''){$Ubicacion.=' '.$arrZonas[0]['Direccion'];}
+if(isset($arrZonas[0]['Comuna'])&&$arrZonas[0]['Comuna']!=''){      $Ubicacion.=', '.$arrZonas[0]['Comuna'];}
+if(isset($arrZonas[0]['Ciudad'])&&$arrZonas[0]['Ciudad']!=''){      $Ubicacion.=', '.$arrZonas[0]['Ciudad'];}
 
 
 //Se limpian los nombres
@@ -121,7 +121,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Resumen Solicitud de Aplicacion N° <?php echo n_doc(simpleDecode($_GET['NSolicitud'], fecha_actual()), 5); ?>.
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	
@@ -192,7 +192,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 							mapTypeId: google.maps.MapTypeId.SATELLITE
 						};
 						map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-						
+
 						//Se dibujan los puntos en base a los niveles de riego
 						/* Data points defined as a mixture of WeightedLocation and LatLng objects */
 						var heatMapData = [<?php echo $rec_x; ?>];
@@ -239,7 +239,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 								if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
 									echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
 									';
-									if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){	
+									if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){
 										$Latitud_x  = $puntos['Latitud'];
 										$Longitud_x = $puntos['Longitud'];
 										//Calculos para centrar mapa
@@ -298,7 +298,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 								});
 							});
 							';
-									
+
 							$zcounter2++;		
 						}
 								
@@ -310,7 +310,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 							if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
 									echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');
 											map.setCenter(myLatlng);'; 
-							}else{ 
+							}else{
 								echo 'codeAddress();';
 							}
 						}
@@ -346,12 +346,12 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -362,12 +362,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
  
 <?php

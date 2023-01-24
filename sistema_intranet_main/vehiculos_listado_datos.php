@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "vehiculos_listado.php";
 $location = $original;
 $new_location = "vehiculos_listado_datos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -39,7 +39,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $query = "SELECT Nombre,Patente,idOpciones_1,idOpciones_2,idOpciones_3,idOpciones_4,idOpciones_5,idOpciones_6, idOpciones_7,
 idOpciones_8,idTipo, Marca, Modelo, Num_serie, AnoFab, idZona, idSistema, Capacidad, MCubicos, idTipoCarga,
@@ -136,7 +136,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php 
 	$vehiculo = $rowdata['Nombre'];
 	if(isset($rowdata['Patente'])&&$rowdata['Patente']!=''){
@@ -146,22 +146,22 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'vehiculos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class="active"><a href="<?php echo 'vehiculos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<?php if($todos!=0 OR $idTipoUsuario==1) { ?>
+				<?php if($todos!=0 OR $idTipoUsuario==1){?>
 					<li class=""><a href="<?php echo 'vehiculos_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 				<?php } ?>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>			
+						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>		
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_1.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Telemetria</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>	
+						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_2.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-database" aria-hidden="true"></i> Bodega</a></li>
 						<?php }
 						if(isset($rowdata['idOpciones_3'])&&$rowdata['idOpciones_3']==1){ ?>
@@ -199,30 +199,30 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 						<li class=""><a href="<?php echo 'vehiculos_listado_doc_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Ficha Tecnica</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Nombre)) {                $x1  = $Nombre;                 }else{$x1  = $rowdata['Nombre'];}
-					if(isset($idTipo)) {                $x2  = $idTipo;                 }else{$x2  = $rowdata['idTipo'];}
-					if(isset($Marca)) {                 $x3  = $Marca;                  }else{$x3  = $rowdata['Marca'];}
-					if(isset($Modelo)) {                $x4  = $Modelo;                 }else{$x4  = $rowdata['Modelo'];}
-					if(isset($Patente)) {               $x5  = $Patente;                }else{$x5  = $rowdata['Patente'];}
-					if(isset($Num_serie)) {             $x6  = $Num_serie;              }else{$x6  = $rowdata['Num_serie'];}
-					if(isset($AnoFab)) {                $x7  = $AnoFab;                 }else{$x7  = $rowdata['AnoFab'];}
-					if(isset($idZona)) {                $x8  = $idZona;                 }else{$x8  = $rowdata['idZona'];}
-					if(isset($CapacidadPersonas)) {     $x9  = $CapacidadPersonas;      }else{$x9  = $rowdata['CapacidadPersonas'];}
-					if(isset($Capacidad)) {             $x10 = $Capacidad;              }else{$x10 = Cantidades_decimales_justos($rowdata['Capacidad']);}
-					if(isset($MCubicos)) {              $x11 = $MCubicos;               }else{$x11 = Cantidades_decimales_justos($rowdata['MCubicos']);}
-					if(isset($idTipoCarga)) {           $x12 = $idTipoCarga;            }else{$x12 = $rowdata['idTipoCarga'];}
-					if(isset($idProceso)) {             $x13 = $idProceso;              }else{$x13 = $rowdata['idProceso'];}
-					if(isset($Motivo)) {                $x14 = $Motivo;                 }else{$x14 = $rowdata['Motivo'];}
-					if(isset($LimiteVelocidad)) {       $x15 = $LimiteVelocidad;        }else{$x15 = Cantidades_decimales_justos($rowdata['LimiteVelocidad']);}
-					if(isset($AlertLimiteVelocidad)) {  $x16 = $AlertLimiteVelocidad;   }else{$x16 = $rowdata['AlertLimiteVelocidad'];}
+					if(isset($Nombre)){                $x1  = $Nombre;                 }else{$x1  = $rowdata['Nombre'];}
+					if(isset($idTipo)){                $x2  = $idTipo;                 }else{$x2  = $rowdata['idTipo'];}
+					if(isset($Marca)){                 $x3  = $Marca;                  }else{$x3  = $rowdata['Marca'];}
+					if(isset($Modelo)){                $x4  = $Modelo;                 }else{$x4  = $rowdata['Modelo'];}
+					if(isset($Patente)){               $x5  = $Patente;                }else{$x5  = $rowdata['Patente'];}
+					if(isset($Num_serie)){             $x6  = $Num_serie;              }else{$x6  = $rowdata['Num_serie'];}
+					if(isset($AnoFab)){                $x7  = $AnoFab;                 }else{$x7  = $rowdata['AnoFab'];}
+					if(isset($idZona)){                $x8  = $idZona;                 }else{$x8  = $rowdata['idZona'];}
+					if(isset($CapacidadPersonas)){     $x9  = $CapacidadPersonas;      }else{$x9  = $rowdata['CapacidadPersonas'];}
+					if(isset($Capacidad)){             $x10 = $Capacidad;              }else{$x10 = Cantidades_decimales_justos($rowdata['Capacidad']);}
+					if(isset($MCubicos)){              $x11 = $MCubicos;               }else{$x11 = Cantidades_decimales_justos($rowdata['MCubicos']);}
+					if(isset($idTipoCarga)){           $x12 = $idTipoCarga;            }else{$x12 = $rowdata['idTipoCarga'];}
+					if(isset($idProceso)){             $x13 = $idProceso;              }else{$x13 = $rowdata['idProceso'];}
+					if(isset($Motivo)){                $x14 = $Motivo;                 }else{$x14 = $rowdata['Motivo'];}
+					if(isset($LimiteVelocidad)){       $x15 = $LimiteVelocidad;        }else{$x15 = Cantidades_decimales_justos($rowdata['LimiteVelocidad']);}
+					if(isset($AlertLimiteVelocidad)){  $x16 = $AlertLimiteVelocidad;   }else{$x16 = $rowdata['AlertLimiteVelocidad'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -259,19 +259,19 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 		
 			
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "vehiculos_rutas.php";
 $location = $original;
 $new_location = "vehiculos_rutas_configuracion.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_ruta']) )  { 
+if (!empty($_POST['submit_ruta'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit_ruta']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/vehiculos_rutas_ubicaciones.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit_ruta']) )  { 
+if (!empty($_POST['submit_edit_ruta'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -41,13 +41,13 @@ if ( !empty($_POST['submit_edit_ruta']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/vehiculos_rutas_ubicaciones.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/vehiculos_rutas_ubicaciones.php';	
+	require_once 'A1XRXS_sys/xrxs_form/vehiculos_rutas_ubicaciones.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -62,8 +62,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ruta editada correctam
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ruta borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['mod']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if(!empty($_GET['mod'])){ 
 // consulto los datos
 $query = "SELECT Nombre
 FROM `vehiculos_rutas`
@@ -105,12 +105,12 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta', $rowdata['Nombre'], 'Editar Ruta');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -118,11 +118,11 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 				<li class=""><a href="<?php echo 'vehiculos_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class="active"><a href="<?php echo 'vehiculos_rutas_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 				
-			</ul>	
+			</ul>
 		</header>
         <div class="table-responsive">
 			
-			<div class="col-sm-8">
+			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				<div class="row">
 					<?php
 					//Si no existe una ID se utiliza una por defecto
@@ -179,14 +179,14 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 									if (status == google.maps.GeocoderStatus.OK) {
 										if (results[0]) {
 											document.getElementById(div).value = results[0].formatted_address;
-										} else {
+										}else {
 											alert('No results found');
 										}
-									} else {
+									}else {
 										alert('Geocoder failed due to: ' + status);
 									}
 								});
-							}	
+							}
 							
 							/* ************************************************************************** */
 							google.maps.event.addDomListener(window, "load", initialize());
@@ -195,7 +195,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 				</div>
 			</div>
 			
-			<div class="col-sm-4">
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
@@ -213,7 +213,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Actualizar Punto" name="submit_edit_ruta"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Actualizar Punto" name="submit_edit_ruta"> 
 						</div>
 							  
 					</form>
@@ -222,19 +222,19 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 				</div>
 			</div>
 			
-		</div>	
+		</div>
 		
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} else  { 	 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {	 
 // consulto los datos
 $query = "SELECT Nombre
 FROM `vehiculos_rutas`
@@ -273,16 +273,16 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrRutas,$row );
 }?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta', $rowdata['Nombre'], 'Editar Ruta');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -290,11 +290,11 @@ array_push( $arrRutas,$row );
 				<li class=""><a href="<?php echo 'vehiculos_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class="active"><a href="<?php echo 'vehiculos_rutas_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 				
-			</ul>	
+			</ul>
 		</header>
         <div class="table-responsive">
 			
-			<div class="col-sm-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="row">
 					<?php
 					//Si no existe una ID se utiliza una por defecto
@@ -353,10 +353,10 @@ array_push( $arrRutas,$row );
 									if (status == google.maps.GeocoderStatus.OK) {
 										if (results[0]) {
 											document.getElementById(div).value = results[0].formatted_address;
-										} else {
+										}else {
 											alert('No results found');
 										}
-									} else {
+									}else {
 										alert('Geocoder failed due to: ' + status);
 									}
 								});
@@ -505,7 +505,7 @@ array_push( $arrRutas,$row );
 										$(this).css({opacity: '1'});
 									});
 								});
-							}	
+							}
 							
 
 							/* ************************************************************************** */
@@ -516,7 +516,7 @@ array_push( $arrRutas,$row );
 				</div>
 			</div>
 			
-			<div class="col-sm-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
@@ -534,7 +534,7 @@ array_push( $arrRutas,$row );
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Punto" name="submit_ruta"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Punto" name="submit_ruta"> 
 						</div>
 							  
 					</form>
@@ -568,19 +568,19 @@ array_push( $arrRutas,$row );
 							</tr>
 						<?php 
 						$nx++;
-						} ?>                    
+						} ?>        
 						</tbody>
 					</table>
 				</div>
 			</div>
 			
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php } ?>

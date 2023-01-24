@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "cursos_listado.php";
 $location = $original;
 $new_location = "cursos_listado_videoconferencia.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/cursos_listado_videoconferencia.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -41,13 +41,13 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/cursos_listado_videoconferencia.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/cursos_listado_videoconferencia.php';	
+	require_once 'A1XRXS_sys/xrxs_form/cursos_listado_videoconferencia.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -61,10 +61,10 @@ if (isset($_GET['created'])){ $error['created'] = 'sucess/Videoconferencia agreg
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Videoconferencia eliminada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['edit']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['edit'])){
 // consulto los datos
-$query = "SELECT idUsuario, Nombre, HoraInicio, HoraTermino, idDia_1, idDia_2,
+$query = "SELECT idUsuario, Nombre,HoraInicio, HoraTermino, idDia_1, idDia_2,
 idDia_3, idDia_4, idDia_5, idDia_6, idDia_7
 FROM `cursos_listado_videoconferencia`
 WHERE idVideoConferencia = ".$_GET['edit'];
@@ -83,40 +83,40 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado); 
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar VideoConferencia</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar VideoConferencia</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {        $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
-				if(isset($idUsuario)) {     $x2  = $idUsuario;     }else{$x2  = $rowdata['idUsuario'];}
-				if(isset($HoraInicio)) {    $x3  = $HoraInicio;    }else{$x3  = $rowdata['HoraInicio'];}
-				if(isset($HoraTermino)) {   $x4  = $HoraTermino;   }else{$x4  = $rowdata['HoraTermino'];}
-				if(isset($idDia_1)) {       $x5  = $idDia_1;       }else{$x5  = $rowdata['idDia_1'];}
-				if(isset($idDia_2)) {       $x5 .= ','.$idDia_2;   }else{$x5 .= ','.$rowdata['idDia_2'];}
-				if(isset($idDia_3)) {       $x5 .= ','.$idDia_3;   }else{$x5 .= ','.$rowdata['idDia_3'];}
-				if(isset($idDia_4)) {       $x5 .= ','.$idDia_4;   }else{$x5 .= ','.$rowdata['idDia_4'];}
-				if(isset($idDia_5)) {       $x5 .= ','.$idDia_5;   }else{$x5 .= ','.$rowdata['idDia_5'];}
-				if(isset($idDia_6)) {       $x5 .= ','.$idDia_6;   }else{$x5 .= ','.$rowdata['idDia_6'];}
-				if(isset($idDia_7)) {       $x5 .= ','.$idDia_7;   }else{$x5 .= ','.$rowdata['idDia_7'];}
-				
+				if(isset($Nombre)){        $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
+				if(isset($idUsuario)){     $x2  = $idUsuario;     }else{$x2  = $rowdata['idUsuario'];}
+				if(isset($HoraInicio)){    $x3  = $HoraInicio;    }else{$x3  = $rowdata['HoraInicio'];}
+				if(isset($HoraTermino)){   $x4  = $HoraTermino;   }else{$x4  = $rowdata['HoraTermino'];}
+				if(isset($idDia_1)){       $x5  = $idDia_1;       }else{$x5  = $rowdata['idDia_1'];}
+				if(isset($idDia_2)){       $x5 .= ','.$idDia_2;   }else{$x5 .= ','.$rowdata['idDia_2'];}
+				if(isset($idDia_3)){       $x5 .= ','.$idDia_3;   }else{$x5 .= ','.$rowdata['idDia_3'];}
+				if(isset($idDia_4)){       $x5 .= ','.$idDia_4;   }else{$x5 .= ','.$rowdata['idDia_4'];}
+				if(isset($idDia_5)){       $x5 .= ','.$idDia_5;   }else{$x5 .= ','.$rowdata['idDia_5'];}
+				if(isset($idDia_6)){       $x5 .= ','.$idDia_6;   }else{$x5 .= ','.$rowdata['idDia_6'];}
+				if(isset($idDia_7)){       $x5 .= ','.$idDia_7;   }else{$x5 .= ','.$rowdata['idDia_7'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				$Form_Inputs->form_select_join_filter('Profesor','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('Profesor','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x3, 2, 2);
 				$Form_Inputs->form_time('Hora Termino','HoraTermino', $x4, 2, 1);
 				$Form_Inputs->form_checkbox_active('Dias','idDia', $x5, 2, 'idDia', 'Nombre', 'core_tiempo_dias', 0, $dbConn);
@@ -127,55 +127,55 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						
 				?>
 
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 <?php
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Agregar VideoConferencia</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Agregar VideoConferencia</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {        $x1  = $Nombre;        }else{$x1  = '';}
-				if(isset($idUsuario)) {     $x2  = $idUsuario;     }else{$x2  = '';}
-				if(isset($HoraInicio)) {    $x3  = $HoraInicio;    }else{$x3  = '';}
-				if(isset($HoraTermino)) {   $x4  = $HoraTermino;   }else{$x4  = '';}
-				if(isset($idDia_1)) {       $x5  = $idDia_1;       }else{$x5  = '';}
-				if(isset($idDia_2)) {       $x5 .= ','.$idDia_2;   }else{$x5 .= ',';}
-				if(isset($idDia_3)) {       $x5 .= ','.$idDia_3;   }else{$x5 .= ',';}
-				if(isset($idDia_4)) {       $x5 .= ','.$idDia_4;   }else{$x5 .= ',';}
-				if(isset($idDia_5)) {       $x5 .= ','.$idDia_5;   }else{$x5 .= ',';}
-				if(isset($idDia_6)) {       $x5 .= ','.$idDia_6;   }else{$x5 .= ',';}
-				if(isset($idDia_7)) {       $x5 .= ','.$idDia_7;   }else{$x5 .= ',';}
+				if(isset($Nombre)){        $x1  = $Nombre;        }else{$x1  = '';}
+				if(isset($idUsuario)){     $x2  = $idUsuario;     }else{$x2  = '';}
+				if(isset($HoraInicio)){    $x3  = $HoraInicio;    }else{$x3  = '';}
+				if(isset($HoraTermino)){   $x4  = $HoraTermino;   }else{$x4  = '';}
+				if(isset($idDia_1)){       $x5  = $idDia_1;       }else{$x5  = '';}
+				if(isset($idDia_2)){       $x5 .= ','.$idDia_2;   }else{$x5 .= ',';}
+				if(isset($idDia_3)){       $x5 .= ','.$idDia_3;   }else{$x5 .= ',';}
+				if(isset($idDia_4)){       $x5 .= ','.$idDia_4;   }else{$x5 .= ',';}
+				if(isset($idDia_5)){       $x5 .= ','.$idDia_5;   }else{$x5 .= ',';}
+				if(isset($idDia_6)){       $x5 .= ','.$idDia_6;   }else{$x5 .= ',';}
+				if(isset($idDia_7)){       $x5 .= ','.$idDia_7;   }else{$x5 .= ',';}
 				
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				$Form_Inputs->form_select_join_filter('Profesor','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('Profesor','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x3, 2, 2);
 				$Form_Inputs->form_time('Hora Termino','HoraTermino', $x4, 2, 1);
 				$Form_Inputs->form_checkbox_active('Dias','idDia', $x5, 2, 'idDia', 'Nombre', 'core_tiempo_dias', 0, $dbConn);
@@ -184,16 +184,16 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						
 				?>
 
-				<div class="form-group">		
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
 $query = "SELECT Nombre
@@ -249,21 +249,21 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrVideo,$row );
 }
 
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['Nombre'], 'Editar VideoConferencia Relacionadas');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar VideoConferencia</a><?php }?>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar VideoConferencia</a><?php }?>
 	</div>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -277,10 +277,10 @@ array_push( $arrVideo,$row );
 						<li class=""><a href="<?php echo 'cursos_listado_documentacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Documentos Relacionados</a></li>
 						<li class="active"><a href="<?php echo 'cursos_listado_videoconferencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >VideoConferencias Relacionadas</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div class="table-responsive"> 
+        <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -307,7 +307,7 @@ array_push( $arrVideo,$row );
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					
 
-					<?php foreach ($arrVideo as $video) {?>
+					<?php foreach ($arrVideo as $video){ ?>
 						<tr> 
 							<td><?php echo $video['NombreVideo']; ?></td>
 							<td><?php echo $video['Usuario']; ?></td>
@@ -328,21 +328,21 @@ array_push( $arrVideo,$row );
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($video['idVideoConferencia'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la videoconferencia '.$video['NombreVideo'].'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>								
+									<?php } ?>
 								</div>
 							</td>
-						</tr> 
+						</tr>
 					<?php } ?>
 						                
 				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

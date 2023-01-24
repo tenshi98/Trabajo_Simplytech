@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistemas.php";
 $location = $original;
 /**********************************************************************************************************************************/
@@ -25,7 +25,7 @@ require_once 'core/Web.Header.Main.php';
 ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -34,9 +34,9 @@ require_once 'core/Web.Header.Main.php';
 				<li class=""><a href="#barraLat" data-toggle="tab">Barra Lateral</a></li>
 				<li class=""><a href="#pie" data-toggle="tab">Torta</a></li>
 				<li class=""><a href="#embudo" data-toggle="tab">Embudo</a></li>
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 		
 			<div class="tab-pane fade active in" id="lineal">
 				<?php
@@ -92,7 +92,7 @@ require_once 'core/Web.Header.Main.php';
 				echo GraphLinear_2('graphLinear_2', 'Seleccion con Rango', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
 				
 				?>
-			</div>	
+			</div>
 			
 			<div class="tab-pane fade" id="barra">
 				<?php 
@@ -184,7 +184,7 @@ require_once 'core/Web.Header.Main.php';
 				echo GraphPie_1('graphPie_3', 'Donut Chart', $Graphics_values,$Graphics_labels,$Graphics_width,$Graphics_height, 3,0);
 				
 				?>
-			</div>	
+			</div>
 			
 			<div class="tab-pane fade" id="embudo">
 				<?php
@@ -197,7 +197,7 @@ require_once 'core/Web.Header.Main.php';
 				?>
 			</div>
 				
-        </div>	
+        </div>
 	</div>
 </div>
 

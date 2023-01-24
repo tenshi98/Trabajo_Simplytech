@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "licitacion_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,16 +18,16 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){        $location .= "&idCliente=".$_GET['idCliente'];       $search .= "&idCliente=".$_GET['idCliente'];}
-if(isset($_GET['Codigo']) && $_GET['Codigo'] != ''){              $location .= "&Codigo=".$_GET['Codigo'];             $search .= "&Codigo=".$_GET['Codigo'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){              $location .= "&Nombre=".$_GET['Nombre'];             $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['FechaInicio']) && $_GET['FechaInicio'] != ''){    $location .= "&FechaInicio=".$_GET['FechaInicio'];   $search .= "&FechaInicio=".$_GET['FechaInicio'];}
-if(isset($_GET['FechaTermino']) && $_GET['FechaTermino'] != ''){  $location .= "&FechaTermino=".$_GET['FechaTermino']; $search .= "&FechaTermino=".$_GET['FechaTermino'];}
-if(isset($_GET['Presupuesto']) && $_GET['Presupuesto'] != ''){    $location .= "&Presupuesto=".$_GET['Presupuesto'];   $search .= "&Presupuesto=".$_GET['Presupuesto'];}
-if(isset($_GET['idBodegaProd']) && $_GET['idBodegaProd'] != ''){  $location .= "&idBodegaProd=".$_GET['idBodegaProd']; $search .= "&idBodegaProd=".$_GET['idBodegaProd'];}
-if(isset($_GET['idBodegaIns']) && $_GET['idBodegaIns'] != ''){    $location .= "&idBodegaIns=".$_GET['idBodegaIns'];   $search .= "&idBodegaIns=".$_GET['idBodegaIns'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){          $location .= "&idEstado=".$_GET['idEstado'];         $search .= "&idEstado=".$_GET['idEstado'];}
-if(isset($_GET['idAprobado']) && $_GET['idAprobado'] != ''){      $location .= "&idAprobado=".$_GET['idAprobado'];     $search .= "&idAprobado=".$_GET['idAprobado'];}
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){ $location .= "&idCliente=".$_GET['idCliente'];       $search .= "&idCliente=".$_GET['idCliente'];}
+if(isset($_GET['Codigo']) && $_GET['Codigo']!=''){       $location .= "&Codigo=".$_GET['Codigo'];             $search .= "&Codigo=".$_GET['Codigo'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){       $location .= "&Nombre=".$_GET['Nombre'];             $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['FechaInicio']) && $_GET['FechaInicio']!=''){    $location .= "&FechaInicio=".$_GET['FechaInicio'];   $search .= "&FechaInicio=".$_GET['FechaInicio'];}
+if(isset($_GET['FechaTermino']) && $_GET['FechaTermino']!=''){  $location .= "&FechaTermino=".$_GET['FechaTermino']; $search .= "&FechaTermino=".$_GET['FechaTermino'];}
+if(isset($_GET['Presupuesto']) && $_GET['Presupuesto']!=''){    $location .= "&Presupuesto=".$_GET['Presupuesto'];   $search .= "&Presupuesto=".$_GET['Presupuesto'];}
+if(isset($_GET['idBodegaProd']) && $_GET['idBodegaProd']!=''){  $location .= "&idBodegaProd=".$_GET['idBodegaProd']; $search .= "&idBodegaProd=".$_GET['idBodegaProd'];}
+if(isset($_GET['idBodegaIns']) && $_GET['idBodegaIns']!=''){    $location .= "&idBodegaIns=".$_GET['idBodegaIns'];   $search .= "&idBodegaIns=".$_GET['idBodegaIns'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){   $location .= "&idEstado=".$_GET['idEstado'];         $search .= "&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idAprobado']) && $_GET['idAprobado']!=''){      $location .= "&idAprobado=".$_GET['idAprobado'];     $search .= "&idAprobado=".$_GET['idAprobado'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -37,16 +37,16 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 
 //------------------------------------- Licitacion -------------------------------------// 
 //formulario para crear
-if ( !empty($_POST['submit_Licitacion']) )  { 
+if (!empty($_POST['submit_Licitacion'])){
 	//Llamamos al formulario
 	$form_trabajo= 'createBasicData';
 	require_once 'A1XRXS_sys/xrxs_form/z_licitacion_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'delBasicData';
-	require_once 'A1XRXS_sys/xrxs_form/z_licitacion_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_licitacion_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -61,15 +61,15 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Contrato editada corre
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Contrato borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['id']) ) {
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 /*******************************************/ 
 //se traen los datos basicos de la licitacion
 $SIS_query = '
 licitacion_listado.Codigo, 
-licitacion_listado.Nombre, 
+licitacion_listado.Nombre,
 licitacion_listado.FechaInicio, 
 licitacion_listado.FechaTermino, 
 licitacion_listado.Presupuesto, 
@@ -97,7 +97,7 @@ LEFT JOIN `core_sistemas_opciones`       ON core_sistemas_opciones.idOpciones   
 $SIS_where = 'licitacion_listado.idLicitacion='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con el historial
 $SIS_query = '
 licitacion_listado_historial.Creacion_fecha, 
@@ -144,7 +144,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 
 	$array3d = array();
 	foreach($arrLicitacion as $key) {
-		
+
 		//Creo Variables para la rejilla
 		for ($i = 1; $i <= $nmax; $i++) {
 			$d[$i]  = $key['LVL_'.$i.'_id'];   
@@ -295,13 +295,13 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 		
 		foreach ($array as $key => $value){
 			//Rearmo la ubicacion de acuerdo a la profundidad
-			if (isset($value['id'])) {
+			if (isset($value['id'])){
 				$loc = $location.'&lv_'.$lv.'='.$value['id'];
 			}else{
 				$loc = $location;
 			}
-			
-			if (isset($value['Nombre'])) {
+
+			if (isset($value['Nombre'])){
 				echo '<li><div class="blum">';
 				echo '<div class="pull-left">'.$value['Codigo'].' - '.$value['Nombre'].'</div>';
 							
@@ -324,13 +324,13 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Resumen');?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -342,15 +342,15 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 					<ul class="dropdown-menu" role="menu">
 						<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
 							<li class=""><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Itemizado</a></li>
-						<?php } ?> 
+						<?php } ?>
 						<li class=""><a href="<?php echo 'licitacion_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'licitacion_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 					</ul>
 				</li> 
                          
-			</ul>	
+			</ul>
 		</header>
-		<div id="div-3" class="tab-content">
+		<div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
@@ -370,7 +370,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 								<td><?php echo $rowdata['Sistema'];?></td>
 							</tr>
 							
-							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
+							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
 								<tr class="odd">
 									<td>Cliente</td>
 									<td><?php echo $rowdata['Cliente'];?></td>
@@ -418,7 +418,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 								</tr>
 								<tr>
 									<td colspan="2">
-										<div class="clearfix"></div>  	
+										<div class="clearfix"></div>
 
 										<?php //Se imprime el arbol
 										echo arrayToUL($array3d, 0, $rowlevel['level'],$location, $nmax);
@@ -444,7 +444,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 </div>	
 	
 <?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
-	<div class="col-xs-12" style="margin-bottom:15px;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 		<table id="items">
 			<tbody>
 				<tr>
@@ -454,68 +454,68 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 					<th width="160">Fecha</th>
 					<th>Usuario</th>
 					<th>Observacion</th>
-				</tr>			  
+				</tr>
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
 						<td><?php echo '<i class="'.$doc['FonAwesome'].'" aria-hidden="true"></i> '.$doc['Observacion']; ?></td>
-					</tr> 
+					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
-	</div>	
+	</div>
 <?php } ?>
 
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-	<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
 </div>
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {  
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //verifico que sea un administrador
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Contrato</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {             $x1  = $idCliente;           }else{$x1  = '';}
-				if(isset($Codigo)) {                $x2  = $Codigo;              }else{$x2  = '';}
-				if(isset($Nombre)) {                $x3  = $Nombre;              }else{$x3  = '';}
-				if(isset($FechaInicio)) {           $x4  = $FechaInicio;         }else{$x4  = '';}
-				if(isset($FechaTermino)) {          $x5  = $FechaTermino;        }else{$x5  = '';}
-				if(isset($idTipoLicitacion)) {      $x6  = $idTipoLicitacion;    }else{$x6  = '';}
-				if(isset($ValorMensual)) {          $x7  = $ValorMensual;        }else{$x7  = '';}
-				if(isset($Presupuesto)) {           $x8  = $Presupuesto;         }else{$x8  = '';}
-				if(isset($idBodegaProd)) {          $x9  = $idBodegaProd;        }else{$x9  = '';}
-				if(isset($idBodegaIns)) {           $x10 = $idBodegaIns;         }else{$x10 = '';}
-				if(isset($idOpcionItem)) {          $x11 = $idOpcionItem;        }else{$x11 = '';}
-				
+				if(isset($idCliente)){             $x1  = $idCliente;           }else{$x1  = '';}
+				if(isset($Codigo)){                $x2  = $Codigo;              }else{$x2  = '';}
+				if(isset($Nombre)){                $x3  = $Nombre;              }else{$x3  = '';}
+				if(isset($FechaInicio)){           $x4  = $FechaInicio;         }else{$x4  = '';}
+				if(isset($FechaTermino)){          $x5  = $FechaTermino;        }else{$x5  = '';}
+				if(isset($idTipoLicitacion)){      $x6  = $idTipoLicitacion;    }else{$x6  = '';}
+				if(isset($ValorMensual)){          $x7  = $ValorMensual;        }else{$x7  = '';}
+				if(isset($Presupuesto)){           $x8  = $Presupuesto;         }else{$x8  = '';}
+				if(isset($idBodegaProd)){          $x9  = $idBodegaProd;        }else{$x9  = '';}
+				if(isset($idBodegaIns)){           $x10 = $idBodegaIns;         }else{$x10 = '';}
+				if(isset($idOpcionItem)){          $x11 = $idOpcionItem;        }else{$x11 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1); 
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2); 
-				$Form_Inputs->form_date('Fecha de Inicio Contrato','FechaInicio', $x4, 1); 
-				$Form_Inputs->form_date('Fecha de Termino Contrato','FechaTermino', $x5, 1); 
+				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1);
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2);
+				$Form_Inputs->form_date('Fecha de Inicio Contrato','FechaInicio', $x4, 1);
+				$Form_Inputs->form_date('Fecha de Termino Contrato','FechaTermino', $x5, 1);
 				$Form_Inputs->form_select('Tipo Contrato','idTipoLicitacion', $x6, 2, 'idTipoLicitacion', 'Nombre', 'core_licitacion_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_values('Valor Fijo Mensual', 'ValorMensual', $x7, 1);
 				$Form_Inputs->form_values('Presupuesto', 'Presupuesto', $x8, 1);
@@ -531,7 +531,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('idAprobado', 2, 2);
 				
 				
-				?> 
+				?>
 				
 				<script>
 					document.getElementById('div_ValorMensual').style.display = 'none';
@@ -541,51 +541,43 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si es A suma Alzada
-						if(modelSelected1 == 1){ 
+						if(modelSelected1 == 1){
 							document.getElementById('div_ValorMensual').style.display = '';
 							document.getElementById('div_Presupuesto').style.display = 'none';
-							document.getElementById('Presupuesto').value = "0";						
+							document.getElementById('Presupuesto').value = "0";
 									
 						//si es Por Itemizado
-						} else if(modelSelected1 == 2){ 
+						} else if(modelSelected1 == 2){
 							document.getElementById('div_ValorMensual').style.display = 'none';
 							document.getElementById('div_Presupuesto').style.display = '';
-							document.getElementById('ValorMensual').value = "0";	
+							document.getElementById('ValorMensual').value = "0";
 
 						}
 					});
 							
-				</script>        
+				</script>  
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_Licitacion"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_Licitacion"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
                     
 		</div>
 	</div>
 </div> 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -608,24 +600,24 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/ 
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where = "licitacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "licitacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){       $SIS_where .= " AND licitacion_listado.idCliente=".$_GET['idCliente'];}
-if(isset($_GET['Codigo']) && $_GET['Codigo'] != ''){             $SIS_where .= " AND licitacion_listado.Codigo LIKE '%".$_GET['Codigo']."%'";}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){             $SIS_where .= " AND licitacion_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['FechaInicio']) && $_GET['FechaInicio'] != ''){   $SIS_where .= " AND licitacion_listado.FechaInicio='".$_GET['FechaInicio']."'";}
-if(isset($_GET['FechaTermino']) && $_GET['FechaTermino'] != ''){ $SIS_where .= " AND licitacion_listado.FechaTermino='".$_GET['FechaTermino']."'";}
-if(isset($_GET['Presupuesto']) && $_GET['Presupuesto'] != ''){   $SIS_where .= " AND licitacion_listado.Presupuesto LIKE '%".$_GET['Presupuesto']."%'";}
-if(isset($_GET['idBodegaProd']) && $_GET['idBodegaProd'] != ''){ $SIS_where .= " AND licitacion_listado.idBodegaProd=".$_GET['idBodegaProd'];}
-if(isset($_GET['idBodegaIns']) && $_GET['idBodegaIns'] != ''){   $SIS_where .= " AND licitacion_listado.idBodegaIns=".$_GET['idBodegaIns'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){         $SIS_where .= " AND licitacion_listado.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['idAprobado']) && $_GET['idAprobado'] != ''){     $SIS_where .= " AND licitacion_listado.idAprobado=".$_GET['idAprobado'];}
-/**********************************************************/				
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){$SIS_where .= " AND licitacion_listado.idCliente=".$_GET['idCliente'];}
+if(isset($_GET['Codigo']) && $_GET['Codigo']!=''){      $SIS_where .= " AND licitacion_listado.Codigo LIKE '%".EstandarizarInput($_GET['Codigo'])."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){      $SIS_where .= " AND licitacion_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['FechaInicio']) && $_GET['FechaInicio']!=''){   $SIS_where .= " AND licitacion_listado.FechaInicio='".$_GET['FechaInicio']."'";}
+if(isset($_GET['FechaTermino']) && $_GET['FechaTermino']!=''){ $SIS_where .= " AND licitacion_listado.FechaTermino='".$_GET['FechaTermino']."'";}
+if(isset($_GET['Presupuesto']) && $_GET['Presupuesto']!=''){   $SIS_where .= " AND licitacion_listado.Presupuesto LIKE '%".EstandarizarInput($_GET['Presupuesto'])."%'";}
+if(isset($_GET['idBodegaProd']) && $_GET['idBodegaProd']!=''){ $SIS_where .= " AND licitacion_listado.idBodegaProd=".$_GET['idBodegaProd'];}
+if(isset($_GET['idBodegaIns']) && $_GET['idBodegaIns']!=''){   $SIS_where .= " AND licitacion_listado.idBodegaIns=".$_GET['idBodegaIns'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){  $SIS_where .= " AND licitacion_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idAprobado']) && $_GET['idAprobado']!=''){     $SIS_where .= " AND licitacion_listado.idAprobado=".$_GET['idAprobado'];}
+/**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idLicitacion', 'licitacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 licitacion_listado.idLicitacion,
@@ -648,47 +640,47 @@ $arrArea = db_select_array (false, $SIS_query, 'licitacion_listado', $SIS_join, 
 
 /**********************************************************/ 
 //Verifico el tipo de usuario que esta ingresando
-$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php }?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {             $x0  = $idCliente;           }else{$x0  = '';}
-				if(isset($Codigo)) {                $x1  = $Codigo;              }else{$x1  = '';}
-				if(isset($Nombre)) {                $x2  = $Nombre;              }else{$x2  = '';}
-				if(isset($FechaInicio)) {           $x3  = $FechaInicio;         }else{$x3  = '';}
-				if(isset($FechaTermino)) {          $x4  = $FechaTermino;        }else{$x4  = '';}
-				if(isset($Presupuesto)) {           $x5  = $Presupuesto;         }else{$x5  = '';}
-				if(isset($idBodegaProd)) {          $x6  = $idBodegaProd;        }else{$x6  = '';}
-				if(isset($idBodegaIns)) {           $x7  = $idBodegaIns;         }else{$x7  = '';}
-				if(isset($idEstado)) {              $x8  = $idEstado;            }else{$x8  = '';}
-				if(isset($idAprobado)) {            $x9  = $idAprobado;          }else{$x9  = '';}
-				
+				if(isset($idCliente)){             $x0  = $idCliente;           }else{$x0  = '';}
+				if(isset($Codigo)){                $x1  = $Codigo;              }else{$x1  = '';}
+				if(isset($Nombre)){                $x2  = $Nombre;              }else{$x2  = '';}
+				if(isset($FechaInicio)){           $x3  = $FechaInicio;         }else{$x3  = '';}
+				if(isset($FechaTermino)){          $x4  = $FechaTermino;        }else{$x4  = '';}
+				if(isset($Presupuesto)){           $x5  = $Presupuesto;         }else{$x5  = '';}
+				if(isset($idBodegaProd)){          $x6  = $idBodegaProd;        }else{$x6  = '';}
+				if(isset($idBodegaIns)){           $x7  = $idBodegaIns;         }else{$x7  = '';}
+				if(isset($idEstado)){              $x8  = $idEstado;            }else{$x8  = '';}
+				if(isset($idAprobado)){            $x9  = $idAprobado;          }else{$x9  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x1, 1); 
+				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x1, 1);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1); 
-				$Form_Inputs->form_date('Fecha de Inicio Contrato','FechaInicio', $x3, 1); 
-				$Form_Inputs->form_date('Fecha de Termino Contrato','FechaTermino', $x4, 1); 
+				$Form_Inputs->form_date('Fecha de Inicio Contrato','FechaInicio', $x3, 1);
+				$Form_Inputs->form_date('Fecha de Termino Contrato','FechaTermino', $x4, 1);
 				$Form_Inputs->form_values('Presupuesto', 'Presupuesto', $x5, 1);
 				$Form_Inputs->form_select('Bodega Productos','idBodegaProd', $x6, 1, 'idBodega', 'Nombre', 'bodegas_productos_listado', $w, '', $dbConn);
 				$Form_Inputs->form_select('Bodega Insumos','idBodegaIns', $x7, 1, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $w, '', $dbConn);
@@ -696,25 +688,25 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select('Estado Aprobacion','idAprobado', $x9, 1, 'idEstado', 'Nombre', 'core_estado_aprobacion', 0, '', $dbConn);
 				
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div> 
-<div class="clearfix"></div>                
+<div class="clearfix"></div>      
                                  
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Contratos</h5>	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Contratos</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -766,13 +758,13 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrArea as $area) { ?>
-					<tr class="odd">			
+					<tr class="odd">
 						<td><?php echo $area['Cliente']; ?></td>
 						<td><?php echo $area['Codigo']; ?></td>
 						<td><?php echo $area['Nombre']; ?></td>
 						<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $area['Estado']; ?></label></td>
 						<td><?php echo $area['EstadoAprobacion']; ?></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>		
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_licitacion.php?view='.simpleEncode($area['idLicitacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -781,15 +773,15 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 									$ubicacion = $location.'&del='.simpleEncode($area['idLicitacion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>

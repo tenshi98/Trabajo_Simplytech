@@ -2,44 +2,44 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-278).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idMantencion']) )      $idMantencion        = $_POST['idMantencion'];
-	if ( !empty($_POST['idSistema']) )         $idSistema           = $_POST['idSistema'];
-	if ( !empty($_POST['idServicio']) )        $idServicio          = $_POST['idServicio'];
-	if ( !empty($_POST['idOpciones_1']) )      $idOpciones_1        = $_POST['idOpciones_1'];
-	if ( !empty($_POST['idOpciones_2']) )      $idOpciones_2        = $_POST['idOpciones_2'];
-	if ( !empty($_POST['idOpciones_3']) )      $idOpciones_3        = $_POST['idOpciones_3'];
-	if ( !empty($_POST['idUsuario']) )         $idUsuario           = $_POST['idUsuario'];
-	if ( !empty($_POST['Fecha']) )             $Fecha               = $_POST['Fecha'];
-	if ( !empty($_POST['Dia']) )               $Dia                 = $_POST['Dia'];
-	if ( !empty($_POST['idMes']) )             $idMes               = $_POST['idMes'];
-	if ( !empty($_POST['Semana']) )            $Semana              = $_POST['Semana'];
-	if ( !empty($_POST['Ano']) )               $Ano                 = $_POST['Ano'];
-	if ( !empty($_POST['h_Inicio']) )          $h_Inicio            = $_POST['h_Inicio'];
-	if ( !empty($_POST['h_Termino']) )         $h_Termino           = $_POST['h_Termino'];
-	if ( !empty($_POST['Duracion']) )          $Duracion            = $_POST['Duracion'];
-	if ( !empty($_POST['Resumen']) )           $Resumen             = $_POST['Resumen'];
-	if ( !empty($_POST['Resolucion']) )        $Resolucion          = $_POST['Resolucion'];
-	if ( !empty($_POST['Recepcion_Nombre']) )  $Recepcion_Nombre    = $_POST['Recepcion_Nombre'];
-	if ( !empty($_POST['Recepcion_Rut']) )     $Recepcion_Rut       = $_POST['Recepcion_Rut'];
-	if ( !empty($_POST['Recepcion_Email']) )   $Recepcion_Email     = $_POST['Recepcion_Email'];
-	if ( !empty($_POST['Path_Firma']) )        $Path_Firma          = $_POST['Path_Firma'];
-	
-	if ( !empty($_POST['idEquipo']) )          $idEquipo            = $_POST['idEquipo'];
-	if ( !empty($_POST['idTelemetria']) )      $idTelemetria        = $_POST['idTelemetria'];
-	if ( !empty($_POST['idArchivo']) )         $idArchivo           = $_POST['idArchivo'];
-	
+	if (!empty($_POST['idMantencion']))      $idMantencion        = $_POST['idMantencion'];
+	if (!empty($_POST['idSistema']))         $idSistema           = $_POST['idSistema'];
+	if (!empty($_POST['idServicio']))        $idServicio          = $_POST['idServicio'];
+	if (!empty($_POST['idOpciones_1']))      $idOpciones_1        = $_POST['idOpciones_1'];
+	if (!empty($_POST['idOpciones_2']))      $idOpciones_2        = $_POST['idOpciones_2'];
+	if (!empty($_POST['idOpciones_3']))      $idOpciones_3        = $_POST['idOpciones_3'];
+	if (!empty($_POST['idUsuario']))         $idUsuario           = $_POST['idUsuario'];
+	if (!empty($_POST['Fecha']))             $Fecha               = $_POST['Fecha'];
+	if (!empty($_POST['Dia']))               $Dia                 = $_POST['Dia'];
+	if (!empty($_POST['idMes']))             $idMes               = $_POST['idMes'];
+	if (!empty($_POST['Semana']))            $Semana              = $_POST['Semana'];
+	if (!empty($_POST['Ano']))               $Ano                 = $_POST['Ano'];
+	if (!empty($_POST['h_Inicio']))          $h_Inicio            = $_POST['h_Inicio'];
+	if (!empty($_POST['h_Termino']))         $h_Termino           = $_POST['h_Termino'];
+	if (!empty($_POST['Duracion']))          $Duracion            = $_POST['Duracion'];
+	if (!empty($_POST['Resumen']))           $Resumen             = $_POST['Resumen'];
+	if (!empty($_POST['Resolucion']))        $Resolucion          = $_POST['Resolucion'];
+	if (!empty($_POST['Recepcion_Nombre']))  $Recepcion_Nombre    = $_POST['Recepcion_Nombre'];
+	if (!empty($_POST['Recepcion_Rut']))     $Recepcion_Rut       = $_POST['Recepcion_Rut'];
+	if (!empty($_POST['Recepcion_Email']))   $Recepcion_Email     = $_POST['Recepcion_Email'];
+	if (!empty($_POST['Path_Firma']))        $Path_Firma          = $_POST['Path_Firma'];
+
+	if (!empty($_POST['idEquipo']))          $idEquipo            = $_POST['idEquipo'];
+	if (!empty($_POST['idTelemetria']))      $idTelemetria        = $_POST['idTelemetria'];
+	if (!empty($_POST['idArchivo']))         $idArchivo           = $_POST['idArchivo'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -73,56 +73,56 @@ require_once '0_validate_user_1.php';
 			case 'Recepcion_Rut':       if(empty($Recepcion_Rut)){     $error['Recepcion_Rut']     = 'error/No ha ingresado el rut de la persona de recepcion';}break;
 			case 'Recepcion_Email':     if(empty($Recepcion_Email)){   $error['Recepcion_Email']   = 'error/No ha ingresado el email de la persona de recepcion';}break;
 			case 'Path_Firma':          if(empty($Path_Firma)){        $error['Path_Firma']        = 'error/No ha ingresado la firma';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Resumen) && $Resumen != ''){       $Resumen    = EstandarizarInput($Resumen); }
-	if(isset($Resolucion) && $Resolucion != ''){ $Resolucion = EstandarizarInput($Resolucion); }
-	
+/*******************************************************************************************************************/
+	if(isset($Resumen) && $Resumen!=''){       $Resumen    = EstandarizarInput($Resumen);}
+	if(isset($Resolucion) && $Resolucion!=''){ $Resolucion = EstandarizarInput($Resolucion);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Resumen)&&contar_palabras_censuradas($Resumen)!=0){        $error['Resumen']    = 'error/Edita Resumen, contiene palabras no permitidas'; }	
-	if(isset($Resolucion)&&contar_palabras_censuradas($Resolucion)!=0){  $error['Resolucion'] = 'error/Edita Resolucion, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Resumen)&&contar_palabras_censuradas($Resumen)!=0){        $error['Resumen']    = 'error/Edita Resumen, contiene palabras no permitidas';}
+	if(isset($Resolucion)&&contar_palabras_censuradas($Resolucion)!=0){  $error['Resolucion'] = 'error/Edita Resolucion, contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//se verifican las horas para obtener la duracion
 			if($h_Termino<$h_Inicio){
 				$error['duracion'] = 'error/La hora de inicio es superior a la hora de termino'; 
 			}
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//se calcula la duracion
 				$Duracion = restahoras($h_Inicio,$h_Termino);
-				
+
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){          $SIS_data  = "'".$idSistema."'" ;      }else{$SIS_data  = "''";}
-				if(isset($idServicio) && $idServicio != ''){        $SIS_data .= ",'".$idServicio."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){    $SIS_data .= ",'".$idOpciones_1."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){    $SIS_data .= ",'".$idOpciones_2."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){    $SIS_data .= ",'".$idOpciones_3."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario != ''){          $SIS_data .= ",'".$idUsuario."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha != ''){                  
-					$SIS_data .= ",'".$Fecha."'" ;   
-					$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'" ; 
-					$SIS_data .= ",'".fecha2NMes($Fecha)."'" ; 
-					$SIS_data .= ",'".fecha2NSemana($Fecha)."'" ; 
-					$SIS_data .= ",'".fecha2Ano($Fecha)."'" ;       
+				if(isset($idSistema) && $idSistema!=''){          $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
+				if(isset($idServicio) && $idServicio!=''){        $SIS_data .= ",'".$idServicio."'";    }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_1) && $idOpciones_1!=''){    $SIS_data .= ",'".$idOpciones_1."'";  }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_2) && $idOpciones_2!=''){    $SIS_data .= ",'".$idOpciones_2."'";  }else{$SIS_data .= ",''";}
+				if(isset($idOpciones_3) && $idOpciones_3!=''){    $SIS_data .= ",'".$idOpciones_3."'";  }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){
+					$SIS_data .= ",'".$Fecha."'";  
+					$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'";
+					$SIS_data .= ",'".fecha2NMes($Fecha)."'";
+					$SIS_data .= ",'".fecha2NSemana($Fecha)."'"; 
+					$SIS_data .= ",'".fecha2Ano($Fecha)."'";    
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
@@ -130,21 +130,21 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($h_Inicio) && $h_Inicio != ''){                  $SIS_data .= ",'".$h_Inicio."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($h_Termino) && $h_Termino != ''){                $SIS_data .= ",'".$h_Termino."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($Duracion) && $Duracion != ''){                  $SIS_data .= ",'".$Duracion."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($Resumen) && $Resumen != ''){                    $SIS_data .= ",'".$Resumen."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($Resolucion) && $Resolucion != ''){              $SIS_data .= ",'".$Resolucion."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($Recepcion_Nombre) && $Recepcion_Nombre != ''){  $SIS_data .= ",'".$Recepcion_Nombre."'" ; }else{$SIS_data .= ",''";}
-				if(isset($Recepcion_Rut) && $Recepcion_Rut != ''){        $SIS_data .= ",'".$Recepcion_Rut."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($Recepcion_Email) && $Recepcion_Email != ''){    $SIS_data .= ",'".$Recepcion_Email."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($Path_Firma) && $Path_Firma != ''){              $SIS_data .= ",'".$Path_Firma."'" ;       }else{$SIS_data .= ",''";}
-				
+				if(isset($h_Inicio) && $h_Inicio!=''){                  $SIS_data .= ",'".$h_Inicio."'";         }else{$SIS_data .= ",''";}
+				if(isset($h_Termino) && $h_Termino!=''){                $SIS_data .= ",'".$h_Termino."'";        }else{$SIS_data .= ",''";}
+				if(isset($Duracion) && $Duracion!=''){                  $SIS_data .= ",'".$Duracion."'";         }else{$SIS_data .= ",''";}
+				if(isset($Resumen) && $Resumen!=''){                    $SIS_data .= ",'".$Resumen."'";          }else{$SIS_data .= ",''";}
+				if(isset($Resolucion) && $Resolucion!=''){              $SIS_data .= ",'".$Resolucion."'";       }else{$SIS_data .= ",''";}
+				if(isset($Recepcion_Nombre) && $Recepcion_Nombre!=''){  $SIS_data .= ",'".$Recepcion_Nombre."'"; }else{$SIS_data .= ",''";}
+				if(isset($Recepcion_Rut) && $Recepcion_Rut!=''){        $SIS_data .= ",'".$Recepcion_Rut."'";    }else{$SIS_data .= ",''";}
+				if(isset($Recepcion_Email) && $Recepcion_Email!=''){    $SIS_data .= ",'".$Recepcion_Email."'";  }else{$SIS_data .= ",''";}
+				if(isset($Path_Firma) && $Path_Firma!=''){              $SIS_data .= ",'".$Path_Firma."'";       }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, idServicio, idOpciones_1, idOpciones_2, idOpciones_3, idUsuario, Fecha, Dia, idMes, Semana, Ano, h_Inicio, h_Termino, 
-				Duracion, Resumen, Resolucion, Recepcion_Nombre, Recepcion_Rut, Recepcion_Email, Path_Firma';
+				Duracion, Resumen, Resolucion, Recepcion_Nombre,Recepcion_Rut, Recepcion_Email, Path_Firma';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_historial_mantencion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -152,50 +152,50 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//se verifican las horas para obtener la duracion
 			if($h_Termino<$h_Inicio){
 				$error['duracion'] = 'error/La hora de inicio es superior a la hora de termino'; 
 			}
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//se calcula la duracion
 				$Duracion = restahoras($h_Inicio,$h_Termino);
-				
+
 				//Filtros
-				$SIS_data = "idMantencion='".$idMantencion."'" ;
-				if(isset($idSistema) && $idSistema != ''){         $SIS_data .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idServicio) && $idServicio != ''){       $SIS_data .= ",idServicio='".$idServicio."'" ;}
-				if(isset($idOpciones_1) && $idOpciones_1 != ''){   $SIS_data .= ",idOpciones_1='".$idOpciones_1."'" ;}else{$SIS_data .= ",idOpciones_1='1'";}
-				if(isset($idOpciones_2) && $idOpciones_2 != ''){   $SIS_data .= ",idOpciones_2='".$idOpciones_2."'" ;}else{$SIS_data .= ",idOpciones_2='1'";}
-				if(isset($idOpciones_3) && $idOpciones_3 != ''){   $SIS_data .= ",idOpciones_3='".$idOpciones_3."'" ;}else{$SIS_data .= ",idOpciones_3='1'";}
-				if(isset($idUsuario) && $idUsuario != ''){         $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($Fecha) && $Fecha != ''){                 
-					$SIS_data .= ",Fecha='".$Fecha."'" ;
-					$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'" ;
-					$SIS_data .= ",idMes='".fecha2NMes($Fecha)."'" ;
-					$SIS_data .= ",Semana='".fecha2NSemana($Fecha)."'" ;
-					$SIS_data .= ",Ano='".fecha2Ano($Fecha)."'" ;
+				$SIS_data = "idMantencion='".$idMantencion."'";
+				if(isset($idSistema) && $idSistema!=''){         $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idServicio) && $idServicio!=''){       $SIS_data .= ",idServicio='".$idServicio."'";}
+				if(isset($idOpciones_1) && $idOpciones_1!=''){   $SIS_data .= ",idOpciones_1='".$idOpciones_1."'";}else{$SIS_data .= ",idOpciones_1='1'";}
+				if(isset($idOpciones_2) && $idOpciones_2!=''){   $SIS_data .= ",idOpciones_2='".$idOpciones_2."'";}else{$SIS_data .= ",idOpciones_2='1'";}
+				if(isset($idOpciones_3) && $idOpciones_3!=''){   $SIS_data .= ",idOpciones_3='".$idOpciones_3."'";}else{$SIS_data .= ",idOpciones_3='1'";}
+				if(isset($idUsuario) && $idUsuario!=''){        $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($Fecha) && $Fecha!=''){  
+					$SIS_data .= ",Fecha='".$Fecha."'";
+					$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'";
+					$SIS_data .= ",idMes='".fecha2NMes($Fecha)."'";
+					$SIS_data .= ",Semana='".fecha2NSemana($Fecha)."'";
+					$SIS_data .= ",Ano='".fecha2Ano($Fecha)."'";
 				}
-				if(isset($h_Inicio) && $h_Inicio != ''){                  $SIS_data .= ",h_Inicio='".$h_Inicio."'" ;}
-				if(isset($h_Termino) && $h_Termino != ''){                $SIS_data .= ",h_Termino='".$h_Termino."'" ;}
-				if(isset($Duracion) && $Duracion != ''){                  $SIS_data .= ",Duracion='".$Duracion."'" ;}
-				if(isset($Resumen) && $Resumen != ''){                    $SIS_data .= ",Resumen='".$Resumen."'" ;}
-				if(isset($Resolucion) && $Resolucion != ''){              $SIS_data .= ",Resolucion='".$Resolucion."'" ;}
-				if(isset($Recepcion_Nombre) && $Recepcion_Nombre != ''){  $SIS_data .= ",Recepcion_Nombre='".$Recepcion_Nombre."'" ;}
-				if(isset($Recepcion_Rut) && $Recepcion_Rut != ''){        $SIS_data .= ",Recepcion_Rut='".$Recepcion_Rut."'" ;}
-				if(isset($Recepcion_Email) && $Recepcion_Email != ''){    $SIS_data .= ",Recepcion_Email='".$Recepcion_Email."'" ;}
-				if(isset($Path_Firma) && $Path_Firma != ''){              $SIS_data .= ",Path_Firma='".$Path_Firma."'" ;}
-				
+				if(isset($h_Inicio) && $h_Inicio!=''){                  $SIS_data .= ",h_Inicio='".$h_Inicio."'";}
+				if(isset($h_Termino) && $h_Termino!=''){                $SIS_data .= ",h_Termino='".$h_Termino."'";}
+				if(isset($Duracion) && $Duracion!=''){                  $SIS_data .= ",Duracion='".$Duracion."'";}
+				if(isset($Resumen) && $Resumen!=''){                    $SIS_data .= ",Resumen='".$Resumen."'";}
+				if(isset($Resolucion) && $Resolucion!=''){              $SIS_data .= ",Resolucion='".$Resolucion."'";}
+				if(isset($Recepcion_Nombre) && $Recepcion_Nombre!=''){  $SIS_data .= ",Recepcion_Nombre='".$Recepcion_Nombre."'";}
+				if(isset($Recepcion_Rut) && $Recepcion_Rut!=''){        $SIS_data .= ",Recepcion_Rut='".$Recepcion_Rut."'";}
+				if(isset($Recepcion_Email) && $Recepcion_Email!=''){    $SIS_data .= ",Recepcion_Email='".$Recepcion_Email."'";}
+				if(isset($Path_Firma) && $Path_Firma!=''){              $SIS_data .= ",Path_Firma='".$Path_Firma."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'telemetria_historial_mantencion', 'idMantencion = "'.$idMantencion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -208,19 +208,18 @@ require_once '0_validate_user_1.php';
 				
 
 			}
-		
-	
-		break;	
-							
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -228,20 +227,20 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//Se buscan todos los archivos relacionados
 				$arrArchivos = array();
@@ -253,7 +252,7 @@ require_once '0_validate_user_1.php';
 				$resultado_3 = db_delete_data (false, 'telemetria_historial_mantencion_equipos', 'idMantencion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado_1==true OR $resultado_2==true OR $resultado_3==true){
-					
+
 					//Se recorren los archivos
 					foreach ($arrArchivos as $archivos) {
 						//se elimina el archivo
@@ -264,32 +263,29 @@ require_once '0_validate_user_1.php';
 								}else{
 									unlink('upload/'.$archivos['Nombre']);
 								}
-							}catch(Exception $e) { 
+							}catch(Exception $e) {
 								//guardar el dato en un archivo log
 							}
 						}
 					}
-				
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-			
 
 		break;
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert_equipo':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -301,37 +297,37 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Equipo ingresado ya existe';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idMantencion) && $idMantencion != ''){  $SIS_data  = "'".$idMantencion."'" ;    }else{$SIS_data  = "''";}
-				if(isset($idTelemetria) && $idTelemetria != ''){  $SIS_data .= ",'".$idTelemetria."'" ;   }else{$SIS_data .= ",''";}
-				
+				if(isset($idMantencion) && $idMantencion!=''){  $SIS_data  = "'".$idMantencion."'";    }else{$SIS_data  = "''";}
+				if(isset($idTelemetria) && $idTelemetria!=''){  $SIS_data .= ",'".$idTelemetria."'";   }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idMantencion, idTelemetria';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_historial_mantencion_equipos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&id='.$idMantencion.'&created=true' );
 					die;
 				}
-				
+
 			}
-	
-		break;				
+
+		break;
 /*******************************************************************************************************************/
-		case 'del_equipo':	
-			
+		case 'del_equipo':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -339,47 +335,46 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
-				
+
 				//se borran los datos
 				$resultado_1 = db_delete_data (false, 'telemetria_historial_mantencion_equipos', 'idEquipo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado_1==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
 
 		break;
 		
 		
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'new_archivo':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Verifico que los tipos de archivo correspondan y que tengan el peso necesario
 			if($_FILES['files_adj']){
 				$images = $_FILES['files_adj'];
@@ -390,9 +385,9 @@ require_once '0_validate_user_1.php';
 							$error['files_adj'] = 'error/'.uploadPHPError($images['error'][$i]); 
 						} else {
 							//Se verifican las extensiones de los archivos
-							$permitidos = array("image/jpg", 
-												"image/jpeg", 
-												"image/gif", 
+							$permitidos = array("image/jpg",
+												"image/jpeg",
+												"image/gif",
 												"image/png"
 												);
 							//Se verifica que el archivo subido no exceda los 100 kb
@@ -401,16 +396,16 @@ require_once '0_validate_user_1.php';
 							if (in_array($images['type'][$i], $permitidos) && $images['size'][$i] <= $limite_kb * 1024){
 								//nada mas que validar	
 							}else{
-								$error['files_adj']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+								$error['files_adj']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 							}
 						}
 					}
 				}
 			}
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				/************************************************************/
 				//Guardo los archivos en el servidor
 				if($_FILES['files_adj']){
@@ -423,9 +418,9 @@ require_once '0_validate_user_1.php';
 								$error['files_adj'.$i] = 'error/'.uploadPHPError($images['error'][$i]); 
 							} else {
 								//Se verifican las extensiones de los archivos
-								$permitidos = array("image/jpg", 
-													"image/jpeg", 
-													"image/gif", 
+								$permitidos = array("image/jpg",
+													"image/jpeg",
+													"image/gif",
 													"image/png"
 
 													);
@@ -447,45 +442,45 @@ require_once '0_validate_user_1.php';
 											$nombre_arc = $sufijo.$images['name'][$i] ;
 
 											//filtros
-											if(isset($idMantencion) && $idMantencion != ''){    $SIS_data  = "'".$idMantencion."'" ;  }else{$SIS_data  = "''";}
-											if(isset($nombre_arc) && $nombre_arc != ''){        $SIS_data .= ",'".$nombre_arc."'" ;   }else{$SIS_data .= ",''";}
+											if(isset($idMantencion) && $idMantencion!=''){    $SIS_data  = "'".$idMantencion."'";  }else{$SIS_data  = "''";}
+											if(isset($nombre_arc) && $nombre_arc!=''){        $SIS_data .= ",'".$nombre_arc."'";   }else{$SIS_data .= ",''";}
 											
 											// inserto los datos de registro en la db
 											$SIS_columns = 'idMantencion,Nombre';
 											$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_historial_mantencion_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 											
-										} else {
-											$error['files_adj'.$i]     = 'error/Ocurrio un error al mover el archivo'; 
+										}else {
+											$error['files_adj'.$i]     = 'error/Ocurrio un error al mover el archivo';
 										}
-									} else {
-										$error['files_adj'.$i]     = 'error/El archivo '.$images['name'][$i].' ya existe'; 
+									}else {
+										$error['files_adj'.$i]     = 'error/El archivo '.$images['name'][$i].' ya existe';
 									}
 								}else{
-									$error['files_adj'.$i]     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+									$error['files_adj'.$i]     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 								}
 							}
 						}
 					}
 				}
-				
+
 				//Si no hay errores internos
-				if ( empty($error) ) {
+				if(empty($error)){
 					header( 'Location: '.$location.'&id='.$idMantencion.'&created=true' );
 					die;
 				}
-				
+
 			}
-	
-		break;		
+
+		break;
 /*******************************************************************************************************************/
-		case 'del_archivo':	
-			
+		case 'del_Archivo':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del_archivo']) OR !validaEntero($_GET['del_archivo']))&&$_GET['del_archivo']!=''){
 				$indice = simpleDecode($_GET['del_archivo'], fecha_actual());
@@ -493,29 +488,29 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del_archivo'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				// Se obtiene el nombre del logo
 				$rowdata = db_select_data (false, 'Nombre', 'telemetria_historial_mantencion_archivos', '', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//se borran los datos
 				$resultado = db_delete_data (false, 'telemetria_historial_mantencion_archivos', 'idArchivo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//se elimina el archivo
 					if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
 						try {
@@ -524,34 +519,34 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/'.$rowdata['Nombre']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted_img=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
 
-		break;	
+		break;
 /*******************************************************************************************************************/
 		//Cambia el nivel del permiso
-		case 'submit_firma':	
-			
+		case 'submit_firma':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			if ($_FILES["Path_Firma"]["error"] > 0){ 
-				$error['Path_Firma'] = 'error/'.uploadPHPError($_FILES["Path_Firma"]["error"]); 
+
+			if ($_FILES["Path_Firma"]["error"] > 0){
+				$error['Path_Firma'] = 'error/'.uploadPHPError($_FILES["Path_Firma"]["error"]);
 			} else {
 			  //Se verifican las extensiones de los archivos
-			  $permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
+			  $permitidos = array("image/jpg","image/jpeg","image/gif","image/png");
 			  //Se verifica que el archivo subido no exceda los 100 kb
 			  $limite_kb = 10000;
 			  //Sufijo
@@ -595,7 +590,7 @@ require_once '0_validate_user_1.php';
 							if($imgBase_width < $max_width){
 								$newwidth = $imgBase_width;
 							}else{
-								$newwidth = $max_width;	
+								$newwidth = $max_width;
 							}
 							$divisor = $imgBase_width / $newwidth;
 							$newheight = floor( $imgBase_height / $divisor);
@@ -624,7 +619,7 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/xxxsxx_'.$_FILES['Path_Firma']['name']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 						//se eliminan las imagenes de la memoria
@@ -633,9 +628,9 @@ require_once '0_validate_user_1.php';
 					
 					
 						//Filtro para idSistema
-						if ( !empty($_POST['idMantencion']) )    $idMantencion       = $_POST['idMantencion'];
+						if (!empty($_POST['idMantencion']))    $idMantencion       = $_POST['idMantencion'];
 						
-						$SIS_data = "Path_Firma='".$sufijo.$_FILES['Path_Firma']['name']."'" ;
+						$SIS_data = "Path_Firma='".$sufijo.$_FILES['Path_Firma']['name']."'";
 						
 						/*******************************************************/
 						//se actualizan los datos
@@ -645,36 +640,36 @@ require_once '0_validate_user_1.php';
 							header( 'Location: '.$location.'&id='.$idMantencion );
 							die;
 						}
-						
+
 					} else {
-					$error['Path_Firma']     = 'error/Ocurrio un error al mover el archivo'; 
+					$error['Path_Firma']     = 'error/Ocurrio un error al mover el archivo';
 				  }
 				} else {
-				  $error['Path_Firma']     = 'error/El archivo '.$_FILES['Path_Firma']['name'].' ya existe'; 
+				  $error['Path_Firma']     = 'error/El archivo '.$_FILES['Path_Firma']['name'].' ya existe';
 				}
 			  } else {
-				$error['Path_Firma']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+				$error['Path_Firma']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 			  }
 			}
 
 
-		break;	
+		break;
 /*******************************************************************************************************************/
-		case 'del_firma':	
+		case 'del_firma':
 		
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Path_Firma', 'telemetria_historial_mantencion', '', 'idMantencion = "'.$_GET['del_firma'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 			/*******************************************************/
 			//se actualizan los datos
 			$SIS_data = "Path_Firma=''" ;
 			$resultado = db_update_data (false, $SIS_data, 'telemetria_historial_mantencion', 'idMantencion = "'.$_GET['del_firma'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
-				
+
 				//se elimina el archivo
 				if(isset($rowdata['Path_Firma'])&&$rowdata['Path_Firma']!=''){
 					try {
@@ -683,19 +678,19 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$rowdata['Path_Firma']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
-				
-				//Redirijo			
+
+				//redirijo
 				header( 'Location: '.$location.'&id='.$_GET['del_firma'] );
 				die;
-				
+
 			}
 				
 			
-		break;															
+		break;
 /*******************************************************************************************************************/
 	}
 ?>

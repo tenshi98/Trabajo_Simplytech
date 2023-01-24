@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "comunicaciones_video_meeting.php";
 $location = $original;
 //oculto el menu
@@ -64,7 +64,7 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 .messaging .inbox_msg {white-space: initial!important;}
 </style> 
 
-<div class="col-sm-12 breadcrumb-bar" id="msg_options">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" id="msg_options">
 	
 	
 	<?php
@@ -82,7 +82,7 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 						<span class="input-group-btn">
 							<div class="btn-group" style="width: 140px;" >
 								<a id="join-room" class="btn btn-primary" ><i class="fa fa-video-camera" aria-hidden="true"></i> Unirse a Reunion</a>
-							</div>		
+							</div>
 						</span>
 					</div>
 				</div>
@@ -90,14 +90,14 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 			
 		</div>
 		<div class="col-sm-3">
-			<button id="open-room" class="btn btn-primary pull-right margin_width fmrbtn" ><i class="fa fa-video-camera" aria-hidden="true"></i> Iniciar Reunion</button>
+			<button id="open-room" class="btn btn-primary pull-right margin_form_btn fmrbtn" ><i class="fa fa-video-camera" aria-hidden="true"></i> Iniciar Reunion</button>
 		</div>
 	</div>
 		
 
 </div>
 
-<div class="col-sm-12" id="msg_noti">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="msg_noti">
 
 	<?php
 	$Alert_Text  = 'La <strong>Clave Unica de Reunion</strong> es <strong>'.$ClaveUnica.'</strong>, compartela para poder trabajar en linea';
@@ -436,7 +436,7 @@ function disableInputButtons(enable) {
 })();
 
 var roomid = '';
-if (localStorage.getItem(connection.socketMessageEvent)) {
+if (localStorage.getItem(connection.socketMessageEvent)){
     roomid = '<?php echo $ClaveUnica; ?>';//localStorage.getItem(connection.socketMessageEvent);
 } else {
     roomid = '<?php echo $ClaveUnica; ?>';//connection.token();
@@ -544,7 +544,7 @@ connection.filesContainer = document.getElementById('file-container');
 
 
                        
-</script> 
+</script>
    
 <?php
 /**********************************************************************************************************************************/

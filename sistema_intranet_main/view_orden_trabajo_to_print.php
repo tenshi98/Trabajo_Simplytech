@@ -11,19 +11,19 @@ require_once 'core/Load.Utils.Print.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -184,7 +184,7 @@ $html = '<style>
    
     <div id="customer">
         
-        <table id="meta" class="fleft otdata">
+        <table id="meta" class="pull-left otdata">
             <tbody>
 				<tr>
                     <td class="meta-head"><strong>DATOS BASICOS</strong></td>
@@ -232,35 +232,35 @@ $html = '<style>
 						<td>'.Fecha_estandar($rowdata['f_creacion']).'</td>
 					</tr>';
 				}
-				
+
 				if($rowdata['f_programacion']!='0000-00-00'){
 					$html .='<tr>
 						<td class="meta-head">Fecha programada</td>
 						<td>'.Fecha_estandar($rowdata['f_programacion']).'</td>
 					</tr>';
 				}
-				
+
 				if($rowdata['f_termino']!='0000-00-00'){
 					$html .='<tr>
 						<td class="meta-head">Fecha termino</td>
 						<td>'.Fecha_estandar($rowdata['f_termino']).'</td>
 					</tr>';
 				}
-				
+
 				if($rowdata['horaInicio']!='00:00:00'){
 					$html .='<tr>
 						<td class="meta-head">Hora inicio</td>
 						<td>'.$rowdata['horaInicio'].'</td>
 					</tr>';
 				}
-				
+
 				if($rowdata['horaTermino']!='00:00:00'){
 					$html .='<tr>
 						<td class="meta-head">Hora termino</td>
 						<td>'.$rowdata['horaTermino'].'</td>
 					</tr>';
 				}
-				
+
 				if($rowdata['horaProg']!='00:00:00'){
 					$html .='<tr>
 						<td class="meta-head">Tiempo Programado</td>
@@ -297,7 +297,7 @@ $html = '<style>
 							<td class="item-name" colspan="5">'.$insumos['NombreProducto'];
 							if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){$html .=' - '.$insumos['NombreBodega'];}
 							$html .='</td>
-							<td class="item-name">'.Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida'].'</td>	
+							<td class="item-name">'.Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida'].'</td>
 						</tr>';
 					}
 				}
@@ -314,13 +314,13 @@ $html = '<style>
 							<td class="item-name" colspan="5">'.$prod['NombreProducto'];
 							if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){$html .=' - '.$prod['NombreBodega'];}
 							$html .='</td>
-							<td class="item-name">'.Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['UnidadMedida'].'</td>	
+							<td class="item-name">'.Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['UnidadMedida'].'</td>
 						</tr>';
 					}
 				}
 				$html .='<tr id="hiderow"><td colspan="6"></td></tr>';
 			}
-			/**********************************************************************************/ 
+			/**********************************************************************************/
 			if($arrTrabajo!=false && !empty($arrTrabajo) && $arrTrabajo!='') { 
 				$html .='<tr class="item-row fact_tittle"><td colspan="6">';
 				if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){$html .='Trabajos Programados';}else{$html .='Trabajos Ejecutados';}
@@ -330,7 +330,7 @@ $html = '<style>
 						<td class="item-name" colspan="2">'.$trab['NombreComponente'].'</td>
 						<td class="item-name" colspan="2">'.$trab['NombreTrabajo'].'</td>
 						<td class="item-name" colspan="2">';
-						
+
 						//Se verifica el tipo de trabajo a realizar
 						switch ($trab['idTrabajo']) {
 							case 1: //Analisis
@@ -340,8 +340,8 @@ $html = '<style>
 								//El tipo de maquina que es
 								switch ($trab['idSubTipo']) {
 									case 1: //Grasa
-										if(isset($trab['Grasa_inicial'])&&$trab['Grasa_inicial']!=0){             $html .= Cantidades_decimales_justos($trab['Grasa_inicial']);}
-										if(isset($trab['Grasa_relubricacion'])&&$trab['Grasa_relubricacion']!=0){ $html .= Cantidades_decimales_justos($trab['Grasa_relubricacion']);}
+										if(isset($trab['Grasa_inicial'])&&$trab['Grasa_inicial']!=0){         $html .= Cantidades_decimales_justos($trab['Grasa_inicial']);}
+										if(isset($trab['Grasa_relubricacion'])&&$trab['Grasa_relubricacion']!=0){$html .= Cantidades_decimales_justos($trab['Grasa_relubricacion']);}
 										break;
 									case 2: //Aceite
 										$html .= Cantidades_decimales_justos($trab['Aceite']);
@@ -360,7 +360,7 @@ $html = '<style>
 								break;
 						}
 						$html .='
-						</td>	
+						</td>
 					</tr>'; 
 				}
 				$html .='<tr id="hiderow"><td colspan="6"></td></tr>';

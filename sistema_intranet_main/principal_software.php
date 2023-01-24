@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "principal_software.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -24,37 +24,28 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 //Filtro
 if(isset($_GET['filterCat'])&&$_GET['filterCat']!=''){
 	$SIS_where = 'soporte_software_listado.idCategoria='.$_GET['filterCat'];
 }else{
 	$SIS_where = '';
-}				
+}	
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'Nombre', 'soporte_software_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
-soporte_software_listado.Nombre, 
+soporte_software_listado.Nombre,
 soporte_software_listado.Descripcion,
 soporte_software_listado.Peso,
 soporte_software_listado.SitioWeb,
@@ -86,8 +77,8 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 
 <div class="row">
 	
-	<div class="col-sm-8">
-		<?php foreach ($arrSoftware as $soft) { ?>					
+	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+		<?php foreach ($arrSoftware as $soft) { ?>
 			<div class="block task task-high boxsoftware">
 				<div class="row with-padding">
 					<div class="col-sm-9">
@@ -109,22 +100,22 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 					</div>
 					<div class="pull-right clearfix" style="width: 70px;">
 						<ul class="footer-icons-group">
-							<?php if(isset($soft['SitioWeb'])&&$soft['SitioWeb']!=''){ ?><li><a href="<?php echo $soft['SitioWeb']; ?>" target="_blank" rel="noopener noreferrer" title="Ir al Sitio" class="tooltip" style="position: relative;"><i class="fa fa-firefox" aria-hidden="true"></i></a></li><?php } ?>
+							<?php if(isset($soft['SitioWeb'])&&$soft['SitioWeb']!=''){?><li><a href="<?php echo $soft['SitioWeb']; ?>" target="_blank" rel="noopener noreferrer" title="Ir al Sitio" class="tooltip" style="position: relative;"><i class="fa fa-firefox" aria-hidden="true"></i></a></li><?php } ?>
 							<li><a href="<?php echo $soft['SitioDescarga']; ?>" target="_blank" rel="noopener noreferrer" title="Descargar" class="tooltip" style="position: relative;"><i class="fa fa-cloud-download" aria-hidden="true"></i></a></li>
 						</ul>
 					</div>
 					<div class="clearfix"></div>
 				</div>
 			</div>
-		<?php } ?>     											
+		<?php } ?>
 	</div>
 	
 	
 	<div class="col-sm-4 mail-left-box">
   		<div class="list-group inbox-options">
-			<?php $todos = 0; foreach ($arrCategorias as $cat) { $todos = $todos + $cat['cuenta']; } ?>
+			<?php $todos = 0; foreach ($arrCategorias as $cat) { $todos = $todos + $cat['cuenta'];} ?>
 					
-			<div class="list-group-item">Filtro</div>	
+			<div class="list-group-item">Filtro</div>
 			<a href="<?php echo $original.'?pagina=1'; ?>" class="list-group-item">
 				<i class="fa fa-inbox" aria-hidden="true"></i> 
 				Mostrar Todos
@@ -135,7 +126,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 				<a href="<?php echo $original.'?pagina=1&filterCat='.$cat['idCategoria']; ?>" class="list-group-item">
 					<i class="fa fa-inbox" aria-hidden="true"></i> 
 					<?php echo $cat['Nombre']; ?>
-					<span class="badge  bg-primary"><?php echo $cat['cuenta']; ?></span> 
+					<span class="badge bg-primary"><?php echo $cat['cuenta']; ?></span>
 				</a>	
 			<?php } ?>
 					
@@ -149,8 +140,8 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px; margin-top:30px">
-<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
+<a href="principal.php" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

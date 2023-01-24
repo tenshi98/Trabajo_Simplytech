@@ -1,5 +1,5 @@
 <?php
-//Variables			
+//Variables
 $currentTime  = strtotime(hora_actual());
 $startTime    = strtotime('21:00:00');
 $endTime      = strtotime('07:00:00');
@@ -20,15 +20,15 @@ echo '<div class="wrapper">';
 				<div class="train"></div>
 				<div class="crane">
 					<div class="logo"></div>
-				</div>	
+				</div>
 			</div>
 			
 			<div class="cover_avatar">
 				<div class="avatar">';
 					if ($_SESSION['usuario']['basic_data']['Direccion_img']=='') {
-						echo '<img alt="User Picture" src="'.DB_SITE_REPO.'/LIB_assets/img/usr.png">';
+						echo '<img alt="Imagen Referencia" src="'.DB_SITE_REPO.'/LIB_assets/img/usr.png">';
 					}else{
-						echo '<img alt="User Picture" src="upload/'.$_SESSION['usuario']['basic_data']['Direccion_img'].'">';
+						echo '<img alt="Imagen Referencia" src="upload/'.$_SESSION['usuario']['basic_data']['Direccion_img'].'">';
 					}
 					echo '
 				</div>
@@ -60,9 +60,9 @@ echo '<div class="wrapper">';
 			<div class="cover_avatar">
 				<div class="avatar">';
 					if ($_SESSION['usuario']['basic_data']['Direccion_img']=='') {
-						echo '<img alt="User Picture" src="'.DB_SITE_REPO.'/LIB_assets/img/usr.png">';
+						echo '<img alt="Imagen Referencia" src="'.DB_SITE_REPO.'/LIB_assets/img/usr.png">';
 					}else{
-						echo '<img alt="User Picture" src="upload/'.$_SESSION['usuario']['basic_data']['Direccion_img'].'">';
+						echo '<img alt="Imagen Referencia" src="upload/'.$_SESSION['usuario']['basic_data']['Direccion_img'].'">';
 					}
 					echo '
 				</div>

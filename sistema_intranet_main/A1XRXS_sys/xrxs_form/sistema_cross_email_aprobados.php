@@ -2,22 +2,22 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-137).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idAprobador']) )     $idAprobador      = $_POST['idAprobador'];
-	if ( !empty($_POST['idSistema']) )       $idSistema        = $_POST['idSistema'];
-	if ( !empty($_POST['email']) )           $email            = $_POST['email'];
-	
+	if (!empty($_POST['idAprobador']))     $idAprobador      = $_POST['idAprobador'];
+	if (!empty($_POST['idSistema']))       $idSistema        = $_POST['idSistema'];
+	if (!empty($_POST['email']))           $email            = $_POST['email'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -32,33 +32,33 @@ require_once '0_validate_user_1.php';
 			case 'idAprobador':      if(empty($idAprobador)){      $error['idAprobador']      = 'error/No ha ingresado el id';}break;
 			case 'idSistema':        if(empty($idSistema)){        $error['idSistema']        = 'error/No ha seleccionado el sistema al cual pertenece';}break;
 			case 'email':            if(empty($email)){            $error['email']            = 'error/No ha ingresado un correo';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($email) && $email != ''){ $email = EstandarizarInput($email); }
+/*******************************************************************************************************************/
+	if(isset($email) && $email!=''){ $email = EstandarizarInput($email);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
+/*******************************************************************************************************************/
 	//Verifica si el mail corresponde
-	if(isset($email)&&!validarEmail($email)){  $error['email']   = 'error/El Email ingresado no es valido'; }
+	if(isset($email)&&!validarEmail($email)){  $error['email']   = 'error/El Email ingresado no es valido';}
 
-	if(isset($email)&&contar_palabras_censuradas($email)!=0){  $error['email'] = 'error/Edita email, contiene palabras no permitidas'; }	
+	if(isset($email)&&contar_palabras_censuradas($email)!=0){  $error['email'] = 'error/Edita email, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -69,18 +69,18 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Usuario ya existe';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idSistema) && $idSistema != ''){       $SIS_data  = "'".$idSistema."'" ;        }else{$SIS_data  = "''";}
-				if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
-				
+				if(isset($idSistema) && $idSistema!=''){       $SIS_data  = "'".$idSistema."'";        }else{$SIS_data  = "''";}
+				if(isset($email) && $email!=''){               $SIS_data .= ",'".$email."'";           }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, email';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'sistema_cross_email_aprobados', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -88,14 +88,14 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -106,38 +106,37 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Usuario ya existe';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idAprobador='".$idAprobador."'" ;
-				if(isset($idSistema) && $idSistema != ''){   $SIS_data .= ",idSistema='".$idSistema."'" ;}
-				if(isset($email) && $email != ''){           $SIS_data .= ",email='".$email."'" ;}
-				
+				$SIS_data = "idAprobador='".$idAprobador."'";
+				if(isset($idSistema) && $idSistema!=''){   $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($email) && $email!=''){           $SIS_data .= ",email='".$email."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'sistema_cross_email_aprobados', 'idAprobador = "'.$idAprobador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
-		break;	
-						
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -145,40 +144,38 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'sistema_cross_email_aprobados', 'idAprobador = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-		break;	
-		
+		break;
+
 /*******************************************************************************************************************/
 	}
 ?>

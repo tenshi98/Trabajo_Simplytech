@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "cross_predios_listado.php";
 $location = $original;
 $new_location = "cross_predios_listado_configuracion.php";
@@ -24,7 +24,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_zona']) )  { 
+if (!empty($_POST['submit_zona'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	//Llamamos al formulario
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit_zona']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/cross_predios_listado_zonas.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit_zona']) )  { 
+if (!empty($_POST['submit_edit_zona'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	//Llamamos al formulario
@@ -40,16 +40,16 @@ if ( !empty($_POST['submit_edit_zona']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/cross_predios_listado_zonas.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_zona']) )     {
+if (!empty($_GET['del_zona'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	//Llamamos al formulario
 	$form_trabajo= 'del_zona';
-	require_once 'A1XRXS_sys/xrxs_form/cross_predios_listado_zonas.php';	
+	require_once 'A1XRXS_sys/xrxs_form/cross_predios_listado_zonas.php';
 }
 /****************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_punto']) )  { 
+if (!empty($_POST['submit_punto'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location .='&edit_puntos='.$_GET['edit_puntos'];
@@ -58,7 +58,7 @@ if ( !empty($_POST['submit_punto']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/cross_predios_listado_zonas_ubicaciones.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit_punto']) )  { 
+if (!empty($_POST['submit_edit_punto'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location .='&edit_puntos='.$_GET['edit_puntos'];
@@ -67,13 +67,13 @@ if ( !empty($_POST['submit_edit_punto']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/cross_predios_listado_zonas_ubicaciones.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_punto']) )     {
+if (!empty($_GET['del_punto'])){
 	//se agregan ubicaciones
 	$location = $new_location;
 	$location .='&edit_puntos='.$_GET['edit_puntos'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_punto';
-	require_once 'A1XRXS_sys/xrxs_form/cross_predios_listado_zonas_ubicaciones.php';	
+	require_once 'A1XRXS_sys/xrxs_form/cross_predios_listado_zonas_ubicaciones.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -88,8 +88,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Cuartel editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Cuartel borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['mod']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if(!empty($_GET['mod'])){ 
 // consulto los datos
 $query = "SELECT 
 cross_predios_listado_zonas.Nombre,
@@ -173,19 +173,19 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPuntos,$row );
 }
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
-		<header>		
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
 			
-			<div class="col-sm-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="row">
 					<?php
 					//Si no existe una ID se utiliza una por defecto
@@ -256,7 +256,7 @@ array_push( $arrPuntos,$row );
 									//se cierra la figura
 									if(isset($Longitud_x)&&$Longitud_x!=''){
 										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
-									}	
+									}
 									?>
 								];
 							
@@ -280,7 +280,7 @@ array_push( $arrPuntos,$row );
 										  marker.setPosition(myLatlng);
 										  map.setCenter(myLatlng);
 										  map.panTo(marker.position);'; 
-								}else{ ?>
+								}else{?>
 									codeAddress();
 								<?php } ?>
 
@@ -296,7 +296,7 @@ array_push( $arrPuntos,$row );
 								
 										map.setCenter(myLatlng); 
 														  
-									} else {
+									}else {
 										alert('Geocode was not successful for the following reason: ' + status);
 									}
 								});
@@ -311,7 +311,7 @@ array_push( $arrPuntos,$row );
 				</div>
 			</div>
 			
-			<div class="col-sm-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
@@ -331,7 +331,7 @@ array_push( $arrPuntos,$row );
 						
 					
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Actualizar Punto" name="submit_edit_punto"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Actualizar Punto" name="submit_edit_punto"> 
 						</div>
 							  
 					</form>
@@ -340,7 +340,7 @@ array_push( $arrPuntos,$row );
 				</div>
 			</div>
 			
-		</div>	
+		</div>
 	</div>
 </div>
 
@@ -349,12 +349,12 @@ array_push( $arrPuntos,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $new_location.'&edit_puntos='.$_GET['edit_puntos'] ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $new_location.'&edit_puntos='.$_GET['edit_puntos'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_puntos']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_puntos'])){ 
 // consulto los datos
 $query = "SELECT 
 cross_predios_listado_zonas.Nombre,
@@ -414,7 +414,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPuntos,$row );
 }
 
@@ -452,21 +452,21 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrZonas,$row );
 }
 
 ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
-		<header>		
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
 			
-			<div class="col-sm-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="row">
 					<?php
 					//Si no existe una ID se utiliza una por defecto
@@ -493,7 +493,7 @@ array_push( $arrZonas,$row );
 									mapTypeId: google.maps.MapTypeId.SATELLITE
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								map.setTilt(0); 
+								map.setTilt(0);
 								
 								marker = new google.maps.Marker({
 									draggable	: true,
@@ -544,7 +544,7 @@ array_push( $arrZonas,$row );
 										if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
 											echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
 											';
-											if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){	
+											if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){
 												$Latitud_x = $puntos['Latitud'];
 												$Longitud_x = $puntos['Longitud'];
 												//Calculos para centrar mapa
@@ -610,7 +610,7 @@ array_push( $arrZonas,$row );
 								if(isset($Latitud_x)&&$Latitud_x!=''&&isset($Longitud_x)&&$Longitud_x!=''){
 									echo 'marker.setPosition(new google.maps.LatLng('.$Latitud_x.', '.$Longitud_x.'));
 										  map.panTo(marker.position);'; 
-								}else{ ?>
+								}else{?>
 									codeAddress();
 								<?php } ?>
 
@@ -627,7 +627,7 @@ array_push( $arrZonas,$row );
 										map.setCenter(myLatlng);
 										marker.setPosition(myLatlng); 
 														  
-									} else {
+									}else {
 										alert('Geocode was not successful for the following reason: ' + status);
 									}
 								});
@@ -643,7 +643,7 @@ array_push( $arrZonas,$row );
 				</div>
 			</div>
 			
-			<div class="col-sm-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
@@ -661,7 +661,7 @@ array_push( $arrZonas,$row );
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Punto" name="submit_punto"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Punto" name="submit_punto"> 
 						</div>
 							  
 					</form>
@@ -695,23 +695,23 @@ array_push( $arrZonas,$row );
 							</tr>
 						<?php 
 						$nx++;
-						} ?>                    
+						} ?>        
 						</tbody>
 					</table>
 				</div>
 			</div>
 			
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $new_location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $new_location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_zona']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_zona'])){ 
 // consulto los datos
 $query = "SELECT Nombre,Codigo,idCategoria,idProducto,AnoPlantacion,Hectareas,Hileras,Plantas,
 idEstadoProd,DistanciaPlant,DistanciaHileras,idEstado
@@ -732,30 +732,30 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
- <div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Cuartel</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Cuartel</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {           $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Codigo)) {           $x2  = $Codigo;            }else{$x2  = $rowdata['Codigo'];}
-				if(isset($idCategoria)) {      $x3  = $idCategoria;       }else{$x3  = $rowdata['idCategoria'];}
-				if(isset($idProducto)) {       $x4  = $idProducto;        }else{$x4  = $rowdata['idProducto'];}
-				if(isset($AnoPlantacion)) {    $x5  = $AnoPlantacion;     }else{$x5  = $rowdata['AnoPlantacion'];}
-				if(isset($Hectareas)) {        $x6  = $Hectareas;         }else{$x6  = $rowdata['Hectareas'];}
-				if(isset($Hileras)) {          $x7  = $Hileras;           }else{$x7  = $rowdata['Hileras'];}
-				if(isset($Plantas)) {          $x8  = $Plantas;           }else{$x8  = $rowdata['Plantas'];}
-				if(isset($idEstadoProd)) {     $x9  = $idEstadoProd;      }else{$x9  = $rowdata['idEstadoProd'];}
-				if(isset($DistanciaPlant)) {   $x10 = $DistanciaPlant;    }else{$x10 = $rowdata['DistanciaPlant'];}
-				if(isset($DistanciaHileras)) { $x11 = $DistanciaHileras;  }else{$x11 = $rowdata['DistanciaHileras'];}
-				if(isset($idEstado)) {         $x12 = $idEstado;          }else{$x12 = $rowdata['idEstado'];}
-				
+				if(isset($Nombre)){           $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
+				if(isset($Codigo)){           $x2  = $Codigo;            }else{$x2  = $rowdata['Codigo'];}
+				if(isset($idCategoria)){      $x3  = $idCategoria;       }else{$x3  = $rowdata['idCategoria'];}
+				if(isset($idProducto)){       $x4  = $idProducto;        }else{$x4  = $rowdata['idProducto'];}
+				if(isset($AnoPlantacion)){    $x5  = $AnoPlantacion;     }else{$x5  = $rowdata['AnoPlantacion'];}
+				if(isset($Hectareas)){        $x6  = $Hectareas;         }else{$x6  = $rowdata['Hectareas'];}
+				if(isset($Hileras)){          $x7  = $Hileras;           }else{$x7  = $rowdata['Hileras'];}
+				if(isset($Plantas)){          $x8  = $Plantas;           }else{$x8  = $rowdata['Plantas'];}
+				if(isset($idEstadoProd)){     $x9  = $idEstadoProd;      }else{$x9  = $rowdata['idEstadoProd'];}
+				if(isset($DistanciaPlant)){   $x10 = $DistanciaPlant;    }else{$x10 = $rowdata['DistanciaPlant'];}
+				if(isset($DistanciaHileras)){ $x11 = $DistanciaHileras;  }else{$x11 = $rowdata['DistanciaHileras'];}
+				if(isset($idEstado)){         $x12 = $idEstado;          }else{$x12 = $rowdata['idEstado'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre del Cuartel', 'Nombre', $x1, 2);	
@@ -767,10 +767,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_number_spinner('N° Hectáreas','Hectareas', $x6, 0, 500, '0.01', 2, 2);
 				$Form_Inputs->form_input_number_spinner('N° Hileras','Hileras', $x7, 0, 2000, 1, 0, 2);
 				$Form_Inputs->form_input_number_spinner('N° Plantas','Plantas', $x8, 0, 200000, 1, 0, 2);
-				$Form_Inputs->form_select('Estado productivo','idEstadoProd', $x9, 2, 'idEstadoProd', 'Nombre', 'core_cross_estados_productivos', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Estado productivo','idEstadoProd', $x9, 2, 'idEstadoProd', 'Nombre', 'core_cross_estados_productivos', 0, '', $dbConn);
 				$Form_Inputs->form_input_number_spinner('Distancia de plantación','DistanciaPlant', $x10, 0, 100, '0.1', 1, 2);
 				$Form_Inputs->form_input_number_spinner('Distancia Hileras','DistanciaHileras', $x11, 0, 100, '0.1', 1, 2);
-				$Form_Inputs->form_select('Estado','idEstado', $x12, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Estado','idEstado', $x12, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_hidden('idPredio', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idZona', $_GET['edit_zona'], 2);
@@ -778,43 +778,43 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 
 							
-				<div class="form-group">	
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_zona">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_zona">	
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Cuartel</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Cuartel</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {           $x1  = $Nombre;            }else{$x1  = '';}
-				if(isset($Codigo)) {           $x2  = $Codigo;            }else{$x2  = '';}
-				if(isset($idCategoria)) {      $x3  = $idCategoria;       }else{$x3  = '';}
-				if(isset($idProducto)) {       $x4  = $idProducto;        }else{$x4  = '';}
-				if(isset($AnoPlantacion)) {    $x5  = $AnoPlantacion;     }else{$x5  = '';}
-				if(isset($Hectareas)) {        $x6  = $Hectareas;         }else{$x6  = '';}
-				if(isset($Hileras)) {          $x7  = $Hileras;           }else{$x7  = '';}
-				if(isset($Plantas)) {          $x8  = $Plantas;           }else{$x8  = '';}
-				if(isset($idEstadoProd)) {     $x9  = $idEstadoProd;      }else{$x9  = '';}
-				if(isset($DistanciaPlant)) {   $x10 = $DistanciaPlant;    }else{$x10 = '';}
-				if(isset($DistanciaHileras)) { $x11 = $DistanciaHileras;  }else{$x11 = '';}
-				
+				if(isset($Nombre)){           $x1  = $Nombre;            }else{$x1  = '';}
+				if(isset($Codigo)){           $x2  = $Codigo;            }else{$x2  = '';}
+				if(isset($idCategoria)){      $x3  = $idCategoria;       }else{$x3  = '';}
+				if(isset($idProducto)){       $x4  = $idProducto;        }else{$x4  = '';}
+				if(isset($AnoPlantacion)){    $x5  = $AnoPlantacion;     }else{$x5  = '';}
+				if(isset($Hectareas)){        $x6  = $Hectareas;         }else{$x6  = '';}
+				if(isset($Hileras)){          $x7  = $Hileras;           }else{$x7  = '';}
+				if(isset($Plantas)){          $x8  = $Plantas;           }else{$x8  = '';}
+				if(isset($idEstadoProd)){     $x9  = $idEstadoProd;      }else{$x9  = '';}
+				if(isset($DistanciaPlant)){   $x10 = $DistanciaPlant;    }else{$x10 = '';}
+				if(isset($DistanciaHileras)){ $x11 = $DistanciaHileras;  }else{$x11 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre del Cuartel', 'Nombre', $x1, 2);	
@@ -826,7 +826,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_number_spinner('N° Hectáreas','Hectareas', $x6, 0, 500, '0.01', 2, 2);
 				$Form_Inputs->form_input_number_spinner('N° Hileras','Hileras', $x7, 0, 2000, 1, 0, 2);
 				$Form_Inputs->form_input_number_spinner('N° Plantas','Plantas', $x8, 0, 200000, 1, 0, 2);
-				$Form_Inputs->form_select('Estado productivo','idEstadoProd', $x9, 2, 'idEstadoProd', 'Nombre', 'core_cross_estados_productivos', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Estado productivo','idEstadoProd', $x9, 2, 'idEstadoProd', 'Nombre', 'core_cross_estados_productivos', 0, '', $dbConn);
 				$Form_Inputs->form_input_number_spinner('Distancia de plantación','DistanciaPlant', $x10, 0, 100, '0.1', 1, 2);
 				$Form_Inputs->form_input_number_spinner('Distancia Hileras','DistanciaHileras', $x11, 0, 100, '0.1', 1, 2);
 				
@@ -837,17 +837,17 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				?>
 
 							
-				<div class="form-group">	
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_zona">	
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_zona">	
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} else  { 	 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {	 
 // consulto los datos
 $query = "SELECT Nombre
 FROM `cross_predios_listado`
@@ -903,19 +903,19 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrZonas,$row );
 }?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Editar Cuarteles');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuartel</a><?php } ?>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuartel</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -923,7 +923,7 @@ array_push( $arrZonas,$row );
 				<li class=""><a href="<?php echo 'cross_predios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="<?php echo 'cross_predios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 				<li class="active"><a href="<?php echo 'cross_predios_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Editar Cuarteles</a></li>
-			</ul>	
+			</ul>
 		</header>
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -944,17 +944,17 @@ array_push( $arrZonas,$row );
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrZonas as $zona) { ?>
-					<tr class="odd">		
-						<td><?php echo $zona['CuartelEspecie']; ?></td>	
-						<td><?php echo $zona['CuartelVariedad']; ?></td>	
-						<td><?php echo $zona['CuartelNombre']; ?></td>	
-						<td><?php echo $zona['CuartelEstadoProd']; ?></td>	
-						<td><?php echo $zona['CuartelAnoPlantacion']; ?></td>	
-						<td><?php echo $zona['CuartelHectareas']; ?></td>	
-						<td><?php echo $zona['CuartelPlantas']; ?></td>	
-						<td><?php echo $zona['CuartelHileras']; ?></td>	
-						<td><?php echo $zona['CuartelDistanciaPlant']; ?></td>	
-						<td><?php echo $zona['CuartelDistanciaHileras']; ?></td>	
+					<tr class="odd">
+						<td><?php echo $zona['CuartelEspecie']; ?></td>
+						<td><?php echo $zona['CuartelVariedad']; ?></td>
+						<td><?php echo $zona['CuartelNombre']; ?></td>
+						<td><?php echo $zona['CuartelEstadoProd']; ?></td>
+						<td><?php echo $zona['CuartelAnoPlantacion']; ?></td>
+						<td><?php echo $zona['CuartelHectareas']; ?></td>
+						<td><?php echo $zona['CuartelPlantas']; ?></td>
+						<td><?php echo $zona['CuartelHileras']; ?></td>
+						<td><?php echo $zona['CuartelDistanciaPlant']; ?></td>
+						<td><?php echo $zona['CuartelDistanciaHileras']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_zona.php?view='.simpleEncode($zona['idZona'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -965,22 +965,22 @@ array_push( $arrZonas,$row );
 									$ubicacion = $new_location.'&del_zona='.simpleEncode($zona['idZona'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el cuartel '.$zona['CuartelNombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <?php widget_modal(80, 95); ?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 <?php } ?>

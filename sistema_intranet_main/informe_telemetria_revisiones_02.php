@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_telemetria_revisiones_02.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -19,8 +19,8 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //Variables para filtro y paginacion
 $search = '';
 $location .= "?submit_filter=true";
-if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){        $location .= "&idSistema=".$_GET['idSistema'];        $search .= "&idSistema=".$_GET['idSistema'];}
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];  $search .= "&idTelemetria=".$_GET['idTelemetria'];}
+if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){ $location .= "&idSistema=".$_GET['idSistema'];        $search .= "&idSistema=".$_GET['idSistema'];}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];  $search .= "&idTelemetria=".$_GET['idTelemetria'];}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -28,25 +28,25 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
  
 //variables
-$HoraSistema    = hora_actual(); 
+$HoraSistema    = hora_actual();
 $FechaSistema   = fecha_actual();
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){ $SIS_where.=" AND telemetria_listado.idTelemetria =".$_GET['idTelemetria'];}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){ $SIS_where.=" AND telemetria_listado.idTelemetria =".$_GET['idTelemetria'];}
 
 //Se consultan datos
 $SIS_query = '
 telemetria_listado.idTelemetria,
 telemetria_listado.Nombre,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.LastUpdateFecha, 
+telemetria_listado.LastUpdateFecha,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores,
 core_sistemas.Nombre AS Sistema';
@@ -59,10 +59,10 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 	
 
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Estado Equipo</h5>	
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Estado Equipo</h5>
 			</header>
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -91,13 +91,13 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 							$tiempo1     = $equip['LastUpdateHora'];
 							$tiempo2     = $HoraSistema;
 							$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-							
+
 							//Comparaciones de tiempo
 							$Time_Tiempo     = horas2segundos($Tiempo);
 							$Time_Tiempo_FL  = horas2segundos($equip['TiempoFueraLinea']);
 							$Time_Tiempo_Max = horas2segundos('48:00:00');
 							//comparacion
-							if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+							if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
 								$in_eq_fueralinea++;
 							}
 								
@@ -121,10 +121,10 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 							?>
 							
 							<tr class="odd <?php echo $danger ?>">		
-								<td><?php echo $equip['Sistema'] ?></td>	
-								<td><?php echo $equip['Nombre'] ?></td>	
-								<td><?php echo fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs'; ?></td>	
-								<td><div class="btn-group" ><?php echo $eq_ok ?></div></td>			
+								<td><?php echo $equip['Sistema'] ?></td>
+								<td><?php echo $equip['Nombre'] ?></td>
+								<td><?php echo fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs'; ?></td>
+								<td><div class="btn-group" ><?php echo $eq_ok ?></div></td>		
 								<td>
 									<div class="btn-group" style="width: 105px;" >
 										<a href="<?php echo 'telemetria_gestion_equipos_view_equipo_admin.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()) ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
@@ -132,11 +132,11 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 									</div>
 								</td>
 							</tr>
-						<?php } ?>  
+						<?php } ?>
 					</tbody>
 				</table>
-			</div>	
-		</div>	
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -144,58 +144,58 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Filtro de busqueda
 $w  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idSistema)) {     $x1 = $idSistema;      }else{$x1 = '';}
-				if(isset($idTelemetria)) {  $x2  = $idTelemetria;  }else{$x2  = '';}
-				
+				if(isset($idSistema)){     $x1 = $idSistema;      }else{$x1 = '';}
+				if(isset($idTelemetria)){  $x2  = $idTelemetria;  }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter('Sistema','idSistema', $x1, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Sistema','idSistema', $x1, 1, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x2, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x2, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x2, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
 				
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

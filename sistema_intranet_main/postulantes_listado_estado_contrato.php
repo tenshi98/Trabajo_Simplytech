@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "postulantes_listado.php";
 $location = $original;
 $new_location = "postulantes_listado_estado_contrato.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //Si el estado esta distinto de vacio
-if ( !empty($_GET['estadoContrato']) ) {
+if (!empty($_GET['estadoContrato'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -42,7 +42,7 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Estado cambiado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = '
 postulantes_listado.idPostulante,
@@ -57,12 +57,12 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Estado');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -80,10 +80,10 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 						<li class="active"><a href="<?php echo 'postulantes_listado_estado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-text-o" aria-hidden="true"></i>  Estado Contrato</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div class="table-responsive"> 
+        <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -92,29 +92,29 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<tr class="odd">			
-						<td><?php echo 'Postulante '.$rowdata['EstadoContrato']; ?></td>		
+					<tr class="odd">
+						<td><?php echo 'Postulante '.$rowdata['EstadoContrato']; ?></td>
 						<td>
-							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">		 
-								<?php if ($rowlevel['level']>=2){?>    				
+							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
+								<?php if ($rowlevel['level']>=2){?>
 									<?php if ( $rowdata['idEstadoContrato']==1 ) {   
 										$ubicacion = $new_location.'&id='.$rowdata['idPostulante'].'&estadoContrato='.simpleEncode(2, fecha_actual());
 										$dialogo   = 'Esta a punto de contratar al postulante '.$rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'].', una vez hecho se desactivara como postulante y sera registrado como trabajador activo';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-success fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Contratar</a>
-									<?php }?>    
-								<?php }?>  
-							</div>     
-						</td>	
-					</tr>                  
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-success pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Contratar</a>
+									<?php } ?>
+								<?php } ?>
+							</div>
+						</td>
+					</tr>
 				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

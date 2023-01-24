@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "principal_agenda_telefonica.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -19,22 +19,22 @@ $location .='?pagina='.$_GET['pagina'];
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/principal_agenda_telefonica.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/principal_agenda_telefonica.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/principal_agenda_telefonica.php';	
+	require_once 'A1XRXS_sys/xrxs_form/principal_agenda_telefonica.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -49,12 +49,12 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Contacto Modificado co
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Contacto borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
-$query = "SELECT Nombre, Fono, idSistema, idUsuario
+$query = "SELECT Nombre,Fono, idSistema, idUsuario
 FROM `principal_agenda_telefonica`
 WHERE idAgenda = ".$_GET['id'];
 //Consulta
@@ -72,20 +72,20 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del Contacto</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Fono)) {        $x2  = $Fono;       }else{$x2  = $rowdata['Fono'];}
-				if(isset($idUsuario)) {   $x3  = $idUsuario;  }else{$x3  = $rowdata['idUsuario'];}
+				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = $rowdata['Nombre'];}
+				if(isset($Fono)){        $x2  = $Fono;       }else{$x2  = $rowdata['Fono'];}
+				if(isset($idUsuario)){   $x3  = $idUsuario;  }else{$x3  = $rowdata['idUsuario'];}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -101,8 +101,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					$zy ='selected=""';
 				}
 				echo '<div class="form-group" id="div_idUsuario">
-					<label for="text2" class="control-label col-sm-4" id="label_idSistema">Visibilidad</label>
-					<div class="col-sm-8 field">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_idSistema">Visibilidad</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 						<select name="idUsuario" id="idUsuario" class="form-control" required="">
 							<option value="" selected="">Seleccione una Opcion</option>
 							<option '.$zx.' value="'.$_SESSION['usuario']['basic_data']['idUsuario'].'">Solo yo</option>
@@ -117,35 +117,35 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Nuevo Contacto</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = '';}
-				if(isset($Fono)) {        $x2  = $Fono;       }else{$x2  = '';}
-				if(isset($idUsuario)) {   $x3  = $idUsuario;  }else{$x3  = '';}
+				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = '';}
+				if(isset($Fono)){        $x2  = $Fono;       }else{$x2  = '';}
+				if(isset($idUsuario)){   $x3  = $idUsuario;  }else{$x3  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -161,8 +161,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 					$zy ='selected=""';
 				}
 				echo '<div class="form-group" id="div_idUsuario">
-					<label for="text2" class="control-label col-sm-4" id="label_idSistema">Visibilidad</label>
-					<div class="col-sm-8 field">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_idSistema">Visibilidad</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 						<select name="idUsuario" id="idUsuario" class="form-control" required="">
 							<option value="" selected="">Seleccione una Opcion</option>
 							<option '.$zx.' value="'.$_SESSION['usuario']['basic_data']['idUsuario'].'">Solo yo</option>
@@ -176,37 +176,28 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where  = "principal_agenda_telefonica.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where  = "principal_agenda_telefonica.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //filtro si el documento lo creo el usuario o el sistema
 $SIS_where .= " AND principal_agenda_telefonica.idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."'";
 $SIS_where .= " OR principal_agenda_telefonica.idUsuario = '9999' ";				
@@ -214,7 +205,7 @@ $SIS_where .= " OR principal_agenda_telefonica.idUsuario = '9999' ";
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idAgenda', 'principal_agenda_telefonica', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 principal_agenda_telefonica.idAgenda,
@@ -231,7 +222,7 @@ $arrContactos = db_select_array (false, $SIS_query, 'principal_agenda_telefonica
 $search='';
 ?>
                                 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Contactos</h5>
@@ -266,15 +257,15 @@ $search='';
 									$ubicacion = $location.'&del='.simpleEncode($cont['idAgenda'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el contacto '.$cont['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
@@ -284,11 +275,11 @@ $search='';
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px; margin-top:30px">
-<a href="principal.php" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
+<a href="principal.php" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

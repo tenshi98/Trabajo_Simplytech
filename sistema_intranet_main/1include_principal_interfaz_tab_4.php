@@ -127,7 +127,7 @@ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.
 <script type="text/javascript">google.charts.load(\'current\', {\'packages\':[\'corechart\']});</script>';		
 
 	echo '<div class="tab-pane fade" id="Menu_tab_4">
-			<div class="col-sm-12">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 				<div class="col-sm-12 admin-grid">
 					<div class="sort-disable">
@@ -139,7 +139,7 @@ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.
 				
 						<div class="panel-body mnw700 of-a">
 							<div class="row">
-								<div class="col-sm-4">
+								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 									<h5 style="color: #666;font-weight: 600 !important;">Ordenes de Trabajo
 										<small class="pull-right fw600 text-primary"></small>
 									</h5>
@@ -148,7 +148,7 @@ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.
 										<tbody>';				
 											/****************************************************/
 											//Acceso a las OT de la semana
-											$OT_Semana = $prm_x[10] + $prm_x[11];					
+											$OT_Semana = $prm_x[10] + $prm_x[11];
 											if($OT_Semana!=0) {
 												echo '
 												<tr>
@@ -171,7 +171,7 @@ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.
 								</div>';
 														
 								/**************************************************************/
-								echo '<div class="col-sm-4">
+								echo '<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 								
 									<h5 style="color: #666;font-weight: 600 !important;">Analisis Maquinas
 										<small class="pull-right fw600 text-primary"></small>
@@ -216,7 +216,7 @@ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.
 										}
 										echo '
 										</tbody>
-									</table>			
+									</table>		
 								</div>
 							</div>
 						</div>
@@ -232,7 +232,7 @@ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.
 
 echo '
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -247,7 +247,7 @@ echo '
 					}
 					if($xcounter>4){echo '</ul></li>';}
 				echo '
-				</ul>	
+				</ul>
 			</header>
 			<div id="div-4" class="tab-content">';
 				$xcounter = 1;
@@ -272,7 +272,7 @@ echo '
 											/**************************************************************/
 											echo '
 											<div class="row">
-												<div class="col-sm-4">
+												<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 													<h5 style="color: #666;font-weight: 600 !important;">Ordenes de Trabajo (Mes)
 														<small class="pull-right fw600 text-primary"></small>
 													</h5>
@@ -307,7 +307,7 @@ echo '
 														</tbody>
 													</table>
 												</div>
-												<div class="col-sm-8">
+												<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 												
 													<script>
 												
@@ -333,7 +333,7 @@ echo '
 															chart_'.$xcounter.'.draw(data, options);
 
 														}
-													</script> 
+													</script>
 													<div id="chart_mes_'.$xcounter.'" style="height: 200px; width: 100%;"></div>
 				
 												</div>
@@ -342,7 +342,7 @@ echo '
 											/**************************************************************/
 											echo '
 											<div class="row">
-												<div class="col-sm-4">
+												<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 													<h5 style="color: #666;font-weight: 600 !important;">Ordenes de Trabajo (Año)
 														<small class="pull-right fw600 text-primary"></small>
 													</h5>
@@ -371,7 +371,7 @@ echo '
 														</tbody>
 													</table>
 												</div>
-												<div class="col-sm-8">
+												<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 												
 													<script>
 												
@@ -397,7 +397,7 @@ echo '
 															chart_'.$xcounter.'.draw(data, options);
 
 														}
-													</script> 
+													</script>
 													<div id="chart_ano_'.$xcounter.'" style="height: 200px; width: 100%;"></div>
 												
 												</div>
@@ -406,7 +406,7 @@ echo '
 											/**************************************************************/
 											echo '
 											<div class="row">
-												<div class="col-sm-4">
+												<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 												
 													<h5 style="color: #666;font-weight: 600 !important;">Analisis Maquinas
 														<small class="pull-right fw600 text-primary"></small>
@@ -447,20 +447,20 @@ echo '
 														}
 														echo '
 														</tbody>
-													</table>			
+													</table>		
 												</div>
 											</div>
 										</div>
 									</div>
 									
-								</div>	
+								</div>
 							</div>
 						</div>';
 						
 					$xcounter++;
 				}
 			echo '	
-			</div>	
+			</div>
 		</div>
 	</div>
 </div>
@@ -489,7 +489,7 @@ echo '
 		
 		
 		
-		echo '</div>';	
+		echo '</div>';
 	echo '</div>';
 	
 }

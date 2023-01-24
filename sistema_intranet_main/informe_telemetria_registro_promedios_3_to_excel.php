@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -238,7 +238,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 /*******************************************************/
 //se trae un listado con los equipos
 $SIS_query = '
-telemetria_listado.idTelemetria, 
+telemetria_listado.idTelemetria,
 telemetria_listado.Nombre AS NombreEquipo, 
 telemetria_listado.cantSensores';
 $SIS_order = 'telemetria_listado.idTelemetria ASC';
@@ -297,7 +297,7 @@ foreach ($arrEquipos as $equipo) {
 							->setCellValue($arrData[$yy].'1', DeSanitizar($arrTemporal[0]['SensorNombre_'.$i]).' ('.DeSanitizar($grupo).')');
 							$yy++;
 			}
-		}						
+		}
 	}
  
 	/***********************************************************/
@@ -372,7 +372,7 @@ foreach ($arrEquipos as $equipo) {
 						$cuenta_xx++;
 					}
 				}
-			}	
+			}
 		}	*/		
 		//Si no existen datos imprimo
 		if($cuenta_xx==0){
@@ -434,7 +434,7 @@ foreach ($arrEquipos as $equipo) {
 		}
 		
 				   
-		$nn++;           
+		$nn++;
 		   
 	}
 

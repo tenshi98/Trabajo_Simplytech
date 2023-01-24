@@ -2,25 +2,25 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-184).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idCorreos']) )      $idCorreos      = $_POST['idCorreos'];
-	if ( !empty($_POST['idCorreosCat']) )   $idCorreosCat   = $_POST['idCorreosCat'];
-	if ( !empty($_POST['idSistema']) )      $idSistema      = $_POST['idSistema'];
-	if ( !empty($_POST['idUsuario']) )      $idUsuario      = $_POST['idUsuario'];
-	if ( !empty($_POST['TimeStamp']) )      $TimeStamp      = $_POST['TimeStamp'];
-	if ( !empty($_POST['Chat_id']) )        $Chat_id        = $_POST['Chat_id'];
-	
+	if (!empty($_POST['idCorreos']))      $idCorreos      = $_POST['idCorreos'];
+	if (!empty($_POST['idCorreosCat']))   $idCorreosCat   = $_POST['idCorreosCat'];
+	if (!empty($_POST['idSistema']))      $idSistema      = $_POST['idSistema'];
+	if (!empty($_POST['idUsuario']))      $idUsuario      = $_POST['idUsuario'];
+	if (!empty($_POST['TimeStamp']))      $TimeStamp      = $_POST['TimeStamp'];
+	if (!empty($_POST['Chat_id']))        $Chat_id        = $_POST['Chat_id'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -38,7 +38,7 @@ require_once '0_validate_user_1.php';
 			case 'idUsuario':     if(empty($idUsuario)){      $error['idUsuario']      = 'error/No ha seleccionado el Usuario';}break;
 			case 'TimeStamp':     if(empty($TimeStamp)){      $error['TimeStamp']      = 'error/No ha ingresado la fecha y hora';}break;
 			case 'Chat_id':       if(empty($Chat_id)){        $error['Chat_id']        = 'error/No ha ingresado el Chat id';}break;
-			
+
 		}
 	}
 
@@ -47,12 +47,12 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -73,21 +73,21 @@ require_once '0_validate_user_1.php';
 			if($ndata_2 > 0) {$error['ndata_2'] = 'error/El Chat id ya existe';}
 			if($ndata_3 > 0) {$error['ndata_3'] = 'error/No ha seleccionado un usuario ni ha ingresado el chat id';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idCorreosCat) && $idCorreosCat != ''){   $SIS_data  = "'".$idCorreosCat."'" ;   }else{$SIS_data  = "''";}
-				if(isset($idSistema) && $idSistema != ''){         $SIS_data .= ",'".$idSistema."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario != ''){         $SIS_data .= ",'".$idUsuario."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($TimeStamp) && $TimeStamp != ''){         $SIS_data .= ",'".$TimeStamp."'" ;     }else{$SIS_data .= ",''";}
-				if(isset($Chat_id) && $Chat_id != ''){             $SIS_data .= ",'".$Chat_id."'" ;       }else{$SIS_data .= ",''";}
-				
+				if(isset($idCorreosCat) && $idCorreosCat!=''){   $SIS_data  = "'".$idCorreosCat."'";   }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema!=''){         $SIS_data .= ",'".$idSistema."'";     }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){        $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
+				if(isset($TimeStamp) && $TimeStamp!=''){         $SIS_data .= ",'".$TimeStamp."'";     }else{$SIS_data .= ",''";}
+				if(isset($Chat_id) && $Chat_id!=''){             $SIS_data .= ",'".$Chat_id."'";       }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idCorreosCat, idSistema, idUsuario, TimeStamp, Chat_id';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_mnt_correos_list', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -95,14 +95,14 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -123,42 +123,40 @@ require_once '0_validate_user_1.php';
 			if($ndata_2 > 0) {$error['ndata_2'] = 'error/El Chat id ya existe';}
 			if($ndata_3 > 0) {$error['ndata_3'] = 'error/No ha seleccionado un usuario ni ha ingresado el chat id';}
 			/*******************************************************************/
-			
-			
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idCorreos='".$idCorreos."'" ;
-				if(isset($idCorreosCat) && $idCorreosCat != ''){    $SIS_data .= ",idCorreosCat='".$idCorreosCat."'" ;}
-				if(isset($idSistema) && $idSistema != ''){          $SIS_data .= ",idSistema='".$idSistema."'" ;}
-				if(isset($idUsuario) && $idUsuario != ''){          $SIS_data .= ",idUsuario='".$idUsuario."'" ;}
-				if(isset($TimeStamp) && $TimeStamp != ''){          $SIS_data .= ",TimeStamp='".$TimeStamp."'" ;}
-				if(isset($Chat_id) && $Chat_id != ''){              $SIS_data .= ",Chat_id='".$Chat_id."'" ;}
-				
+				$SIS_data = "idCorreos='".$idCorreos."'";
+				if(isset($idCorreosCat) && $idCorreosCat!=''){    $SIS_data .= ",idCorreosCat='".$idCorreosCat."'";}
+				if(isset($idSistema) && $idSistema!=''){          $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($TimeStamp) && $TimeStamp!=''){          $SIS_data .= ",TimeStamp='".$TimeStamp."'";}
+				if(isset($Chat_id) && $Chat_id!=''){              $SIS_data .= ",Chat_id='".$Chat_id."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'telemetria_mnt_correos_list', 'idCorreos = "'.$idCorreos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-	
-		break;	
-						
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -166,54 +164,52 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'telemetria_mnt_correos_list', 'idCorreos = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-		break;							
-/*******************************************************************************************************************/		
-		case 'noMolestar':	
-			
+		break;
+/*******************************************************************************************************************/
+		case 'noMolestar':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			//variables
-			$HoraSistema      = hora_actual(); 
+
+			//Variables
+			$HoraSistema      = hora_actual();
 			$FechaSistema     = fecha_actual();
 			$noMolestar       = $_GET['noMolestar'];
 			$idUsuario        = $_GET['idUsuario'];
 			$idSistema        = $_GET['idSistema'];
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 
 				//Se definen las horas para no molestar
 				switch ($noMolestar) {
@@ -237,12 +233,12 @@ require_once '0_validate_user_1.php';
 					$Hora_noMolestar   = restahoras('24:00:00',$Hora_noMolestar);
 					$Fecha_noMolestar  = sumarDias($Fecha_noMolestar,1);
 				}
-				
+
 				//Filtros
-				if(isset($Fecha_noMolestar) && $Fecha_noMolestar != ''&&isset($Hora_noMolestar) && $Hora_noMolestar != ''){          
-					$SIS_data = "TimeStamp='".$Fecha_noMolestar." ".$Hora_noMolestar."'" ;
+				if(isset($Fecha_noMolestar) && $Fecha_noMolestar != ''&&isset($Hora_noMolestar) && $Hora_noMolestar!=''){          
+					$SIS_data = "TimeStamp='".$Fecha_noMolestar." ".$Hora_noMolestar."'";
 				}
-				
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'telemetria_mnt_correos_list', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -251,11 +247,11 @@ require_once '0_validate_user_1.php';
 					
 					header( 'Location: '.$location.'&noMol='.simpleEncode($h_noMolestar, fecha_actual()) );
 					die;
-					
+
 				}
 			}
-	
-		break;								
+
+		break;
 /*******************************************************************************************************************/
 	}
 ?>

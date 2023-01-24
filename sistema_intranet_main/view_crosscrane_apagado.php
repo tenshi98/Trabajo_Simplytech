@@ -12,17 +12,17 @@ require_once 'core/Load.Utils.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "view_crosscrane_apagado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -31,7 +31,7 @@ $location .='?view='.$X_Puntero;
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //Si el estado esta distinto de vacio
-if ( !empty($_GET['idEstadoEncendido']) ) {
+if (!empty($_GET['idEstadoEncendido'])){
 	//Llamamos al formulario
 	$form_trabajo= 'EstadoEncendido';
 	require_once 'A1XRXS_sys/xrxs_form/z_telemetria_listado.php';
@@ -40,9 +40,9 @@ if ( !empty($_GET['idEstadoEncendido']) ) {
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -79,34 +79,34 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo</h5>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			<div class="wmd-panel">
 					
-				<div class="col-sm-4">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<?php if ($rowdata['Direccion_img']=='') { ?>
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 					<?php }else{  ?>
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 					<?php }?>
 				</div>
-				<div class="col-sm-8">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Equipo</h2>
 					<p class="text-muted">
-						<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){ ?><strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){ ?><strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){ ?><strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){ ?><strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){ ?><strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){ ?><strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){ ?><strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){ ?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
-						<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){ ?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
+						<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){?><strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
+						<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){?><strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
+						<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){?><strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
+						<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){?><strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
+						<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){?><strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
+						<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){?><strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
+						<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){?><strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
+						<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
+						<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
 					</p>
 						
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Configuracion</h2>
@@ -129,38 +129,38 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 					
 					<table  class="table table-bordered">
 						<tr class="item-row">
-							<td><label class="label <?php if(isset($rowdata['idEstadoEncendido'])&&$rowdata['idEstadoEncendido']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $rowdata['EstadoEncendido']; ?></label></td>	
+							<td><label class="label <?php if(isset($rowdata['idEstadoEncendido'])&&$rowdata['idEstadoEncendido']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $rowdata['EstadoEncendido']; ?></label></td>
 							<td width="10">
-								<div class="btn-group" style="width: 100px;" id="toggle_event_editing"> 
-									<?php if ( $rowdata['idEstadoEncendido']==1 ) {?>   
+								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
+									<?php if ( $rowdata['idEstadoEncendido']==1 ){ ?>   
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $location.'&idTelemetria='.$rowdata['idTelemetria'].'&idEstadoEncendido=2' ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 									<?php } else {?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $location.'&idTelemetria='.$rowdata['idTelemetria'].'&idEstadoEncendido=1' ; ?>">ON</a>
-									<?php }?> 
+									<?php } ?>
 								</div>
 							</td>
 						</tr>
 					</table>
 						
-				</div>	
+				</div>
 				<div class="clearfix"></div>
 						
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -171,12 +171,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 

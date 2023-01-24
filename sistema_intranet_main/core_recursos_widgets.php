@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistemas.php";
 $location = $original;
 /**********************************************************************************************************************************/
@@ -22,7 +22,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 //widget_title($bg_color, $icon, $porcentaje, $titulo, $subtitulo_1, $subtitulo_2)
 echo widget_title('bg-green', 'fa-cog', 100, 'Sistema', 'Nombre', 'Editar Datos de Contacto');
@@ -48,12 +48,12 @@ echo '<div class="clearfix"></div>';
 
 											
 //widget_Ficha_2($bg_color, $icon, $number, $width, $titulo, $subtitulo, $enlace, $texto_enlace, $color_enlace, $new_tab, $iframe)	
-echo widget_Ficha_2('box-green', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2); 											
-echo widget_Ficha_2('box-yellow', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2); 											
-echo widget_Ficha_2('box-red', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2); 											
-echo widget_Ficha_2('box-purple', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2); 											
-echo widget_Ficha_2('box-orange', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2); 											
-echo widget_Ficha_2('box-blue', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2); 											
+echo widget_Ficha_2('box-green', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);
+echo widget_Ficha_2('box-yellow', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);
+echo widget_Ficha_2('box-red', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);
+echo widget_Ficha_2('box-purple', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);
+echo widget_Ficha_2('box-orange', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);
+echo widget_Ficha_2('box-blue', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);
 echo '<div class="clearfix"></div>';
 
 					
@@ -158,7 +158,7 @@ $arrLinks[2]['Texto'] = 'Sales';
 $arrLinks[3]['link']  = 'www.google.cl';
 $arrLinks[3]['valor'] = '83';
 $arrLinks[3]['Texto'] = 'Projects';
-//widget_Ficha_10($bg_color, $img_direction, $nombre, $trabajo, $arrDatos, $arrLinks)
+//widget_Ficha_10($bg_color, $img_direction, $Nombre,$trabajo, $arrDatos, $arrLinks)
 echo widget_Ficha_10('main-box_gray-bg', 'https://centaurus.aircode.sk/v5/img/samples/angelina-300.jpg', 'Angelina Jolie', 'Actress', $arrDatos, $arrLinks);
 echo widget_Ficha_10('main-box_emerald-bg', 'https://centaurus.aircode.sk/v5/img/samples/angelina-300.jpg', 'Angelina Jolie', 'Actress', $arrDatos, $arrLinks);
 echo widget_Ficha_10('main-box_red-bg', 'https://centaurus.aircode.sk/v5/img/samples/angelina-300.jpg', 'Angelina Jolie', 'Actress', $arrDatos, $arrLinks);

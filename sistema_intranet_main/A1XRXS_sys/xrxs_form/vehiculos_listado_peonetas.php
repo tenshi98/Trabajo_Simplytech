@@ -2,26 +2,26 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-211).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idPeoneta']) )     $idPeoneta     = $_POST['idPeoneta'];
-	if ( !empty($_POST['idVehiculo']) )    $idVehiculo    = $_POST['idVehiculo'];
-	if ( !empty($_POST['Nombre']) )        $Nombre        = $_POST['Nombre'];
-	if ( !empty($_POST['ApellidoPat']) )   $ApellidoPat   = $_POST['ApellidoPat'];
-	if ( !empty($_POST['ApellidoMat']) )   $ApellidoMat   = $_POST['ApellidoMat'];
-	if ( !empty($_POST['Rut']) )           $Rut           = $_POST['Rut'];
-	if ( !empty($_POST['Fecha']) )         $Fecha         = $_POST['Fecha'];
-	
+	if (!empty($_POST['idPeoneta']))     $idPeoneta     = $_POST['idPeoneta'];
+	if (!empty($_POST['idVehiculo']))    $idVehiculo    = $_POST['idVehiculo'];
+	if (!empty($_POST['Nombre']))        $Nombre        = $_POST['Nombre'];
+	if (!empty($_POST['ApellidoPat']))   $ApellidoPat   = $_POST['ApellidoPat'];
+	if (!empty($_POST['ApellidoMat']))   $ApellidoMat   = $_POST['ApellidoMat'];
+	if (!empty($_POST['Rut']))           $Rut           = $_POST['Rut'];
+	if (!empty($_POST['Fecha']))         $Fecha         = $_POST['Fecha'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -40,34 +40,34 @@ require_once '0_validate_user_1.php';
 			case 'ApellidoMat':  if(empty($ApellidoMat)){  $error['ApellidoMat']  = 'error/No ha ingresado el apellido materno';}break;
 			case 'Rut':          if(empty($Rut)){          $error['Rut']          = 'error/No ha ingresado el Rut';}break;
 			case 'Fecha':        if(empty($Fecha)){        $error['Fecha']        = 'error/No ha ingresado la Fecha de nacimiento';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Nombre) && $Nombre != ''){           $Nombre      = EstandarizarInput($Nombre); }
-	if(isset($ApellidoPat) && $ApellidoPat != ''){ $ApellidoPat = EstandarizarInput($ApellidoPat); }
-	if(isset($ApellidoMat) && $ApellidoMat != ''){ $ApellidoMat = EstandarizarInput($ApellidoMat); }
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre) && $Nombre!=''){          $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($ApellidoPat) && $ApellidoPat!=''){ $ApellidoPat = EstandarizarInput($ApellidoPat);}
+	if(isset($ApellidoMat) && $ApellidoMat!=''){ $ApellidoMat = EstandarizarInput($ApellidoMat);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	if(isset($ApellidoPat)&&contar_palabras_censuradas($ApellidoPat)!=0){  $error['ApellidoPat'] = 'error/Edita Apellido Pat, contiene palabras no permitidas'; }	
-	if(isset($ApellidoMat)&&contar_palabras_censuradas($ApellidoMat)!=0){  $error['ApellidoMat'] = 'error/Edita Apellido Mat, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre'] = 'error/Edita Nombre,contiene palabras no permitidas';}
+	if(isset($ApellidoPat)&&contar_palabras_censuradas($ApellidoPat)!=0){  $error['ApellidoPat'] = 'error/Edita Apellido Pat, contiene palabras no permitidas';}
+	if(isset($ApellidoMat)&&contar_palabras_censuradas($ApellidoMat)!=0){  $error['ApellidoMat'] = 'error/Edita Apellido Mat, contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -84,23 +84,23 @@ require_once '0_validate_user_1.php';
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Rut ya existe en el sistema';}
 			if($ndata_2 > 0) {$error['ndata_2'] = 'error/La Peoneta ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				
 				
 				//filtros
-				if(isset($idVehiculo) && $idVehiculo != ''){    $SIS_data  = "'".$idVehiculo."'" ;    }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre != ''){            $SIS_data .= ",'".$Nombre."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){  $SIS_data .= ",'".$ApellidoPat."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){  $SIS_data .= ",'".$ApellidoMat."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($Rut) && $Rut != ''){                  $SIS_data .= ",'".$Rut."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha != ''){              $SIS_data .= ",'".$Fecha."'" ;        }else{$SIS_data .= ",''";}
-				
+				if(isset($idVehiculo) && $idVehiculo!=''){    $SIS_data  = "'".$idVehiculo."'";    }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
+				if(isset($ApellidoPat) && $ApellidoPat!=''){  $SIS_data .= ",'".$ApellidoPat."'";  }else{$SIS_data .= ",''";}
+				if(isset($ApellidoMat) && $ApellidoMat!=''){  $SIS_data .= ",'".$ApellidoMat."'";  }else{$SIS_data .= ",''";}
+				if(isset($Rut) && $Rut!=''){                  $SIS_data .= ",'".$Rut."'";          }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){ $SIS_data .= ",'".$Fecha."'";       }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idVehiculo, Nombre, ApellidoPat, ApellidoMat, Rut, Fecha';
+				$SIS_columns = 'idVehiculo, Nombre,ApellidoPat, ApellidoMat, Rut, Fecha';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_listado_peonetas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -108,14 +108,14 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -132,43 +132,42 @@ require_once '0_validate_user_1.php';
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Rut ya existe en el sistema';}
 			if($ndata_2 > 0) {$error['ndata_2'] = 'error/La Peoneta ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
-				//Filtros
-				$SIS_data = "idPeoneta='".$idPeoneta."'" ;
-				if(isset($idVehiculo) && $idVehiculo != ''){     $SIS_data .= ",idVehiculo='".$idVehiculo."'" ;}
-				if(isset($Nombre) && $Nombre != ''){             $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($ApellidoPat) && $ApellidoPat != ''){   $SIS_data .= ",ApellidoPat='".$ApellidoPat."'" ;}
-				if(isset($ApellidoMat) && $ApellidoMat != ''){   $SIS_data .= ",ApellidoMat='".$ApellidoMat."'" ;}
-				if(isset($Rut) && $Rut != ''){                   $SIS_data .= ",Rut='".$Rut."'" ;}
-				if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",Fecha='".$Fecha."'" ;}
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
+				//filtros
+				$SIS_data = "idPeoneta='".$idPeoneta."'";
+				if(isset($idVehiculo) && $idVehiculo!=''){     $SIS_data .= ",idVehiculo='".$idVehiculo."'";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($ApellidoPat) && $ApellidoPat!=''){   $SIS_data .= ",ApellidoPat='".$ApellidoPat."'";}
+				if(isset($ApellidoMat) && $ApellidoMat!=''){   $SIS_data .= ",ApellidoMat='".$ApellidoMat."'";}
+				if(isset($Rut) && $Rut!=''){                   $SIS_data .= ",Rut='".$Rut."'";}
+				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado_peonetas', 'idPeoneta = "'.$idPeoneta.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
-		break;	
-							
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -176,39 +175,37 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'vehiculos_listado_peonetas', 'idPeoneta = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-		break;							
+		break;
 
 					
 /*******************************************************************************************************************/

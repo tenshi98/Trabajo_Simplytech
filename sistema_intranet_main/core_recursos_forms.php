@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistemas.php";
 $location = $original;
 /**********************************************************************************************************************************/
@@ -24,13 +24,13 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Inputs Test</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
@@ -202,26 +202,26 @@ require_once 'core/Web.Header.Main.php';
 				$Form_Inputs->form_checkbox_active('opciones seleccionadas','form_checkbox_active2', $x40, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 				
 				$Form_Inputs->form_tittle(3, 'Selects');
-				$Form_Inputs->form_select('form_select','form_select1', $x41, 1, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, '', $dbConn);	
-				$Form_Inputs->form_select('form_select','form_select2', $x42, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, '', $dbConn);	
-				$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
-				$Form_Inputs->form_select_filter('form_select_filter','ifilter1', $x43, 1, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil, '', $dbConn);	
-				$Form_Inputs->form_select_filter('form_select_filter','ifilter2', $x44, 2, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil, '', $dbConn);	
+				$Form_Inputs->form_select('form_select','form_select1', $x41, 1, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, '', $dbConn);
+				$Form_Inputs->form_select('form_select','form_select2', $x42, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, '', $dbConn);
+				$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
+				$Form_Inputs->form_select_filter('form_select_filter','ifilter1', $x43, 1, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil, '', $dbConn);
+				$Form_Inputs->form_select_filter('form_select_filter','ifilter2', $x44, 2, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil, '', $dbConn);
 				$Form_Inputs->form_select_join('form_select_join','form_select_join1', $x45, 1, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', 'bodegas_insumos_listado.idSistema>=0', $dbConn);
 				$Form_Inputs->form_select_join('form_select_join','form_select_join2', $x46, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', 'bodegas_insumos_listado.idSistema>=0', $dbConn);
-				$Form_Inputs->form_select_join_filter('form_select_join_filter 1','form_select_join_filter1', $x47, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				$Form_Inputs->form_select_join_filter('form_select_join_filter 2','form_select_join_filter2', $x48, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('form_select_join_filter 1','form_select_join_filter1', $x47, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('form_select_join_filter 2','form_select_join_filter2', $x48, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_select_disabled('form_select_disabled 1','form_select_disabled1', $x49, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', $dbConn);
 				$Form_Inputs->form_select_disabled('form_select_disabled 2','form_select_disabled2', $x50, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', $dbConn);
-				$Form_Inputs->form_select_n_auto('form_select_n_auto','form_select_n_auto1', $x51, 1, 1, 72);	
+				$Form_Inputs->form_select_n_auto('form_select_n_auto','form_select_n_auto1', $x51, 1, 1, 72);
 				$Form_Inputs->form_select_n_auto('form_select_n_auto','form_select_n_auto2', $x52, 2, 1, 72);	
 				$Form_Inputs->form_select_country('form_select_country','form_select_country1', $x53, 1, $dbConn);
 				$Form_Inputs->form_select_country('form_select_country','form_select_country2', $x54, 2, $dbConn);
 				$Form_Inputs->form_select_depend1('Select dependientes 1 a','idCiudad', $x55, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-												 'Nivel 1','idComuna', $x56, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
-												 $dbConn, 'form1');																															
+												 'Nivel 1','idComuna', $x56, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
+												 $dbConn, 'form1');
 				$Form_Inputs->form_select_depend1('Select dependientes 1 b','idCiudad2', $x57, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-												'Nivel 1','idComuna2', $x58, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+												'Nivel 1','idComuna2', $x58, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												$dbConn, 'form1');
 				$Form_Inputs->form_select_depend2('Select dependientes 2', 'idCentroCosto',  $x59,  1,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  0,   0,
 												  'Nivel 1', 'idLevel_1',  $x60,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
@@ -255,14 +255,14 @@ require_once 'core/Web.Header.Main.php';
 				
 				
 			
-				?> 
+				?>
 			  
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tarea"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tarea"> 
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>

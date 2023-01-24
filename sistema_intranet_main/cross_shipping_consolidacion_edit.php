@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "cross_shipping_consolidacion.php";
 $location = $original;
 $new_location = "cross_shipping_consolidacion_edit.php";
@@ -22,7 +22,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_modBase']) )  { 
+if (!empty($_POST['submit_modBase'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -31,7 +31,7 @@ if ( !empty($_POST['submit_modBase']) )  {
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_file']) )  { 
+if (!empty($_POST['submit_file'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -39,16 +39,16 @@ if ( !empty($_POST['submit_file']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_shipping_consolidacion.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_file']) )     {
+if (!empty($_GET['del_file'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
 	$form_trabajo= 'del_file';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_shipping_consolidacion.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_shipping_consolidacion.php';
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_estiba']) )  { 
+if (!empty($_POST['submit_estiba'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -56,7 +56,7 @@ if ( !empty($_POST['submit_estiba']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_shipping_consolidacion.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_edit_estiba']) )  { 
+if (!empty($_POST['submit_edit_estiba'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
@@ -64,21 +64,21 @@ if ( !empty($_POST['submit_edit_estiba']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_cross_shipping_consolidacion.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_estiba']) )     {
+if (!empty($_GET['del_estiba'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
 	$form_trabajo= 'delEstiba';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_shipping_consolidacion.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_shipping_consolidacion.php';
 }
 /**********************************************/
 //se borra un dato
-if ( !empty($_GET['modEdit']) )     {
+if (!empty($_GET['modEdit'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	//Llamamos al formulario
 	$form_trabajo= 'modEdit';
-	require_once 'A1XRXS_sys/xrxs_form/z_cross_shipping_consolidacion.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_cross_shipping_consolidacion.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -93,8 +93,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ingreso Modificado cor
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ingreso borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['addFile']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['addFile'])){ 
 /*****************************************************/
 // Se trae la informacion del producto
 $query = "SELECT CTNNombreCompañia
@@ -116,19 +116,19 @@ if(!$resultado){
 $rowConso = mysqli_fetch_assoc ($resultado);
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php           
+				<?php 
 				//Se verifican si existen los datos
-				if(isset($idArchivoTipo)) {    $x1  = $idArchivoTipo;  }else{$x1  = '';}
-				
+				if(isset($idArchivoTipo)){    $x1  = $idArchivoTipo;  }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 15, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
@@ -138,20 +138,20 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				
 				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
 				$Form_Inputs->form_input_hidden('CTNNombreCompañia', $rowConso['CTNNombreCompañia'], 2);	
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file">
+					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>              
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['cloneEstiba']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['cloneEstiba'])){ 
 /*****************************************************/
 // Se trae la informacion del producto
 $query = "SELECT idEstiba, idEstibaUbicacion, idPosicion, idEnvase, NPallet, 
@@ -175,25 +175,25 @@ if(!$resultado){
 }
 $rowEstiba = mysqli_fetch_assoc ($resultado);
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Estiba</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idEstiba)) {           $x1  = $idEstiba;           }else{$x1  = $rowEstiba['idEstiba'];}
-				if(isset($idEstibaUbicacion)) {  $x2  = $idEstibaUbicacion;  }else{$x2  = $rowEstiba['idEstibaUbicacion'];}
-				if(isset($idPosicion)) {         $x3  = $idPosicion;         }else{$x3  = $rowEstiba['idPosicion'];}
-				if(isset($idEnvase)) {           $x4  = $idEnvase;           }else{$x4  = $rowEstiba['idEnvase'];}
-				if(isset($NPallet)) {            $x5  = $NPallet;            }else{$x5  = $rowEstiba['NPallet'];}
-				if(isset($Temperatura)) {        $x6  = $Temperatura;        }else{$x6  = Cantidades_decimales_justos($rowEstiba['Temperatura']);}
-				if(isset($idTermografo)) {       $x7  = $idTermografo;       }else{$x7  = $rowEstiba['idTermografo'];}
-				if(isset($NSerieSensor)) {       $x8  = $NSerieSensor;       }else{$x8  = $rowEstiba['NSerieSensor'];}
-				
+				if(isset($idEstiba)){           $x1  = $idEstiba;           }else{$x1  = $rowEstiba['idEstiba'];}
+				if(isset($idEstibaUbicacion)){  $x2  = $idEstibaUbicacion;  }else{$x2  = $rowEstiba['idEstibaUbicacion'];}
+				if(isset($idPosicion)){         $x3  = $idPosicion;         }else{$x3  = $rowEstiba['idPosicion'];}
+				if(isset($idEnvase)){           $x4  = $idEnvase;           }else{$x4  = $rowEstiba['idEnvase'];}
+				if(isset($NPallet)){            $x5  = $NPallet;            }else{$x5  = $rowEstiba['NPallet'];}
+				if(isset($Temperatura)){        $x6  = $Temperatura;        }else{$x6  = Cantidades_decimales_justos($rowEstiba['Temperatura']);}
+				if(isset($idTermografo)){       $x7  = $idTermografo;       }else{$x7  = $rowEstiba['idTermografo'];}
+				if(isset($NSerieSensor)){       $x8  = $NSerieSensor;       }else{$x8  = $rowEstiba['NSerieSensor'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
@@ -213,17 +213,17 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_estiba">
-					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_estiba">
+					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>               
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['editEstiba']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['editEstiba'])){ 
 /*****************************************************/
 // Se trae la informacion del producto
 $query = "SELECT idEstiba, idEstibaUbicacion, idPosicion, idEnvase, NPallet, 
@@ -247,25 +247,25 @@ if(!$resultado){
 }
 $rowEstiba = mysqli_fetch_assoc ($resultado);	 
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Estiba</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idEstiba)) {           $x1  = $idEstiba;           }else{$x1  = $rowEstiba['idEstiba'];}
-				if(isset($idEstibaUbicacion)) {  $x2  = $idEstibaUbicacion;  }else{$x2  = $rowEstiba['idEstibaUbicacion'];}
-				if(isset($idPosicion)) {         $x3  = $idPosicion;         }else{$x3  = $rowEstiba['idPosicion'];}
-				if(isset($idEnvase)) {           $x4  = $idEnvase;           }else{$x4  = $rowEstiba['idEnvase'];}
-				if(isset($NPallet)) {            $x5  = $NPallet;            }else{$x5  = $rowEstiba['NPallet'];}
-				if(isset($Temperatura)) {        $x6  = $Temperatura;        }else{$x6  = Cantidades_decimales_justos($rowEstiba['Temperatura']);}
-				if(isset($idTermografo)) {       $x7  = $idTermografo;       }else{$x7  = $rowEstiba['idTermografo'];}
-				if(isset($NSerieSensor)) {       $x8  = $NSerieSensor;       }else{$x8  = $rowEstiba['NSerieSensor'];}
-				
+				if(isset($idEstiba)){           $x1  = $idEstiba;           }else{$x1  = $rowEstiba['idEstiba'];}
+				if(isset($idEstibaUbicacion)){  $x2  = $idEstibaUbicacion;  }else{$x2  = $rowEstiba['idEstibaUbicacion'];}
+				if(isset($idPosicion)){         $x3  = $idPosicion;         }else{$x3  = $rowEstiba['idPosicion'];}
+				if(isset($idEnvase)){           $x4  = $idEnvase;           }else{$x4  = $rowEstiba['idEnvase'];}
+				if(isset($NPallet)){            $x5  = $NPallet;            }else{$x5  = $rowEstiba['NPallet'];}
+				if(isset($Temperatura)){        $x6  = $Temperatura;        }else{$x6  = Cantidades_decimales_justos($rowEstiba['Temperatura']);}
+				if(isset($idTermografo)){       $x7  = $idTermografo;       }else{$x7  = $rowEstiba['idTermografo'];}
+				if(isset($NSerieSensor)){       $x8  = $NSerieSensor;       }else{$x8  = $rowEstiba['NSerieSensor'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
@@ -286,37 +286,37 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit_estiba">
-					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_estiba">
+					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>               
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addEstiba']) ) { ?>
-<div class="col-sm-8 fcenter">
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addEstiba'])){ ?>
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingreso Estibas</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idEstiba)) {           $x1  = $idEstiba;           }else{$x1  = '';}
-				if(isset($idEstibaUbicacion)) {  $x2  = $idEstibaUbicacion;  }else{$x2  = '';}
-				if(isset($idPosicion)) {         $x3  = $idPosicion;         }else{$x3  = '';}
-				if(isset($idEnvase)) {           $x4  = $idEnvase;           }else{$x4  = '';}
-				if(isset($NPallet)) {            $x5  = $NPallet;            }else{$x5  = '';}
-				if(isset($Temperatura)) {        $x6  = $Temperatura;        }else{$x6  = '';}
-				if(isset($idTermografo)) {       $x7  = $idTermografo;       }else{$x7  = '';}
-				if(isset($NSerieSensor)) {       $x8  = $NSerieSensor;       }else{$x8  = '';}
-				
+				if(isset($idEstiba)){           $x1  = $idEstiba;           }else{$x1  = '';}
+				if(isset($idEstibaUbicacion)){  $x2  = $idEstibaUbicacion;  }else{$x2  = '';}
+				if(isset($idPosicion)){         $x3  = $idPosicion;         }else{$x3  = '';}
+				if(isset($idEnvase)){           $x4  = $idEnvase;           }else{$x4  = '';}
+				if(isset($NPallet)){            $x5  = $NPallet;            }else{$x5  = '';}
+				if(isset($Temperatura)){        $x6  = $Temperatura;        }else{$x6  = '';}
+				if(isset($idTermografo)){       $x7  = $idTermografo;       }else{$x7  = '';}
+				if(isset($NSerieSensor)){       $x8  = $NSerieSensor;       }else{$x8  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
@@ -333,21 +333,21 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_estiba">
-					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_estiba">
+					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>               
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['modBase']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['modBase'])){
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*****************************************************/
 // Se trae la informacion del producto
@@ -376,47 +376,47 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 
  ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Consolidacion</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($CTNNombreCompañia)) {     $x1  = $CTNNombreCompañia;     }else{$x1  = $rowConso['CTNNombreCompañia'];}
-				if(isset($Creacion_fecha)) {        $x2  = $Creacion_fecha;        }else{$x2  = $rowConso['Creacion_fecha'];}
-				if(isset($FechaInicioEmbarque)) {   $x3  = $FechaInicioEmbarque;   }else{$x3  = $rowConso['FechaInicioEmbarque'];}
-				if(isset($HoraInicioCarga)) {       $x4  = $HoraInicioCarga;       }else{$x4  = $rowConso['HoraInicioCarga'];}
-				if(isset($FechaTerminoEmbarque)) {  $x5  = $FechaTerminoEmbarque;  }else{$x5  = $rowConso['FechaTerminoEmbarque'];}
-				if(isset($HoraTerminoCarga)) {      $x6  = $HoraTerminoCarga;      }else{$x6  = $rowConso['HoraTerminoCarga'];}
-				if(isset($idPlantaDespacho)) {      $x7  = $idPlantaDespacho;      }else{$x7  = $rowConso['idPlantaDespacho'];}
-				if(isset($idCategoria)) {           $x8  = $idCategoria;           }else{$x8  = $rowConso['idCategoria'];}
-				if(isset($idProducto)) {            $x9  = $idProducto;            }else{$x9  = $rowConso['idProducto'];}
-				if(isset($CantidadCajas)) {         $x10 = $CantidadCajas;         }else{$x10 = $rowConso['CantidadCajas'];}
-				if(isset($idInstructivo)) {         $x11 = $idInstructivo;         }else{$x11 = $rowConso['idInstructivo'];}
-				if(isset($idNaviera)) {             $x12 = $idNaviera;             }else{$x12 = $rowConso['idNaviera'];}
-				if(isset($idPuertoEmbarque)) {      $x13 = $idPuertoEmbarque;      }else{$x13 = $rowConso['idPuertoEmbarque'];}
-				if(isset($idPuertoDestino)) {       $x14 = $idPuertoDestino;       }else{$x14 = $rowConso['idPuertoDestino'];}
-				if(isset($idMercado)) {             $x15 = $idMercado;             }else{$x15 = $rowConso['idMercado'];}
-				if(isset($idPais)) {                $x16 = $idPais;                }else{$x16 = $rowConso['idPais'];}
-				if(isset($idRecibidor)) {           $x17 = $idRecibidor;           }else{$x17 = $rowConso['idRecibidor'];}
-				if(isset($idEmpresaTransporte)) {   $x18 = $idEmpresaTransporte;   }else{$x18 = $rowConso['idEmpresaTransporte'];}
-				if(isset($ChoferNombreRut)) {       $x19 = $ChoferNombreRut;       }else{$x19 = $rowConso['ChoferNombreRut'];}
-				if(isset($PatenteCamion)) {         $x20 = $PatenteCamion;         }else{$x20 = $rowConso['PatenteCamion'];}
-				if(isset($PatenteCarro)) {          $x21 = $PatenteCarro;          }else{$x21 = $rowConso['PatenteCarro'];}
-				if(isset($idCondicion)) {           $x22 = $idCondicion;           }else{$x22 = $rowConso['idCondicion'];}
-				if(isset($idSellado)) {             $x23 = $idSellado;             }else{$x23 = $rowConso['idSellado'];}
-				if(isset($TSetPoint)) {             $x24 = $TSetPoint;             }else{$x24 = Cantidades_decimales_justos($rowConso['TSetPoint']);}
-				if(isset($TVentilacion)) {          $x25 = $TVentilacion;          }else{$x25 = Cantidades_decimales_justos($rowConso['TVentilacion']);}
-				if(isset($TAmbiente)) {             $x26 = $TAmbiente;             }else{$x26 = Cantidades_decimales_justos($rowConso['TAmbiente']);}
-				if(isset($NumeroSello)) {           $x27 = $NumeroSello;           }else{$x27 = $rowConso['NumeroSello'];}
-				if(isset($idInspector)) {           $x28 = $idInspector;           }else{$x28 = $rowConso['idInspector'];}
-				if(isset($Observaciones)) {         $x29 = $Observaciones;         }else{$x29 = $rowConso['Observaciones'];}
-				
+				if(isset($CTNNombreCompañia)){     $x1  = $CTNNombreCompañia;     }else{$x1  = $rowConso['CTNNombreCompañia'];}
+				if(isset($Creacion_fecha)){        $x2  = $Creacion_fecha;        }else{$x2  = $rowConso['Creacion_fecha'];}
+				if(isset($FechaInicioEmbarque)){   $x3  = $FechaInicioEmbarque;   }else{$x3  = $rowConso['FechaInicioEmbarque'];}
+				if(isset($HoraInicioCarga)){       $x4  = $HoraInicioCarga;       }else{$x4  = $rowConso['HoraInicioCarga'];}
+				if(isset($FechaTerminoEmbarque)){  $x5  = $FechaTerminoEmbarque;  }else{$x5  = $rowConso['FechaTerminoEmbarque'];}
+				if(isset($HoraTerminoCarga)){      $x6  = $HoraTerminoCarga;      }else{$x6  = $rowConso['HoraTerminoCarga'];}
+				if(isset($idPlantaDespacho)){      $x7  = $idPlantaDespacho;      }else{$x7  = $rowConso['idPlantaDespacho'];}
+				if(isset($idCategoria)){           $x8  = $idCategoria;           }else{$x8  = $rowConso['idCategoria'];}
+				if(isset($idProducto)){            $x9  = $idProducto;            }else{$x9  = $rowConso['idProducto'];}
+				if(isset($CantidadCajas)){         $x10 = $CantidadCajas;         }else{$x10 = $rowConso['CantidadCajas'];}
+				if(isset($idInstructivo)){         $x11 = $idInstructivo;         }else{$x11 = $rowConso['idInstructivo'];}
+				if(isset($idNaviera)){             $x12 = $idNaviera;             }else{$x12 = $rowConso['idNaviera'];}
+				if(isset($idPuertoEmbarque)){      $x13 = $idPuertoEmbarque;      }else{$x13 = $rowConso['idPuertoEmbarque'];}
+				if(isset($idPuertoDestino)){       $x14 = $idPuertoDestino;       }else{$x14 = $rowConso['idPuertoDestino'];}
+				if(isset($idMercado)){             $x15 = $idMercado;             }else{$x15 = $rowConso['idMercado'];}
+				if(isset($idPais)){                $x16 = $idPais;                }else{$x16 = $rowConso['idPais'];}
+				if(isset($idRecibidor)){           $x17 = $idRecibidor;           }else{$x17 = $rowConso['idRecibidor'];}
+				if(isset($idEmpresaTransporte)){   $x18 = $idEmpresaTransporte;   }else{$x18 = $rowConso['idEmpresaTransporte'];}
+				if(isset($ChoferNombreRut)){       $x19 = $ChoferNombreRut;       }else{$x19 = $rowConso['ChoferNombreRut'];}
+				if(isset($PatenteCamion)){         $x20 = $PatenteCamion;         }else{$x20 = $rowConso['PatenteCamion'];}
+				if(isset($PatenteCarro)){          $x21 = $PatenteCarro;          }else{$x21 = $rowConso['PatenteCarro'];}
+				if(isset($idCondicion)){           $x22 = $idCondicion;           }else{$x22 = $rowConso['idCondicion'];}
+				if(isset($idSellado)){             $x23 = $idSellado;             }else{$x23 = $rowConso['idSellado'];}
+				if(isset($TSetPoint)){             $x24 = $TSetPoint;             }else{$x24 = Cantidades_decimales_justos($rowConso['TSetPoint']);}
+				if(isset($TVentilacion)){          $x25 = $TVentilacion;          }else{$x25 = Cantidades_decimales_justos($rowConso['TVentilacion']);}
+				if(isset($TAmbiente)){             $x26 = $TAmbiente;             }else{$x26 = Cantidades_decimales_justos($rowConso['TAmbiente']);}
+				if(isset($NumeroSello)){           $x27 = $NumeroSello;           }else{$x27 = $rowConso['NumeroSello'];}
+				if(isset($idInspector)){           $x28 = $idInspector;           }else{$x28 = $rowConso['idInspector'];}
+				if(isset($Observaciones)){         $x29 = $Observaciones;         }else{$x29 = $rowConso['Observaciones'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Cuerpo Indentificacion');
@@ -426,30 +426,30 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_time('Hora Inicio Carga','HoraInicioCarga', $x4, 1, 1, 24);
 				$Form_Inputs->form_date('Fecha Termino del Embarque','FechaTerminoEmbarque', $x5, 1);
 				$Form_Inputs->form_time('Hora Termino Carga','HoraTerminoCarga', $x6, 1, 1, 24);
-				$Form_Inputs->form_select_filter('Planta Despachadora','idPlantaDespacho', $x7, 1, 'idPlantaDespacho', 'Codigo,Nombre', 'cross_shipping_plantas', $w, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Planta Despachadora','idPlantaDespacho', $x7, 1, 'idPlantaDespacho', 'Codigo,Nombre', 'cross_shipping_plantas', $w, '', $dbConn);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x8, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x9, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_number_integer('Cantidad de Cajas', 'CantidadCajas', $x10, 1);
-				$Form_Inputs->form_select_filter('N° Instructivo','idInstructivo', $x11, 1, 'idInstructivo', 'Codigo,Nombre', 'cross_shipping_instructivo', $w, '', $dbConn);	
-				$Form_Inputs->form_select_filter('Naviera','idNaviera', $x12, 1, 'idNaviera', 'Codigo,Nombre', 'cross_shipping_naviera', 0, '', $dbConn);	
-				$Form_Inputs->form_select_filter('Puerto Embarque','idPuertoEmbarque', $x13, 1, 'idPuertoEmbarque', 'Codigo,Nombre', 'cross_shipping_puerto_embarque', 0, '', $dbConn);	
-				$Form_Inputs->form_select_filter('Puerto Destino','idPuertoDestino', $x14, 1, 'idPuertoDestino', 'Codigo,Nombre', 'cross_shipping_puerto_destino', 0, '', $dbConn);	
-				$Form_Inputs->form_select_filter('Mercado','idMercado', $x15, 1, 'idMercado', 'Codigo,Nombre', 'cross_shipping_mercado', 0, '', $dbConn);	
-				$Form_Inputs->form_select_filter('Pais','idPais', $x16, 1, 'idPais', 'Nombre', 'core_paises', 0, '', $dbConn);	
-				$Form_Inputs->form_select_filter('Recibidor','idRecibidor', $x17, 1, 'idRecibidor', 'Codigo,Nombre', 'cross_shipping_recibidores', $w, '', $dbConn);	
+				$Form_Inputs->form_select_filter('N° Instructivo','idInstructivo', $x11, 1, 'idInstructivo', 'Codigo,Nombre', 'cross_shipping_instructivo', $w, '', $dbConn);
+				$Form_Inputs->form_select_filter('Naviera','idNaviera', $x12, 1, 'idNaviera', 'Codigo,Nombre', 'cross_shipping_naviera', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Puerto Embarque','idPuertoEmbarque', $x13, 1, 'idPuertoEmbarque', 'Codigo,Nombre', 'cross_shipping_puerto_embarque', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Puerto Destino','idPuertoDestino', $x14, 1, 'idPuertoDestino', 'Codigo,Nombre', 'cross_shipping_puerto_destino', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Mercado','idMercado', $x15, 1, 'idMercado', 'Codigo,Nombre', 'cross_shipping_mercado', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Pais','idPais', $x16, 1, 'idPais', 'Nombre', 'core_paises', 0, '', $dbConn);
+				$Form_Inputs->form_select_filter('Recibidor','idRecibidor', $x17, 1, 'idRecibidor', 'Codigo,Nombre', 'cross_shipping_recibidores', $w, '', $dbConn);
 				
 				
 				$Form_Inputs->form_tittle(3, 'Cuerpo Indentificacion Empresa Transportista');
-				$Form_Inputs->form_select_filter('Empresa Transporte','idEmpresaTransporte', $x18, 1, 'idEmpresaTransporte', 'Nombre', 'cross_shipping_empresa_transporte', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Empresa Transporte','idEmpresaTransporte', $x18, 1, 'idEmpresaTransporte', 'Nombre', 'cross_shipping_empresa_transporte', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Conductor', 'ChoferNombreRut', $x19, 1);
 				$Form_Inputs->form_input_text('Patente Camion', 'PatenteCamion', $x20, 1);
 				$Form_Inputs->form_input_text('Patente Carro', 'PatenteCarro', $x21, 1);
 				
 				
 				$Form_Inputs->form_tittle(3, 'Cuerpo Parametros Evaluados');
-				$Form_Inputs->form_select('Condicion CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Sellado Piso','idSellado', $x23, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Condicion CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);
+				$Form_Inputs->form_select('Sellado Piso','idSellado', $x23, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('T° Set Point', 'TSetPoint', $x24, 1);
 				$Form_Inputs->form_input_number('T° Ventilacion', 'TVentilacion', $x25, 1);
 				$Form_Inputs->form_input_number('T° Ambiente', 'TAmbiente', $x26, 1);
@@ -463,24 +463,24 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
-				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);		
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
 				
-				?> 
+				?>
 				
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
+					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit'])){
 /************************************************************/
 // Se trae la informacion del producto
 $query = "SELECT 
@@ -606,7 +606,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrEstibas,$row );
 }
 
@@ -637,9 +637,9 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrArchivos,$row );
-}						
+}
 							
 ?>
 
@@ -655,18 +655,18 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 	<div class="clearfix"></div>
 <?php } ?>
  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> Control Proceso Preembarque - T° y Estiba de Contenedores</div>
 
 		<div id="customer">
 			
-			<table id="meta" class="fleft" style="width:100%" >
+			<table id="meta" class="pull-left" style="width:100%" >
 				<tbody>
 					<tr>
 						<td class="meta-head" colspan="3"><strong>DATOS MAESTROS</strong></td>
-						<td class="meta-head"><a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					
 					
@@ -735,7 +735,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 						<td><?php if(isset($rowConso['TransporteNombre'])&&$rowConso['TransporteNombre']!=''){echo $rowConso['TransporteCodigo'].' - '.$rowConso['TransporteNombre'];}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">Conductor</td>
 						<td><?php if(isset($rowConso['ChoferNombreRut'])&&$rowConso['ChoferNombreRut']!=''){echo $rowConso['ChoferNombreRut'];}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">Patente Camion</td>
 						<td><?php if(isset($rowConso['PatenteCamion'])&&$rowConso['PatenteCamion']!=''){echo $rowConso['PatenteCamion'];}else{echo 'Sin Datos';}?></td>
@@ -751,19 +751,19 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 						<td><?php if(isset($rowConso['Condicion'])&&$rowConso['Condicion']!=''){echo $rowConso['Condicion'];}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">Sellado Piso</td>
 						<td><?php if(isset($rowConso['Sellado'])&&$rowConso['Sellado']!=''){echo $rowConso['Sellado'];}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">T°Set Point</td>
 						<td><?php if(isset($rowConso['TSetPoint'])&&$rowConso['TSetPoint']!=''){echo Cantidades_decimales_justos($rowConso['TSetPoint']);}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">T° Ventilacion</td>
 						<td><?php if(isset($rowConso['TSetPoint'])&&$rowConso['TSetPoint']!=''){echo Cantidades_decimales_justos($rowConso['TVentilacion']);}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">T° Ambiente</td>
 						<td><?php if(isset($rowConso['TAmbiente'])&&$rowConso['TAmbiente']!=''){echo Cantidades_decimales_justos($rowConso['TAmbiente']);}else{echo 'Sin Datos';}?></td>
 						<td class="meta-head">Numero de sello</td>
 						<td><?php if(isset($rowConso['NumeroSello'])&&$rowConso['NumeroSello']!=''){echo $rowConso['NumeroSello'];}else{echo 'Sin Datos';}?></td>
-					</tr>	
+					</tr>
 					<tr>
 						<td class="meta-head">Inspector</td>
 						<td><?php if(isset($rowConso['InspectorNombre'])&&$rowConso['InspectorNombre']!=''){echo $rowConso['InspectorNombre'].' '.$rowConso['InspectorApellido'];}else{echo 'Sin Datos';}?></td>
@@ -787,11 +787,11 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 				<tr>
 					<th colspan="8">Detalle</th>
 					<th width="160">Acciones</th>
-				</tr>		  
+				</tr>
 				
 				
 				
-				<?php /**********************************************************************************/ ?>
+				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td colspan="8">Estibas</td>
 					<td>
@@ -832,7 +832,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 							</div>
 						</td>
-					</tr> 
+					</tr>
 				<?php } ?>
 
 				
@@ -856,7 +856,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td>Archivos Adjuntos</td>
                 <td width="160"><a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></td>
-            </tr>		  
+            </tr>
             
 			<?php 
 			filtrar($arrArchivos, 'Tipo');  
@@ -889,7 +889,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 
 
 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

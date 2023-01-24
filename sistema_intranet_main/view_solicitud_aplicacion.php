@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -99,7 +99,7 @@ LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTr
 $SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-/*****************************************/				
+/*****************************************/
 //Cuarteles
 $SIS_query = '
 cross_solicitud_aplicacion_listado.idSolicitud,
@@ -129,7 +129,7 @@ $SIS_order = 'cross_predios_listado_zonas.Nombre ASC';
 $arrCuarteles = array();
 $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_cuarteles', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrCuarteles');
 
-/*****************************************/	
+/*****************************************/
 //Tractores
 $SIS_query = '
 telemetria_listado.Nombre AS TelemetriaNombre,
@@ -152,7 +152,7 @@ $SIS_order = 'telemetria_listado.Nombre ASC';
 $arrTractores = array();
 $arrTractores = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTractores');
 
-/*****************************************/	
+/*****************************************/
 //tractores por cuartel
 $SIS_query = '
 cross_solicitud_aplicacion_listado_cuarteles.idZona,
@@ -168,7 +168,7 @@ $SIS_order = 'cross_solicitud_aplicacion_listado_cuarteles.idZona ASC, telemetri
 $arrTracxCuartel = array();
 $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTracxCuartel');
 
-/*****************************************/	
+/*****************************************/
 //Se trae un listado con los productos	
 $SIS_query = '
 cross_solicitud_aplicacion_listado_productos.idProdQuim,
@@ -190,8 +190,8 @@ $SIS_where = 'cross_solicitud_aplicacion_listado_productos.idSolicitud = '.$X_Pu
 $SIS_order = 'productos_listado.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
-	
-/*****************************************/	
+
+/*****************************************/
 //Se trae un listado con los materiales	
 $SIS_query = '
 cross_checking_materiales_seguridad.Nombre,
@@ -202,7 +202,7 @@ $SIS_order = 'cross_checking_materiales_seguridad.Nombre ASC';
 $arrMateriales = array();
 $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_materiales', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMateriales');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con el historial
 $SIS_query = '
 cross_solicitud_aplicacion_listado_historial.Creacion_fecha, 
@@ -239,7 +239,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				<i class="fa fa-globe" aria-hidden="true"></i> Solicitud de Aplicacion.
 				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['f_creacion'])?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 
 	<div class="row invoice-info">
@@ -263,8 +263,8 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				Temporada: <?php echo $row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre']; ?><br/>
 				Estado Fenologico: <?php echo $row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre']; ?><br/>
 				<?php
-					if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){        echo 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
-					if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){  echo 'Variedad: '.$row_data['VariedadNombre'].'<br/>'; }else{echo 'Variedad: Todas las Variedades<br/>';}
+					if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){echo 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
+					if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){ echo 'Variedad: '.$row_data['VariedadNombre'].'<br/>';}else{echo 'Variedad: Todas las Variedades<br/>';}
 				?>
 			</address>
 		</div>
@@ -276,12 +276,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				Fecha inicio requerido: <?php echo fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg']; ?><br/>
 				Fecha termino requerido: <?php echo fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin']; ?><br/>
 				<?php
-					if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){ echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
-					if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){ echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
-					if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){ echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
-					if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){ echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
+					if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
+					if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
+					if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
+					if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
 					echo 'Agrónomo: '.$row_data['NombreUsuario'];
-					if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
+					if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
 				?>
 			</address>
 		</div>
@@ -340,17 +340,17 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 								$S_LitrosAplicados  = $cuartel['LitrosAplicados'];
 								$S_VelPromedio      = $cuartel['VelPromedio'];
 							}
-							
+
 							//calculo
 							if(isset($cuartel['CuartelHectareas'])&&$cuartel['CuartelHectareas']!=0){
 								$LitrosApliXhect = $S_LitrosAplicados/$cuartel['CuartelHectareas'];
 							}else{
 								$LitrosApliXhect = 0;
 							}
-							
+
 							//se muestra el estado de cierre
 							if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ $cierre = ' (Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';}else{$cierre = '';}
-							
+
 							//defino el icono y su color
 							switch ($cuartel['CuartelidEjecucion']) {
 								case 0:
@@ -363,7 +363,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 									$s_Icon = '<span style="color: #5cb85c;"><i class="fa fa-rss" aria-hidden="true"></i></span>';
 									break;
 							}
-							
+
 							//Sumo Variables
 							$TotalMojamiento         = $TotalMojamiento + $cuartel['Mojamiento'];
 							$TotalLitrosAplicados    = $TotalLitrosAplicados + $S_LitrosAplicados;
@@ -393,7 +393,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 											}
 										}
 									}
-									?>		
+									?>	
 								</td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
@@ -418,7 +418,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 							<td class="item-name"><strong><?php if($TotLitrosApliXhect!=0){echo porcentaje($TotLitrosApliXhect/$TotalMojamiento);}else{ echo '0 %';} ?></strong></td>
 							<td class="item-name"><strong></strong></td>
 							<td class="item-name"><strong></strong></td>
-						</tr> 
+						</tr>
                         <?php    
 					}else{
 						echo '<tr class="item-row linea_punteada"><td colspan="7">No hay cuarteles asignados</td></tr>';
@@ -461,7 +461,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoCarencia']);?></td>
 								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoResidual']);?></td>
 								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoRetroactivo']);?></td>
-							</tr> 
+							</tr>
 							<?php 
 						}
 					}else{
@@ -507,7 +507,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 								<td class="item-name"><?php echo Cantidades($tract['Diferencia'], 0);?></td>
 								<td class="item-name"><?php echo Cantidades($tract['GeoVelocidadProm'],2);?></td>
 								<td class="item-name"><?php echo $tract['T_Aplicacion'];?></td>
-							</tr> 
+							</tr>
 						
 							<?php 
 						}
@@ -536,7 +536,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					$nmb = 0; 
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') {
-						foreach ($arrProductos as $prod) { 
+						foreach ($arrProductos as $prod) {
 							$PromedioCapacidad = $Capacidad/$NTract; ?>
 							
 							<tr class="item-row linea_punteada">
@@ -547,7 +547,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre'];?></td>
 								<td class="item-name"><?php echo Cantidades((($row_data['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed'];?></td>
 	
-							</tr> 
+							</tr>
 	
 							<?php 
 							//se suma 1
@@ -572,10 +572,10 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					<?php
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrMateriales!=false && !empty($arrMateriales) && $arrMateriales!='') {
-						foreach ($arrMateriales as $prod) {?>
+						foreach ($arrMateriales as $prod){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Codigo'].' - '.$prod['Nombre'];?></td>
-							</tr> 
+							</tr>
 							<?php 
 						}
 					}else{
@@ -588,7 +588,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
   
 </section>
 
-<div class="col-xs-12" style="margin-bottom:15px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 	
 	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
@@ -601,14 +601,14 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					<th width="160">Estado</th>
 					<th width="260">Usuario</th>
 					<th>Observacion</th>
-				</tr>			  
+				</tr>
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Estado']; ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
 						<td><?php echo $doc['Observacion']; ?></td>
-					</tr> 
+					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
@@ -618,12 +618,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -634,12 +634,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
  
 <?php

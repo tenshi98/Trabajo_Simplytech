@@ -2,28 +2,28 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-264).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idProveedor']) )     $idProveedor     = $_POST['idProveedor'];
-	if ( !empty($_POST['idDocPago']) )       $idDocPago       = $_POST['idDocPago'];
-	if ( !empty($_POST['N_DocPago']) )       $N_DocPago       = $_POST['N_DocPago'];
-	if ( !empty($_POST['F_Pago']) )          $F_Pago          = $_POST['F_Pago'];
-	if ( !empty($_POST['MontoPagado']) )     $MontoPagado     = $_POST['MontoPagado'];
-	if ( !empty($_POST['idSistema']) )       $idSistema       = $_POST['idSistema'];
-	if ( !empty($_POST['idUsuario']) )       $idUsuario       = $_POST['idUsuario'];
-	if ( !empty($_POST['total_pagar']) )     $total_pagar     = $_POST['total_pagar'];
-	if ( !empty($_POST['idFacturacion']) )   $idFacturacion   = $_POST['idFacturacion'];
-	if ( !empty($_POST['montoPactado']) )    $montoPactado    = $_POST['montoPactado'];
+	if (!empty($_POST['idProveedor']))     $idProveedor     = $_POST['idProveedor'];
+	if (!empty($_POST['idDocPago']))       $idDocPago       = $_POST['idDocPago'];
+	if (!empty($_POST['N_DocPago']))       $N_DocPago       = $_POST['N_DocPago'];
+	if (!empty($_POST['F_Pago']))          $F_Pago          = $_POST['F_Pago'];
+	if (!empty($_POST['MontoPagado']))     $MontoPagado     = $_POST['MontoPagado'];
+	if (!empty($_POST['idSistema']))       $idSistema       = $_POST['idSistema'];
+	if (!empty($_POST['idUsuario']))       $idUsuario       = $_POST['idUsuario'];
+	if (!empty($_POST['total_pagar']))     $total_pagar     = $_POST['total_pagar'];
+	if (!empty($_POST['idFacturacion']))   $idFacturacion   = $_POST['idFacturacion'];
+	if (!empty($_POST['montoPactado']))    $montoPactado    = $_POST['montoPactado'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -46,7 +46,7 @@ require_once '0_validate_user_1.php';
 			case 'total_pagar':    if(empty($total_pagar)){     $error['total_pagar']    = 'error/No ha ingresado el total a pagar';}break;
 			case 'idFacturacion':  if(empty($idFacturacion)){   $error['idFacturacion']  = 'error/No ha seleccionado la facturacion';}break;
 			case 'montoPactado':   if(empty($montoPactado)){    $error['montoPactado']   = 'error/No ha ingresado el monto pactado';}break;
-			
+
 		}
 	}
 				
@@ -60,12 +60,12 @@ require_once '0_validate_user_1.php';
 /*                                               Reversa Pago Masivo                                               */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_pagos':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
 			
@@ -110,7 +110,7 @@ require_once '0_validate_user_1.php';
 			
 			/************************************************************/
 			if($errorn==0){
-				
+
 				//validaciones
 				if(!isset($indice1) OR $indice1==''){
 					$error['idDocPago'] = 'error/No ha seleccionado un documento';
@@ -120,9 +120,9 @@ require_once '0_validate_user_1.php';
 				}
 					
 				/*******************************************************************/
-				// si no hay errores ejecuto el codigo	
-				if ( empty($error) ) {
-					
+				//Si no hay errores ejecuto el codigo
+				if(empty($error)){
+
 					//variable
 					$Valor_Doc = 0;
 					
@@ -144,8 +144,8 @@ require_once '0_validate_user_1.php';
 							$nuevoMonto = $tipo['montoPactado'] - $tipo['MontoPagado'];
 							//si el saldo es 0
 							if($nuevoMonto==0){
-								//se actualiza la liquidacion
-								$SIS_data  = "idFactTrab='".$tipo['idFactTrab']."'" ;
+								//se actualizala liquidacion
+								$SIS_data  = "idFactTrab='".$tipo['idFactTrab']."'";
 								$SIS_data .= ",idUsuarioPago=''";
 								$SIS_data .= ",idDocPago=''";
 								$SIS_data .= ",N_DocPago=''";
@@ -163,9 +163,9 @@ require_once '0_validate_user_1.php';
 								
 							//si ya tiene un saldo anterior
 							}else{
-								//se actualiza la liquidacion
-								$SIS_data = "idFactTrab='".$tipo['idFactTrab']."'" ;
-								$SIS_data .= ",MontoPagado='".$nuevoMonto."'" ;
+								//se actualizala liquidacion
+								$SIS_data = "idFactTrab='".$tipo['idFactTrab']."'";
+								$SIS_data .= ",MontoPagado='".$nuevoMonto."'";
 								$SIS_data .= ",idEstado='1'" ;//abierto
 								
 								/*******************************************************/
@@ -173,7 +173,7 @@ require_once '0_validate_user_1.php';
 								$resultado = db_update_data (false, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores', 'idFactTrab = "'.$tipo['idFactTrab'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								
 							}
-							
+
 							//elimino el registro del pago en los trabajadores
 							$resultado = db_delete_data (false, 'pagos_rrhh_liquidaciones', 'idPago = "'.$tipo['idPago'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									
@@ -184,20 +184,20 @@ require_once '0_validate_user_1.php';
 					
 					
 				}
-				
+
 				//inserto la reversa
-				$SIS_data  = "'".$_SESSION['usuario']['basic_data']['idUsuario']."'" ;  //idUsuario
+				$SIS_data  = "'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idSistema']."'";  //idSistema
-				$SIS_data .= ",'".fecha_actual()."'" ;                                  //Fecha        
-				$SIS_data .= ",'".hora_actual()."'" ;                                   //Hora       
-				$SIS_data .= ",'".$indice1."'" ;                                        //idDocPago
-				$SIS_data .= ",'".$indice2."'" ;                                        //N_DocPago
-				$SIS_data .= ",'".$Valor_Doc."'" ;                                      //Monto
+				$SIS_data .= ",'".fecha_actual()."'";                                //Fecha        
+				$SIS_data .= ",'".hora_actual()."'";                                   //Hora       
+				$SIS_data .= ",'".$indice1."'";                                        //idDocPago
+				$SIS_data .= ",'".$indice2."'";                                        //N_DocPago
+				$SIS_data .= ",'".$Valor_Doc."'";                                      //Monto
 				
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idSistema, Fecha, Hora, idDocPago, N_DocPago, Monto';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_rrhh_liquidaciones_reversa', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo

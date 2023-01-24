@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -205,7 +205,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 						->setCellValue($arrData[$i].$nn, $xdata);
 		}
 			   
-		$nn++;           
+		$nn++;
 	   
 	} 
 	/***********************************************************/
@@ -233,7 +233,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	
 	/*********************************************/
 	// Se trae un listado con todos los elementos
-	$SIS_query = 'telemetria_listado.idTelemetria, telemetria_listado.Nombre';
+	$SIS_query = 'telemetria_listado.idTelemetria,telemetria_listado.Nombre';
 	$SIS_order = 'idTelemetria ASC';
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
@@ -293,7 +293,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 							->setCellValue($arrData[$i].$nn, $xdata);
 			}
 				   
-			$nn++;           
+			$nn++;
 		   
 		} 
 		/***********************************************************/

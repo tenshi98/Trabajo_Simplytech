@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "seguridad_accesos.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,19 +18,19 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){                  $location .= "&idUsuario=".$_GET['idUsuario'];                  $search .= "&idUsuario=".$_GET['idUsuario'];}
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''){                    $location .= "&h_inicio=".$_GET['h_inicio'];                    $search .= "&h_inicio=".$_GET['h_inicio'];}
-if(isset($_GET['h_termino']) && $_GET['h_termino'] != ''){                  $location .= "&h_termino=".$_GET['h_termino'];                  $search .= "&h_termino=".$_GET['h_termino'];}
-if(isset($_GET['h_salida_inicio']) && $_GET['h_salida_inicio'] != ''){      $location .= "&h_salida_inicio=".$_GET['h_salida_inicio'];      $search .= "&h_salida_inicio=".$_GET['h_salida_inicio'];}
-if(isset($_GET['h_salida_termino']) && $_GET['h_salida_termino'] != ''){    $location .= "&h_salida_termino=".$_GET['h_salida_termino'];    $search .= "&h_salida_termino=".$_GET['h_salida_termino'];}
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''){                    $location .= "&f_inicio=".$_GET['f_inicio'];                    $search .= "&f_inicio=".$_GET['f_inicio'];}
-if(isset($_GET['f_termino']) && $_GET['f_termino'] != ''){                  $location .= "&f_termino=".$_GET['f_termino'];                  $search .= "&f_termino=".$_GET['f_termino'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                        $location .= "&Nombre=".$_GET['Nombre'];                        $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                              $location .= "&Rut=".$_GET['Rut'];                              $search .= "&Rut=".$_GET['Rut'];}
-if(isset($_GET['NDocCedula']) && $_GET['NDocCedula'] != ''){                $location .= "&NDocCedula=".$_GET['NDocCedula'];                $search .= "&NDocCedula=".$_GET['NDocCedula'];}
-if(isset($_GET['Destino']) && $_GET['Destino'] != ''){                      $location .= "&Destino=".$_GET['Destino'];                      $search .= "&Destino=".$_GET['Destino'];}
-if(isset($_GET['PersonaReunion']) && $_GET['PersonaReunion'] != ''){        $location .= "&PersonaReunion=".$_GET['PersonaReunion'];        $search .= "&PersonaReunion=".$_GET['PersonaReunion'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                    $location .= "&idEstado=".$_GET['idEstado'];                    $search .= "&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){           $location .= "&idUsuario=".$_GET['idUsuario'];                  $search .= "&idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['h_inicio']) && $_GET['h_inicio']!=''){             $location .= "&h_inicio=".$_GET['h_inicio'];                    $search .= "&h_inicio=".$_GET['h_inicio'];}
+if(isset($_GET['h_termino']) && $_GET['h_termino']!=''){           $location .= "&h_termino=".$_GET['h_termino'];                  $search .= "&h_termino=".$_GET['h_termino'];}
+if(isset($_GET['h_salida_inicio']) && $_GET['h_salida_inicio']!=''){      $location .= "&h_salida_inicio=".$_GET['h_salida_inicio'];      $search .= "&h_salida_inicio=".$_GET['h_salida_inicio'];}
+if(isset($_GET['h_salida_termino']) && $_GET['h_salida_termino']!=''){    $location .= "&h_salida_termino=".$_GET['h_salida_termino'];    $search .= "&h_salida_termino=".$_GET['h_salida_termino'];}
+if(isset($_GET['f_inicio']) && $_GET['f_inicio']!=''){             $location .= "&f_inicio=".$_GET['f_inicio'];                    $search .= "&f_inicio=".$_GET['f_inicio'];}
+if(isset($_GET['f_termino']) && $_GET['f_termino']!=''){           $location .= "&f_termino=".$_GET['f_termino'];                  $search .= "&f_termino=".$_GET['f_termino'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                 $location .= "&Nombre=".$_GET['Nombre'];                        $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                       $location .= "&Rut=".$_GET['Rut'];                              $search .= "&Rut=".$_GET['Rut'];}
+if(isset($_GET['NDocCedula']) && $_GET['NDocCedula']!=''){         $location .= "&NDocCedula=".$_GET['NDocCedula'];                $search .= "&NDocCedula=".$_GET['NDocCedula'];}
+if(isset($_GET['Destino']) && $_GET['Destino']!=''){               $location .= "&Destino=".$_GET['Destino'];                      $search .= "&Destino=".$_GET['Destino'];}
+if(isset($_GET['PersonaReunion']) && $_GET['PersonaReunion']!=''){ $location .= "&PersonaReunion=".$_GET['PersonaReunion'];        $search .= "&PersonaReunion=".$_GET['PersonaReunion'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){             $location .= "&idEstado=".$_GET['idEstado'];                    $search .= "&idEstado=".$_GET['idEstado'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -38,22 +38,22 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/seguridad_accesos.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/seguridad_accesos.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/seguridad_accesos.php';	
+	require_once 'A1XRXS_sys/xrxs_form/seguridad_accesos.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -68,8 +68,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Acceso Visita Modifica
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Acceso Visita borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -91,26 +91,26 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del Acceso Visita</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {          $x1  = $Fecha;          }else{$x1  = $rowdata['Fecha'];}
-				if(isset($Hora)) {           $x2  = $Hora;           }else{$x2  = $rowdata['Hora'];}
-				if(isset($HoraSalida)) {     $x3  = $HoraSalida;     }else{$x3  = $rowdata['HoraSalida'];}
-				if(isset($Nombre)) {         $x4  = $Nombre;         }else{$x4  = $rowdata['Nombre'];}
-				if(isset($Rut)) {            $x5  = $Rut;            }else{$x5  = $rowdata['Rut'];}
-				if(isset($NDocCedula)) {     $x6  = $NDocCedula;     }else{$x6  = $rowdata['NDocCedula'];}
-				if(isset($Destino)) {        $x7  = $Destino;        }else{$x7  = $rowdata['Destino'];}
-				if(isset($PersonaReunion)) { $x8  = $PersonaReunion; }else{$x8  = $rowdata['PersonaReunion'];}
-				
+				if(isset($Fecha)){$x1  = $Fecha;          }else{$x1  = $rowdata['Fecha'];}
+				if(isset($Hora)){           $x2  = $Hora;           }else{$x2  = $rowdata['Hora'];}
+				if(isset($HoraSalida)){     $x3  = $HoraSalida;     }else{$x3  = $rowdata['HoraSalida'];}
+				if(isset($Nombre)){         $x4  = $Nombre;         }else{$x4  = $rowdata['Nombre'];}
+				if(isset($Rut)){            $x5  = $Rut;            }else{$x5  = $rowdata['Rut'];}
+				if(isset($NDocCedula)){     $x6  = $NDocCedula;     }else{$x6  = $rowdata['NDocCedula'];}
+				if(isset($Destino)){        $x7  = $Destino;        }else{$x7  = $rowdata['Destino'];}
+				if(isset($PersonaReunion)){ $x8  = $PersonaReunion; }else{$x8  = $rowdata['PersonaReunion'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
@@ -130,40 +130,40 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Acceso Visita</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {          $x1  = $Fecha;          }else{$x1  = '';}
-				if(isset($Hora)) {           $x2  = $Hora;           }else{$x2  = '';}
-				if(isset($Nombre)) {         $x3  = $Nombre;         }else{$x3  = '';}
-				if(isset($Rut)) {            $x4  = $Rut;            }else{$x4  = '';}
-				if(isset($NDocCedula)) {     $x5  = $NDocCedula;     }else{$x5  = '';}
-				if(isset($Destino)) {        $x6  = $Destino;        }else{$x6  = '';}
-				if(isset($PersonaReunion)) { $x7  = $PersonaReunion; }else{$x7  = '';}
-				
+				if(isset($Fecha)){$x1  = $Fecha;          }else{$x1  = '';}
+				if(isset($Hora)){           $x2  = $Hora;           }else{$x2  = '';}
+				if(isset($Nombre)){         $x3  = $Nombre;         }else{$x3  = '';}
+				if(isset($Rut)){            $x4  = $Rut;            }else{$x4  = '';}
+				if(isset($NDocCedula)){     $x5  = $NDocCedula;     }else{$x5  = '';}
+				if(isset($Destino)){        $x6  = $Destino;        }else{$x6  = '';}
+				if(isset($PersonaReunion)){ $x7  = $PersonaReunion; }else{$x7  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
@@ -181,35 +181,26 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -244,9 +235,9 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $SIS_where = "seguridad_accesos.idAcceso!=0";
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where.= " AND seguridad_accesos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND seguridad_accesos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -254,29 +245,29 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
-	$SIS_where .= " AND seguridad_accesos.idUsuario = '".$_GET['idUsuario']."'" ;
+	$SIS_where .= " AND seguridad_accesos.idUsuario = '".$_GET['idUsuario']."'";
 }
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
+if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){ 
 	$SIS_where .= " AND seguridad_accesos.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'";
 }
-if(isset($_GET['h_salida_inicio']) && $_GET['h_salida_inicio'] != ''&&isset($_GET['h_salida_termino']) && $_GET['h_salida_termino'] != ''){ 
+if(isset($_GET['h_salida_inicio']) && $_GET['h_salida_inicio'] != ''&&isset($_GET['h_salida_termino']) && $_GET['h_salida_termino']!=''){ 
 	$SIS_where .= " AND seguridad_accesos.HoraSalida BETWEEN '".$_GET['h_salida_inicio']."' AND '".$_GET['h_salida_termino']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
 	$SIS_where .= " AND seguridad_accesos.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                  $SIS_where .= " AND seguridad_accesos.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                        $SIS_where .= " AND seguridad_accesos.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['NDocCedula']) && $_GET['NDocCedula'] != ''){          $SIS_where .= " AND seguridad_accesos.NDocCedula LIKE '%".$_GET['NDocCedula']."%'";}
-if(isset($_GET['Destino']) && $_GET['Destino'] != ''){                $SIS_where .= " AND seguridad_accesos.Destino LIKE '%".$_GET['Destino']."%'";}
-if(isset($_GET['PersonaReunion']) && $_GET['PersonaReunion'] != ''){  $SIS_where .= " AND seguridad_accesos.PersonaReunion LIKE '%".$_GET['PersonaReunion']."%'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){              $SIS_where .= " AND seguridad_accesos.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){           $SIS_where .= " AND seguridad_accesos.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                 $SIS_where .= " AND seguridad_accesos.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
+if(isset($_GET['NDocCedula']) && $_GET['NDocCedula']!=''){   $SIS_where .= " AND seguridad_accesos.NDocCedula LIKE '%".EstandarizarInput($_GET['NDocCedula'])."%'";}
+if(isset($_GET['Destino']) && $_GET['Destino']!=''){         $SIS_where .= " AND seguridad_accesos.Destino LIKE '%".EstandarizarInput($_GET['Destino'])."%'";}
+if(isset($_GET['PersonaReunion']) && $_GET['PersonaReunion']!=''){  $SIS_where .= " AND seguridad_accesos.PersonaReunion LIKE '%".EstandarizarInput($_GET['PersonaReunion'])."%'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){       $SIS_where .= " AND seguridad_accesos.idEstado='".$_GET['idEstado']."'";}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idAcceso', 'seguridad_accesos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 seguridad_accesos.idAcceso,
@@ -302,43 +293,43 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos', $SIS_join, $
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Acceso</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Acceso</a><?php } ?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idUsuario)) {           $x1  = $idUsuario;           }else{$x1  = '';}
-				if(isset($f_inicio)) {            $x2  = $f_inicio;            }else{$x2  = '';}
-				if(isset($f_termino)) {           $x3  = $f_termino;           }else{$x3  = '';}
-				if(isset($h_inicio)) {            $x4  = $h_inicio;            }else{$x4  = '';}
-				if(isset($h_termino)) {           $x5  = $h_termino;           }else{$x5  = '';}
-				if(isset($h_salida_inicio)) {     $x6  = $h_salida_inicio;     }else{$x6  = '';}
-				if(isset($h_salida_termino)) {    $x7  = $h_salida_termino;    }else{$x7  = '';}
-				if(isset($Nombre)) {              $x8  = $Nombre;              }else{$x8  = '';}
-				if(isset($Rut)) {                 $x9  = $Rut;                 }else{$x9  = '';}
-				if(isset($NDocCedula)) {          $x10 = $NDocCedula;          }else{$x10 = '';}
-				if(isset($Destino)) {             $x11 = $Destino;             }else{$x11 = '';}
-				if(isset($PersonaReunion)) {      $x12 = $PersonaReunion;      }else{$x12 = '';}
-				if(isset($idEstado)) {            $x13 = $idEstado;            }else{$x13 = '';}
-				
+				if(isset($idUsuario)){           $x1  = $idUsuario;           }else{$x1  = '';}
+				if(isset($f_inicio)){            $x2  = $f_inicio;            }else{$x2  = '';}
+				if(isset($f_termino)){           $x3  = $f_termino;           }else{$x3  = '';}
+				if(isset($h_inicio)){            $x4  = $h_inicio;            }else{$x4  = '';}
+				if(isset($h_termino)){           $x5  = $h_termino;           }else{$x5  = '';}
+				if(isset($h_salida_inicio)){     $x6  = $h_salida_inicio;     }else{$x6  = '';}
+				if(isset($h_salida_termino)){    $x7  = $h_salida_termino;    }else{$x7  = '';}
+				if(isset($Nombre)){              $x8  = $Nombre;              }else{$x8  = '';}
+				if(isset($Rut)){                 $x9  = $Rut;                 }else{$x9  = '';}
+				if(isset($NDocCedula)){          $x10 = $NDocCedula;          }else{$x10 = '';}
+				if(isset($Destino)){             $x11 = $Destino;             }else{$x11 = '';}
+				if(isset($PersonaReunion)){      $x12 = $PersonaReunion;      }else{$x12 = '';}
+				if(isset($idEstado)){            $x13 = $idEstado;            }else{$x13 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x2, 1);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 1);
 				$Form_Inputs->form_time('Hora Entrada Inicio','h_inicio', $x4, 1, 1);
@@ -352,23 +343,23 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos', $SIS_join, $
 				$Form_Inputs->form_input_text('Persona Reunion', 'PersonaReunion', $x12, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x13, 1, 'idEstado', 'Nombre', 'core_estado_caja', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                     
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Accesos Visitas</h5>
@@ -448,7 +439,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos', $SIS_join, $
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>				  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrTipo as $tipo) { ?>
 						<tr class="odd">
@@ -460,7 +451,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos', $SIS_join, $
 							<td><?php echo $tipo['NDocCedula']; ?></td>
 							<td><?php echo $tipo['Destino']; ?></td>
 							<td><?php echo $tipo['PersonaReunion']; ?></td>
-							<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $tipo['Estado']; ?></label></td>		
+							<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $tipo['Estado']; ?></label></td>	
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
@@ -472,22 +463,22 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos', $SIS_join, $
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idAcceso'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el acceso de '.$tipo['Nombre'].'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>								
+									<?php } ?>
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_bodega_arriendos_05.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,92 +22,92 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 
              
   
 
 $z      = "WHERE bodegas_arriendos_facturacion_existencias.idExistencia!=0";
 $search = "?d=d";
-if(isset($_GET['idBodegaOrigen']) && $_GET['idBodegaOrigen'] != ''){       
+if(isset($_GET['idBodegaOrigen']) && $_GET['idBodegaOrigen']!=''){
 	$z .= " AND bodegas_arriendos_facturacion.idBodegaOrigen=".$_GET['idBodegaOrigen'];
 	$search .= "&idBodegaOrigen=".$_GET['idBodegaOrigen'];
 }
-if(isset($_GET['idBodegaDestino']) && $_GET['idBodegaDestino'] != ''){     
+if(isset($_GET['idBodegaDestino']) && $_GET['idBodegaDestino']!=''){     
 	$z .= " AND bodegas_arriendos_facturacion.idBodegaDestino=".$_GET['idBodegaDestino'];
 	$search .= "&idBodegaDestino=".$_GET['idBodegaDestino'];
 }
-if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){                
+if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){         
 	$z .= " AND bodegas_arriendos_facturacion.idSistema=".$_GET['idSistema'];
 	$search .= "&idSistema=".$_GET['idSistema'];
 }
-if(isset($_GET['idSistemaDestino']) && $_GET['idSistemaDestino'] != ''){   
+if(isset($_GET['idSistemaDestino']) && $_GET['idSistemaDestino']!=''){   
 	$z .= " AND bodegas_arriendos_facturacion.idSistemaDestino=".$_GET['idSistemaDestino'];
 	$search .= "&idSistemaDestino=".$_GET['idSistemaDestino'];
 }
-if(isset($_GET['idDocumentos']) && $_GET['idDocumentos'] != ''){           
+if(isset($_GET['idDocumentos']) && $_GET['idDocumentos']!=''){    
 	$z .= " AND bodegas_arriendos_facturacion.idDocumentos=".$_GET['idDocumentos'];
 	$search .= "&idDocumentos=".$_GET['idDocumentos'];
 }
-if(isset($_GET['N_Doc']) && $_GET['N_Doc'] != ''){                         
-	$z .= " AND bodegas_arriendos_facturacion.N_Doc LIKE '%".$_GET['N_Doc']."%'";
+if(isset($_GET['N_Doc']) && $_GET['N_Doc']!=''){                  
+	$z .= " AND bodegas_arriendos_facturacion.N_Doc LIKE '%".EstandarizarInput($_GET['N_Doc'])."%'";
 	$search .= "&N_Doc=".$_GET['N_Doc'];
 }
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                       
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                
 	$z .= " AND bodegas_arriendos_facturacion.idTipo=".$_GET['idTipo'];
 	$search .= "&idTipo=".$_GET['idTipo'];
 }
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){           
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){    
 	$z .= " AND bodegas_arriendos_facturacion.idTrabajador=".$_GET['idTrabajador'];
 	$search .= "&idTrabajador=".$_GET['idTrabajador'];
 }
-if(isset($_GET['idProveedor']) && $_GET['idProveedor'] != ''){             
+if(isset($_GET['idProveedor']) && $_GET['idProveedor']!=''){      
 	$z .= " AND bodegas_arriendos_facturacion.idProveedor=".$_GET['idProveedor'];
 	$search .= "&idProveedor=".$_GET['idProveedor'];
 }
-if(isset($_GET['idCliente']) && $_GET['idCliente'] != ''){                 
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){          
 	$z .= " AND bodegas_arriendos_facturacion.idCliente=".$_GET['idCliente'];
 	$search .= "&idCliente=".$_GET['idCliente'];
 }
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                   
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){            
 	$z .= " AND bodegas_arriendos_facturacion.idEstado=".$_GET['idEstado'];
 	$search .= "&idEstado=".$_GET['idEstado'];
 }
-if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){                 
+if(isset($_GET['idDocPago']) && $_GET['idDocPago']!=''){          
 	$z .= " AND bodegas_arriendos_facturacion.idDocPago=".$_GET['idDocPago'];
 	$search .= "&idDocPago=".$_GET['idDocPago'];
 }
-if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){                 
-	$z .= " AND bodegas_arriendos_facturacion.N_DocPago LIKE '%".$_GET['N_DocPago']."%'";
+if(isset($_GET['N_DocPago']) && $_GET['N_DocPago']!=''){          
+	$z .= " AND bodegas_arriendos_facturacion.N_DocPago LIKE '%".EstandarizarInput($_GET['N_DocPago'])."%'";
 	$search .= "&N_DocPago=".$_GET['N_DocPago'];
 }
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){               
+if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){        
 	$z .= " AND bodegas_arriendos_facturacion_existencias.idProducto=".$_GET['idProducto'];
 	$search .= "&idProducto=".$_GET['idProducto'];
 }
-if(isset($_GET['idEstadoDevolucion']) && $_GET['idEstadoDevolucion'] != ''){               
+if(isset($_GET['idEstadoDevolucion']) && $_GET['idEstadoDevolucion']!=''){        
 	$z .= " AND bodegas_arriendos_facturacion.idEstadoDevolucion=".$_GET['idEstadoDevolucion'];
 	$search .= "&idEstadoDevolucion=".$_GET['idEstadoDevolucion'];
 }
 
-if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'" ;
+if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin']!=''){   
+	$z .= " AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'";
 	$search .= "&Creacion_fecha_ini=".$_GET['Creacion_fecha_ini'];
 	$search .= "&Creacion_fecha_fin=".$_GET['Creacion_fecha_fin'];
 }
-if(isset($_GET['Pago_fecha_ini']) && $_GET['Pago_fecha_ini'] != ''&&isset($_GET['Pago_fecha_fin']) && $_GET['Pago_fecha_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.Pago_fecha BETWEEN '".$_GET['Pago_fecha_ini']."' AND '".$_GET['Pago_fecha_fin']."'" ;
+if(isset($_GET['Pago_fecha_ini']) && $_GET['Pago_fecha_ini'] != ''&&isset($_GET['Pago_fecha_fin']) && $_GET['Pago_fecha_fin']!=''){   
+	$z .= " AND bodegas_arriendos_facturacion.Pago_fecha BETWEEN '".$_GET['Pago_fecha_ini']."' AND '".$_GET['Pago_fecha_fin']."'";
 	$search .= "&Pago_fecha_ini=".$_GET['Pago_fecha_ini'];
 	$search .= "&Pago_fecha_fin=".$_GET['Pago_fecha_fin'];
 }
-if(isset($_GET['F_Pago_ini']) && $_GET['F_Pago_ini'] != ''&&isset($_GET['F_Pago_fin']) && $_GET['F_Pago_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '".$_GET['F_Pago_ini']."' AND '".$_GET['F_Pago_fin']."'" ;
+if(isset($_GET['F_Pago_ini']) && $_GET['F_Pago_ini'] != ''&&isset($_GET['F_Pago_fin']) && $_GET['F_Pago_fin']!=''){   
+	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '".$_GET['F_Pago_ini']."' AND '".$_GET['F_Pago_fin']."'";
 	$search .= "&F_Pago_ini=".$_GET['F_Pago_ini'];
 	$search .= "&F_Pago_fin=".$_GET['F_Pago_fin'];
 }
-if(isset($_GET['F_Devolucion_ini']) && $_GET['F_Devolucion_ini'] != ''&&isset($_GET['F_Devolucion_fin']) && $_GET['F_Devolucion_fin'] != ''){   
-	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '".$_GET['F_Devolucion_ini']."' AND '".$_GET['F_Devolucion_fin']."'" ;
+if(isset($_GET['F_Devolucion_ini']) && $_GET['F_Devolucion_ini'] != ''&&isset($_GET['F_Devolucion_fin']) && $_GET['F_Devolucion_fin']!=''){   
+	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '".$_GET['F_Devolucion_ini']."' AND '".$_GET['F_Devolucion_fin']."'";
 	$search .= "&F_Devolucion_ini=".$_GET['F_Devolucion_ini'];
 	$search .= "&F_Devolucion_fin=".$_GET['F_Devolucion_fin'];
 }
@@ -190,7 +190,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 } ?>
 
@@ -198,12 +198,12 @@ array_push( $arrProductos,$row );
 	<a target="new" href="<?php echo 'informe_bodega_arriendos_05_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Productos de la bodega</h5>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -290,7 +290,7 @@ array_push( $arrProductos,$row );
 						<td><?php echo Cantidades_decimales_justos($productos['Valor']); ?></td>
 						<td><?php echo Cantidades_decimales_justos($productos['ValorTotal']); ?></td>
 					</tr>
-				<?php } ?>                     
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -298,62 +298,62 @@ array_push( $arrProductos,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 $z1 = "bodegas_arriendos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
+$z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z1 .= " AND usuarios_bodegas_arriendos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idBodegaOrigen)) {       $x1  = $idBodegaOrigen;        }else{$x1  = '';}
-				if(isset($idBodegaDestino)) {      $x2  = $idBodegaDestino;       }else{$x2  = '';}
-				if(isset($idSistema)) {            $x3  = $idSistema;             }else{$x3  = '';}
-				if(isset($idSistemaDestino)) {     $x4  = $idSistemaDestino;      }else{$x4  = '';}
-				if(isset($Creacion_fecha_ini)) {   $x5  = $Creacion_fecha_ini;    }else{$x5  = '';}
-				if(isset($Creacion_fecha_fin)) {   $x6  = $Creacion_fecha_fin;    }else{$x6  = '';}
-				if(isset($idDocumentos)) {         $x7  = $idDocumentos;          }else{$x7  = '';}
-				if(isset($N_Doc)) {                $x8  = $N_Doc;                 }else{$x8  = '';}
-				if(isset($idTipo)) {               $x9  = $idTipo;                }else{$x9  = '';}
-				if(isset($idTrabajador)) {         $x10 = $idTrabajador;          }else{$x10 = '';}
-				if(isset($idProveedor)) {          $x11 = $idProveedor;           }else{$x11 = '';}
-				if(isset($idCliente)) {            $x12 = $idCliente;             }else{$x12 = '';}
-				if(isset($Pago_fecha_ini)) {       $x13 = $Pago_fecha_ini;        }else{$x13 = '';}
-				if(isset($Pago_fecha_fin)) {       $x14 = $Pago_fecha_fin;        }else{$x14 = '';}
-				if(isset($idEstado)) {             $x15 = $idEstado;              }else{$x15 = '';}
-				if(isset($idDocPago)) {            $x16 = $idDocPago;             }else{$x16 = '';}
-				if(isset($N_DocPago)) {            $x17 = $N_DocPago;             }else{$x17 = '';}
-				if(isset($F_Pago_ini)) {           $x18 = $F_Pago_ini;            }else{$x18 = '';}
-				if(isset($F_Pago_fin)) {           $x19 = $F_Pago_fin;            }else{$x19 = '';}
-				if(isset($F_Devolucion_ini)) {     $x20 = $F_Devolucion_ini;      }else{$x20 = '';}
-				if(isset($F_Devolucion_fin)) {     $x21 = $F_Devolucion_fin;      }else{$x21 = '';}
-				if(isset($idEquipo)) {             $x22 = $idEquipo;              }else{$x22 = '';}
-				if(isset($idEstadoDevolucion)) {   $x23 = $idEstadoDevolucion;    }else{$x23 = '';}
-				
+				if(isset($idBodegaOrigen)){       $x1  = $idBodegaOrigen;        }else{$x1  = '';}
+				if(isset($idBodegaDestino)){      $x2  = $idBodegaDestino;       }else{$x2  = '';}
+				if(isset($idSistema)){            $x3  = $idSistema;             }else{$x3  = '';}
+				if(isset($idSistemaDestino)){     $x4  = $idSistemaDestino;      }else{$x4  = '';}
+				if(isset($Creacion_fecha_ini)){   $x5  = $Creacion_fecha_ini;    }else{$x5  = '';}
+				if(isset($Creacion_fecha_fin)){   $x6  = $Creacion_fecha_fin;    }else{$x6  = '';}
+				if(isset($idDocumentos)){         $x7  = $idDocumentos;          }else{$x7  = '';}
+				if(isset($N_Doc)){                $x8  = $N_Doc;                 }else{$x8  = '';}
+				if(isset($idTipo)){               $x9  = $idTipo;                }else{$x9  = '';}
+				if(isset($idTrabajador)){         $x10 = $idTrabajador;          }else{$x10 = '';}
+				if(isset($idProveedor)){          $x11 = $idProveedor;           }else{$x11 = '';}
+				if(isset($idCliente)){            $x12 = $idCliente;             }else{$x12 = '';}
+				if(isset($Pago_fecha_ini)){       $x13 = $Pago_fecha_ini;        }else{$x13 = '';}
+				if(isset($Pago_fecha_fin)){       $x14 = $Pago_fecha_fin;        }else{$x14 = '';}
+				if(isset($idEstado)){             $x15 = $idEstado;              }else{$x15 = '';}
+				if(isset($idDocPago)){            $x16 = $idDocPago;             }else{$x16 = '';}
+				if(isset($N_DocPago)){            $x17 = $N_DocPago;             }else{$x17 = '';}
+				if(isset($F_Pago_ini)){           $x18 = $F_Pago_ini;            }else{$x18 = '';}
+				if(isset($F_Pago_fin)){           $x19 = $F_Pago_fin;            }else{$x19 = '';}
+				if(isset($F_Devolucion_ini)){     $x20 = $F_Devolucion_ini;      }else{$x20 = '';}
+				if(isset($F_Devolucion_fin)){     $x21 = $F_Devolucion_fin;      }else{$x21 = '';}
+				if(isset($idEquipo)){             $x22 = $idEquipo;              }else{$x22 = '';}
+				if(isset($idEstadoDevolucion)){   $x23 = $idEstadoDevolucion;    }else{$x23 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x1, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $z1, $dbConn);
 				$Form_Inputs->form_select_join_filter('Bodega Destino','idBodegaDestino', $x2, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $z1, $dbConn);
-				$Form_Inputs->form_select('Sistema Origen','idSistema', $x3, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
-				$Form_Inputs->form_select('Sistema Destino','idSistemaDestino', $x4, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs->form_select('Sistema Origen','idSistema', $x3, 1, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
+				$Form_Inputs->form_select('Sistema Destino','idSistemaDestino', $x4, 1, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
 				$Form_Inputs->form_date('F Creacion Ini','Creacion_fecha_ini', $x5, 1);
 				$Form_Inputs->form_date('F Creacion Fin','Creacion_fecha_fin', $x6, 1);
 				$Form_Inputs->form_select('Documento de Pago','idDocumentos', $x7, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 0, '', $dbConn);
@@ -375,18 +375,18 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select('Estado Devolucion','idEstadoDevolucion', $x23, 1, 'idEstadoDevolucion', 'Nombre', 'core_estado_devolucion', 0, '', $dbConn);
 				
 				
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

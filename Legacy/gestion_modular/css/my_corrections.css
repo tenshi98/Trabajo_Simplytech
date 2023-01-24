@@ -96,3 +96,4 @@ blockquote {background: #fff;font-style: italic;border-left: 3px solid #f0715f;b
 	.menutop1-toggle {float: right !important; margin-top: 15px !important;margin-right: 15px !important;}
 	.menutop2-toggle {display: none;}
 }
+.margin_form_btn {margin-right: 15px !important;}

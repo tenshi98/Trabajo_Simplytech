@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "vehiculos_listado.php";
 $location = $original;
 $new_location = "vehiculos_listado_estado.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //Si el estado esta distinto de vacio
-if ( !empty($_GET['estado']) ) {
+if (!empty($_GET['estado'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -42,7 +42,7 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Estado cambiado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = '
 vehiculos_listado.idVehiculo,
@@ -121,7 +121,7 @@ $todos = $telemetria + $bodega + $ruta + $trabajador + $pasajeros + $peonetas + 
 $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php 
 	$vehiculo = $rowdata['Nombre'];
 	if(isset($rowdata['Patente'])&&$rowdata['Patente']!=''){
@@ -131,22 +131,22 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'vehiculos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<?php if($todos!=0 OR $idTipoUsuario==1) { ?>
+				<?php if($todos!=0 OR $idTipoUsuario==1){?>
 					<li class=""><a href="<?php echo 'vehiculos_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 				<?php } ?>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>			
+						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>		
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_1.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Telemetria</a></li>
 						<?php }
-						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>	
+						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'vehiculos_listado_opc_2.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-database" aria-hidden="true"></i> Bodega</a></li>
 						<?php }
 						if(isset($rowdata['idOpciones_3'])&&$rowdata['idOpciones_3']==1){ ?>
@@ -184,10 +184,10 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 						<li class=""><a href="<?php echo 'vehiculos_listado_doc_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Ficha Tecnica</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div class="table-responsive"> 
+        <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -196,31 +196,31 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<tr class="odd">			
-						<td><?php echo 'Vehiculo '.$rowdata['Estado']; ?></td>		
+					<tr class="odd">
+						<td><?php echo 'Vehiculo '.$rowdata['Estado']; ?></td>
 						<td>
-							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">		 
-								<?php if ($rowlevel['level']>=2){?>    				
-									<?php if ( $rowdata['idEstado']==1 ) {?>   
+							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
+								<?php if ($rowlevel['level']>=2){?>
+									<?php if ( $rowdata['idEstado']==1 ){ ?>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idVehiculo'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
 									<?php } else {?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idVehiculo'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>">ON</a>
-									<?php }?>    
-								<?php }?>  
-							</div>     
-						</td>	
-					</tr>                  
+									<?php } ?>
+								<?php } ?>
+							</div>
+						</td>
+					</tr>
 				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_listado.php";
 $location = $original;
 $new_location = "telemetria_listado_alarmas_perso.php";
@@ -24,7 +24,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//se agregan ubicaciones
 	$location =$new_location;
 	//Llamamos al formulario
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_alarmas_perso.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location =$new_location;
 	//Llamamos al formulario
@@ -40,16 +40,16 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_alarmas_perso.php';
 }
 //se borra un dato
-if ( !empty($_GET['delAlarma']) )     {
+if (!empty($_GET['delAlarma'])){
 	//se agregan ubicaciones
 	$location =$new_location;
 	//Llamamos al formulario
 	$form_trabajo= 'delAlarma';
-	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_alarmas_perso.php';	
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_alarmas_perso.php';
 }
-
+/**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_item']) )  { 
+if (!empty($_POST['submit_item'])){
 	//se agregan ubicaciones
 	$location =$new_location;
 	$location.='&id='.$_GET['id'];
@@ -61,7 +61,7 @@ if ( !empty($_POST['submit_item']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_alarmas_perso_items.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit_item']) )  { 
+if (!empty($_POST['submit_edit_item'])){
 	//se agregan ubicaciones
 	$location =$new_location;
 	$location.='&id='.$_GET['id'];
@@ -73,7 +73,7 @@ if ( !empty($_POST['submit_edit_item']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_alarmas_perso_items.php';
 }
 //se borra un dato
-if ( !empty($_GET['delAlarma_item']) )     {
+if (!empty($_GET['delAlarma_item'])){
 	//se agregan ubicaciones
 	$location =$new_location;
 	$location.='&id='.$_GET['id'];
@@ -82,7 +82,7 @@ if ( !empty($_GET['delAlarma_item']) )     {
 	$location.='&idTipo='.$_GET['idTipo'];
 	//Llamamos al formulario
 	$form_trabajo= 'delAlarma_item';
-	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_alarmas_perso_items.php';	
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_listado_alarmas_perso_items.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -97,8 +97,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Alerta editada correct
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Alerta borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['editItem']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['editItem'])){
 // consulto los datos
 $rowdata = db_select_data (false, 'Sensor_N, Rango_ini, Rango_fin, valor_especifico', 'telemetria_listado_alarmas_perso_items', '', 'idItem ='.$_GET['editItem'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
@@ -112,33 +112,30 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 }
 //Se traen todos los datos
 $rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
-								
+
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 
 $arrFinalGrupos    = array();
-foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre']; }								
-			
-				
+foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];}
+
 ?>
-		
-<div class="col-sm-8 fcenter">
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Item</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
-				<?php 
+
+				<?php
 				$Form_Inputs = new Form_Inputs();
-				
-					
 
 				echo '<div class="form-group" id="div_sensorn" >
-						<label for="text2" class="control-label col-sm-4">Sensor</label>
-						<div class="col-sm-8 field">
+						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor</label>
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 							<select name="Sensor_N" id="Sensor_N" class="form-control" required="">
 								<option value="" selected>Seleccione una Opcion</option>';
 
@@ -165,52 +162,51 @@ foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombr
 											}
 											//se imprime
 											echo '<option value="'.$i.'" '.$selected.'>'.$rowSensores['SensoresNombre_'.$i].'</option>';
-										}		
+										}
 									}
 								}
-									
-							echo '	
+
+							echo '
 							</select>
 						</div>
 					</div>';
-				
+
 				if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&($_GET['idTipo']==3 OR $_GET['idTipo']==4)){
 					//Se verifican si existen los datos
-					if(isset($Rango_ini)) {  $x1  = $Rango_ini;  }else{$x1  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
-					if(isset($Rango_fin)) {  $x2  = $Rango_fin;  }else{$x2  = Cantidades_decimales_justos($rowdata['Rango_fin']);}
-					
-					//opcionales 
+					if(isset($Rango_ini)){  $x1  = $Rango_ini;  }else{$x1  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
+					if(isset($Rango_fin)){  $x2  = $Rango_fin;  }else{$x2  = Cantidades_decimales_justos($rowdata['Rango_fin']);}
+
+					//opcionales
 					$Form_Inputs->form_post_data(1, 'Rango de valores donde normalmente trabaja el sensor, en caso de que un valor sea distinto de este rango (inferior al minimo, superior al maximo) marcara una alerta personalizada');
 					$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x1, 2);
 					$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x2, 2);
 				}elseif(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&$_GET['idTipo']==6){
-					if(isset($valor_especifico)) {  $x3  = $valor_especifico;  }else{$x3  = Cantidades_decimales_justos($rowdata['valor_especifico']);}
-					
-					//opcionales 
+					if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = Cantidades_decimales_justos($rowdata['valor_especifico']);}
+
+					//opcionales
 					$Form_Inputs->form_post_data(1, 'El valor especifico que es considerado como error (por ejemplo 0 o 1)');
 					$Form_Inputs->form_input_number('Valor Especifico','valor_especifico', $x3, 2);
-				
+
 				}
-				
-				
+
 				$Form_Inputs->form_input_hidden('idItem', $_GET['editItem'], 2);
-									
+
 				?>
-				
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_item">
-					<a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_item">
+					<a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['addItem']) ) { 
-	
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['addItem'])){
+
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
@@ -221,32 +217,30 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 }
 //Se traen todos los datos
 $rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
-								
+
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 
 $arrFinalGrupos    = array();
-foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre']; }								
-	
-	
+foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];}
+
 ?>
-	
-<div class="col-sm-8 fcenter">
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Item</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
-				<?php 
+
+				<?php
 				$Form_Inputs = new Form_Inputs();
-				
-				
+
 				echo '<div class="form-group" id="div_sensorn" >
-						<label for="text2" class="control-label col-sm-4">Sensor</label>
-						<div class="col-sm-8 field">
+						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor</label>
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 							<select name="Sensor_N" id="Sensor_N" class="form-control" required="">
 								<option value="" selected>Seleccione una Opcion</option>';
 
@@ -263,52 +257,50 @@ foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombr
 										}else{
 											//se imprime
 											echo '<option value="'.$i.'">'.$rowSensores['SensoresNombre_'.$i].'</option>';
-										}		
+										}
 									}
 								}
-									
-							echo '	
+
+							echo '
 							</select>
 						</div>
 					</div>';
-				
+
 				if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&($_GET['idTipo']==3 OR $_GET['idTipo']==4)){
 					//Se verifican si existen los datos
-					if(isset($Rango_ini)) {  $x1  = $Rango_ini;  }else{$x1  = '';}
-					if(isset($Rango_fin)) {  $x2  = $Rango_fin;  }else{$x2  = '';}
-					
-					//opcionales 
+					if(isset($Rango_ini)){  $x1  = $Rango_ini;  }else{$x1  = '';}
+					if(isset($Rango_fin)){  $x2  = $Rango_fin;  }else{$x2  = '';}
+
+					//opcionales
 					$Form_Inputs->form_post_data(1, 'Rango de valores donde normalmente trabaja el sensor, en caso de que un valor sea distinto de este rango (inferior al minimo, superior al maximo) marcara una alerta personalizada');
 					$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x1, 2);
 					$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x2, 2);
 				}elseif(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&$_GET['idTipo']==6){
-					if(isset($valor_especifico)) {  $x3  = $valor_especifico;  }else{$x3  = '';}
-					
-					//opcionales 
+					if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = '';}
+
+					//opcionales
 					$Form_Inputs->form_post_data(1, 'El valor especifico que es considerado como error (por ejemplo 0 o 1)');
 					$Form_Inputs->form_input_number('Valor Especifico','valor_especifico', $x3, 2);
-				
+
 				}
-				
-				
+
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idAlarma', $_GET['listItems'], 2);
-									
+
 				?>
-				
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_item">
-					<a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_item">
+					<a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['listItems']) ) {
+</div>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['listItems'])){
 // Se trae un listado con todas las alarmas
 $arrAlarmas = array();
 $arrAlarmas = db_select_array (false, 'idItem, Sensor_N, Rango_ini, Rango_fin, valor_especifico', 'telemetria_listado_alarmas_perso_items', '', 'idAlarma ='.$_GET['listItems'], 'idItem ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlarmas');
@@ -322,28 +314,28 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 }
 //Se traen todos los datos
 $rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
-								
+
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 
 $arrFinalGrupos    = array();
-foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre']; }								
-					
+foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];}
+
 ?>
 
-<div class="col-sm-12">
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>&addItem=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Item</a><?php } ?>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>&addItem=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Item</a><?php } ?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Items de <?php echo $_GET['nombre_equipo']; ?></h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Items de <?php echo $_GET['nombre_equipo']; ?></h5>
 		</header>
-        <div class="table-responsive">   
+        <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -353,17 +345,17 @@ foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombr
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrAlarmas as $alarmas) { ?>
-						<tr class="odd">		
-							<td><?php 
+						<tr class="odd">
+							<td><?php
 							$grupo = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$alarmas['Sensor_N']]];
-							echo $grupo.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']]; 
+							echo $grupo.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']];
 							if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&($_GET['idTipo']==3 OR $_GET['idTipo']==4)){
 								echo ' (Rango: '.Cantidades_decimales_justos($alarmas['Rango_ini']).' / '.Cantidades_decimales_justos($alarmas['Rango_fin']).')';
 							}elseif(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&$_GET['idTipo']==6){
 								echo ' (Valor especifico: '.Cantidades_decimales_justos($alarmas['valor_especifico']).')';
 							}
 							?>
-							</td>		
+							</td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo'].'&editItem='.$alarmas['idItem']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -375,61 +367,60 @@ foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombr
 										$ubicacion.='&idTipo='.$_GET['idTipo'];
 										$dialogo   = '¿Realmente deseas eliminar el item '.$grupo.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']].'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>								
+									<?php } ?>
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $new_location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $new_location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['editAlarma']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['editAlarma'])){
 // consulto los datos
-$SIS_query = 'Nombre, idTipoAlerta, idUniMed, idTipo, valor_error, valor_diferencia, Rango_ini, Rango_fin,
+$SIS_query = 'Nombre,idTipoAlerta, idUniMed, idTipo, valor_error, valor_diferencia, Rango_ini, Rango_fin,
 NErroresMax, NErroresActual, idEstado';
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso', '', 'idAlarma ='.$_GET['editAlarma'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
-	
-	
-<div class="col-sm-8 fcenter">
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Alarma Personalizada</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {            $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
-				if(isset($idTipoAlerta)) {      $x2  = $idTipoAlerta;      }else{$x2  = $rowdata['idTipoAlerta'];}
-				if(isset($idUniMed)) {          $x3  = $idUniMed;          }else{$x3  = $rowdata['idUniMed'];}
-				if(isset($idTipo)) {            $x4  = $idTipo;            }else{$x4  = $rowdata['idTipo'];}
-				if(isset($NErroresMax)) {       $x5  = $NErroresMax;       }else{$x5  = Cantidades_decimales_justos($rowdata['NErroresMax']);}
-				if(isset($NErroresActual)) {    $x6  = $NErroresActual;    }else{$x6  = Cantidades_decimales_justos($rowdata['NErroresActual']);}
-				if(isset($valor_error)) {       $x7  = $valor_error;       }else{$x7  = Cantidades_decimales_justos($rowdata['valor_error']);}
-				if(isset($valor_diferencia)) {  $x8  = $valor_diferencia;  }else{$x8  = Cantidades_decimales_justos($rowdata['valor_diferencia']);}
-				if(isset($Rango_ini)) {         $x9  = $Rango_ini;         }else{$x9  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
-				if(isset($Rango_fin)) {         $x10 = $Rango_fin;         }else{$x10 = Cantidades_decimales_justos($rowdata['Rango_fin']);}
-				if(isset($idEstado)) {          $x11 = $idEstado;          }else{$x11 = $rowdata['idEstado'];}
-				
+				if(isset($Nombre)){            $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
+				if(isset($idTipoAlerta)){      $x2  = $idTipoAlerta;      }else{$x2  = $rowdata['idTipoAlerta'];}
+				if(isset($idUniMed)){          $x3  = $idUniMed;          }else{$x3  = $rowdata['idUniMed'];}
+				if(isset($idTipo)){            $x4  = $idTipo;            }else{$x4  = $rowdata['idTipo'];}
+				if(isset($NErroresMax)){       $x5  = $NErroresMax;       }else{$x5  = Cantidades_decimales_justos($rowdata['NErroresMax']);}
+				if(isset($NErroresActual)){    $x6  = $NErroresActual;    }else{$x6  = Cantidades_decimales_justos($rowdata['NErroresActual']);}
+				if(isset($valor_error)){       $x7  = $valor_error;       }else{$x7  = Cantidades_decimales_justos($rowdata['valor_error']);}
+				if(isset($valor_diferencia)){  $x8  = $valor_diferencia;  }else{$x8  = Cantidades_decimales_justos($rowdata['valor_diferencia']);}
+				if(isset($Rango_ini)){         $x9  = $Rango_ini;         }else{$x9  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
+				if(isset($Rango_fin)){         $x10 = $Rango_fin;         }else{$x10 = Cantidades_decimales_justos($rowdata['Rango_fin']);}
+				if(isset($idEstado)){          $x11 = $idEstado;          }else{$x11 = $rowdata['idEstado'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				
+
 				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
 				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x4, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x5, 2);
@@ -439,24 +430,23 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x8, 1);
 				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x9, 1);
 				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x10, 1);
-				
+
 				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 60 minutos.<br/>- <strong>Catastrofica</strong> = cada 15 minutos.');
 				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
-				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
-				
+				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
+
 				$Form_Inputs->form_post_data(1, 'Al desactivarla, se elimina la opcion de que la plataforma registre esta alarma');
 				$Form_Inputs->form_select('Estado','idEstado', $x11, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idAlarma', $_GET['editAlarma'], 2);
-					
+
 				?>
-				
+
 				<script>
-					
+
 					$(document).ready(function(){
 						document.getElementById("div_valor_error").style.display = "none";
 						document.getElementById("div_valor_diferencia").style.display = "none";
@@ -464,12 +454,12 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 						document.getElementById("div_Rango_fin").style.display = "none";
 						cambia_tipo();
 					});
-					
+
 					document.getElementById("idTipo").onchange = function() {cambia_tipo()};
-					
+
 					function cambia_tipo(){
 						let Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
-						
+
 						switch(Componente) {
 							//Errores Conjuntos
 							case '1':
@@ -541,50 +531,50 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 							break;
 
 						}
-						
+
 					}
 				</script>
-				
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['newAlarma']) ) { ?>
-	
-<div class="col-sm-8 fcenter">
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['newAlarma'])){ ?>
+
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Alarma Personalizada</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {            $x1  = $Nombre;            }else{$x1  = '';}
-				if(isset($idTipoAlerta)) {      $x2  = $idTipoAlerta;      }else{$x2  = '';}
-				if(isset($idUniMed)) {          $x3  = $idUniMed;          }else{$x3  = '';}
-				if(isset($idTipo)) {            $x4  = $idTipo;            }else{$x4  = '';}
-				if(isset($NErroresMax)) {       $x5  = $NErroresMax;       }else{$x5  = '';}
-				if(isset($NErroresActual)) {    $x6  = $NErroresActual;    }else{$x6  = '';}
-				if(isset($valor_error)) {       $x7  = $valor_error;       }else{$x7  = '';}
-				if(isset($valor_diferencia)) {  $x8  = $valor_diferencia;  }else{$x8  = '';}
-				if(isset($Rango_ini)) {         $x9  = $Rango_ini;         }else{$x9  = '';}
-				if(isset($Rango_fin)) {         $x10 = $Rango_fin;         }else{$x10 = '';}
-				
+				if(isset($Nombre)){            $x1  = $Nombre;            }else{$x1  = '';}
+				if(isset($idTipoAlerta)){      $x2  = $idTipoAlerta;      }else{$x2  = '';}
+				if(isset($idUniMed)){          $x3  = $idUniMed;          }else{$x3  = '';}
+				if(isset($idTipo)){            $x4  = $idTipo;            }else{$x4  = '';}
+				if(isset($NErroresMax)){       $x5  = $NErroresMax;       }else{$x5  = '';}
+				if(isset($NErroresActual)){    $x6  = $NErroresActual;    }else{$x6  = '';}
+				if(isset($valor_error)){       $x7  = $valor_error;       }else{$x7  = '';}
+				if(isset($valor_diferencia)){  $x8  = $valor_diferencia;  }else{$x8  = '';}
+				if(isset($Rango_ini)){         $x9  = $Rango_ini;         }else{$x9  = '';}
+				if(isset($Rango_fin)){         $x10 = $Rango_fin;         }else{$x10 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				
+
 				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
 				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x4, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x5, 2);
@@ -594,33 +584,31 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x8, 1);
 				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x9, 1);
 				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x10, 1);
-				
+
 				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 60 minutos.<br/>- <strong>Catastrofica</strong> = cada 15 minutos.');
 				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
-				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);	
-				
-				
+				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
+
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				
-					
+
 				?>
 				<script>
-					
+
 					$(document).ready(function(){
 						document.getElementById("div_valor_error").style.display = "none";
 						document.getElementById("div_valor_diferencia").style.display = "none";
 						document.getElementById("div_Rango_ini").style.display = "none";
 						document.getElementById("div_Rango_fin").style.display = "none";
 					});
-					
+
 					document.getElementById("idTipo").onchange = function() {cambia_tipo()};
-					
+
 					function cambia_tipo(){
 						let Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
-						
+
 						switch(Componente) {
 							//Errores Conjuntos
 							case '1':
@@ -694,35 +682,34 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 						}
 					}
 				</script>
-				
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
-			</form> 
-            <?php widget_validator(); ?>        
+
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  {	  
+</div>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 // tomo los datos del equipo
-$rowdata = db_select_data (false, 'Nombre, id_Geo, id_Sensores, cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores, cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //defino los nombres de los sensores
 $subsql = '';
 for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
     $subsql .= ',telemetria_listado.SensoresNombre_'.$i;
-    $subsql .= ',telemetria_listado.SensoresGrupo_'.$i; 
+    $subsql .= ',telemetria_listado.SensoresGrupo_'.$i;
 }
 
 $SIS_query = '
-telemetria_listado_alarmas_perso.idAlarma, 
+telemetria_listado_alarmas_perso.idAlarma,
 telemetria_listado_alarmas_perso.Nombre,
 telemetria_listado_alarmas_perso.idTipo,
-telemetria_listado_alarmas_perso.NErroresMax, 
+telemetria_listado_alarmas_perso.NErroresMax,
 telemetria_listado_alarmas_perso.NErroresActual,
 telemetria_listado_alarmas_perso.Rango_ini AS AlarmIni,
 telemetria_listado_alarmas_perso.Rango_fin AS AlarmFin,
@@ -752,20 +739,20 @@ $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 
 $arrGruposEx    = array();
-foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']; }								
+foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre'];}
 
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Alertas Personalizadas');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location; ?>&newAlarma=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Alarma</a><?php } ?>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location; ?>&newAlarma=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Alarma</a><?php } ?>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -794,12 +781,12 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
-						
+
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div class="table-responsive">   
+        <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -809,12 +796,12 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php 
-					filtrar($arrAlarmas, 'idAlarma');  
+					<?php
+					filtrar($arrAlarmas, 'idAlarma');
 					foreach($arrAlarmas as $tipo=>$alarmas){ ?>
-						<tr class="odd">		
+						<tr class="odd">
 							<td>
-								<?php 
+								<?php
 								//Si esta activada
 								if(isset($alarmas[0]['idEstado'])&&$alarmas[0]['idEstado']==1){
 									$label_color_1 = 'label-success';
@@ -825,29 +812,29 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 								//Si es normal
 								if(isset($alarmas[0]['idTipoAlerta'])&&$alarmas[0]['idTipoAlerta']==1){
 									$label_color_2 = 'label-success';
-								//si es catastrofica 
+								//si es catastrofica
 								}else{
 									$label_color_2 = 'label-danger';
 								}
 								//imprimo
-								echo '<strong>Estado: </strong><label class="label '.$label_color_1.'">'.$alarmas[0]['Estado'].'</label><br/>'; 
-								echo '<strong>Tipo: </strong>'.$alarmas[0]['Tipo'].'<br/>'; 
-								echo '<strong>Prioridad Alarma: </strong><label class="label '.$label_color_2.'">'.$alarmas[0]['Prioridad'].'</label><br/>'; 
-								echo '<strong>Unidad Medida: </strong>'.$alarmas[0]['Unimed'].'<br/>'; 
+								echo '<strong>Estado: </strong><label class="label '.$label_color_1.'">'.$alarmas[0]['Estado'].'</label><br/>';
+								echo '<strong>Tipo: </strong>'.$alarmas[0]['Tipo'].'<br/>';
+								echo '<strong>Prioridad Alarma: </strong><label class="label '.$label_color_2.'">'.$alarmas[0]['Prioridad'].'</label><br/>';
+								echo '<strong>Unidad Medida: </strong>'.$alarmas[0]['Unimed'].'<br/>';
 								echo '<strong>N° Maximo Errores: </strong>'.$alarmas[0]['NErroresMax'].'<br/>';
 								echo '<strong>N° Actual Errores: </strong>'.$alarmas[0]['NErroresActual'].'<br/>';
 								?>
-							</td>	
+							</td>
 							<td>
-								<?php 
-								echo '<strong>Nombre: </strong>'.$alarmas[0]['Nombre']; 
+								<?php
+								echo '<strong>Nombre: </strong>'.$alarmas[0]['Nombre'];
 								if(isset($alarmas[0]['AlarmIni'])&&$alarmas[0]['AlarmIni']!=0&&isset($alarmas[0]['AlarmFin'])&&$alarmas[0]['AlarmFin']!=0){
 									echo '('.Cantidades_decimales_justos($alarmas[0]['AlarmIni']).' / '.Cantidades_decimales_justos($alarmas[0]['AlarmFin']).')<br/>';
 								}else{
 									echo '<br/>';
 								}
-								
-								echo '<strong>Sensores: </strong>'; 
+
+								echo '<strong>Sensores: </strong>';
 								echo '<ul>';
 								foreach ($alarmas as $alarm) {
 									//grupo si es que existe
@@ -857,7 +844,7 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 									}
 									//nombre del sensor
 									if(isset($alarm['SensoresNombre_'.$alarm['Sensor_N']])&&$alarm['SensoresNombre_'.$alarm['Sensor_N']]!=''){
-										$sub_nom .= $alarm['SensoresNombre_'.$alarm['Sensor_N']]; 
+										$sub_nom .= $alarm['SensoresNombre_'.$alarm['Sensor_N']];
 									}
 									//valores
 									if(isset($alarmas[0]['idTipo'])&&$alarmas[0]['idTipo']!=''&&($alarmas[0]['idTipo']==3 OR $alarmas[0]['idTipo']==4)){
@@ -865,16 +852,16 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 									}elseif(isset($alarmas[0]['idTipo'])&&$alarmas[0]['idTipo']!=''&&$alarmas[0]['idTipo']==6){
 										$sub_nom .= ' (Valor especifico: '.Cantidades_decimales_justos($alarm['valor_especifico']).')';
 									}
-									
+
 									/*if(isset($alarm['Rango_ini'])&&$alarm['Rango_ini']!=0&&isset($alarm['Rango_fin'])&&$alarm['Rango_fin']!=0){
 										$sub_nom .= '('.Cantidades_decimales_justos($alarm['Rango_ini']).' / '.Cantidades_decimales_justos($alarm['Rango_fin']).')';
 									}*/
 									echo '<li>'.$sub_nom.'</li>';
 								}
 								echo '</ul>';
-								
+
 								?>
-							</td>	
+							</td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&editAlarma='.$tipo; ?>" title="Editar Datos Basicos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -884,23 +871,23 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 										$ubicacion = $new_location.'&delAlarma='.simpleEncode($tipo, fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la alarma personalizada '.$alarmas[0]['Nombre'].'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>								
+									<?php } ?>
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php } ?>  
+<?php } ?>
 
 <?php
 /**********************************************************************************************************************************/

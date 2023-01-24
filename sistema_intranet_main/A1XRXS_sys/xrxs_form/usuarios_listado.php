@@ -2,39 +2,39 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (1).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idUsuario']) )      $idUsuario      = $_POST['idUsuario'];
-	if ( !empty($_POST['usuario']) )        $usuario        = $_POST['usuario'];
-	if ( !empty($_POST['password']) )       $password       = $_POST['password'];
-	if ( !empty($_POST['repassword']) )     $repassword     = $_POST['repassword'];
-	if ( !empty($_POST['oldpassword']) )    $oldpassword    = $_POST['oldpassword'];
-	if ( !empty($_POST['idTipoUsuario']) )  $idTipoUsuario  = $_POST['idTipoUsuario'];
-	if ( !empty($_POST['idEstado']) )       $idEstado       = $_POST['idEstado'];
-	if ( !empty($_POST['email']) )          $email          = $_POST['email'];
-	if ( !empty($_POST['Nombre']) )         $Nombre         = $_POST['Nombre'];
-	if ( !empty($_POST['Rut']) )            $Rut 	        = $_POST['Rut'];
-	if ( !empty($_POST['fNacimiento']) )    $fNacimiento    = $_POST['fNacimiento'];
-	if ( !empty($_POST['Fono']) )           $Fono 	        = $_POST['Fono'];
-	if ( !empty($_POST['idCiudad']) )       $idCiudad 	    = $_POST['idCiudad'];
-	if ( !empty($_POST['idComuna']) )       $idComuna 	    = $_POST['idComuna'];
-	if ( !empty($_POST['Direccion']) )      $Direccion      = $_POST['Direccion'];
-	if ( !empty($_POST['Direccion_img']) )  $Direccion_img  = $_POST['Direccion_img'];
-	if ( !empty($_POST['Ultimo_acceso']) )  $Ultimo_acceso  = $_POST['Ultimo_acceso'];
-	if ( !empty($_POST['fkinput1']) )       $fkinput1       = $_POST['fkinput1'];
-	if ( !empty($_POST['fkinput2']) )       $fkinput2       = $_POST['fkinput2'];
-	if ( !empty($_POST['idSistema']) )      $idSistema      = $_POST['idSistema'];
-				 
+	if (!empty($_POST['idUsuario']))      $idUsuario      = $_POST['idUsuario'];
+	if (!empty($_POST['usuario']))        $usuario        = $_POST['usuario'];
+	if (!empty($_POST['password']))       $password       = $_POST['password'];
+	if (!empty($_POST['repassword']))     $repassword     = $_POST['repassword'];
+	if (!empty($_POST['oldpassword']))    $oldpassword    = $_POST['oldpassword'];
+	if (!empty($_POST['idTipoUsuario']))  $idTipoUsuario  = $_POST['idTipoUsuario'];
+	if (!empty($_POST['idEstado']))       $idEstado       = $_POST['idEstado'];
+	if (!empty($_POST['email']))          $email          = $_POST['email'];
+	if (!empty($_POST['Nombre']))         $Nombre         = $_POST['Nombre'];
+	if (!empty($_POST['Rut']))            $Rut 	          = $_POST['Rut'];
+	if (!empty($_POST['fNacimiento']))    $fNacimiento    = $_POST['fNacimiento'];
+	if (!empty($_POST['Fono']))           $Fono 	      = $_POST['Fono'];
+	if (!empty($_POST['idCiudad']))       $idCiudad 	  = $_POST['idCiudad'];
+	if (!empty($_POST['idComuna']))       $idComuna 	  = $_POST['idComuna'];
+	if (!empty($_POST['Direccion']))      $Direccion      = $_POST['Direccion'];
+	if (!empty($_POST['Direccion_img']))  $Direccion_img  = $_POST['Direccion_img'];
+	if (!empty($_POST['Ultimo_acceso']))  $Ultimo_acceso  = $_POST['Ultimo_acceso'];
+	if (!empty($_POST['fkinput1']))       $fkinput1       = $_POST['fkinput1'];
+	if (!empty($_POST['fkinput2']))       $fkinput2       = $_POST['fkinput2'];
+	if (!empty($_POST['idSistema']))      $idSistema      = $_POST['idSistema'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -53,50 +53,50 @@ require_once '0_validate_user_1.php';
 			case 'oldpassword':    if(empty($oldpassword)){                             $error['oldpassword']    = 'error/No ha ingresado su clave antigua';}break;
 			case 'idTipoUsuario':  if(empty($idTipoUsuario)){                           $error['idTipoUsuario']  = 'error/No ha seleccionado el tipo de usuario';}break;
 			case 'idEstado':       if(empty($idEstado)){                                $error['idEstado']       = 'error/No ha seleccionado el estado';}break;
-			case 'email':          if(empty($email)){                                   $error['email']          = 'error/No ha ingresado el email';}break;
+			case 'email':          if(empty($email)&&$form_trabajo!='login'){           $error['email']          = 'error/No ha ingresado el email';}break;
 			case 'Nombre':         if(empty($Nombre)){                                  $error['Nombre']         = 'error/No ha ingresado el Nombre';}break;
 			case 'Rut':            if(empty($Rut)){                                     $error['Rut']            = 'error/No ha ingresado el Rut';}break;
 			case 'fNacimiento':    if(empty($fNacimiento)){                             $error['fNacimiento']    = 'error/No ha ingresado el fNacimiento';}break;
-			case 'Fono':           if(empty($Fono)){                                    $error['Fono']           = 'error/No ha ingresado el Fono';}break;	
+			case 'Fono':           if(empty($Fono)){                                    $error['Fono']           = 'error/No ha ingresado el Fono';}break;
 			case 'idCiudad':       if(empty($idCiudad)){                                $error['idCiudad']       = 'error/No ha seleccionado la ciudad';}break;
 			case 'idComuna':       if(empty($idComuna)){                                $error['idComuna']       = 'error/No ha seleccionado la comuna';}break;
 			case 'Direccion':      if(empty($Direccion)){                               $error['Direccion']      = 'error/No ha ingresado la Direccion';}break;
 			case 'Direccion_img':  if(empty($Direccion_img)){                           $error['Direccion_img']  = 'error/No ha ingresado el nombre de la imagen de perfil';}break;
 			case 'Ultimo_acceso':  if(empty($Ultimo_acceso)){                           $error['Ultimo_acceso']  = 'error/No ha ingresado el ultimo acceso al sistema';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($usuario) && $usuario != ''){         $usuario     = EstandarizarInput($usuario); }
-	if(isset($password) && $password != ''){       $password    = EstandarizarInput($password); }
-	if(isset($repassword) && $repassword != ''){   $repassword  = EstandarizarInput($repassword); }
-	if(isset($oldpassword) && $oldpassword != ''){ $oldpassword = EstandarizarInput($oldpassword); }
-	if(isset($email) && $email != ''){             $email       = EstandarizarInput($email); }
-	if(isset($Nombre) && $Nombre != ''){           $Nombre      = EstandarizarInput($Nombre); }
-	if(isset($Direccion) && $Direccion != ''){     $Direccion   = EstandarizarInput($Direccion); }
-	
+/*******************************************************************************************************************/
+	if(isset($usuario) && $usuario!=''){         $usuario     = EstandarizarInput($usuario);}
+	if(isset($password) && $password!=''){       $password    = EstandarizarInput($password);}
+	if(isset($repassword) && $repassword!=''){   $repassword  = EstandarizarInput($repassword);}
+	if(isset($oldpassword) && $oldpassword!=''){ $oldpassword = EstandarizarInput($oldpassword);}
+	if(isset($email) && $email!=''){             $email       = EstandarizarInput($email);}
+	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Direccion) && $Direccion!=''){     $Direccion   = EstandarizarInput($Direccion);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($usuario)&&contar_palabras_censuradas($usuario)!=0){          $error['usuario']     = 'error/Edita usuario, contiene palabras no permitidas'; }	
-	if(isset($password)&&contar_palabras_censuradas($password)!=0){        $error['password']    = 'error/Edita password, contiene palabras no permitidas'; }	
-	if(isset($repassword)&&contar_palabras_censuradas($repassword)!=0){    $error['repassword']  = 'error/Edita repassword, contiene palabras no permitidas'; }	
-	if(isset($oldpassword)&&contar_palabras_censuradas($oldpassword)!=0){  $error['oldpassword'] = 'error/Edita oldpassword, contiene palabras no permitidas'; }	
-	if(isset($email)&&contar_palabras_censuradas($email)!=0){              $error['email']       = 'error/Edita email, contiene palabras no permitidas'; }	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){      $error['Direccion']   = 'error/Edita la Direccion, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($usuario)&&contar_palabras_censuradas($usuario)!=0){          $error['usuario']     = 'error/Edita usuario, contiene palabras no permitidas';}
+	if(isset($password)&&contar_palabras_censuradas($password)!=0){        $error['password']    = 'error/Edita password, contiene palabras no permitidas';}
+	if(isset($repassword)&&contar_palabras_censuradas($repassword)!=0){    $error['repassword']  = 'error/Edita repassword, contiene palabras no permitidas';}
+	if(isset($oldpassword)&&contar_palabras_censuradas($oldpassword)!=0){  $error['oldpassword'] = 'error/Edita oldpassword, contiene palabras no permitidas';}
+	if(isset($email)&&contar_palabras_censuradas($email)!=0){              $error['email']       = 'error/Edita email, contiene palabras no permitidas';}
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){            $error['Nombre']      = 'error/Edita Nombre,contiene palabras no permitidas';}
+	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){      $error['Direccion']   = 'error/Edita la Direccion, contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
+/*******************************************************************************************************************/
 	//Verifica si el mail corresponde
-	if(isset($email)&&!validarEmail($email)){     $error['email']    = 'error/El Email ingresado no es valido'; }	
-	if(isset($Fono)&&!validarNumero($Fono)) {     $error['Fono']	 = 'error/Ingrese un numero telefonico valido'; }
-	if(isset($Rut)&&!validarRut($Rut)){           $error['Rut']      = 'error/El Rut ingresado no es valido'; }
+	if(isset($email)&&!validarEmail($email)){     $error['email']    = 'error/El Email ingresado no es valido';}
+	if(isset($Fono)&&!validarNumero($Fono)){      $error['Fono']	 = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Rut)&&!validarRut($Rut)){           $error['Rut']      = 'error/El Rut ingresado no es valido';}
 	if(isset($password)&&isset($repassword)){
-		if ( $password <> $repassword )           $error['password'] = 'error/Las contraseñas ingresadas no coinciden'; 
+		if ( $password <> $repassword )           $error['password'] = 'error/Las contraseñas ingresadas no coinciden';
 	}
 	if(isset($usuario)){
 		if (strpos($usuario, " ")){               $error['usuario1']  = 'error/El nombre de usuario contiene espacios vacios';}
@@ -105,18 +105,18 @@ require_once '0_validate_user_1.php';
 	if(isset($password)){
 		if (strpos($password, " ")){              $error['Password1'] = 'error/La contraseña de usuario contiene espacios vacios';}
 		//if (strtolower($password) != $password){  $error['Password2'] = 'error/La contraseña de usuario contiene mayusculas';}
-	}	
+	}
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -142,62 +142,62 @@ require_once '0_validate_user_1.php';
 			if($ndata_3 > 0) {$error['ndata_3'] = 'error/El Rut ya ya existe en el sistema';}
 			if($ndata_4 > 0) {$error['ndata_4'] = 'error/El email ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($usuario) && $usuario != ''){              $SIS_data  = "'".$usuario."'" ;         }else{$SIS_data  = "''";}
-				if(isset($password) && $password != ''){            $SIS_data .= ",'".md5($password)."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($idTipoUsuario) && $idTipoUsuario != ''){  $SIS_data .= ",'".$idTipoUsuario."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){            $SIS_data .= ",'".$idEstado."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($email) && $email != ''){                  $SIS_data .= ",'".$email."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                $SIS_data .= ",'".$Nombre."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($Rut) && $Rut != ''){                      $SIS_data .= ",'".$Rut."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($fNacimiento) && $fNacimiento != ''){      $SIS_data .= ",'".$fNacimiento."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($Fono) && $Fono != ''){                    $SIS_data .= ",'".$Fono."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($idCiudad) && $idCiudad != ''){            $SIS_data .= ",'".$idCiudad."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($idComuna) && $idComuna != ''){            $SIS_data .= ",'".$idComuna."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($Direccion) && $Direccion != ''){          $SIS_data .= ",'".$Direccion."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($Direccion_img) && $Direccion_img != ''){  $SIS_data .= ",'".$Direccion_img."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($Ultimo_acceso) && $Ultimo_acceso != ''){  $SIS_data .= ",'".$Ultimo_acceso."'" ;  }else{$SIS_data .= ",''";}
-				
+				if(isset($usuario) && $usuario!=''){              $SIS_data  = "'".$usuario."'";         }else{$SIS_data  = "''";}
+				if(isset($password) && $password!=''){            $SIS_data .= ",'".md5($password)."'";  }else{$SIS_data .= ",''";}
+				if(isset($idTipoUsuario) && $idTipoUsuario!=''){  $SIS_data .= ",'".$idTipoUsuario."'";  }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){            $SIS_data .= ",'".$idEstado."'";       }else{$SIS_data .= ",''";}
+				if(isset($email) && $email!=''){                  $SIS_data .= ",'".$email."'";          }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",'".$Nombre."'";         }else{$SIS_data .= ",''";}
+				if(isset($Rut) && $Rut!=''){                      $SIS_data .= ",'".$Rut."'";            }else{$SIS_data .= ",''";}
+				if(isset($fNacimiento) && $fNacimiento!=''){      $SIS_data .= ",'".$fNacimiento."'";    }else{$SIS_data .= ",''";}
+				if(isset($Fono) && $Fono!=''){                    $SIS_data .= ",'".$Fono."'";           }else{$SIS_data .= ",''";}
+				if(isset($idCiudad) && $idCiudad!=''){            $SIS_data .= ",'".$idCiudad."'";       }else{$SIS_data .= ",''";}
+				if(isset($idComuna) && $idComuna!=''){            $SIS_data .= ",'".$idComuna."'";       }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion!=''){          $SIS_data .= ",'".$Direccion."'";      }else{$SIS_data .= ",''";}
+				if(isset($Direccion_img) && $Direccion_img!=''){  $SIS_data .= ",'".$Direccion_img."'";  }else{$SIS_data .= ",''";}
+				if(isset($Ultimo_acceso) && $Ultimo_acceso!=''){  $SIS_data .= ",'".$Ultimo_acceso."'";  }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'usuario, password, idTipoUsuario, idEstado, email, 
-				Nombre, Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion, Direccion_img, Ultimo_acceso';
+				$SIS_columns = 'usuario, password, idTipoUsuario, idEstado, email,
+				Nombre,Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion, Direccion_img, Ultimo_acceso';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
-				
+
 					//Se genera el permiso relacionado al sistema
-					if(isset($ultimo_id) && $ultimo_id != ''){    $SIS_data  = "'".$ultimo_id."'" ;   }else{$SIS_data  = "''";}
-					if(isset($idSistema) && $idSistema != ''){    $SIS_data .= ",'".$idSistema."'" ;  }else{$SIS_data .= ",''";}
-						
+					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";   }else{$SIS_data  = "''";}
+					if(isset($idSistema) && $idSistema!=''){    $SIS_data .= ",'".$idSistema."'";  }else{$SIS_data .= ",''";}
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idUsuario, idSistema';
-					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas',$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					//Si ejecuto correctamente la consulta
 					if($ultimo_id2!=0){
-					
+
 						//Consulto el sistema que esta usando
-						$rowdata = db_select_data (false, 'idOpcionesGen_7', 'core_sistemas', '', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+						$rowdata = db_select_data (false, 'idOpcionesGen_7', 'core_sistemas','', 'idSistema = "'.$idSistema.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//si tiene la interfaz de crosstech
 						if(isset($rowdata['idOpcionesGen_7'])&&$rowdata['idOpcionesGen_7']==6){
 							//logo de la compañia
 							$login_logo  = DB_SITE_MAIN.'/img/login_logo.png';
 							$file_logo   = 'img/login_logo.png';
-							
+
 							//solo si existe
-							if (file_exists($file_logo)) {
+							if (file_exists($file_logo)){
 								//envio de correo
 								try {
-									
+
 									//se consulta el correo
-									$rowusr = db_select_data (false, 'Nombre, email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas', '', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-										
-									//Se crea el cuerpo	
+									$rowusr = db_select_data (false, 'Nombre,email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas','', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+									//Se crea el cuerpo
 									$BodyMail  = '<div style="background-color: #D9D9D9; padding: 10px;">';
 									$BodyMail .= '<img src="'.$login_logo.'" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
 									$BodyMail .= '<h3 style="text-align: center;font-size: 30px;">';
@@ -210,44 +210,43 @@ require_once '0_validate_user_1.php';
 									$BodyMail .= '</p>';
 									$BodyMail .= '<a href="'.DB_SITE_MAIN.'" style="display:block;width:100%;text-align: center;font-size: 20px;text-decoration: none;color: #004AAD;"><strong>Empezar &#8594;</strong></a>';
 									$BodyMail .= '</div>';
-										
-									$rmail = tareas_envio_correo($rowusr['email_principal'], 'Crosstech', 
-																 $email, $Nombre, 
-																 '', '', 
-																 'Registro de Usuario', 
-																 $BodyMail,'', 
-																 '', 
-																 1, 
-																 $rowusr['Gmail_Usuario'], 
+
+									$rmail = tareas_envio_correo($rowusr['email_principal'], 'Crosstech',
+																 $email, $Nombre,
+																 '', '',
+																 'Registro de Usuario',
+																 $BodyMail,'',
+																 '',
+																 1,
+																 $rowusr['Gmail_Usuario'],
 																 $rowusr['Gmail_Password']);
 									//se guarda el log
-									log_response(1, $rmail, $email.' (Asunto:Registro de Usuario)');	
-									
-								} catch (Exception $e) {
+									log_response(1, $rmail, $email.' (Asunto:Registro de Usuario)');
+
+								}catch (Exception $e) {
 									php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'error de registro:'.$e->getMessage(), '' );
 								}
-								
-									
+
 							}else{
 								php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'logo no existe ('.$login_logo.')', '' );
 							}
 						}
-						
-						//redirijo	
+
+						//redirijo
 						header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 						die;
 					}
-					
+
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -279,56 +278,53 @@ require_once '0_validate_user_1.php';
 			if($ndata_5 == 0) {$error['ndata_5'] = 'error/Las contraseñas ingresadas no coinciden';}
 			/*******************************************************************/
 
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idUsuario='".$idUsuario."'" ;
-				if(isset($usuario) && $usuario != ''){              $SIS_data .= ",usuario='".$usuario."'" ;}
-				if(isset($password) && $password != ''){            $SIS_data .= ",password='".md5($password)."'" ;}
-				if(isset($idTipoUsuario) && $idTipoUsuario != ''){  $SIS_data .= ",idTipoUsuario='".$idTipoUsuario."'" ;}
-				if(isset($idEstado) && $idEstado != ''){            $SIS_data .= ",idEstado='".$idEstado."'" ;}
-				if(isset($email) && $email != ''){                  $SIS_data .= ",email='".$email."'" ;}
-				if(isset($Nombre) && $Nombre != ''){                $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Rut) && $Rut != ''){                      $SIS_data .= ",Rut='".$Rut."'" ;}
-				if(isset($fNacimiento) && $fNacimiento != ''){      $SIS_data .= ",fNacimiento='".$fNacimiento."'" ;}
-				if(isset($Fono) && $Fono != ''){                    $SIS_data .= ",Fono='".$Fono."'" ;}
-				if(isset($idCiudad) && $idCiudad != ''){            $SIS_data .= ",idCiudad='".$idCiudad."'" ;}
-				if(isset($idComuna) && $idComuna != ''){            $SIS_data .= ",idComuna='".$idComuna."'" ;}
-				if(isset($Direccion) && $Direccion != ''){          $SIS_data .= ",Direccion='".$Direccion."'" ;}
-				if(isset($Direccion_img) && $Direccion_img != ''){  $SIS_data .= ",Direccion_img='".$Direccion_img."'" ;}
-				if(isset($Ultimo_acceso) && $Ultimo_acceso != ''){  $SIS_data .= ",Ultimo_acceso='".$Ultimo_acceso."'" ;}
-				
+				$SIS_data = "idUsuario='".$idUsuario."'";
+				if(isset($usuario) && $usuario!=''){              $SIS_data .= ",usuario='".$usuario."'";}
+				if(isset($password) && $password!=''){            $SIS_data .= ",password='".md5($password)."'";}
+				if(isset($idTipoUsuario) && $idTipoUsuario!=''){  $SIS_data .= ",idTipoUsuario='".$idTipoUsuario."'";}
+				if(isset($idEstado) && $idEstado!=''){            $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($email) && $email!=''){                  $SIS_data .= ",email='".$email."'";}
+				if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Rut) && $Rut!=''){                      $SIS_data .= ",Rut='".$Rut."'";}
+				if(isset($fNacimiento) && $fNacimiento!=''){      $SIS_data .= ",fNacimiento='".$fNacimiento."'";}
+				if(isset($Fono) && $Fono!=''){                    $SIS_data .= ",Fono='".$Fono."'";}
+				if(isset($idCiudad) && $idCiudad!=''){            $SIS_data .= ",idCiudad='".$idCiudad."'";}
+				if(isset($idComuna) && $idComuna!=''){            $SIS_data .= ",idComuna='".$idComuna."'";}
+				if(isset($Direccion) && $Direccion!=''){          $SIS_data .= ",Direccion='".$Direccion."'";}
+				if(isset($Direccion_img) && $Direccion_img!=''){  $SIS_data .= ",Direccion_img='".$Direccion_img."'";}
+				if(isset($Ultimo_acceso) && $Ultimo_acceso!=''){  $SIS_data .= ",Ultimo_acceso='".$Ultimo_acceso."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//Si se cambia la password se actualiza el dato de session
 					if(isset($password) && $password != ''&&$idUsuario==$_SESSION['usuario']['basic_data']['idUsuario']){
 						$_SESSION['usuario']['basic_data']['password'] = md5($password);
 					}
-					
+
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
-				
-				
+
 			}
-		
-	
-		break;	
-						
+
+		break;
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -336,31 +332,31 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				// Se obtiene el nombre del logo
 				$rowdata = db_select_data (false, 'Direccion_img', 'usuarios_listado', '', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//se borran los datos
 				$resultado_1 = db_delete_data (false, 'usuarios_listado', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				$resultado_2 = db_delete_data (false, 'usuarios_sistemas', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado_2 = db_delete_data (false, 'usuarios_sistemas','idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$resultado_3 = db_delete_data (false, 'usuarios_permisos', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado_1==true OR $resultado_2==true OR $resultado_3==true){
-					
+
 					//se elimina el archivo
 					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
 						try {
@@ -369,58 +365,56 @@ require_once '0_validate_user_1.php';
 							}else{
 								unlink('upload/'.$rowdata['Direccion_img']);
 							}
-						}catch(Exception $e) { 
+						}catch(Exception $e) {
 							//guardar el dato en un archivo log
 						}
 					}
-						
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-				
-			
-		break;	
+
+		break;
 /*******************************************************************************************************************/
 		//Cambio el estado de activo a inactivo
-		case 'estado':	
-			
+		case 'estado':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			$idUsuario  = $_GET['id'];
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "idEstado='".$idEstado."'" ;
+			$SIS_data = "idEstado='".$idEstado."'";
 			$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
-				
-				header( 'Location: '.$location.'&edited=true' );
-				die; 
-				
-			}
-			
 
-		break;	
+				header( 'Location: '.$location.'&edited=true' );
+				die;
+
+			}
+
+		break;
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
-		case 'prm_add':	
-			
+		case 'prm_add':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variables
 			$id_usuario = $_GET['id'];
 			$id_permiso = $_GET['prm_add'];
 			$level      = '1';
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -431,39 +425,39 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso ya fue otorgado';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($id_usuario) && $id_usuario != ''){ $SIS_data  = "'".$id_usuario."'" ;   }else{$SIS_data  = "''";}
-				if(isset($id_permiso) && $id_permiso != ''){ $SIS_data .= ",'".$id_permiso."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($level) && $level != ''){           $SIS_data .= ",'".$level."'" ;       }else{$SIS_data .= ",''";}
-				
+				if(isset($id_usuario) && $id_usuario!=''){ $SIS_data  = "'".$id_usuario."'";   }else{$SIS_data  = "''";}
+				if(isset($id_permiso) && $id_permiso!=''){ $SIS_data .= ",'".$id_permiso."'";  }else{$SIS_data .= ",''";}
+				if(isset($level) && $level!=''){           $SIS_data .= ",'".$level."'";       }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idAdmpm, level';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_permisos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location );
 					die;
 				}
-			
+
 			}
 
-		break;	
+		break;
 /*******************************************************************************************************************/
 		//borra un permiso del usuario
-		case 'prm_del':	
-			
+		case 'prm_del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['prm_del']) OR !validaEntero($_GET['prm_del']))&&$_GET['prm_del']!=''){
 				$indice = simpleDecode($_GET['prm_del'], fecha_actual());
@@ -471,45 +465,45 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['prm_del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				/**********************************************/
 				//Busco la informacion del permiso
 				$rowdata = db_select_data (false, 'idUsuario, idAdmpm, level', 'usuarios_permisos', '', 'idPermisos = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 				//Datos generados
 				$idUsuario        = $rowdata['idUsuario'];
 				$idAdmpm          = $rowdata['idAdmpm'];
-				$level            = $rowdata['level'];	
+				$level            = $rowdata['level'];
 				$idUsuario_elim   = $_SESSION['usuario']['basic_data']['idUsuario'];
 				$Fecha_elim       = fecha_actual();
 				$Hora_elim        = hora_actual();
-				
+
 				//filtros
-				if(isset($idUsuario) && $idUsuario != ''){            $SIS_data  = "'".$idUsuario."'" ;        }else{$SIS_data  = "''";}
-				if(isset($idAdmpm) && $idAdmpm != ''){                $SIS_data .= ",'".$idAdmpm."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($level) && $level != ''){                    $SIS_data .= ",'".$level."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($idUsuario_elim) && $idUsuario_elim != ''){  $SIS_data .= ",'".$idUsuario_elim."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($Fecha_elim) && $Fecha_elim != ''){          $SIS_data .= ",'".$Fecha_elim."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($Hora_elim) && $Hora_elim != ''){            $SIS_data .= ",'".$Hora_elim."'" ;       }else{$SIS_data .= ",''";}
-				
+				if(isset($idUsuario) && $idUsuario!=''){            $SIS_data  = "'".$idUsuario."'";        }else{$SIS_data  = "''";}
+				if(isset($idAdmpm) && $idAdmpm!=''){                $SIS_data .= ",'".$idAdmpm."'";         }else{$SIS_data .= ",''";}
+				if(isset($level) && $level!=''){                    $SIS_data .= ",'".$level."'";           }else{$SIS_data .= ",''";}
+				if(isset($idUsuario_elim) && $idUsuario_elim!=''){  $SIS_data .= ",'".$idUsuario_elim."'";  }else{$SIS_data .= ",''";}
+				if(isset($Fecha_elim) && $Fecha_elim!=''){          $SIS_data .= ",'".$Fecha_elim."'";      }else{$SIS_data .= ",''";}
+				if(isset($Hora_elim) && $Hora_elim!=''){            $SIS_data .= ",'".$Hora_elim."'";       }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idAdmpm, level, idUsuario_elim, Fecha_elim, Hora_elim';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_permisos_log', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/**********************************************/
@@ -518,28 +512,27 @@ require_once '0_validate_user_1.php';
 					$resultado = db_delete_data (false, 'usuarios_permisos', 'idPermisos = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
-						
+
 						//redirijo
 						header( 'Location: '.$location.'&deleted=true' );
 						die;
-						
-					}	
+
+					}
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-		break;	
+
+		break;
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
-		case 'prm_cat_add':	
-			
+		case 'prm_cat_add':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['prm_cat_add']) OR !validaEntero($_GET['prm_cat_add']))&&$_GET['prm_cat_add']!=''){
 				$indice = simpleDecode($_GET['prm_cat_add'], fecha_actual());
@@ -547,30 +540,30 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['prm_cat_add'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//Variable
 			$errorn=0;
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
-				
+
 				//Variables
 				$id_usuario  = $_GET['id'];
 				$prm_cat     = $indice;
 				$level       = '1';
-				
+
 				//Busco todas las transacciones relacionadas con la categoria
 				$SIS_query = 'idAdmpm';
 				$SIS_join  = '';
@@ -578,7 +571,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 0;
 				$arrPermisos = array();
 				$arrPermisos = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Se llaman a todos los permisos que tenga el usuario
 				$SIS_query = 'idAdmpm';
 				$SIS_join  = '';
@@ -586,50 +579,49 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 0;
 				$arrPerUsuario = array();
 				$arrPerUsuario = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//creo variables temporales
 				$BasesDatos = array();
-				foreach ($arrPerUsuario as $pu) {	
+				foreach ($arrPerUsuario as $pu) {
 					$BasesDatos[$pu['idAdmpm']] = 'true';
 				}
-				
+
 				//Inserto los permisos
 				foreach ($arrPermisos as $comp) {
-					
+
 					//creo los permisos solo si no los tiene
 					if(!isset($BasesDatos[$comp['idAdmpm']]) && $BasesDatos[$comp['idAdmpm']]!='true'){
-						$SIS_data  = "'".$id_usuario."'" ;  
-						$SIS_data .= ",'".$comp['idAdmpm']."'" ;     
-						$SIS_data .= ",'".$level."'" ;      
-						
+						$SIS_data  = "'".$id_usuario."'";
+						$SIS_data .= ",'".$comp['idAdmpm']."'";
+						$SIS_data .= ",'".$level."'";
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idUsuario, idAdmpm, level';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_permisos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
-					
+
 				}
-				
+
 				header( 'Location: '.$location );
 				die;
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			   
 
-		break;	
+
+		break;
 /*******************************************************************************************************************/
 		//borra un permiso del usuario
-		case 'prm_cat_del':	
-			
+		case 'prm_cat_del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['prm_cat_del']) OR !validaEntero($_GET['prm_cat_del']))&&$_GET['prm_cat_del']!=''){
 				$indice = simpleDecode($_GET['prm_cat_del'], fecha_actual());
@@ -637,24 +629,24 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['prm_cat_del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//Variables
 				$id_usuario = $_GET['id'];
-		
+
 				//Busco todas las transacciones relacionadas con la categoria
 				$SIS_query = 'idAdmpm';
 				$SIS_join  = '';
@@ -662,41 +654,41 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 0;
 				$arrPermisos = array();
 				$arrPermisos = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Inserto los permisos
 				foreach ($arrPermisos as $comp) {
-					
+
 					//Busco si el permiso fue dado
 					$rowdel = db_select_data (false, 'idPermisos', 'usuarios_permisos', '', 'idUsuario = "'.$id_usuario.'" AND idAdmpm = "'.$comp['idAdmpm'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Borro el permiso si es que lo tiene
 					if(isset($rowdel['idPermisos'])&&$rowdel['idPermisos']!=''){
 						//se borran los datos
 						$resultado = db_delete_data (false, 'usuarios_permisos', 'idPermisos = "'.$rowdel['idPermisos'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					}
-					
+
 				}
-				
+
 				header( 'Location: '.$location );
 				die;
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			  
 
-		break;	
+
+		break;
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
-		case 'bod_ins_add':	
-			
+		case 'bod_ins_add':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//variables
 			$id_usuario = $_GET['id'];
 			$idBodega   = $_GET['bod_ins_add'];
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -707,37 +699,37 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso a la bodega ya fue otorgado';}
 			/*******************************************************************/
-	
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//filtros
-				if(isset($id_usuario) && $id_usuario != ''){ $SIS_data  = "'".$id_usuario."'" ; }else{$SIS_data  = "''";}
-				if(isset($idBodega) && $idBodega != ''){     $SIS_data .= ",'".$idBodega."'" ;  }else{$SIS_data .= ",''";}
-				
+				if(isset($id_usuario) && $id_usuario!=''){ $SIS_data  = "'".$id_usuario."'"; }else{$SIS_data  = "''";}
+				if(isset($idBodega) && $idBodega!=''){     $SIS_data .= ",'".$idBodega."'";  }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idBodega';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_insumos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
-					die; 
+					die;
 				}
 			}
-			 
 
-		break;	
+
+		break;
 /*******************************************************************************************************************/
 		//borra un permiso del usuario
-		case 'bod_ins_del':	
-			
+		case 'bod_ins_del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['bod_ins_del']) OR !validaEntero($_GET['bod_ins_del']))&&$_GET['bod_ins_del']!=''){
 				$indice = simpleDecode($_GET['bod_ins_del'], fecha_actual());
@@ -745,49 +737,48 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['bod_ins_del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_bodegas_insumos', 'idBodegaPermiso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
-		case 'bod_prod_add':	
-			
+		case 'bod_prod_add':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//variables
 			$id_usuario = $_GET['id'];
 			$idBodega   = $_GET['bod_prod_add'];
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -798,37 +789,37 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso a la bodega ya fue otorgado';}
 			/*******************************************************************/
-	
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//filtros
-				if(isset($id_usuario) && $id_usuario != ''){ $SIS_data  = "'".$id_usuario."'" ; }else{$SIS_data  = "''";}
-				if(isset($idBodega) && $idBodega != ''){     $SIS_data .= ",'".$idBodega."'" ;  }else{$SIS_data .= ",''";}
-				
+				if(isset($id_usuario) && $id_usuario!=''){ $SIS_data  = "'".$id_usuario."'"; }else{$SIS_data  = "''";}
+				if(isset($idBodega) && $idBodega!=''){     $SIS_data .= ",'".$idBodega."'";  }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idBodega';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 				}
-			
+
 			}
 
-		break;	
+		break;
 /*******************************************************************************************************************/
 		//borra un permiso del usuario
-		case 'bod_prod_del':	
-			
+		case 'bod_prod_del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['bod_prod_del']) OR !validaEntero($_GET['bod_prod_del']))&&$_GET['bod_prod_del']!=''){
 				$indice = simpleDecode($_GET['bod_prod_del'], fecha_actual());
@@ -836,50 +827,48 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['bod_prod_del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_bodegas_productos', 'idBodegaPermiso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
 		break;
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
-		case 'bod_arriendo_add':	
-			
+		case 'bod_arriendo_add':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//variables
 			$id_usuario = $_GET['id'];
 			$idBodega   = $_GET['bod_arriendo_add'];
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -890,37 +879,37 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso a la bodega ya fue otorgado';}
 			/*******************************************************************/
-	
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//filtros
-				if(isset($id_usuario) && $id_usuario != ''){ $SIS_data  = "'".$id_usuario."'" ; }else{$SIS_data  = "''";}
-				if(isset($idBodega) && $idBodega != ''){     $SIS_data .= ",'".$idBodega."'" ;  }else{$SIS_data .= ",''";}
-				
+				if(isset($id_usuario) && $id_usuario!=''){ $SIS_data  = "'".$id_usuario."'"; }else{$SIS_data  = "''";}
+				if(isset($idBodega) && $idBodega!=''){     $SIS_data .= ",'".$idBodega."'";  }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idBodega';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_arriendos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
-					die; 
+					die;
 				}
-			
-			} 
 
-		break;	
+			}
+
+		break;
 /*******************************************************************************************************************/
 		//borra un permiso del usuario
-		case 'bod_arriendo_del':	
-			
+		case 'bod_arriendo_del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['bod_arriendo_del']) OR !validaEntero($_GET['bod_arriendo_del']))&&$_GET['bod_arriendo_del']!=''){
 				$indice = simpleDecode($_GET['bod_arriendo_del'], fecha_actual());
@@ -928,82 +917,78 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['bod_arriendo_del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_bodegas_arriendos', 'idBodegaPermiso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
 		break;
 /*******************************************************************************************************************/
 		//Cambia el nivel del permiso
-		case 'perm':	
-			
+		case 'perm':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			$level      = $_GET['mod'];
 			$idPermisos = $_GET['perm'];
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "level='".$level."'" ;
+			$SIS_data = "level='".$level."'";
 			$resultado = db_update_data (false, $SIS_data, 'usuarios_permisos', 'idPermisos = "'.$idPermisos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
-				
+
 				header( 'Location: '.$location );
 				die;
-				
+
 			}
-			
 
-
-		break;			
+		break;
 /*******************************************************************************************************************/
 		//Cambia el nivel del permiso
-		case 'submit_img':	
-			
+		case 'submit_img':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			if ( !empty($_POST['idUsuario']) )    $idUsuario       = $_POST['idUsuario'];
-			
-			if ($_FILES["imgLogo"]["error"] > 0){ 
-				$error['imgLogo'] = 'error/'.uploadPHPError($_FILES["imgLogo"]["error"]); 
+
+			if (!empty($_POST['idUsuario']))    $idUsuario       = $_POST['idUsuario'];
+
+			if ($_FILES["imgLogo"]["error"] > 0){
+				$error['imgLogo'] = 'error/'.uploadPHPError($_FILES["imgLogo"]["error"]);
 			} else {
 				//Se verifican las extensiones de los archivos
-				$permitidos = array("image/jpg", "image/jpeg", "image/gif", "image/png");
+				$permitidos = array("image/jpg","image/jpeg","image/gif","image/png");
 				//Se verifica que el archivo subido no exceda los 100 kb
 				$limite_kb = 1000;
 				//Sufijo
 				$sufijo = 'usr_img_'.$idUsuario.'_';
-							  
+
 				if (in_array($_FILES['imgLogo']['type'], $permitidos) && $_FILES['imgLogo']['size'] <= $limite_kb * 1024){
 					//Se especifica carpeta de destino
 					$ruta = "upload/".$sufijo.$_FILES['imgLogo']['name'];
@@ -1012,16 +997,16 @@ require_once '0_validate_user_1.php';
 						//Se mueve el archivo a la carpeta previamente configurada
 						$move_result = @move_uploaded_file($_FILES["imgLogo"]["tmp_name"], $ruta);
 						if ($move_result){
-											
+
 							//Filtro para idSistema
-							$SIS_data = "Direccion_img='".$sufijo.$_FILES['imgLogo']['name']."'" ;
-							
+							$SIS_data = "Direccion_img='".$sufijo.$_FILES['imgLogo']['name']."'";
+
 							/*******************************************************/
 							//se actualizan los datos
 							$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 							//Si ejecuto correctamente la consulta
 							if($resultado==true){
-								
+
 								//Seteo la variable de sesion si existe
 								if(isset($_SESSION['usuario']['basic_data']['Direccion_img'])){
 									$_SESSION['usuario']['basic_data']['Direccion_img'] = $sufijo.$_FILES['imgLogo']['name'];
@@ -1029,37 +1014,37 @@ require_once '0_validate_user_1.php';
 
 								header( 'Location: '.$location );
 								die;
-								
-							}			
+
+							}
 						} else {
-							$error['imgLogo']     = 'error/Ocurrio un error al mover el archivo'; 
+							$error['imgLogo']     = 'error/Ocurrio un error al mover el archivo';
 						}
 					} else {
-						$error['imgLogo']     = 'error/El archivo '.$_FILES['imgLogo']['name'].' ya existe'; 
+						$error['imgLogo']     = 'error/El archivo '.$_FILES['imgLogo']['name'].' ya existe';
 					}
 				} else {
-					$error['imgLogo']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido'; 
+					$error['imgLogo']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 				}
 			}
 
 
-		break;	
+		break;
 /*******************************************************************************************************************/
-		case 'del_img':	
-			
+		case 'del_img':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			// Se obtiene el nombre del logo
 			$rowdata = db_select_data (false, 'Direccion_img', 'usuarios_listado', '', 'idUsuario = "'.$_GET['id_usuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 			/*******************************************************/
 			//se actualizan los datos
 			$SIS_data = "Direccion_img=''" ;
 			$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$_GET['id_usuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
-				
+
 				//se elimina el archivo
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
 					try {
@@ -1068,33 +1053,33 @@ require_once '0_validate_user_1.php';
 						}else{
 							unlink('upload/'.$rowdata['Direccion_img']);
 						}
-					}catch(Exception $e) { 
+					}catch(Exception $e) {
 						//guardar el dato en un archivo log
 					}
 				}
-				
+
 				//Seteo la variable de sesion si existe
 				if(isset($_SESSION['usuario']['basic_data']['Direccion_img'])){
 					$_SESSION['usuario']['basic_data']['Direccion_img']='';
 				}
-				
-				//Redirijo			
+
+				//Redirijo
 				header( 'Location: '.$location.'&id_img=true' );
 				die;
-				
-			}
-			
 
-		break;	
-/*******************************************************************************************************************/		
-		case 'login': 
-			
+			}
+
+
+		break;
+/*******************************************************************************************************************/
+		case 'login':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Elimino cualquier dato de un usuario anterior
 			unset($_SESSION['usuario']);
-			
+
 			//Variables
 			$fecha          = fecha_actual();
 			$hora           = hora_actual();
@@ -1102,67 +1087,47 @@ require_once '0_validate_user_1.php';
 			$IP_Client      = obtenerIpCliente();
 			$Agent_Transp   = obtenerSistOperativo().' - '.obtenerNavegador();
 			$email          = '';
-				
+
 			//Saneado de datos ingresados
 			$usuario  = preg_replace("/[^a-zA-Z0-9_\-]+ñÑáéíóúÁÉÍÓÚ-_?¿°()=,.<>:;*@/","",$usuario);
 			$password = preg_replace("/[^a-zA-Z0-9_\-]+ñÑáéíóúÁÉÍÓÚ-_?¿°()=,.<>:;*@/","",$password);
-				
+
 			//Se verifica si se trata de hacer fuerza bruta en el ingreso
 			if (checkbrute($usuario, $email, $IP_Client, 'usuarios_checkbrute', $dbConn) == true) {
-				$error['checkbrute']  = 'error/Demasiados accesos fallidos, usuario bloqueado por 2 horas'; 
+				$error['checkbrute']  = 'error/Demasiados accesos fallidos, usuario bloqueado por 2 horas';
 			}
-			
+
 			//Si es una maquina la que esta tratando de entrar
-			if(isset($fkinput1)&&$fkinput1!=''){
+			if((isset($fkinput1)&&$fkinput1!='') OR (isset($fkinput2)&&$fkinput2!='')){
 				//muestro el error
 				$error['checkbrute']  = 'error/Ingreso de maquina';
-				
+
 				//filtros
-				if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
-				if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
-					
+				if(isset($fecha) && $fecha!=''){               $SIS_data  = "'".$fecha."'";            }else{$SIS_data  = "''";}
+				if(isset($hora) && $hora!=''){                 $SIS_data .= ",'".$hora."'";            }else{$SIS_data .= ",''";}
+				if(isset($usuario) && $usuario!=''){           $SIS_data .= ",'".$usuario."'";         }else{$SIS_data .= ",''";}
+				if(isset($email) && $email!=''){               $SIS_data .= ",'".$email."'";           }else{$SIS_data .= ",''";}
+				if(isset($IP_Client) && $IP_Client!=''){       $SIS_data .= ",'".$IP_Client."'";       }else{$SIS_data .= ",''";}
+				if(isset($Agent_Transp) && $Agent_Transp!=''){ $SIS_data .= ",'".$Agent_Transp."'";    }else{$SIS_data .= ",''";}
+				if(isset($Time) && $Time!=''){                 $SIS_data .= ",'".$Time."'";            }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
-				
+
 			}
-			//Si es una maquina la que esta tratando de entrar
-			if(isset($fkinput2)&&$fkinput2!=''){
-				//muestro el error
-				$error['checkbrute']  = 'error/Ingreso de maquina';
-				
-				//filtros
-				if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
-				if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
-					
-				// inserto los datos de registro en la db
-				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
-				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
-				
-			}
-					
-					
+
 			//si no hay errores
-			if ( empty($error) ) {
-						
+			if(empty($error)){
+
 				//Busco al usuario en el sistema
-				$SIS_query = 'usuarios_listado.idUsuario, 
+				$SIS_query = 'usuarios_listado.idUsuario,
 				usuarios_listado.idUsuario AS ID,
-				usuarios_listado.password, 
-				usuarios_listado.usuario, 
-				usuarios_listado.Nombre, 
+				usuarios_listado.password,
+				usuarios_listado.usuario,
+				usuarios_listado.Nombre,
 				usuarios_listado.idEstado,
-				usuarios_listado.Direccion_img, 
+				usuarios_listado.Direccion_img,
 				usuarios_listado.idTipoUsuario,
 				usuarios_tipos.Nombre AS Usuario_Tipo,
 				core_ubicacion_ciudad.Nombre AS nombre_region,
@@ -1174,40 +1139,40 @@ require_once '0_validate_user_1.php';
 				LEFT JOIN `core_ubicacion_ciudad`     ON core_ubicacion_ciudad.idCiudad   = usuarios_listado.idCiudad
 				LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna  = usuarios_listado.idComuna';
 				$SIS_where = 'usuarios_listado.usuario = "'.$usuario.'" AND usuarios_listado.password = "'.md5($password).'"';
-				$rowUser = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, 'Login-form', $original, $form_trabajo);
-				
+				$rowUser = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, 'rowUser', $original, $form_trabajo);
+
 				//Se verifca si los datos ingresados son de un usuario
 				if (isset($rowUser['idUsuario'])&&$rowUser['idUsuario']!='') {
-					
+
 					//Busco el ultimo acceso
-					$rowAcceso = db_select_data (false, 'Fecha, Hora', 'usuarios_accesos', '', 'idUsuario = "'.$rowUser['idUsuario'].'" ORDER BY idAcceso DESC', $dbConn, 'Login-form', $original, $form_trabajo);
-				
+					$rowAcceso = db_select_data (false, 'Fecha, Hora', 'usuarios_accesos', '', 'idUsuario = "'.$rowUser['idUsuario'].'" ORDER BY idAcceso DESC', $dbConn, 'rowAcceso', $original, $form_trabajo);
+
 					//Verifico que el usuario identificado este activo
 					if($rowUser['idEstado']==1){
-						
+
 						/*******************************************************/
 						//se actualizan los datos
-						$SIS_data = "Ultimo_acceso='".$fecha."'" ;
-						$SIS_data .= ",IP_Client='".$IP_Client."'" ;
-						$SIS_data .= ",Agent_Transp='".$Agent_Transp."'" ;
-						$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$rowUser['idUsuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+						$SIS_data = "Ultimo_acceso='".$fecha."'";
+						$SIS_data .= ",IP_Client='".$IP_Client."'";
+						$SIS_data .= ",Agent_Transp='".$Agent_Transp."'";
+						$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$rowUser['idUsuario'].'"', $dbConn, 'Ultimo_acceso', $original, $form_trabajo);
+
 						//busca si la ip del usuario ya existe
-						$n_ip = db_select_nrows (false, 'idIpUsuario', 'usuarios_listado_ip', '', "IP_Client='".$IP_Client."' AND idUsuario='".$rowUser['idUsuario']."'", $dbConn, 'Login-form', $original, $form_trabajo);
+						$n_ip = db_select_nrows (false, 'idIpUsuario', 'usuarios_listado_ip', '', "IP_Client='".$IP_Client."' AND idUsuario='".$rowUser['idUsuario']."'", $dbConn, 'usuarios_listado_ip', $original, $form_trabajo);
 						//si la ip no existe la guarda
 						if(isset($n_ip)&&$n_ip==0){
 							//filtros
-							if(isset($rowUser['idUsuario']) && $rowUser['idUsuario'] != ''){ $SIS_data  = "'".$rowUser['idUsuario']."'" ; }else{$SIS_data  = "''";}
-							if(isset($IP_Client) && $IP_Client != ''){                       $SIS_data .= ",'".$IP_Client."'" ;           }else{$SIS_data .= ",''";}
-							if(isset($fecha) && $fecha != ''){                               $SIS_data .= ",'".$fecha."'" ;               }else{$SIS_data .= ",''";}
-							if(isset($hora) && $hora != ''){                                 $SIS_data .= ",'".$hora."'" ;                }else{$SIS_data .= ",''";}
-							
+							if(isset($rowUser['idUsuario']) && $rowUser['idUsuario']!=''){ $SIS_data  = "'".$rowUser['idUsuario']."'"; }else{$SIS_data  = "''";}
+							if(isset($IP_Client) && $IP_Client!=''){                       $SIS_data .= ",'".$IP_Client."'";           }else{$SIS_data .= ",''";}
+							if(isset($fecha) && $fecha!=''){                               $SIS_data .= ",'".$fecha."'";               }else{$SIS_data .= ",''";}
+							if(isset($hora) && $hora!=''){                                 $SIS_data .= ",'".$hora."'";                }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idUsuario,IP_Client, Fecha, Hora';
 							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_listado_ip', $dbConn, 'usuarios_listado_ip', $original, $form_trabajo);
-							
+
 						}
-			
+
 						/**************************************************************/
 						//Se crean las variables con todos los datos
 						$_SESSION['usuario']['basic_data']['idUsuario']          = $rowUser['idUsuario'];
@@ -1221,52 +1186,52 @@ require_once '0_validate_user_1.php';
 						$_SESSION['usuario']['basic_data']['Region']             = $rowUser['nombre_region'];
 						$_SESSION['usuario']['basic_data']['Pronostico']         = $rowUser['nombre_pronostico'];
 						$_SESSION['usuario']['basic_data']['Comuna']             = $rowUser['nombre_comuna'];
-						
-						if(isset($rowAcceso['Fecha'])&&$rowAcceso['Fecha']!=''){ $_SESSION['usuario']['basic_data']['FechaLogin'] = $rowAcceso['Fecha']; }else{$_SESSION['usuario']['basic_data']['FechaLogin'] = fecha_actual();}
-						if(isset($rowAcceso['Hora'])&&$rowAcceso['Hora']!=''){   $_SESSION['usuario']['basic_data']['HoraLogin']  = $rowAcceso['Hora'];  }else{$_SESSION['usuario']['basic_data']['HoraLogin']  = hora_actual();}
-						
-						//Se buscan los datos para crear el menu					
+
+						//Verifico si existen datos
+						if(isset($rowAcceso['Fecha'])&&$rowAcceso['Fecha']!=''){$_SESSION['usuario']['basic_data']['FechaLogin'] = $rowAcceso['Fecha']; }else{$_SESSION['usuario']['basic_data']['FechaLogin'] = fecha_actual();}
+						if(isset($rowAcceso['Hora'])&&$rowAcceso['Hora']!=''){  $_SESSION['usuario']['basic_data']['HoraLogin']  = $rowAcceso['Hora'];  }else{$_SESSION['usuario']['basic_data']['HoraLogin']  = hora_actual();}
+
+						//Se buscan los datos para crear el menu
 						$arrMenu = array();
 						//Si el usuario es un super usuario
 						if($rowUser['idTipoUsuario']==1){
 							//se traen todos los permisos existentes
 							$SIS_query = '
-							core_permisos_categorias.Nombre AS CategoriaNombre, 
+							core_permisos_categorias.Nombre AS CategoriaNombre,
 							core_font_awesome.Codigo AS CategoriaIcono,
 							core_permisos_categorias.IconColor AS CategoriaIconoColor,
 							core_permisos_listado.Direccionbase AS TransaccionURLBase,
-							core_permisos_listado.Direccionweb AS TransaccionURL, 
-							core_permisos_listado.Nombre AS TransaccionNombre, 
+							core_permisos_listado.Direccionweb AS TransaccionURL,
+							core_permisos_listado.Nombre AS TransaccionNombre,
 							core_permisos_listado.visualizacion AS idSistema';
 							$SIS_join  = '
-							INNER JOIN core_permisos_categorias  ON core_permisos_categorias.id_pmcat  = core_permisos_listado.id_pmcat 
+							INNER JOIN core_permisos_categorias  ON core_permisos_categorias.id_pmcat  = core_permisos_listado.id_pmcat
 							LEFT JOIN `core_font_awesome`        ON core_font_awesome.idFont           = core_permisos_categorias.idFont';
 							$SIS_where = '';
 							$SIS_order = 'CategoriaNombre ASC, TransaccionNombre ASC';
-							$arrMenu = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, 'Login-form', $original, $form_trabajo);
-							
+							$arrMenu = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, 'core_permisos_listado', $original, $form_trabajo);
+
 						//Si el usuario es un usuario normal
 						}else{
 							$SIS_query = '
-							core_permisos_categorias.Nombre AS CategoriaNombre, 
+							core_permisos_categorias.Nombre AS CategoriaNombre,
 							core_font_awesome.Codigo AS CategoriaIcono,
 							core_permisos_categorias.IconColor AS CategoriaIconoColor,
 							core_permisos_listado.Direccionbase AS TransaccionURLBase,
-							core_permisos_listado.Direccionweb AS TransaccionURL, 
+							core_permisos_listado.Direccionweb AS TransaccionURL,
 							core_permisos_listado.Nombre AS TransaccionNombre,
-							usuarios_permisos.level, 
+							usuarios_permisos.level,
 							core_permisos_listado.visualizacion AS idSistema';
 							$SIS_join  = '
 							INNER JOIN core_permisos_listado      ON core_permisos_listado.idAdmpm        = usuarios_permisos.idAdmpm
-							INNER JOIN core_permisos_categorias   ON core_permisos_categorias.id_pmcat    = core_permisos_listado.id_pmcat 
+							INNER JOIN core_permisos_categorias   ON core_permisos_categorias.id_pmcat    = core_permisos_listado.id_pmcat
 							LEFT JOIN `core_font_awesome`         ON core_font_awesome.idFont             = core_permisos_categorias.idFont';
 							$SIS_where = 'usuarios_permisos.idUsuario = '.$rowUser['idUsuario'];
 							$SIS_order = 'CategoriaNombre ASC, TransaccionNombre ASC';
-							$arrMenu = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, 'Login-form', $original, $form_trabajo);
-													
+							$arrMenu = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, 'usuarios_permisos', $original, $form_trabajo);
+
 						}
-						
-						
+
 						//Permisos
 						foreach($arrMenu as $menu) {
 							$_SESSION['usuario']['Permisos'][$menu['TransaccionURLBase']]['CategoriaNombre']     = $menu['CategoriaNombre'];
@@ -1280,72 +1245,71 @@ require_once '0_validate_user_1.php';
 								$_SESSION['usuario']['Permisos'][$menu['TransaccionURLBase']]['level']   = $menu['level'];
 							}
 						}
-						
+
 						//Construccion de los menus del sistema
 						//llamamos a la función para filtrar los datos
 						filtrar($arrMenu, 'CategoriaNombre');
 						/******************************************************************/
 						//recorremos el array para imprimirlo con formato HTML
 						foreach($arrMenu as $Categorias=>$Transacciones) {
-							
-							$ntranx = 0;			
+
+							$ntranx = 0;
 							// recorremos los productos
 							foreach($Transacciones as $transaccion) {
-								
+
 								$_SESSION['usuario']['menu'][$Categorias][$ntranx]['CategoriaNombre']         = $Categorias;
 								$_SESSION['usuario']['menu'][$Categorias][$ntranx]['CategoriaIcono']          = $transaccion['CategoriaIcono'];
 								$_SESSION['usuario']['menu'][$Categorias][$ntranx]['CategoriaIconoColor']     = $transaccion['CategoriaIconoColor'];
 								$_SESSION['usuario']['menu'][$Categorias][$ntranx]['TransaccionURL']          = $transaccion['TransaccionURL'];
 								$_SESSION['usuario']['menu'][$Categorias][$ntranx]['TransaccionNombre']       = $transaccion['TransaccionNombre'];
 								$_SESSION['usuario']['menu'][$Categorias][$ntranx]['idSistema']               = $transaccion['idSistema'];
-								
+
 								$ntranx++;
 							}
-							   
+
 						}
-						
-						
+
 						//Si el usuario es un super usuario
 						if($rowUser['idTipoUsuario']==1){
-							
+
 							//Redirijo a la pagina de seleccion
 							header( 'Location: index_select.php' );
 							die;
-							
+
 						//Si el usuario es un usuario normal
 						}else{
-							
+
 							/******************************************************************/
 							//Verifico la cantidad de sistemas a la cual tiene permitido el acceso
-							$rowSis = db_select_data (false, 'COUNT(idPermisoSistema) AS Sistemas', 'usuarios_sistemas', 'LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema', 'usuarios_sistemas.idUsuario = "'.$rowUser['idUsuario'].'" AND core_sistemas.idEstado=1', $dbConn, 'Login-form', $original, $form_trabajo);
-				
+							$rowSis = db_select_data (false, 'COUNT(idPermisoSistema) AS Sistemas', 'usuarios_sistemas','LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema', 'usuarios_sistemas.idUsuario = "'.$rowUser['idUsuario'].'" AND core_sistemas.idEstado=1', $dbConn, 'rowSis', $original, $form_trabajo);
+
 							//Si no tiene sistemas relacionados
 							if(isset($rowSis['Sistemas'])&&$rowSis['Sistemas']==0){
 								$error['idUsuario']   = 'error/No tiene sistemas asignados, Contactese con el administrador y solicite el acceso';
-							
+
 							//Si tiene solo un sistema asignado
 							}elseif(isset($rowSis['Sistemas'])&&$rowSis['Sistemas']==1){
-								
+
 								/******************************************************************/
 								//Verifico el sistema que tiene acceso
-								$rowAccs = db_select_data (false, 'usuarios_sistemas.idSistema', 'usuarios_sistemas', 'LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema', 'usuarios_sistemas.idUsuario = "'.$rowUser['idUsuario'].'" AND core_sistemas.idEstado=1', $dbConn, 'Login-form', $original, $form_trabajo);
-				
+								$rowAccs = db_select_data (false, 'usuarios_sistemas.idSistema', 'usuarios_sistemas','LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema', 'usuarios_sistemas.idUsuario = "'.$rowUser['idUsuario'].'" AND core_sistemas.idEstado=1', $dbConn, 'rowAccs', $original, $form_trabajo);
+
 								//filtros
-								if(isset($rowUser['idUsuario']) && $rowUser['idUsuario'] != ''){  $SIS_data  = "'".$rowUser['idUsuario']."'" ;   }else{$SIS_data  = "''";}
-								if(isset($fecha) && $fecha != ''){                                $SIS_data .= ",'".$fecha."'" ;                 }else{$SIS_data .= ",''";}
-								if(isset($hora) && $hora != ''){                                  $SIS_data .= ",'".$hora."'" ;                  }else{$SIS_data .= ",''";}
-								if(isset($IP_Client) && $IP_Client != ''){                        $SIS_data .= ",'".$IP_Client."'" ;             }else{$SIS_data .= ",''";}
-								if(isset($Agent_Transp) && $Agent_Transp != ''){                  $SIS_data .= ",'".$Agent_Transp."'" ;          }else{$SIS_data .= ",''";}
-								if(isset($rowAccs['idSistema']) && $rowAccs['idSistema'] != ''){  $SIS_data .= ",'".$rowAccs['idSistema']."'" ;  }else{$SIS_data .= ",''";}
-								
+								if(isset($rowUser['idUsuario']) && $rowUser['idUsuario']!=''){  $SIS_data  = "'".$rowUser['idUsuario']."'";   }else{$SIS_data  = "''";}
+								if(isset($fecha) && $fecha!=''){                                $SIS_data .= ",'".$fecha."'";                 }else{$SIS_data .= ",''";}
+								if(isset($hora) && $hora!=''){                                  $SIS_data .= ",'".$hora."'";                  }else{$SIS_data .= ",''";}
+								if(isset($IP_Client) && $IP_Client!=''){                        $SIS_data .= ",'".$IP_Client."'";             }else{$SIS_data .= ",''";}
+								if(isset($Agent_Transp) && $Agent_Transp!=''){                  $SIS_data .= ",'".$Agent_Transp."'";          }else{$SIS_data .= ",''";}
+								if(isset($rowAccs['idSistema']) && $rowAccs['idSistema']!=''){  $SIS_data .= ",'".$rowAccs['idSistema']."'";  }else{$SIS_data .= ",''";}
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idUsuario,Fecha, Hora, IP_Client, Agent_Transp, idSistema';
-								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_accesos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_accesos', $dbConn, 'usuarios_accesos', $original, $form_trabajo);
+
 								/******************************************************************/
 								//Verifico la cantidad de sistemas a la cual tiene permitido el acceso
-								$rowSystem = db_select_data (false, 'usuarios_sistemas.idSistema', 'usuarios_sistemas', 'LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema', 'usuarios_sistemas.idUsuario = "'.$rowUser['idUsuario'].'" AND core_sistemas.idEstado=1', $dbConn, 'Login-form', $original, $form_trabajo);
-								
+								$rowSystem = db_select_data (false, 'usuarios_sistemas.idSistema', 'usuarios_sistemas','LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema', 'usuarios_sistemas.idUsuario = "'.$rowUser['idUsuario'].'" AND core_sistemas.idEstado=1', $dbConn, 'rowSystem', $original, $form_trabajo);
+
 								//resto de los datos
 								$SIS_query = 'core_sistemas.Config_idTheme,
 								core_sistemas.Config_imgLogo,
@@ -1363,10 +1327,11 @@ require_once '0_validate_user_1.php';
 								core_sistemas.Social_rss,
 								core_sistemas.Social_youtube,
 								core_sistemas.Social_tumblr';
-								$SIS_join = 'LEFT JOIN `core_config_ram` ON core_config_ram.idConfigRam = core_sistemas.idConfigRam 
+								$SIS_join = '
+								LEFT JOIN `core_config_ram`   ON core_config_ram.idConfigRam    = core_sistemas.idConfigRam
 								LEFT JOIN `core_config_time`  ON core_config_time.idConfigTime  = core_sistemas.idConfigTime';
-								$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, 'core_sistemas.idSistema = "'.$rowSystem['idSistema'].'"', $dbConn, 'Login-form', $original, $form_trabajo);
-				
+								$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, 'core_sistemas.idSistema = "'.$rowSystem['idSistema'].'"', $dbConn, 'rowSistema', $original, $form_trabajo);
+
 								//Se crean las variables con todos los datos
 								$_SESSION['usuario']['basic_data']['Config_idTheme']     = $rowSistema['Config_idTheme'];
 								$_SESSION['usuario']['basic_data']['Config_imgLogo']     = $rowSistema['Config_imgLogo'];
@@ -1385,11 +1350,11 @@ require_once '0_validate_user_1.php';
 								$_SESSION['usuario']['basic_data']['Social_rss']         = $rowSistema['Social_rss'];
 								$_SESSION['usuario']['basic_data']['Social_youtube']     = $rowSistema['Social_youtube'];
 								$_SESSION['usuario']['basic_data']['Social_tumblr']      = $rowSistema['Social_tumblr'];
-								
+
 								//Redirijo a la pagina principal
 								header( 'Location: principal.php' );
 								die;
-							
+
 							//Si tiene mas de uno, se redirije a una pantalla de seleccion
 							}elseif(isset($rowSis['Sistemas'])&&$rowSis['Sistemas']>1){
 								//Redirijo a la pagina de seleccion
@@ -1397,53 +1362,51 @@ require_once '0_validate_user_1.php';
 								die;
 							}
 
-						}	
-						
-						
-					//Si no esta activo envio error	
+						}
+
+					//Si no esta activo envio error
 					}else{
 						$error['idUsuario']   = 'error/Su usuario esta desactivado, Contactese con el administrador';
 					}
-				
-				//Si no se encuentra ningun usuario se envia un error	
+
+				//Si no se encuentra ningun usuario se envia un error
 				}else{
 					$error['idUsuario']   = 'error/El nombre de usuario o contraseña no coinciden';
-					
+
 					//filtros
-					if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
-					if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
-					if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
-					if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
-					if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
-					if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
-					if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
-						
+					if(isset($fecha) && $fecha!=''){               $SIS_data  = "'".$fecha."'";            }else{$SIS_data  = "''";}
+					if(isset($hora) && $hora!=''){                 $SIS_data .= ",'".$hora."'";            }else{$SIS_data .= ",''";}
+					if(isset($usuario) && $usuario!=''){           $SIS_data .= ",'".$usuario."'";         }else{$SIS_data .= ",''";}
+					if(isset($email) && $email!=''){               $SIS_data .= ",'".$email."'";           }else{$SIS_data .= ",''";}
+					if(isset($IP_Client) && $IP_Client!=''){       $SIS_data .= ",'".$IP_Client."'";       }else{$SIS_data .= ",''";}
+					if(isset($Agent_Transp) && $Agent_Transp!=''){ $SIS_data .= ",'".$Agent_Transp."'";    }else{$SIS_data .= ",''";}
+					if(isset($Time) && $Time!=''){                 $SIS_data .= ",'".$Time."'";            }else{$SIS_data .= ",''";}
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
 					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
-					
+
 				}
-						
-			} 
+
+			}
 		break;
-/*******************************************************************************************************************/		
-		case 'select_sistema': 
-			
+/*******************************************************************************************************************/
+		case 'select_sistema':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			
+
 			//Se eliminan todas las sesiones
 			unset($_SESSION['receta']);
 			unset($_SESSION['receta_productos']);
-	
+
 			unset($_SESSION['arriendos_ing_basicos']);
 			unset($_SESSION['arriendos_ing_productos']);
 			unset($_SESSION['arriendos_ing_impuestos']);
 			unset($_SESSION['arriendos_ing_archivos']);
 			unset($_SESSION['arriendos_ing_descuentos']);
 			unset($_SESSION['arriendos_ing_guias']);
-				
+
 			unset($_SESSION['insumos_ing_basicos']);
 			unset($_SESSION['insumos_ing_productos']);
 			unset($_SESSION['insumos_ing_temporal']);
@@ -1451,7 +1414,7 @@ require_once '0_validate_user_1.php';
 			unset($_SESSION['insumos_ing_impuestos']);
 			unset($_SESSION['insumos_ing_archivos']);
 			unset($_SESSION['insumos_ing_descuentos']);
-				
+
 			unset($_SESSION['productos_ing_basicos']);
 			unset($_SESSION['productos_ing_productos']);
 			unset($_SESSION['productos_ing_temporal']);
@@ -1459,7 +1422,7 @@ require_once '0_validate_user_1.php';
 			unset($_SESSION['productos_ing_impuestos']);
 			unset($_SESSION['productos_ing_archivos']);
 			unset($_SESSION['productos_ing_descuentos']);
-				
+
 			unset($_SESSION['servicios_ing_basicos']);
 			unset($_SESSION['servicios_ing_productos']);
 			unset($_SESSION['servicios_ing_temporal']);
@@ -1467,17 +1430,17 @@ require_once '0_validate_user_1.php';
 			unset($_SESSION['servicios_ing_archivos']);
 			unset($_SESSION['servicios_ing_descuentos']);
 			unset($_SESSION['servicios_ing_guias']);
-				
+
 			unset($_SESSION['boleta_ing_basicos']);
 			unset($_SESSION['boleta_ing_servicios']);
 			unset($_SESSION['boleta_ing_temporal']);
 			unset($_SESSION['boleta_ing_archivos']);
-				
+
 			unset($_SESSION['caja_ing_basicos']);
 			unset($_SESSION['caja_ing_documentos']);
 			unset($_SESSION['caja_ing_temporal']);
 			unset($_SESSION['caja_ing_archivos']);
-				
+
 			unset($_SESSION['cotizacion_basicos']);
 			unset($_SESSION['cotizacion_arriendos']);
 			unset($_SESSION['cotizacion_insumos']);
@@ -1485,7 +1448,7 @@ require_once '0_validate_user_1.php';
 			unset($_SESSION['cotizacion_servicios']);
 			unset($_SESSION['cotizacion_temporal']);
 			unset($_SESSION['cotizacion_archivos']);
-				
+
 			unset($_SESSION['cotizacion_prospectos_basicos']);
 			unset($_SESSION['cotizacion_prospectos_arriendos']);
 			unset($_SESSION['cotizacion_prospectos_insumos']);
@@ -1493,32 +1456,32 @@ require_once '0_validate_user_1.php';
 			unset($_SESSION['cotizacion_prospectos_servicios']);
 			unset($_SESSION['cotizacion_prospectos_temporal']);
 			unset($_SESSION['cotizacion_prospectos_archivos']);
-				
+
 			unset($_SESSION['cross_quality_ana_cali_basicos']);
 			unset($_SESSION['cross_quality_ana_cali_muestras']);
 			unset($_SESSION['cross_quality_ana_cali_maquinas']);
 			unset($_SESSION['cross_quality_ana_cali_trabajadores']);
 			unset($_SESSION['cross_quality_ana_cali_archivos']);
 			unset($_SESSION['cross_quality_ana_cali_temporal']);
-				
+
 			unset($_SESSION['cross_quality_reg_insp_basicos']);
 			unset($_SESSION['cross_quality_reg_insp_muestras']);
 			unset($_SESSION['cross_quality_reg_insp_maquinas']);
 			unset($_SESSION['cross_quality_reg_insp_trabajadores']);
 			unset($_SESSION['cross_quality_reg_insp_archivos']);
 			unset($_SESSION['cross_quality_reg_insp_temporal']);
-				
+
 			unset($_SESSION['cross_shipping_consolidacion_basicos']);
 			unset($_SESSION['cross_shipping_consolidacion_estibas']);
 			unset($_SESSION['cross_shipping_consolidacion_archivos']);
 			unset($_SESSION['cross_shipping_consolidacion_temporal']);
-				
+
 			unset($_SESSION['sol_apli_basicos']);
 			unset($_SESSION['sol_apli_cuarteles']);
 			unset($_SESSION['sol_apli_tractores']);
 			unset($_SESSION['sol_apli_productos']);
 			unset($_SESSION['sol_apli_temporal']);
-				
+
 			unset($_SESSION['ocompra_basicos']);
 			unset($_SESSION['ocompra_arriendos']);
 			unset($_SESSION['ocompra_insumos']);
@@ -1529,32 +1492,32 @@ require_once '0_validate_user_1.php';
 			unset($_SESSION['ocompra_otros']);
 			unset($_SESSION['ocompra_sol_rel']);
 			unset($_SESSION['ocompra_archivos']);
-				
+
 			unset($_SESSION['ot_basicos']);
 			unset($_SESSION['ot_trabajador']);
 			unset($_SESSION['ot_trabajos']);
 			unset($_SESSION['ot_temporal']);
 			unset($_SESSION['ot_insumos']);
 			unset($_SESSION['ot_productos']);
-				
+
 			unset($_SESSION['pagos_boletas_clientes']);
 			unset($_SESSION['pagos_boletas_trabajadores']);
-				
+
 			unset($_SESSION['pago_clientes_insumos']);
 			unset($_SESSION['pago_clientes_productos']);
 			unset($_SESSION['pago_clientes_arriendo']);
 			unset($_SESSION['pago_clientes_servicio']);
-				
+
 			unset($_SESSION['pago_proveedor_insumos']);
 			unset($_SESSION['pago_proveedor_productos']);
 			unset($_SESSION['pago_proveedor_arriendo']);
 			unset($_SESSION['pago_proveedor_servicio']);
-				
+
 			unset($_SESSION['fact_sueldos_basicos']);
 			unset($_SESSION['fact_sueldos_sueldos']);
 			unset($_SESSION['fact_sueldos_temporal']);
 			unset($_SESSION['fact_sueldos_archivos']);
-				
+
 			unset($_SESSION['solicitud_basicos']);
 			unset($_SESSION['solicitud_arriendos']);
 			unset($_SESSION['solicitud_insumos']);
@@ -1562,32 +1525,31 @@ require_once '0_validate_user_1.php';
 			unset($_SESSION['solicitud_productos']);
 			unset($_SESSION['solicitud_servicios']);
 			unset($_SESSION['solicitud_temporal']);
-				
+
 			unset($_SESSION['desc_cuotas_basicos']);
 			unset($_SESSION['desc_cuotas_listado']);
 			unset($_SESSION['desc_cuotas_temporal']);
 			unset($_SESSION['desc_cuotas_archivos']);
-				
+
 			unset($_SESSION['horas_extras_ing_basicos']);
 			unset($_SESSION['horas_extras_ing_horas']);
 			unset($_SESSION['horas_extras_ing_temporal']);
 			unset($_SESSION['horas_extras_ing_archivos']);
 			unset($_SESSION['horas_extras_mens_ing_horas']);
-				
+
 			unset($_SESSION['horas_extras_mens_ing_basicos']);
 			unset($_SESSION['horas_extras_mens_ing_horas']);
 			unset($_SESSION['horas_extras_mens_ing_temporal']);
 			unset($_SESSION['horas_extras_mens_ing_archivos']);
-				
+
 			unset($_SESSION['basicos']);
 			unset($_SESSION['hijos']);
-				
-				
+
 			//se verifica que el usuario exista
 			if (isset($_GET['id'])&&$_GET['id']==$_SESSION['usuario']['basic_data']['idUsuario']) {
 				//se verifica el envio de datos
 				if(isset($_GET['ini'])&&$_GET['ini']!=''){
-								
+
 					$SIS_query = 'core_sistemas.Config_idTheme,
 					core_sistemas.Config_imgLogo,
 					core_sistemas.Config_IDGoogle,
@@ -1604,10 +1566,11 @@ require_once '0_validate_user_1.php';
 					core_sistemas.Social_rss,
 					core_sistemas.Social_youtube,
 					core_sistemas.Social_tumblr';
-					$SIS_join = 'LEFT JOIN `core_config_ram`   ON core_config_ram.idConfigRam    = core_sistemas.idConfigRam
+					$SIS_join = '
+					LEFT JOIN `core_config_ram`   ON core_config_ram.idConfigRam    = core_sistemas.idConfigRam
 					LEFT JOIN `core_config_time`  ON core_config_time.idConfigTime  = core_sistemas.idConfigTime';
-					$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, 'core_sistemas.idSistema = "'.$_GET['ini'].'"', $dbConn, 'Login-form', $original, $form_trabajo);
-								
+					$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, 'core_sistemas.idSistema = "'.$_GET['ini'].'"', $dbConn, 'rowSistema', $original, $form_trabajo);
+
 					//Se crean las variables con todos los datos
 					$_SESSION['usuario']['basic_data']['Config_idTheme']     = $rowSistema['Config_idTheme'];
 					$_SESSION['usuario']['basic_data']['Config_imgLogo']     = $rowSistema['Config_imgLogo'];
@@ -1626,7 +1589,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['usuario']['basic_data']['Social_rss']         = $rowSistema['Social_rss'];
 					$_SESSION['usuario']['basic_data']['Social_youtube']     = $rowSistema['Social_youtube'];
 					$_SESSION['usuario']['basic_data']['Social_tumblr']      = $rowSistema['Social_tumblr'];
-								
+
 					/**************************************************************/
 					//variables
 					$idUsuario      = $_SESSION['usuario']['basic_data']['idUsuario'];
@@ -1635,38 +1598,36 @@ require_once '0_validate_user_1.php';
 					$IP_Client      = obtenerIpCliente();
 					$Agent_Transp   = obtenerSistOperativo().' - '.obtenerNavegador();
 					$idSistema      = $_GET['ini'];
-					
+
 					//filtros
-					if(isset($idUsuario) && $idUsuario != ''){       $SIS_data  = "'".$idUsuario."'" ;        }else{$SIS_data  = "''";}
-					if(isset($Fecha) && $Fecha != ''){               $SIS_data .= ",'".$Fecha."'" ;           }else{$SIS_data .= ",''";}
-					if(isset($Hora) && $Hora != ''){                 $SIS_data .= ",'".$Hora."'" ;            }else{$SIS_data .= ",''";}
-					if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
-					if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
-					if(isset($idSistema) && $idSistema != ''){       $SIS_data .= ",'".$idSistema."'" ;       }else{$SIS_data .= ",''";}
-					
+					if(isset($idUsuario) && $idUsuario!=''){       $SIS_data  = "'".$idUsuario."'";        }else{$SIS_data  = "''";}
+					if(isset($Fecha) && $Fecha!=''){               $SIS_data .= ",'".$Fecha."'";           }else{$SIS_data .= ",''";}
+					if(isset($Hora) && $Hora!=''){                 $SIS_data .= ",'".$Hora."'";            }else{$SIS_data .= ",''";}
+					if(isset($IP_Client) && $IP_Client!=''){       $SIS_data .= ",'".$IP_Client."'";       }else{$SIS_data .= ",''";}
+					if(isset($Agent_Transp) && $Agent_Transp!=''){ $SIS_data .= ",'".$Agent_Transp."'";    }else{$SIS_data .= ",''";}
+					if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",'".$idSistema."'";       }else{$SIS_data .= ",''";}
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idUsuario,Fecha, Hora, IP_Client, Agent_Transp, idSistema';
-					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_accesos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_accesos', $dbConn, 'usuarios_accesos', $original, $form_trabajo);
+
 					//Si ejecuto correctamente la consulta
 					if($ultimo_id!=0){
 						//Redirijo a la pagina principal
 						header( 'Location: principal.php' );
 						die;
 					}
-					
-								
+
 				}
 			}
-						
-		
-		break;		
-/*******************************************************************************************************************/		
+
+		break;
+/*******************************************************************************************************************/
 		case 'getpass':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variables
 			$fecha          = fecha_actual();
 			$hora           = hora_actual();
@@ -1675,138 +1636,129 @@ require_once '0_validate_user_1.php';
 			$Agent_Transp   = obtenerSistOperativo().' - '.obtenerNavegador();
 			$usuario        = '';
 			$password       = '';
-				
+
 			//Saneado de datos ingresados
 			$email = preg_replace("/[^a-zA-Z0-9_\-]+ñÑáéíóúÁÉÍÓÚ-_?¿°()=,.<>:;*@/","",$email);
-				
+
 			//Se verifica si se trata de hacer fuerza bruta en el ingreso
 			if (checkbrute($usuario, $email, $IP_Client, 'usuarios_checkbrute', $dbConn) == true) {
-				$error['checkbrute']  = 'error/Demasiados accesos fallidos, correo bloqueado por 2 horas'; 
+				$error['checkbrute']  = 'error/Demasiados accesos fallidos, correo bloqueado por 2 horas';
 			}
 			//se verifica que se haya ingresado el correo
 			if(!isset($email) OR $email==''){
-				$error['email']  = 'error/No ha ingresado un correo'; 
+				$error['email']  = 'error/No ha ingresado un correo';
 			}
-			
+
 			//Si es una maquina la que esta tratando de entrar
-			if(isset($fkinput1)&&$fkinput1!=''){
+			if((isset($fkinput1)&&$fkinput1!='') OR (isset($fkinput2)&&$fkinput2!='')){
 				//muestro el error
 				$error['checkbrute']  = 'error/Ingreso de maquina';
-				
+
 				//filtros
-				if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
-				if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
-					
+				if(isset($fecha) && $fecha!=''){               $SIS_data  = "'".$fecha."'";            }else{$SIS_data  = "''";}
+				if(isset($hora) && $hora!=''){                 $SIS_data .= ",'".$hora."'";            }else{$SIS_data .= ",''";}
+				if(isset($usuario) && $usuario!=''){           $SIS_data .= ",'".$usuario."'";         }else{$SIS_data .= ",''";}
+				if(isset($email) && $email!=''){               $SIS_data .= ",'".$email."'";           }else{$SIS_data .= ",''";}
+				if(isset($IP_Client) && $IP_Client!=''){       $SIS_data .= ",'".$IP_Client."'";       }else{$SIS_data .= ",''";}
+				if(isset($Agent_Transp) && $Agent_Transp!=''){ $SIS_data .= ",'".$Agent_Transp."'";    }else{$SIS_data .= ",''";}
+				if(isset($Time) && $Time!=''){                 $SIS_data .= ",'".$Time."'";            }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
-				
+
 			}
-			//Si es una maquina la que esta tratando de entrar
-			if(isset($fkinput2)&&$fkinput2!=''){
-				//muestro el error
-				$error['checkbrute']  = 'error/Ingreso de maquina';
-				
-				//filtros
-				if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
-				if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
-					
-				// inserto los datos de registro en la db
-				$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
-				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
-				
-			}
-			
-	
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//traigo los datos almacenados
-				$cuenta_registros = db_select_nrows (false, 'email', 'usuarios_listado', '', 'email = "'.$email.'"', $dbConn, 'Login-form', $original, $form_trabajo);
-				$rowusr           = db_select_data (false, 'email', 'usuarios_listado', '', 'email = "'.$email.'"', $dbConn, 'Login-form', $original, $form_trabajo);
-				
-				//traigo los datos almacenados
-				$rowSistema = db_select_data (false, 'Nombre, email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas', '', 'idSistema=1', $dbConn, 'Login-form', $original, $form_trabajo);
-				
+				$cuenta_registros = db_select_nrows (false, 'email', 'usuarios_listado', '', 'email = "'.$email.'"', $dbConn, 'cuenta_registros', $original, $form_trabajo);
+
 				//verifico si los datos ingresados son iguales a los almacenados
-				if(isset($cuenta_registros)&&$cuenta_registros!=''&&$cuenta_registros!=0){  
-					
+				if(isset($cuenta_registros)&&$cuenta_registros!=''&&$cuenta_registros!=0){
+
+					/*******************************************************/
+					//traigo los datos almacenados
+					$rowUsr = db_select_data (false, 'idUsuario, Nombre,usuario, email', 'usuarios_listado', '', 'email = "'.$email.'"', $dbConn, 'rowUsr', $original, $form_trabajo);
+					$SIS_query = '
+					Nombre,
+					email_principal,
+					core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario,
+					core_sistemas.Config_Gmail_Password AS Gmail_Password';
+					$SIS_join  = '';
+					$SIS_where = 'idSistema=1';
+					$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, 'rowSistema', $original, $form_trabajo);
+
+					/*******************************************************/
 					//Generacion de nueva clave
-					$num_caracteres = "10"; //cantidad de caracteres de la clave
-					$clave          = substr(md5(rand()),0,$num_caracteres); //generador aleatorio de claves 
-					$nueva_clave    = md5($clave);//se codifica la clave 
-					
+					$num_caracteres = "10";                                  //cantidad de caracteres de la clave
+					$clave          = substr(md5(rand()),0,$num_caracteres); //generador aleatorio de claves
+					$nueva_clave    = md5($clave);                           //se codifica la clave
+
 					/*******************************************************/
 					//se actualizan los datos
-					$SIS_data = "password='".$nueva_clave."'" ;
-					$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'email = "'.$email.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+					$SIS_data  = "password='".$nueva_clave."'";
+					$resultado = db_update_data (false, $SIS_data, 'usuarios_listado', 'idUsuario = "'.$rowUsr['idUsuario'].'"', $dbConn, 'usuarios_listado', $original, $form_trabajo);
+
+					/*******************************************************/
+					//Cuerpo del correo
+					$Body = '<p>Se ha generado una nueva contraseña para el usuario '.$rowUsr['email'].', su nueva contraseña es: '.$clave.'</p>';
+
+					/*******************************************************/
 					//Envio de correo
-					$texto = '<p>Se ha generado una nueva contraseña para el usuario '.$email.', su nueva contraseña es: '.$clave.'</p>';
-					$rmail = tareas_envio_correo($rowSistema['email_principal'], $rowSistema['Nombre'], 
-												 $email, 'Receptor', 
-												 '', '', 
-												 'Cambio de password', 
-												 $texto,'', 
-												 '', 
-												 1, 
-												 $rowSistema['Gmail_Usuario'], 
+					$rmail = tareas_envio_correo($rowSistema['email_principal'], $rowSistema['Nombre'],
+												 $rowUsr['email'], $rowUsr['Nombre'],
+												 '', '',
+												 'Cambio de password',
+												 $Body,'',
+												 '',
+												 1,
+												 $rowSistema['Gmail_Usuario'],
 												 $rowSistema['Gmail_Password']);
 					//se guarda el log
-					log_response(1, $rmail, $email.' (Asunto:Cambio de password)');
-													 
+					log_response(1, $rmail, $rowUsr['email'].' (Asunto:Cambio de password)');
+
 					//Envio del mensaje
 					if ($rmail!=1) {
 						$error['email'] = 'error/'.$rmail;
 					} else {
 						$error['email'] = 'sucess/La nueva contraseña fue enviada a tu correo';
 					}
-				
-				//Si no se encuentra ningun usuario se envia un error	
-				}else{	
+
+				//Si no se encuentra ningun usuario se envia un error
+				}else{
 					$error['email'] 	  = 'error/El email ingresado no existe';
-					
+
 					//filtros
-					if(isset($fecha) && $fecha != ''){               $SIS_data  = "'".$fecha."'" ;            }else{$SIS_data  = "''";}
-					if(isset($hora) && $hora != ''){                 $SIS_data .= ",'".$hora."'" ;            }else{$SIS_data .= ",''";}
-					if(isset($usuario) && $usuario != ''){           $SIS_data .= ",'".$usuario."'" ;         }else{$SIS_data .= ",''";}
-					if(isset($email) && $email != ''){               $SIS_data .= ",'".$email."'" ;           }else{$SIS_data .= ",''";}
-					if(isset($IP_Client) && $IP_Client != ''){       $SIS_data .= ",'".$IP_Client."'" ;       }else{$SIS_data .= ",''";}
-					if(isset($Agent_Transp) && $Agent_Transp != ''){ $SIS_data .= ",'".$Agent_Transp."'" ;    }else{$SIS_data .= ",''";}
-					if(isset($Time) && $Time != ''){                 $SIS_data .= ",'".$Time."'" ;            }else{$SIS_data .= ",''";}
-					
+					if(isset($fecha) && $fecha!=''){               $SIS_data  = "'".$fecha."'";            }else{$SIS_data  = "''";}
+					if(isset($hora) && $hora!=''){                 $SIS_data .= ",'".$hora."'";            }else{$SIS_data .= ",''";}
+					if(isset($usuario) && $usuario!=''){           $SIS_data .= ",'".$usuario."'";         }else{$SIS_data .= ",''";}
+					if(isset($email) && $email!=''){               $SIS_data .= ",'".$email."'";           }else{$SIS_data .= ",''";}
+					if(isset($IP_Client) && $IP_Client!=''){       $SIS_data .= ",'".$IP_Client."'";       }else{$SIS_data .= ",''";}
+					if(isset($Agent_Transp) && $Agent_Transp!=''){ $SIS_data .= ",'".$Agent_Transp."'";    }else{$SIS_data .= ",''";}
+					if(isset($Time) && $Time!=''){                 $SIS_data .= ",'".$Time."'";            }else{$SIS_data .= ",''";}
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'Fecha, Hora, usuario, email, IP_Client, Agent_Transp, Time';
 					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_checkbrute', $dbConn, 'usuarios_checkbrute', $original, $form_trabajo);
-					
-				}
-			
 
-					
+				}
+
 			}
 
-		break;	
+		break;
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
-		case 'doc_add':	
-			
+		case 'doc_add':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//variables
 			$id_usuario  = $_GET['id'];
 			$idDocPago   = $_GET['doc_add'];
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -1817,18 +1769,18 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso al documento ya fue otorgado';}
 			/*******************************************************************/
-	
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($id_usuario) && $id_usuario != ''){  $SIS_data  = "'".$id_usuario."'" ;  }else{$SIS_data  = "''";}
-				if(isset($idDocPago) && $idDocPago != ''){    $SIS_data .= ",'".$idDocPago."'" ;  }else{$SIS_data .= ",''";}
-				
+				if(isset($id_usuario) && $id_usuario!=''){  $SIS_data  = "'".$id_usuario."'";  }else{$SIS_data  = "''";}
+				if(isset($idDocPago) && $idDocPago!=''){    $SIS_data .= ",'".$idDocPago."'";  }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idDocPago';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_documentos_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -1836,19 +1788,18 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-			
 
-		break;	
+		break;
 /*******************************************************************************************************************/
 		//borra un permiso del usuario
-		case 'doc_del':	
-			
+		case 'doc_del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['doc_del']) OR !validaEntero($_GET['doc_del']))&&$_GET['doc_del']!=''){
 				$indice = simpleDecode($_GET['doc_del'], fecha_actual());
@@ -1856,46 +1807,45 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['doc_del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_documentos_pago', 'idDocPagoPermiso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-		break;	
+
+		break;
 /*******************************************************************************************************************/
 		//se clona al usuario
-		case 'clone_Usuario':	
-		
+		case 'clone_Usuario':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -1911,24 +1861,23 @@ require_once '0_validate_user_1.php';
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El nombre de usuario ingresado ya existe';}
 			/*if($ndata_2 > 0) {$error['ndata_4'] = 'error/El email ya existe en el sistema';}*/
 			/*******************************************************************/
-			
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				/*******************************************************************/
 				//Consultas
 				//Datos
-				$rowusr = db_select_data (false, 'idTipoUsuario, Nombre, Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion', 'usuarios_listado', '', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+				$rowusr = db_select_data (false, 'idTipoUsuario, Nombre,Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion', 'usuarios_listado', '', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 				//sistemas asignados
 				$SIS_query = 'idSistema';
 				$SIS_join  = '';
 				$SIS_where = 'idUsuario='.$idUsuario;
 				$SIS_order = 0;
 				$arrSistemas = array();
-				$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+				$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 				//Permisos asignados
 				$SIS_query = 'idAdmpm, level';
 				$SIS_join  = '';
@@ -1936,48 +1885,48 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 0;
 				$arrPermisos = array();
 				$arrPermisos = db_select_array (false, $SIS_query, 'usuarios_permisos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				/*******************************************************************/
 				//Variables
 				$password        = 1234;
 				$idEstado        = 1;
-				
+
 				//si no existen se crean desde el usuario copiado
-				if(isset($idTipoUsuario)) {  $idTipoUsuario   = $rowusr['idTipoUsuario'];}
-				if(isset($Nombre)) {         $Nombre          = $rowusr['Nombre'];}
-				if(isset($Fono)) {           $Fono            = $rowusr['Fono'];}
-				if(isset($Rut)) {            $Rut             = $rowusr['Rut'];}
-				if(isset($fNacimiento)) {    $fNacimiento     = $rowusr['fNacimiento'];}
-				if(isset($idCiudad)) {       $idCiudad        = $rowusr['idCiudad'];}
-				if(isset($idComuna)) {       $idComuna        = $rowusr['idComuna'];}
-				if(isset($Direccion)) {      $Direccion       = $rowusr['Direccion'];}
-				
+				if(!isset($idTipoUsuario)){  $idTipoUsuario   = $rowusr['idTipoUsuario'];}
+				if(!isset($Nombre)){         $Nombre          = $rowusr['Nombre'];}
+				if(!isset($Fono)){           $Fono            = $rowusr['Fono'];}
+				if(!isset($Rut)){            $Rut             = $rowusr['Rut'];}
+				if(!isset($fNacimiento)){    $fNacimiento     = $rowusr['fNacimiento'];}
+				if(!isset($idCiudad)){       $idCiudad        = $rowusr['idCiudad'];}
+				if(!isset($idComuna)){       $idComuna        = $rowusr['idComuna'];}
+				if(!isset($Direccion)){      $Direccion       = $rowusr['Direccion'];}
+
 				/*******************************************************************/
 				/*******************************************************************/
 				//filtros
-				if(isset($usuario) && $usuario != ''){              $SIS_data  = "'".$usuario."'" ;         }else{$SIS_data  = "''";}
-				if(isset($password) && $password != ''){            $SIS_data .= ",'".md5($password)."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($idTipoUsuario) && $idTipoUsuario != ''){  $SIS_data .= ",'".$idTipoUsuario."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado != ''){            $SIS_data .= ",'".$idEstado."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($email) && $email != ''){                  $SIS_data .= ",'".$email."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){                $SIS_data .= ",'".$Nombre."'" ;         }else{$SIS_data .= ",''";}
-				if(isset($Rut) && $Rut != ''){                      $SIS_data .= ",'".$Rut."'" ;            }else{$SIS_data .= ",''";}
-				if(isset($fNacimiento) && $fNacimiento != ''){      $SIS_data .= ",'".$fNacimiento."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($Fono) && $Fono != ''){                    $SIS_data .= ",'".$Fono."'" ;           }else{$SIS_data .= ",''";}
-				if(isset($idCiudad) && $idCiudad != ''){            $SIS_data .= ",'".$idCiudad."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($idComuna) && $idComuna != ''){            $SIS_data .= ",'".$idComuna."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($Direccion) && $Direccion != ''){          $SIS_data .= ",'".$Direccion."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($Direccion_img) && $Direccion_img != ''){  $SIS_data .= ",'".$Direccion_img."'" ;  }else{$SIS_data .= ",''";}
-				if(isset($Ultimo_acceso) && $Ultimo_acceso != ''){  $SIS_data .= ",'".$Ultimo_acceso."'" ;  }else{$SIS_data .= ",''";}
-				
+				if(isset($usuario) && $usuario!=''){              $SIS_data  = "'".$usuario."'";         }else{$SIS_data  = "''";}
+				if(isset($password) && $password!=''){            $SIS_data .= ",'".md5($password)."'";  }else{$SIS_data .= ",''";}
+				if(isset($idTipoUsuario) && $idTipoUsuario!=''){  $SIS_data .= ",'".$idTipoUsuario."'";  }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){            $SIS_data .= ",'".$idEstado."'";       }else{$SIS_data .= ",''";}
+				if(isset($email) && $email!=''){                  $SIS_data .= ",'".$email."'";          }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",'".$Nombre."'";         }else{$SIS_data .= ",''";}
+				if(isset($Rut) && $Rut!=''){                      $SIS_data .= ",'".$Rut."'";            }else{$SIS_data .= ",''";}
+				if(isset($fNacimiento) && $fNacimiento!=''){      $SIS_data .= ",'".$fNacimiento."'";    }else{$SIS_data .= ",''";}
+				if(isset($Fono) && $Fono!=''){                    $SIS_data .= ",'".$Fono."'";           }else{$SIS_data .= ",''";}
+				if(isset($idCiudad) && $idCiudad!=''){            $SIS_data .= ",'".$idCiudad."'";       }else{$SIS_data .= ",''";}
+				if(isset($idComuna) && $idComuna!=''){            $SIS_data .= ",'".$idComuna."'";       }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion!=''){          $SIS_data .= ",'".$Direccion."'";      }else{$SIS_data .= ",''";}
+				if(isset($Direccion_img) && $Direccion_img!=''){  $SIS_data .= ",'".$Direccion_img."'";  }else{$SIS_data .= ",''";}
+				if(isset($Ultimo_acceso) && $Ultimo_acceso!=''){  $SIS_data .= ",'".$Ultimo_acceso."'";  }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'usuario, password, idTipoUsuario, idEstado, email, 
-				Nombre, Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion, Direccion_img, Ultimo_acceso';
+				$SIS_columns = 'usuario, password, idTipoUsuario, idEstado, email,
+				Nombre,Rut, fNacimiento, Fono, idCiudad, idComuna, Direccion, Direccion_img, Ultimo_acceso';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
-				
+
 					/*******************************************************************/
 					/*******************************************************************/
 					//Se copian los sistemas
@@ -1985,15 +1934,15 @@ require_once '0_validate_user_1.php';
 						//Variables
 						$idUsuario  = $ultimo_id;
 						$idSistema  = $sis['idSistema'];
-						
+
 						//filtros
-						if(isset($idUsuario) && $idUsuario != ''){  $SIS_data  = "'".$idUsuario."'" ;  }else{$SIS_data  = "''";}
-						if(isset($idSistema) && $idSistema != ''){  $SIS_data .= ",'".$idSistema."'" ; }else{$SIS_data .= ",''";}
-						
+						if(isset($idUsuario) && $idUsuario!=''){  $SIS_data  = "'".$idUsuario."'";  }else{$SIS_data  = "''";}
+						if(isset($idSistema) && $idSistema!=''){  $SIS_data .= ",'".$idSistema."'"; }else{$SIS_data .= ",''";}
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idUsuario, idSistema';
-						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas',$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					}
 					/*******************************************************************/
 					//Se copian los permisos
@@ -2002,39 +1951,37 @@ require_once '0_validate_user_1.php';
 						$idUsuario  = $ultimo_id;
 						$idAdmpm    = $perm['idAdmpm'];
 						$level      = $perm['level'];
-					
+
 						//filtros
-						if(isset($idUsuario) && $idUsuario != ''){  $SIS_data  = "'".$idUsuario."'" ;  }else{$SIS_data  = "''";}
-						if(isset($idAdmpm) && $idAdmpm != ''){      $SIS_data .= ",'".$idAdmpm."'" ;   }else{$SIS_data .= ",''";}
-						if(isset($level) && $level != ''){          $SIS_data .= ",'".$level."'" ;     }else{$SIS_data .= ",''";}
-						
+						if(isset($idUsuario) && $idUsuario!=''){  $SIS_data  = "'".$idUsuario."'";  }else{$SIS_data  = "''";}
+						if(isset($idAdmpm) && $idAdmpm!=''){      $SIS_data .= ",'".$idAdmpm."'";   }else{$SIS_data .= ",''";}
+						if(isset($level) && $level!=''){          $SIS_data .= ",'".$level."'";     }else{$SIS_data .= ",''";}
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idUsuario, idAdmpm, level';
 						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_permisos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
-						
+
 					header( 'Location: '.$location.'&clone=true' );
 					die;
-					
+
 				}
-				
-				
+
 			}
-			
-		
+
 		break;
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
-		case 'contrato_add':	
-			
+		case 'contrato_add':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//variables
 			$id_usuario     = $_GET['id'];
 			$idLicitacion   = $_GET['contrato_add'];
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -2045,37 +1992,37 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso al contrato ya ha sido otorgado';}
 			/*******************************************************************/
-	
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//filtros
-				if(isset($id_usuario) && $id_usuario != ''){      $SIS_data  = "'".$id_usuario."'" ;      }else{$SIS_data  = "''";}
-				if(isset($idLicitacion) && $idLicitacion != ''){  $SIS_data .= ",'".$idLicitacion."'" ;   }else{$SIS_data .= ",''";}
-				
+				if(isset($id_usuario) && $id_usuario!=''){      $SIS_data  = "'".$id_usuario."'";      }else{$SIS_data  = "''";}
+				if(isset($idLicitacion) && $idLicitacion!=''){  $SIS_data .= ",'".$idLicitacion."'";   }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idLicitacion';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_contratos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 				}
-			
+
 			}
 
-		break;	
+		break;
 /*******************************************************************************************************************/
 		//borra un permiso del usuario
-		case 'contrato_del':	
-			
+		case 'contrato_del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['contrato_del']) OR !validaEntero($_GET['contrato_del']))&&$_GET['contrato_del']!=''){
 				$indice = simpleDecode($_GET['contrato_del'], fecha_actual());
@@ -2083,50 +2030,48 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['contrato_del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_contratos', 'idContratoPermiso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
 
-		break;	
+		break;
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
-		case 'caja_add':	
-			
+		case 'caja_add':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//variables
 			$id_usuario  = $_GET['id'];
 			$idCajaChica = $_GET['caja_add'];
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -2137,37 +2082,36 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso a la caja chica ya ha sido otorgado';}
 			/*******************************************************************/
-	
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//filtros
-				if(isset($id_usuario) && $id_usuario != ''){    $SIS_data  = "'".$id_usuario."'" ;     }else{$SIS_data  = "''";}
-				if(isset($idCajaChica) && $idCajaChica != ''){  $SIS_data .= ",'".$idCajaChica."'" ;   }else{$SIS_data .= ",''";}
-				
+				if(isset($id_usuario) && $id_usuario!=''){    $SIS_data  = "'".$id_usuario."'";     }else{$SIS_data  = "''";}
+				if(isset($idCajaChica) && $idCajaChica!=''){  $SIS_data .= ",'".$idCajaChica."'";   }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idCajaChica';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_cajas_chicas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
-					die; 
+					die;
 				}
 			}
-			
 
-		break;	
+		break;
 /*******************************************************************************************************************/
 		//borra un permiso del usuario
-		case 'caja_del':	
-			
+		case 'caja_del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['caja_del']) OR !validaEntero($_GET['caja_del']))&&$_GET['caja_del']!=''){
 				$indice = simpleDecode($_GET['caja_del'], fecha_actual());
@@ -2175,46 +2119,45 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['caja_del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_cajas_chicas', 'idCajaPermiso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
 
-		break;	
-		
+		break;
+
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
 		case 'prm_add_all_bodegas':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Verifico permisos a las transacciones de bodegas
 			/******************************************************/
 			//Accesos a bodegas de productos
@@ -2250,7 +2193,7 @@ require_once '0_validate_user_1.php';
 			$SIS_join  = '';
 			$SIS_where = 'usuarios_listado.idUsuario='.$_GET['id'];
 			$rowdatax = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 			$productos    = $rowdatax['tran_1'] + $rowdatax['tran_2'] + $rowdatax['tran_3'] + $rowdatax['tran_4'];
 			$insumos      = $rowdatax['tran_10'] + $rowdatax['tran_11'] + $rowdatax['tran_12'] + $rowdatax['tran_13'];
 			$arriendos    = $rowdatax['tran_5'] + $rowdatax['tran_6'];
@@ -2263,7 +2206,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'bodegas_insumos_listado.idSistema ASC, bodegas_insumos_listado.Nombre ASC';
 				$arrInsumos = array();
 				$arrInsumos = db_select_array (false, $SIS_query, 'bodegas_insumos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 			}
 
 			//Verifico que tenga permisos para ver la transaccion de bodega productos
@@ -2274,7 +2217,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'bodegas_productos_listado.idSistema ASC, bodegas_productos_listado.Nombre ASC';
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, $SIS_query, 'bodegas_productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 			}
 			//Verifico que tenga permisos para ver la transaccion de bodega productos
 			if($arriendos!=0){
@@ -2284,13 +2227,13 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'bodegas_arriendos_listado.idSistema ASC, bodegas_arriendos_listado.Nombre ASC';
 				$arrArriendos = array();
 				$arrArriendos = db_select_array (false, $SIS_query, 'bodegas_arriendos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-			}			
-			
+
+			}
+
 			/****************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				/************************************************************************************/
 				//Se entregan los permisos relacionados a la bodega de insumos
 				if($insumos!=0){
@@ -2298,13 +2241,13 @@ require_once '0_validate_user_1.php';
 						//Si no se ha entregado el permiso
 						if ( $ins['contar']!='1' ) {
 							//filtros
-							if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $SIS_data  = "'".$_GET['idUsuario']."'" ;   }else{$SIS_data  = "''";}
-							if(isset($ins['idBodega']) && $ins['idBodega'] != ''){       $SIS_data .= ",'".$ins['idBodega']."'" ;    }else{$SIS_data .= ",''";}
-							
+							if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){   $SIS_data  = "'".$_GET['idUsuario']."'";   }else{$SIS_data  = "''";}
+							if(isset($ins['idBodega']) && $ins['idBodega']!=''){       $SIS_data .= ",'".$ins['idBodega']."'";    }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idUsuario, idBodega';
 							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_insumos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
 				}
@@ -2315,13 +2258,13 @@ require_once '0_validate_user_1.php';
 						//Si no se ha entregado el permiso
 						if ( $prod['contar']!='1' ) {
 							//filtros
-							if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $SIS_data  = "'".$_GET['idUsuario']."'" ;    }else{$SIS_data  = "''";}
-							if(isset($prod['idBodega']) && $prod['idBodega'] != ''){    $SIS_data .= ",'".$prod['idBodega']."'" ;    }else{$SIS_data .= ",''";}
-							
+							if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){  $SIS_data  = "'".$_GET['idUsuario']."'";    }else{$SIS_data  = "''";}
+							if(isset($prod['idBodega']) && $prod['idBodega']!=''){    $SIS_data .= ",'".$prod['idBodega']."'";    }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idUsuario, idBodega';
 							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
 				}
@@ -2332,34 +2275,34 @@ require_once '0_validate_user_1.php';
 						//Si no se ha entregado el permiso
 						if ( $arri['contar']!='1' ) {
 							//filtros
-							if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){ $SIS_data  = "'".$_GET['idUsuario']."'" ;  }else{$SIS_data  = "''";}
-							if(isset($arri['idBodega']) && $arri['idBodega'] != ''){   $SIS_data .= ",'".$arri['idBodega']."'" ;  }else{$SIS_data .= ",''";}
-							
+							if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){ $SIS_data  = "'".$_GET['idUsuario']."'";  }else{$SIS_data  = "''";}
+							if(isset($arri['idBodega']) && $arri['idBodega']!=''){   $SIS_data .= ",'".$arri['idBodega']."'";  }else{$SIS_data .= ",''";}
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idUsuario, idBodega';
 							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_bodegas_arriendos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						}
 					}
 				}
-				
+
 				//redirijo
 				header( 'Location: '.$location.'&created=true' );
 				die;
-								
+
 			}
 
 		break;
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
-		case 'prm_del_all_bodegas':	
-		
+		case 'prm_del_all_bodegas':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['idUsuario']) OR !validaEntero($_GET['idUsuario']))&&$_GET['idUsuario']!=''){
 				$indice = simpleDecode($_GET['idUsuario'], fecha_actual());
@@ -2367,20 +2310,20 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['idUsuario'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				/***************************************************************************************/
 				//se borran los datos
@@ -2389,74 +2332,70 @@ require_once '0_validate_user_1.php';
 				$resultado_3 = db_delete_data (false, 'usuarios_bodegas_arriendos', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado_1==true OR $resultado_2==true OR $resultado_3==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-			
-		
-		break;	
+
+		break;
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
 		case 'prm_add_all_cajas':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			//Verifico permisos a las transacciones 
+
+			//Verifico permisos a las transacciones
 			$SIS_query = 'caja_chica_listado.idCajaChica, (SELECT COUNT(idCajaChica) FROM usuarios_cajas_chicas WHERE idCajaChica = caja_chica_listado.idCajaChica AND idUsuario = '.$_GET['idUsuario'].' LIMIT 1) AS contar';
 			$SIS_join  = '';
 			$SIS_where = 'caja_chica_listado.idSistema = '.$_GET['idSistema'];
 			$SIS_order = 'caja_chica_listado.idSistema ASC, caja_chica_listado.Nombre ASC';
 			$arrCajas  = array();
 			$arrCajas  = db_select_array (false, $SIS_query, 'caja_chica_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 			/****************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				/************************************************************************************/
 				//Se entregan los permisos relacionados a la caja
 				foreach ($arrCajas as $caja) {
 					//Si no se ha entregado el permiso
 					if ( $caja['contar']!='1' ) {
 						//filtros
-						if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){     $SIS_data  = "'".$_GET['idUsuario']."'" ;     }else{$SIS_data  = "''";}
-						if(isset($caja['idCajaChica']) && $caja['idCajaChica'] != ''){ $SIS_data .= ",'".$caja['idCajaChica']."'" ;  }else{$SIS_data .= ",''";}
-						
+						if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){     $SIS_data  = "'".$_GET['idUsuario']."'";     }else{$SIS_data  = "''";}
+						if(isset($caja['idCajaChica']) && $caja['idCajaChica']!=''){ $SIS_data .= ",'".$caja['idCajaChica']."'";  }else{$SIS_data .= ",''";}
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idUsuario, idCajaChica';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_cajas_chicas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
 				}
-				
-				
+
 				//redirijo
 				header( 'Location: '.$location.'&created=true' );
 				die;
-								
+
 			}
 
 		break;
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
-		case 'prm_del_all_cajas':	
-		
+		case 'prm_del_all_cajas':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['idUsuario']) OR !validaEntero($_GET['idUsuario']))&&$_GET['idUsuario']!=''){
 				$indice = simpleDecode($_GET['idUsuario'], fecha_actual());
@@ -2464,93 +2403,90 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['idUsuario'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				/***************************************************************************************/
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_cajas_chicas', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-		
-		break;	
+
+		break;
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
 		case 'prm_add_all_contratos':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			//Verifico permisos a las transacciones 
+
+			//Verifico permisos a las transacciones
 			$SIS_query    = 'licitacion_listado.idLicitacion, (SELECT COUNT(idLicitacion) FROM usuarios_contratos WHERE idLicitacion = licitacion_listado.idLicitacion AND idUsuario = '.$_GET['idUsuario'].' LIMIT 1) AS contar';
 			$SIS_join     = '';
 			$SIS_where    = 'licitacion_listado.idSistema = '.$_GET['idSistema'].' AND licitacion_listado.idEstado=1';
 			$SIS_order    = 'licitacion_listado.idSistema ASC, licitacion_listado.Nombre ASC';
 			$arrContratos = array();
 			$arrContratos = db_select_array (false, $SIS_query, 'licitacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 			/****************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				/************************************************************************************/
 				//Se entregan los permisos relacionados a la caja
 				foreach ($arrContratos as $cont) {
 					//Si no se ha entregado el permiso
 					if ( $cont['contar']!='1' ) {
 						//filtros
-						if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){       $SIS_data  = "'".$_GET['idUsuario']."'" ;       }else{$SIS_data  = "''";}
-						if(isset($cont['idLicitacion']) && $cont['idLicitacion'] != ''){ $SIS_data .= ",'".$cont['idLicitacion']."'" ;   }else{$SIS_data .= ",''";}
-						
+						if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){       $SIS_data  = "'".$_GET['idUsuario']."'";       }else{$SIS_data  = "''";}
+						if(isset($cont['idLicitacion']) && $cont['idLicitacion']!=''){ $SIS_data .= ",'".$cont['idLicitacion']."'";   }else{$SIS_data .= ",''";}
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idUsuario, idLicitacion';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_contratos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
 				}
-				
-				
+
 				//redirijo
 				header( 'Location: '.$location.'&created=true' );
 				die;
-								
+
 			}
 
 		break;
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
-		case 'prm_del_all_contratos':	
-		
+		case 'prm_del_all_contratos':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['idUsuario']) OR !validaEntero($_GET['idUsuario']))&&$_GET['idUsuario']!=''){
 				$indice = simpleDecode($_GET['idUsuario'], fecha_actual());
@@ -2558,50 +2494,48 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['idUsuario'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				/***************************************************************************************/
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_contratos', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-		
-		break;		
+
+		break;
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
-		case 'equipo_tel_add':	
-			
+		case 'equipo_tel_add':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['equipo_tel_add']) OR !validaEntero($_GET['equipo_tel_add']))&&$_GET['equipo_tel_add']!=''){
 				$indice = simpleDecode($_GET['equipo_tel_add'], fecha_actual());
@@ -2609,26 +2543,26 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['equipo_tel_add'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			/***************************************************************/
 			if($errorn==0){
 				//variables
 				$id_usuario     = $_GET['id'];
 				$idTelemetria   = $indice;
-				
+
 				/*******************************************************************/
 				//variables
 				$ndata_1 = 0;
@@ -2639,41 +2573,41 @@ require_once '0_validate_user_1.php';
 				//generacion de errores
 				if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso al equipo ya fue otorgado';}
 				/*******************************************************************/
-		
-				// si no hay errores ejecuto el codigo	
-				if ( empty($error) ) {
+
+				// si no hay errores ejecuto el codigo
+				if(empty($error)){
 					//filtros
-					if(isset($id_usuario) && $id_usuario != ''){     $SIS_data  = "'".$id_usuario."'" ;     }else{$SIS_data  = "''";}
-					if(isset($idTelemetria) && $idTelemetria != ''){ $SIS_data .= ",'".$idTelemetria."'" ;  }else{$SIS_data .= ",''";}
-					
+					if(isset($id_usuario) && $id_usuario!=''){     $SIS_data  = "'".$id_usuario."'";     }else{$SIS_data  = "''";}
+					if(isset($idTelemetria) && $idTelemetria!=''){ $SIS_data .= ",'".$idTelemetria."'";  }else{$SIS_data .= ",''";}
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idUsuario, idTelemetria';
 					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_equipos_telemetria', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Si ejecuto correctamente la consulta
 					if($ultimo_id!=0){
 						//redirijo
 						header( 'Location: '.$location.'&edited=true' );
 						die;
 					}
-				
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-		break;	
+
+		break;
 /*******************************************************************************************************************/
 		//borra un permiso del usuario
-		case 'equipo_tel_del':	
-			
+		case 'equipo_tel_del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['equipo_tel_del']) OR !validaEntero($_GET['equipo_tel_del']))&&$_GET['equipo_tel_del']!=''){
 				$indice = simpleDecode($_GET['equipo_tel_del'], fecha_actual());
@@ -2681,49 +2615,49 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['equipo_tel_del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			/***************************************************************/
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_equipos_telemetria', 'idEquipoTelPermiso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
+
 		break;
-		
+
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
 		case 'prm_add_all_tel':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			/*********************************************************************************/
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['idUsuario']) OR !validaEntero($_GET['idUsuario']))&&$_GET['idUsuario']!=''){
@@ -2732,20 +2666,20 @@ require_once '0_validate_user_1.php';
 				$indice_1 = $_GET['idUsuario'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice_1)&&$indice_1!=''){ 
+			if (!validarNumero($indice_1)&&$indice_1!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice_1 ('.$indice_1.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice_1)&&$indice_1!=''){ 
+			if (!validaEntero($indice_1)&&$indice_1!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice_1 ('.$indice_1.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			/*********************************************************************************/
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['idSistema']) OR !validaEntero($_GET['idSistema']))&&$_GET['idSistema']!=''){
@@ -2754,69 +2688,67 @@ require_once '0_validate_user_1.php';
 				$indice_2 = $_GET['idSistema'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice_2)&&$indice_2!=''){ 
+			if (!validarNumero($indice_2)&&$indice_2!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice_2 ('.$indice_2.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice_2)&&$indice_2!=''){ 
+			if (!validaEntero($indice_2)&&$indice_2!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice_2 ('.$indice_2.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			/*********************************************************************************/
 			if($errorn==0){
-				
+
 				//Verifico permisos a las transacciones
-				$SIS_query    = 'telemetria_listado.idTelemetria, (SELECT COUNT(idTelemetria) FROM usuarios_equipos_telemetria WHERE idTelemetria = telemetria_listado.idTelemetria AND idUsuario = '.$indice_1.' LIMIT 1) AS contar';
+				$SIS_query    = 'telemetria_listado.idTelemetria,(SELECT COUNT(idTelemetria) FROM usuarios_equipos_telemetria WHERE idTelemetria = telemetria_listado.idTelemetria AND idUsuario = '.$indice_1.' LIMIT 1) AS contar';
 				$SIS_join     = '';
 				$SIS_where    = 'telemetria_listado.idSistema = '.$indice_2.' AND telemetria_listado.idEstado=1';
 				$SIS_order    = 'telemetria_listado.idSistema ASC, telemetria_listado.Nombre ASC';
 				$arrPermisos = array();
 				$arrPermisos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				/************************************************************************************/
 				//Se entregan los permisos relacionados a los equipos
 				foreach ($arrPermisos as $perm) {
 					//Si no se ha entregado el permiso
 					if ( $perm['contar']!='1' ) {
 						//filtros
-						$SIS_data  = "'".$indice_1."'" ;//idUsuario
-						if(isset($perm['idTelemetria']) && $perm['idTelemetria'] != ''){  $SIS_data .= ",'".$perm['idTelemetria']."'" ;  }else{$SIS_data .= ",''";}
-						
+						$SIS_data  = "'".$indice_1."'";//idUsuario
+						if(isset($perm['idTelemetria']) && $perm['idTelemetria']!=''){  $SIS_data .= ",'".$perm['idTelemetria']."'";  }else{$SIS_data .= ",''";}
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idUsuario, idTelemetria';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_equipos_telemetria', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
 				}
-				
-				
+
 				//redirijo
 				header( 'Location: '.$location.'&created=true' );
 				die;
-				
+
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
-			}	
-			
+			}
 
 		break;
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
-		case 'prm_del_all_tel':	
-		
+		case 'prm_del_all_tel':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			/*********************************************************************************/
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['idUsuario']) OR !validaEntero($_GET['idUsuario']))&&$_GET['idUsuario']!=''){
@@ -2825,73 +2757,72 @@ require_once '0_validate_user_1.php';
 				$indice_1 = $_GET['idUsuario'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice_1)&&$indice_1!=''){ 
+			if (!validarNumero($indice_1)&&$indice_1!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice_1 ('.$indice_1.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice_1)&&$indice_1!=''){ 
+			if (!validaEntero($indice_1)&&$indice_1!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice_1 ('.$indice_1.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			/*********************************************************************************/
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_equipos_telemetria', 'idUsuario = "'.$indice_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-		break;	
-/*******************************************************************************************************************/		
-		case 'login_alt': 
-			
+
+		break;
+/*******************************************************************************************************************/
+		case 'login_alt':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variables
 			$fecha          = fecha_actual();
-			
-	
+
 			//si no hay errores
-			if ( empty($error) ) {
-				
+			if(empty($error)){
+
 				/******************************************************************/
 				//Verifico la cantidad de sistemas a la cual tiene permitido el acceso
-				$rowSis = db_select_data (false, 'COUNT(idPermisoSistema) AS Sistemas', 'usuarios_sistemas', '', 'idUsuario = "'.$idUsuario.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+				$rowSis = db_select_data (false, 'COUNT(idPermisoSistema) AS Sistemas', 'usuarios_sistemas','', 'idUsuario = "'.$idUsuario.'"', $dbConn, 'rowSis', $original, $form_trabajo);
+
 				//Si no tiene sistemas relacionados
 				if(isset($rowSis['Sistemas'])&&$rowSis['Sistemas']==0){
 					$error['idUsuario']   = 'error/Este usuario no tiene sistemas asignados';
-							
+
 				//Si tiene solo un sistema asignado
 				}elseif(isset($rowSis['Sistemas'])&&$rowSis['Sistemas']!=0){
-					
+
 					//Elimino cualquier dato de un usuario anterior
 					unset($_SESSION['usuario']);
-					
+
 					//Busco al usuario en el sistema
-					$SIS_query = 'usuarios_listado.idUsuario, 
+					$SIS_query = 'usuarios_listado.idUsuario,
 					usuarios_listado.idUsuario AS ID,
-					usuarios_listado.password, 
-					usuarios_listado.usuario, 
-					usuarios_listado.Nombre, 
+					usuarios_listado.password,
+					usuarios_listado.usuario,
+					usuarios_listado.Nombre,
 					usuarios_listado.idEstado,
-					usuarios_listado.Direccion_img, 
+					usuarios_listado.Direccion_img,
 					usuarios_listado.idTipoUsuario,
 					usuarios_tipos.Nombre AS Usuario_Tipo,
 					core_ubicacion_ciudad.Nombre AS nombre_region,
@@ -2903,17 +2834,17 @@ require_once '0_validate_user_1.php';
 					LEFT JOIN `core_ubicacion_ciudad`     ON core_ubicacion_ciudad.idCiudad   = usuarios_listado.idCiudad
 					LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna  = usuarios_listado.idComuna';
 					$SIS_where = 'usuarios_listado.idUsuario = "'.$idUsuario.'"';
-					$rowUser = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+					$rowUser = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, 'rowUser', $original, $form_trabajo);
+
 					//Busco al usuario en el sistema
-					$rowAcceso = db_select_data (false, 'Fecha, Hora', 'usuarios_accesos', '', 'idUsuario = "'.$rowUser['idUsuario'].'" ORDER BY idAcceso DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+					$rowAcceso = db_select_data (false, 'Fecha, Hora', 'usuarios_accesos', '', 'idUsuario = "'.$rowUser['idUsuario'].'" ORDER BY idAcceso DESC', $dbConn, 'rowAcceso', $original, $form_trabajo);
+
 					//Se verifca si los datos ingresados son de un usuario
 					if (isset($rowUser['idUsuario'])&&$rowUser['idUsuario']!='') {
-						
+
 						//Verifico que el usuario identificado este activo
 						if($rowUser['idEstado']==1){
-							
+
 							//Se crean las variables con todos los datos
 							$_SESSION['usuario']['basic_data']['idUsuario']          = $rowUser['idUsuario'];
 							$_SESSION['usuario']['basic_data']['password']           = $rowUser['password'];
@@ -2926,71 +2857,72 @@ require_once '0_validate_user_1.php';
 							$_SESSION['usuario']['basic_data']['Region']             = $rowUser['nombre_region'];
 							$_SESSION['usuario']['basic_data']['Pronostico']         = $rowUser['nombre_pronostico'];
 							$_SESSION['usuario']['basic_data']['Comuna']             = $rowUser['nombre_comuna'];
-							
-							if(isset($rowAcceso['Fecha'])&&$rowAcceso['Fecha']!=''){ $_SESSION['usuario']['basic_data']['FechaLogin'] = $rowAcceso['Fecha']; }else{$_SESSION['usuario']['basic_data']['FechaLogin'] = fecha_actual();}
-							if(isset($rowAcceso['Hora'])&&$rowAcceso['Hora']!=''){   $_SESSION['usuario']['basic_data']['HoraLogin']  = $rowAcceso['Hora'];  }else{$_SESSION['usuario']['basic_data']['HoraLogin']  = hora_actual();}
-						
+
+							//Verifico si existen datos
+							if(isset($rowAcceso['Fecha'])&&$rowAcceso['Fecha']!=''){$_SESSION['usuario']['basic_data']['FechaLogin'] = $rowAcceso['Fecha']; }else{$_SESSION['usuario']['basic_data']['FechaLogin'] = fecha_actual();}
+							if(isset($rowAcceso['Hora'])&&$rowAcceso['Hora']!=''){  $_SESSION['usuario']['basic_data']['HoraLogin']  = $rowAcceso['Hora'];  }else{$_SESSION['usuario']['basic_data']['HoraLogin']  = hora_actual();}
+
 							//Se buscan los datos para crear el menu
 							$SIS_query = '
-							core_permisos_categorias.Nombre AS CategoriaNombre, 
-							core_font_awesome.Codigo AS CategoriaIcono, 
-							core_permisos_categorias.IconColor AS CategoriaIconoColor, 
-							core_permisos_listado.Direccionbase AS TransaccionURLBase, 
-							core_permisos_listado.Direccionweb AS TransaccionURL, 
-							core_permisos_listado.Nombre AS TransaccionNombre, 
-							usuarios_permisos.level, 
+							core_permisos_categorias.Nombre AS CategoriaNombre,
+							core_font_awesome.Codigo AS CategoriaIcono,
+							core_permisos_categorias.IconColor AS CategoriaIconoColor,
+							core_permisos_listado.Direccionbase AS TransaccionURLBase,
+							core_permisos_listado.Direccionweb AS TransaccionURL,
+							core_permisos_listado.Nombre AS TransaccionNombre,
+							usuarios_permisos.level,
 							core_permisos_listado.visualizacion AS idSistema';
 							$arrMenu = array();
-							$arrMenu = db_select_array (false, $SIS_query, 'usuarios_permisos', 'INNER JOIN core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm INNER JOIN core_permisos_categorias ON core_permisos_categorias.id_pmcat = core_permisos_listado.id_pmcat LEFT JOIN `core_font_awesome` ON core_font_awesome.idFont = core_permisos_categorias.idFont', 'usuarios_permisos.idUsuario ='.$idUsuario, 'CategoriaNombre ASC, TransaccionNombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+							$arrMenu = db_select_array (false, $SIS_query, 'usuarios_permisos', 'INNER JOIN core_permisos_listado ON core_permisos_listado.idAdmpm = usuarios_permisos.idAdmpm INNER JOIN core_permisos_categorias ON core_permisos_categorias.id_pmcat = core_permisos_listado.id_pmcat LEFT JOIN `core_font_awesome` ON core_font_awesome.idFont = core_permisos_categorias.idFont', 'usuarios_permisos.idUsuario ='.$idUsuario, 'CategoriaNombre ASC, TransaccionNombre ASC', $dbConn, 'arrMenu', $original, $form_trabajo);
+
 							//Permisos
 							foreach($arrMenu as $menu) {
 								$_SESSION['usuario']['Permisos'][$menu['TransaccionURLBase']]['CategoriaNombre']     = $menu['CategoriaNombre'];
 								$_SESSION['usuario']['Permisos'][$menu['TransaccionURLBase']]['CategoriaIcono']      = $menu['TransaccionURL'];
 								$_SESSION['usuario']['Permisos'][$menu['TransaccionURLBase']]['TransaccionNombre']   = $menu['TransaccionNombre'];
 								$_SESSION['usuario']['Permisos'][$menu['TransaccionURLBase']]['level']               = $menu['level'];
-								
+
 							}
-							
+
 							//Construccion de los menus del sistema
 							//llamamos a la función para filtrar los datos
 							filtrar($arrMenu, 'CategoriaNombre');
 							/******************************************************************/
 							//recorremos el array para imprimirlo con formato HTML
 							foreach($arrMenu as $Categorias=>$Transacciones) {
-								
-								$ntranx = 0;			
+
+								$ntranx = 0;
 								// recorremos los productos
 								foreach($Transacciones as $transaccion) {
-									
+
 									$_SESSION['usuario']['menu'][$Categorias][$ntranx]['CategoriaNombre']         = $Categorias;
 									$_SESSION['usuario']['menu'][$Categorias][$ntranx]['CategoriaIcono']          = $transaccion['CategoriaIcono'];
 									$_SESSION['usuario']['menu'][$Categorias][$ntranx]['CategoriaIconoColor']     = $transaccion['CategoriaIconoColor'];
 									$_SESSION['usuario']['menu'][$Categorias][$ntranx]['TransaccionURL']          = $transaccion['TransaccionURL'];
 									$_SESSION['usuario']['menu'][$Categorias][$ntranx]['TransaccionNombre']       = $transaccion['TransaccionNombre'];
 									$_SESSION['usuario']['menu'][$Categorias][$ntranx]['idSistema']               = $transaccion['idSistema'];
-									
+
 									$ntranx++;
 								}
-								   
+
 							}
-							
+
 							/******************************************************************/
 							//Si el usuario es un super usuario
 							if($rowUser['idTipoUsuario']==1){
-								
+
 								//Redirijo a la pagina de seleccion
 								header( 'Location: index_select.php' );
 								die;
-								
+
 							//Si el usuario es un usuario normal
 							}else{
-								
+
 								if(isset($rowSis['Sistemas'])&&$rowSis['Sistemas']==1){
-									
+
 									//Verifico la cantidad de sistemas a la cual tiene permitido el acceso
-									$rowSystem = db_select_data (false, 'idSistema', 'usuarios_sistemas', '', 'idUsuario = "'.$rowUser['idUsuario'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+									$rowSystem = db_select_data (false, 'idSistema', 'usuarios_sistemas','', 'idUsuario = "'.$rowUser['idUsuario'].'"', $dbConn, 'rowSystem', $original, $form_trabajo);
+
 									//Consulto
 									$SIS_query = 'core_sistemas.Config_idTheme,
 									core_sistemas.Config_imgLogo,
@@ -3002,8 +2934,8 @@ require_once '0_validate_user_1.php';
 									core_config_time.Nombre AS ConfigTime';
 									$SIS_join = 'LEFT JOIN `core_config_ram`   ON core_config_ram.idConfigRam    = core_sistemas.idConfigRam
 									LEFT JOIN `core_config_time`  ON core_config_time.idConfigTime  = core_sistemas.idConfigTime';
-									$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, 'core_sistemas.idSistema = "'.$rowSystem['idSistema'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+									$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, 'core_sistemas.idSistema = "'.$rowSystem['idSistema'].'"', $dbConn, 'rowSistema', $original, $form_trabajo);
+
 									//Se crean las variables con todos los datos
 									$_SESSION['usuario']['basic_data']['Config_idTheme']     = $rowSistema['Config_idTheme'];
 									$_SESSION['usuario']['basic_data']['Config_imgLogo']     = $rowSistema['Config_imgLogo'];
@@ -3014,11 +2946,11 @@ require_once '0_validate_user_1.php';
 									$_SESSION['usuario']['basic_data']['CorreoInterno']      = $rowSistema['idOpcionesGen_8'];
 									$_SESSION['usuario']['basic_data']['idInterfaz']         = $rowSistema['idOpcionesGen_7'];
 									$_SESSION['usuario']['basic_data']['idSistema']          = $rowSystem['idSistema'];
-									
+
 									//Redirijo a la pagina principal
 									header( 'Location: principal.php' );
 									die;
-								
+
 								//Si tiene mas de uno, se redirije a una pantalla de seleccion
 								}elseif(isset($rowSis['Sistemas'])&&$rowSis['Sistemas']>1){
 									//Redirijo a la pagina de seleccion
@@ -3027,78 +2959,73 @@ require_once '0_validate_user_1.php';
 								}
 
 							}
-							
-					
-						//Si no esta activo envio error	
+
+						//Si no esta activo envio error
 						}else{
 							$error['idUsuario']   = 'error/Su usuario esta desactivado, Contactese con el administrador';
 						}
-					
-					//Si no se encuentra ningun usuario se envia un error	
+
+					//Si no se encuentra ningun usuario se envia un error
 					}else{
 						$error['idUsuario']   = 'error/El nombre de usuario o contraseña no coinciden';
 					}
-						
+
 				}
-							
-							
-				
-						
-			} 
+
+			}
 		break;
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
-		case 'sistema_add':	
-			
+		case 'sistema_add':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//variables
 			$id_usuario  = $_GET['id'];
 			$idSistema   = $_GET['sistema_add'];
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
 			if(isset($idSistema)&&$idSistema!=''&&isset($id_usuario)&&$id_usuario!=''){
-				$ndata_1 = db_select_nrows (false, 'idSistema', 'usuarios_sistemas', '', "idSistema='".$idSistema."' AND idUsuario='".$id_usuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$ndata_1 = db_select_nrows (false, 'idSistema', 'usuarios_sistemas','', "idSistema='".$idSistema."' AND idUsuario='".$id_usuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso al sistema ya fue otorgado';}
 			/*******************************************************************/
-	
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//filtros
-				if(isset($id_usuario) && $id_usuario != ''){  $SIS_data  = "'".$id_usuario."'" ;   }else{$SIS_data  = "''";}
-				if(isset($idSistema) && $idSistema != ''){    $SIS_data .= ",'".$idSistema."'" ;   }else{$SIS_data .= ",''";}
-				
+				if(isset($id_usuario) && $id_usuario!=''){  $SIS_data  = "'".$id_usuario."'";   }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema!=''){    $SIS_data .= ",'".$idSistema."'";   }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idSistema';
-				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas',$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 				}
-			
+
 			}
-			
-			
-		break;	
+
+		break;
 /*******************************************************************************************************************/
 		//borra un permiso del usuario
-		case 'sistema_del':	
-			
+		case 'sistema_del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['sistema_del']) OR !validaEntero($_GET['sistema_del']))&&$_GET['sistema_del']!=''){
 				$indice = simpleDecode($_GET['sistema_del'], fecha_actual());
@@ -3106,93 +3033,97 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['sistema_del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
-				$resultado = db_delete_data (false, 'usuarios_sistemas', 'idPermisoSistema = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_delete_data (false, 'usuarios_sistemas','idPermisoSistema = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-			
-		break;	
-		
+
+		break;
+
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
 		case 'prm_add_all_sys':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			//Verifico permisos a las transacciones 
-			$SIS_query    = 'core_sistemas.idSistema, (SELECT COUNT(idSistema) FROM usuarios_sistemas WHERE idSistema = core_sistemas.idSistema AND idUsuario = '.$_GET['idUsuario'].' LIMIT 1) AS contar';
-			$SIS_join     = '';
-			$SIS_where    = '';
-			$SIS_order    = 'core_sistemas.idSistema ASC';
-			$arrContratos = array();
-			$arrContratos = db_select_array (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
-			/****************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Valido
+			if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){
+
+				//Variables
+				$idUsuario = simpleDecode($_GET['idUsuario'], fecha_actual());
+
+				//Verifico permisos a las transacciones
+				$SIS_query    = '
+				core_sistemas.idSistema,
+				(SELECT COUNT(idSistema) FROM usuarios_sistemas WHERE idSistema = core_sistemas.idSistema AND idUsuario = '.$idUsuario.' LIMIT 1) AS contar';
+				$SIS_join     = '';
+				$SIS_where    = '';
+				$SIS_order    = 'core_sistemas.idSistema ASC';
+				$arrContratos = array();
+				$arrContratos = db_select_array (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 				/************************************************************************************/
 				//Se entregan los permisos relacionados a la caja
 				foreach ($arrContratos as $cont) {
 					//Si no se ha entregado el permiso
 					if ( $cont['contar']!='1' ) {
 						//filtros
-						if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){  $SIS_data  = "'".$_GET['idUsuario']."'" ;        }else{$SIS_data  = "''";}
-						if(isset($cont['idSistema']) && $cont['idSistema'] != ''){  $SIS_data .= ",'".$cont['idSistema']."'" ;       }else{$SIS_data .= ",''";}
-						
+						$SIS_data  = "'".$idUsuario."'";
+						if(isset($cont['idSistema']) && $cont['idSistema']!=''){  $SIS_data .= ",'".$cont['idSistema']."'";       }else{$SIS_data .= ",''";}
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idUsuario, idSistema';
-						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_sistemas',$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
 					}
 				}
-				
-				
+
 				//redirijo
 				header( 'Location: '.$location.'&created=true' );
 				die;
-								
+
+			//Si hay errores
+			}else{
+				$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';
 			}
 
 		break;
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
-		case 'prm_del_all_sys':	
-		
+		case 'prm_del_all_sys':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['idUsuario']) OR !validaEntero($_GET['idUsuario']))&&$_GET['idUsuario']!=''){
 				$indice = simpleDecode($_GET['idUsuario'], fecha_actual());
@@ -3200,52 +3131,50 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['idUsuario'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				/***************************************************************************************/
 				//se borran los datos
-				$resultado = db_delete_data (false, 'usuarios_sistemas', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$resultado = db_delete_data (false, 'usuarios_sistemas','idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-		
-		break;	
+
+		break;
 
 /*******************************************************************************************************************/
 		//Agrega un permiso al usuario
-		case 'camara_add':	
-			
+		case 'camara_add':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//variables
 			$id_usuario  = $_GET['id'];
 			$idCamara = $_GET['camara_add'];
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -3256,38 +3185,37 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El permiso a la caja chica ya ha sido otorgado';}
 			/*******************************************************************/
-	
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($id_usuario) && $id_usuario != ''){  $SIS_data  = "'".$id_usuario."'" ;   }else{$SIS_data  = "''";}
-				if(isset($idCamara) && $idCamara != ''){      $SIS_data .= ",'".$idCamara."'" ;    }else{$SIS_data .= ",''";}
-				
+				if(isset($id_usuario) && $id_usuario!=''){  $SIS_data  = "'".$id_usuario."'";   }else{$SIS_data  = "''";}
+				if(isset($idCamara) && $idCamara!=''){      $SIS_data .= ",'".$idCamara."'";    }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idCamara';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_camaras', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
-					die; 
+					die;
 				}
 			}
-			
 
-		break;	
+		break;
 /*******************************************************************************************************************/
 		//borra un permiso del usuario
-		case 'camara_del':	
-			
+		case 'camara_del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['camara_del']) OR !validaEntero($_GET['camara_del']))&&$_GET['camara_del']!=''){
 				$indice = simpleDecode($_GET['camara_del'], fecha_actual());
@@ -3295,93 +3223,90 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['camara_del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_camaras', 'idCamaraPermiso = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-			
+
 
 		break;
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
 		case 'prm_add_all_camaras':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			//Verifico permisos a las transacciones 
+
+			//Verifico permisos a las transacciones
 			$SIS_query = 'seguridad_camaras_listado.idCamara, (SELECT COUNT(idCamara) FROM usuarios_camaras WHERE idCamara = seguridad_camaras_listado.idCamara AND idUsuario = '.$_GET['idUsuario'].' LIMIT 1) AS contar';
 			$SIS_join  = '';
 			$SIS_where = 'seguridad_camaras_listado.idSistema = '.$_GET['idSistema'];
 			$SIS_order = 'seguridad_camaras_listado.idSistema ASC, seguridad_camaras_listado.Nombre ASC';
 			$arrCajas  = array();
 			$arrCajas  = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 			/****************************************************************/
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+			// si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				/************************************************************************************/
 				//Se entregan los permisos relacionados a la caja
 				foreach ($arrCajas as $caja) {
 					//Si no se ha entregado el permiso
 					if ( $caja['contar']!='1' ) {
 						//filtros
-						if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){ $SIS_data  = "'".$_GET['idUsuario']."'" ;   }else{$SIS_data  = "''";}
-						if(isset($caja['idCamara']) && $caja['idCamara'] != ''){   $SIS_data .= ",'".$caja['idCamara']."'" ;   }else{$SIS_data .= ",''";}
-						
+						if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){ $SIS_data  = "'".$_GET['idUsuario']."'";   }else{$SIS_data  = "''";}
+						if(isset($caja['idCamara']) && $caja['idCamara']!=''){   $SIS_data .= ",'".$caja['idCamara']."'";   }else{$SIS_data .= ",''";}
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idUsuario, idCamara';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'usuarios_camaras', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
 				}
-				
-				
+
 				//redirijo
 				header( 'Location: '.$location.'&created=true' );
 				die;
-								
+
 			}
 
 		break;
 /*******************************************************************************************************************/
 		//se dan permisos al usuario
-		case 'prm_del_all_camaras':	
-		
+		case 'prm_del_all_camaras':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['idUsuario']) OR !validaEntero($_GET['idUsuario']))&&$_GET['idUsuario']!=''){
 				$indice = simpleDecode($_GET['idUsuario'], fecha_actual());
@@ -3389,39 +3314,37 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['idUsuario'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				/***************************************************************************************/
 				//se borran los datos
 				$resultado = db_delete_data (false, 'usuarios_camaras', 'idUsuario = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-		
+
 		break;
 /*******************************************************************************************************************/
 	}

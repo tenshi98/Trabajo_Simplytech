@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "admin_trabajadores_listado.php";
 $location = $original;
 $new_location = "admin_trabajadores_listado_licencia.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -32,13 +32,13 @@ if ( !empty($_POST['submit_edit']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_File_Licencia']) )     {
+if (!empty($_GET['del_File_Licencia'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_File_Licencia';
-	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -53,7 +53,7 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Trabajador editado cor
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Trabajador borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = 'Nombre,ApellidoPat,ApellidoMat,idTipoLicencia,CA_Licencia,LicenciaFechaControlUltimo,LicenciaFechaControl, File_Licencia';
 $SIS_join  = '';
@@ -62,12 +62,12 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Licencia Conducir');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -83,7 +83,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_bonos_fijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Bonos Fijos Asignados</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_cargas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Cargas Familiares</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						
+
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Contrato</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_anexos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Anexos Contrato</a></li>
 						<li class="active"><a href="<?php echo 'admin_trabajadores_listado_licencia.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Licencia Conducir</a></li>
@@ -92,61 +92,61 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Antecedentes</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Carnet</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
-						
+
 					</ul>
-                </li>           
+                </li>
 			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">		
-			
-					<?php 
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
+
+					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipoLicencia)) {               $x1 = $idTipoLicencia;                }else{$x1 = $rowdata['idTipoLicencia'];}
-					if(isset($CA_Licencia)) {                  $x2 = $CA_Licencia;                   }else{$x2 = $rowdata['CA_Licencia'];}
-					if(isset($LicenciaFechaControlUltimo)) {   $x3 = $LicenciaFechaControlUltimo;    }else{$x3 = $rowdata['LicenciaFechaControlUltimo'];}
-					if(isset($LicenciaFechaControl)) {         $x4 = $LicenciaFechaControl;          }else{$x4 = $rowdata['LicenciaFechaControl'];}
-					
+					if(isset($idTipoLicencia)){               $x1 = $idTipoLicencia;                }else{$x1 = $rowdata['idTipoLicencia'];}
+					if(isset($CA_Licencia)){                  $x2 = $CA_Licencia;                   }else{$x2 = $rowdata['CA_Licencia'];}
+					if(isset($LicenciaFechaControlUltimo)){   $x3 = $LicenciaFechaControlUltimo;    }else{$x3 = $rowdata['LicenciaFechaControlUltimo'];}
+					if(isset($LicenciaFechaControl)){         $x4 = $LicenciaFechaControl;          }else{$x4 = $rowdata['LicenciaFechaControl'];}
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Tipo Licencia','idTipoLicencia', $x1, 2, 'idTipoLicencia', 'Nombre', 'core_tipos_licencia_conducir', 0, '', $dbConn);
 					$Form_Inputs->form_input_text('CA Licencia', 'CA_Licencia', $x2, 1);
 					$Form_Inputs->form_date('Fecha Ultimo Control','LicenciaFechaControlUltimo', $x3, 1);
 					$Form_Inputs->form_date('Fecha Control','LicenciaFechaControl', $x4, 1);
-					
+
 					if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
-        
+
 						echo '<div class="col-sm-10 fcenter"><h3>Archivo</h3>';
-						echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Licencia'], ''); 
+						echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Licencia'], '');
 						echo '</div>
-						<a href="'.$new_location.'&id='.$_GET['id'].'&del_File_Licencia='.$_GET['id'].'" class="btn btn-danger fright margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
+						<a href="'.$new_location.'&id='.$_GET['id'].'&del_File_Licencia='.$_GET['id'].'" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 						<div class="clearfix"></div>';
-					
+
 					}else{
 
 						//se dibujan los inputs
 						$Form_Inputs->form_tittle(3, 'Permiso de Circulacion');
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Licencia', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
-						
+
 					}
-					
+
 					$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

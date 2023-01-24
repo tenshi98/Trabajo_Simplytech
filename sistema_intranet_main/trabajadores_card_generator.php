@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "trabajadores_card_generator.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,8 +22,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 // Se traen todos los datos de la tarjeta
 $query = "SELECT 
 card_listado.Nombre AS CardNombre,
@@ -55,7 +55,7 @@ $query = "SELECT
 trabajadores_listado.Direccion_img,
 trabajadores_listado.Nombre,
 trabajadores_listado.ApellidoPat,
-trabajadores_listado.ApellidoMat, 
+trabajadores_listado.ApellidoMat,
 trabajadores_listado.Rut,
 core_sexo.Nombre AS Sexo,
 trabajadores_listado.FNacimiento,
@@ -172,7 +172,7 @@ switch ($rowCard['idCardType']) {
 				   font-size:12px;
 				}';
 			break;
-			
+
 		}
 		
 			
@@ -395,7 +395,7 @@ switch ($rowCard['idCardType']) {
 					<img width="80px" height="100px" style="border:1px solid black;" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png"><br/>
 				<?php }else{  ?>
 					<img width="80px" height="100px" style="border:1px solid black;"  src="upload/<?php echo $rowTrabajador['Direccion_img']; ?>"><br/>
-				<?php }?>			
+				<?php }?>		
 				<div id="card_ID">
 					ID : <?php echo n_doc($_GET['idTrabajador'],5); ?>
 				</div>
@@ -419,43 +419,43 @@ switch ($rowCard['idCardType']) {
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 			
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
- ?>			
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Filtro de busqueda</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+ ?>		
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Filtro de busqueda</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
                
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTrabajador)) {  $x1  = $idTrabajador;  }else{$x1  = '';}
-				if(isset($idCard)) {        $x2  = $idCard;        }else{$x2  = '';}
-				
+				if(isset($idTrabajador)){  $x1  = $idTrabajador;  }else{$x1  = '';}
+				if(isset($idCard)){        $x2  = $idCard;        }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
-				$Form_Inputs->form_select_filter('Tarjeta','idCard', $x2, 2, 'idCard', 'Nombre', 'card_listado', 0, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Tarjeta','idCard', $x2, 2, 'idCard', 'Nombre', 'card_listado', 0, '', $dbConn);
 				
-				?>        
+				?>
 	   
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
 			</form>
-			<?php widget_validator(); ?> 
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>

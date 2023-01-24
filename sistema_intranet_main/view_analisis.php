@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -39,8 +39,8 @@ $SIS_query = 'maquinas_listado_matriz.cantPuntos';
 $SIS_join  = 'LEFT JOIN `maquinas_listado_matriz` ON maquinas_listado_matriz.idMatriz = analisis_listado.idMatriz';
 $SIS_where = 'analisis_listado.idAnalisis ='.$X_Puntero;
 $rowpre = db_select_data (false, $SIS_query, 'analisis_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowpre');
-	
-/**********************************************************************/	
+
+/**********************************************************************/
 //Costruyo cadena con los datos a filtrar
 $consql = '';
 for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
@@ -200,7 +200,7 @@ foreach ($arrFlashpoint as $datos) {
 				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['Analisis_Nombre']?>.
 				<small class="pull-right">Fecha Reporte: <?php echo Fecha_estandar($row_data['Analisis_f_reporte'])?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">
@@ -249,19 +249,19 @@ foreach ($arrFlashpoint as $datos) {
 						Serie: '.$row_data['MaquinaSerie'].'<br/>
 						Fabricante: '.$row_data['MaquinaFabricante'].'<br/>
 						Ubicacion: '.$row_data['MaquinaUbicacion'];
-						if(isset($row_data['MaquinaUbicacion_lvl_1'])&&$row_data['MaquinaUbicacion_lvl_1']!=''){ 
+						if(isset($row_data['MaquinaUbicacion_lvl_1'])&&$row_data['MaquinaUbicacion_lvl_1']!=''){
 							echo ' - '.$row_data['MaquinaUbicacion_lvl_1'];
 						}
-						if(isset($row_data['MaquinaUbicacion_lvl_2'])&&$row_data['MaquinaUbicacion_lvl_2']!=''){ 
+						if(isset($row_data['MaquinaUbicacion_lvl_2'])&&$row_data['MaquinaUbicacion_lvl_2']!=''){
 							echo ' - '.$row_data['MaquinaUbicacion_lvl_2'];
 						}
-						if(isset($row_data['MaquinaUbicacion_lvl_3'])&&$row_data['MaquinaUbicacion_lvl_3']!=''){ 
+						if(isset($row_data['MaquinaUbicacion_lvl_3'])&&$row_data['MaquinaUbicacion_lvl_3']!=''){
 							echo ' - '.$row_data['MaquinaUbicacion_lvl_3'];
 						}
-						if(isset($row_data['MaquinaUbicacion_lvl_4'])&&$row_data['MaquinaUbicacion_lvl_4']!=''){ 
+						if(isset($row_data['MaquinaUbicacion_lvl_4'])&&$row_data['MaquinaUbicacion_lvl_4']!=''){
 							echo ' - '.$row_data['MaquinaUbicacion_lvl_4'];
 						}
-						if(isset($row_data['MaquinaUbicacion_lvl_5'])&&$row_data['MaquinaUbicacion_lvl_5']!=''){ 
+						if(isset($row_data['MaquinaUbicacion_lvl_5'])&&$row_data['MaquinaUbicacion_lvl_5']!=''){
 							echo ' - '.$row_data['MaquinaUbicacion_lvl_5'];
 						}
 					echo '
@@ -272,20 +272,20 @@ foreach ($arrFlashpoint as $datos) {
 					<strong>Datos</strong><br/>
 					<strong>Estado: </strong>'.$row_data['Analisis_Estado'].'<br/>
 					<strong>Sistema: </strong>'.$row_data['Analisis_Sistema'].'<br/>';
-					
-					if(isset($row_data['Analisis_OT'])&&$row_data['Analisis_OT']!=''&&$row_data['Analisis_OT']!=0){ 
+
+					if(isset($row_data['Analisis_OT'])&&$row_data['Analisis_OT']!=''&&$row_data['Analisis_OT']!=0){
 						echo '<strong>Orden Trabajo Relacionada: </strong>'.$row_data['Analisis_OT'].'<br/>';
 					}
-					if(isset($row_data['Analisis_f_muestreo'])&&$row_data['Analisis_f_muestreo']!=''&&$row_data['Analisis_f_muestreo']!='0000-00-00'){ 
+					if(isset($row_data['Analisis_f_muestreo'])&&$row_data['Analisis_f_muestreo']!=''&&$row_data['Analisis_f_muestreo']!='0000-00-00'){
 						echo '<strong>Fecha Muestreo : </strong>'.Fecha_estandar($row_data['Analisis_f_muestreo']).'<br/>';
 					}
-					if(isset($row_data['Analisis_f_recibida'])&&$row_data['Analisis_f_recibida']!=''&&$row_data['Analisis_f_recibida']!='0000-00-00'){ 
+					if(isset($row_data['Analisis_f_recibida'])&&$row_data['Analisis_f_recibida']!=''&&$row_data['Analisis_f_recibida']!='0000-00-00'){
 						echo '<strong>Fecha Recepcion : </strong>'.Fecha_estandar($row_data['Analisis_f_recibida']).'<br/>';
 					}
-					if(isset($row_data['Analisis_f_reporte'])&&$row_data['Analisis_f_reporte']!=''&&$row_data['Analisis_f_reporte']!='0000-00-00'){ 
+					if(isset($row_data['Analisis_f_reporte'])&&$row_data['Analisis_f_reporte']!=''&&$row_data['Analisis_f_reporte']!='0000-00-00'){
 						echo '<strong>Fecha Reporte : </strong>'.Fecha_estandar($row_data['Analisis_f_reporte']).'<br/>';
 					}
-					if(isset($row_data['Analisis_n_muestra'])&&$row_data['Analisis_n_muestra']!=''){ 
+					if(isset($row_data['Analisis_n_muestra'])&&$row_data['Analisis_n_muestra']!=''){
 						echo '<strong>Muestra N° : </strong>'.$row_data['Analisis_n_muestra'].'<br/>';
 					}
 				echo '</div>';
@@ -334,7 +334,7 @@ foreach ($arrFlashpoint as $datos) {
 							$Producto     = $arrFinalProducto[$row_data['Analisis_Medida_'.$i]]['Nombre'];
 							$Dispersancia = $arrFinalDispersancia[$row_data['Analisis_Medida_'.$i]]['Nombre'];
 							$Flashpoint   = $arrFinalFlashpoint[$row_data['Analisis_Medida_'.$i]]['Nombre'];
-							
+
 							//comparo el tipo de dato a mostrar
 							switch ($row_data['PuntoidTipo_'.$i]) {
 								//Medidas
@@ -378,7 +378,7 @@ foreach ($arrFlashpoint as $datos) {
 											$alert_lvl = 'color-red-dark'; //roja
 										}
 										
-									}							
+									}
 								
 									/*******************************/
 									echo '<tr>';
@@ -417,7 +417,7 @@ foreach ($arrFlashpoint as $datos) {
 					echo '</table>';	
 						
 				} 	
-			} ?>	
+			} ?>
 			
 
 
@@ -450,12 +450,12 @@ foreach ($arrFlashpoint as $datos) {
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -466,12 +466,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

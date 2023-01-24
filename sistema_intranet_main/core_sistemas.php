@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistemas.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -21,16 +21,16 @@ $location .='?pagina='.$_GET['pagina'];
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';	
+	require_once 'A1XRXS_sys/xrxs_form/core_sistemas.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -45,23 +45,23 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sistema editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 // consulto los datos
 $SIS_query = '
-core_sistemas.Nombre,  
-core_sistemas.Rut, 
-core_ubicacion_ciudad.Nombre AS Ciudad, 
-core_ubicacion_comunas.Nombre AS Comuna, 
-core_sistemas.Direccion, 
-core_sistemas.Contacto_Nombre, 
-core_sistemas.Contacto_Fono1, 
-core_sistemas.Contacto_Fono2, 
-core_sistemas.Contacto_Fax, 
-core_sistemas.Contacto_Web, 
-core_sistemas.Contacto_Email, 
+core_sistemas.Nombre,
+core_sistemas.Rut,
+core_ubicacion_ciudad.Nombre AS Ciudad,
+core_ubicacion_comunas.Nombre AS Comuna,
+core_sistemas.Direccion,
+core_sistemas.Contacto_Nombre,
+core_sistemas.Contacto_Fono1,
+core_sistemas.Contacto_Fono2,
+core_sistemas.Contacto_Fax,
+core_sistemas.Contacto_Web,
+core_sistemas.Contacto_Email,
 core_sistemas.email_principal, 
-core_sistemas.Contrato_Nombre, 
+core_sistemas.Contrato_Nombre,
 core_sistemas.Contrato_Numero, 
 core_sistemas.Contrato_Fecha, 
 core_sistemas.Contrato_Duracion,
@@ -120,16 +120,16 @@ LEFT JOIN `core_config_ram`                    ON core_config_ram.idConfigRam   
 LEFT JOIN `core_config_time`                   ON core_config_time.idConfigTime                    = core_sistemas.idConfigTime
 LEFT JOIN `core_sistemas_opciones`  socialUso  ON socialUso.idOpciones                             = core_sistemas.Social_idUso';
 $SIS_where = 'core_sistemas.idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -152,15 +152,15 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
-						<div class="col-sm-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary">Datos Basicos</h2>
 							<p class="text-muted word_break">
 								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -252,7 +252,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php 
 							//se arma la direccion
@@ -273,45 +273,45 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 				<div class="clearfix"></div>
 				
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} elseif ( ! empty($_GET['new']) ) {  ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){ ?>
 	
-<div class="col-sm-9 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Sistema</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {           $x1  = $Nombre;           }else{$x1  = '';}
-				if(isset($Rut)) {              $x2  = $Rut;              }else{$x2  = '';}
-				if(isset($idCiudad)) {         $x3  = $idCiudad;         }else{$x3  = '';}
-				if(isset($idComuna)) {         $x4  = $idComuna;         }else{$x4  = '';}
-				if(isset($Direccion)) {        $x5  = $Direccion;        }else{$x5  = '';}
-				
+				if(isset($Nombre)){           $x1  = $Nombre;           }else{$x1  = '';}
+				if(isset($Rut)){              $x2  = $Rut;              }else{$x2  = '';}
+				if(isset($idCiudad)){         $x3  = $idCiudad;         }else{$x3  = '';}
+				if(isset($idComuna)){         $x4  = $idComuna;         }else{$x4  = '';}
+				if(isset($Direccion)){        $x5  = $Direccion;        }else{$x5  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x2, 2);
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										 'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
-										 $dbConn, 'form1');	
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');            
+										 'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
+										 $dbConn, 'form1');
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
 				
 				$Form_Inputs->form_input_hidden('Config_idTheme', 1, 2);
 				$Form_Inputs->form_input_hidden('idOpcionesGen_1', 1, 2);
@@ -331,40 +331,31 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 				?>
 	 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 //Creo la variable con la ubicacion
 $SIS_where = "core_sistemas.idSistema!=0 ";
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
-$cuenta_registros = db_select_nrows (false, 'core_sistemas.idSistema', 'core_sistemas', 'LEFT JOIN `core_estados`  ON core_estados.idEstado  = core_sistemas.idEstado', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
+$cuenta_registros = db_select_nrows (false, 'core_sistemas.idSistema', 'core_sistemas','LEFT JOIN `core_estados`  ON core_estados.idEstado  = core_sistemas.idEstado', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 core_sistemas.idSistema,
@@ -375,18 +366,18 @@ core_estados.Nombre AS estado';
 $SIS_join  = 'LEFT JOIN `core_estados`  ON core_estados.idEstado  = core_sistemas.idEstado';
 $SIS_order = 'core_estados.Nombre ASC, core_sistemas.Nombre ASC LIMIT '.$comienzo.', '.$cant_reg;
 $arrSistemas = array();
-$arrSistemas = db_select_array (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
+$arrSistemas = db_select_array (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
 /**********************************************************/
 //paginacion
 $search='';
 ?>
 
-<div class="col-sm-12">
-	<a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Sistema</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Sistema</a>
 </div>
-<div class="clearfix"></div>                       
+<div class="clearfix"></div>
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Sistemas</h5>
@@ -412,7 +403,7 @@ $search='';
 					<tr class="odd">
 						<td><?php echo $tipo['Nombre']; ?></td>
 						<td><?php echo $tipo['Rut']; ?></td>
-						<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $tipo['estado']; ?></label></td>		
+						<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $tipo['estado']; ?></label></td>	
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo 'view_sistema.php?view='.simpleEncode($tipo['idSistema'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
@@ -420,15 +411,15 @@ $search='';
 								<?php 
 								$ubicacion = $location.'&del='.simpleEncode($tipo['idSistema'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el sistema '.$tipo['Nombre'].'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
-							</div>			
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
-		</div>	
-		<div class="pagrow">	
+		</div>
+		<div class="pagrow">
 			<?php 
 			//paginacion
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>

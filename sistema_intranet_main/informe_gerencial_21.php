@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_gerencial_21.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -25,8 +25,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //Solo compras pagadas totalmente
 $z1 = "WHERE bodegas_arriendos_facturacion.idTipo=1"; //solo ventas
 $z2 = "WHERE bodegas_insumos_facturacion.idTipo=1";   //solo ventas
@@ -39,7 +39,7 @@ $z3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic
 $z4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //variable
 $search = '';
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){ 
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){
 	$z1.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['idProveedor'];
 	$z2.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];
 	$z3.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];
@@ -47,7 +47,7 @@ if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){
 	$location .="&idProveedor=".$_GET['idProveedor'];
 	$search .="&idProveedor=".$_GET['idProveedor'];
 }
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){ 
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){
 	$z1.=" AND bodegas_arriendos_facturacion.idEstado=".$_GET['idEstado'];
 	$z2.=" AND bodegas_insumos_facturacion.idEstado=".$_GET['idEstado'];
 	$z3.=" AND bodegas_productos_facturacion.idEstado=".$_GET['idEstado'];
@@ -55,7 +55,7 @@ if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){
 	$location .="&idEstado=".$_GET['idEstado'];
 	$search .="&idEstado=".$_GET['idEstado'];
 }
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ 
+if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 	$z1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$z2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$z3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
@@ -98,7 +98,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_1,$row );
 }
 /*************************************************************************************************/
@@ -131,7 +131,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_2,$row );
 }
 /*************************************************************************************************/
@@ -164,7 +164,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_3,$row );
 }
 /*************************************************************************************************/
@@ -197,7 +197,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal_4,$row );
 }
 
@@ -211,7 +211,7 @@ array_push( $arrTemporal_4,$row );
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="table-responsive" style="height: 800px;">
 		
 		<?php 
@@ -266,32 +266,32 @@ array_push( $arrTemporal_4,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProveedor)) {  $x1  = $idProveedor;  }else{$x1  = '';}
-				if(isset($idEstado)) {     $x2  = $idEstado;     }else{$x2  = '';}
-				if(isset($f_inicio)) {     $x3  = $f_inicio;     }else{$x3  = '';}
-				if(isset($f_termino)) {    $x4  = $f_termino;    }else{$x4  = '';}
-				
+				if(isset($idProveedor)){  $x1  = $idProveedor;  }else{$x1  = '';}
+				if(isset($idEstado)){     $x2  = $idEstado;     }else{$x2  = '';}
+				if(isset($f_inicio)){     $x3  = $f_inicio;     }else{$x3  = '';}
+				if(isset($f_termino)){    $x4  = $f_termino;    }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Rut,Nombre', 'proveedor_listado', $z, '', $dbConn);
@@ -299,14 +299,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x3, 1);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 1);
 						
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

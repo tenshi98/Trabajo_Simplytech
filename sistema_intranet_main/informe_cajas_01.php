@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_cajas_01.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -18,12 +18,12 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /********************************************************************/
 //Variables para filtro y paginacion
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idCajaChica']) && $_GET['idCajaChica'] != ''){                            $location .= "&idCajaChica=".$_GET['idCajaChica'];                            $search .= "&idCajaChica=".$_GET['idCajaChica'];}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){                          $location .= "&idTrabajador=".$_GET['idTrabajador'];                          $search .= "&idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){                      $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];                      $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
-if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada'] != ''){  $location .= "&idFacturacionRelacionada=".$_GET['idFacturacionRelacionada'];  $search .= "&idFacturacionRelacionada=".$_GET['idFacturacionRelacionada'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                                      $location .= "&idTipo=".$_GET['idTipo'];                                      $search .= "&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                                  $location .= "&idEstado=".$_GET['idEstado'];                                  $search .= "&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idCajaChica']) && $_GET['idCajaChica']!=''){                     $location .= "&idCajaChica=".$_GET['idCajaChica'];                            $search .= "&idCajaChica=".$_GET['idCajaChica'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){                   $location .= "&idTrabajador=".$_GET['idTrabajador'];                          $search .= "&idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){               $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];                      $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
+if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada']!=''){  $location .= "&idFacturacionRelacionada=".$_GET['idFacturacionRelacionada'];  $search .= "&idFacturacionRelacionada=".$_GET['idFacturacionRelacionada'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                               $location .= "&idTipo=".$_GET['idTipo'];                                      $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){                           $location .= "&idEstado=".$_GET['idEstado'];                                  $search .= "&idEstado=".$_GET['idEstado'];}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -31,27 +31,18 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 
              
   
 
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 $order_by = 'caja_chica_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
@@ -59,21 +50,21 @@ $order_by = 'caja_chica_facturacion.Creacion_fecha DESC '; $bread_order = '<i cl
 //Variable con la ubicacion
 $SIS_where = "caja_chica_facturacion.idTipo!=0";//Solo egresos
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where.= " AND caja_chica_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND caja_chica_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCajaChica']) && $_GET['idCajaChica'] != ''){                            $SIS_where .= " AND caja_chica_facturacion.idCajaChica=".$_GET['idCajaChica'];}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){                          $SIS_where .= " AND caja_chica_facturacion.idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){                      $SIS_where .= " AND caja_chica_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada'] != ''){  $SIS_where .= " AND caja_chica_facturacion.idFacturacionRelacionada='".$_GET['idFacturacionRelacionada']."'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                                      $SIS_where .= " AND caja_chica_facturacion.idTipo='".$_GET['idTipo']."'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                                  $SIS_where .= " AND caja_chica_facturacion.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['idCajaChica']) && $_GET['idCajaChica']!=''){                     $SIS_where .= " AND caja_chica_facturacion.idCajaChica=".$_GET['idCajaChica'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){                   $SIS_where .= " AND caja_chica_facturacion.idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){               $SIS_where .= " AND caja_chica_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada']!=''){  $SIS_where .= " AND caja_chica_facturacion.idFacturacionRelacionada='".$_GET['idFacturacionRelacionada']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                               $SIS_where .= " AND caja_chica_facturacion.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){                           $SIS_where .= " AND caja_chica_facturacion.idEstado='".$_GET['idEstado']."'";}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idFacturacion', 'caja_chica_facturacion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 caja_chica_facturacion.idFacturacion AS ID,
@@ -99,18 +90,18 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
-		<li class="btn btn-default"><?php echo $bread_order; ?></li>	
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
 
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                      
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Cotizaciones</h5>
@@ -120,7 +111,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -182,11 +173,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
@@ -197,38 +188,38 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 $z = "caja_chica_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_cajas_chicas.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];			
+	$z .= " AND usuarios_cajas_chicas.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCajaChica)) {                $x1  = $idCajaChica;               }else{$x1  = '';}
-				if(isset($idTrabajador)) {               $x2  = $idTrabajador;              }else{$x2  = '';}
-				if(isset($Creacion_fecha)) {             $x3  = $Creacion_fecha;            }else{$x3  = '';}
-				if(isset($idFacturacionRelacionada)) {   $x4  = $idFacturacionRelacionada;  }else{$x4  = '';}
-				if(isset($idTipo)) {                     $x5  = $idTipo;                    }else{$x5  = '';}
-				if(isset($idEstado)) {                   $x6  = $idEstado;                  }else{$x6  = '';}
-				
+				if(isset($idCajaChica)){                $x1  = $idCajaChica;               }else{$x1  = '';}
+				if(isset($idTrabajador)){               $x2  = $idTrabajador;              }else{$x2  = '';}
+				if(isset($Creacion_fecha)){             $x3  = $Creacion_fecha;            }else{$x3  = '';}
+				if(isset($idFacturacionRelacionada)){   $x4  = $idFacturacionRelacionada;  }else{$x4  = '';}
+				if(isset($idTipo)){                     $x5  = $idTipo;                    }else{$x5  = '';}
+				if(isset($idEstado)){                   $x6  = $idEstado;                  }else{$x6  = '';}
+
 				//se dibujan los inputs	
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Caja','idCajaChica', $x1, 2, 'idCajaChica', 'Nombre', 'caja_chica_listado', 'usuarios_cajas_chicas', $z, $dbConn);
@@ -238,18 +229,18 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select('Tipo Movimiento','idTipo', $x5, 1, 'idTipo', 'Nombre', 'caja_chica_facturacion_tipo', 0, '', $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_caja', 0, '', $dbConn);
 				
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

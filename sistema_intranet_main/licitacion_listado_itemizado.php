@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "licitacion_listado.php";
 $location = $original;
 $new_location = "licitacion_listado_itemizado.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_idLevel']) )  { 
+if (!empty($_POST['submit_idLevel'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -32,7 +32,7 @@ if ( !empty($_POST['submit_idLevel']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_licitacion_listado.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit_idLevel']) )  { 
+if (!empty($_POST['submit_edit_idLevel'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
@@ -41,13 +41,13 @@ if ( !empty($_POST['submit_edit_idLevel']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_licitacion_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_idLevel']) )     {
+if (!empty($_GET['del_idLevel'])){
 	//Agregamos nuevas direcciones
 	$location = $new_location;
 	$location.= '&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_item';
-	require_once 'A1XRXS_sys/xrxs_form/z_licitacion_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_licitacion_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -62,10 +62,10 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Contrato editada corre
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Contrato borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['edit']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['edit'])){
 // consulto los datos
-$query = "SELECT Nombre, Codigo, idUtilizable, idFrecuencia, Cantidad, TiempoProgramado, idTrabajo, Valor, ValorTotal
+$query = "SELECT Nombre,Codigo, idUtilizable, idFrecuencia, Cantidad, TiempoProgramado, idTrabajo, Valor, ValorTotal
 FROM `licitacion_listado_level_".$_GET['lvl']."`
 WHERE idLevel_".$_GET['lvl']." = ".$_GET['edit'];
 //Consulta
@@ -84,31 +84,31 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Rama</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Codigo)) {            $x2  = $Codigo;             }else{$x2  = $rowdata['Codigo'];}
-				if(isset($idUtilizable)) {      $x3  = $idUtilizable;       }else{$x3  = $rowdata['idUtilizable'];}
-				if(isset($idFrecuencia)) {      $x4  = $idFrecuencia;       }else{$x4  = $rowdata['idFrecuencia'];}
-				if(isset($Cantidad)) {          $x5  = $Cantidad;           }else{$x5  = $rowdata['Cantidad'];}
-				if(isset($TiempoProgramado)) {  $x6  = $TiempoProgramado;   }else{$x6  = $rowdata['TiempoProgramado'];}
-				if(isset($idTrabajo)) {         $x7  = $idTrabajo;          }else{$x7  = $rowdata['idTrabajo'];}
-				if(isset($Valor)) {             $x8  = $Valor;              }else{$x8  = $rowdata['Valor'];}
-				if(isset($ValorTotal)) {        $x9  = $ValorTotal;         }else{$x9  = $rowdata['ValorTotal'];}
+				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
+				if(isset($Codigo)){            $x2  = $Codigo;             }else{$x2  = $rowdata['Codigo'];}
+				if(isset($idUtilizable)){      $x3  = $idUtilizable;       }else{$x3  = $rowdata['idUtilizable'];}
+				if(isset($idFrecuencia)){      $x4  = $idFrecuencia;       }else{$x4  = $rowdata['idFrecuencia'];}
+				if(isset($Cantidad)){          $x5  = $Cantidad;           }else{$x5  = $rowdata['Cantidad'];}
+				if(isset($TiempoProgramado)){  $x6  = $TiempoProgramado;   }else{$x6  = $rowdata['TiempoProgramado'];}
+				if(isset($idTrabajo)){         $x7  = $idTrabajo;          }else{$x7  = $rowdata['idTrabajo'];}
+				if(isset($Valor)){             $x8  = $Valor;             }else{$x8  = $rowdata['Valor'];}
+				if(isset($ValorTotal)){        $x9  = $ValorTotal;         }else{$x9  = $rowdata['ValorTotal'];}
 				
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 2);
 				$Form_Inputs->form_select('Utilizable','idUtilizable', $x3, 2, 'idUtilizable', 'Nombre', 'core_estado_utilizable', 0, '', $dbConn);
 				
@@ -118,10 +118,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Tipo Trabajo','idTrabajo', $x7, 1, 'idTrabajo', 'Nombre', 'core_licitacion_trabajos', 0, '', $dbConn);
 				
 				
-				$Form_Inputs->form_input_number('Valor', 'Valor', $x8, 1);	
+				$Form_Inputs->form_input_number('Valor', 'Valor', $x8, 1);
 				echo '<div class="form-group" id="div_ValorTotal">
-					<label class="control-label col-sm-4" id="label_">Valor Total</label>
-					<div class="col-sm-8">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Valor Total</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<input value="'.$x9.'" type="text" placeholder="Valor Total" class="form-control"  name="Total" id="Total" disabled >
 					</div>
 				</div>';
@@ -133,7 +133,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_hidden('idLicitacion', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 				  	 
-				?>    
+				?> 
 				<script>
 					//funcion para actualizar el valor total
 				document.getElementById("Valor").onkeyup = function() {myFunction()};
@@ -158,37 +158,37 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_Valor').style.display = 'none';
 					document.getElementById('div_ValorTotal').style.display = 'none';
 							
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 								
 						let Sensores_val= $("#idUtilizable").val();
 								
 						//si es SI
-						if(Sensores_val == 1){ 
+						if(Sensores_val == 1){
 							document.getElementById('div_idFrecuencia').style.display = 'none';
 							document.getElementById('div_Cantidad').style.display = 'none';
 							document.getElementById('div_TiempoProgramado').style.display = 'none';
 							document.getElementById('div_idTrabajo').style.display = 'none';
 							document.getElementById('div_Valor').style.display = 'none';
-							document.getElementById('div_ValorTotal').style.display = 'none';						
+							document.getElementById('div_ValorTotal').style.display = 'none';
 									
 						//si es NO
-						} else if(Sensores_val == 2){ 
+						} else if(Sensores_val == 2){
 							document.getElementById('div_idFrecuencia').style.display = '';
 							document.getElementById('div_Cantidad').style.display = '';
 							document.getElementById('div_TiempoProgramado').style.display = '';
 							document.getElementById('div_idTrabajo').style.display = '';
 							document.getElementById('div_Valor').style.display = '';
-							document.getElementById('div_ValorTotal').style.display = '';	
+							document.getElementById('div_ValorTotal').style.display = '';
 						}
 								
 								
-					}); 
+					});
 							
 					$("#idUtilizable").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si es SI
-						if(modelSelected1 == 1){ 
+						if(modelSelected1 == 1){
 							document.getElementById('div_idFrecuencia').style.display = 'none';
 							document.getElementById('div_Cantidad').style.display = 'none';
 							document.getElementById('div_TiempoProgramado').style.display = 'none';
@@ -204,90 +204,90 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							document.getElementById('ValorTotal').value = "0";
 																
 						//si es NO
-						} else if(modelSelected1 == 2){ 
+						} else if(modelSelected1 == 2){
 							document.getElementById('div_idFrecuencia').style.display = '';
 							document.getElementById('div_Cantidad').style.display = '';
 							document.getElementById('div_TiempoProgramado').style.display = '';
 							document.getElementById('div_idTrabajo').style.display = '';
 							document.getElementById('div_Valor').style.display = '';
 							document.getElementById('div_ValorTotal').style.display = '';
-							
+
 						}
 					});
 							
 							
-				</script>    
+				</script>
 	   
 				<div class="form-group">
 				
 					
-					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){   $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
-					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){   $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
-					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){   $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
-					<?php if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){   $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);} ?>
-					<?php if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){   $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);} ?>
-					<?php if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){   $Form_Inputs->form_input_hidden('idLevel_6', $_GET['lv_6'], 2);} ?>
-					<?php if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){   $Form_Inputs->form_input_hidden('idLevel_7', $_GET['lv_7'], 2);} ?>
-					<?php if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){   $Form_Inputs->form_input_hidden('idLevel_8', $_GET['lv_8'], 2);} ?>
-					<?php if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){   $Form_Inputs->form_input_hidden('idLevel_9', $_GET['lv_9'], 2);} ?>
-					<?php if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){ $Form_Inputs->form_input_hidden('idLevel_10', $_GET['lv_10'], 2);} ?>
-					<?php if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){ $Form_Inputs->form_input_hidden('idLevel_11', $_GET['lv_11'], 2);} ?>
-					<?php if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){ $Form_Inputs->form_input_hidden('idLevel_12', $_GET['lv_12'], 2);} ?>
-					<?php if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){ $Form_Inputs->form_input_hidden('idLevel_13', $_GET['lv_13'], 2);} ?>
-					<?php if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){ $Form_Inputs->form_input_hidden('idLevel_14', $_GET['lv_14'], 2);} ?>
-					<?php if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){ $Form_Inputs->form_input_hidden('idLevel_15', $_GET['lv_15'], 2);} ?>
-					<?php if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){ $Form_Inputs->form_input_hidden('idLevel_16', $_GET['lv_16'], 2);} ?>
-					<?php if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){ $Form_Inputs->form_input_hidden('idLevel_17', $_GET['lv_17'], 2);} ?>
-					<?php if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){ $Form_Inputs->form_input_hidden('idLevel_18', $_GET['lv_18'], 2);} ?>
-					<?php if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){ $Form_Inputs->form_input_hidden('idLevel_19', $_GET['lv_19'], 2);} ?>
-					<?php if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){ $Form_Inputs->form_input_hidden('idLevel_20', $_GET['lv_20'], 2);} ?>
-					<?php if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){ $Form_Inputs->form_input_hidden('idLevel_21', $_GET['lv_21'], 2);} ?>
-					<?php if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){ $Form_Inputs->form_input_hidden('idLevel_22', $_GET['lv_22'], 2);} ?>
-					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){ $Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
-					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){ $Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
-					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){ $Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
+					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
+					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
+					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
+					<?php if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){  $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);} ?>
+					<?php if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){  $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);} ?>
+					<?php if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){  $Form_Inputs->form_input_hidden('idLevel_6', $_GET['lv_6'], 2);} ?>
+					<?php if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){  $Form_Inputs->form_input_hidden('idLevel_7', $_GET['lv_7'], 2);} ?>
+					<?php if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){  $Form_Inputs->form_input_hidden('idLevel_8', $_GET['lv_8'], 2);} ?>
+					<?php if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){  $Form_Inputs->form_input_hidden('idLevel_9', $_GET['lv_9'], 2);} ?>
+					<?php if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){$Form_Inputs->form_input_hidden('idLevel_10', $_GET['lv_10'], 2);} ?>
+					<?php if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){$Form_Inputs->form_input_hidden('idLevel_11', $_GET['lv_11'], 2);} ?>
+					<?php if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){$Form_Inputs->form_input_hidden('idLevel_12', $_GET['lv_12'], 2);} ?>
+					<?php if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){$Form_Inputs->form_input_hidden('idLevel_13', $_GET['lv_13'], 2);} ?>
+					<?php if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){$Form_Inputs->form_input_hidden('idLevel_14', $_GET['lv_14'], 2);} ?>
+					<?php if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){$Form_Inputs->form_input_hidden('idLevel_15', $_GET['lv_15'], 2);} ?>
+					<?php if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){$Form_Inputs->form_input_hidden('idLevel_16', $_GET['lv_16'], 2);} ?>
+					<?php if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){$Form_Inputs->form_input_hidden('idLevel_17', $_GET['lv_17'], 2);} ?>
+					<?php if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){$Form_Inputs->form_input_hidden('idLevel_18', $_GET['lv_18'], 2);} ?>
+					<?php if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){$Form_Inputs->form_input_hidden('idLevel_19', $_GET['lv_19'], 2);} ?>
+					<?php if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){$Form_Inputs->form_input_hidden('idLevel_20', $_GET['lv_20'], 2);} ?>
+					<?php if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){$Form_Inputs->form_input_hidden('idLevel_21', $_GET['lv_21'], 2);} ?>
+					<?php if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){$Form_Inputs->form_input_hidden('idLevel_22', $_GET['lv_22'], 2);} ?>
+					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
+					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
+					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
 			
 				
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel"> 
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel"> 
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>       
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Rama</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {            $x1  = $Nombre;             }else{$x1  = '';}
-				if(isset($Codigo)) {            $x2  = $Codigo;             }else{$x2  = '';}
-				if(isset($idUtilizable)) {      $x3  = $idUtilizable;       }else{$x3  = '';}
-				if(isset($idFrecuencia)) {      $x4  = $idFrecuencia;       }else{$x4  = '';}
-				if(isset($Cantidad)) {          $x5  = $Cantidad;           }else{$x5  = '';}
-				if(isset($TiempoProgramado)) {  $x6  = $TiempoProgramado;   }else{$x6  = '';}
-				if(isset($idTrabajo)) {         $x7  = $idTrabajo;          }else{$x7  = '';}
-				if(isset($Valor)) {             $x8  = $Valor;              }else{$x8  = '';}
-				if(isset($ValorTotal)) {        $x9  = $ValorTotal;         }else{$x9  = '';}
+				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = '';}
+				if(isset($Codigo)){            $x2  = $Codigo;             }else{$x2  = '';}
+				if(isset($idUtilizable)){      $x3  = $idUtilizable;       }else{$x3  = '';}
+				if(isset($idFrecuencia)){      $x4  = $idFrecuencia;       }else{$x4  = '';}
+				if(isset($Cantidad)){          $x5  = $Cantidad;           }else{$x5  = '';}
+				if(isset($TiempoProgramado)){  $x6  = $TiempoProgramado;   }else{$x6  = '';}
+				if(isset($idTrabajo)){         $x7  = $idTrabajo;          }else{$x7  = '';}
+				if(isset($Valor)){             $x8  = $Valor;             }else{$x8  = '';}
+				if(isset($ValorTotal)){        $x9  = $ValorTotal;         }else{$x9  = '';}
 				
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 2);
 				$Form_Inputs->form_select('Utilizable','idUtilizable', $x3, 2, 'idUtilizable', 'Nombre', 'core_estado_utilizable', 0, '', $dbConn);
 				
@@ -297,10 +297,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_select('Tipo Trabajo','idTrabajo', $x7, 1, 'idTrabajo', 'Nombre', 'core_licitacion_trabajos', 0, '', $dbConn);
 				
 				
-				$Form_Inputs->form_input_number('Valor', 'Valor', $x8, 1);	
+				$Form_Inputs->form_input_number('Valor', 'Valor', $x8, 1);
 				echo '<div class="form-group" id="div_ValorTotal">
-					<label class="control-label col-sm-4" id="label_">Valor Total</label>
-					<div class="col-sm-8">
+					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Valor Total</label>
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<input value="'.$x9.'" type="text" placeholder="Valor Total" class="form-control"  name="Total" id="Total" disabled >
 					</div>
 				</div>';
@@ -310,7 +310,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_hidden('idLicitacion', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 				
-				?> 
+				?>
 				
 					
 				<script>
@@ -328,7 +328,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 						}
 					}
 				
-				</script>  
+				</script>
 				<script>
 					document.getElementById('div_idFrecuencia').style.display = 'none';
 					document.getElementById('div_Cantidad').style.display = 'none';
@@ -341,7 +341,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si es SI
-						if(modelSelected1 == 1){ 
+						if(modelSelected1 == 1){
 							document.getElementById('div_idFrecuencia').style.display = 'none';
 							document.getElementById('div_Cantidad').style.display = 'none';
 							document.getElementById('div_TiempoProgramado').style.display = 'none';
@@ -357,59 +357,59 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 							document.getElementById('ValorTotal').value = "0";
 																
 						//si es NO
-						} else if(modelSelected1 == 2){ 
+						} else if(modelSelected1 == 2){
 							document.getElementById('div_idFrecuencia').style.display = '';
 							document.getElementById('div_Cantidad').style.display = '';
 							document.getElementById('div_TiempoProgramado').style.display = '';
 							document.getElementById('div_idTrabajo').style.display = '';
 							document.getElementById('div_Valor').style.display = '';
 							document.getElementById('div_ValorTotal').style.display = '';
-							
+
 						}
 					});
 							
 							
-				</script>      
+				</script>
 	   
 				<div class="form-group">
 					
 					
-					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){   $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
-					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){   $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
-					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){   $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
-					<?php if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){   $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);} ?>
-					<?php if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){   $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);} ?>
-					<?php if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){   $Form_Inputs->form_input_hidden('idLevel_6', $_GET['lv_6'], 2);} ?>
-					<?php if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){   $Form_Inputs->form_input_hidden('idLevel_7', $_GET['lv_7'], 2);} ?>
-					<?php if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){   $Form_Inputs->form_input_hidden('idLevel_8', $_GET['lv_8'], 2);} ?>
-					<?php if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){   $Form_Inputs->form_input_hidden('idLevel_9', $_GET['lv_9'], 2);} ?>
-					<?php if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){ $Form_Inputs->form_input_hidden('idLevel_10', $_GET['lv_10'], 2);} ?>
-					<?php if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){ $Form_Inputs->form_input_hidden('idLevel_11', $_GET['lv_11'], 2);} ?>
-					<?php if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){ $Form_Inputs->form_input_hidden('idLevel_12', $_GET['lv_12'], 2);} ?>
-					<?php if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){ $Form_Inputs->form_input_hidden('idLevel_13', $_GET['lv_13'], 2);} ?>
-					<?php if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){ $Form_Inputs->form_input_hidden('idLevel_14', $_GET['lv_14'], 2);} ?>
-					<?php if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){ $Form_Inputs->form_input_hidden('idLevel_15', $_GET['lv_15'], 2);} ?>
-					<?php if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){ $Form_Inputs->form_input_hidden('idLevel_16', $_GET['lv_16'], 2);} ?>
-					<?php if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){ $Form_Inputs->form_input_hidden('idLevel_17', $_GET['lv_17'], 2);} ?>
-					<?php if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){ $Form_Inputs->form_input_hidden('idLevel_18', $_GET['lv_18'], 2);} ?>
-					<?php if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){ $Form_Inputs->form_input_hidden('idLevel_19', $_GET['lv_19'], 2);} ?>
-					<?php if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){ $Form_Inputs->form_input_hidden('idLevel_20', $_GET['lv_20'], 2);} ?>
-					<?php if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){ $Form_Inputs->form_input_hidden('idLevel_21', $_GET['lv_21'], 2);} ?>
-					<?php if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){ $Form_Inputs->form_input_hidden('idLevel_22', $_GET['lv_22'], 2);} ?>
-					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){ $Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
-					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){ $Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
-					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){ $Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
+					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
+					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
+					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
+					<?php if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){  $Form_Inputs->form_input_hidden('idLevel_4', $_GET['lv_4'], 2);} ?>
+					<?php if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){  $Form_Inputs->form_input_hidden('idLevel_5', $_GET['lv_5'], 2);} ?>
+					<?php if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){  $Form_Inputs->form_input_hidden('idLevel_6', $_GET['lv_6'], 2);} ?>
+					<?php if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){  $Form_Inputs->form_input_hidden('idLevel_7', $_GET['lv_7'], 2);} ?>
+					<?php if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){  $Form_Inputs->form_input_hidden('idLevel_8', $_GET['lv_8'], 2);} ?>
+					<?php if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){  $Form_Inputs->form_input_hidden('idLevel_9', $_GET['lv_9'], 2);} ?>
+					<?php if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){$Form_Inputs->form_input_hidden('idLevel_10', $_GET['lv_10'], 2);} ?>
+					<?php if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){$Form_Inputs->form_input_hidden('idLevel_11', $_GET['lv_11'], 2);} ?>
+					<?php if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){$Form_Inputs->form_input_hidden('idLevel_12', $_GET['lv_12'], 2);} ?>
+					<?php if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){$Form_Inputs->form_input_hidden('idLevel_13', $_GET['lv_13'], 2);} ?>
+					<?php if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){$Form_Inputs->form_input_hidden('idLevel_14', $_GET['lv_14'], 2);} ?>
+					<?php if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){$Form_Inputs->form_input_hidden('idLevel_15', $_GET['lv_15'], 2);} ?>
+					<?php if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){$Form_Inputs->form_input_hidden('idLevel_16', $_GET['lv_16'], 2);} ?>
+					<?php if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){$Form_Inputs->form_input_hidden('idLevel_17', $_GET['lv_17'], 2);} ?>
+					<?php if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){$Form_Inputs->form_input_hidden('idLevel_18', $_GET['lv_18'], 2);} ?>
+					<?php if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){$Form_Inputs->form_input_hidden('idLevel_19', $_GET['lv_19'], 2);} ?>
+					<?php if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){$Form_Inputs->form_input_hidden('idLevel_20', $_GET['lv_20'], 2);} ?>
+					<?php if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){$Form_Inputs->form_input_hidden('idLevel_21', $_GET['lv_21'], 2);} ?>
+					<?php if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){$Form_Inputs->form_input_hidden('idLevel_22', $_GET['lv_22'], 2);} ?>
+					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
+					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
+					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
 					
 				
 					
 					
 					
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_idLevel">
-					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_idLevel">
+					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
@@ -417,10 +417,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
-$query = "SELECT Nombre, idSistema, idOpcionItem
+$query = "SELECT Nombre,idSistema, idOpcionItem
 FROM `licitacion_listado`
 WHERE idLicitacion = ".$_GET['id'];
 //Consulta
@@ -455,7 +455,7 @@ for ($i = 1; $i <= $nmax; $i++) {
 		$leftjoin .= ' LEFT JOIN `licitacion_listado_level_'.$xx.'`   ON licitacion_listado_level_'.$xx.'.idLevel_'.$i.'    = licitacion_listado_level_'.$i.'.idLevel_'.$i;
     }
     //ORDER BY
-    $orderby .= ', licitacion_listado_level_'.$i.'.Codigo * 1 ASC';
+    $orderby .= ', licitacion_listado_level_'.$i.'.Codigo ASC';
 }
 
 //se hace la consulta
@@ -466,7 +466,7 @@ licitacion_listado_level_1.idLevel_1 AS bla
 FROM `licitacion_listado_level_1`
 ".$leftjoin."
 WHERE licitacion_listado_level_1.idLicitacion=".$_GET['id']."
-ORDER BY licitacion_listado_level_1.Codigo * 1 ASC ".$orderby."
+ORDER BY licitacion_listado_level_1.Codigo ASC ".$orderby."
 
 ";
 //Consulta
@@ -482,7 +482,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrLicitacion,$row );
 }
 
@@ -504,7 +504,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTipos,$row );
 }
 //Se crea el arreglo
@@ -700,13 +700,13 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
     
     foreach ($array as $key => $value){
 		//Rearmo la ubicacion de acuerdo a la profundidad
-		if (isset($value['id'])) {
+		if (isset($value['id'])){
 			$loc = $location.'&lv_'.$lv.'='.$value['id'];
 		}else{
 			$loc = $location;
 		}
 		
-        if (isset($value['Nombre'])) {
+        if (isset($value['Nombre'])){
 			echo '<li><div class="blum">';
 			echo '<div class="pull-left"><strong>'.$TipoMaq[$value['Tipo']]['Nombre'].':</strong> '.$value['Codigo'].' - '.$value['Nombre'].'</div>';
 						
@@ -732,7 +732,7 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 						}
 					}
 				echo '</div>';
-			}				
+			}
 			echo '<div class="clearfix"></div>';
 			echo '</div>';
 		}
@@ -748,15 +748,15 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Itemizado');?>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php }?>
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php }?>
 	</div>
 </div>
-<div class="clearfix"></div>   
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -768,13 +768,13 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 					<ul class="dropdown-menu" role="menu">
 						<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
 							<li class="active"><a href="<?php echo 'licitacion_listado_itemizado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Itemizado</a></li>
-						<?php } ?> 	
+						<?php } ?>
 						<li class=""><a href="<?php echo 'licitacion_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'licitacion_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
 					</ul>
 				</li> 
                           
-			</ul>	
+			</ul>
 		</header>
         <div class="table-responsive">
 			
@@ -782,13 +782,13 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 			echo arrayToUL($array3d, $TipoMaq, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'], $nmax);
 			?>
 
-		</div> 	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

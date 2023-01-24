@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "alumnos_cursos.php";
 $location = $original;
 $new_location = "alumnos_cursos_datos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/alumnos_cursos.php';
@@ -41,9 +41,9 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Apoderado editado corr
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Apoderado borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$query = "SELECT Nombre, Semanas, F_inicio, F_termino, idSistema
+$query = "SELECT Nombre,Semanas, F_inicio, F_termino, idSistema
 FROM `alumnos_cursos`
 WHERE idCurso = ".$_GET['id'];
 //Consulta
@@ -62,12 +62,12 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -80,19 +80,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'alumnos_cursos_elearning.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Elearning Asignados</a></li>
 						<li class=""><a href="<?php echo 'alumnos_cursos_documentacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Documentos Relacionados</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Nombre)) {      $x2  = $Nombre;      }else{$x2  = $rowdata['Nombre'];}
-					/*if(isset($Semanas)) {     $x3  = $Semanas;     }else{$x3  = $rowdata['Semanas'];}
-					if(isset($F_inicio)) {    $x4  = $F_inicio;    }else{$x4  = $rowdata['F_inicio'];}
-					if(isset($F_termino)) {   $x5  = $F_termino;   }else{$x5  = $rowdata['F_termino'];}*/
+					if(isset($Nombre)){      $x2  = $Nombre;      }else{$x2  = $rowdata['Nombre'];}
+					/*if(isset($Semanas)){     $x3  = $Semanas;     }else{$x3  = $rowdata['Semanas'];}
+					if(isset($F_inicio)){    $x4  = $F_inicio;    }else{$x4  = $rowdata['F_inicio'];}
+					if(isset($F_termino)){   $x5  = $F_termino;   }else{$x5  = $rowdata['F_termino'];}*/
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -107,19 +107,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

@@ -2,27 +2,27 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-165).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idMenuOtros']) )   $idMenuOtros   = $_POST['idMenuOtros'];
-	if ( !empty($_POST['idSitio']) )       $idSitio       = $_POST['idSitio'];
-	if ( !empty($_POST['idEstado']) )      $idEstado      = $_POST['idEstado'];
-	if ( !empty($_POST['idPosicion']) )    $idPosicion    = $_POST['idPosicion'];
-	if ( !empty($_POST['Nombre']) )        $Nombre        = $_POST['Nombre'];
-	if ( !empty($_POST['Link']) )          $Link          = $_POST['Link'];
-	if ( !empty($_POST['idNewTab']) )      $idNewTab      = $_POST['idNewTab'];
-	if ( !empty($_POST['idPopup']) )       $idPopup       = $_POST['idPopup'];
-	
+	if (!empty($_POST['idMenuOtros']))   $idMenuOtros   = $_POST['idMenuOtros'];
+	if (!empty($_POST['idSitio']))       $idSitio       = $_POST['idSitio'];
+	if (!empty($_POST['idEstado']))      $idEstado      = $_POST['idEstado'];
+	if (!empty($_POST['idPosicion']))    $idPosicion    = $_POST['idPosicion'];
+	if (!empty($_POST['Nombre']))        $Nombre        = $_POST['Nombre'];
+	if (!empty($_POST['Link']))          $Link          = $_POST['Link'];
+	if (!empty($_POST['idNewTab']))      $idNewTab      = $_POST['idNewTab'];
+	if (!empty($_POST['idPopup']))       $idPopup       = $_POST['idPopup'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -47,27 +47,27 @@ require_once '0_validate_user_1.php';
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Nombre) && $Nombre != ''){ $Nombre = EstandarizarInput($Nombre); }
-	if(isset($Link) && $Link != ''){     $Link   = EstandarizarInput($Link); }
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre) && $Nombre!=''){$Nombre = EstandarizarInput($Nombre);}
+	if(isset($Link) && $Link!=''){     $Link   = EstandarizarInput($Link);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre']  = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	if(isset($Link)&&contar_palabras_censuradas($Link)!=0){      $error['Link']    = 'error/Edita Link, contiene palabras no permitidas'; }	
+/*******************************************************************************************************************/
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){  $error['Nombre']  = 'error/Edita Nombre,contiene palabras no permitidas';}
+	if(isset($Link)&&contar_palabras_censuradas($Link)!=0){      $error['Link']    = 'error/Edita Link, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -83,23 +83,23 @@ require_once '0_validate_user_1.php';
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Menu que intenta ingresar ya existe en el sistema';}
 			if($ndata_2 > 0) {$error['ndata_2'] = 'error/El Menu que intenta ingresar ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idSitio) && $idSitio != ''){          $SIS_data  = "'".$idSitio."'" ;        }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado != ''){        $SIS_data .= ",'".$idEstado."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($idPosicion) && $idPosicion != ''){    $SIS_data .= ",'".$idPosicion."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre != ''){            $SIS_data .= ",'".$Nombre."'" ;        }else{$SIS_data .= ",''";}
-				if(isset($Link) && $Link != ''){                $SIS_data .= ",'".$Link."'" ;          }else{$SIS_data .= ",''";}
-				if(isset($idNewTab) && $idNewTab != ''){        $SIS_data .= ",'".$idNewTab."'" ;      }else{$SIS_data .= ",''";}
-				if(isset($idPopup) && $idPopup != ''){          $SIS_data .= ",'".$idPopup."'" ;       }else{$SIS_data .= ",''";}
-				
+				if(isset($idSitio) && $idSitio!=''){          $SIS_data  = "'".$idSitio."'";        }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado!=''){       $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
+				if(isset($idPosicion) && $idPosicion!=''){    $SIS_data .= ",'".$idPosicion."'";    }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
+				if(isset($Link) && $Link!=''){                $SIS_data .= ",'".$Link."'";          }else{$SIS_data .= ",''";}
+				if(isset($idNewTab) && $idNewTab!=''){        $SIS_data .= ",'".$idNewTab."'";      }else{$SIS_data .= ",''";}
+				if(isset($idPopup) && $idPopup!=''){          $SIS_data .= ",'".$idPopup."'";       }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSitio,idEstado,idPosicion,Nombre,Link,idNewTab,idPopup';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'sitios_listado_menu_otros', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
@@ -107,14 +107,14 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -130,43 +130,42 @@ require_once '0_validate_user_1.php';
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Menu que intenta ingresar ya existe en el sistema';}
 			if($ndata_2 > 0) {$error['ndata_2'] = 'error/El Menu que intenta ingresar ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idMenuOtros='".$idMenuOtros."'" ;
-				if(isset($idSitio) && $idSitio != ''){          $SIS_data .= ",idSitio='".$idSitio."'" ;}
-				if(isset($idEstado) && $idEstado != ''){        $SIS_data .= ",idEstado='".$idEstado."'" ;}
-				if(isset($idPosicion) && $idPosicion != ''){    $SIS_data .= ",idPosicion='".$idPosicion."'" ;}
-				if(isset($Nombre) && $Nombre != ''){            $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Link) && $Link != ''){                $SIS_data .= ",Link='".$Link."'" ;}
-				if(isset($idNewTab) && $idNewTab != ''){        $SIS_data .= ",idNewTab='".$idNewTab."'" ;}
-				if(isset($idPopup) && $idPopup != ''){          $SIS_data .= ",idPopup='".$idPopup."'" ;}
+				$SIS_data = "idMenuOtros='".$idMenuOtros."'";
+				if(isset($idSitio) && $idSitio!=''){          $SIS_data .= ",idSitio='".$idSitio."'";}
+				if(isset($idEstado) && $idEstado!=''){       $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idPosicion) && $idPosicion!=''){    $SIS_data .= ",idPosicion='".$idPosicion."'";}
+				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Link) && $Link!=''){                $SIS_data .= ",Link='".$Link."'";}
+				if(isset($idNewTab) && $idNewTab!=''){        $SIS_data .= ",idNewTab='".$idNewTab."'";}
+				if(isset($idPopup) && $idPopup!=''){          $SIS_data .= ",idPopup='".$idPopup."'";}
 					
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'sitios_listado_menu_otros', 'idMenuOtros = "'.$idMenuOtros.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
 			}
-		
-	
-		break;	
-						
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -174,30 +173,30 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'sitios_listado_menu_otros', 'idMenuOtros = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
@@ -205,7 +204,7 @@ require_once '0_validate_user_1.php';
 			}
 			
 			
-		break;		
+		break;
 
 		
 /*******************************************************************************************************************/

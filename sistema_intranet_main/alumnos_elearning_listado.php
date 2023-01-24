@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "alumnos_elearning_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,8 +18,8 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){         $location .= "&Nombre=".$_GET['Nombre'];         $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){     $location .= "&idEstado=".$_GET['idEstado'];     $search .= "&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){  $location .= "&Nombre=".$_GET['Nombre'];         $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){     $location .= "&idEstado=".$_GET['idEstado'];     $search .= "&idEstado=".$_GET['idEstado'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -27,92 +27,92 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert_curso';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['edit_curso']) )  { 
+if (!empty($_POST['edit_curso'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update_curso';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_curso']) )     {
+if (!empty($_GET['del_curso'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_curso';
-	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 /*************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_unidad']) )  { 
+if (!empty($_POST['submit_unidad'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert_unidad';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['edit_unidad']) )  { 
+if (!empty($_POST['edit_unidad'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update_unidad';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_Unidad']) )     {
+if (!empty($_GET['del_Unidad'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_unidad';
-	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 /*************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_contenido']) )  { 
+if (!empty($_POST['submit_contenido'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert_contenido';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['edit_contenido']) )  { 
+if (!empty($_POST['edit_contenido'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update_contenido';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_Contenido']) )     {
+if (!empty($_GET['del_Contenido'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_contenido';
-	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 /*************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_file']) )  { 
+if (!empty($_POST['submit_file'])){
 	//Llamamos al formulario
 	$form_trabajo= 'new_file';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_file']) )     {
+if (!empty($_GET['del_file'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_file';
-	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 /*************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_quiz']) )  { 
+if (!empty($_POST['submit_quiz'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert_quiz';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['edit_quiz']) )  { 
+if (!empty($_POST['edit_quiz'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update_quiz';
 	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_quiz']) )     {
+if (!empty($_GET['del_quiz'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_quiz';
-	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_alumnos_elearning_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -128,8 +128,8 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Elearning borrado corr
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 ?>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['editCuestionario']) ) {	
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if(!empty($_GET['editCuestionario'])){	
 // consulto los datos
 $SIS_query = 'idQuiz';
 $SIS_join  = '';
@@ -140,18 +140,18 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 
- <div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Cuestionario</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Cuestionario</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idQuiz)) {      $x1  = $idQuiz;      }else{$x1  = $rowdata['idQuiz'];}
+				if(isset($idQuiz)){      $x1  = $idQuiz;      }else{$x1  = $rowdata['idQuiz'];}
 					
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -165,32 +165,32 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 				
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="edit_quiz">	
-					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="edit_quiz">	
+					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['addCuestionario']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['addCuestionario'])){ 
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 
- <div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Agregar Cuestionario</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Agregar Cuestionario</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idQuiz)) {      $x1  = $idQuiz;      }else{$x1  = '';}
+				if(isset($idQuiz)){      $x1  = $idQuiz;      }else{$x1  = '';}
 					
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -203,41 +203,41 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 				
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_quiz">	
-					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_quiz">	
+					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['modBase']) ) { 	
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['modBase'])){ 	
 // consulto los datos
-$SIS_query = 'Nombre, Resumen, Objetivos,Requisitos,Descripcion, idSistema, idEstado';
+$SIS_query = 'Nombre,Resumen, Objetivos,Requisitos,Descripcion, idSistema, idEstado';
 $SIS_join  = '';
 $SIS_where = 'idElearning ='.$_GET['id_curso'];
 $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
- <div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Datos Basicos</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Datos Basicos</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
-				if(isset($Resumen)) {     $x2  = $Resumen;     }else{$x2  = $rowdata['Resumen'];}
-				if(isset($Objetivos)) {   $x3  = $Objetivos;   }else{$x3  = $rowdata['Objetivos'];}
-				if(isset($Requisitos)) {  $x4  = $Requisitos;  }else{$x4  = $rowdata['Requisitos'];}
-				if(isset($Descripcion)) { $x5  = $Descripcion; }else{$x5  = $rowdata['Descripcion'];}
-				if(isset($idEstado)) {    $x6  = $idEstado;    }else{$x6  = $rowdata['idEstado'];}
+				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
+				if(isset($Resumen)){     $x2  = $Resumen;     }else{$x2  = $rowdata['Resumen'];}
+				if(isset($Objetivos)){   $x3  = $Objetivos;   }else{$x3  = $rowdata['Objetivos'];}
+				if(isset($Requisitos)){  $x4  = $Requisitos;  }else{$x4  = $rowdata['Requisitos'];}
+				if(isset($Descripcion)){ $x5  = $Descripcion; }else{$x5  = $rowdata['Descripcion'];}
+				if(isset($idEstado)){    $x6  = $idEstado;    }else{$x6  = $rowdata['idEstado'];}
 					
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -256,27 +256,27 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 				?>
 				
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="edit_curso">	
-					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="edit_curso">	
+					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addFile']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addFile'])){ ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php           
+				<?php 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "mp3", "wav", "pdf", "txt", "rtf", "mp2", "mpeg", "mpg", "mov", "avi", "gz", "gzip", "7Z", "zip", "rar"');
@@ -285,36 +285,36 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 				$Form_Inputs->form_input_hidden('idUnidad', $_GET['Unidad_ID'], 2);
 				$Form_Inputs->form_input_hidden('idContenido', $_GET['Contenido_ID'], 2);
 				
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file">
+					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>              
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['addUnidad']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ }elseif(!empty($_GET['addUnidad'])){ ?>
 	
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Nueva Unidad</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Nueva Unidad</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($N_Unidad)) {   $x1  = $N_Unidad;   }else{$x1  = '';}
-				if(isset($Nombre)) {     $x2  = $Nombre;     }else{$x2  = '';}
-				if(isset($Duracion)) {   $x3  = $Duracion;   }else{$x3  = '';}
-				
+				if(isset($N_Unidad)){   $x1  = $N_Unidad;   }else{$x1  = '';}
+				if(isset($Nombre)){     $x2  = $Nombre;     }else{$x2  = '';}
+				if(isset($Duracion)){   $x3  = $Duracion;   }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Numero de Unidad','N_Unidad', $x1, 2, 1, 50);
@@ -322,43 +322,43 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 				$Form_Inputs->form_select_n_auto('Dias de Duracion','Duracion', $x3, 2, 1, 50);
 				
 				$Form_Inputs->form_input_hidden('idElearning', $_GET['id_curso'], 2);
-				?>	
+				?>
 								
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_unidad">	
-					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_unidad">	
+					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['editUnidad']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ }elseif(!empty($_GET['editUnidad'])){ 
 //Se consulta
-$SIS_query = 'N_Unidad, Nombre, Duracion';
+$SIS_query = 'N_Unidad, Nombre,Duracion';
 $SIS_join  = '';
 $SIS_where = 'idUnidad ='.$_GET['editUnidad'];
 $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidades', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 	 
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Pregunta</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Pregunta</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($N_Unidad)) {   $x1  = $N_Unidad;   }else{$x1  = $rowdata['N_Unidad'];}
-				if(isset($Nombre)) {     $x2  = $Nombre;     }else{$x2  = $rowdata['Nombre'];}
-				if(isset($Duracion)) {   $x3  = $Duracion;   }else{$x3  = $rowdata['Duracion'];}
-				
+				if(isset($N_Unidad)){   $x1  = $N_Unidad;   }else{$x1  = $rowdata['N_Unidad'];}
+				if(isset($Nombre)){     $x2  = $Nombre;     }else{$x2  = $rowdata['Nombre'];}
+				if(isset($Duracion)){   $x3  = $Duracion;   }else{$x3  = $rowdata['Duracion'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Unidad','N_Unidad', $x1, 2, 1, 50);
@@ -370,33 +370,33 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 				?>
 								
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="edit_unidad">	
-					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="edit_unidad">	
+					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['addContenido']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ }elseif(!empty($_GET['addContenido'])){ ?>
 	
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Nuevo Contenido</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Nuevo Contenido</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idUnidad)) {   $x1  = $idUnidad;   }else{$x1  = '';}
-				if(isset($Nombre)) {     $x2  = $Nombre;     }else{$x2  = '';}
-				if(isset($Contenido)) {  $x3  = $Contenido;  }else{$x3  = '';}
-				
+				if(isset($idUnidad)){   $x1  = $idUnidad;   }else{$x1  = '';}
+				if(isset($Nombre)){     $x2  = $Nombre;     }else{$x2  = '';}
+				if(isset($Contenido)){  $x3  = $Contenido;  }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('N° Unidad','idUnidad', $x1, 2, 'idUnidad', 'N_Unidad,Nombre', 'alumnos_elearning_listado_unidades', 'idElearning='.$_GET['id_curso'], '', $dbConn);
@@ -405,43 +405,43 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 				
 				
 				$Form_Inputs->form_input_hidden('idElearning', $_GET['id_curso'], 2);
-				?>	
+				?>
 								
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_contenido">	
-					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_contenido">	
+					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['editContenido']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ }elseif(!empty($_GET['editContenido'])){ 
 //se consulta
-$SIS_query = 'idUnidad, Nombre, Contenido';
+$SIS_query = 'idUnidad, Nombre,Contenido';
 $SIS_join  = '';
 $SIS_where = 'idContenido ='.$_GET['editContenido'];
 $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidades_contenido', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
  
 ?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Contenido</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Contenido</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idUnidad)) {   $x1  = $idUnidad;   }else{$x1  = $rowdata['idUnidad'];}
-				if(isset($Nombre)) {     $x2  = $Nombre;     }else{$x2  = $rowdata['Nombre'];}
-				if(isset($Contenido)) {  $x3  = $Contenido;  }else{$x3  = $rowdata['Contenido'];}
-				
+				if(isset($idUnidad)){   $x1  = $idUnidad;   }else{$x1  = $rowdata['idUnidad'];}
+				if(isset($Nombre)){     $x2  = $Nombre;     }else{$x2  = $rowdata['Nombre'];}
+				if(isset($Contenido)){  $x3  = $Contenido;  }else{$x3  = $rowdata['Contenido'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('N° Unidad','idUnidad', $x1, 2, 'idUnidad', 'N_Unidad,Nombre', 'alumnos_elearning_listado_unidades', 'idElearning='.$_GET['id_curso'], '', $dbConn);
@@ -453,19 +453,19 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 				?>
 								
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="edit_contenido">	
-					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="edit_contenido">	
+					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>		 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['id_curso']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ }elseif(!empty($_GET['id_curso'])){ 
 // consulto los datos
 $SIS_query = '
-alumnos_elearning_listado.Nombre, 
+alumnos_elearning_listado.Nombre,
 alumnos_elearning_listado.Resumen, 
 alumnos_elearning_listado.Imagen,
 alumnos_elearning_listado.LastUpdate,
@@ -527,15 +527,15 @@ foreach($arrContenidos as $categoria=>$permisos){
 ?>
  
 <div class="row">
-	<div class="col-sm-12">
-		<div class="box">	
-			<header>		
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos Basicos</h5>
 				<div class="toolbar">
 					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso'].'&modBase=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a>
 				</div>
 			</header>
-			<div class="table-responsive">    
+			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<tr>
@@ -553,19 +553,19 @@ foreach($arrContenidos as $categoria=>$permisos){
 						<tr>
 							<td class="meta-head">Resumen</td>
 							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowdata['Resumen']; ?></span></td>
-						</tr> 
+						</tr>
 						<tr>
 							<td class="meta-head">Ultima Actualizacion</td>
 							<td><?php echo fecha_estandar($rowdata['LastUpdate']); ?></td>
-						</tr> 
+						</tr>
 						<tr>
 							<td class="meta-head">Objetivos</td>
 							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowdata['Objetivos']; ?></span></td>
-						</tr> 
+						</tr>
 						<tr>
 							<td class="meta-head">Requisitos</td>
 							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowdata['Requisitos']; ?></span></td>
-						</tr> 
+						</tr>
 						<tr>
 							<td class="meta-head">Descripcion</td>
 							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowdata['Descripcion']; ?></span></td>
@@ -578,16 +578,16 @@ foreach($arrContenidos as $categoria=>$permisos){
 </div>
 
 <div class="row">
-	<div class="col-sm-12">
-		<div class="box">	
-			<header>		
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Contenido</h5>
 				<div class="toolbar">
 					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso'].'&addUnidad=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Nueva Unidad</a>
 					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso'].'&addContenido=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Nuevo Contenido</a>
 				</div>
 			</header>
-			<div class="table-responsive">    
+			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						
@@ -628,7 +628,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 													<?php foreach ($arrFiles as $file) {
 														//verifico que el archivo sea del contenido
 														if(isset($preg['Unidad_ID'])&&$preg['Unidad_ID']==$file['idUnidad']&&isset($preg['Contenido_ID'])&&$preg['Contenido_ID']==$file['idContenido']){ ?>
-															<div class="col-sm-12" style="margin-top:2px;">
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:2px;">
 																<div class="col-sm-10">
 																	<?php 
 																	$f_file = str_replace('elearning_files_'.$file['idContenido'].'_','',$file['File']);
@@ -666,7 +666,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 													<?php foreach ($arrCuestionarios as $file) {
 														//verifico que el archivo sea del contenido
 														if(isset($preg['Unidad_ID'])&&$preg['Unidad_ID']==$file['idUnidad']&&isset($preg['Contenido_ID'])&&$preg['Contenido_ID']==$file['idContenido']){ ?>
-															<div class="col-sm-12" style="margin-top:2px;">
+															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:2px;">
 																<div class="col-sm-10"><?php echo $file['Cuestionario'];  ?></div>
 																<div class="col-sm-2">
 																	<div class="btn-group pull-right" style="width: 105px;" >
@@ -683,7 +683,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 													<?php } ?>
 												<?php } ?>
 											<?php } ?>
-										</td>			
+										</td>
 										<td width="10" >
 											<div class="btn-group" style="width: 140px;" >
 												<a href="<?php echo $location.'&id_curso='.$_GET['id_curso'].'&Unidad_ID='.$preg['Unidad_ID'].'&editContenido='.$preg['Contenido_ID']; ?>" title="Editar Contenido" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -696,9 +696,9 @@ foreach($arrContenidos as $categoria=>$permisos){
 											</div>
 										</td>
 									</tr>
-								<?php } ?> 
-							<?php } ?> 
-						<?php } ?> 
+								<?php } ?>
+							<?php } ?>
+						<?php } ?>
 						                  
 					</tbody>
 				</table>
@@ -712,30 +712,30 @@ foreach($arrContenidos as $categoria=>$permisos){
 <?php widget_modal(80, 95); ?> 
  
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Elearning</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;      }else{$x1  = '';}
-				if(isset($Unidades)) {    $x2  = $Unidades;    }else{$x2  = '';}
-				
+				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = '';}
+				if(isset($Unidades)){    $x2  = $Unidades;    }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -747,34 +747,25 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -794,13 +785,13 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $SIS_where = "alumnos_elearning_listado.idElearning!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){        $SIS_where .= " AND alumnos_elearning_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){    $SIS_where .= " AND alumnos_elearning_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){ $SIS_where .= " AND alumnos_elearning_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){    $SIS_where .= " AND alumnos_elearning_listado.idEstado=".$_GET['idEstado'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idElearning', 'alumnos_elearning_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 alumnos_elearning_listado.idElearning,
@@ -817,50 +808,50 @@ $arrCurso = db_select_array (false, $SIS_query, 'alumnos_elearning_listado', $SI
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Elearning</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Elearning</a><?php } ?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = '';}
-				if(isset($idEstado)) {    $x2  = $idEstado;   }else{$x2  = '';}
-				
+				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = '';}
+				if(isset($idEstado)){    $x2  = $idEstado;   }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                                                        
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Elearnings</h5>
@@ -891,13 +882,13 @@ $arrCurso = db_select_array (false, $SIS_query, 'alumnos_elearning_listado', $SI
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>				  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrCurso as $curso) { ?>
 					<tr class="odd">
 						<td><?php echo $curso['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($curso['idEstado'])&&$curso['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $curso['Estado']; ?></label></td>	
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $curso['sistema']; ?></td><?php } ?>			
+						<td><label class="label <?php if(isset($curso['idEstado'])&&$curso['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $curso['Estado']; ?></label></td>
+						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $curso['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_elearning.php?view='.simpleEncode($curso['idElearning'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -906,15 +897,15 @@ $arrCurso = db_select_array (false, $SIS_query, 'alumnos_elearning_listado', $SI
 									$ubicacion = $location.'&del_curso='.simpleEncode($curso['idElearning'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el elearning '.$curso['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
@@ -923,7 +914,7 @@ $arrCurso = db_select_array (false, $SIS_query, 'alumnos_elearning_listado', $SI
 </div>
 
 <?php widget_modal(80, 95); ?>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

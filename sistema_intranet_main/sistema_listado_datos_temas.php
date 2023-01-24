@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "sistema_listado.php";
 $location = $original;
 $new_location = "sistema_listado_datos_temas.php";
@@ -25,7 +25,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_GET['edit_theme']) )  { 
+if (!empty($_GET['edit_theme'])){
 	//ubicaciones extras
 	$location = $new_location;
 	$location.='?idSistema='.$_GET['idSistema']; ;
@@ -44,7 +44,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $query = "SELECT Nombre,Config_idTheme
 FROM `core_sistemas`
@@ -66,7 +66,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 // Se trae un listado con todos los temas
 $arrTemas = array();
-$query = "SELECT idTheme, Nombre, img
+$query = "SELECT idTheme, Nombre,img
 FROM `core_theme_colors`
 ORDER BY Nombre  ";
 //Consulta
@@ -82,7 +82,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemas,$row );
 }
 
@@ -189,12 +189,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Cambiar tema');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -229,35 +229,35 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 							<li class=""><a href="<?php echo 'sistema_listado_datos_cross_aprobadas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Cross Shipping Correos Aprobados</a></li>
 						<?php } ?>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
 			<div class="" id="themelist">
 				<?php foreach ($arrTemas as $temas) { ?>
-					<div class="col-sm-4">
-						<div class="theme-box <?php if($rowdata['Config_idTheme']==$temas['idTheme']){echo 'selected';} ?>"> 
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+						<div class="theme-box <?php if($rowdata['Config_idTheme']==$temas['idTheme']){echo 'selected';} ?>">
 							<img src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/themes_preview/<?php echo $temas['img']; ?>" alt="Tema" class="img-responsive2">
 							<div class="theme-info">
 								<div class="clearfix">
 									<h2><?php echo $temas['Nombre']; ?></h2>
 								</div>
-								<div class="buttons"> 
+								<div class="buttons">
 									<a href="<?php echo 'view_tema.php?idTheme='.$temas['idTheme']; ?>" class="iframe"><i class="fa fa-eye" aria-hidden="true"></i> &nbsp;Ver</a> 
 									<a href="<?php echo $new_location.'&idTheme='.$temas['idTheme'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].'&edit_theme=true'; ?>"><i class="fa fa-check" aria-hidden="true"></i> &nbsp;Seleccionar</a> 
 								</div>
 							</div>
 						</div>
 					</div>
-				<?php } ?> 
-			</div>	
-		</div>	
+				<?php } ?>
+			</div>
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

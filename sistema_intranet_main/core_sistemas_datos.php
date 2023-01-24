@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistemas.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -21,7 +21,7 @@ $location .='?pagina='.$_GET['pagina'];
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$location.='&id='.$_GET['id'];
 	$form_trabajo= 'update';
@@ -40,20 +40,20 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sistema editado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$SIS_query = 'Nombre, Rut, Direccion,idCiudad, idComuna, Rubro, RepresentanteNombre, RepresentanteRut';
+$SIS_query = 'Nombre,Rut, Direccion,idCiudad, idComuna, Rubro, RepresentanteNombre,RepresentanteRut';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_GET['id'];
-$rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -76,23 +76,23 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Nombre)) {               $x1  = $Nombre;                }else{$x1  = $rowdata['Nombre'];}
-					if(isset($Rut)) {                  $x2  = $Rut;                   }else{$x2  = $rowdata['Rut'];}
-					if(isset($idCiudad)) {             $x3  = $idCiudad;              }else{$x3  = $rowdata['idCiudad'];}
-					if(isset($idComuna)) {             $x4  = $idComuna;              }else{$x4  = $rowdata['idComuna'];}
-					if(isset($Direccion)) {            $x5  = $Direccion;             }else{$x5  = $rowdata['Direccion'];}
-					if(isset($Rubro)) {                $x6  = $Rubro;                 }else{$x6  = $rowdata['Rubro'];}
-					if(isset($RepresentanteNombre)) {  $x7  = $RepresentanteNombre;   }else{$x7  = $rowdata['RepresentanteNombre'];}
-					if(isset($RepresentanteRut)) {     $x8  = $RepresentanteRut;      }else{$x8  = $rowdata['RepresentanteRut'];}
+					if(isset($Nombre)){               $x1  = $Nombre;                }else{$x1  = $rowdata['Nombre'];}
+					if(isset($Rut)){                  $x2  = $Rut;                   }else{$x2  = $rowdata['Rut'];}
+					if(isset($idCiudad)){             $x3  = $idCiudad;              }else{$x3  = $rowdata['idCiudad'];}
+					if(isset($idComuna)){             $x4  = $idComuna;              }else{$x4  = $rowdata['idComuna'];}
+					if(isset($Direccion)){            $x5  = $Direccion;             }else{$x5  = $rowdata['Direccion'];}
+					if(isset($Rubro)){                $x6  = $Rubro;                 }else{$x6  = $rowdata['Rubro'];}
+					if(isset($RepresentanteNombre)){  $x7  = $RepresentanteNombre;   }else{$x7  = $rowdata['RepresentanteNombre'];}
+					if(isset($RepresentanteRut)){     $x8  = $RepresentanteRut;      }else{$x8  = $rowdata['RepresentanteRut'];}
 					
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -100,9 +100,9 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 					$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 2);
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x2, 2);
 					$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										 'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+										 'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');            
+					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
 					$Form_Inputs->form_input_icon('Rubro', 'Rubro', $x6, 1,'fa fa-sitemap');
 					
 					$Form_Inputs->form_tittle(3, 'Datos de Representacion');
@@ -113,19 +113,19 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_w
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

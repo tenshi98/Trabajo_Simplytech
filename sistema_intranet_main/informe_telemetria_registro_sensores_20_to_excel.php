@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -205,7 +205,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$Grupo[$sen['idGrupo']] = $sen['Nombre'];
 	}
 
-	/****************************************************************/				
+	/****************************************************************/
 	//Variables
 	$m_table_title  = '';
 	$m_table        = '';
@@ -310,7 +310,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$horaInicio  = $arrTable[$anterior]['HoraHasta'];
 			$horaTermino = $fac['HoraSistema'];
 			$HorasTrans  = horas_transcurridas($diaInicio, $diaTermino, $horaInicio, $horaTermino);
-				
+
 			//recorro
 			$arrTable[$posit]['FechaDesde'] = $diaInicio;
 			$arrTable[$posit]['FechaHasta'] = $diaTermino;
@@ -320,15 +320,15 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			for ($x = 1; $x <= $count; $x++) {
 				$arrTable2[$posit][$x]['Contenido'] = $arrTableTemp2[$x];
 			}
-			
+
 			//cuento
 			$posit++;
 			$Maincount = $count;
-			
+
 			//Guardo el ultimo registro
 			$Ult_diaInicio   = $fac['FechaSistema'];
 			$Ult_horaInicio  = $fac['HoraSistema'];
-		}											
+		}	
 		
 		//Guardo el ultimo registro
 		$Ult_diaTermino  = $fac['FechaSistema'];

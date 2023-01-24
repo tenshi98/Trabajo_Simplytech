@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -40,7 +40,7 @@ trabajadores_listado.Direccion_img,
 
 trabajadores_listado.Nombre,
 trabajadores_listado.ApellidoPat,
-trabajadores_listado.ApellidoMat, 
+trabajadores_listado.ApellidoMat,
 trabajadores_listado.Rut,
 core_sexo.Nombre AS Sexo,
 trabajadores_listado.FNacimiento,
@@ -51,7 +51,7 @@ core_ubicacion_comunas.Nombre AS nombre_comuna,
 trabajadores_listado.Direccion,
 core_estado_civil.Nombre AS EstadoCivil,
 core_estados.Nombre AS Estado,
-core_sistemas.Nombre AS Sistema,				
+core_sistemas.Nombre AS Sistema,
 
 trabajadores_listado.ContactoPersona,
 trabajadores_listado.ContactoFono,
@@ -129,7 +129,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 
 
 // Se trae un listado con todas las cargas familiares
-$SIS_query = 'Nombre, ApellidoPat, ApellidoMat';
+$SIS_query = 'Nombre,ApellidoPat, ApellidoMat';
 $SIS_join  = '';
 $SIS_where = 'idTrabajador ='.$X_Puntero;
 $SIS_order = 'idCarga ASC';
@@ -202,7 +202,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 <div class="clearfix"></div>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -210,22 +210,22 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="#ot" data-toggle="tab"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Ordenes de Trabajo</a></li>
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				
 				<div class="wmd-panel">
 					
-					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 						<?php }?>
 					</div>
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
@@ -255,7 +255,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 									echo '<strong>Carga #'.$n_carga.' : </strong>'.$carga['Nombre'].' '.$carga['ApellidoPat'].' '.$carga['ApellidoMat'].'<br/>';
 									$n_carga++;
 								}
-							//si no existen cargas se muestra mensaje	
+							//si no existen cargas se muestra mensaje
 							}else{
 								echo 'Trabajador sin cargas familiares';
 							}
@@ -267,7 +267,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 						<p class="text-muted">
 							<strong>Persona de Contacto : </strong><?php echo $rowdata['ContactoPersona']; ?><br/>
 							<strong>Fono de Persona de Contacto : </strong><?php echo formatPhone($rowdata['ContactoFono']); ?><br/>
-						</p>	
+						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Laborales</h2>
 						<p class="text-muted">
@@ -276,7 +276,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<strong>Cargo : </strong><?php echo $rowdata['Cargo']; ?><br/>
 							
 							<br/><span class="text-danger"><strong>Datos Contrato</strong></span><br/>
-							<?php if(isset($rowdata['Contratista'])&&$rowdata['Contratista']!=''){ ?><strong>Contratista : </strong><?php echo $rowdata['Contratista']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Contratista'])&&$rowdata['Contratista']!=''){?><strong>Contratista : </strong><?php echo $rowdata['Contratista']; ?><br/><?php } ?>
 							<strong>Tipo de Trabajador : </strong><?php echo $rowdata['TipoConTrabajador']; ?><br/>
 							<strong>Tipo de Contrato : </strong><?php echo $rowdata['TipoContrato']; ?><br/>
 							<strong>Tipo de Sueldo : </strong><?php echo $rowdata['TipoContratoTrab']; ?><br/>
@@ -313,7 +313,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<strong>AFP : </strong><?php echo $rowdata['nombre_afp']; ?><br/>
 							<?php foreach ($arrDescuentos as $bon) { ?>
 								<strong><?php echo $bon['Descuento'].' ('.$bon['AFP'].')'; ?> : </strong><?php echo valores($bon['Monto'], 0); ?><br/>
-							<?php } ?> 	
+							<?php } ?>
 							<strong>Salud : </strong><?php echo $rowdata['nombre_salud']; ?><br/>
 							
 							<br/><span class="text-danger"><strong>Bonos Fijos Asignados</strong></span><br/>
@@ -330,19 +330,19 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 									echo '<strong>Bono '.$bon['Bono'].' : </strong> '.valores($bon['Monto'], 0).'<br/>';
 									$n_carga++;
 								}
-							//si no existen cargas se muestra mensaje	
+							//si no existen cargas se muestra mensaje
 							}else{
 								echo 'Trabajador sin Bonos Fijos Asignados';
 							}
 							?>
 							<?php
-							if(isset($rowdata['CentroCosto_Nombre'])&&$rowdata['CentroCosto_Nombre']!=''){ 
+							if(isset($rowdata['CentroCosto_Nombre'])&&$rowdata['CentroCosto_Nombre']!=''){
 								echo '<br/><strong>Centro de Costo : </strong>'.$rowdata['CentroCosto_Nombre'];
-								if(isset($rowdata['CentroCosto_Level_1'])&&$rowdata['CentroCosto_Level_1']!=''){echo ' - '.$rowdata['CentroCosto_Level_1']; }
-								if(isset($rowdata['CentroCosto_Level_2'])&&$rowdata['CentroCosto_Level_2']!=''){echo ' - '.$rowdata['CentroCosto_Level_2']; }
-								if(isset($rowdata['CentroCosto_Level_3'])&&$rowdata['CentroCosto_Level_3']!=''){echo ' - '.$rowdata['CentroCosto_Level_3']; }
-								if(isset($rowdata['CentroCosto_Level_4'])&&$rowdata['CentroCosto_Level_4']!=''){echo ' - '.$rowdata['CentroCosto_Level_4']; }
-								if(isset($rowdata['CentroCosto_Level_5'])&&$rowdata['CentroCosto_Level_5']!=''){echo ' - '.$rowdata['CentroCosto_Level_5']; }
+								if(isset($rowdata['CentroCosto_Level_1'])&&$rowdata['CentroCosto_Level_1']!=''){echo ' - '.$rowdata['CentroCosto_Level_1'];}
+								if(isset($rowdata['CentroCosto_Level_2'])&&$rowdata['CentroCosto_Level_2']!=''){echo ' - '.$rowdata['CentroCosto_Level_2'];}
+								if(isset($rowdata['CentroCosto_Level_3'])&&$rowdata['CentroCosto_Level_3']!=''){echo ' - '.$rowdata['CentroCosto_Level_3'];}
+								if(isset($rowdata['CentroCosto_Level_4'])&&$rowdata['CentroCosto_Level_4']!=''){echo ' - '.$rowdata['CentroCosto_Level_4'];}
+								if(isset($rowdata['CentroCosto_Level_5'])&&$rowdata['CentroCosto_Level_5']!=''){echo ' - '.$rowdata['CentroCosto_Level_5'];}
 								echo '<br/>';
 							}
 							?>
@@ -472,7 +472,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 						</table>
 						
 										
-					</div>	
+					</div>
 					<div class="clearfix"></div>
 			
 				</div>
@@ -507,7 +507,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 			
 			
 			
-        </div>	
+        </div>
 	</div>
 </div>
 
@@ -515,10 +515,10 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 
 
 
-<?php if ($arrActivos!=false && !empty($arrActivos) && $arrActivos!='') {?>   
+<?php if ($arrActivos!=false && !empty($arrActivos) && $arrActivos!=''){ ?>   
 	<?php 
 	filtrar($arrActivos, 'Categoria');?>
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -535,7 +535,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 					?>
 				</ul>
 			</header>
-			<div id="div-3" class="body tab-content">
+			<div class="body tab-content">
 				
 				<?php 
 				$xx=1;
@@ -567,7 +567,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 											
 										
 										</tr>
-									<?php } ?>                    
+									<?php } ?>
 									</tbody>
 								</table>
 							</div>
@@ -581,16 +581,16 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 			</div>
 		</div>
 	</div>
-<?php } ?>             
+<?php } ?>
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -601,12 +601,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

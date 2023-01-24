@@ -12,17 +12,17 @@ require_once 'core/Load.Utils.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], '123333');
 	}
 } else { 
 	$X_Puntero = simpleDecode($_GET['view'], '123333');
 }
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "view_notificacion.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -31,18 +31,18 @@ $location .='?view='.$X_Puntero;
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //se indica que no hay que molestar
-if ( !empty($_GET['noMolestar']) )     {
+if (!empty($_GET['noMolestar'])){
 	//Llamamos al formulario
 	$form_trabajo= 'noMolestar';
-	require_once 'A1XRXS_sys/xrxs_form/telemetria_mnt_correos_list.php';	
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_mnt_correos_list.php';
 }
 /**********************************************************************************************************************************/
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -67,25 +67,25 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Notificacion</h5>	
+			<h5>Notificacion</h5>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					
-					<div class="col-sm-4" style="margin-bottom:5px;">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="margin-bottom:5px;">
 						<?php if ($row_data['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $row_data['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $row_data['Direccion_img']; ?>">
 						<?php }?>
 					</div>
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 						<p class="text-muted">
 							<strong>Autor: </strong><?php echo $row_data['Nombre']; ?><br/>
@@ -103,7 +103,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 							$Alert_Text  = 'Se han desactivado las alertas por '.simpleDecode($_GET['noMol'], fecha_actual()).' Horas.';
 							alert_post_data(2,1,1, $Alert_Text);
 						}
-				
+
 						//verifico que exista el no molestar
 						if(isset($row_data['NoMolestar'])&&$row_data['NoMolestar']!=''&&$row_data['NoMolestar']!=0){
 							switch ($row_data['NoMolestar']) {
@@ -134,12 +134,12 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 						}
 						?>
 					
-					</div>	
+					</div>
 					<div class="clearfix"></div>
 			
 				</div>
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 
@@ -148,12 +148,12 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 	
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -164,12 +164,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 

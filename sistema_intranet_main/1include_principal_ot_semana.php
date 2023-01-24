@@ -1,24 +1,24 @@
-<?php 
+<?php
 //Se definen las variables
-if(isset($_GET["Mes"])){   $Mes = $_GET["Mes"];   } else { $Mes  = mes_actual(); }
-if(isset($_GET["Ano"])){   $Ano = $_GET["Ano"];   } else { $Ano  = ano_actual(); }
+if(isset($_GET['Mes'])){   $Mes = $_GET['Mes'];   } else { $Mes  = mes_actual();}
+if(isset($_GET['Ano'])){   $Ano = $_GET['Ano'];   } else { $Ano  = ano_actual();}
 //Otras Variables
 $diaActual     = dia_actual();
 $semanaActual  = semana_actual();
 
 //calculo de los dias del mes, cuando inicia y cuando termina
-$diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
+$diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7;
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
 //verifico el tipo de usuario
-$SIS_where = 'idOT!=0';	
-$SIS_where.= " AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = 'idOT!=0';
+$SIS_where.= " AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 //verifica las ot generadas dentro del mes y que esten programadas
 if(isset($_GET["estado"])&&$_GET["estado"]==1){
 	//dentro de la semana
 	$SIS_where.=' AND progSemana='.semana_actual();
-//verifica las ot que ya esten atrasadas	
+//verifica las ot que ya esten atrasadas
 }elseif(isset($_GET["estado"])&&$_GET["estado"]==2){
 	//anterior a la semana
 	$SIS_where.=' AND progSemana<'.semana_actual();
@@ -42,12 +42,12 @@ $arrOT = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join,
     position: initial!important;
 }
 </style>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<h5>Calendario de Ordenes de Trabajo</h5>
 		</header>
-				
+
 		<div id="calendar_content" class="body">
 			<div id="calendar" class="fc fc-ltr">
 
@@ -55,9 +55,9 @@ $arrOT = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join,
 					<tbody>
 						<tr>
 							<?php
-							if(isset($_GET["Ano"])){
-								$Ano_a  = $_GET["Ano"];
-								$Ano_b  = $_GET["Ano"];	
+							if(isset($_GET['Ano'])){
+								$Ano_a  = $_GET['Ano'];
+								$Ano_b  = $_GET['Ano'];
 							} else {
 								$Ano_a  = date("Y");
 								$Ano_b  = date("Y");
@@ -75,9 +75,9 @@ $arrOT = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join,
 				<div class="fc-content" style="position: relative;margin-left: -10px;margin-right: -10px;">
 					<div class="fc-view fc-view-Mes fc-grid" style="position:relative" unselectable="on">
 
-						<table class="fc-border-separate correct_border" style="width:100%" cellspacing="0"> 
+						<table class="fc-border-separate correct_border" style="width:100%" cellspacing="0">
 							<thead>
-								<tr class="fc-first fc-last"> 
+								<tr class="fc-first fc-last">
 									<th class="fc-day-header fc-sun fc-widget-header" width="14%">Lunes</th>
 									<th class="fc-day-header fc-sun fc-widget-header" width="14%">Martes</th>
 									<th class="fc-day-header fc-sun fc-widget-header" width="14%">Miercoles</th>
@@ -88,7 +88,7 @@ $arrOT = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join,
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="fc-week"> 
+								<tr class="fc-week">
 									<?php
 									$last_cell = $diaSemana + $ultimoDiaMes;
 									// hacemos un bucle hasta 42, que es el máximo de valores que puede
@@ -102,13 +102,13 @@ $arrOT = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join,
 										if($i<$diaSemana || $i>=$last_cell){
 											echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 										// mostramos el dia
-										}else{ ?>  
-											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight'; }?>">
+										}else{?>
+											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';}?>">
 												<div class="calendar_min">
 													<div class="fc-Dia-number"><?php echo $Dia; ?></div>
 													<div class="fc-Dia-content">
-														<?php 
-														foreach ($arrOT as $evento) { 
+														<?php
+														foreach ($arrOT as $evento) {
 															if ($evento['progDia']==$Dia&&$evento['progMes']==$Mes) {
 																$ver = 'view_orden_trabajo.php?view='.simpleEncode($evento['idOT'], fecha_actual());
 																switch ($evento['idEstado']) {
@@ -122,13 +122,13 @@ $arrOT = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join,
 																	$calcolor  = 'evcal_color6';
 																}
 																echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor.'" href="'.$ver.'&return=true">OT N° '.$evento['idOT'].$Status.'</a>';
-																
-															} 
-														} ?>    
+
+															}
+														}?>
 													</div>
 												</div>
 											</td>
-											<?php  
+											<?php
 											$Dia++;
 										}
 										// cuando llega al final de la semana, iniciamos una columna nueva

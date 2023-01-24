@@ -2,11 +2,11 @@
 	
 	<div style="margin-top:10px;">
 		
-		<div class="col-sm-12">
-			<a target="_blank" href="<?php echo 'principal_calendario.php?Mes='.$Mes.'&Ano='.$Ano.'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evento</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<a target="_blank" rel="noopener noreferrer" href="<?php echo 'principal_calendario.php?Mes='.$Mes.'&Ano='.$Ano.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evento</a>
 		</div>
 
-		<div class="col-sm-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
 				<header>
 					<h5>Calendario General</h5>
@@ -28,9 +28,9 @@
 						<div class="fc-content" style="position: relative;margin-left: -10px;margin-right: -10px;">
 							<div class="fc-view fc-view-Mes fc-grid" style="position:relative" unselectable="on">
 
-								<table class="fc-border-separate correct_border" style="width:100%" cellspacing="0"> 
+								<table class="fc-border-separate correct_border" style="width:100%" cellspacing="0">
 									<thead>
-										<tr class="fc-first fc-last"> 
+										<tr class="fc-first fc-last">
 											<th class="fc-day-header fc-sun fc-widget-header" width="14%">Lunes</th>
 											<th class="fc-day-header fc-sun fc-widget-header" width="14%">Martes</th>
 											<th class="fc-day-header fc-sun fc-widget-header" width="14%">Miercoles</th>
@@ -41,7 +41,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr class="fc-week"> 
+										<tr class="fc-week">
 											<?php
 											$last_cell = $diaSemana + $ultimoDiaMes;
 											// hacemos un bucle hasta 42, que es el máximo de valores que puede
@@ -55,21 +55,21 @@
 												if($i<$diaSemana || $i>=$last_cell){
 													echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 												// mostramos el dia
-												}else{ ?>  
-													<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight'; }?>">
+												}else{?>
+													<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';}?>">
 														<div class="calendar_min">
 															<div class="fc-Dia-number"><?php echo $Dia; ?></div>
 															<div class="fc-Dia-content">
-																<?php foreach ($arrEventos as $evento) { 
+																<?php foreach ($arrEventos as $evento) {
 																	if ($evento['Dia']==$Dia) {
 																		$ver = 'principal_calendario.php?Mes='.$Mes.'&Ano='.$Ano.'&view='.$evento['idCalendario'];
 																		if ($evento['idUsuario']==9999){
-																			echo '<a class="event_calendar evcal_color2 word_break" target="_blank" href="'.$ver.'">'.cortar('Administrador : '.$evento['Titulo'], 20).'</a>';
+																			echo '<a class="event_calendar evcal_color2 word_break" target="_blank" rel="noopener noreferrer" href="'.$ver.'">'.cortar('Administrador : '.$evento['Titulo'], 20).'</a>';
 																		}else{
-																			echo '<a class="event_calendar evcal_color1 word_break" target="_blank" href="'.$ver.'">'.cortar($evento['Titulo'], 20).'</a>';
+																			echo '<a class="event_calendar evcal_color1 word_break" target="_blank" rel="noopener noreferrer" href="'.$ver.'">'.cortar($evento['Titulo'], 20).'</a>';
 																		}
-																	} 
-																} ?>    
+																	}
+																}?>    
 															</div>
 														</div>
 													</td>

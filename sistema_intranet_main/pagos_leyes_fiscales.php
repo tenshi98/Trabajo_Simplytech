@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "pagos_leyes_fiscales.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,10 +18,10 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Periodo_Ano']) && $_GET['Periodo_Ano'] != ''){    $location .= "&Periodo_Ano=".$_GET['Periodo_Ano'];    $search .= "&Periodo_Ano=".$_GET['Periodo_Ano'];}
-if(isset($_GET['Periodo_Mes']) && $_GET['Periodo_Mes'] != ''){    $location .= "&Periodo_Mes=".$_GET['Periodo_Mes'];    $search .= "&Periodo_Mes=".$_GET['Periodo_Mes'];}
-if(isset($_GET['Pago_fecha']) && $_GET['Pago_fecha'] != ''){      $location .= "&Pago_fecha=".$_GET['Pago_fecha'];      $search .= "&Pago_fecha=".$_GET['Pago_fecha'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){        $location .= "&idUsuario=".$_GET['idUsuario'];        $search .= "&idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['Periodo_Ano']) && $_GET['Periodo_Ano']!=''){    $location .= "&Periodo_Ano=".$_GET['Periodo_Ano'];    $search .= "&Periodo_Ano=".$_GET['Periodo_Ano'];}
+if(isset($_GET['Periodo_Mes']) && $_GET['Periodo_Mes']!=''){    $location .= "&Periodo_Mes=".$_GET['Periodo_Mes'];    $search .= "&Periodo_Mes=".$_GET['Periodo_Mes'];}
+if(isset($_GET['Pago_fecha']) && $_GET['Pago_fecha']!=''){      $location .= "&Pago_fecha=".$_GET['Pago_fecha'];      $search .= "&Pago_fecha=".$_GET['Pago_fecha'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){ $location .= "&idUsuario=".$_GET['idUsuario'];        $search .= "&idUsuario=".$_GET['idUsuario'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -29,65 +29,65 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'new_pago';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_modBase']) )  { 
+if (!empty($_POST['submit_modBase'])){
 	//Llamamos al formulario
 	$form_trabajo= 'modBase_pago';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';
 }
 //formulario para editar
-if ( !empty($_GET['clear_all']) )  { 
+if (!empty($_GET['clear_all'])){
 	//Llamamos al formulario
 	$form_trabajo= 'clear_all_pago';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_iva']) )  { 
+if (!empty($_POST['submit_iva'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_monto_pago_iva';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_ppm']) )  { 
+if (!empty($_POST['submit_ppm'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_monto_pago_ppm';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_file']) )  { 
+if (!empty($_POST['submit_file'])){
 	//Llamamos al formulario
 	$form_trabajo= 'new_file_pago';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_file']) )     {
+if (!empty($_GET['del_file'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_file_pago';
-	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_pagos']) )  { 
+if (!empty($_POST['submit_pagos'])){
 	//Llamamos al formulario
 	$form_trabajo= 'pagos_listado';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';
 }
 /**********************************************/
-if ( !empty($_GET['PagoFiscal']) )     {
+if (!empty($_GET['PagoFiscal'])){
 	//Llamamos al formulario
 	$form_trabajo= 'PagoFiscal';
-	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_new_pago']) )  { 
+if (!empty($_POST['submit_new_pago'])){
 	//Llamamos al formulario
 	$form_trabajo= 'add_new_pago';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';
@@ -108,8 +108,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Pago Modificado correc
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Pago borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['newPago']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['newPago'])){ 
 //se dibujan los inputs
 $Form_Inputs = new Inputs();
 
@@ -128,7 +128,7 @@ $IMPRENT_Pagado = 0;
 //recorro los pagos
 if($arrFormaPago){
 	foreach ($arrFormaPago as $pago) {
-		if(isset($pago['idTipo'])&&$pago['idTipo']!=''){ 
+		if(isset($pago['idTipo'])&&$pago['idTipo']!=''){
 			switch ($pago['idTipo']) {
 				case 1: $IVA_Pagado     = $IVA_Pagado + $pago['Monto']; break;
 				case 2: $PPM_Pagado     = $PPM_Pagado + $pago['Monto']; break;
@@ -157,48 +157,48 @@ input[type="date"].form-control{
 </style>
 
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box dark">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Pagos</h5>
 			</header>
-			<div id="div-1" class="body">
+			<div class="body">
 
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 					<?php if($IVA_Total_deuda>0){ ?>
-						<div class="col-sm-12 breadcrumb-bar" style="margin-bottom:10px;">
-							<p class="fleft" style="margin-top: 0px;margin-bottom: 0px;">IVA a Pagar <strong><?php echo valores($IVA_Total_deuda, 0);?></strong></p>
-							<a onclick="pago_iva_add();"  class="btn btn-default fright margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
+							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">IVA a Pagar <strong><?php echo valores($IVA_Total_deuda, 0);?></strong></p>
+							<a onclick="pago_iva_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
 						</div>
-						<div class="clearfix"></div> 
+						<div class="clearfix"></div>
 						<div id="insert_pago_iva"></div>
 					<?php } ?>
 					
 					<?php if($PPM_Total_deuda>0){ ?>
-						<div class="col-sm-12 breadcrumb-bar" style="margin-bottom:10px;">
-							<p class="fleft" style="margin-top: 0px;margin-bottom: 0px;">PPM a Pagar <strong><?php echo valores($PPM_Total_deuda, 0);?></strong></p>
-							<a onclick="pago_ppm_add();"  class="btn btn-default fright margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
+							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">PPM a Pagar <strong><?php echo valores($PPM_Total_deuda, 0);?></strong></p>
+							<a onclick="pago_ppm_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
 						</div>
-						<div class="clearfix"></div> 
+						<div class="clearfix"></div>
 						<div id="insert_pago_ppm"></div>
 					<?php } ?>
 					
 					<?php if($RET_Total_deuda>0){ ?>
-						<div class="col-sm-12 breadcrumb-bar" style="margin-bottom:10px;">
-							<p class="fleft" style="margin-top: 0px;margin-bottom: 0px;">Retencion a Pagar <strong><?php echo valores($RET_Total_deuda, 0);?></strong></p>
-							<a onclick="pago_ret_add();"  class="btn btn-default fright margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
+							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">Retencion a Pagar <strong><?php echo valores($RET_Total_deuda, 0);?></strong></p>
+							<a onclick="pago_ret_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
 						</div>
-						<div class="clearfix"></div> 
+						<div class="clearfix"></div>
 						<div id="insert_pago_ret"></div>
 					<?php } ?>
 					
 					<?php if($IMPRENT_Total_deuda>0){ ?>
-						<div class="col-sm-12 breadcrumb-bar" style="margin-bottom:10px;">
-							<p class="fleft" style="margin-top: 0px;margin-bottom: 0px;">Impuesto a la Renta a Pagar <strong><?php echo valores($IMPRENT_Total_deuda, 0);?></strong></p>
-							<a onclick="pago_impuesto_renta_add();"  class="btn btn-default fright margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
+							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">Impuesto a la Renta a Pagar <strong><?php echo valores($IMPRENT_Total_deuda, 0);?></strong></p>
+							<a onclick="pago_impuesto_renta_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
 						</div>
-						<div class="clearfix"></div> 
+						<div class="clearfix"></div>
 						<div id="insert_pago_impuesto_renta"></div>
 					<?php } ?>
 				
@@ -218,12 +218,12 @@ input[type="date"].form-control{
 					?>
 				
 					<div class="form-group" style="margin-top:10px;">
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_new_pago"> 
-						<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_new_pago"> 
+						<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 					</div>
 						  
-				</form> 
-				<?php widget_validator(); ?>         
+				</form>
+				<?php widget_validator(); ?>
 			</div>
 		</div>
 	</div>
@@ -231,7 +231,7 @@ input[type="date"].form-control{
 <div class="clearfix"></div>
 
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Pagos Realizados</h5>
@@ -473,12 +473,12 @@ input[type="date"].form-control{
 	</div>
 </div>
 
-<div style="display: none;"> 
+<div style="display: none;">
 	
 	<div id="clone_pago_iva" class="pago_iva_container"> 
 		<div class="col-sm-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','IVA_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>	
+				<?php $Form_Inputs->select('Documento de Pago','IVA_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-sm-3 nopadding">
@@ -508,7 +508,7 @@ input[type="date"].form-control{
 	<div id="clone_pago_ppm" class="pago_ppm_container"> 
 		<div class="col-sm-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','PPM_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>	
+				<?php $Form_Inputs->select('Documento de Pago','PPM_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-sm-3 nopadding">
@@ -538,7 +538,7 @@ input[type="date"].form-control{
 	<div id="clone_pago_ret" class="pago_ret_container"> 
 		<div class="col-sm-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','RET_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>	
+				<?php $Form_Inputs->select('Documento de Pago','RET_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-sm-3 nopadding">
@@ -568,7 +568,7 @@ input[type="date"].form-control{
 	<div id="clone_pago_impuesto_renta" class="pago_impuesto_renta_container"> 
 		<div class="col-sm-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','IMPRENT_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>	
+				<?php $Form_Inputs->select('Documento de Pago','IMPRENT_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-sm-3 nopadding">
@@ -612,7 +612,7 @@ input[type="date"].form-control{
 		let objTo    = document.getElementById('insert_pago_iva');
 		let objclone = document.getElementById('clone_pago_iva'),
 		//se clonan los div
-		clone_pago_iva = objclone.cloneNode(true); 
+		clone_pago_iva = objclone.cloneNode(true);
 		clone_pago_iva.id = 'new_pago_iva_'+nPagoIva;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_pago_iva);
@@ -626,7 +626,7 @@ input[type="date"].form-control{
 		let objTo    = document.getElementById('insert_pago_ppm');
 		let objclone = document.getElementById('clone_pago_ppm'),
 		//se clonan los div
-		clone_pago_ppm = objclone.cloneNode(true); 
+		clone_pago_ppm = objclone.cloneNode(true);
 		clone_pago_ppm.id = 'new_pago_ppm_'+nPagoPPM;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_pago_ppm);
@@ -640,7 +640,7 @@ input[type="date"].form-control{
 		let objTo    = document.getElementById('insert_pago_ret');
 		let objclone = document.getElementById('clone_pago_ret'),
 		//se clonan los div
-		clone_pago_ret = objclone.cloneNode(true); 
+		clone_pago_ret = objclone.cloneNode(true);
 		clone_pago_ret.id = 'new_pago_ret_'+nPagoRet;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_pago_ret);
@@ -654,7 +654,7 @@ input[type="date"].form-control{
 		let objTo    = document.getElementById('insert_pago_impuesto_renta');
 		let objclone = document.getElementById('clone_pago_impuesto_renta'),
 		//se clonan los div
-		clone_pago_impuesto_renta = objclone.cloneNode(true); 
+		clone_pago_impuesto_renta = objclone.cloneNode(true);
 		clone_pago_impuesto_renta.id = 'new_pago_impuesto_renta_'+nImpRent;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_pago_impuesto_renta);
@@ -683,9 +683,9 @@ input[type="date"].form-control{
 	});
     
     
-</script>		
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['addPago']) ) { 
+</script>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['addPago'])){ 
 //se dibujan los inputs
 $Form_Inputs = new Inputs();	
 ?>
@@ -697,70 +697,70 @@ input[type="date"].form-control{
 </style>
 
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box dark">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Pagos</h5>
 			</header>
-			<div id="div-1" class="body">
+			<div class="body">
 
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago']!=0){ ?>
-						<div class="col-sm-12 breadcrumb-bar" style="margin-bottom:10px;">
-							<p class="fleft" style="margin-top: 0px;margin-bottom: 0px;">IVA a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago'], 0);?></strong></p>
-							<a onclick="pago_iva_add();"  class="btn btn-default fright margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
+					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago']!=0){?>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
+							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">IVA a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago'], 0);?></strong></p>
+							<a onclick="pago_iva_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
 						</div>
-						<div class="clearfix"></div> 
+						<div class="clearfix"></div>
 						<div id="insert_pago_iva"></div>
 					<?php } ?>
 					
-					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago']!=0){ ?>
-						<div class="col-sm-12 breadcrumb-bar" style="margin-bottom:10px;">
-							<p class="fleft" style="margin-top: 0px;margin-bottom: 0px;">PPM a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago'], 0);?></strong></p>
-							<a onclick="pago_ppm_add();"  class="btn btn-default fright margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
+					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago']!=0){?>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
+							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">PPM a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago'], 0);?></strong></p>
+							<a onclick="pago_ppm_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
 						</div>
-						<div class="clearfix"></div> 
+						<div class="clearfix"></div>
 						<div id="insert_pago_ppm"></div>
 					<?php } ?>
 					
-					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['Retencion']!=0){ ?>
-						<div class="col-sm-12 breadcrumb-bar" style="margin-bottom:10px;">
-							<p class="fleft" style="margin-top: 0px;margin-bottom: 0px;">Retencion a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['Retencion'], 0);?></strong></p>
-							<a onclick="pago_ret_add();"  class="btn btn-default fright margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
+					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['Retencion']!=0){?>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
+							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">Retencion a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['Retencion'], 0);?></strong></p>
+							<a onclick="pago_ret_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
 						</div>
-						<div class="clearfix"></div> 
+						<div class="clearfix"></div>
 						<div id="insert_pago_ret"></div>
 					<?php } ?>
 					
-					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta']!=0){ ?>
-						<div class="col-sm-12 breadcrumb-bar" style="margin-bottom:10px;">
-							<p class="fleft" style="margin-top: 0px;margin-bottom: 0px;">Impuesto a la Renta a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta'], 0);?></strong></p>
-							<a onclick="pago_impuesto_renta_add();"  class="btn btn-default fright margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
+					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta']!=0){?>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
+							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">Impuesto a la Renta a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta'], 0);?></strong></p>
+							<a onclick="pago_impuesto_renta_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
 						</div>
-						<div class="clearfix"></div> 
+						<div class="clearfix"></div>
 						<div id="insert_pago_impuesto_renta"></div>
 					<?php } ?>
 				
 					<div class="form-group" style="margin-top:10px;">
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar" name="submit_pagos"> 
-						<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_pagos"> 
+						<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 					</div>
 						  
-				</form> 
-				<?php widget_validator(); ?>         
+				</form>
+				<?php widget_validator(); ?>
 			</div>
 		</div>
 	</div>
 </div>
 <div class="clearfix"></div>
 
-<div style="display: none;"> 
+<div style="display: none;">
 	
 	<div id="clone_pago_iva" class="pago_iva_container"> 
 		<div class="col-sm-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','IVA_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>	
+				<?php $Form_Inputs->select('Documento de Pago','IVA_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-sm-3 nopadding">
@@ -790,7 +790,7 @@ input[type="date"].form-control{
 	<div id="clone_pago_ppm" class="pago_ppm_container"> 
 		<div class="col-sm-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','PPM_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>	
+				<?php $Form_Inputs->select('Documento de Pago','PPM_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-sm-3 nopadding">
@@ -820,7 +820,7 @@ input[type="date"].form-control{
 	<div id="clone_pago_ret" class="pago_ret_container"> 
 		<div class="col-sm-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','RET_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>	
+				<?php $Form_Inputs->select('Documento de Pago','RET_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-sm-3 nopadding">
@@ -850,7 +850,7 @@ input[type="date"].form-control{
 	<div id="clone_pago_impuesto_renta" class="pago_impuesto_renta_container"> 
 		<div class="col-sm-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','IMPRENT_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>	
+				<?php $Form_Inputs->select('Documento de Pago','IMPRENT_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-sm-3 nopadding">
@@ -894,7 +894,7 @@ input[type="date"].form-control{
 		let objTo    = document.getElementById('insert_pago_iva');
 		let objclone = document.getElementById('clone_pago_iva'),
 		//se clonan los div
-		clone_pago_iva = objclone.cloneNode(true); 
+		clone_pago_iva = objclone.cloneNode(true);
 		clone_pago_iva.id = 'new_pago_iva_'+nPagoIva;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_pago_iva);
@@ -908,7 +908,7 @@ input[type="date"].form-control{
 		let objTo    = document.getElementById('insert_pago_ppm');
 		let objclone = document.getElementById('clone_pago_ppm'),
 		//se clonan los div
-		clone_pago_ppm = objclone.cloneNode(true); 
+		clone_pago_ppm = objclone.cloneNode(true);
 		clone_pago_ppm.id = 'new_pago_ppm_'+nPagoPPM;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_pago_ppm);
@@ -922,7 +922,7 @@ input[type="date"].form-control{
 		let objTo    = document.getElementById('insert_pago_ret');
 		let objclone = document.getElementById('clone_pago_ret'),
 		//se clonan los div
-		clone_pago_ret = objclone.cloneNode(true); 
+		clone_pago_ret = objclone.cloneNode(true);
 		clone_pago_ret.id = 'new_pago_ret_'+nPagoRet;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_pago_ret);
@@ -936,7 +936,7 @@ input[type="date"].form-control{
 		let objTo    = document.getElementById('insert_pago_impuesto_renta');
 		let objclone = document.getElementById('clone_pago_impuesto_renta'),
 		//se clonan los div
-		clone_pago_impuesto_renta = objclone.cloneNode(true); 
+		clone_pago_impuesto_renta = objclone.cloneNode(true);
 		clone_pago_impuesto_renta.id = 'new_pago_impuesto_renta_'+nImpRent;
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_pago_impuesto_renta);
@@ -969,41 +969,41 @@ input[type="date"].form-control{
 	
 
 <div class="clearfix"></div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['addFile']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['addFile'])){ ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php           
+				<?php 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 					
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file">
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>              
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_ppm']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_ppm'])){ 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
@@ -1018,7 +1018,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 			?>
 			</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
@@ -1028,25 +1028,25 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 					//Arriendo
 					case 1: 
 						$x1  = valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo'], 0);
-						if(isset($MontoPago)) {  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago'];}
+						if(isset($MontoPago)){  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago'];}
 					break;
 					//Insumo
 					case 2: 
 						$x1  = valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo'], 0);
-						if(isset($MontoPago)) {  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago'];}
+						if(isset($MontoPago)){  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago'];}
 					break;
 					//Producto
 					case 3:
 						$x1  = valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo'], 0);
-						if(isset($MontoPago)) {  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago'];}
+						if(isset($MontoPago)){  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago'];}
 					break;
 					//Servicio
 					case 4: 
 						$x1  = valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo'], 0);
-						if(isset($MontoPago)) {  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago'];}
+						if(isset($MontoPago)){  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago'];}
 					break;
 				}
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_disabled('Saldo','fake_emp', $x1);
@@ -1056,21 +1056,21 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_ppm"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_ppm"> 
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_iva']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_iva'])){ 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
@@ -1085,41 +1085,41 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 			?>
 			</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Saldo general del bloque
 				$x0  = Valores($_SESSION['pagos_leyes_fiscales_basicos']['IVA_TotalSaldo'], 0);
-				
+
 				//Se verifican si existen los datos
 				switch ($_GET['edit_iva']) {
 					//Arriendo
 					case 1: 
 						$x1  = valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo'], 0);
 						$xtext = 'Saldo Facturas Arriendo';
-						if(isset($MontoPago)) {  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago'];}
+						if(isset($MontoPago)){  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago'];}
 					break;
 					//Insumo
 					case 2: 
 						$x1  = valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo'], 0);
 						$xtext = 'Saldo Facturas Insumo';
-						if(isset($MontoPago)) {  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago'];}
+						if(isset($MontoPago)){  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago'];}
 					break;
 					//Producto
 					case 3:
 						$x1  = valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo'], 0);
 						$xtext = 'Saldo Facturas Producto';
-						if(isset($MontoPago)) {  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago'];}
+						if(isset($MontoPago)){  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago'];}
 					break;
 					//Servicio
 					case 4: 
 						$x1  = valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo'], 0);
 						$xtext = 'Saldo Facturas Servicio';
-						if(isset($MontoPago)) {  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago'];}
+						if(isset($MontoPago)){  $x2  = $MontoPago; }else{$x2  = $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago'];}
 					break;
 				}
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				
@@ -1133,37 +1133,37 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_iva"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_iva"> 
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['modBase']) ) {
-$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['modBase'])){
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos del egreso</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Periodo_Ano)) {      $x1  = $Periodo_Ano;    }else{$x1  = $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano'];}
-				if(isset($Periodo_Mes)) {      $x2  = $Periodo_Mes;    }else{$x2  = $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes'];}
-				if(isset($Pago_fecha)) {       $x3  = $Pago_fecha;     }else{$x3  = $_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'];}
-				if(isset($Observaciones)) {    $x4  = $Observaciones;  }else{$x4  = $_SESSION['pagos_leyes_fiscales_basicos']['Observaciones'];}
-				
+				if(isset($Periodo_Ano)){      $x1  = $Periodo_Ano;    }else{$x1  = $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano'];}
+				if(isset($Periodo_Mes)){      $x2  = $Periodo_Mes;    }else{$x2  = $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes'];}
+				if(isset($Pago_fecha)){       $x3  = $Pago_fecha;     }else{$x3  = $_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'];}
+				if(isset($Observaciones)){    $x4  = $Observaciones;  }else{$x4  = $_SESSION['pagos_leyes_fiscales_basicos']['Observaciones'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Periodo Año','Periodo_Ano', $x1, 2, 2016, ano_actual());
@@ -1180,21 +1180,21 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
+					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['view']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['view'])){
 $Form_Inputs = new Inputs();
 ?>
 
-<div class="col-sm-12" style="margin-bottom:30px">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
 		<?php 
@@ -1213,18 +1213,18 @@ $Form_Inputs = new Inputs();
 	<div class="clearfix"></div>
 </div> 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> Formulario de Pago</div>
 	   
 		<div id="customer">
 			
-			<table id="meta" class="fleft otdata">
+			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Usuario</td>
@@ -1274,7 +1274,7 @@ $Form_Inputs = new Inputs();
 			<tbody>
 				<tr>
 					<th colspan="7">IVA</th>
-				</tr>	
+				</tr>
 				<tr class="item-row fact_tittle">
 					<td>Item</td>
 					<td width="10">Compra</td>
@@ -1283,7 +1283,7 @@ $Form_Inputs = new Inputs();
 					<td width="10">Monto Pago</td>
 					<td width="10">Diferencia</td>
 					<td width="10">Acciones</td>
-				</tr>		
+				</tr>	
 				<tr class="item-row linea_punteada">
 					<td>Saldo IVA Mes Anterior</td>
 					<td align="right"><?php if($_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior']<=0){echo Valores($_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'], 0);}else{echo Valores(0, 0);} ?></td>
@@ -1292,7 +1292,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores(0, 0);?></td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'], 0) ?></td>
 					<td></td>
-				</tr>		
+				</tr>	
 				<tr class="item-row linea_punteada">
 					<td>Arriendos</td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][1]['IVA'], 0)?></td>
@@ -1318,7 +1318,7 @@ $Form_Inputs = new Inputs();
 							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo']>0){?><a href="<?php echo $location.'&edit_iva=2'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
-				</tr> 
+				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Productos</td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['IVA'], 0)?></td>
@@ -1331,7 +1331,7 @@ $Form_Inputs = new Inputs();
 							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo']>0){?><a href="<?php echo $location.'&edit_iva=3'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
-				</tr> 
+				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Servicios</td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['IVA'], 0)?></td>
@@ -1344,7 +1344,7 @@ $Form_Inputs = new Inputs();
 							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo']>0){?><a href="<?php echo $location.'&edit_iva=4'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
-				</tr>  
+				</tr> 
 				<tr class="invoice-total" bgcolor="#f1f1f1">
 					<td colspan="3" align="right"> <strong>Total</strong></td>    
 					<td align="right" class="<?php if($_SESSION['pagos_leyes_fiscales_basicos']['IVA_TotalSaldo']>0){echo 'color-red';}else{echo 'color-blue';}?>"><?php echo Valores($_SESSION['pagos_leyes_fiscales_basicos']['IVA_TotalSaldo'], 0);?></td>
@@ -1359,7 +1359,7 @@ $Form_Inputs = new Inputs();
 			<tbody>
 				<tr>
 					<th colspan="6">PPM</th>
-				</tr>	
+				</tr>
 				<tr class="item-row fact_tittle">
 					<td>Item</td>
 					<td width="10">Venta Neta</td>
@@ -1391,7 +1391,7 @@ $Form_Inputs = new Inputs();
 							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_ppm=2'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
-				</tr> 
+				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Productos</td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['ValorNeto'], 0)?></td>
@@ -1403,7 +1403,7 @@ $Form_Inputs = new Inputs();
 							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_ppm=3'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
-				</tr> 
+				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Servicios</td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['ValorNeto'], 0)?></td>
@@ -1415,7 +1415,7 @@ $Form_Inputs = new Inputs();
 							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_ppm=4'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
-				</tr>  
+				</tr> 
 				<tr class="invoice-total" bgcolor="#f1f1f1">
 					<td colspan="2" align="right"> <strong>Total</strong></td>    
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Saldo'], 0);?></td>
@@ -1431,7 +1431,7 @@ $Form_Inputs = new Inputs();
 			<tbody>
 				<tr>
 					<th colspan="4">Retenciones</th>
-				</tr>	
+				</tr>
 				<tr class="item-row fact_tittle">
 					<td>Item</td>
 					<td width="10">Valor</td>
@@ -1447,7 +1447,7 @@ $Form_Inputs = new Inputs();
 			<tbody>
 				<tr>
 					<th colspan="4">Impuesto a la Renta</th>
-				</tr>	
+				</tr>
 				<tr class="item-row fact_tittle">
 					<td>Item</td>
 					<td width="10">Valor</td>
@@ -1671,7 +1671,7 @@ $Form_Inputs = new Inputs();
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td colspan="5">Archivos Adjuntos</td>
                 <td width="160"><a href="<?php echo $location.'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></td>
-            </tr>		  
+            </tr>
             
 			<?php 
 			if (isset($_SESSION['pagos_leyes_fiscales_archivos'])){
@@ -1705,30 +1705,30 @@ $Form_Inputs = new Inputs();
 <div class="clearfix"></div>
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
-$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Pago</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Periodo_Ano)) {      $x1  = $Periodo_Ano;    }else{$x1  = '';}
-				if(isset($Periodo_Mes)) {      $x2  = $Periodo_Mes;    }else{$x2  = '';}
-				if(isset($Pago_fecha)) {       $x3  = $Pago_fecha;     }else{$x3  = '';}
-				if(isset($Observaciones)) {    $x4  = $Observaciones;  }else{$x4  = '';}
-				
+				if(isset($Periodo_Ano)){      $x1  = $Periodo_Ano;    }else{$x1  = '';}
+				if(isset($Periodo_Mes)){      $x2  = $Periodo_Mes;    }else{$x2  = '';}
+				if(isset($Pago_fecha)){       $x3  = $Pago_fecha;     }else{$x3  = '';}
+				if(isset($Observaciones)){    $x4  = $Observaciones;  }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Periodo Año','Periodo_Ano', $x1, 2, 2016, ano_actual());
@@ -1744,35 +1744,26 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -1797,18 +1788,18 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable con la ubicacion
 $SIS_where = "pagos_leyes_fiscales.idFactFiscal!=0";
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where.= " AND pagos_leyes_fiscales.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND pagos_leyes_fiscales.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Periodo_Ano']) && $_GET['Periodo_Ano'] != ''){  $SIS_where .= " AND pagos_leyes_fiscales.Periodo_Ano='".$_GET['Periodo_Ano']."'";}
-if(isset($_GET['Pago_fecha']) && $_GET['Periodo_Mes'] != ''){   $SIS_where .= " AND pagos_leyes_fiscales.Periodo_Mes='".$_GET['Periodo_Mes']."'";}
-if(isset($_GET['Pago_fecha']) && $_GET['Pago_fecha'] != ''){    $SIS_where .= " AND pagos_leyes_fiscales.Pago_fecha='".$_GET['Pago_fecha']."'";}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){      $SIS_where .= " AND pagos_leyes_fiscales.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['Periodo_Ano']) && $_GET['Periodo_Ano']!=''){  $SIS_where .= " AND pagos_leyes_fiscales.Periodo_Ano='".$_GET['Periodo_Ano']."'";}
+if(isset($_GET['Pago_fecha']) && $_GET['Periodo_Mes']!=''){   $SIS_where .= " AND pagos_leyes_fiscales.Periodo_Mes='".$_GET['Periodo_Mes']."'";}
+if(isset($_GET['Pago_fecha']) && $_GET['Pago_fecha']!=''){    $SIS_where .= " AND pagos_leyes_fiscales.Pago_fecha='".$_GET['Pago_fecha']."'";}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){      $SIS_where .= " AND pagos_leyes_fiscales.idUsuario=".$_GET['idUsuario'];}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idFactFiscal', 'pagos_leyes_fiscales', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 pagos_leyes_fiscales.idFactFiscal,
@@ -1828,63 +1819,63 @@ $arrTipo = array();
 $arrTipo = db_select_array (false, $SIS_query, 'pagos_leyes_fiscales', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Pago</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Pago</a><?php } ?>
 </div> 
-<div class="clearfix"></div>                      
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Periodo_Ano)) {   $x1 = $Periodo_Ano;  }else{$x1 = '';}
-				if(isset($Periodo_Mes)) {   $x2 = $Periodo_Mes;  }else{$x2 = '';}
-				if(isset($Pago_fecha)) {    $x3 = $Pago_fecha;   }else{$x3 = '';}
-				if(isset($idUsuario)) {     $x4 = $idUsuario;    }else{$x4 = '';}
-				
+				if(isset($Periodo_Ano)){   $x1 = $Periodo_Ano;  }else{$x1 = '';}
+				if(isset($Periodo_Mes)){   $x2 = $Periodo_Mes;  }else{$x2 = '';}
+				if(isset($Pago_fecha)){    $x3 = $Pago_fecha;   }else{$x3 = '';}
+				if(isset($idUsuario)){     $x4 = $idUsuario;    }else{$x4 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Periodo Año','Periodo_Ano', $x1, 2, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Periodo Mes','Periodo_Mes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_date('Fecha Pago','Pago_fecha', $x3, 2);
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil, '', $dbConn);
 				}else{
-					$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
-				}	
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+					$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
+				}
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                             
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Pagos</h5>
@@ -1894,7 +1885,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -1954,11 +1945,11 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
@@ -1967,7 +1958,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 </div>
 
 <?php widget_modal(80, 95); ?>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

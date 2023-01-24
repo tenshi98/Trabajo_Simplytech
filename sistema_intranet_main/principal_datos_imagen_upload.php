@@ -32,7 +32,7 @@ if(isset($_POST["image"])){
 		if ($resultado){
 											
 			//Filtro para idSistema
-			$a = "Direccion_img='".$imageName."'" ;
+			$a = "Direccion_img='".$imageName."'";
 
 			// inserto los datos de registro en la db
 			$query  = "UPDATE `usuarios_listado` SET ".$a." WHERE idUsuario = '$idUsuario'";
@@ -44,13 +44,13 @@ if(isset($_POST["image"])){
 				//Seteo la variable de sesion si existe
 				if(isset($_SESSION['usuario']['basic_data']['Direccion_img'])){
 					$_SESSION['usuario']['basic_data']['Direccion_img'] = $imageName;
-				}			
-			}			
+				}
+			}
 		} else {
-			$error['imgLogo']     = 'error/Ocurrio un error al mover el archivo'; 
+			$error['imgLogo']     = 'error/Ocurrio un error al mover el archivo';
 		}
 	} else {
-		$error['imgLogo']     = 'error/El archivo '.$imageName.' ya existe'; 
+		$error['imgLogo']     = 'error/El archivo '.$imageName.' ya existe';
 	}
 }
 

@@ -12,17 +12,17 @@ require_once 'core/Load.Utils.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "view_crosscrane_estado_elev.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -31,9 +31,9 @@ $location .='?view='.$X_Puntero;
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -67,7 +67,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 }
 						
 $SIS_query = '
-Nombre, 
+Nombre,
 cantSensores, 
 LastUpdateFecha,
 LastUpdateHora,
@@ -139,10 +139,10 @@ foreach ($arrUnimed as $sen) {
 $SIS_query = 'idOpcionesGen_6';
 $SIS_join  = '';
 $SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
+$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
 
-/********************************************************************************************/			
+/********************************************************************************************/		
 if(isset($rowdata['CrossCrane_tiempo_revision'])&&$rowdata['CrossCrane_tiempo_revision']=='00:00:00'){
 	echo '<div class="col-xs-12" style="margin-top:15px;">';
 		$Alert_Text  = 'No se ha configurado el tiempo de revision';
@@ -189,14 +189,14 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table', 'gauge']});</script>	
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Estado del Equipo <?php echo $rowdata['Nombre'].' (Hora Refresco: '.hora_actual().')'; ?></h5>
 		</header>
-        <div id="div-3" class="tab-content">
-			<div class="col-sm-12">
+        <div class="tab-content">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<?php
 				//numero sensores equipo
 				$N_Maximo_Sensores = $rowdata['cantSensores'];
@@ -366,7 +366,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				if($alimentacion_min > 1&&$alimentacion_max > 1){  $margen_alimentacion  = cantidades(100-(($alimentacion_min*100)/$alimentacion_max), 0);}
 				if($motor_subida_min > 1&&$motor_subida_max > 1){  $margen_motor_subida  = cantidades(100-(($motor_subida_min*100)/$motor_subida_max), 0);}
 				if($motor_bajada_min > 1&&$motor_bajada_max > 1){  $margen_motor_bajada  = cantidades(100-(($motor_bajada_min*100)/$motor_bajada_max), 0);}
-				
+
 				/*****************************************/
 				//genero los iconos de alertas
 				//alimentacion
@@ -403,7 +403,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						$icon_voltaje = '<span style="color:#60c060"><i class="fa fa-check-circle" aria-hidden="true"></i></span>';
 					}
 				}
-				
+
 				//Alertas
 				if(isset($rowdata['Alertas'])&&$rowdata['Alertas']!=0){
 					$icon_Alertas = '<span style="color:#da4932"><i class="fa fa-exclamation-triangle faa-bounce animated" aria-hidden="true"></i></span>';
@@ -463,8 +463,8 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$link_Alertas .= '?f_inicio='.$Fecha_inicio;
 				$link_Alertas .= '&f_termino='.$Fecha_fin;
 				$link_Alertas .= '&idTelemetria='.$X_Puntero;
-				$link_Alertas .= '&idLeido=0';		
-				$link_Alertas .= '&submit_filter=+Filtrar';		
+				$link_Alertas .= '&idLeido=0';
+				$link_Alertas .= '&submit_filter=+Filtrar';	
 				//Sobre uso
 				$link_sobreuso  = 'informe_telemetria_uso_03.php';
 				$link_sobreuso .= '?idTelemetria='.$X_Puntero;
@@ -473,14 +473,14 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 
 				<div class="row">
 					
-					<div class="col-sm-6">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<h3 style="text-align: center;"><?php echo $icon_motor_subida.' M. Subida';?></h3>
 						<div class="float_table" id="chart_gauge_m_subida" ></div> 
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo $link_motor_subida; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
 					
-					<div class="col-sm-6">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<h3 style="text-align: center;"><?php echo $icon_motor_bajada.' M. Bajada';?></h3>
 						<div class="float_table" id="chart_gauge_m_bajada" ></div> 
 						<div class="clearfix"></div>
@@ -567,7 +567,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 							//dibujo
 							chart_gauge_2.draw(data_gauge_2, options_gauge_2);
 						}
-						
+
 						/********************************************************************/
 						function update_correccion_1(data) {
 							//Formateo
@@ -597,7 +597,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 			
 				<div class="row">
 					
-					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<h3 style="text-align: center;"><?php echo $icon_voltaje.' Voltaje';?></h3>
 						
 						<div  class="box box-blue box-solid tooltip">
@@ -640,7 +640,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo $link_voltaje; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
 					
-					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<h3 style="text-align: center;"><?php echo $icon_Alertas.' Operacion';?></h3>
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
@@ -657,7 +657,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo $link_Alertas; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
 					
-					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<h3 style="text-align: center;"><?php echo $icon_sobreuso.' Mantencion';?></h3>
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
@@ -715,7 +715,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 										mapTypeId: google.maps.MapTypeId.SATELLITE
 									};
 									map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-									map.setTilt(0); 
+									map.setTilt(0);
 									
 									// InfoWindow content
 									var content_1 = '<div id="iw-container">' +
@@ -820,7 +820,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 							</script>
 							<?php 
 						}
-						
+
 					} ?>
 					
 			</div>
@@ -828,19 +828,19 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 	
 					
 		
-		</div>	
+		</div>
 	</div>
 </div>
 
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -851,12 +851,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 

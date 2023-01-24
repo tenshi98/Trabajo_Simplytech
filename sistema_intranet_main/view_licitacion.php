@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -37,7 +37,7 @@ if (validarNumero($_GET['view'])){
 //se traen los datos basicos de la licitacion
 $SIS_query = '
 licitacion_listado.Codigo, 
-licitacion_listado.Nombre, 
+licitacion_listado.Nombre,
 licitacion_listado.FechaInicio, 
 licitacion_listado.FechaTermino, 
 licitacion_listado.Presupuesto,
@@ -65,7 +65,7 @@ LEFT JOIN `core_sistemas_opciones`       ON core_sistemas_opciones.idOpciones   
 $SIS_where = 'licitacion_listado.idLicitacion='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con el historial
 $SIS_query = '
 licitacion_listado_historial.Creacion_fecha, 
@@ -110,7 +110,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 
 	$array3d = array();
 	foreach($arrLicitacion as $key) {
-		
+
 		//Creo Variables para la rejilla
 		for ($i = 1; $i <= $nmax; $i++) {
 			$d[$i]  = $key['LVL_'.$i.'_id'];   
@@ -256,7 +256,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 		}
 		foreach ($array as $key => $value){
 			
-			if (isset($value['Nombre'])) {
+			if (isset($value['Nombre'])){
 				echo '<li><div class="blum">';
 				echo '<div class="pull-left">'.$value['Codigo'].' - '.$value['Nombre'].'</div>';
 				echo '<div class="clearfix"></div>';
@@ -273,13 +273,13 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 }
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Ver Datos del Contrato</h5>	
+			<h5>Ver Datos del Contrato</h5>
 		</header>
-		<div id="div-3" class="tab-content">
+		<div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
@@ -299,7 +299,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 								<td>Sistema</td>
 								<td><?php echo $rowdata['Sistema'];?></td>
 							</tr>
-							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
+							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
 								<tr class="odd">
 									<td>Cliente</td>
 									<td><?php echo $rowdata['Cliente'];?></td>
@@ -347,7 +347,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 								</tr>
 								<tr>
 									<td colspan="2">
-										<div class="clearfix"></div>  	
+										<div class="clearfix"></div>
 										<?php //Se imprime el arbol
 										echo arrayToUL($array3d, 0, $nmax);
 										?>
@@ -372,7 +372,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 </div>	
 
 <?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
-	<div class="col-xs-12" style="margin-bottom:15px;">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 		<table id="items">
 			<tbody>
 				<tr>
@@ -382,27 +382,27 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 					<th width="160">Fecha</th>
 					<th>Usuario</th>
 					<th>Observacion</th>
-				</tr>			  
+				</tr>
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
 						<td><?php echo '<i class="'.$doc['FonAwesome'].'" aria-hidden="true"></i> '.$doc['Observacion']; ?></td>
-					</tr> 
+					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
-	</div>	
+	</div>
 <?php } ?>
 	
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -413,12 +413,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 <?php

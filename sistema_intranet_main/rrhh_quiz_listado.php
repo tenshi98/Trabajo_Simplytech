@@ -10,12 +10,12 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "rrhh_quiz_listado.php";
 $location = $original;
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
-if(isset($_GET['search']) && $_GET['search'] != ''){                       $location .= "&search=".$_GET['search']; 	}
+if(isset($_GET['search']) && $_GET['search']!=''){                $location .= "&search=".$_GET['search']; 	}
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -23,13 +23,13 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
 /***************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_quiz']) )  { 
+if (!empty($_POST['submit_quiz'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert_quiz';
 	require_once 'A1XRXS_sys/xrxs_form/z_rrhh_quiz_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['edit_quiz']) )  { 
+if (!empty($_POST['edit_quiz'])){
 	//Ubicaciones nuevas
 	$location .= "&id_quiz=".$_GET['id_quiz'];
 	//Llamamos al formulario
@@ -37,14 +37,14 @@ if ( !empty($_POST['edit_quiz']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_rrhh_quiz_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_quiz']) )     {
+if (!empty($_GET['del_quiz'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_quiz';
-	require_once 'A1XRXS_sys/xrxs_form/z_rrhh_quiz_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_rrhh_quiz_listado.php';
 }
 /***************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_pregunta']) )  { 
+if (!empty($_POST['submit_pregunta'])){
 	//Ubicaciones nuevas
 	$location .= "&id_quiz=".$_GET['id_quiz'];
 	//Llamamos al formulario
@@ -52,7 +52,7 @@ if ( !empty($_POST['submit_pregunta']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_rrhh_quiz_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['edit_pregunta']) )  { 
+if (!empty($_POST['edit_pregunta'])){
 	//Ubicaciones nuevas
 	$location .= "&id_quiz=".$_GET['id_quiz'];
 	//Llamamos al formulario
@@ -60,12 +60,12 @@ if ( !empty($_POST['edit_pregunta']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/z_rrhh_quiz_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_pregunta']) )     {
+if (!empty($_GET['del_pregunta'])){
 	//Ubicaciones nuevas
 	$location .= "&id_quiz=".$_GET['id_quiz'];
 	//Llamamos al formulario
 	$form_trabajo= 'del_pregunta';
-	require_once 'A1XRXS_sys/xrxs_form/z_rrhh_quiz_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_rrhh_quiz_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -80,8 +80,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Evaluacion editada cor
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evaluacion borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['modBase']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if(!empty($_GET['modBase'])){ 
 // Se traen todos los datos de la pregunta
 $query = "SELECT Nombre,Header_texto, Header_fecha, Footer_texto, Texto_Inicio, idSistema,
 idEscala, Porcentaje_apro, idEstado, idTipoEvaluacion, idTipoQuiz
@@ -103,32 +103,32 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);		 
 ?>
 
- <div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Evaluacion</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Evaluacion</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
-				if(isset($idTipoEvaluacion)) {  $x2  = $idTipoEvaluacion;   }else{$x2  = $rowdata['idTipoEvaluacion'];}
-				if(isset($idEscala)) {          $x3  = $idEscala;           }else{$x3  = $rowdata['idEscala'];}
-				if(isset($Porcentaje_apro)) {   $x4  = $Porcentaje_apro;    }else{$x4  = $rowdata['Porcentaje_apro'];}
-				if(isset($idTipoQuiz)) {        $x7  = $idTipoQuiz;         }else{$x7  = $rowdata['idTipoQuiz'];}
-				if(isset($Header_texto)) {      $x8  = $Header_texto;       }else{$x8  = $rowdata['Header_texto'];}
-				if(isset($Header_fecha)) {      $x9  = $Header_fecha;       }else{$x9  = $rowdata['Header_fecha'];}
-				if(isset($Texto_Inicio)) {      $x10 = $Texto_Inicio;       }else{$x10 = $rowdata['Texto_Inicio'];}
-				if(isset($Footer_texto)) {      $x11 = $Footer_texto;       }else{$x11 = $rowdata['Footer_texto'];}
-				if(isset($idEstado)) {          $x12 = $idEstado;           }else{$x12 = $rowdata['idEstado'];}
-				
+				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
+				if(isset($idTipoEvaluacion)){  $x2  = $idTipoEvaluacion;   }else{$x2  = $rowdata['idTipoEvaluacion'];}
+				if(isset($idEscala)){          $x3  = $idEscala;           }else{$x3  = $rowdata['idEscala'];}
+				if(isset($Porcentaje_apro)){   $x4  = $Porcentaje_apro;    }else{$x4  = $rowdata['Porcentaje_apro'];}
+				if(isset($idTipoQuiz)){        $x7  = $idTipoQuiz;         }else{$x7  = $rowdata['idTipoQuiz'];}
+				if(isset($Header_texto)){      $x8  = $Header_texto;       }else{$x8  = $rowdata['Header_texto'];}
+				if(isset($Header_fecha)){      $x9  = $Header_fecha;       }else{$x9  = $rowdata['Header_fecha'];}
+				if(isset($Texto_Inicio)){      $x10 = $Texto_Inicio;       }else{$x10 = $rowdata['Texto_Inicio'];}
+				if(isset($Footer_texto)){      $x11 = $Footer_texto;       }else{$x11 = $rowdata['Footer_texto'];}
+				if(isset($idEstado)){          $x12 = $idEstado;           }else{$x12 = $rowdata['idEstado'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				
 				$Form_Inputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x2, 2, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Escala','idEscala', $x3, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
@@ -181,7 +181,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						document.getElementById('idEscala').required = 'false';
 						document.getElementById('Porcentaje_apro').required = 'true';
 								
-					} else { 
+					} else {
 						document.getElementById('div_idEscala').style.display = 'none';
 						document.getElementById('div_Porcentaje_apro').style.display = 'none';
 						document.getElementById('idEscala').required = 'false';
@@ -189,12 +189,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 									
 					}
 
-					/************************************************************/		
-					$(document).ready(function(){ 
+					/************************************************************/	
+					$(document).ready(function(){
 						//Tipo Evaluacion
 						$("#idTipoEvaluacion").on("change", function(){
 							TipoEvaluacion= $("#idTipoEvaluacion").val();
-							
+
 							//Escala
 							if(TipoEvaluacion == 1){ 
 								document.getElementById('div_idEscala').style.display = '';
@@ -202,7 +202,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								
 								document.getElementById('idEscala').required = 'true';
 								document.getElementById('Porcentaje_apro').required = 'false';
-							
+
 							//Porcentaje
 							} else if(TipoEvaluacion == 2){ 
 								document.getElementById('div_idEscala').style.display = 'none';
@@ -211,53 +211,53 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('idEscala').required = 'false';
 								document.getElementById('Porcentaje_apro').required = 'true';
 								
-							} else { 
+							} else {
 								document.getElementById('div_idEscala').style.display = 'none';
 								document.getElementById('div_Porcentaje_apro').style.display = 'none';
 								document.getElementById('idEscala').required = 'false';
 								document.getElementById('Porcentaje_apro').required = 'false';
 									
 							}
-						}); 
+						});
 						
-					}); 
+					});
 				</script>
 								
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="edit_quiz">	
-					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="edit_quiz">	
+					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 	 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['addPreg']) ) { ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ }elseif(!empty($_GET['addPreg'])){ ?>
 	
 	
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Pregunta</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Pregunta</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCategoria)) {       $x1  = $idCategoria;     }else{$x1  = '';}
-				if(isset($Nombre)) {            $x2  = $Nombre;          }else{$x2  = '';}
-				if(isset($idTipo)) {            $x3  = $idTipo;          }else{$x3  = '';}
-				if(isset($Opcion_1)) {          $x4  = $Opcion_1;        }else{$x4  = '';}
-				if(isset($Opcion_2)) {          $x5  = $Opcion_2;        }else{$x5  = '';}
-				if(isset($Opcion_3)) {          $x6  = $Opcion_3;        }else{$x6  = '';}
-				if(isset($Opcion_4)) {          $x7  = $Opcion_4;        }else{$x7  = '';}
-				if(isset($Opcion_5)) {          $x8  = $Opcion_5;        }else{$x8  = '';}
-				if(isset($Opcion_6)) {          $x9  = $Opcion_6;        }else{$x9  = '';}
-				if(isset($OpcionCorrecta)) {    $x10 = $OpcionCorrecta;  }else{$x10 = '';}
+				if(isset($idCategoria)){       $x1  = $idCategoria;     }else{$x1  = '';}
+				if(isset($Nombre)){            $x2  = $Nombre;          }else{$x2  = '';}
+				if(isset($idTipo)){            $x3  = $idTipo;          }else{$x3  = '';}
+				if(isset($Opcion_1)){          $x4  = $Opcion_1;        }else{$x4  = '';}
+				if(isset($Opcion_2)){          $x5  = $Opcion_2;        }else{$x5  = '';}
+				if(isset($Opcion_3)){          $x6  = $Opcion_3;        }else{$x6  = '';}
+				if(isset($Opcion_4)){          $x7  = $Opcion_4;        }else{$x7  = '';}
+				if(isset($Opcion_5)){          $x8  = $Opcion_5;        }else{$x8  = '';}
+				if(isset($Opcion_6)){          $x9  = $Opcion_6;        }else{$x9  = '';}
+				if(isset($OpcionCorrecta)){    $x10 = $OpcionCorrecta;  }else{$x10 = '';}
 				
 
 				//se dibujan los inputs
@@ -288,14 +288,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_Opcion_6').style.display = 'none';
 					document.getElementById('div_OpcionCorrecta').style.display = 'none';
 	
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 						
 						$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 							let modelSelected= $("#idTipo").val();//Asignamos el valor seleccionado
 							
 							
 							//Seleccion Unica
-							if(modelSelected == 1){ 
+							if(modelSelected == 1){
 								document.getElementById('div_Opcion_1').style.display = '';
 								document.getElementById('div_Opcion_2').style.display = '';
 								document.getElementById('div_Opcion_3').style.display = '';
@@ -314,9 +314,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 									option.value = option.text = i;
 									document.getElementById('OpcionCorrecta').add( option );
 								}
-							
+
 							//Seleccion Multiple	
-							} else if(modelSelected == 2){ 
+							} else if(modelSelected == 2){
 								document.getElementById('div_Opcion_1').style.display = '';
 								document.getElementById('div_Opcion_2').style.display = '';
 								document.getElementById('div_Opcion_3').style.display = '';
@@ -324,9 +324,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_5').style.display = '';
 								document.getElementById('div_Opcion_6').style.display = '';
 								document.getElementById('div_OpcionCorrecta').style.display = 'none';
-								
+
 							//Verdadero o Falso	
-							} else if(modelSelected == 3){ 
+							} else if(modelSelected == 3){
 								document.getElementById('div_Opcion_1').style.display = '';
 								document.getElementById('div_Opcion_2').style.display = '';
 								document.getElementById('div_Opcion_3').style.display = 'none';
@@ -358,7 +358,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							Valor (1 a 5)
 							Voto
 							*/
-							} else { 
+							} else {
 								document.getElementById('div_Opcion_1').style.display = 'none';
 								document.getElementById('div_Opcion_2').style.display = 'none';
 								document.getElementById('div_Opcion_3').style.display = 'none';
@@ -369,26 +369,26 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								
 							}
 						
-						}); 
-					}); 
+						});
+					});
 					
 				</script>	
 					
 								
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_pregunta">	
-					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_pregunta">	
+					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['editPreg']) ) { 
-$query = "SELECT Nombre, idTipo, Opcion_1, Opcion_2, Opcion_3, Opcion_4, Opcion_5, Opcion_6,
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ }elseif(!empty($_GET['editPreg'])){ 
+$query = "SELECT Nombre,idTipo, Opcion_1, Opcion_2, Opcion_3, Opcion_4, Opcion_5, Opcion_6,
 OpcionCorrecta, idCategoria
 FROM `rrhh_quiz_listado_preguntas`
 WHERE idPregunta = ".$_GET['editPreg'];
@@ -409,27 +409,27 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Editar Pregunta</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Editar Pregunta</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCategoria)) {       $x1  = $idCategoria;     }else{$x1  = $rowdata['idCategoria'];}
-				if(isset($Nombre)) {            $x2  = $Nombre;          }else{$x2  = $rowdata['Nombre'];}
-				if(isset($idTipo)) {            $x3  = $idTipo;          }else{$x3  = $rowdata['idTipo'];}
-				if(isset($Opcion_1)) {          $x4  = $Opcion_1;        }else{$x4  = $rowdata['Opcion_1'];}
-				if(isset($Opcion_2)) {          $x5  = $Opcion_2;        }else{$x5  = $rowdata['Opcion_2'];}
-				if(isset($Opcion_3)) {          $x6  = $Opcion_3;        }else{$x6  = $rowdata['Opcion_3'];}
-				if(isset($Opcion_4)) {          $x7  = $Opcion_4;        }else{$x7  = $rowdata['Opcion_4'];}
-				if(isset($Opcion_5)) {          $x8  = $Opcion_5;        }else{$x8  = $rowdata['Opcion_5'];}
-				if(isset($Opcion_6)) {          $x9  = $Opcion_6;        }else{$x9  = $rowdata['Opcion_6'];}
-				if(isset($OpcionCorrecta)) {    $x10 = $OpcionCorrecta;  }else{$x10 = $rowdata['OpcionCorrecta'];}
+				if(isset($idCategoria)){       $x1  = $idCategoria;     }else{$x1  = $rowdata['idCategoria'];}
+				if(isset($Nombre)){            $x2  = $Nombre;          }else{$x2  = $rowdata['Nombre'];}
+				if(isset($idTipo)){            $x3  = $idTipo;          }else{$x3  = $rowdata['idTipo'];}
+				if(isset($Opcion_1)){          $x4  = $Opcion_1;        }else{$x4  = $rowdata['Opcion_1'];}
+				if(isset($Opcion_2)){          $x5  = $Opcion_2;        }else{$x5  = $rowdata['Opcion_2'];}
+				if(isset($Opcion_3)){          $x6  = $Opcion_3;        }else{$x6  = $rowdata['Opcion_3'];}
+				if(isset($Opcion_4)){          $x7  = $Opcion_4;        }else{$x7  = $rowdata['Opcion_4'];}
+				if(isset($Opcion_5)){          $x8  = $Opcion_5;        }else{$x8  = $rowdata['Opcion_5'];}
+				if(isset($Opcion_6)){          $x9  = $Opcion_6;        }else{$x9  = $rowdata['Opcion_6'];}
+				if(isset($OpcionCorrecta)){    $x10 = $OpcionCorrecta;  }else{$x10 = $rowdata['OpcionCorrecta'];}
 				
 
 				//se dibujan los inputs
@@ -462,12 +462,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_Opcion_6').style.display = 'none';
 					document.getElementById('div_OpcionCorrecta').style.display = 'none';
 					
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 						
 						let tipo_val= $("#idTipo").val();
-						
+
 						//Seleccion Unica
-						if(tipo_val == 1){ 
+						if(tipo_val == 1){
 							document.getElementById('div_Opcion_1').style.display = '';
 							document.getElementById('div_Opcion_2').style.display = '';
 							document.getElementById('div_Opcion_3').style.display = '';
@@ -475,9 +475,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							document.getElementById('div_Opcion_5').style.display = '';
 							document.getElementById('div_Opcion_6').style.display = '';
 							document.getElementById('div_OpcionCorrecta').style.display = '';
-						
+
 						//Seleccion Multiple		
-						} else if(tipo_val == 2){ 
+						} else if(tipo_val == 2){
 							document.getElementById('div_Opcion_1').style.display = '';
 							document.getElementById('div_Opcion_2').style.display = '';
 							document.getElementById('div_Opcion_3').style.display = '';
@@ -487,7 +487,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							document.getElementById('div_OpcionCorrecta').style.display = 'none';
 								
 						//Verdadero o Falso			
-						} else if(tipo_val == 3){ 
+						} else if(tipo_val == 3){
 							document.getElementById('div_Opcion_1').style.display = '';
 							document.getElementById('div_Opcion_2').style.display = '';
 							document.getElementById('div_Opcion_3').style.display = 'none';
@@ -508,7 +508,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						Valor (1 a 5)
 						Voto
 						*/	
-						} else { 
+						} else {
 							document.getElementById('div_Opcion_1').style.display = 'none';
 							document.getElementById('div_Opcion_2').style.display = 'none';
 							document.getElementById('div_Opcion_3').style.display = 'none';
@@ -522,9 +522,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	
 						$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 							let modelSelected= $("#idTipo").val();
-							
+
 							//Seleccion Unica
-							if(modelSelected == 1){ 
+							if(modelSelected == 1){
 								document.getElementById('div_Opcion_1').style.display = '';
 								document.getElementById('div_Opcion_2').style.display = '';
 								document.getElementById('div_Opcion_3').style.display = '';
@@ -543,9 +543,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 									option.value = option.text = i;
 									document.getElementById('OpcionCorrecta').add( option );
 								}
-							
+
 							//Seleccion Multiple		
-							} else if(modelSelected == 2){ 
+							} else if(modelSelected == 2){
 								document.getElementById('div_Opcion_1').style.display = '';
 								document.getElementById('div_Opcion_2').style.display = '';
 								document.getElementById('div_Opcion_3').style.display = '';
@@ -553,9 +553,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_5').style.display = '';
 								document.getElementById('div_Opcion_6').style.display = '';
 								document.getElementById('div_OpcionCorrecta').style.display = 'none';
-								
+
 							//Verdadero o Falso	
-							} else if(modelSelected == 3){ 
+							} else if(modelSelected == 3){
 								document.getElementById('div_Opcion_1').style.display = '';
 								document.getElementById('div_Opcion_2').style.display = '';
 								document.getElementById('div_Opcion_3').style.display = 'none';
@@ -574,7 +574,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 									option.value = option.text = i;
 									document.getElementById('OpcionCorrecta').add( option );
 								}
-							
+
 							//Para el resto	
 							/*
 							Observaciones
@@ -587,7 +587,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							Valor (1 a 5)
 							Voto
 							*/
-							} else { 
+							} else {
 								document.getElementById('div_Opcion_1').style.display = 'none';
 								document.getElementById('div_Opcion_2').style.display = 'none';
 								document.getElementById('div_Opcion_3').style.display = 'none';
@@ -598,25 +598,25 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								
 							}
 						
-						}); 
-					}); 
+						});
+					});
 					
 				</script>	
 					
 								
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="edit_pregunta">	
-					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="edit_pregunta">	
+					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 		 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- }elseif ( ! empty($_GET['id_quiz']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ }elseif(!empty($_GET['id_quiz'])){ 
 // Se traen todos los datos de la pregunta
 $query = "SELECT
 rrhh_quiz_listado.Nombre,
@@ -692,7 +692,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPreguntas,$row );
 }	
 
@@ -705,7 +705,7 @@ foreach ($arrPreguntas as $preg) {
 ?>
 <?php if(isset($count)&&$count==0){ ?>
 	<div class="row">	
-		<div class="col-sm-12" style="margin-top:20px;">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 			<?php
 			$Alert_Text  = 'No tiene preguntas asignadas a la Evaluacion';
 			alert_post_data(4,1,1, $Alert_Text);
@@ -716,24 +716,24 @@ foreach ($arrPreguntas as $preg) {
 <?php } ?>
  
 <div class="row">
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<a target="new" href="rrhh_quiz_listado_to_word_1.php?id_quiz=<?php echo $_GET['id_quiz'] ?>" class="btn btn-info pull-right" ><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar a Word</a>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
  
 
 <div class="row">
-	<div class="col-sm-12">
-		<div class="box">	
-			<header>		
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos Basicos</h5>
 				<div class="toolbar">
 					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz'].'&modBase=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a>
 				</div>
 			</header>
-			<div class="table-responsive">    
+			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<tr>
@@ -747,7 +747,7 @@ foreach ($arrPreguntas as $preg) {
 						<tr>
 							<td class="meta-head">Fecha Cabecera</td>
 							<td><?php echo fecha_estandar($rowdata['Header_fecha']); ?></td>
-						</tr> 
+						</tr>
 						<tr>
 							<td class="meta-head">Texto Contenido</td>
 							<td><span style="word-wrap: break-word;white-space: initial;"><?php echo $rowdata['Texto_Inicio']; ?></span></td>
@@ -763,7 +763,7 @@ foreach ($arrPreguntas as $preg) {
 						<tr>	
 							<td class="meta-head">Estado</td>
 							<td><?php echo $rowdata['Estado']; ?></td>
-						</tr> 
+						</tr>
 						<tr>
 							<td class="meta-head">Tipo Puntuacion</td>
 							<?php
@@ -798,9 +798,9 @@ foreach ($arrPreguntas as $preg) {
 	
 
 <div class="row">
-	<div class="col-sm-12">
-		<div class="box">	
-			<header>		
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Preguntas</h5>
 				<div class="toolbar">
 					<?php 
@@ -810,7 +810,7 @@ foreach ($arrPreguntas as $preg) {
 					<?php } ?>
 				</div>
 			</header>
-			<div class="table-responsive">    
+			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						
@@ -831,9 +831,9 @@ foreach ($arrPreguntas as $preg) {
 										if(isset($preg['Opcion_4'])&&$preg['Opcion_4']!=''){$tex = '';if($preg['OpcionCorrecta']==$resp_correct){$tex = ' <strong>-> correcta</strong>';};echo ' - '.$preg['Opcion_4'].$tex.'<br/>';$resp_correct++;}
 										if(isset($preg['Opcion_5'])&&$preg['Opcion_5']!=''){$tex = '';if($preg['OpcionCorrecta']==$resp_correct){$tex = ' <strong>-> correcta</strong>';};echo ' - '.$preg['Opcion_5'].$tex.'<br/>';$resp_correct++;}
 										if(isset($preg['Opcion_6'])&&$preg['Opcion_6']!=''){$tex = '';if($preg['OpcionCorrecta']==$resp_correct){$tex = ' <strong>-> correcta</strong>';};echo ' - '.$preg['Opcion_6'].$tex.'<br/>';$resp_correct++;}
-										?>	
+										?>
 						
-									</td>			
+									</td>	
 									<td width="120" >
 										<div class="btn-group" style="width: 70px;" >
 											<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz'].'&editPreg='.$preg['idPregunta']; ?>" title="Editar Pregunta" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -844,8 +844,8 @@ foreach ($arrPreguntas as $preg) {
 										</div>
 									</td>
 								</tr>
-							<?php } ?> 
-						<?php } ?> 
+							<?php } ?>
+						<?php } ?>
 						                  
 					</tbody>
 				</table>
@@ -864,41 +864,41 @@ foreach ($arrPreguntas as $preg) {
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px; margin-top:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Evaluacion</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Evaluacion</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {            $x1  = $Nombre;             }else{$x1  = '';}
-				if(isset($idTipoEvaluacion)) {  $x2  = $idTipoEvaluacion;   }else{$x2  = '';}
-				if(isset($idEscala)) {          $x3  = $idEscala;           }else{$x3  = '';}
-				if(isset($Porcentaje_apro)) {   $x4  = $Porcentaje_apro;    }else{$x4  = '';}
-				if(isset($idTipoQuiz)) {        $x7  = $idTipoQuiz;         }else{$x7  = '';}
-				if(isset($Header_texto)) {      $x8  = $Header_texto;       }else{$x8  = '';}
-				if(isset($Header_fecha)) {      $x9  = $Header_fecha;       }else{$x9  = '';}
-				if(isset($Texto_Inicio)) {      $x10 = $Texto_Inicio;       }else{$x10 = '';}
-				if(isset($Footer_texto)) {      $x11 = $Footer_texto;       }else{$x11 = '';}
-				
+				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = '';}
+				if(isset($idTipoEvaluacion)){  $x2  = $idTipoEvaluacion;   }else{$x2  = '';}
+				if(isset($idEscala)){          $x3  = $idEscala;           }else{$x3  = '';}
+				if(isset($Porcentaje_apro)){   $x4  = $Porcentaje_apro;    }else{$x4  = '';}
+				if(isset($idTipoQuiz)){        $x7  = $idTipoQuiz;         }else{$x7  = '';}
+				if(isset($Header_texto)){      $x8  = $Header_texto;       }else{$x8  = '';}
+				if(isset($Header_fecha)){      $x9  = $Header_fecha;       }else{$x9  = '';}
+				if(isset($Texto_Inicio)){      $x10 = $Texto_Inicio;       }else{$x10 = '';}
+				if(isset($Footer_texto)){      $x11 = $Footer_texto;       }else{$x11 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				
 				$Form_Inputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x2, 2, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Escala','idEscala', $x3, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
@@ -928,11 +928,11 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 					document.getElementById('div_idEscala').style.display = 'none';
 					document.getElementById('div_Porcentaje_apro').style.display = 'none';
 					
-					$(document).ready(function(){ 
+					$(document).ready(function(){
 						//Tipo Puntuacion
 						$("#idTipoEvaluacion").on("change", function(){
 							let TipoEvaluacion= $("#idTipoEvaluacion").val();
-							
+
 							//Escala
 							if(TipoEvaluacion == 1){ 
 								document.getElementById('div_idEscala').style.display = '';
@@ -940,7 +940,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 								
 								document.getElementById('idEscala').required = 'true';
 								document.getElementById('Porcentaje_apro').required = 'false';
-							
+
 							//Porcentaje
 							} else if(TipoEvaluacion == 2){ 
 								document.getElementById('div_idEscala').style.display = 'none';
@@ -949,45 +949,36 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 								document.getElementById('idEscala').required = 'false';
 								document.getElementById('Porcentaje_apro').required = 'true';
 								
-							} else { 
+							} else {
 								document.getElementById('div_idEscala').style.display = 'none';
 								document.getElementById('div_Porcentaje_apro').style.display = 'none';
 								document.getElementById('idEscala').required = 'false';
 								document.getElementById('Porcentaje_apro').required = 'false';
 									
 							}
-						}); 
+						});
 						 
-					}); 
+					});
 				</script>
 					
 								
-				<div class="form-group">	
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_quiz">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_quiz">	
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
-			<?php widget_validator(); ?> 
+			</form>
+			<?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} else  { 
-//paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
-	$num_pag = 1;	
-}
+//paginador de resultados
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -1005,13 +996,13 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $SIS_where = "rrhh_quiz_listado.idQuiz!=0";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){  $SIS_where .= " AND rrhh_quiz_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){  $SIS_where .= " AND rrhh_quiz_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idQuiz', 'rrhh_quiz_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 rrhh_quiz_listado.idQuiz,
@@ -1026,55 +1017,55 @@ $arrUsers = db_select_array (false, $SIS_query, 'rrhh_quiz_listado', $SIS_join, 
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evaluacion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evaluacion</a><?php } ?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;     }else{$x1  = '';}
+				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                     
                                  
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Evaluaciones</h5>	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Evaluaciones</h5>
 			<div class="toolbar">
 				<?php 
-				if (isset($_GET['search'])) {  $search ='&search='.$_GET['search']; } else { $search='';}
+				if (isset($_GET['search'])){  $search ='&search='.$_GET['search'];} else { $search='';}
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
@@ -1089,10 +1080,10 @@ $arrUsers = db_select_array (false, $SIS_query, 'rrhh_quiz_listado', $SIS_join, 
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrUsers as $usuarios) { ?>
-					<tr class="odd">			
-						<td><?php echo $usuarios['Nombre']; ?></td>	
-						<td><?php echo $usuarios['N_preg']; ?></td>	
+					<?php foreach ($arrUsers as $usuarios){ ?>
+					<tr class="odd">
+						<td><?php echo $usuarios['Nombre']; ?></td>
+						<td><?php echo $usuarios['N_preg']; ?></td>
 						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group widthtd120" >
@@ -1102,22 +1093,22 @@ $arrUsers = db_select_array (false, $SIS_query, 'rrhh_quiz_listado', $SIS_join, 
 									$ubicacion = $location.'&del_quiz='.simpleEncode($usuarios['idQuiz'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el Punto '.$usuarios['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
-			if (isset($_GET['search'])) {  $search ='&search='.$_GET['search']; } else { $search='';}
+			if (isset($_GET['search'])){  $search ='&search='.$_GET['search'];} else { $search='';}
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div>   
+		</div>
 	</div>
 </div>
-<?php widget_modal(80, 95); ?>	
+<?php widget_modal(80, 95); ?>
 
 
 	

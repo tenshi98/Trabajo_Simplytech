@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "pago_boletas_cliente.php";
 $location = $original;     
 //Verifico los permisos del usuario sobre la transaccion
@@ -20,18 +20,18 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
 /************************************************************/
 //formulario para borrar
-if ( !empty($_GET['del_boleta']) )  { 
+if (!empty($_GET['del_boleta'])){
 	//Se agregan ubicaciones
 	$location .= '?submit_filter=true';
-	if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){                 $location .= '&N_Doc='.$_GET['N_Doc'];}			
-	if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){   $location .= '&idCliente='.$_GET['idCliente'];}
+	if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){         $location .= '&N_Doc='.$_GET['N_Doc'];}
+	if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){  $location .= '&idCliente='.$_GET['idCliente'];}
 	//Llamamos al formulario
 	$form_trabajo= 'del_boleta';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_boletas_clientes.php';
 }
 /************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_form']) )  { 
+if (!empty($_POST['submit_form'])){
 	//Llamamos al formulario
 	$form_trabajo= 'pago_general';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_boletas_clientes.php';
@@ -46,14 +46,14 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['pay'])){ $error['pay'] = 'sucess/Pago Realizado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);}					
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['next']) ) {  
+if(isset($error)&&$error!=''){echo notifications_list($error);}		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['next'])){  
 
 $location .= '?submit_filter=true';
-if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){ $location .= '&idDocumentos='.$_GET['idDocumentos'];}
-if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){               $location .= '&N_Doc='.$_GET['N_Doc'];}			
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $location .= '&idCliente='.$_GET['idCliente'];}
+if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){$location .= '&idDocumentos='.$_GET['idDocumentos'];}
+if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){       $location .= '&N_Doc='.$_GET['N_Doc'];}
+if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $location .= '&idCliente='.$_GET['idCliente'];}
 
 /******************************************************************/
 //Se verifica el saldo de los pagos anticipados
@@ -85,8 +85,8 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 		//Reviso si no se han agregado los valores
 		if(isset($tipo['ValorReal'])&&$tipo['ValorReal']==''){
 			$Data_Pendientes++;
-		}		
-	}				
+		}
+	}	
 }
 					
 ?>
@@ -125,7 +125,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 							<th>Total a Pagar</th>
 								<th>Opc</th>
 						</tr>
-					</thead>			  
+					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php 
 						$TotalFact = 0;
@@ -146,7 +146,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 												$ubicacion = $location.'&del_boleta='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la Boleta N° '.$tipo['N_Doc'].'?';?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-											<?php } ?>	
+											<?php } ?>
 										</div>
 									</td>
 									<td><?php echo 'Boleta N° '.$tipo['N_Doc']; ?></td>
@@ -169,7 +169,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 									<td align="right">
 										<?php if(isset($tipo['ValorReal'])&&$tipo['ValorReal']!=''){?>
 											<a onclick="delpago(<?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-										<?php }else{ ?>	
+										<?php }else{ ?>
 											<a onclick="addpago(<?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 										<?php } ?>
 									</td>
@@ -185,7 +185,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 						<td style="background-color: #E5E5E5;" align="right"><strong><?php echo valores($TotalDeuda, 0); ?></strong></td>
 						<td style="background-color: #E5E5E5;" align="right"><strong><?php echo valores($TotalGeneral, 0); ?></strong></td>
 						<td style="background-color: #E5E5E5;" align="right"></td>
-					</tr>                   
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -230,7 +230,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 					$total = $tipo['ValorTotal']-$tipo['MontoPagado'];								
 					//llamo al script
 					echo "addpago_2(".$tipo['idFacturacion'].", ".$total.");";
-				}	
+				}
 			}
 		}
 		
@@ -275,7 +275,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 
 
 	
-	<?php if(isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalGeneral!=0){ ?>		
+	<?php if(isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalGeneral!=0){ ?>	
 		<div class="col-md-7">
 
 			<div class="box">
@@ -283,15 +283,15 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 					<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 					<h5>Ingresar Pago Facturas</h5>
 				</header>
-				<div id="div-1" class="body">
+				<div class="body">
 					<form class="form-horizontal" method="post" name="form1" id="form1">
 					
 						<?php 
 						//Se verifican si existen los datos
-						if(isset($idDocPago)) {         $x1  = $idDocPago;          }else{$x1  = '';}
-						if(isset($N_DocPago)) {         $x2  = $N_DocPago;          }else{$x2  = '';}
-						if(isset($F_Pago)) {            $x3  = $F_Pago;             }else{$x3  = '';}
-				
+						if(isset($idDocPago)){         $x1  = $idDocPago;          }else{$x1  = '';}
+						if(isset($N_DocPago)){         $x2  = $N_DocPago;          }else{$x2  = '';}
+						if(isset($F_Pago)){            $x3  = $F_Pago;             }else{$x3  = '';}
+
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
@@ -299,8 +299,8 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 						$Form_Inputs->form_date('F Vencimiento','F_Pago', $x3, 2);
 
 						echo '<div class="form-group" id="div_">
-							<label class="control-label col-sm-4" id="label_">Valor a Pagar</label>
-							<div class="col-sm-8">
+							<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Valor a Pagar</label>
+							<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 								<input type="text" placeholder="Valor de la Factura" class="form-control"  name="escribeme" id="escribeme" disabled value="'.Valores($TotalGeneral, 0).'">
 							</div>
 						</div>';
@@ -313,10 +313,10 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 						
 						<div class="form-group">
 							<input type="submit" id="submitCadastroHidden" style="display: none;" name="submit_form">
-							<input type="button" id="submitBtn" data-toggle="modal" data-target="#confirm-submit"  class="btn btn-primary fright margin_width fa-input" value="&#xf283; Ingresar Pago" name="submit2">
+							<input type="button" id="submitBtn" data-toggle="modal" data-target="#confirm-submit"  class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Ingresar Pago" name="submit2">
 						</div>
 							  
-					</form> 
+					</form>
 							
 				</div>
 			</div>
@@ -362,7 +362,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 
 			</script>
 			
-		</div> 							
+		</div>
 	<?php } ?>
 
 	
@@ -370,12 +370,12 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 	</div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width" ><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right margin_form_btn" ><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Cancelar</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['submit_filter']) ) {  
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['submit_filter'])){
 //Titulo con el Cliente		
 if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){				
 	$query = "SELECT Nombre
@@ -401,7 +401,7 @@ if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){
 unset($_SESSION['pagos_boletas_clientes']);
 /*************************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$z=" AND boleta_honorarios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		
+$z=" AND boleta_honorarios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 /**********************************************************************************************/
 //datos de la obra
 $Docsubmit_filter   = '';
@@ -452,7 +452,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrBoletas,$row );
 }
 	
@@ -469,9 +469,9 @@ array_push( $arrBoletas,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-	<a style="display: none;" id="acep_1" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary fright margin_width"><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
-	<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+	<a style="display: none;" id="acep_1" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
+	<a href="<?php echo $original; ?>" class="btn btn-danger pull-right margin_form_btn" ><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 	<div class="clearfix"></div>
 </div>
 
@@ -492,7 +492,7 @@ array_push( $arrBoletas,$row );
 						<th>Total a Pagar</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
 					if ($arrBoletas!=false && !empty($arrBoletas) && $arrBoletas!='') {
@@ -527,7 +527,7 @@ array_push( $arrBoletas,$row );
 						<td align="right"><strong id="final_val_2"></strong></td>
 						<td align="right"><strong id="final_val_3"></strong></td>
 						<td></td>
-					</tr>                   
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -628,44 +628,44 @@ array_push( $arrBoletas,$row );
 
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a style="display: none;" id="acep_2" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary fright margin_width"><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
-<a href="<?php echo $original; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a style="display: none;" id="acep_2" href="<?php echo $location.'&next=true'; ?>" class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-check-square-o" aria-hidden="true"></i> Aceptar</a>
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando 
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idCliente)) {  $x1  = $idCliente; }else{$x1  = '';}
-				if(isset($N_Doc)) {         $x2  = $N_Doc;        }else{$x2  = '';}
-				
+				if(isset($idCliente)){  $x1  = $idCliente; }else{$x1  = '';}
+				if(isset($N_Doc)){         $x2  = $N_Doc;        }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $z, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_Doc', $x2, 1);
 					
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

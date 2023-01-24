@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_listado.php";
 $location = $original;
 $new_location = "telemetria_listado_datos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//se agregan ubicaciones
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
@@ -39,18 +39,18 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $rowdata = db_select_data (false, 'Nombre,id_Sensores, id_Geo,idTipo, Marca, Modelo, Patente, Num_serie, AnoFab, idZona, CapacidadPersonas,CapacidadKilos, MCubicos, LimiteVelocidad, TiempoDetencion', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos GPS');?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -79,30 +79,30 @@ $rowdata = db_select_data (false, 'Nombre,id_Sensores, id_Geo,idTipo, Marca, Mod
 						<li class=""><a href="<?php echo 'telemetria_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_script.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-code" aria-hidden="true"></i> Scripts</a></li>
 						<li class=""><a href="<?php echo 'telemetria_listado_archivos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivos</a></li>
-						
+
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
-			
-					<?php  
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+
+					<?php
 					//Se verifican si existen los datos
-					if(isset($idTipo)) {            $x1  = $idTipo;             }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Marca)) {             $x2  = $Marca;              }else{$x2  = $rowdata['Marca'];}
-					if(isset($Modelo)) {            $x3  = $Modelo;             }else{$x3  = $rowdata['Modelo'];}
-					if(isset($Patente)) {           $x4  = $Patente;            }else{$x4  = $rowdata['Patente'];}
-					if(isset($Num_serie)) {         $x5  = $Num_serie;          }else{$x5  = $rowdata['Num_serie'];}
-					if(isset($AnoFab)) {            $x6  = $AnoFab;             }else{$x6  = $rowdata['AnoFab'];}
-					if(isset($idZona)) {            $x7  = $idZona;             }else{$x7  = $rowdata['idZona'];}
-					if(isset($CapacidadPersonas)) { $x8  = $CapacidadPersonas;  }else{$x8  = $rowdata['CapacidadPersonas'];}
-					if(isset($CapacidadKilos)) {    $x9  = $CapacidadKilos;     }else{$x9  = Cantidades_decimales_justos($rowdata['CapacidadKilos']);}
-					if(isset($MCubicos)) {          $x10 = $MCubicos;           }else{$x10 = Cantidades_decimales_justos($rowdata['MCubicos']);}
-					if(isset($LimiteVelocidad)) {   $x11 = $LimiteVelocidad;    }else{$x11 = Cantidades_decimales_justos($rowdata['LimiteVelocidad']);}
-					if(isset($TiempoDetencion)) {   $x12 = $TiempoDetencion;    }else{$x12 = $rowdata['TiempoDetencion'];}
-					
+					if(isset($idTipo)){            $x1  = $idTipo;             }else{$x1  = $rowdata['idTipo'];}
+					if(isset($Marca)){             $x2  = $Marca;              }else{$x2  = $rowdata['Marca'];}
+					if(isset($Modelo)){            $x3  = $Modelo;             }else{$x3  = $rowdata['Modelo'];}
+					if(isset($Patente)){           $x4  = $Patente;            }else{$x4  = $rowdata['Patente'];}
+					if(isset($Num_serie)){         $x5  = $Num_serie;          }else{$x5  = $rowdata['Num_serie'];}
+					if(isset($AnoFab)){            $x6  = $AnoFab;             }else{$x6  = $rowdata['AnoFab'];}
+					if(isset($idZona)){            $x7  = $idZona;             }else{$x7  = $rowdata['idZona'];}
+					if(isset($CapacidadPersonas)){ $x8  = $CapacidadPersonas;  }else{$x8  = $rowdata['CapacidadPersonas'];}
+					if(isset($CapacidadKilos)){    $x9  = $CapacidadKilos;     }else{$x9  = Cantidades_decimales_justos($rowdata['CapacidadKilos']);}
+					if(isset($MCubicos)){          $x10 = $MCubicos;           }else{$x10 = Cantidades_decimales_justos($rowdata['MCubicos']);}
+					if(isset($LimiteVelocidad)){   $x11 = $LimiteVelocidad;    }else{$x11 = Cantidades_decimales_justos($rowdata['LimiteVelocidad']);}
+					if(isset($TiempoDetencion)){   $x12 = $TiempoDetencion;    }else{$x12 = $rowdata['TiempoDetencion'];}
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Basicos');
@@ -112,39 +112,35 @@ $rowdata = db_select_data (false, 'Nombre,id_Sensores, id_Geo,idTipo, Marca, Mod
 					$Form_Inputs->form_input_text('Patente', 'Patente', $x4, 2);
 					$Form_Inputs->form_input_text('Numero de serie', 'Num_serie', $x5, 1);
 					$Form_Inputs->form_select_n_auto('Año de Fabricacion','AnoFab', $x6, 1, 1975, ano_actual());
-					
+
 					$Form_Inputs->form_tittle(3, 'Caracteristicos');
 					$Form_Inputs->form_select('Zona de Trabajo','idZona', $x7, 1, 'idZona', 'Nombre', 'vehiculos_zonas', 0, '', $dbConn);
 					$Form_Inputs->form_select_n_auto('Capacidad Pasajeros','CapacidadPersonas', $x8, 1, 1, 99);
 					$Form_Inputs->form_input_number('Capacidad (Kilos)','CapacidadKilos', $x9, 1);
 					$Form_Inputs->form_input_number('Metros Cubicos (M3)','MCubicos', $x10, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Datos Movilizacion');
 					$Form_Inputs->form_input_number('Velocidad Maxima','LimiteVelocidad', $x11, 1);
 					$Form_Inputs->form_time('Tiempo Maximo Detencion','TiempoDetencion', $x12, 1, 1);
-					
-					
-					
-					
+
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/

@@ -2,24 +2,24 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-118).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idCanal']) )      $idCanal      = $_POST['idCanal'];
-	if ( !empty($_POST['idCategoria']) )  $idCategoria  = $_POST['idCategoria'];
-	if ( !empty($_POST['Nombre']) )       $Nombre       = $_POST['Nombre'];
-	if ( !empty($_POST['Direccion']) )    $Direccion    = $_POST['Direccion'];
-	if ( !empty($_POST['Channel_ID']) )   $Channel_ID   = $_POST['Channel_ID'];
-	
+	if (!empty($_POST['idCanal']))      $idCanal      = $_POST['idCanal'];
+	if (!empty($_POST['idCategoria']))  $idCategoria  = $_POST['idCategoria'];
+	if (!empty($_POST['Nombre']))       $Nombre       = $_POST['Nombre'];
+	if (!empty($_POST['Direccion']))    $Direccion    = $_POST['Direccion'];
+	if (!empty($_POST['Channel_ID']))   $Channel_ID   = $_POST['Channel_ID'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -36,40 +36,40 @@ require_once '0_validate_user_1.php';
 			case 'Nombre':       if(empty($Nombre)){      $error['Nombre']       = 'error/No ha ingresado el nombre';}break;
 			case 'Direccion':    if(empty($Direccion)){   $error['Direccion']    = 'error/No ha ingresado la direccion';}break;
 			case 'Channel_ID':   if(empty($Channel_ID)){  $error['Channel_ID']   = 'error/No ha ingresado el Channel ID';}break;
-			
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
-/*******************************************************************************************************************/	
-	if(isset($Nombre) && $Nombre != ''){         $Nombre     = EstandarizarInput($Nombre); }
-	if(isset($Direccion) && $Direccion != ''){   $Direccion  = EstandarizarInput($Direccion); }
-	if(isset($Channel_ID) && $Channel_ID != ''){ $Channel_ID = EstandarizarInput($Channel_ID); }
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre) && $Nombre!=''){        $Nombre     = EstandarizarInput($Nombre);}
+	if(isset($Direccion) && $Direccion!=''){   $Direccion  = EstandarizarInput($Direccion);}
+	if(isset($Channel_ID) && $Channel_ID!=''){ $Channel_ID = EstandarizarInput($Channel_ID);}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){         $error['Nombre']     = 'error/Edita Nombre, contiene palabras no permitidas'; }	
-	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){   $error['Direccion']  = 'error/Edita la Direccion, contiene palabras no permitidas'; }	
-	if(isset($Channel_ID)&&contar_palabras_censuradas($Channel_ID)!=0){ $error['Channel_ID'] = 'error/Edita Channel ID, contiene palabras no permitidas'; }	
-	
+/*******************************************************************************************************************/
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){         $error['Nombre']     = 'error/Edita Nombre,contiene palabras no permitidas';}
+	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){   $error['Direccion']  = 'error/Edita la Direccion, contiene palabras no permitidas';}
+	if(isset($Channel_ID)&&contar_palabras_censuradas($Channel_ID)!=0){ $error['Channel_ID'] = 'error/Edita Channel ID, contiene palabras no permitidas';}
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
-/*******************************************************************************************************************/	
+/*******************************************************************************************************************/
 	//Verifica si el mail corresponde
-	if(isset($Direccion)&&!validarURL($Direccion)){  $error['Direccion'] = 'error/La Direccion Web ingresada no es valida'; }
-	
+	if(isset($Direccion)&&!validarURL($Direccion)){  $error['Direccion'] = 'error/La Direccion Web ingresada no es valida';}
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
 	switch ($form_trabajo) {
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'insert':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -80,36 +80,36 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
-				
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
+
 				//filtros
-				if(isset($idCategoria) && $idCategoria != ''){  $SIS_data  = "'".$idCategoria."'" ;   }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre != ''){            $SIS_data .= ",'".$Nombre."'" ;       }else{$SIS_data .= ",''";}
-				if(isset($Direccion) && $Direccion != ''){      $SIS_data .= ",'".$Direccion."'" ;    }else{$SIS_data .= ",''";}
-				if(isset($Channel_ID) && $Channel_ID != ''){    $SIS_data .= ",'".$Channel_ID."'" ;   }else{$SIS_data .= ",''";}
-				
+				if(isset($idCategoria) && $idCategoria!=''){  $SIS_data  = "'".$idCategoria."'";   }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
+				if(isset($Direccion) && $Direccion!=''){      $SIS_data .= ",'".$Direccion."'";    }else{$SIS_data .= ",''";}
+				if(isset($Channel_ID) && $Channel_ID!=''){    $SIS_data .= ",'".$Channel_ID."'";   }else{$SIS_data .= ",''";}
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idCategoria, Nombre, Direccion, Channel_ID';
+				$SIS_columns = 'idCategoria, Nombre,Direccion, Channel_ID';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seg_vecinal_canales_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
-				
+
 			}
-	
+
 		break;
-/*******************************************************************************************************************/		
-		case 'update':	
-			
+/*******************************************************************************************************************/
+		case 'update':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -120,41 +120,40 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Nombre ya existe en el sistema';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el codigo	
-			if ( empty($error) ) {
+
+			//Si no hay errores ejecuto el codigo
+			if(empty($error)){
 				//Filtros
-				$SIS_data = "idCanal='".$idCanal."'" ;
-				if(isset($idCategoria) && $idCategoria != ''){  $SIS_data .= ",idCategoria='".$idCategoria."'" ;}
-				if(isset($Nombre) && $Nombre != ''){            $SIS_data .= ",Nombre='".$Nombre."'" ;}
-				if(isset($Direccion) && $Direccion != ''){      $SIS_data .= ",Direccion='".$Direccion."'" ;}
-				if(isset($Channel_ID) && $Channel_ID != ''){    $SIS_data .= ",Channel_ID='".$Channel_ID."'" ;}
-				
+				$SIS_data = "idCanal='".$idCanal."'";
+				if(isset($idCategoria) && $idCategoria!=''){  $SIS_data .= ",idCategoria='".$idCategoria."'";}
+				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Direccion) && $Direccion!=''){      $SIS_data .= ",Direccion='".$Direccion."'";}
+				if(isset($Channel_ID) && $Channel_ID!=''){    $SIS_data .= ",Channel_ID='".$Channel_ID."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'seg_vecinal_canales_listado', 'idCanal = "'.$idCanal.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
+
 				}
-				
+
 			}
-		
-	
-		break;	
-							
+
+		break;
+
 /*******************************************************************************************************************/
-		case 'del':	
-			
+		case 'del':
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
-			
+
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del']) OR !validaEntero($_GET['del']))&&$_GET['del']!=''){
 				$indice = simpleDecode($_GET['del'], fecha_actual());
@@ -162,41 +161,38 @@ require_once '0_validate_user_1.php';
 				$indice = $_GET['del'];
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
-				
+
 			}
-			
+
 			//se verifica si es un numero lo que se recibe
-			if (!validarNumero($indice)&&$indice!=''){ 
+			if (!validarNumero($indice)&&$indice!=''){
 				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
-			if (!validaEntero($indice)&&$indice!=''){ 
+			if (!validaEntero($indice)&&$indice!=''){
 				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			if($errorn==0){
 				//se borran los datos
 				$resultado = db_delete_data (false, 'seg_vecinal_canales_listado', 'idCanal = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+
 					//redirijo
 					header( 'Location: '.$location.'&deleted=true' );
 					die;
-					
+
 				}
 			}else{
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-			
 
-		break;							
-					
+		break;
+
 /*******************************************************************************************************************/
 	}
 ?>

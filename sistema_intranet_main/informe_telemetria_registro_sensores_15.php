@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_telemetria_registro_sensores_15.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,15 +18,15 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''){          $location .= "&f_inicio=".$_GET['f_inicio'];           $search .= "&f_inicio=".$_GET['f_inicio'];}
-if(isset($_GET['f_termino']) && $_GET['f_termino'] != ''){        $location .= "&f_termino=".$_GET['f_termino'];         $search .= "&f_termino=".$_GET['f_termino'];}
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''){          $location .= "&h_inicio=".$_GET['h_inicio'];           $search .= "&h_inicio=".$_GET['h_inicio'];}
-if(isset($_GET['h_termino']) && $_GET['h_termino'] != ''){        $location .= "&h_termino=".$_GET['h_termino'];         $search .= "&h_termino=".$_GET['h_termino'];}
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];   $search .= "&idTelemetria=".$_GET['idTelemetria'];}
-if(isset($_GET['idGrupo']) && $_GET['idGrupo'] != ''){            $location .= "&idGrupo=".$_GET['idGrupo'];             $search .= "&idGrupo=".$_GET['idGrupo'];}
-if(isset($_GET['idGrafico']) && $_GET['idGrafico'] != ''){        $location .= "&idGrafico=".$_GET['idGrafico'];         $search .= "&idGrafico=".$_GET['idGrafico'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){          $location .= "&idEstado=".$_GET['idEstado'];           $search .= "&idEstado=".$_GET['idEstado'];}
-if(isset($_GET['Observacion']) && $_GET['Observacion'] != ''){    $location .= "&Observacion=".$_GET['Observacion'];     $search .= "&Observacion=".$_GET['Observacion'];}
+if(isset($_GET['f_inicio']) && $_GET['f_inicio']!=''){   $location .= "&f_inicio=".$_GET['f_inicio'];           $search .= "&f_inicio=".$_GET['f_inicio'];}
+if(isset($_GET['f_termino']) && $_GET['f_termino']!=''){ $location .= "&f_termino=".$_GET['f_termino'];         $search .= "&f_termino=".$_GET['f_termino'];}
+if(isset($_GET['h_inicio']) && $_GET['h_inicio']!=''){   $location .= "&h_inicio=".$_GET['h_inicio'];           $search .= "&h_inicio=".$_GET['h_inicio'];}
+if(isset($_GET['h_termino']) && $_GET['h_termino']!=''){ $location .= "&h_termino=".$_GET['h_termino'];         $search .= "&h_termino=".$_GET['h_termino'];}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];   $search .= "&idTelemetria=".$_GET['idTelemetria'];}
+if(isset($_GET['idGrupo']) && $_GET['idGrupo']!=''){     $location .= "&idGrupo=".$_GET['idGrupo'];             $search .= "&idGrupo=".$_GET['idGrupo'];}
+if(isset($_GET['idGrafico']) && $_GET['idGrafico']!=''){ $location .= "&idGrafico=".$_GET['idGrafico'];         $search .= "&idGrafico=".$_GET['idGrafico'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){   $location .= "&idEstado=".$_GET['idEstado'];           $search .= "&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['Observacion']) && $_GET['Observacion']!=''){    $location .= "&Observacion=".$_GET['Observacion'];     $search .= "&Observacion=".$_GET['Observacion'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -34,22 +34,22 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_tracking.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/telemetria_tracking.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/telemetria_tracking.php';	
+	require_once 'A1XRXS_sys/xrxs_form/telemetria_tracking.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -64,8 +64,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tracking Modificado co
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tracking borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -74,34 +74,34 @@ $rowdata = db_select_data (false, 'idTracking, f_inicio, f_termino, h_inicio, h_
 $z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo='2'";	 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=2";//CrossC			
+	$z .= " AND telemetria_listado.idTab=2";//CrossC
 }
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Tracking</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;     }else{$x1  = $rowdata['f_inicio'];}
-				if(isset($h_inicio)) {      $x2  = $h_inicio;     }else{$x2  = $rowdata['h_inicio'];}
-				if(isset($f_termino)) {     $x3  = $f_termino;    }else{$x3  = $rowdata['f_termino'];}
-				if(isset($h_termino)) {     $x4  = $h_termino;    }else{$x4  = $rowdata['h_termino'];}
-				if(isset($idTelemetria)) {  $x5  = $idTelemetria; }else{$x5  = $rowdata['idTelemetria'];}
-				if(isset($idGrafico)) {     $x8  = $idGrafico;    }else{$x8  = $rowdata['idGrafico'];}
-				if(isset($idEstado)) {      $x9  = $idEstado;     }else{$x9  = $rowdata['idEstado'];}
-				if(isset($Observacion)) {   $x10 = $Observacion;  }else{$x10 = $rowdata['Observacion'];}
-				
+				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = $rowdata['f_inicio'];}
+				if(isset($h_inicio)){      $x2  = $h_inicio;     }else{$x2  = $rowdata['h_inicio'];}
+				if(isset($f_termino)){     $x3  = $f_termino;    }else{$x3  = $rowdata['f_termino'];}
+				if(isset($h_termino)){     $x4  = $h_termino;    }else{$x4  = $rowdata['h_termino'];}
+				if(isset($idTelemetria)){  $x5  = $idTelemetria; }else{$x5  = $rowdata['idTelemetria'];}
+				if(isset($idGrafico)){     $x8  = $idGrafico;    }else{$x8  = $rowdata['idGrafico'];}
+				if(isset($idEstado)){      $x9  = $idEstado;     }else{$x9  = $rowdata['idEstado'];}
+				if(isset($Observacion)){   $x10 = $Observacion;  }else{$x10 = $rowdata['Observacion'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
@@ -110,13 +110,13 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 2, 1);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
-				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
-				$Form_Inputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);		
+				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
 				$Form_Inputs->form_input_text('Observacion', 'Observacion', $x10, 1);
 				
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -124,51 +124,51 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 $z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.id_Geo='2'";	 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=2";//CrossC			
+	$z .= " AND telemetria_listado.idTab=2";//CrossC
 }	 	 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Tracking</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;     }else{$x1  = '';}
-				if(isset($h_inicio)) {      $x2  = $h_inicio;     }else{$x2  = '';}
-				if(isset($f_termino)) {     $x3  = $f_termino;    }else{$x3  = '';}
-				if(isset($h_termino)) {     $x4  = $h_termino;    }else{$x4  = '';}
-				if(isset($idTelemetria)) {  $x5  = $idTelemetria; }else{$x5  = '';}
-				if(isset($idGrafico)) {     $x8  = $idGrafico;    }else{$x8  = '';}
-				if(isset($Observacion)) {   $x9  = $Observacion;  }else{$x9  = '';}
-				
+				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
+				if(isset($h_inicio)){      $x2  = $h_inicio;     }else{$x2  = '';}
+				if(isset($f_termino)){     $x3  = $f_termino;    }else{$x3  = '';}
+				if(isset($h_termino)){     $x4  = $h_termino;    }else{$x4  = '';}
+				if(isset($idTelemetria)){  $x5  = $idTelemetria; }else{$x5  = '';}
+				if(isset($idGrafico)){     $x8  = $idGrafico;    }else{$x8  = '';}
+				if(isset($Observacion)){   $x9  = $Observacion;  }else{$x9  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
@@ -177,12 +177,12 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 2, 1);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
-				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
+				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				$Form_Inputs->form_input_text('Observacion', 'Observacion', $x9, 1);
 				
 				
@@ -193,35 +193,26 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -254,21 +245,21 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $SIS_where = "telemetria_tracking.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''){          $SIS_where .= " AND telemetria_tracking.f_inicio='".$_GET['f_inicio']."'";}
-if(isset($_GET['f_termino']) && $_GET['f_termino'] != ''){        $SIS_where .= " AND telemetria_tracking.f_termino='".$_GET['f_termino']."'";}
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''){          $SIS_where .= " AND telemetria_tracking.h_inicio='".$_GET['h_inicio']."'";}
-if(isset($_GET['h_termino']) && $_GET['h_termino'] != ''){        $SIS_where .= " AND telemetria_tracking.h_termino='".$_GET['h_termino']."'";}
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  $SIS_where .= " AND telemetria_tracking.idTelemetria='".$_GET['idTelemetria']."'";}
-if(isset($_GET['idGrupo']) && $_GET['idGrupo'] != ''){            $SIS_where .= " AND telemetria_tracking.idGrupo='".$_GET['idGrupo']."'";}
-if(isset($_GET['idGrafico']) && $_GET['idGrafico'] != ''){        $SIS_where .= " AND telemetria_tracking.idGrafico='".$_GET['idGrafico']."'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){          $SIS_where .= " AND telemetria_tracking.idEstado='".$_GET['idEstado']."'";}
-if(isset($_GET['Observacion']) && $_GET['Observacion'] != ''){    $SIS_where .= " AND telemetria_tracking.Observacion LIKE '%".$_GET['Observacion']."%'";}
+if(isset($_GET['f_inicio']) && $_GET['f_inicio']!=''){   $SIS_where .= " AND telemetria_tracking.f_inicio='".$_GET['f_inicio']."'";}
+if(isset($_GET['f_termino']) && $_GET['f_termino']!=''){ $SIS_where .= " AND telemetria_tracking.f_termino='".$_GET['f_termino']."'";}
+if(isset($_GET['h_inicio']) && $_GET['h_inicio']!=''){   $SIS_where .= " AND telemetria_tracking.h_inicio='".$_GET['h_inicio']."'";}
+if(isset($_GET['h_termino']) && $_GET['h_termino']!=''){ $SIS_where .= " AND telemetria_tracking.h_termino='".$_GET['h_termino']."'";}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  $SIS_where .= " AND telemetria_tracking.idTelemetria='".$_GET['idTelemetria']."'";}
+if(isset($_GET['idGrupo']) && $_GET['idGrupo']!=''){     $SIS_where .= " AND telemetria_tracking.idGrupo='".$_GET['idGrupo']."'";}
+if(isset($_GET['idGrafico']) && $_GET['idGrafico']!=''){ $SIS_where .= " AND telemetria_tracking.idGrafico='".$_GET['idGrafico']."'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){   $SIS_where .= " AND telemetria_tracking.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['Observacion']) && $_GET['Observacion']!=''){    $SIS_where .= " AND telemetria_tracking.Observacion LIKE '%".EstandarizarInput($_GET['Observacion'])."%'";}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idTracking', 'telemetria_tracking', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 telemetria_tracking.idTracking,
@@ -302,45 +293,45 @@ $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSist
 $z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=2";//CrossC			
+	$z .= " AND telemetria_listado.idTab=2";//CrossC
 }
 
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Tracking</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Tracking</a><?php } ?>
 	
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;     }else{$x1  = '';}
-				if(isset($h_inicio)) {      $x2  = $h_inicio;     }else{$x2  = '';}
-				if(isset($f_termino)) {     $x3  = $f_termino;    }else{$x3  = '';}
-				if(isset($h_termino)) {     $x4  = $h_termino;    }else{$x4  = '';}
-				if(isset($idTelemetria)) {  $x5  = $idTelemetria; }else{$x5  = '';}
-				if(isset($idGrafico)) {     $x8  = $idGrafico;    }else{$x8  = '';}
-				if(isset($idEstado)) {      $x9  = $idEstado;     }else{$x9  = '';}
-				if(isset($Observacion)) {   $x10 = $Observacion;  }else{$x10 = '';}
-				
+				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
+				if(isset($h_inicio)){      $x2  = $h_inicio;     }else{$x2  = '';}
+				if(isset($f_termino)){     $x3  = $f_termino;    }else{$x3  = '';}
+				if(isset($h_termino)){     $x4  = $h_termino;    }else{$x4  = '';}
+				if(isset($idTelemetria)){  $x5  = $idTelemetria; }else{$x5  = '';}
+				if(isset($idGrafico)){     $x8  = $idGrafico;    }else{$x8  = '';}
+				if(isset($idEstado)){      $x9  = $idEstado;     }else{$x9  = '';}
+				if(isset($Observacion)){   $x10 = $Observacion;  }else{$x10 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 1);
@@ -349,33 +340,33 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 1, $dbConn);
-				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
-				$Form_Inputs->form_select('Estado','idEstado', $x9, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);		
+				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Estado','idEstado', $x9, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);	
 				$Form_Inputs->form_input_text('Observacion', 'Observacion', $x10, 1);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                       
                          
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Tracking</h5>
@@ -459,7 +450,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 						<td><?php echo $cat['equipo']; ?></td>
 						<td><?php echo $cat['grupo']; ?></td>
 						<td><?php echo $cat['grafico']; ?></td>
-						<td><label class="label <?php if(isset($cat['idEstado'])&&$cat['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $cat['estado']; ?></label></td>	
+						<td><label class="label <?php if(isset($cat['idEstado'])&&$cat['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $cat['estado']; ?></label></td>
 						<td><?php echo $cat['Observacion']; ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $cat['RazonSocial']; ?></td><?php } ?>
 						<td>
@@ -467,14 +458,14 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 								<?php
 
 								$Filtrar = '';
-								if(isset($cat['f_inicio']) && $cat['f_inicio'] != ''){           $Filtrar .= "&f_inicio=".$cat['f_inicio'];}
-								if(isset($cat['f_termino']) && $cat['f_termino'] != ''){         $Filtrar .= "&f_termino=".$cat['f_termino'];}
-								if(isset($cat['h_inicio']) && $cat['h_inicio'] != ''){           $Filtrar .= "&h_inicio=".$cat['h_inicio'];}
-								if(isset($cat['h_termino']) && $cat['h_termino'] != ''){         $Filtrar .= "&h_termino=".$cat['h_termino'];}
-								if(isset($cat['idTelemetria']) && $cat['idTelemetria'] != ''){   $Filtrar .= "&idTelemetria=".$cat['idTelemetria'];}
-								if(isset($cat['idGrupo']) && $cat['idGrupo'] != ''){             $Filtrar .= "&idGrupo=".$cat['idGrupo'];}
-								if(isset($cat['idGrafico']) && $cat['idGrafico'] != ''){         $Filtrar .= "&idGrafico=".$cat['idGrafico'];}
-								if(isset($cat['idEstado']) && $cat['idEstado'] != ''){           $Filtrar .= "&idEstado=".$cat['idEstado'];}
+								if(isset($cat['f_inicio']) && $cat['f_inicio']!=''){    $Filtrar .= "&f_inicio=".$cat['f_inicio'];}
+								if(isset($cat['f_termino']) && $cat['f_termino']!=''){  $Filtrar .= "&f_termino=".$cat['f_termino'];}
+								if(isset($cat['h_inicio']) && $cat['h_inicio']!=''){    $Filtrar .= "&h_inicio=".$cat['h_inicio'];}
+								if(isset($cat['h_termino']) && $cat['h_termino']!=''){  $Filtrar .= "&h_termino=".$cat['h_termino'];}
+								if(isset($cat['idTelemetria']) && $cat['idTelemetria']!=''){   $Filtrar .= "&idTelemetria=".$cat['idTelemetria'];}
+								if(isset($cat['idGrupo']) && $cat['idGrupo']!=''){      $Filtrar .= "&idGrupo=".$cat['idGrupo'];}
+								if(isset($cat['idGrafico']) && $cat['idGrafico']!=''){  $Filtrar .= "&idGrafico=".$cat['idGrafico'];}
+								if(isset($cat['idEstado']) && $cat['idEstado']!=''){    $Filtrar .= "&idEstado=".$cat['idEstado'];}
 
 								?>
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'informe_telemetria_registro_sensores_12.php?submit_filter=Filtrar'.$Filtrar; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -483,23 +474,23 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 									$ubicacion = $location.'&del='.simpleEncode($cat['idTracking'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el tracking del equipo '.$cat['equipo'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>	
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div> 
+		</div>
 		
 	</div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

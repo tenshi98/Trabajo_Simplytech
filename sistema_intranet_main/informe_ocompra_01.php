@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_ocompra_01.php";
 $location = $original;
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,8 +22,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 
              
   
@@ -34,21 +34,21 @@ $z2 = "";
 $z3 = "";
 $z4 = "";
 /**************************************************************/
-if(isset($_GET['idOcompra']) && $_GET['idOcompra'] != ''){       $z .= " AND ocompra_listado.idOcompra=".$_GET['idOcompra'];}
-if(isset($_GET['idProveedor']) && $_GET['idProveedor'] != ''){   $z .= " AND ocompra_listado.idProveedor=".$_GET['idProveedor'];}
-if(isset($_GET['idSistema']) && $_GET['idSistema'] != ''){       $z .= " AND ocompra_listado.idSistema=".$_GET['idSistema'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){       $z .= " AND ocompra_listado.idUsuario=".$_GET['idUsuario'];}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){         $z .= " AND ocompra_listado.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin'] != ''){   
-	$z .= " AND ocompra_listado.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'" ;
+if(isset($_GET['idOcompra']) && $_GET['idOcompra']!=''){$z .= " AND ocompra_listado.idOcompra=".$_GET['idOcompra'];}
+if(isset($_GET['idProveedor']) && $_GET['idProveedor']!=''){   $z .= " AND ocompra_listado.idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){$z .= " AND ocompra_listado.idSistema=".$_GET['idSistema'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){$z .= " AND ocompra_listado.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){  $z .= " AND ocompra_listado.idEstado=".$_GET['idEstado'];}
+if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin']!=''){   
+	$z .= " AND ocompra_listado.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'";
 }
 /**************************************************************/
-if(isset($_GET['idServicio']) && $_GET['idServicio'] != ''){ $z1 .= " AND ocompra_listado_existencias_servicios.idServicio=".$_GET['idServicio'];}
-if(isset($_GET['idEquipo']) && $_GET['idEquipo'] != ''){     $z2 .= " AND ocompra_listado_existencias_arriendos.idEquipo=".$_GET['idEquipo'];}
-if(isset($_GET['idInsumo']) && $_GET['idInsumo'] != ''){     $z3 .= " AND ocompra_listado_existencias_insumos.idProducto=".$_GET['idInsumo'];}
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){ $z4 .= " AND ocompra_listado_existencias_productos.idProducto=".$_GET['idProducto'];}
+if(isset($_GET['idServicio']) && $_GET['idServicio']!=''){ $z1 .= " AND ocompra_listado_existencias_servicios.idServicio=".$_GET['idServicio'];}
+if(isset($_GET['idEquipo']) && $_GET['idEquipo']!=''){     $z2 .= " AND ocompra_listado_existencias_arriendos.idEquipo=".$_GET['idEquipo'];}
+if(isset($_GET['idInsumo']) && $_GET['idInsumo']!=''){     $z3 .= " AND ocompra_listado_existencias_insumos.idProducto=".$_GET['idInsumo'];}
+if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){ $z4 .= " AND ocompra_listado_existencias_productos.idProducto=".$_GET['idProducto'];}
 			
-/**************************************************************/				
+/**************************************************************/
 // Se trae un listado con todos los productos
 $arrServicios = array();
 $query = "SELECT 
@@ -77,10 +77,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrServicios,$row );
 } 
-/**************************************************************/				
+/**************************************************************/
 // Se trae un listado con todos los productos
 $arrArriendos = array();
 $query = "SELECT 
@@ -109,10 +109,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrArriendos,$row );
 } 
-/**************************************************************/				
+/**************************************************************/
 // Se trae un listado con todos los productos
 $arrInsumos = array();
 $query = "SELECT 
@@ -141,10 +141,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrInsumos,$row );
 } 
-/**************************************************************/				
+/**************************************************************/
 // Se trae un listado con todos los productos
 $arrProductos = array();
 $query = "SELECT 
@@ -173,18 +173,18 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 } 
 
 
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ordenes de Compra Incompletas</h5>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -214,7 +214,7 @@ array_push( $arrProductos,$row );
 								</div>
 							</td>
 						</tr>
-					<?php } ?> 
+					<?php } ?>
 					<?php foreach ($arrArriendos as $productos) { ?>
 						<tr class="odd">
 							<td><?php echo 'OC N°'.n_doc($productos['idOcompra'], 5); ?></td>
@@ -262,7 +262,7 @@ array_push( $arrProductos,$row );
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -271,17 +271,17 @@ array_push( $arrProductos,$row );
 <?php widget_modal(80, 95); ?>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
-$z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -307,7 +307,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -333,7 +333,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
@@ -341,29 +341,29 @@ foreach ($arrPermisos as $prod) {
 }
 
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idOcompra)) {           $x1  = $idOcompra;           }else{$x1  = '';}
-				if(isset($idProveedor)) {         $x2  = $idProveedor;         }else{$x2  = '';}
-				if(isset($Creacion_fecha_ini)) {  $x3  = $Creacion_fecha_ini;  }else{$x3  = '';}
-				if(isset($Creacion_fecha_fin)) {  $x4  = $Creacion_fecha_fin;  }else{$x4  = '';}
-				if(isset($idSistema)) {           $x5  = $idSistema;           }else{$x5  = '';}
-				if(isset($idUsuario)) {           $x6  = $idUsuario;           }else{$x6  = '';}
-				if(isset($idEstado)) {            $x7  = $idEstado;            }else{$x7  = '';}
-				if(isset($idServicio)) {          $x8  = $idServicio;          }else{$x8  = '';}
-				if(isset($idEquipo)) {            $x9  = $idEquipo;            }else{$x9  = '';}
-				if(isset($idInsumo)) {            $x10 = $idInsumo;            }else{$x10 = '';}
-				if(isset($idProducto)) {          $x11 = $idProducto;          }else{$x11 = '';}
-				
+				if(isset($idOcompra)){           $x1  = $idOcompra;           }else{$x1  = '';}
+				if(isset($idProveedor)){         $x2  = $idProveedor;         }else{$x2  = '';}
+				if(isset($Creacion_fecha_ini)){  $x3  = $Creacion_fecha_ini;  }else{$x3  = '';}
+				if(isset($Creacion_fecha_fin)){  $x4  = $Creacion_fecha_fin;  }else{$x4  = '';}
+				if(isset($idSistema)){           $x5  = $idSistema;           }else{$x5  = '';}
+				if(isset($idUsuario)){           $x6  = $idUsuario;           }else{$x6  = '';}
+				if(isset($idEstado)){            $x7  = $idEstado;            }else{$x7  = '';}
+				if(isset($idServicio)){          $x8  = $idServicio;          }else{$x8  = '';}
+				if(isset($idEquipo)){            $x9  = $idEquipo;            }else{$x9  = '';}
+				if(isset($idInsumo)){            $x10 = $idInsumo;            }else{$x10 = '';}
+				if(isset($idProducto)){          $x11 = $idProducto;          }else{$x11 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
@@ -371,8 +371,8 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x2, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
 				$Form_Inputs->form_date('F Creacion Ini','Creacion_fecha_ini', $x3, 1);
 				$Form_Inputs->form_date('F Creacion Fin','Creacion_fecha_fin', $x4, 1);
-				$Form_Inputs->form_select('Sistema Origen','idSistema', $x5, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
-				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x6, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select('Sistema Origen','idSistema', $x5, 1, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
+				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x6, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x7, 1, 'idEstado', 'Nombre', 'core_oc_estado', 0, '', $dbConn);
 				
 				$Form_Inputs->form_tittle(3, 'Contenido');
@@ -382,18 +382,18 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x11, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 
 				
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

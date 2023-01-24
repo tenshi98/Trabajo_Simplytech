@@ -11,14 +11,14 @@ require_once 'core/Load.Utils.Web.php';
 /*                                                      Consulta                                                                  */
 /**********************************************************************************************************************************/
 //variables
-$HoraSistema    = hora_actual(); 
+$HoraSistema    = hora_actual();
 $FechaSistema   = fecha_actual();
 
 //Variable
 $SIS_where  = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 $SIS_where .= " AND telemetria_listado.id_Geo = 2";//solo los equipos que tengan el seguimiento desactivado
 //verifico que sea un administrador
-$SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
 }
@@ -31,17 +31,17 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
-}						
+}
 
 //Se consultan datos
 $SIS_query = '
-telemetria_listado.GeoLatitud, 
+telemetria_listado.GeoLatitud,
 telemetria_listado.GeoLongitud,
 telemetria_listado.idTelemetria,
 telemetria_listado.Nombre,
 telemetria_listado.Direccion_img,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.LastUpdateFecha, 
+telemetria_listado.LastUpdateFecha,
 telemetria_listado.cantSensores,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores,
@@ -100,7 +100,7 @@ foreach ($arrGrupos as $sen) {
 								$Time_Tiempo_FL  = horas2segundos($rowDatos['TiempoFueraLinea']);
 								$Time_Tiempo_Max = horas2segundos('48:00:00');
 								//comparacion
-								if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+								if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
 									$in_eq_fueralinea++;
 								}
 									
@@ -124,8 +124,8 @@ foreach ($arrGrupos as $sen) {
 								?>
 									
 								<tr class="odd <?php echo $danger; ?>">		
-									<td><?php echo $rowDatos['Nombre']; ?></td>		
-									<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>			
+									<td><?php echo $rowDatos['Nombre']; ?></td>
+									<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>		
 									<td>
 										<div class="btn-group" style="width: 35px;" >
 											<a href="<?php echo 'telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($rowDatos['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
@@ -133,8 +133,8 @@ foreach ($arrGrupos as $sen) {
 									</td>
 								</tr>
 								<tr class="odd" style="background-color: #CCCCCC;">		
-									<td>Grupo</td>		
-									<td colspan="2">Mediciones</td>			
+									<td>Grupo</td>	
+									<td colspan="2">Mediciones</td>		
 								</tr>
 								
 								<?php
@@ -170,7 +170,7 @@ foreach ($arrGrupos as $sen) {
 								array_multisort($names, SORT_ASC, $arrGruposTitulo);
 									
 								//se recorre el arreglo
-								foreach($arrGruposTitulo as $titulo=>$items) { 
+								foreach($arrGruposTitulo as $titulo=>$items) {
 									
 									$columna_a = '';
 									$columna_b = '';
@@ -182,8 +182,8 @@ foreach ($arrGrupos as $sen) {
 									$unimed_col2 = '';
 									$y = 1;
 									?>
-									<tr class="odd">		
-										<td><?php echo $titulo ?></td>		
+									<tr class="odd">
+										<td><?php echo $titulo ?></td>	
 										<?php foreach($items as $datos) { 
 											if($y==1){
 												$columna_a .= $datos['Descripcion'].'<br/>';
@@ -207,19 +207,19 @@ foreach ($arrGrupos as $sen) {
 										}?> 
 										
 										<td><?php echo $columna_a ?></td>
-										<td><?php echo $columna_b ?></td>		
+										<td><?php echo $columna_b ?></td>	
 									</tr>
 									
 									<?php if($rowDatos['idOpcionesGen_3']==1){ ?>
-										<tr class="odd">		
+										<tr class="odd">
 											<td>Promedio</td>
 											<td><?php if($ntotal_col1!=0){echo Cantidades_decimales_justos($total_col1/$ntotal_col1).$unimed_col1;} ?></td>
-											<td><?php if($ntotal_col2!=0){echo Cantidades_decimales_justos($total_col2/$ntotal_col2).$unimed_col2;} ?></td>			
+											<td><?php if($ntotal_col2!=0){echo Cantidades_decimales_justos($total_col2/$ntotal_col2).$unimed_col2;} ?></td>		
 										</tr>
 									<?php } ?>
 										
 										
-					            <?php } ?>        
+					            <?php } ?>
 							</tbody>
 						</table>
 						
@@ -230,16 +230,16 @@ foreach ($arrGrupos as $sen) {
 		//Examples of how to assign the Colorbox event to elements
 		$(".iframe").colorbox({iframe:true, width:"80%", height:"95%"});
 		$(".callbacks").colorbox({
-			onOpen:function(){ alert('onOpen: colorbox is about to open'); },
-			onLoad:function(){ alert('onLoad: colorbox has started to load the targeted content'); },
-			onComplete:function(){ alert('onComplete: colorbox has displayed the loaded content'); },
-			onCleanup:function(){ alert('onCleanup: colorbox has begun the close process'); },
-			onClosed:function(){ alert('onClosed: colorbox has completely closed'); }
+			onOpen:function(){ alert('onOpen: colorbox is about to open');},
+			onLoad:function(){ alert('onLoad: colorbox has started to load the targeted content');},
+			onComplete:function(){ alert('onComplete: colorbox has displayed the loaded content');},
+			onCleanup:function(){ alert('onCleanup: colorbox has begun the close process');},
+			onClosed:function(){ alert('onClosed: colorbox has completely closed');}
 		});
 
 				
 		//Example of preserving a JavaScript event for inline calls.
-		$("#click").click(function(){ 
+		$("#click").click(function(){
 			$('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
 			return false;
 		});

@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -99,7 +99,7 @@ $SIS_where = 'orden_trabajo_tareas_listado_insumos.idOT ='.$X_Puntero;
 $SIS_order = 'insumos_listado.Nombre ASC';
 $arrInsumos = array();
 $arrInsumos = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
-	
+
 /***************************************************/
 // Se trae un listado con todos los productos utilizados
 $SIS_query = '
@@ -188,7 +188,7 @@ $SIS_order = 'NombreArchivo ASC';
 $arrArchivos = array();
 $arrArchivos = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_tareas_adjuntos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivos');
 
-/***************************************************/	
+/***************************************************/
 // Se trae un listado con el historial
 $SIS_query = '
 orden_trabajo_tareas_listado_historial.Creacion_fecha, 
@@ -221,9 +221,9 @@ $SIS_order = 'orden_trabajo_tareas_quejas.idQueja DESC';
 $arrQuejas = array();
 $arrQuejas = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrQuejas');
 
-if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
+if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="bs-callout bs-callout-danger" >
 			<h4>Orden de Trabajo <?php echo n_doc($X_Puntero, 8); ?> cancelada</h4>
 			<p>
@@ -243,7 +243,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 		
 			<div id="customer">
 				
-				<table id="meta" class="fleft otdata">
+				<table id="meta" class="pull-left otdata">
 					<tbody>
 						<tr>
 							<td class="meta-head"><strong>DATOS BASICOS</strong></td>
@@ -317,7 +317,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 					<tr><th colspan="6">Detalle</th></tr>		  
 					
 					<?php 
-					/**********************************************************************************/ 
+					/**********************************************************************************/
 					if($arrTrabajadores!=false && !empty($arrTrabajadores) && $arrTrabajadores!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajadores</td></tr>
 						<?php foreach ($arrTrabajadores as $trab) {  ?>
@@ -325,39 +325,39 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 								<td class="item-name"><?php echo $trab['Rut'];?></td>
 								<td class="item-name" colspan="4"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'];?></td>
 								<td class="item-name"><?php echo $trab['Cargo'];?></td> 
-							</tr> 
-						<?php }?>	
+							</tr>
+						<?php }?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
-					/**********************************************************************************/ 
+					/**********************************************************************************/
 					if($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
 						<?php foreach ($arrInsumos as $insumos) {
 							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
 								<tr class="item-row linea_punteada">
 									<td class="item-name" colspan="5"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
-									<td class="item-name"><?php echo Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida']; ?></td>	
-								</tr> 
+									<td class="item-name"><?php echo Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida']; ?></td>
+								</tr>
 							<?php
 							} 
 						} ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
-					/**********************************************************************************/ 
+					/**********************************************************************************/
 					if($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
-						<?php foreach ($arrProductos as $prod) { 
+						<?php foreach ($arrProductos as $prod) {
 							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
 								<tr class="item-row linea_punteada">
 									<td class="item-name" colspan="5"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
-									<td class="item-name"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['UnidadMedida']; ?></td>	
-								</tr> 
+									<td class="item-name"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['UnidadMedida']; ?></td>
+								</tr>
 							<?php 
 							}
 						} ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
-					/**********************************************************************************/ 
+					/**********************************************************************************/
 					if($arrTarea!=false && !empty($arrTarea) && $arrTarea!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';}?></td></tr>
 						<?php foreach ($arrTarea as $tarea) {  
@@ -390,13 +390,13 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name">
 									<strong>Estado: </strong><?php echo $tarea['EstadoTarea'];?>
-								</td>	
+								</td>
 								<td class="item-name" colspan="5">
 									<strong>Licitacion: </strong><?php echo $tarea['Licitacion'];?><br/>
 									<strong>Tarea: </strong><?php echo $s_tarea; ?><br/>
 									<strong>Observacion: </strong><?php echo $tarea['Observacion'];?>
 								</td>
-							</tr> 
+							</tr>
 							
 							<?php if($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!=''){ 
 								$zxcv = 0;
@@ -415,19 +415,19 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 													<?php if(isset($arch['idTrabajoOT'])&&$arch['idTrabajoOT']==$tarea['idTrabajoOT']){ ?>
 														<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
 															<img src="upload/<?php echo $arch['NombreArchivo']; ?>" class="img-responsive">
-														</div>	
-													<?php } ?>	
+														</div>
+													<?php } ?>
 												<?php } ?>
 											</div>
 										</td>
 									</tr>
-								<?php } ?>	
-							<?php } ?>	
+								<?php } ?>
+							<?php } ?>
 							
 						<?php } ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
-					/**********************************************************************************/ ?>
+					/**********************************************************************************/?>
 
 					
 					<tr><td colspan="6" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td></tr>
@@ -435,13 +435,13 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 					
 				</tbody>
 			</table>
-			<div class="clearfix"></div>	
+			<div class="clearfix"></div>
 		</div>
 	</div>
 
 </div>
 
-<div class="col-xs-12" style="margin-bottom:15px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
@@ -452,13 +452,13 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 					<th width="160">Fecha</th>
 					<th>Usuario</th>
 					<th>Observacion</th>
-				</tr>			  
+				</tr>
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
 						<td><?php echo '<i class="'.$doc['FonAwesome'].'" aria-hidden="true"></i> '.$doc['Observacion']; ?></td>
-					</tr> 
+					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
@@ -473,7 +473,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 					<th width="160">Fecha</th>
 					<th>Usuario</th>
 					<th>Observacion</th>
-				</tr>			  
+				</tr>
 				<?php foreach ($arrQuejas as $doc){?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['FechaQueja']); ?></td>
@@ -485,7 +485,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 							echo  '<strong>Queja:</strong>'.$doc['Observaciones'].'<br/>';
 							?>
 						</td>
-					</tr> 
+					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
@@ -496,12 +496,12 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -512,12 +512,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 

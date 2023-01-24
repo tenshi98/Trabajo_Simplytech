@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -33,7 +33,7 @@ $SIS_where_5  = "contab_caja_gastos_existencias.idExistencia!=0";
 $SIS_where_6  = "pagos_leyes_fiscales_formas_pago.idHistorial!=0";
 $SIS_where_7  = "pagos_leyes_sociales_formas_pago.idHistorial!=0";
 //filtro el año
-if(isset($_GET['Ano'])&&$_GET['Ano']!=''){ 
+if(isset($_GET['Ano'])&&$_GET['Ano']!=''){
 	$SIS_where_1.=" AND pagos_facturas_proveedores.F_Pago_ano=".simpleDecode($_GET['Ano'], fecha_actual());
 	$SIS_where_2.=" AND pagos_facturas_clientes.F_Pago_ano=".simpleDecode($_GET['Ano'], fecha_actual());
 	$SIS_where_3.=" AND pagos_rrhh_liquidaciones.F_Pago_ano=".simpleDecode($_GET['Ano'], fecha_actual());
@@ -264,7 +264,7 @@ foreach ($arrTemporal_1 as $tipo) {
 					->setCellValue('F'.$nn, $tipo['MontoPagado']);            
 		$total_egreso = $total_egreso + $tipo['MontoPagado']; 
 		$Subtotal_2   = $Subtotal_2 + $tipo['MontoPagado'];
-	}			
+	}
 				
 	$nn++;
 		           
@@ -279,7 +279,7 @@ if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){
 if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){            
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('F'.$nn, $Subtotal_2); 
-}						
+}
 $nn++;
 
 /***************************************************************/
@@ -307,7 +307,7 @@ foreach ($arrTemporal_2 as $tipo) {
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){            
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('F'.$nn, 0);  
-	}			
+	}
 				
 	$nn++;
 		           
@@ -322,7 +322,7 @@ if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){
 if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){            
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('F'.$nn, $Subtotal_2); 
-}						
+}
 $nn++;	
 
 /***************************************************************/
@@ -350,7 +350,7 @@ foreach ($arrTemporal_3 as $tipo) {
 					->setCellValue('F'.$nn, $tipo['MontoPagado']);  
 		$total_egreso = $total_egreso + $tipo['MontoPagado'];
 		$Subtotal_2   = $Subtotal_2 + $tipo['MontoPagado'];
-	}			
+	}
 				
 	$nn++;
 		           
@@ -365,7 +365,7 @@ if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){
 if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){            
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('F'.$nn, $Subtotal_2); 
-}						
+}
 $nn++;	
 
 /***************************************************************/
@@ -393,7 +393,7 @@ foreach ($arrTemporal_4 as $tipo) {
 					->setCellValue('F'.$nn, $tipo['MontoPagado']);  
 		$total_egreso = $total_egreso + $tipo['MontoPagado'];
 		$Subtotal_2   = $Subtotal_2 + $tipo['MontoPagado'];
-	}			
+	}
 				
 	$nn++;
 		           
@@ -408,7 +408,7 @@ if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){
 if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){            
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('F'.$nn, $Subtotal_2); 
-}						
+}
 $nn++;		
 
 /***************************************************************/
@@ -436,7 +436,7 @@ foreach ($arrTemporal_5 as $tipo) {
 					->setCellValue('F'.$nn, $tipo['MontoPagado']);  
 		$total_egreso = $total_egreso + $tipo['MontoPagado'];
 		$Subtotal_2   = $Subtotal_2 + $tipo['MontoPagado'];
-	}			
+	}
 				
 	$nn++;
 		           
@@ -451,7 +451,7 @@ if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){
 if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){            
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('F'.$nn, $Subtotal_2); 
-}						
+}
 $nn++;			
 
 /***************************************************************/
@@ -479,7 +479,7 @@ foreach ($arrTemporal_6 as $tipo) {
 					->setCellValue('F'.$nn, $tipo['MontoPagado']);  
 		$total_egreso = $total_egreso + $tipo['MontoPagado'];
 		$Subtotal_2   = $Subtotal_2 + $tipo['MontoPagado'];
-	}			
+	}
 				
 	$nn++;
 		           
@@ -494,7 +494,7 @@ if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){
 if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){            
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('F'.$nn, $Subtotal_2); 
-}						
+}
 $nn++;			
 
 /***************************************************************/
@@ -522,7 +522,7 @@ foreach ($arrTemporal_7 as $tipo) {
 					->setCellValue('F'.$nn, $tipo['MontoPagado']);  
 		$total_egreso = $total_egreso + $tipo['MontoPagado'];
 		$Subtotal_2   = $Subtotal_2 + $tipo['MontoPagado'];
-	}			
+	}
 				
 	$nn++;
 		           
@@ -537,10 +537,10 @@ if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){
 if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){            
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('F'.$nn, $Subtotal_2); 
-}						
+}
 $nn++;
 
-/***************************************************************/							
+/***************************************************************/			
 $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('D'.$nn, 'Total General');
 if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
@@ -550,7 +550,7 @@ if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){
 if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){            
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('F'.$nn, $total_egreso); 
-}			
+}
 			
 			
 // Rename worksheet

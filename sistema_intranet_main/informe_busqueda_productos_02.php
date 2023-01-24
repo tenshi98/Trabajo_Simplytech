@@ -10,18 +10,18 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_busqueda_productos_02.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor=".$_GET['idProveedor'];}
-if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){   $search .="&idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){   $search .="&idDocumentos=".$_GET['idDocumentos'];}
-if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){                 $search .="&N_Doc=".$_GET['N_Doc'];}
-if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){           $search .="&idEstado=".$_GET['idEstado'];}
-if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){         $search .="&idDocPago=".$_GET['idDocPago'];}
-if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){         $search .="&N_DocPago=".$_GET['N_DocPago'];}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){    $search .="&idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){  $search .="&idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){  $search .="&idDocumentos=".$_GET['idDocumentos'];}
+if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){         $search .="&N_Doc=".$_GET['N_Doc'];}
+if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){   $search .="&idEstado=".$_GET['idEstado'];}
+if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){ $search .="&idDocPago=".$_GET['idDocPago'];}
+if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){ $search .="&N_DocPago=".$_GET['N_DocPago'];}
 if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
 	$search .="&f_creacion_inicio=".$_GET['f_creacion_inicio'];
 	$search .="&f_creacion_termino=".$_GET['f_creacion_termino'];
@@ -44,24 +44,15 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -90,26 +81,26 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $SIS_where = "bodegas_productos_facturacion.idEstado=1"; //solo documentos no pagados
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where.= " AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_where.= " AND bodegas_productos_facturacion.idTipo=1"; //solo compras
 $SIS_where.= " AND bodegas_productos_facturacion.Pago_fecha<'".fecha_actual()."'"; //fecha actual
 
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $SIS_where.= " AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];}
-if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){ $SIS_where.= " AND bodegas_productos_facturacion.idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){ $SIS_where.= " AND bodegas_productos_facturacion.idDocumentos=".$_GET['idDocumentos'];}
-if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){               $SIS_where.= " AND bodegas_productos_facturacion.N_Doc=".$_GET['N_Doc'];}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $SIS_where.= " AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){$SIS_where.= " AND bodegas_productos_facturacion.idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){$SIS_where.= " AND bodegas_productos_facturacion.idDocumentos=".$_GET['idDocumentos'];}
+if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){       $SIS_where.= " AND bodegas_productos_facturacion.N_Doc=".$_GET['N_Doc'];}
 
 if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
 	$SIS_where.= " AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
 }
 if(isset($_GET['f_pago_inicio'])&&$_GET['f_pago_inicio']!=''&&isset($_GET['f_pago_termino'])&&$_GET['f_pago_termino']!=''){
 	$SIS_where.= " AND bodegas_productos_facturacion.Pago_fecha BETWEEN '".$_GET['f_pago_inicio']."' AND '".$_GET['f_pago_termino']."'";
-}				
+}	
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idFacturacion', 'bodegas_productos_facturacion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 bodegas_productos_facturacion.idFacturacion,
@@ -136,18 +127,18 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
-		<li class="btn btn-default"><?php echo $bread_order; ?></li>	
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
 	
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Documentos</h5>
@@ -155,7 +146,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 				<?php echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -205,7 +196,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrTipo as $tipo) { ?>
 					<tr class="odd">
@@ -223,11 +214,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
@@ -235,35 +226,35 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProveedor)) {          $x1  = $idProveedor;         }else{$x1  = '';}
-				if(isset($idTrabajador)) {         $x2  = $idTrabajador;        }else{$x2  = '';}
-				if(isset($idDocumentos)) {         $x3  = $idDocumentos;        }else{$x3  = '';}
-				if(isset($N_Doc)) {                $x4  = $N_Doc;               }else{$x4  = '';}
-				if(isset($f_creacion_inicio)) {    $x5  = $f_creacion_inicio;   }else{$x5  = '';}
-				if(isset($f_creacion_termino)) {   $x6  = $f_creacion_termino;  }else{$x6  = '';}
-				if(isset($f_pago_inicio)) {        $x7  = $f_pago_inicio;       }else{$x7  = '';}
-				if(isset($f_pago_termino)) {       $x8  = $f_pago_termino;      }else{$x8  = '';}
+				if(isset($idProveedor)){          $x1  = $idProveedor;         }else{$x1  = '';}
+				if(isset($idTrabajador)){         $x2  = $idTrabajador;        }else{$x2  = '';}
+				if(isset($idDocumentos)){         $x3  = $idDocumentos;        }else{$x3  = '';}
+				if(isset($N_Doc)){                $x4  = $N_Doc;               }else{$x4  = '';}
+				if(isset($f_creacion_inicio)){    $x5  = $f_creacion_inicio;   }else{$x5  = '';}
+				if(isset($f_creacion_termino)){   $x6  = $f_creacion_termino;  }else{$x6  = '';}
+				if(isset($f_pago_inicio)){        $x7  = $f_pago_inicio;       }else{$x7  = '';}
+				if(isset($f_pago_termino)){       $x8  = $f_pago_termino;      }else{$x8  = '';}
 		
 				
 				//se dibujan los inputs
@@ -279,14 +270,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_date('Fecha Pago prog Hasta','f_pago_termino', $x8, 1);
 	
 						
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

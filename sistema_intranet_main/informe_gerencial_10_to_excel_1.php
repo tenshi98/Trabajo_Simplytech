@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -33,13 +33,13 @@ $SIS_where_1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario
 $SIS_where_2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_where_3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_where_4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){ 
+if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){
 	$SIS_where_1.=" AND bodegas_arriendos_facturacion.idTrabajador=".$_GET['idTrabajador'];
 	$SIS_where_2.=" AND bodegas_insumos_facturacion.idTrabajador=".$_GET['idTrabajador'];
 	$SIS_where_3.=" AND bodegas_productos_facturacion.idTrabajador=".$_GET['idTrabajador'];
 	$SIS_where_4.=" AND bodegas_servicios_facturacion.idTrabajador=".$_GET['idTrabajador'];
 }
-if(isset($_GET['Creacion_ano'])&&$_GET['Creacion_ano']!=''){ 
+if(isset($_GET['Creacion_ano'])&&$_GET['Creacion_ano']!=''){
 	$SIS_where_1.=" AND bodegas_arriendos_facturacion.Creacion_ano=".$_GET['Creacion_ano'];
 	$SIS_where_2.=" AND bodegas_insumos_facturacion.Creacion_ano=".$_GET['Creacion_ano'];
 	$SIS_where_3.=" AND bodegas_productos_facturacion.Creacion_ano=".$_GET['Creacion_ano'];
@@ -176,7 +176,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('K2', 'Subtotal');
             
 $nn=3;
-foreach ($arrCreativo as $prod) { 
+foreach ($arrCreativo as $prod) {
 	
 	// subtotales Netos
 	$sub_1 = 0;

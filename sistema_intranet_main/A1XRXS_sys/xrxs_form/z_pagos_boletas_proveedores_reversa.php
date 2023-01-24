@@ -2,20 +2,20 @@
 /*******************************************************************************************************************/
 /*                                              Bloque de seguridad                                                */
 /*******************************************************************************************************************/
-if( ! defined('XMBCXRXSKGC')) {
+if( ! defined('XMBCXRXSKGC')){
     die('No tienes acceso a esta carpeta o archivo (Access Code 1009-254).');
 }
 /*******************************************************************************************************************/
 /*                                          Verifica si la Sesion esta activa                                      */
 /*******************************************************************************************************************/
-require_once '0_validate_user_1.php';	
+require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if ( !empty($_POST['idTrabajador']) )     $idTrabajador     = $_POST['idTrabajador'];
-	
+	if (!empty($_POST['idTrabajador']))     $idTrabajador     = $_POST['idTrabajador'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -41,12 +41,12 @@ require_once '0_validate_user_1.php';
 /*                                               Reversa Pago Masivo                                               */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
-/*******************************************************************************************************************/		
+/*******************************************************************************************************************/
 		case 'del_pagos':
-			
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			//Variable
 			$errorn = 0;
 			
@@ -100,8 +100,8 @@ require_once '0_validate_user_1.php';
 				}
 					
 				/*******************************************************************/
-				// si no hay errores ejecuto el codigo	
-				if ( empty($error) ) {
+				//Si no hay errores ejecuto el codigo
+				if(empty($error)){
 					
 					/**********************************************************************/
 					//selecciono el monto desde el registro de pago
@@ -113,15 +113,15 @@ require_once '0_validate_user_1.php';
 					//verifico si el dato es pago parcial
 					if($rowBoleta['MontoPagado']>$rowPago['MontoPagado']){
 						$nuevoMonto = $rowBoleta['MontoPagado'] - $rowPago['MontoPagado'];
-						//se actualiza con los datos del pago anterior
-						$SIS_data  = "idUsuarioPago='".$rowBoleta['idUsuarioPago']."'" ;
-						$SIS_data .= ",idDocPago='".$rowBoleta['idDocPago']."'" ;
-						$SIS_data .= ",N_DocPago='".$rowBoleta['N_DocPago']."'" ;
-						$SIS_data .= ",F_Pago='".$rowBoleta['F_Pago']."'" ;
-						$SIS_data .= ",F_Pago_dia='".$rowBoleta['F_Pago_dia']."'" ;
-						$SIS_data .= ",F_Pago_mes='".$rowBoleta['F_Pago_mes']."'" ;
-						$SIS_data .= ",F_Pago_ano='".$rowBoleta['F_Pago_ano']."'" ;
-						$SIS_data .= ",MontoPagado='".$nuevoMonto."'" ;
+						//se actualizacon los datos del pago anterior
+						$SIS_data  = "idUsuarioPago='".$rowBoleta['idUsuarioPago']."'";
+						$SIS_data .= ",idDocPago='".$rowBoleta['idDocPago']."'";
+						$SIS_data .= ",N_DocPago='".$rowBoleta['N_DocPago']."'";
+						$SIS_data .= ",F_Pago='".$rowBoleta['F_Pago']."'";
+						$SIS_data .= ",F_Pago_dia='".$rowBoleta['F_Pago_dia']."'";
+						$SIS_data .= ",F_Pago_mes='".$rowBoleta['F_Pago_mes']."'";
+						$SIS_data .= ",F_Pago_ano='".$rowBoleta['F_Pago_ano']."'";
+						$SIS_data .= ",MontoPagado='".$nuevoMonto."'";
 						$SIS_data .= ",idEstado='1'" ;
 						
 						/*******************************************************/
@@ -131,7 +131,7 @@ require_once '0_validate_user_1.php';
 						
 					//si es pago completo
 					}elseif($rowBoleta['MontoPagado']==$rowPago['MontoPagado']){
-						//se actualiza con los datos del pago anterior
+						//se actualizacon los datos del pago anterior
 						$SIS_data  = "idUsuarioPago=''";
 						$SIS_data .= ",idDocPago=''";
 						$SIS_data .= ",N_DocPago=''";
@@ -145,15 +145,15 @@ require_once '0_validate_user_1.php';
 						/*******************************************************/
 						//se actualizan los datos
 						$resultado = db_update_data (false, $SIS_data, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
-					
+
 					/**********************************************************************/
 					//se guarda dato en el historial, indicando documento eliminado y su numero
-					if(isset($indice2) && $indice2 != ''){    
+					if(isset($indice2) && $indice2!=''){    
 						
-						$SIS_data  = "'".$indice2."'" ;  
-						$SIS_data .= ",'".fecha_actual()."'" ;           
+						$SIS_data  = "'".$indice2."'";  
+						$SIS_data .= ",'".fecha_actual()."'";         
 						$SIS_data .= ",'1'";                                                                                                   //Creacion Satisfactoria
 						$SIS_data .= ",'Se realiza reversa del pago del documento ".$rowPago['Documento']." N° ".$rowPago['N_DocPago']."'";    //Observacion
 						$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                                                 //idUsuario
@@ -161,12 +161,12 @@ require_once '0_validate_user_1.php';
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'boleta_honorarios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 					}
-					
+
 					/**********************************************************************/
 					//se borran los datos
-					if(isset($indice2) && $indice2 != ''){
+					if(isset($indice2) && $indice2!=''){
 						$resultado = db_delete_data (false, 'pagos_boletas_empresas', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//Si ejecuto correctamente la consulta
 						if($resultado==true){
@@ -174,9 +174,9 @@ require_once '0_validate_user_1.php';
 							//redirijo
 							header( 'Location: '.$location.'&reversa=true' );
 							die;
-							
+
 						}
-					}	
+					}
 				
 				}
 			}else{

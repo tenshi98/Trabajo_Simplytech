@@ -1,12 +1,12 @@
 <?php 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Se definen las variables
-if(isset($_GET["Mes"])){   $Mes = $_GET["Mes"];   } else { $Mes  = mes_actual(); }
-if(isset($_GET["Ano"])){   $Ano = $_GET["Ano"];   } else { $Ano  = ano_actual(); }
+if(isset($_GET['Mes'])){   $Mes = $_GET['Mes'];   } else { $Mes  = mes_actual();}
+if(isset($_GET['Ano'])){   $Ano = $_GET['Ano'];   } else { $Ano  = ano_actual();}
 $diaActual = dia_actual();
 
 //calculo de los dias del mes, cuando inicia y cuando termina
-$diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
+$diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7;
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
 //Traigo los eventos guardados en la base de datos
@@ -22,7 +22,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_j
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<h5>Calendario de Cargas por vencer</h5>
@@ -35,9 +35,9 @@ $arrEventos = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_j
 					<tbody>
 						<tr>
 							<?php
-							if(isset($_GET["Ano"])){
-								$Ano_a  = $_GET["Ano"];
-								$Ano_b  = $_GET["Ano"];	
+							if(isset($_GET['Ano'])){
+								$Ano_a  = $_GET['Ano'];
+								$Ano_b  = $_GET['Ano'];
 							} else {
 								$Ano_a  = date("Y");
 								$Ano_b  = date("Y");
@@ -55,9 +55,9 @@ $arrEventos = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_j
 				<div class="fc-content" style="position: relative;margin-left: -10px;margin-right: -10px;">
 					<div class="fc-view fc-view-Mes fc-grid" style="position:relative" unselectable="on">
 
-						<table class="fc-border-separate correct_border" style="width:100%" cellspacing="0"> 
+						<table class="fc-border-separate correct_border" style="width:100%" cellspacing="0">
 							<thead>
-								<tr class="fc-first fc-last"> 
+								<tr class="fc-first fc-last">
 									<th class="fc-day-header fc-sun fc-widget-header" width="14%">Lunes</th>
 									<th class="fc-day-header fc-sun fc-widget-header" width="14%">Martes</th>
 									<th class="fc-day-header fc-sun fc-widget-header" width="14%">Miercoles</th>
@@ -68,7 +68,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_j
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="fc-week"> 
+								<tr class="fc-week">
 									<?php
 									$last_cell = $diaSemana + $ultimoDiaMes;
 									// hacemos un bucle hasta 42, que es el máximo de valores que puede
@@ -82,17 +82,17 @@ $arrEventos = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_j
 										if($i<$diaSemana || $i>=$last_cell){
 											echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 										// mostramos el dia
-										}else{ ?>  
-											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight'; }?>">
+										}else{?>
+											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';}?>">
 												<div class="calendar_min">
 													<div class="fc-Dia-number"><?php echo $Dia; ?></div>
 													<div class="fc-Dia-content">
-														<?php foreach ($arrEventos as $evento) { 
+														<?php foreach ($arrEventos as $evento) {
 															if ($evento['Dia']==$Dia) {
 																$ver = $location.'&view='.$evento['idCarga'];
 																echo '<div class="event_calendar evcal_color1 word_break" href="'.$ver.'">'.cortar($evento['Titulo'], 20).'</div>';
-															} 
-														} ?>    
+															}
+														}?>
 													</div>
 												</div>
 											</td>

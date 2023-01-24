@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "sistema_leyes_sociales.php";
 $location = $original;
 /********************************************************************/
@@ -20,22 +20,22 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/sistema_leyes_sociales.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/sistema_leyes_sociales.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/sistema_leyes_sociales.php';	
+	require_once 'A1XRXS_sys/xrxs_form/sistema_leyes_sociales.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -50,8 +50,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Mantenedor Modificado 
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Mantenedor borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 
@@ -79,39 +79,39 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	
 //sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Mantenedor</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($AFP_idCentroCosto)) {            $x2  = $AFP_idCentroCosto;            }else{$x2  = $rowdata['AFP_idCentroCosto'];}
-				if(isset($AFP_idLevel_1)) {                $x3  = $AFP_idLevel_1;                }else{$x3  = $rowdata['AFP_idLevel_1'];}
-				if(isset($AFP_idLevel_2)) {                $x4  = $AFP_idLevel_2;                }else{$x4  = $rowdata['AFP_idLevel_2'];}
-				if(isset($AFP_idLevel_3)) {                $x5  = $AFP_idLevel_3;                }else{$x5  = $rowdata['AFP_idLevel_3'];}
-				if(isset($AFP_idLevel_4)) {                $x6  = $AFP_idLevel_4;                }else{$x6  = $rowdata['AFP_idLevel_4'];}
-				if(isset($AFP_idLevel_5)) {                $x7  = $AFP_idLevel_5;                }else{$x7  = $rowdata['AFP_idLevel_5'];}
-				if(isset($SALUD_idCentroCosto)) {          $x8  = $SALUD_idCentroCosto;          }else{$x8  = $rowdata['SALUD_idCentroCosto'];}
-				if(isset($SALUD_idLevel_1)) {              $x9  = $SALUD_idLevel_1;              }else{$x9  = $rowdata['SALUD_idLevel_1'];}
-				if(isset($SALUD_idLevel_2)) {              $x10 = $SALUD_idLevel_2;              }else{$x10 = $rowdata['SALUD_idLevel_2'];}
-				if(isset($SALUD_idLevel_3)) {              $x11 = $SALUD_idLevel_3;              }else{$x11 = $rowdata['SALUD_idLevel_3'];}
-				if(isset($SALUD_idLevel_4)) {              $x12 = $SALUD_idLevel_4;              }else{$x12 = $rowdata['SALUD_idLevel_4'];}
-				if(isset($SALUD_idLevel_5)) {              $x13 = $SALUD_idLevel_5;              }else{$x13 = $rowdata['SALUD_idLevel_5'];}
-				if(isset($SEGURIDAD_idCentroCosto)) {      $x14 = $SEGURIDAD_idCentroCosto;      }else{$x14 = $rowdata['SEGURIDAD_idCentroCosto'];}
-				if(isset($SEGURIDAD_idLevel_1)) {          $x15 = $SEGURIDAD_idLevel_1;          }else{$x15 = $rowdata['SEGURIDAD_idLevel_1'];}
-				if(isset($SEGURIDAD_idLevel_2)) {          $x16 = $SEGURIDAD_idLevel_2;          }else{$x16 = $rowdata['SEGURIDAD_idLevel_2'];}
-				if(isset($SEGURIDAD_idLevel_3)) {          $x17 = $SEGURIDAD_idLevel_3;          }else{$x17 = $rowdata['SEGURIDAD_idLevel_3'];}
-				if(isset($SEGURIDAD_idLevel_4)) {          $x18 = $SEGURIDAD_idLevel_4;          }else{$x18 = $rowdata['SEGURIDAD_idLevel_4'];}
-				if(isset($SEGURIDAD_idLevel_5)) {          $x19 = $SEGURIDAD_idLevel_5;          }else{$x19 = $rowdata['SEGURIDAD_idLevel_5'];}
-				
+				if(isset($AFP_idCentroCosto)){            $x2  = $AFP_idCentroCosto;            }else{$x2  = $rowdata['AFP_idCentroCosto'];}
+				if(isset($AFP_idLevel_1)){                $x3  = $AFP_idLevel_1;                }else{$x3  = $rowdata['AFP_idLevel_1'];}
+				if(isset($AFP_idLevel_2)){                $x4  = $AFP_idLevel_2;                }else{$x4  = $rowdata['AFP_idLevel_2'];}
+				if(isset($AFP_idLevel_3)){                $x5  = $AFP_idLevel_3;                }else{$x5  = $rowdata['AFP_idLevel_3'];}
+				if(isset($AFP_idLevel_4)){                $x6  = $AFP_idLevel_4;                }else{$x6  = $rowdata['AFP_idLevel_4'];}
+				if(isset($AFP_idLevel_5)){                $x7  = $AFP_idLevel_5;                }else{$x7  = $rowdata['AFP_idLevel_5'];}
+				if(isset($SALUD_idCentroCosto)){          $x8  = $SALUD_idCentroCosto;          }else{$x8  = $rowdata['SALUD_idCentroCosto'];}
+				if(isset($SALUD_idLevel_1)){              $x9  = $SALUD_idLevel_1;              }else{$x9  = $rowdata['SALUD_idLevel_1'];}
+				if(isset($SALUD_idLevel_2)){              $x10 = $SALUD_idLevel_2;              }else{$x10 = $rowdata['SALUD_idLevel_2'];}
+				if(isset($SALUD_idLevel_3)){              $x11 = $SALUD_idLevel_3;              }else{$x11 = $rowdata['SALUD_idLevel_3'];}
+				if(isset($SALUD_idLevel_4)){              $x12 = $SALUD_idLevel_4;              }else{$x12 = $rowdata['SALUD_idLevel_4'];}
+				if(isset($SALUD_idLevel_5)){              $x13 = $SALUD_idLevel_5;              }else{$x13 = $rowdata['SALUD_idLevel_5'];}
+				if(isset($SEGURIDAD_idCentroCosto)){      $x14 = $SEGURIDAD_idCentroCosto;      }else{$x14 = $rowdata['SEGURIDAD_idCentroCosto'];}
+				if(isset($SEGURIDAD_idLevel_1)){          $x15 = $SEGURIDAD_idLevel_1;          }else{$x15 = $rowdata['SEGURIDAD_idLevel_1'];}
+				if(isset($SEGURIDAD_idLevel_2)){          $x16 = $SEGURIDAD_idLevel_2;          }else{$x16 = $rowdata['SEGURIDAD_idLevel_2'];}
+				if(isset($SEGURIDAD_idLevel_3)){          $x17 = $SEGURIDAD_idLevel_3;          }else{$x17 = $rowdata['SEGURIDAD_idLevel_3'];}
+				if(isset($SEGURIDAD_idLevel_4)){          $x18 = $SEGURIDAD_idLevel_4;          }else{$x18 = $rowdata['SEGURIDAD_idLevel_4'];}
+				if(isset($SEGURIDAD_idLevel_5)){          $x19 = $SEGURIDAD_idLevel_5;          }else{$x19 = $rowdata['SEGURIDAD_idLevel_5'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Pension');
@@ -149,54 +149,54 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); 
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Mantenedor</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($AFP_idCentroCosto)) {        $x2  = $AFP_idCentroCosto;          }else{$x2  = '';}
-				if(isset($AFP_idLevel_1)) {            $x3  = $AFP_idLevel_1;              }else{$x3  = '';}
-				if(isset($AFP_idLevel_2)) {            $x4  = $AFP_idLevel_2;              }else{$x4  = '';}
-				if(isset($AFP_idLevel_3)) {            $x5  = $AFP_idLevel_3;              }else{$x5  = '';}
-				if(isset($AFP_idLevel_4)) {            $x6  = $AFP_idLevel_4;              }else{$x6  = '';}
-				if(isset($AFP_idLevel_5)) {            $x7  = $AFP_idLevel_5;              }else{$x7  = '';}
-				if(isset($SALUD_idCentroCosto)) {      $x8  = $SALUD_idCentroCosto;        }else{$x8  = '';}
-				if(isset($SALUD_idLevel_1)) {          $x9  = $SALUD_idLevel_1;            }else{$x9  = '';}
-				if(isset($SALUD_idLevel_2)) {          $x10 = $SALUD_idLevel_2;            }else{$x10 = '';}
-				if(isset($SALUD_idLevel_3)) {          $x11 = $SALUD_idLevel_3;            }else{$x11 = '';}
-				if(isset($SALUD_idLevel_4)) {          $x12 = $SALUD_idLevel_4;            }else{$x12 = '';}
-				if(isset($SALUD_idLevel_5)) {          $x13 = $SALUD_idLevel_5;            }else{$x13 = '';}
-				if(isset($SEGURIDAD_idCentroCosto)) {  $x14 = $SEGURIDAD_idCentroCosto;    }else{$x14 = '';}
-				if(isset($SEGURIDAD_idLevel_1)) {      $x15 = $SEGURIDAD_idLevel_1;        }else{$x15 = '';}
-				if(isset($SEGURIDAD_idLevel_2)) {      $x16 = $SEGURIDAD_idLevel_2;        }else{$x16 = '';}
-				if(isset($SEGURIDAD_idLevel_3)) {      $x17 = $SEGURIDAD_idLevel_3;        }else{$x17 = '';}
-				if(isset($SEGURIDAD_idLevel_4)) {      $x18 = $SEGURIDAD_idLevel_4;        }else{$x18 = '';}
-				if(isset($SEGURIDAD_idLevel_5)) {      $x19 = $SEGURIDAD_idLevel_5;        }else{$x19 = '';}
-				
+				if(isset($AFP_idCentroCosto)){        $x2  = $AFP_idCentroCosto;          }else{$x2  = '';}
+				if(isset($AFP_idLevel_1)){            $x3  = $AFP_idLevel_1;              }else{$x3  = '';}
+				if(isset($AFP_idLevel_2)){            $x4  = $AFP_idLevel_2;              }else{$x4  = '';}
+				if(isset($AFP_idLevel_3)){            $x5  = $AFP_idLevel_3;              }else{$x5  = '';}
+				if(isset($AFP_idLevel_4)){            $x6  = $AFP_idLevel_4;              }else{$x6  = '';}
+				if(isset($AFP_idLevel_5)){            $x7  = $AFP_idLevel_5;              }else{$x7  = '';}
+				if(isset($SALUD_idCentroCosto)){      $x8  = $SALUD_idCentroCosto;        }else{$x8  = '';}
+				if(isset($SALUD_idLevel_1)){          $x9  = $SALUD_idLevel_1;            }else{$x9  = '';}
+				if(isset($SALUD_idLevel_2)){          $x10 = $SALUD_idLevel_2;            }else{$x10 = '';}
+				if(isset($SALUD_idLevel_3)){          $x11 = $SALUD_idLevel_3;            }else{$x11 = '';}
+				if(isset($SALUD_idLevel_4)){          $x12 = $SALUD_idLevel_4;            }else{$x12 = '';}
+				if(isset($SALUD_idLevel_5)){          $x13 = $SALUD_idLevel_5;            }else{$x13 = '';}
+				if(isset($SEGURIDAD_idCentroCosto)){  $x14 = $SEGURIDAD_idCentroCosto;    }else{$x14 = '';}
+				if(isset($SEGURIDAD_idLevel_1)){      $x15 = $SEGURIDAD_idLevel_1;        }else{$x15 = '';}
+				if(isset($SEGURIDAD_idLevel_2)){      $x16 = $SEGURIDAD_idLevel_2;        }else{$x16 = '';}
+				if(isset($SEGURIDAD_idLevel_3)){      $x17 = $SEGURIDAD_idLevel_3;        }else{$x17 = '';}
+				if(isset($SEGURIDAD_idLevel_4)){      $x18 = $SEGURIDAD_idLevel_4;        }else{$x18 = '';}
+				if(isset($SEGURIDAD_idLevel_5)){      $x19 = $SEGURIDAD_idLevel_5;        }else{$x19 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Pension');
@@ -230,19 +230,19 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 // Se trae un listado con todos los elementos
 $arrImpuestos = array();
 $query = "SELECT 
@@ -300,7 +300,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrImpuestos,$row );
 }
 //cuento la cantidad de items creados
@@ -309,13 +309,13 @@ $ndata_1 = db_select_nrows (false, 'idSistema', 'sistema_leyes_sociales', '', "i
 			
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 	<?php if (isset($ndata_1)&&$ndata_1==0){ ?>
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>?new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Mantenedor</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>?new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Mantenedor</a><?php } ?>
 	<?php } ?>
 </div>
                     
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Mantenedor</h5>
@@ -333,31 +333,31 @@ $ndata_1 = db_select_nrows (false, 'idSistema', 'sistema_leyes_sociales', '', "i
 					<tr class="odd">
 						<td>
 							<?php 
-							if(isset($imp['AFP_CC_Nombre'])&&$imp['AFP_CC_Nombre']!=''){ 
+							if(isset($imp['AFP_CC_Nombre'])&&$imp['AFP_CC_Nombre']!=''){
 								echo '<strong>Centro Costo IVA: </strong>'.$imp['AFP_CC_Nombre'];
-								if(isset($imp['AFP_CC_Level_1'])&&$imp['AFP_CC_Level_1']!=''){echo ' - '.$imp['AFP_CC_Level_1']; }
-								if(isset($imp['AFP_CC_Level_2'])&&$imp['AFP_CC_Level_2']!=''){echo ' - '.$imp['AFP_CC_Level_2']; }
-								if(isset($imp['AFP_CC_Level_3'])&&$imp['AFP_CC_Level_3']!=''){echo ' - '.$imp['AFP_CC_Level_3']; }
-								if(isset($imp['AFP_CC_Level_4'])&&$imp['AFP_CC_Level_4']!=''){echo ' - '.$imp['AFP_CC_Level_4']; }
-								if(isset($imp['AFP_CC_Level_5'])&&$imp['AFP_CC_Level_5']!=''){echo ' - '.$imp['AFP_CC_Level_5']; }
+								if(isset($imp['AFP_CC_Level_1'])&&$imp['AFP_CC_Level_1']!=''){echo ' - '.$imp['AFP_CC_Level_1'];}
+								if(isset($imp['AFP_CC_Level_2'])&&$imp['AFP_CC_Level_2']!=''){echo ' - '.$imp['AFP_CC_Level_2'];}
+								if(isset($imp['AFP_CC_Level_3'])&&$imp['AFP_CC_Level_3']!=''){echo ' - '.$imp['AFP_CC_Level_3'];}
+								if(isset($imp['AFP_CC_Level_4'])&&$imp['AFP_CC_Level_4']!=''){echo ' - '.$imp['AFP_CC_Level_4'];}
+								if(isset($imp['AFP_CC_Level_5'])&&$imp['AFP_CC_Level_5']!=''){echo ' - '.$imp['AFP_CC_Level_5'];}
 								echo '<br/>';
 							}
-							if(isset($imp['SALUD_CC_Nombre'])&&$imp['SALUD_CC_Nombre']!=''){ 
+							if(isset($imp['SALUD_CC_Nombre'])&&$imp['SALUD_CC_Nombre']!=''){
 								echo '<strong>Centro Costo PPM: </strong>'.$imp['SALUD_CC_Nombre'];
-								if(isset($imp['SALUD_CC_Level_1'])&&$imp['SALUD_CC_Level_1']!=''){echo ' - '.$imp['SALUD_CC_Level_1']; }
-								if(isset($imp['SALUD_CC_Level_2'])&&$imp['SALUD_CC_Level_2']!=''){echo ' - '.$imp['SALUD_CC_Level_2']; }
-								if(isset($imp['SALUD_CC_Level_3'])&&$imp['SALUD_CC_Level_3']!=''){echo ' - '.$imp['SALUD_CC_Level_3']; }
-								if(isset($imp['SALUD_CC_Level_4'])&&$imp['SALUD_CC_Level_4']!=''){echo ' - '.$imp['SALUD_CC_Level_4']; }
-								if(isset($imp['SALUD_CC_Level_5'])&&$imp['SALUD_CC_Level_5']!=''){echo ' - '.$imp['SALUD_CC_Level_5']; }
+								if(isset($imp['SALUD_CC_Level_1'])&&$imp['SALUD_CC_Level_1']!=''){echo ' - '.$imp['SALUD_CC_Level_1'];}
+								if(isset($imp['SALUD_CC_Level_2'])&&$imp['SALUD_CC_Level_2']!=''){echo ' - '.$imp['SALUD_CC_Level_2'];}
+								if(isset($imp['SALUD_CC_Level_3'])&&$imp['SALUD_CC_Level_3']!=''){echo ' - '.$imp['SALUD_CC_Level_3'];}
+								if(isset($imp['SALUD_CC_Level_4'])&&$imp['SALUD_CC_Level_4']!=''){echo ' - '.$imp['SALUD_CC_Level_4'];}
+								if(isset($imp['SALUD_CC_Level_5'])&&$imp['SALUD_CC_Level_5']!=''){echo ' - '.$imp['SALUD_CC_Level_5'];}
 								echo '<br/>';
 							}
-							if(isset($imp['SEGURIDAD_CC_Nombre'])&&$imp['SEGURIDAD_CC_Nombre']!=''){ 
+							if(isset($imp['SEGURIDAD_CC_Nombre'])&&$imp['SEGURIDAD_CC_Nombre']!=''){
 								echo '<strong>Centro Costo Retenciones: </strong>'.$imp['SEGURIDAD_CC_Nombre'];
-								if(isset($imp['SEGURIDAD_CC_Level_1'])&&$imp['SEGURIDAD_CC_Level_1']!=''){echo ' - '.$imp['SEGURIDAD_CC_Level_1']; }
-								if(isset($imp['SEGURIDAD_CC_Level_2'])&&$imp['SEGURIDAD_CC_Level_2']!=''){echo ' - '.$imp['SEGURIDAD_CC_Level_2']; }
-								if(isset($imp['SEGURIDAD_CC_Level_3'])&&$imp['SEGURIDAD_CC_Level_3']!=''){echo ' - '.$imp['SEGURIDAD_CC_Level_3']; }
-								if(isset($imp['SEGURIDAD_CC_Level_4'])&&$imp['SEGURIDAD_CC_Level_4']!=''){echo ' - '.$imp['SEGURIDAD_CC_Level_4']; }
-								if(isset($imp['SEGURIDAD_CC_Level_5'])&&$imp['SEGURIDAD_CC_Level_5']!=''){echo ' - '.$imp['SEGURIDAD_CC_Level_5']; }
+								if(isset($imp['SEGURIDAD_CC_Level_1'])&&$imp['SEGURIDAD_CC_Level_1']!=''){echo ' - '.$imp['SEGURIDAD_CC_Level_1'];}
+								if(isset($imp['SEGURIDAD_CC_Level_2'])&&$imp['SEGURIDAD_CC_Level_2']!=''){echo ' - '.$imp['SEGURIDAD_CC_Level_2'];}
+								if(isset($imp['SEGURIDAD_CC_Level_3'])&&$imp['SEGURIDAD_CC_Level_3']!=''){echo ' - '.$imp['SEGURIDAD_CC_Level_3'];}
+								if(isset($imp['SEGURIDAD_CC_Level_4'])&&$imp['SEGURIDAD_CC_Level_4']!=''){echo ' - '.$imp['SEGURIDAD_CC_Level_4'];}
+								if(isset($imp['SEGURIDAD_CC_Level_5'])&&$imp['SEGURIDAD_CC_Level_5']!=''){echo ' - '.$imp['SEGURIDAD_CC_Level_5'];}
 								echo '<br/>';
 							}
 							?>
@@ -369,17 +369,17 @@ $ndata_1 = db_select_nrows (false, 'idSistema', 'sistema_leyes_sociales', '', "i
 									$ubicacion = $location.'?del='.simpleEncode($imp['idMantenedor'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar los datos del mantenedor?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>	
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

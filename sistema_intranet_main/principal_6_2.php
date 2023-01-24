@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "principal.php";
 $location = $original;
 //oculto el menu
@@ -25,7 +25,7 @@ require_once 'core/Web.Header.Main.php';
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
 $SIS_query = 'idOpcionesGen_6, idOpcionesGen_4, idOpcionesGen_10';
 $SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'n_permisos');
+$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas','', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'n_permisos');
 /************************************************************************************/
 //variable de numero de permiso
 $x_nperm = 0;
@@ -48,10 +48,10 @@ $x_nperm++; $trans[$x_nperm] = "cross_checking_monitor_aplicaciones.php";       
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_errores_2.php";              //13 - Alerta Sensores
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_4.php";    //14 - Exportar Datos
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_fuera_linea_2.php";          //15 - Fuera de Linea
-$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_4.php";   //16 - Max – Min Camara 
+$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_4.php";   //16 - Max – Min Camara
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_2.php";   //17 - Max – Min Sensor
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_6.php";   //18 - Promedio Diario
-$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_6.php";    //19 - Registro Camara 
+$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_6.php";    //19 - Registro Camara
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_2.php";    //20 - Registro Sensores
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_12.php";   //21 - Trazabilidad
 
@@ -83,7 +83,7 @@ $x_nperm++; $trans[$x_nperm] = "informe_telemetria_errores_6.php";              
 
 //CrossEnergy
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_errores_7.php";              //42 - Alerta Sensores
-$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_18.php";   //43 - Trazabilidad Sensor 
+$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_18.php";   //43 - Trazabilidad Sensor
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_19.php";   //44 - Trazabilidad Grupo
 $x_nperm++; $trans[$x_nperm] = "informe_crossenergy_01.php";                    //45 - Resumen Dia
 $x_nperm++; $trans[$x_nperm] = "informe_crossenergy_02.php";                    //46 - Resumen Hora
@@ -127,7 +127,7 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 // Listado con los nombres del tab
 $arrTabMenu = array();
 $arrTabMenu = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTabMenu');
-//Recorro																						
+//Recorro
 foreach ($arrTabMenu as $tab) {
 	$arrOrderTabMenu[$tab['idTab']] = $tab['Nombre'];
 }
@@ -164,17 +164,17 @@ foreach ($arrTabMenu as $tab) {
 		</header>
 		<div class="tab-content">
 			<?php
-			
+
 			/*********************************************************/
 			//Si esta configurado para usar el nuevo widget
 			if($n_permisos['idOpcionesGen_10']==1){
-				
-				echo widget_CrossC('Gestion de equipos', '06:00:00', 2, 
-									$_SESSION['usuario']['basic_data']['idSistema'], 
-									$_SESSION['usuario']['basic_data']['idTipoUsuario'], 
-									$_SESSION['usuario']['basic_data']['idUsuario'], 
+
+				echo widget_CrossC('Gestion de equipos', '06:00:00', 2,
+									$_SESSION['usuario']['basic_data']['idSistema'],
+									$_SESSION['usuario']['basic_data']['idTipoUsuario'],
+									$_SESSION['usuario']['basic_data']['idUsuario'],
 									$dbConn);
-				
+
 			/*********************************************************/
 			//los seleccionados para mostrar la antigua
 			}else{
@@ -184,10 +184,10 @@ foreach ($arrTabMenu as $tab) {
 				}else{
 					$x_seg = 60000;
 				}
-					
+
 				//Verifico si esta activada la actualizacion de la pagina
-				if($n_permisos['idOpcionesGen_4']=='1') { 
-					
+				if($n_permisos['idOpcionesGen_4']=='1') {
+
 					$Url  = 'principal_telemetria_alt_crosstech.php';
 					$Url .= '?bla=bla';
 					$Url .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
@@ -199,7 +199,7 @@ foreach ($arrTabMenu as $tab) {
 					$Url .= '&idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 					$Url .= '&trans_8='.$prm_x[302];
 					$Url .= '&trans_9='.$prm_x[303];
-						
+
 					echo '
 					<script type="text/javascript">
 						function actualiza_contenido() {
@@ -213,25 +213,24 @@ foreach ($arrTabMenu as $tab) {
 				<div class="panel-heading">
 					<span class="panel-title"  style="color: #666;font-weight: 700 !important;">Telemetria</span>
 				</div>';
-					
+
 				echo '
-				<div class="col-sm-12" id="update_tel">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="update_tel">
 					<span class="panel-title"  style="color: #1E90FF;font-weight: 700 !important;" id="update_text_HoraRefresco">Hora Refresco: '.hora_actual().'</span>';
-				
+
 					echo widget_Equipos_Crosstech('Equipos Telemetria', 2, 0,$prm_x[303], $_SESSION['usuario']['basic_data']['idSistema'],
 													$_SESSION['usuario']['basic_data']['idTipoUsuario'],
 													$_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
-					echo widget_Promedios_equipo_grupos_Crosstech('Mediciones Promedios Actuales', 2, 0, 0, 
+					echo widget_Promedios_equipo_grupos_Crosstech('Mediciones Promedios Actuales', 2, 0, 0,
 																$_SESSION['usuario']['basic_data']['idSistema'],
 																$_SESSION['usuario']['basic_data']['idTipoUsuario'],
 																$_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
-																
+
 				echo '</div>';
 			}
-			
+
 			?>
 
-			
 		</div>
 	</div>
 </div>

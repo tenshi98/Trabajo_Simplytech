@@ -28,18 +28,18 @@ mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion
 $original = "index.php";
 /**********************************************************************************************************************************/
 /*                                               Se cargan los formularios                                                        */
 /**********************************************************************************************************************************/
 //formulario para iniciar sesion
-if ( !empty($_POST['submit_login']) )  { 
+if (!empty($_POST['submit_login'])){
 	$form_trabajo= 'login';
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 //formulario para recuperar la contraseña
-if ( !empty($_POST['submit_pass']) )  { 
+if (!empty($_POST['submit_pass'])){
 	$form_trabajo= 'getpass';
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
@@ -59,13 +59,13 @@ $_SESSION['form_require'] = 'required';
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport"              content="width=device-width, initial-scale=1, user-scalable=no">
 		<meta http-equiv="Content-Type"    content="text/html; charset=UTF-8">
-		
+
 		<!-- Informacion del sitio-->
 		<title>Login</title>
 		<meta name="description"           content="">
 		<meta name="author"                content="">
 		<meta name="keywords"              content="">
-		
+
 		<!-- WEB FONT -->
 		<?php
 		//verifica la capa de desarrollo
@@ -75,15 +75,15 @@ $_SESSION['form_require'] = 'required';
 		if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			echo '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIB_assets/lib/font-awesome/css/font-awesome.min.css">';
 			//echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
-			
+
 		////////////////////////////////////////////////////////////////////////////////
-		//si estoy en ambiente de produccion	
+		//si estoy en ambiente de produccion
 		}else{
 			echo '<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">';
 			echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
 		}
 		?>
-		
+
 		<!-- CSS Base -->
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
@@ -125,20 +125,20 @@ $_SESSION['form_require'] = 'required';
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/country_picker/js/bootstrap-select.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly-locale-es-ar.js"></script>
-		
+
 		<!-- Favicons-->
 		<?php
 		//Favicon Personalizado
 		$nombre_fichero = 'img/mifavicon.png';
-		if (file_exists($nombre_fichero)) { ?>
+		if (file_exists($nombre_fichero)){ ?>
 			<link rel="icon"             type="image/png"                    href="img/mifavicon.png" >
 			<link rel="shortcut icon"    type="image/x-icon"                 href="img/mifavicon.png" >
 			<link rel="apple-touch-icon" type="image/x-icon"                 href="img/mifavicon-57x57.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="72x72"   href="img/mifavicon-72x72.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/mifavicon-114x114.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/mifavicon-144x144.png">
-		<?php 
-		//Favicon predefinido	
+		<?php
+		//Favicon predefinido
 		}else{ ?>
 			<link rel="icon"             type="image/png"                    href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/favicon.png" >
 			<link rel="shortcut icon"    type="image/x-icon"                 href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/favicon.png" >
@@ -149,8 +149,8 @@ $_SESSION['form_require'] = 'required';
 		<?php } ?>
 	</head>
 	<body class="login">
-	  
-<?php 
+
+<?php
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
@@ -182,7 +182,7 @@ $ip_bloqueada = db_select_nrows (false, 'idBloqueo', 'sistema_seguridad_bloqueo_
 if(isset($Mantenciones['Fecha'])&&strtotime($Mantenciones['Fecha'])>=strtotime(fecha_actual())&&strtotime($Mantenciones['Hora_ini'])<=strtotime(hora_actual())&&strtotime($Mantenciones['Hora_fin'])>=strtotime(hora_actual())&&$bloqueo==0){ $bloqueo=1;}
 if(isset($INT_Pais)&&$INT_Pais!=''&&$INT_Pais!='Chile'&&$INT_IP!='::1'&&$bloqueo==0){  $bloqueo = 2;}
 if(isset($ip_bloqueada)&&$ip_bloqueada!=0&&$bloqueo==0){ $bloqueo = 3;}
-	
+
 /**********************************************************************************************************************************/
 /*                                                        Despliegue                                                              */
 /**********************************************************************************************************************************/
@@ -191,18 +191,9 @@ switch ($bloqueo) {
     //pantalla normal
     case 0:
         switch ($intForm) {
-			//pantalla de mantenimiento
-			case 1:
-				require_once '1include_login_form_1.php';
-				break;
-			//pantalla de bloqueo pais
-			case 2:
-				require_once '1include_login_form_2.php';
-				break;
-			//pantalla de baneo
-			case 3:
-				require_once '1include_login_form_3.php';
-				break;
+			case 1: require_once '1include_login_form_1.php'; break; //Login normal
+			case 2: require_once '1include_login_form_2.php'; break; //Login animado
+			case 3: require_once '1include_login_form_3.php'; break; //login terrania
 		}
 		break;
 	//pantalla de mantenimiento

@@ -10,17 +10,17 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_busqueda_pagos_01.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['idType'])&&$_GET['idType']!=''){               $search .="&idType=".$_GET['idType'];}
-if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){     $search .="&idProveedor=".$_GET['idProveedor'];}
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){         $search .="&idCliente=".$_GET['idCliente'];}
-if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){               $search .="&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){         $search .="&idDocPago=".$_GET['idDocPago'];}
-if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){         $search .="&N_DocPago=".$_GET['N_DocPago'];}
+if(isset($_GET['idType'])&&$_GET['idType']!=''){       $search .="&idType=".$_GET['idType'];}
+if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){    $search .="&idProveedor=".$_GET['idProveedor'];}
+if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){ $search .="&idCliente=".$_GET['idCliente'];}
+if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){       $search .="&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){ $search .="&idDocPago=".$_GET['idDocPago'];}
+if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){ $search .="&N_DocPago=".$_GET['N_DocPago'];}
 if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
 	$search .="&f_inicio_p=".$_GET['f_inicio_p'];
 	$search .="&f_termino_p=".$_GET['f_termino_p'];
@@ -37,24 +37,15 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 switch ($_GET['idType']) {
     /**********************************************************/
@@ -80,18 +71,18 @@ switch ($_GET['idType']) {
 		/**********************************************************/
 		//Variable de busqueda
 		$SIS_where = "pagos_facturas_proveedores.idPago!=0";
-		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){       $SIS_where.= " AND pagos_facturas_proveedores.idDocPago=".$_GET['idDocPago'];}
-		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){       $SIS_where.= " AND pagos_facturas_proveedores.N_DocPago=".$_GET['N_DocPago'];}
-		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $SIS_where.= " AND pagos_facturas_proveedores.idTipo=".$_GET['idTipo'];}
-		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){   $SIS_where.= " AND pagos_facturas_proveedores.idProveedor=".$_GET['idProveedor'];}
+		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){      $SIS_where.= " AND pagos_facturas_proveedores.idDocPago=".$_GET['idDocPago'];}
+		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){      $SIS_where.= " AND pagos_facturas_proveedores.N_DocPago=".$_GET['N_DocPago'];}
+		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){     $SIS_where.= " AND pagos_facturas_proveedores.idTipo=".$_GET['idTipo'];}
+		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $SIS_where.= " AND pagos_facturas_proveedores.idProveedor=".$_GET['idProveedor'];}
 		if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
 			$SIS_where.= " AND pagos_facturas_proveedores.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
-		}				
+		}	
 		/**********************************************************/
 		//Realizo una consulta para saber el total de elementos existentes
 		$cuenta_registros = db_select_nrows (false, 'idPago', 'pagos_facturas_proveedores', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 		//Realizo la operacion para saber la cantidad de paginas que hay
-		$total_paginas = ceil($cuenta_registros / $cant_reg);	
+		$total_paginas = ceil($cuenta_registros / $cant_reg);
 		// Se trae un listado con todos los elementos
 		$SIS_query = '
 		pagos_facturas_proveedores.idTipo,
@@ -137,18 +128,18 @@ switch ($_GET['idType']) {
 		/**********************************************************/
 		//Variable de busqueda
 		$SIS_where = "pagos_facturas_clientes.idPago!=0";
-		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){       $SIS_where.= " AND pagos_facturas_clientes.idDocPago=".$_GET['idDocPago'];}
-		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){       $SIS_where.= " AND pagos_facturas_clientes.N_DocPago=".$_GET['N_DocPago'];}
-		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){             $SIS_where.= " AND pagos_facturas_clientes.idTipo=".$_GET['idTipo'];}
-		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){       $SIS_where.= " AND pagos_facturas_clientes.idCliente=".$_GET['idCliente'];}
+		if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){      $SIS_where.= " AND pagos_facturas_clientes.idDocPago=".$_GET['idDocPago'];}
+		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){      $SIS_where.= " AND pagos_facturas_clientes.N_DocPago=".$_GET['N_DocPago'];}
+		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){     $SIS_where.= " AND pagos_facturas_clientes.idTipo=".$_GET['idTipo'];}
+		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $SIS_where.= " AND pagos_facturas_clientes.idCliente=".$_GET['idCliente'];}
 		if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
 			$SIS_where.= " AND pagos_facturas_clientes.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
-		}				
+		}	
 		/**********************************************************/
 		//Realizo una consulta para saber el total de elementos existentes
 		$cuenta_registros = db_select_nrows (false, 'idPago', 'pagos_facturas_clientes', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 		//Realizo la operacion para saber la cantidad de paginas que hay
-		$total_paginas = ceil($cuenta_registros / $cant_reg);	
+		$total_paginas = ceil($cuenta_registros / $cant_reg);
 		// Se trae un listado con todos los elementos
 		$SIS_query = '
 		pagos_facturas_clientes.idTipo,
@@ -173,18 +164,18 @@ switch ($_GET['idType']) {
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
-		<li class="btn btn-default"><?php echo $bread_order; ?></li>	
+		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
 	
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 	
 	
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Documentos</h5>
@@ -192,7 +183,7 @@ switch ($_GET['idType']) {
 				<?php echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -227,7 +218,7 @@ switch ($_GET['idType']) {
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrTipo as $tipo) { ?>
 					<tr class="odd">
@@ -257,11 +248,11 @@ switch ($_GET['idType']) {
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
@@ -269,36 +260,36 @@ switch ($_GET['idType']) {
 <?php widget_modal(80, 95); ?>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idType)) {               $x1  = $idType;              }else{$x1  = '';}
-				if(isset($idProveedor)) {          $x2  = $idProveedor;         }else{$x2  = '';}
-				if(isset($idCliente)) {            $x3  = $idCliente;           }else{$x3  = '';}
-				if(isset($idTipo)) {               $x4  = $idTipo;              }else{$x4  = '';}
-				if(isset($idDocPago)) {            $x5  = $idDocPago;           }else{$x5  = '';}
-				if(isset($N_DocPago)) {            $x6  = $N_DocPago;           }else{$x6  = '';}
-				if(isset($f_inicio_p)) {           $x7  = $f_inicio_p;          }else{$x7  = '';}
-				if(isset($f_termino_p)) {          $x8  = $f_termino_p;         }else{$x8  = '';}
-				
+				if(isset($idType)){               $x1  = $idType;              }else{$x1  = '';}
+				if(isset($idProveedor)){          $x2  = $idProveedor;         }else{$x2  = '';}
+				if(isset($idCliente)){            $x3  = $idCliente;           }else{$x3  = '';}
+				if(isset($idTipo)){               $x4  = $idTipo;              }else{$x4  = '';}
+				if(isset($idDocPago)){            $x5  = $idDocPago;           }else{$x5  = '';}
+				if(isset($N_DocPago)){            $x6  = $N_DocPago;           }else{$x6  = '';}
+				if(isset($f_inicio_p)){           $x7  = $f_inicio_p;          }else{$x7  = '';}
+				if(isset($f_termino_p)){          $x8  = $f_termino_p;         }else{$x8  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo Pago','idType', $x1, 2, 'idType', 'Nombre', 'pagos_facturas_tipos', 0, '', $dbConn);
@@ -310,41 +301,41 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_date('Fecha Pagada Desde','f_inicio_p', $x7, 1);
 				$Form_Inputs->form_date('Fecha Pagada Hasta','f_termino_p', $x8, 1);
 						
-				?> 
+				?>
 				
 				<script>
 					document.getElementById('div_idProveedor').style.display = 'none';
 					document.getElementById('div_idCliente').style.display = 'none';
 						
-					$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 						
 						$("#idType").on("change", function(){ //se ejecuta al cambiar valor del select
 							let tipo_val= $("#idType").val();//Asignamos el valor seleccionado
 								
 							//Proveedores
-							if(tipo_val == 1){ 
+							if(tipo_val == 1){
 								document.getElementById('div_idProveedor').style.display = '';
 								document.getElementById('div_idCliente').style.display = 'none';
 							//Clientes	
-							} else if(tipo_val == 2){ 
+							} else if(tipo_val == 2){
 								document.getElementById('div_idProveedor').style.display = 'none';
 								document.getElementById('div_idCliente').style.display = '';
-							} else { 
+							} else {
 								document.getElementById('div_idProveedor').style.display = 'none';
 								document.getElementById('div_idCliente').style.display = 'none';
 							}
 							
-						}); 
-					}); 
+						});
+					});
 						
 					</script>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

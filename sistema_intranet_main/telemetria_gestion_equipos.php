@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "telemetria_gestion_equipos.php";
 $location = $original;  
 //Se agregan ubicaciones
@@ -24,10 +24,10 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) {
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //Variables
-$HoraSistema    = hora_actual(); 
+$HoraSistema    = hora_actual();
 $FechaSistema   = fecha_actual();
 
 //Variable
@@ -35,7 +35,7 @@ $SIS_where  = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 $SIS_where .= " AND telemetria_listado.id_Geo = 2";//solo los equipos que tengan el seguimiento desactivado
 $enlace     = "?dd=true";
 //verifico que sea un administrador
-$SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $enlace    .= "&idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
@@ -50,17 +50,17 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
 	$subquery .= ',SensoresGrupo_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
-}						
+}
 
 //Se consultan datos
 $SIS_query = '
-telemetria_listado.GeoLatitud, 
+telemetria_listado.GeoLatitud,
 telemetria_listado.GeoLongitud,
 telemetria_listado.idTelemetria,
 telemetria_listado.Nombre,
 telemetria_listado.Direccion_img,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.LastUpdateFecha, 
+telemetria_listado.LastUpdateFecha,
 telemetria_listado.cantSensores,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores,
@@ -90,10 +90,10 @@ foreach ($arrGrupos as $sen) {
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Gestion de Equipos en Tiempo Real</h5>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Gestion de Equipos en Tiempo Real</h5>
 		</header>
         <div class="table-responsive">
 			
@@ -129,7 +129,7 @@ foreach ($arrGrupos as $sen) {
 								$Time_Tiempo_FL  = horas2segundos($rowDatos['TiempoFueraLinea']);
 								$Time_Tiempo_Max = horas2segundos('48:00:00');
 								//comparacion
-								if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+								if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
 									$in_eq_fueralinea++;
 								}
 									
@@ -153,8 +153,8 @@ foreach ($arrGrupos as $sen) {
 								?>
 									
 								<tr class="odd <?php echo $danger; ?>">		
-									<td><?php echo $rowDatos['Nombre']; ?></td>		
-									<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>			
+									<td><?php echo $rowDatos['Nombre']; ?></td>
+									<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>		
 									<td>
 										<div class="btn-group" style="width: 35px;" >
 											<a href="<?php echo 'telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($rowDatos['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
@@ -162,8 +162,8 @@ foreach ($arrGrupos as $sen) {
 									</td>
 								</tr>
 								<tr class="odd" style="background-color: #CCCCCC;">		
-									<td>Grupo</td>		
-									<td colspan="2">Mediciones</td>			
+									<td>Grupo</td>	
+									<td colspan="2">Mediciones</td>		
 								</tr>
 								
 								<?php
@@ -199,7 +199,7 @@ foreach ($arrGrupos as $sen) {
 								array_multisort($names, SORT_ASC, $arrGruposTitulo);
 									
 								//se recorre el arreglo
-								foreach($arrGruposTitulo as $titulo=>$items) { 
+								foreach($arrGruposTitulo as $titulo=>$items) {
 									
 									$columna_a = '';
 									$columna_b = '';
@@ -211,8 +211,8 @@ foreach ($arrGrupos as $sen) {
 									$unimed_col2 = '';
 									$y = 1;
 									?>
-									<tr class="odd">		
-										<td><?php echo $titulo ?></td>		
+									<tr class="odd">
+										<td><?php echo $titulo ?></td>	
 										<?php foreach($items as $datos) { 
 											if($y==1){
 												$columna_a .= $datos['Descripcion'].'<br/>';
@@ -236,19 +236,19 @@ foreach ($arrGrupos as $sen) {
 										}?> 
 										
 										<td><?php echo $columna_a ?></td>
-										<td><?php echo $columna_b ?></td>		
+										<td><?php echo $columna_b ?></td>	
 									</tr>
 									
 									<?php if($rowDatos['idOpcionesGen_3']==1){ ?>
-										<tr class="odd">		
+										<tr class="odd">
 											<td>Promedio</td>
 											<td><?php if($ntotal_col1!=0){echo Cantidades_decimales_justos($total_col1/$ntotal_col1).$unimed_col1;} ?></td>
-											<td><?php if($ntotal_col2!=0){echo Cantidades_decimales_justos($total_col2/$ntotal_col2).$unimed_col2;} ?></td>			
+											<td><?php if($ntotal_col2!=0){echo Cantidades_decimales_justos($total_col2/$ntotal_col2).$unimed_col2;} ?></td>		
 										</tr>
 									<?php } ?>
 										
 										
-					            <?php } ?>        
+					            <?php } ?>
 							</tbody>
 						</table>
 					</div>
@@ -258,16 +258,16 @@ foreach ($arrGrupos as $sen) {
 			<div class="col-sm-5">
 				<div class="row">	
 					<?php if ($rowDatos['Direccion_img']=='') { ?>
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 					<?php }else{  ?>
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowDatos['Direccion_img']; ?>">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowDatos['Direccion_img']; ?>">
 					<?php }?>
 				</div>
 			</div>
 			
 			
 			
-		</div>	
+		</div>
 	</div>
 </div>
 <?php widget_modal(80, 95); ?>
@@ -285,12 +285,12 @@ function myTimer2() {
 
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";	
@@ -315,7 +315,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 						
 	}
-	while ( $row = mysqli_fetch_assoc ($resultado)) {
+	while ( $row = mysqli_fetch_assoc ($resultado)){
 	array_push( $arrPermisos,$row );
 	}
 	foreach ($arrPermisos as $prod) {
@@ -327,18 +327,18 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $original; ?>" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTelemetria)) {     $x1  = $idTelemetria;      }else{$x1  = '';}
+				if(isset($idTelemetria)){     $x1  = $idTelemetria;      }else{$x1  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -346,11 +346,11 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Ver" name="submit_filter">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Ver" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>

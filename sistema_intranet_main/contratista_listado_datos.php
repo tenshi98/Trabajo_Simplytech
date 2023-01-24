@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "contratista_listado.php";
 $location = $original;
 $new_location = "contratista_listado_datos.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$location.='&id='.$_GET['id'];
 	$form_trabajo= 'update';
@@ -42,7 +42,7 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Contratista editado co
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Contratista borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $query = "SELECT idTipo, Nombre , Rut, fNacimiento, idPais, idCiudad, idComuna, Direccion, idSistema, Giro
 FROM `contratista_listado`
@@ -62,12 +62,12 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contratista', $rowdata['Nombre'], 'Editar Datos Basicos');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -81,24 +81,24 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						<li class=""><a href="<?php echo 'contratista_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'contratista_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;min-height:500px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;min-height:500px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($idTipo)) {           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
-					if(isset($Nombre)) {           $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
-					if(isset($Rut)) {              $x3  = $Rut;               }else{$x3  = $rowdata['Rut'];}
-					if(isset($fNacimiento)) {      $x4  = $fNacimiento;       }else{$x4  = $rowdata['fNacimiento'];}
-					if(isset($idPais)) {           $x5  = $idPais;            }else{$x5  = $rowdata['idPais'];}
-					if(isset($idCiudad)) {         $x6  = $idCiudad;          }else{$x6  = $rowdata['idCiudad'];}
-					if(isset($idComuna)) {         $x7  = $idComuna;          }else{$x7  = $rowdata['idComuna'];}
-					if(isset($Direccion)) {        $x8  = $Direccion;         }else{$x8  = $rowdata['Direccion'];}
-					if(isset($Giro)) {             $x9  = $Giro;              }else{$x9  = $rowdata['Giro'];}
+					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
+					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
+					if(isset($Rut)){              $x3  = $Rut;               }else{$x3  = $rowdata['Rut'];}
+					if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = $rowdata['fNacimiento'];}
+					if(isset($idPais)){           $x5  = $idPais;            }else{$x5  = $rowdata['idPais'];}
+					if(isset($idCiudad)){         $x6  = $idCiudad;          }else{$x6  = $rowdata['idCiudad'];}
+					if(isset($idComuna)){         $x7  = $idComuna;          }else{$x7  = $rowdata['idComuna'];}
+					if(isset($Direccion)){        $x8  = $Direccion;         }else{$x8  = $rowdata['Direccion'];}
+					if(isset($Giro)){             $x9  = $Giro;              }else{$x9  = $rowdata['Giro'];}
 					
 
 					//se dibujan los inputs
@@ -109,7 +109,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_date('F Ingreso','fNacimiento', $x4, 1);
 					$Form_Inputs->form_select_country('Pais','idPais', $x5, 1, $dbConn);
 					$Form_Inputs->form_select_depend1('Region','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-											'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+											'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map'); 
 					$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
@@ -122,11 +122,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					
 					<script>
 						
-						$(document).ready(function(){ //se ejecuta al cargar la página (OBLIGATORIO)
+						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 									
 							let idSubconfiguracion = $("#idSubconfiguracion").val();
 							let idPais             = $("#idPais").val();
-							
+
 							//Si el pais es distinto de chile
 							if(idPais!=1){
 								document.getElementById("idCiudad").disabled = true;
@@ -136,13 +136,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 							}else{
 								document.getElementById("idCiudad").disabled = false;
 								document.getElementById("idComuna").disabled = false;
-							}		
-						}); 
+							}
+						});
 						
 						$("#idPais").on("change", function(){
 							
 							let idPais_sel = $("#idPais").val();
-							
+
 							//Si el pais es distinto de chile
 							if(idPais_sel!=1){
 								document.getElementById("idCiudad").disabled = true;
@@ -157,19 +157,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						
 					</script>
 				  
-					<div class="form-group">			
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">	
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

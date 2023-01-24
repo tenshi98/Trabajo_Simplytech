@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -54,7 +54,7 @@ telemetria_historial_mantencion.Resolucion,
 telemetria_historial_mantencion.idOpciones_1,
 telemetria_historial_mantencion.idOpciones_2,
 telemetria_historial_mantencion.idOpciones_3,
-telemetria_historial_mantencion.Recepcion_Nombre, 
+telemetria_historial_mantencion.Recepcion_Nombre,
 telemetria_historial_mantencion.Recepcion_Rut, 
 telemetria_historial_mantencion.Recepcion_Email,
 telemetria_historial_mantencion.Path_Firma,
@@ -69,7 +69,7 @@ $SIS_where = 'telemetria_historial_mantencion.idMantencion ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 
-/**********************************/				
+/**********************************/
 $arrOpciones = array();
 $arrOpciones = db_select_array (false, 'idOpciones, Nombre', 'core_telemetria_servicio_tecnico_opciones', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOpciones');
 
@@ -118,7 +118,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 				<i class="fa fa-globe" aria-hidden="true"></i> Visita Tecnica.
 				<small class="pull-right">N°: <?php echo n_doc($X_Puntero, 7)?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">
@@ -183,7 +183,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 					</tr>
 				<?php } ?>
 			</tbody>
-		</table>			
+		</table>		
     </div>
 
 	<div class="col-xs-12">
@@ -217,20 +217,20 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 					</tr>
 				<?php } ?>
 			</tbody>
-		</table>			
+		</table>		
     </div>
 
 	<div class="row firma">
 		
 		<div class="col-sm-6 fcont">
-			<?php if(isset($row_data['Path_Firma'])&&$row_data['Path_Firma']!=''){ ?>
+			<?php if(isset($row_data['Path_Firma'])&&$row_data['Path_Firma']!=''){?>
 				<div class="col-sm-6 fcenter">
-					<img style="" class="media-object user-img width100" alt="User Picture" src="upload/<?php echo $row_data['Path_Firma']; ?>">
-				</div>	
+					<img style="" class="media-object user-img width100" alt="Imagen Referencia" src="upload/<?php echo $row_data['Path_Firma']; ?>">
+				</div>
 			<?php } ?>
 			<p>Firma Aprobador</p>
 		</div>
-		<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div> 
+		<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
 	</div>
 
       
@@ -239,12 +239,12 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
  
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -255,12 +255,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
 
 

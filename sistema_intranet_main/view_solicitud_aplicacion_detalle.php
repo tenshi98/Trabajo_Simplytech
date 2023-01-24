@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -23,11 +23,11 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
-if (validarNumero($_GET['view'])){ 
+if (validarNumero($_GET['view'])){
 	//Verifica si el numero recibido es un entero
-	if (validaEntero($_GET['view'])){ 
+	if (validaEntero($_GET['view'])){
 		$X_Puntero = $_GET['view'];
-	} else { 
+	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
 } else { 
@@ -102,8 +102,8 @@ LEFT JOIN `trabajadores_listado`                           ON trabajadores_lista
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idSolicitud   = cross_solicitud_aplicacion_listado.idSolicitud';
 $SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud ='.$X_Puntero.' GROUP BY cross_solicitud_aplicacion_listado.idSolicitud';
 $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
-	
-/*****************************************/				
+
+/*****************************************/
 //Insumos
 $SIS_query = '
 cross_solicitud_aplicacion_listado_cuarteles.idEstado,
@@ -144,7 +144,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['NSolicitud'], 5); ?>.
 				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino'])?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">
@@ -168,8 +168,8 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				Temporada: <?php echo $row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre']; ?><br/>
 				Estado Fenologico: <?php echo $row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre']; ?><br/>
 				<?php
-					if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){        echo 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
-					if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){  echo 'Variedad: '.$row_data['VariedadNombre'].'<br/>'; }else{echo 'Variedad: Todas las Variedades<br/>';}
+					if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){echo 'Especie: '.$row_data['VariedadCat'].'<br/>';     }else{echo 'Especie: Todas las Especies<br/>';}
+					if(isset($row_data['VariedadNombre'])&&$row_data['VariedadNombre']!=''){ echo 'Variedad: '.$row_data['VariedadNombre'].'<br/>';}else{echo 'Variedad: Todas las Variedades<br/>';}
 				?>
 			</address>
 		</div>
@@ -181,13 +181,13 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				Fecha inicio requerido: <?php echo fecha_estandar($row_data['f_programacion']).' '.$row_data['horaProg']; ?><br/>
 				Fecha termino requerido: <?php echo fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin']; ?><br/>
 				<?php
-					if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){ echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
-					if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){ echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
-					if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){ echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
-					if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){ echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
+					if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){echo 'Fecha inicio programación: '.fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion'].'<br/>';}
+					if(isset($row_data['f_ejecucion_fin'])&&$row_data['f_ejecucion_fin']!='0000-00-00'){echo 'Fecha termino programación: '.fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin'].'<br/>';}
+					if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){echo 'Fecha inicio ejecución: '.fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino'].'<br/>';}
+					if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
 					echo 'Agrónomo: '.$row_data['NombreUsuario'];
-					if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
-				?>		
+					if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
+				?>	
 					
 			</address>
 		</div>
@@ -275,7 +275,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 									case 2:
 										$s_Icon = '<span style="color: #5cb85c;"><i class="fa fa-rss" aria-hidden="true"></i></span>';
 										break;
-								}	
+								}
 								?>
 								
 								<tr class="item-row linea_punteada">
@@ -318,7 +318,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 									</td>
 									
 										
-								</tr> 
+								</tr>
 								<?php 
 							}
 						}else{
@@ -334,12 +334,12 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
-if(isset($_GET['return'])&&$_GET['return']!=''){ 
+if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 	<?php 
@@ -350,12 +350,12 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		$volver = $array[1];
 		?>
 		<div class="clearfix"></div>
-		<div class="col-sm-12" style="margin-bottom:30px;margin-top:30px;">
-			<a href="<?php echo $volver; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
+			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
 		
-	<?php }		
+	<?php }
 } ?>
  
 <?php

@@ -55,7 +55,7 @@ foreach ($arrUnimed as $sen) {
 }
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -70,21 +70,21 @@ foreach ($arrUnimed as $sen) {
 				<li class=""><a href="#alertas" data-toggle="tab"><i class="fa fa-bullhorn"  aria-hidden="true"></i> Alertas</a></li>
 				<li class=""><a href="#flinea" data-toggle="tab"><i class="fa fa-power-off" aria-hidden="true"></i> Fuera de Linea</a></li>
 
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					
-					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 						<?php }?>
 					</div>
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos del Equipo</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -100,7 +100,7 @@ foreach ($arrUnimed as $sen) {
 						</p>
 
 						
-					</div>	
+					</div>
 					<div class="clearfix"></div>
 					
 					
@@ -123,7 +123,7 @@ foreach ($arrUnimed as $sen) {
 							$subquery .= ',SensoresMedActual_'.$i;
 						}
 						// consulto los datos
-						$query = "SELECT Nombre, id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,
+						$query = "SELECT Nombre,id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,
 						GeoVelocidad
 						".$subquery."
 
@@ -149,8 +149,8 @@ foreach ($arrUnimed as $sen) {
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default fright margin_width fmrbtn" >Ver Ubicacion</a>
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default fright margin_width fmrbtn" >Informe Medicion Sensores</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ubicacion</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 							
@@ -169,20 +169,20 @@ foreach ($arrUnimed as $sen) {
 											if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){ 
 												$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]];
 												?>
-												<tr class="odd">		
+												<tr class="odd">
 													<td><?php echo 's'.$i ?></td>
-													<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>	
+													<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
 													<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
 													<td><?php 
 													if(isset($rowMed['SensoresMedActual_'.$i])&&$rowMed['SensoresMedActual_'.$i]<99900){
 														echo Cantidades_decimales_justos($rowMed['SensoresMedActual_'.$i]).$unimed;
 													}else{
 														echo 'Sin Datos';
-													} ?>
+													}?>
 													</td>
 												</tr>
-											<?php } ?> 
-										<?php } ?>                    
+											<?php } ?>
+										<?php } ?>
 									</tbody>
 								</table>
 						
@@ -238,7 +238,7 @@ foreach ($arrUnimed as $sen) {
 							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 											
 						}
-						while ( $row = mysqli_fetch_assoc ($resultado)) {
+						while ( $row = mysqli_fetch_assoc ($resultado)){
 						array_push( $arrAlertas,$row );
 						}
 						
@@ -247,7 +247,7 @@ foreach ($arrUnimed as $sen) {
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default fright margin_width fmrbtn" >Abrir Reporte</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 							
@@ -282,7 +282,7 @@ foreach ($arrUnimed as $sen) {
 												</div>
 											</td>
 										</tr>
-									<?php } ?>                    
+									<?php } ?>
 								</tbody>
 							</table>
 	
@@ -314,7 +314,7 @@ foreach ($arrUnimed as $sen) {
 							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 											
 						}
-						while ( $row = mysqli_fetch_assoc ($resultado)) {
+						while ( $row = mysqli_fetch_assoc ($resultado)){
 						array_push( $arrFlinea,$row );
 						}
 						?>
@@ -322,7 +322,7 @@ foreach ($arrUnimed as $sen) {
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default fright margin_width fmrbtn" >Abrir Reporte</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 							
@@ -351,9 +351,9 @@ foreach ($arrUnimed as $sen) {
 												<div class="btn-group" style="width: 35px;" >
 													<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_2_view.php?view='.$error['idFueraLinea']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
-											</td>		
+											</td>
 										</tr>
-									<?php } ?>                    
+									<?php } ?>
 								</tbody>
 							</table>
 	
@@ -362,7 +362,7 @@ foreach ($arrUnimed as $sen) {
 				</div>
 			
 			
-        </div>	
+        </div>
 	</div>
 </div>
 

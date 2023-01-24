@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "comunicaciones_notificaciones_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,8 +18,8 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){              $location .= "&Titulo=".$_GET['Titulo'];               $search .= "&Titulo=".$_GET['Titulo'];}
-if(isset($_GET['Notificacion']) && $_GET['Notificacion'] != ''){  $location .= "&Notificacion=".$_GET['Notificacion'];   $search .= "&Notificacion=".$_GET['Notificacion'];}
+if(isset($_GET['Titulo']) && $_GET['Titulo']!=''){       $location .= "&Titulo=".$_GET['Titulo'];               $search .= "&Titulo=".$_GET['Titulo'];}
+if(isset($_GET['Notificacion']) && $_GET['Notificacion']!=''){  $location .= "&Notificacion=".$_GET['Notificacion'];   $search .= "&Notificacion=".$_GET['Notificacion'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -27,16 +27,16 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'enviar_masivo';
 	require_once 'A1XRXS_sys/xrxs_form/z_notificaciones.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/z_notificaciones.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_notificaciones.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -51,8 +51,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Notificacion Modificad
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Notificacion borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['detalle']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ if(!empty($_GET['detalle'])){ 
 // consulto los datos
 $arrNotificaciones = array();
 $query = "SELECT 
@@ -82,7 +82,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrNotificaciones,$row );
 }
 
@@ -91,7 +91,7 @@ array_push( $arrNotificaciones,$row );
  
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $arrNotificaciones[0]['Titulo'];?></h5>
@@ -105,7 +105,7 @@ array_push( $arrNotificaciones,$row );
 						<th width="120">Fecha envio</th>
 						<th width="120">Fecha leida</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrNotificaciones as $noti) { ?>
 					<tr class="odd">
@@ -114,7 +114,7 @@ array_push( $arrNotificaciones,$row );
 						<td><?php echo fecha_estandar($noti['Fecha']); ?></td>
 						<td><?php if($noti['idEstado']==2){echo fecha_estandar($noti['FechaVisto']);}?></td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -122,31 +122,31 @@ array_push( $arrNotificaciones,$row );
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="#" onclick="history.back()" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Notificacion</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Titulo)) {        $x1  = $Titulo;       }else{$x1  = '';}
-				if(isset($Notificacion)) {  $x2  = $Notificacion; }else{$x2  = '';}
-				
+				if(isset($Titulo)){        $x1  = $Titulo;       }else{$x1  = '';}
+				if(isset($Notificacion)){  $x2  = $Notificacion; }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x1, 2);
@@ -159,35 +159,26 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf003; Enviar" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -209,14 +200,14 @@ $SIS_where.= " AND principal_notificaciones_listado.idSistema=".$_SESSION['usuar
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Titulo']) && $_GET['Titulo'] != ''){               $SIS_where .= " AND principal_notificaciones_listado.Titulo LIKE '%".$_GET['Titulo']."%'";}
-if(isset($_GET['Notificacion']) && $_GET['Notificacion'] != ''){   $SIS_where .= " AND principal_notificaciones_listado.Notificacion LIKE '%".$_GET['Notificacion']."%'";}
+if(isset($_GET['Titulo']) && $_GET['Titulo']!=''){        $SIS_where .= " AND principal_notificaciones_listado.Titulo LIKE '%".EstandarizarInput($_GET['Titulo'])."%'";}
+if(isset($_GET['Notificacion']) && $_GET['Notificacion']!=''){   $SIS_where .= " AND principal_notificaciones_listado.Notificacion LIKE '%".EstandarizarInput($_GET['Notificacion'])."%'";}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idNotificaciones', 'principal_notificaciones_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = 'idNotificaciones,Titulo, Fecha';
 $SIS_join  = '';
@@ -226,52 +217,52 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificacion
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Notificacion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Notificacion</a><?php } ?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Titulo)) {        $x1  = $Titulo;       }else{$x1  = '';}
-				if(isset($Notificacion)) {  $x2  = $Notificacion; }else{$x2  = '';}
-				
+				if(isset($Titulo)){        $x1  = $Titulo;       }else{$x1  = '';}
+				if(isset($Notificacion)){  $x2  = $Notificacion; }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x1, 1);
 				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x2, 1);
 				
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                     
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Notificaciones</h5>
@@ -301,7 +292,7 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificacion
 						</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrNotificaciones as $noti) { ?>
 					<tr class="odd">
@@ -315,15 +306,15 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificacion
 									$ubicacion = $location.'&del='.simpleEncode($noti['idNotificaciones'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la notificacion '.$noti['Titulo'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
@@ -332,7 +323,7 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificacion
 </div>
 
 <?php widget_modal(80, 95); ?>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

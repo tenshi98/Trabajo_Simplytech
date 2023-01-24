@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "cross_shipping_consolidacion_anuladas.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,12 +18,12 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){         $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];          $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){               $location .= "&idCategoria=".$_GET['idCategoria'];                $search .= "&idCategoria=".$_GET['idCategoria'];}
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){                 $location .= "&idProducto=".$_GET['idProducto'];                  $search .= "&idProducto=".$_GET['idProducto'];}
-if(isset($_GET['CTNNombreCompañia']) && $_GET['CTNNombreCompañia'] != ''){   $location .= "&CTNNombreCompañia=".$_GET['CTNNombreCompañia'];    $search .= "&CTNNombreCompañia=".$_GET['CTNNombreCompañia'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){  $location .= "&Creacion_fecha=".$_GET['Creacion_fecha'];          $search .= "&Creacion_fecha=".$_GET['Creacion_fecha'];}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria']!=''){        $location .= "&idCategoria=".$_GET['idCategoria'];                $search .= "&idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){          $location .= "&idProducto=".$_GET['idProducto'];                  $search .= "&idProducto=".$_GET['idProducto'];}
+if(isset($_GET['CTNNombreCompañia']) && $_GET['CTNNombreCompañia']!=''){   $location .= "&CTNNombreCompañia=".$_GET['CTNNombreCompañia'];    $search .= "&CTNNombreCompañia=".$_GET['CTNNombreCompañia'];}
 /********************************************************************/
-if(isset($_GET['soli']) && $_GET['soli'] != ''){          $location .= "&soli=".$_GET['soli']; 	}
+if(isset($_GET['soli']) && $_GET['soli']!=''){   $location .= "&soli=".$_GET['soli']; 	}
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -39,28 +39,19 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Documento Editado corr
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Documento borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['compra_rechazo']) ) { ?>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['compra_rechazo'])){ ?>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -84,19 +75,19 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable con la ubicacion
 $SIS_where = "cross_shipping_consolidacion.idConsolidacion!=0";
 $SIS_where.= " AND cross_shipping_consolidacion.idEstado=4";//Solo las que esten en espera de aprobacion
-$SIS_where.= " AND cross_shipping_consolidacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	//Verifico el tipo de usuario que esta ingresando
+$SIS_where.= " AND cross_shipping_consolidacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){        $SIS_where .= " AND cross_shipping_consolidacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['idCategoria']) && $_GET['idCategoria'] != ''){              $SIS_where .= " AND cross_shipping_consolidacion.idCategoria=".$_GET['idCategoria'];}
-if(isset($_GET['idProducto']) && $_GET['idProducto'] != ''){                $SIS_where .= " AND cross_shipping_consolidacion.idProducto=".$_GET['idProducto'];}
-if(isset($_GET['CTNNombreCompañia']) && $_GET['CTNNombreCompañia'] != ''){  $SIS_where .= " AND cross_shipping_consolidacion.CTNNombreCompañia LIKE '%".$_GET['CTNNombreCompañia']."%'";}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){ $SIS_where .= " AND cross_shipping_consolidacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['idCategoria']) && $_GET['idCategoria']!=''){       $SIS_where .= " AND cross_shipping_consolidacion.idCategoria=".$_GET['idCategoria'];}
+if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){         $SIS_where .= " AND cross_shipping_consolidacion.idProducto=".$_GET['idProducto'];}
+if(isset($_GET['CTNNombreCompañia']) && $_GET['CTNNombreCompañia']!=''){  $SIS_where .= " AND cross_shipping_consolidacion.CTNNombreCompañia LIKE '%".EstandarizarInput($_GET['CTNNombreCompañia'])."%'";}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idConsolidacion', 'cross_shipping_consolidacion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 cross_shipping_consolidacion.idConsolidacion,
@@ -117,29 +108,29 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Creacion_fecha)) {      $x1  = $Creacion_fecha;    }else{$x1  = '';}
-				if(isset($idCategoria)) {         $x2  = $idCategoria;       }else{$x2  = '';}
-				if(isset($idProducto)) {          $x3  = $idProducto;        }else{$x3  = '';}
-				if(isset($CTNNombreCompañia)) {   $x4  = $CTNNombreCompañia; }else{$x4  = '';}
-				
+				if(isset($Creacion_fecha)){      $x1  = $Creacion_fecha;    }else{$x1  = '';}
+				if(isset($idCategoria)){         $x2  = $idCategoria;       }else{$x2  = '';}
+				if(isset($idProducto)){          $x3  = $idProducto;        }else{$x3  = '';}
+				if(isset($CTNNombreCompañia)){   $x4  = $CTNNombreCompañia; }else{$x4  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha del informe','Creacion_fecha', $x1, 1);
@@ -148,22 +139,22 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x4, 1);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div>                     
+<div class="clearfix"></div> 
                                       
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consolidaciones Anuladas</h5>
@@ -173,7 +164,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -208,7 +199,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrTipo as $tipo) { ?>
 					<tr class="odd">
@@ -223,11 +214,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 							</div>
 						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
@@ -235,8 +226,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>	
-<?php } ?>           
+<?php widget_modal(80, 95); ?>
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

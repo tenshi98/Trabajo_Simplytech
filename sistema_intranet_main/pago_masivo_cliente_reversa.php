@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "pago_masivo_cliente_reversa.php";
 $location = $original;   
 //Se agregan ubicaciones
@@ -18,10 +18,10 @@ $location .='?pagina='.$_GET['pagina'];
 
 //Se agregan ubicaciones
 $search = '';
-if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){   $location .= "&idDocPago=".$_GET['idDocPago'];  $search .= "&idDocPago=".$_GET['idDocPago'];}
-if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){   $location .= "&N_DocPago=".$_GET['N_DocPago'];  $search .= "&N_DocPago=".$_GET['N_DocPago'];}
-if(isset($_GET['Monto']) && $_GET['Monto'] != ''){           $location .= "&Monto=".$_GET['Monto'];          $search .= "&Monto=".$_GET['Monto'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $location .= "&idUsuario=".$_GET['idUsuario'];  $search .= "&idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idDocPago']) && $_GET['idDocPago']!=''){   $location .= "&idDocPago=".$_GET['idDocPago'];  $search .= "&idDocPago=".$_GET['idDocPago'];}
+if(isset($_GET['N_DocPago']) && $_GET['N_DocPago']!=''){   $location .= "&N_DocPago=".$_GET['N_DocPago'];  $search .= "&N_DocPago=".$_GET['N_DocPago'];}
+if(isset($_GET['Monto']) && $_GET['Monto']!=''){    $location .= "&Monto=".$_GET['Monto'];          $search .= "&Monto=".$_GET['Monto'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){   $location .= "&idUsuario=".$_GET['idUsuario'];  $search .= "&idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['Fecha_Inicio'])&&$_GET['Fecha_Inicio']!=''&&isset($_GET['Fecha_Termino'])&&$_GET['Fecha_Termino']!=''){
 	$location .="&f_programacion_desde=".$_GET['Fecha_Inicio'];
 	$location .="&f_programacion_hasta=".$_GET['Fecha_Termino'];
@@ -35,7 +35,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
 /************************************************************/
 //formulario para borrar
-if ( !empty($_GET['del_idDocPago']) )  { 
+if (!empty($_GET['del_idDocPago'])){
 	//Nueva ubicacion
 	$location = $original;
 	$location.='?pagina=1';
@@ -53,9 +53,9 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['reversa'])){ $error['reversa'] = 'sucess/Pago Reversado correctamente';}
 //Manejador de errores
-if(isset($error)&&$error!=''){echo notifications_list($error);}					
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) {  
+if(isset($error)&&$error!=''){echo notifications_list($error);}		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 
 /**********************************************************************************************/
 //datos de la obra
@@ -150,7 +150,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrReversa,$row );
 }
 
@@ -176,7 +176,7 @@ array_push( $arrReversa,$row );
 						<th>Pagado</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
 					if ($arrReversa!=false && !empty($arrReversa) && $arrReversa!='') {
@@ -194,11 +194,11 @@ array_push( $arrReversa,$row );
 											/*Factura Productos*/ case 2: $docu = $productos[0]['ProductoDocumentoTipo'].' N'.$productos[0]['ProductoDocumentoNumero']; break;
 											/*Factura Servicios*/ case 3: $docu = $productos[0]['ServicioDocumentoTipo'].' N'.$productos[0]['ServicioDocumentoNumero']; break;
 											/*Factura Arriendos*/ case 4: $docu = $productos[0]['ArriendoDocumentoTipo'].' N'.$productos[0]['ArriendoDocumentoNumero']; break;
-										} 
+										}
 										$ubicacion = $location.'&submit_filter=Filtrar&del_idDocPago='.simpleEncode($productos[0]['idDocPago'], fecha_actual()).'&del_N_DocPago='.simpleEncode($menu, fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el documento '.$docu.'?';?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Reversar Pago" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-exchange" aria-hidden="true"></i></a>
-									</div>	
+									</div>
 								</td>
 							</tr>
 										
@@ -282,69 +282,60 @@ array_push( $arrReversa,$row );
 
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width" >Cancelar y Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn" >Cancelar y Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //Verifico el tipo de usuario que esta ingresando 
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];		
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idDocPago)) {   $x1  = $idDocPago;  }else{$x1  = '';}
-				if(isset($N_DocPago)) {   $x2  = $N_DocPago;  }else{$x2  = '';}
-				
+				if(isset($idDocPago)){   $x1  = $idDocPago;  }else{$x1  = '';}
+				if(isset($N_DocPago)){   $x2  = $N_DocPago;  }else{$x2  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);	
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -370,25 +361,25 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $SIS_where = "pagos_facturas_clientes_reversa.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
-$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';	
+$usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idDocPago']) && $_GET['idDocPago'] != ''){   $SIS_where .= " AND pagos_facturas_clientes_reversa.idDocPago=".$_GET['idDocPago'];}
-if(isset($_GET['N_DocPago']) && $_GET['N_DocPago'] != ''){   $SIS_where .= " AND pagos_facturas_clientes_reversa.N_DocPago=".$_GET['N_DocPago'];}
-if(isset($_GET['Monto']) && $_GET['Monto'] != ''){           $SIS_where .= " AND pagos_facturas_clientes_reversa.Monto=".$_GET['Monto'];}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != ''){   $SIS_where .= " AND pagos_facturas_clientes_reversa.idUsuario=".$_GET['idUsuario'];}
+if(isset($_GET['idDocPago']) && $_GET['idDocPago']!=''){   $SIS_where .= " AND pagos_facturas_clientes_reversa.idDocPago=".$_GET['idDocPago'];}
+if(isset($_GET['N_DocPago']) && $_GET['N_DocPago']!=''){   $SIS_where .= " AND pagos_facturas_clientes_reversa.N_DocPago=".$_GET['N_DocPago'];}
+if(isset($_GET['Monto']) && $_GET['Monto']!=''){    $SIS_where .= " AND pagos_facturas_clientes_reversa.Monto=".$_GET['Monto'];}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){   $SIS_where .= " AND pagos_facturas_clientes_reversa.idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['Fecha_Inicio'])&&$_GET['Fecha_Inicio']!=''&&isset($_GET['Fecha_Termino'])&&$_GET['Fecha_Termino']!=''){
 	$SIS_where.= " AND pagos_facturas_clientes_reversa.Fecha BETWEEN '".$_GET['Fecha_Inicio']."' AND '".$_GET['Fecha_Termino']."'";
-}				
+}	
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idReversa', 'pagos_facturas_clientes_reversa', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 pagos_facturas_clientes_reversa.Fecha,
@@ -407,58 +398,58 @@ $arrAFP = db_select_array (false, $SIS_query, 'pagos_facturas_clientes_reversa',
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Reversa</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Reversa</a><?php } ?>
 	
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
-				if(isset($idDocPago)) {       $x1  = $idDocPago;       }else{$x1  = '';}
-				if(isset($N_DocPago)) {       $x2  = $N_DocPago;       }else{$x2  = '';}
-				if(isset($Monto)) {           $x3  = $Monto;           }else{$x3  = '';}
-				if(isset($idUsuario)) {       $x4  = $idUsuario;       }else{$x4  = '';}
-				if(isset($Fecha_Inicio)) {    $x5  = $Fecha_Inicio;    }else{$x5  = '';}
-				if(isset($Fecha_Termino)) {   $x6  = $Fecha_Termino;   }else{$x6  = '';}
-				
+				if(isset($idDocPago)){       $x1  = $idDocPago;       }else{$x1  = '';}
+				if(isset($N_DocPago)){       $x2  = $N_DocPago;       }else{$x2  = '';}
+				if(isset($Monto)){           $x3  = $Monto;           }else{$x3  = '';}
+				if(isset($idUsuario)){       $x4  = $idUsuario;       }else{$x4  = '';}
+				if(isset($Fecha_Inicio)){    $x5  = $Fecha_Inicio;    }else{$x5  = '';}
+				if(isset($Fecha_Termino)){   $x6  = $Fecha_Termino;   }else{$x6  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Documento de Pago','idDocPago', $x1, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);	
 				$Form_Inputs->form_input_number('Monto', 'Monto', $x3, 1);
-				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas', $usrfil, $dbConn);
+				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_date('Fecha Inicio','Fecha_Inicio', $x5, 1);
 				$Form_Inputs->form_date('Fecha Termino','Fecha_Termino', $x6, 1);
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
                      
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Reversas</h5>
@@ -508,7 +499,7 @@ $arrAFP = db_select_array (false, $SIS_query, 'pagos_facturas_clientes_reversa',
 							</div>
 						</th>
 					</tr>
-				</thead>				  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrAFP as $afp) { ?>
 					<tr class="odd">
@@ -518,11 +509,11 @@ $arrAFP = db_select_array (false, $SIS_query, 'pagos_facturas_clientes_reversa',
 						<td align="right"><?php echo valores($afp['Monto'], 0); ?></td>
 						<td><?php echo $afp['Usuario']; ?></td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>

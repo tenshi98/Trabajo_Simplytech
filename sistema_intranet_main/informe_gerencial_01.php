@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_gerencial_01.php";
 $location = $original;    
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,11 +22,11 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-$x1 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+$x1 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //se verifica el tipo de usuario
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$x2 = "idUsuario>=0";		
+	$x2 = "idUsuario>=0";
 }else{
 	$x2 = "idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
@@ -64,7 +64,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrExistencias,$row );
 }
 	
@@ -121,7 +121,7 @@ foreach ($arrExistencias as $existencias) {
 		case 9:
 			$mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo9'] = $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo9'] + $existencias['Valor'];
 			break;
-	}								
+	}	
 }
 								
 $xmes = mes_actual();
@@ -132,15 +132,15 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 	if($xmes>0){
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
-		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1']; }else{$grafico[$xcontador]['tipo1'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2']; }else{$grafico[$xcontador]['tipo2'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo3'])){ $grafico[$xcontador]['tipo3'] = $mes[$xaño][$xmes]['tipo3']; }else{$grafico[$xcontador]['tipo3'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo4'])){ $grafico[$xcontador]['tipo4'] = $mes[$xaño][$xmes]['tipo4']; }else{$grafico[$xcontador]['tipo4'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo5'])){ $grafico[$xcontador]['tipo5'] = $mes[$xaño][$xmes]['tipo5']; }else{$grafico[$xcontador]['tipo5'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo6'])){ $grafico[$xcontador]['tipo6'] = $mes[$xaño][$xmes]['tipo6']; }else{$grafico[$xcontador]['tipo6'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo7'])){ $grafico[$xcontador]['tipo7'] = $mes[$xaño][$xmes]['tipo7']; }else{$grafico[$xcontador]['tipo7'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo8'])){ $grafico[$xcontador]['tipo8'] = $mes[$xaño][$xmes]['tipo8']; }else{$grafico[$xcontador]['tipo8'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo9'])){ $grafico[$xcontador]['tipo9'] = $mes[$xaño][$xmes]['tipo9']; }else{$grafico[$xcontador]['tipo9'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo3'])){ $grafico[$xcontador]['tipo3'] = $mes[$xaño][$xmes]['tipo3'];}else{$grafico[$xcontador]['tipo3'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo4'])){ $grafico[$xcontador]['tipo4'] = $mes[$xaño][$xmes]['tipo4'];}else{$grafico[$xcontador]['tipo4'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo5'])){ $grafico[$xcontador]['tipo5'] = $mes[$xaño][$xmes]['tipo5'];}else{$grafico[$xcontador]['tipo5'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo6'])){ $grafico[$xcontador]['tipo6'] = $mes[$xaño][$xmes]['tipo6'];}else{$grafico[$xcontador]['tipo6'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo7'])){ $grafico[$xcontador]['tipo7'] = $mes[$xaño][$xmes]['tipo7'];}else{$grafico[$xcontador]['tipo7'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo8'])){ $grafico[$xcontador]['tipo8'] = $mes[$xaño][$xmes]['tipo8'];}else{$grafico[$xcontador]['tipo8'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo9'])){ $grafico[$xcontador]['tipo9'] = $mes[$xaño][$xmes]['tipo9'];}else{$grafico[$xcontador]['tipo9'] = 0;};
 									
 	}else{
 		$xmes = 12;
@@ -148,15 +148,15 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
 		
-		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1']; }else{$grafico[$xcontador]['tipo1'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2']; }else{$grafico[$xcontador]['tipo2'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo3'])){ $grafico[$xcontador]['tipo3'] = $mes[$xaño][$xmes]['tipo3']; }else{$grafico[$xcontador]['tipo3'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo4'])){ $grafico[$xcontador]['tipo4'] = $mes[$xaño][$xmes]['tipo4']; }else{$grafico[$xcontador]['tipo4'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo5'])){ $grafico[$xcontador]['tipo5'] = $mes[$xaño][$xmes]['tipo5']; }else{$grafico[$xcontador]['tipo5'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo6'])){ $grafico[$xcontador]['tipo6'] = $mes[$xaño][$xmes]['tipo6']; }else{$grafico[$xcontador]['tipo6'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo7'])){ $grafico[$xcontador]['tipo7'] = $mes[$xaño][$xmes]['tipo7']; }else{$grafico[$xcontador]['tipo7'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo8'])){ $grafico[$xcontador]['tipo8'] = $mes[$xaño][$xmes]['tipo8']; }else{$grafico[$xcontador]['tipo8'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo9'])){ $grafico[$xcontador]['tipo9'] = $mes[$xaño][$xmes]['tipo9']; }else{$grafico[$xcontador]['tipo9'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo3'])){ $grafico[$xcontador]['tipo3'] = $mes[$xaño][$xmes]['tipo3'];}else{$grafico[$xcontador]['tipo3'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo4'])){ $grafico[$xcontador]['tipo4'] = $mes[$xaño][$xmes]['tipo4'];}else{$grafico[$xcontador]['tipo4'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo5'])){ $grafico[$xcontador]['tipo5'] = $mes[$xaño][$xmes]['tipo5'];}else{$grafico[$xcontador]['tipo5'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo6'])){ $grafico[$xcontador]['tipo6'] = $mes[$xaño][$xmes]['tipo6'];}else{$grafico[$xcontador]['tipo6'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo7'])){ $grafico[$xcontador]['tipo7'] = $mes[$xaño][$xmes]['tipo7'];}else{$grafico[$xcontador]['tipo7'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo8'])){ $grafico[$xcontador]['tipo8'] = $mes[$xaño][$xmes]['tipo8'];}else{$grafico[$xcontador]['tipo8'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo9'])){ $grafico[$xcontador]['tipo9'] = $mes[$xaño][$xmes]['tipo9'];}else{$grafico[$xcontador]['tipo9'] = 0;};
 			
 	}
 	$xmes = $xmes-1;								
@@ -188,7 +188,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 
 <h3 class="supertittle text-primary">Productos</h3>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -209,15 +209,15 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 						<?php if($s_Ingreso_Manual=='true'){ ?>    <li class=""><a href="#tab_prod_10" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ingreso Manual</a></li><?php } ?>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="tab_prod_1">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-						<div class="col-sm-12" style="margin-top:5px;">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:5px;">
 							<?php
 							$trans_1='';				     
 							echo widget_bodega('Bodega de Productos',
@@ -274,7 +274,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 								var chart1 = new google.visualization.LineChart(document.getElementById('chart_prod_1'));
 								chart1.draw(data_prod_1, options);
 							}
-						</script> 
+						</script>
 						<div id="chart_prod_1" style="height: 500px; width: 100%;"></div>
 					</div>
 				</div>
@@ -326,7 +326,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_prod_2'));
 									chart1.draw(data_prod_2, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_prod_2" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -380,7 +380,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_prod_3'));
 									chart1.draw(data_prod_3, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_prod_3" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -434,7 +434,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_prod_4'));
 									chart1.draw(data_prod_4, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_prod_4" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -488,7 +488,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_prod_5'));
 									chart1.draw(data_prod_5, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_prod_5" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -542,7 +542,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_prod_6'));
 									chart1.draw(data_prod_6, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_prod_6" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -596,7 +596,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_prod_7'));
 									chart1.draw(data_prod_7, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_prod_7" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -650,7 +650,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_prod_8'));
 									chart1.draw(data_prod_8, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_prod_8" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -704,7 +704,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_prod_9'));
 									chart1.draw(data_prod_9, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_prod_9" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -714,7 +714,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 			<?php } ?>
 
 			
-        </div>	
+        </div>
 	</div>
 </div>
 
@@ -750,7 +750,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrExistencias,$row );
 }
 
@@ -807,7 +807,7 @@ foreach ($arrExistencias as $existencias) {
 		case 9:
 			$mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo9'] = $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo9'] + $existencias['Valor'];
 			break;
-	}								
+	}	
 }
 								
 $xmes = mes_actual();
@@ -818,15 +818,15 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 	if($xmes>0){
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
-		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1']; }else{$grafico[$xcontador]['tipo1'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2']; }else{$grafico[$xcontador]['tipo2'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo3'])){ $grafico[$xcontador]['tipo3'] = $mes[$xaño][$xmes]['tipo3']; }else{$grafico[$xcontador]['tipo3'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo4'])){ $grafico[$xcontador]['tipo4'] = $mes[$xaño][$xmes]['tipo4']; }else{$grafico[$xcontador]['tipo4'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo5'])){ $grafico[$xcontador]['tipo5'] = $mes[$xaño][$xmes]['tipo5']; }else{$grafico[$xcontador]['tipo5'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo6'])){ $grafico[$xcontador]['tipo6'] = $mes[$xaño][$xmes]['tipo6']; }else{$grafico[$xcontador]['tipo6'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo7'])){ $grafico[$xcontador]['tipo7'] = $mes[$xaño][$xmes]['tipo7']; }else{$grafico[$xcontador]['tipo7'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo8'])){ $grafico[$xcontador]['tipo8'] = $mes[$xaño][$xmes]['tipo8']; }else{$grafico[$xcontador]['tipo8'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo9'])){ $grafico[$xcontador]['tipo9'] = $mes[$xaño][$xmes]['tipo9']; }else{$grafico[$xcontador]['tipo9'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo3'])){ $grafico[$xcontador]['tipo3'] = $mes[$xaño][$xmes]['tipo3'];}else{$grafico[$xcontador]['tipo3'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo4'])){ $grafico[$xcontador]['tipo4'] = $mes[$xaño][$xmes]['tipo4'];}else{$grafico[$xcontador]['tipo4'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo5'])){ $grafico[$xcontador]['tipo5'] = $mes[$xaño][$xmes]['tipo5'];}else{$grafico[$xcontador]['tipo5'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo6'])){ $grafico[$xcontador]['tipo6'] = $mes[$xaño][$xmes]['tipo6'];}else{$grafico[$xcontador]['tipo6'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo7'])){ $grafico[$xcontador]['tipo7'] = $mes[$xaño][$xmes]['tipo7'];}else{$grafico[$xcontador]['tipo7'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo8'])){ $grafico[$xcontador]['tipo8'] = $mes[$xaño][$xmes]['tipo8'];}else{$grafico[$xcontador]['tipo8'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo9'])){ $grafico[$xcontador]['tipo9'] = $mes[$xaño][$xmes]['tipo9'];}else{$grafico[$xcontador]['tipo9'] = 0;};
 									
 	}else{
 		$xmes = 12;
@@ -834,15 +834,15 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
 		
-		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1']; }else{$grafico[$xcontador]['tipo1'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2']; }else{$grafico[$xcontador]['tipo2'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo3'])){ $grafico[$xcontador]['tipo3'] = $mes[$xaño][$xmes]['tipo3']; }else{$grafico[$xcontador]['tipo3'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo4'])){ $grafico[$xcontador]['tipo4'] = $mes[$xaño][$xmes]['tipo4']; }else{$grafico[$xcontador]['tipo4'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo5'])){ $grafico[$xcontador]['tipo5'] = $mes[$xaño][$xmes]['tipo5']; }else{$grafico[$xcontador]['tipo5'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo6'])){ $grafico[$xcontador]['tipo6'] = $mes[$xaño][$xmes]['tipo6']; }else{$grafico[$xcontador]['tipo6'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo7'])){ $grafico[$xcontador]['tipo7'] = $mes[$xaño][$xmes]['tipo7']; }else{$grafico[$xcontador]['tipo7'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo8'])){ $grafico[$xcontador]['tipo8'] = $mes[$xaño][$xmes]['tipo8']; }else{$grafico[$xcontador]['tipo8'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo9'])){ $grafico[$xcontador]['tipo9'] = $mes[$xaño][$xmes]['tipo9']; }else{$grafico[$xcontador]['tipo9'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo3'])){ $grafico[$xcontador]['tipo3'] = $mes[$xaño][$xmes]['tipo3'];}else{$grafico[$xcontador]['tipo3'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo4'])){ $grafico[$xcontador]['tipo4'] = $mes[$xaño][$xmes]['tipo4'];}else{$grafico[$xcontador]['tipo4'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo5'])){ $grafico[$xcontador]['tipo5'] = $mes[$xaño][$xmes]['tipo5'];}else{$grafico[$xcontador]['tipo5'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo6'])){ $grafico[$xcontador]['tipo6'] = $mes[$xaño][$xmes]['tipo6'];}else{$grafico[$xcontador]['tipo6'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo7'])){ $grafico[$xcontador]['tipo7'] = $mes[$xaño][$xmes]['tipo7'];}else{$grafico[$xcontador]['tipo7'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo8'])){ $grafico[$xcontador]['tipo8'] = $mes[$xaño][$xmes]['tipo8'];}else{$grafico[$xcontador]['tipo8'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo9'])){ $grafico[$xcontador]['tipo9'] = $mes[$xaño][$xmes]['tipo9'];}else{$grafico[$xcontador]['tipo9'] = 0;};
 			
 	}
 	$xmes = $xmes-1;								
@@ -871,7 +871,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 <div class="clearfix"></div>
 <h3 class="supertittle text-primary">Insumos</h3>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -892,15 +892,15 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 						<?php if($s_Ingreso_Manual=='true'){ ?>    <li class=""><a href="#tab_ins_10" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ingreso Manual</a></li><?php } ?>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="tab_ins_1">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-						<div class="col-sm-12" style="margin-top:5px;">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:5px;">
 							<?php
 							//Se dibujan los graficos, los widget y las tablas
 							$trans_1='';				     
@@ -958,7 +958,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 								var chart1 = new google.visualization.LineChart(document.getElementById('chart_ins_1'));
 								chart1.draw(data_ins_1, options);
 							}
-						</script> 
+						</script>
 						<div id="chart_ins_1" style="height: 500px; width: 100%;"></div>
 					</div>
 				</div>
@@ -1010,7 +1010,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_ins_2'));
 									chart1.draw(data_ins_2, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_ins_2" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -1064,7 +1064,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_ins_3'));
 									chart1.draw(data_ins_3, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_ins_3" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -1118,7 +1118,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_ins_4'));
 									chart1.draw(data_ins_4, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_ins_4" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -1172,7 +1172,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_ins_5'));
 									chart1.draw(data_ins_5, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_ins_5" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -1226,7 +1226,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_ins_6'));
 									chart1.draw(data_ins_6, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_ins_6" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -1280,7 +1280,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_ins_7'));
 									chart1.draw(data_ins_7, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_ins_7" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -1334,7 +1334,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_ins_8'));
 									chart1.draw(data_ins_8, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_ins_8" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -1388,7 +1388,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_ins_9'));
 									chart1.draw(data_ins_9, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_ins_9" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -1398,7 +1398,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 			<?php } ?>
 	
 			
-        </div>	
+        </div>
 	</div>
 </div>         
 
@@ -1433,7 +1433,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrExistencias,$row );
 }
 
@@ -1451,7 +1451,7 @@ foreach ($arrExistencias as $existencias) {
 		case 2:
 			$mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'] = $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'] + $existencias['Valor'];
 			break;
-	}								
+	}	
 }
 								
 $xmes = mes_actual();
@@ -1462,8 +1462,8 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 	if($xmes>0){
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
-		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1']; }else{$grafico[$xcontador]['tipo1'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2']; }else{$grafico[$xcontador]['tipo2'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
 									
 	}else{
 		$xmes = 12;
@@ -1471,8 +1471,8 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
 		
-		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1']; }else{$grafico[$xcontador]['tipo1'] = 0;};
-		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2']; }else{$grafico[$xcontador]['tipo2'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
+		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
 			
 	}
 	$xmes = $xmes-1;								
@@ -1487,7 +1487,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 <div class="clearfix"></div>
 <h3 class="supertittle text-primary">Arriendos</h3>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -1500,15 +1500,15 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 					<ul class="dropdown-menu" role="menu">
 						<?php if($s_Ventas=='true'){ ?>            <li class=""><a href="#tab_arr_3" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ventas</a></li><?php } ?>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="tab_arr_1">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-						<div class="col-sm-12" style="margin-top:5px;">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:5px;">
 							<?php
 							//Se dibujan los graficos, los widget y las tablas
 							$trans_1='';				     
@@ -1566,7 +1566,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 								var chart1 = new google.visualization.LineChart(document.getElementById('chart_arr_1'));
 								chart1.draw(data_arr_1, options);
 							}
-						</script> 
+						</script>
 						<div id="chart_arr_1" style="height: 500px; width: 100%;"></div>
 					</div>
 				</div>
@@ -1618,7 +1618,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 									var chart1 = new google.visualization.LineChart(document.getElementById('chart_arr_2'));
 									chart1.draw(data_arr_2, options);
 								}
-							</script> 
+							</script>
 							<div id="chart_arr_2" style="height: 500px; width: 100%;"></div>
 							
 							
@@ -1627,7 +1627,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 				</div>
 			<?php } ?>
 
-        </div>	
+        </div>
 	</div>
 </div>         
 

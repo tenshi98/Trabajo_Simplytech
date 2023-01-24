@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -29,29 +29,29 @@ $SIS_where_2 = "bodegas_insumos_facturacion.idEstado=1";
 $SIS_where_3 = "bodegas_productos_facturacion.idEstado=1";
 $SIS_where_4 = "bodegas_servicios_facturacion.idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where_1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$SIS_where_2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$SIS_where_3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
-$SIS_where_4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where_1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where_2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where_3.=" AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where_4.=" AND bodegas_servicios_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico que sean solo compras
 $SIS_where_1.=" AND (bodegas_arriendos_facturacion.idTipo=2 OR bodegas_arriendos_facturacion.idTipo=12)";
 $SIS_where_2.=" AND (bodegas_insumos_facturacion.idTipo=2 OR bodegas_insumos_facturacion.idTipo=12)";
 $SIS_where_3.=" AND (bodegas_productos_facturacion.idTipo=2 OR bodegas_productos_facturacion.idTipo=12)";
 $SIS_where_4.=" AND (bodegas_servicios_facturacion.idTipo=2 OR bodegas_servicios_facturacion.idTipo=12)";
 
-if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){   
+if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){  
 	$SIS_where_1.=" AND bodegas_arriendos_facturacion.idCliente=".$_GET['idCliente'];
 	$SIS_where_2.=" AND bodegas_insumos_facturacion.idCliente=".$_GET['idCliente'];
 	$SIS_where_3.=" AND bodegas_productos_facturacion.idCliente=".$_GET['idCliente'];
 	$SIS_where_4.=" AND bodegas_servicios_facturacion.idCliente=".$_GET['idCliente'];
 }
-if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){ 
+if(isset($_GET['idDocumentos'])&&$_GET['idDocumentos']!=''){
 	$SIS_where_1.=" AND bodegas_arriendos_facturacion.idDocumentos=".$_GET['idDocumentos'];
 	$SIS_where_2.=" AND bodegas_insumos_facturacion.idDocumentos=".$_GET['idDocumentos'];
 	$SIS_where_3.=" AND bodegas_productos_facturacion.idDocumentos=".$_GET['idDocumentos'];
 	$SIS_where_4.=" AND bodegas_servicios_facturacion.idDocumentos=".$_GET['idDocumentos'];
 }
-if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){               
+if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){       
 	$SIS_where_1.=" AND bodegas_arriendos_facturacion.N_Doc=".$_GET['N_Doc'];
 	$SIS_where_2.=" AND bodegas_insumos_facturacion.N_Doc=".$_GET['N_Doc'];
 	$SIS_where_3.=" AND bodegas_productos_facturacion.N_Doc=".$_GET['N_Doc'];
@@ -108,7 +108,7 @@ $nn=2;
 /********************************************************/
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Arriendos');
-$nn++;  
+$nn++;
 foreach ($arrTipo1 as $tipo) { 
 
 	$spreadsheet->setActiveSheetIndex(0)
@@ -119,13 +119,13 @@ foreach ($arrTipo1 as $tipo) {
 				->setCellValue('E'.$nn, Fecha_estandar($tipo['Pago_fecha']))
 				->setCellValue('F'.$nn, $tipo['ValorTotal'])
 				->setCellValue('G'.$nn, $tipo['MontoPagado']);
-	$nn++;           
+	$nn++;
    
 } 
 /********************************************************/
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Insumos');
-$nn++;  
+$nn++;
 foreach ($arrTipo2 as $tipo) { 
 
 	$spreadsheet->setActiveSheetIndex(0)
@@ -136,13 +136,13 @@ foreach ($arrTipo2 as $tipo) {
 				->setCellValue('E'.$nn, Fecha_estandar($tipo['Pago_fecha']))
 				->setCellValue('F'.$nn, $tipo['ValorTotal'])
 				->setCellValue('G'.$nn, $tipo['MontoPagado']);
-	$nn++;           
+	$nn++;
    
 }
 /********************************************************/
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Productos');
-$nn++;  
+$nn++;
 foreach ($arrTipo3 as $tipo) { 
 
 	$spreadsheet->setActiveSheetIndex(0)
@@ -153,13 +153,13 @@ foreach ($arrTipo3 as $tipo) {
 				->setCellValue('E'.$nn, Fecha_estandar($tipo['Pago_fecha']))
 				->setCellValue('F'.$nn, $tipo['ValorTotal'])
 				->setCellValue('G'.$nn, $tipo['MontoPagado']);
-	$nn++;           
+	$nn++;
    
 }
 /********************************************************/
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A'.$nn, 'Servicios');
-$nn++;  
+$nn++;
 foreach ($arrTipo4 as $tipo) { 
 
 	$spreadsheet->setActiveSheetIndex(0)
@@ -170,7 +170,7 @@ foreach ($arrTipo4 as $tipo) {
 				->setCellValue('E'.$nn, Fecha_estandar($tipo['Pago_fecha']))
 				->setCellValue('F'.$nn, $tipo['ValorTotal'])
 				->setCellValue('G'.$nn, $tipo['MontoPagado']);
-	$nn++;           
+	$nn++;
    
 }
 

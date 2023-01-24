@@ -12,23 +12,23 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_info_sistema.php";
 $location = $original;
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_email']) )  { 
+if (!empty($_POST['submit_email'])){
 	//Llamamos al formulario
 	$form_trabajo= 'send_mail';
 	require_once 'A1XRXS_sys/xrxs_form/z_server_test.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_error']) )     {
+if (!empty($_GET['del_error'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del_error';
-	require_once 'A1XRXS_sys/xrxs_form/z_server_test.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_server_test.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */

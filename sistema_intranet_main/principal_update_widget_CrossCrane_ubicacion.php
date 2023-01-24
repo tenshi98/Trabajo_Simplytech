@@ -11,9 +11,9 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                      Consulta                                                                  */
 /**********************************************************************************************************************************/
@@ -31,16 +31,16 @@ $FechaSistema   = fecha_actual();
 $Fecha_inicio   = restarDias(fecha_actual(),1);
 $Fecha_fin      = fecha_actual();
 $principioMes   = fecha2Ano($FechaSistema).'-'.fecha2NMes($FechaSistema).'-01';
-$HoraSistema    = hora_actual(); 
+$HoraSistema    = hora_actual();
 $arrGruas       = array();
 $nicon          = 0;
-		
+
 //condicionales
 if(isset($_GET['idZona'])&&$_GET['idZona']!=''){
 	//Variables
 	$idZona  = $_GET['idZona'];
-	//redefino la variable temporal de la zona 
-	$_SESSION['usuario']['zona']['idZona'] = $idZona;	
+	//redefino la variable temporal de la zona
+	$_SESSION['usuario']['zona']['idZona'] = $idZona;
 }else{
 	$idZona  = $_SESSION['usuario']['zona']['idZona'];
 }
@@ -49,7 +49,7 @@ if(isset($_GET['idZona'])&&$_GET['idZona']!=''){
 //se traen todas las zonas
 $arrZonas = array();
 $arrZonas = db_select_array (false, 'idZona, Nombre', 'telemetria_zonas', '', '', 'idZona ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
-	
+
 /************************************************/
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
@@ -59,25 +59,25 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
-}	
+}
 //Listar los equipos
 $SIS_query = '
-telemetria_listado.idTelemetria, 
-telemetria_listado.Nombre, 
-telemetria_listado.Identificador, 
-telemetria_listado.NumSerie, 
+telemetria_listado.idTelemetria,
+telemetria_listado.Nombre,
+telemetria_listado.Identificador,
+telemetria_listado.NumSerie,
 telemetria_listado.LastUpdateFecha,
 telemetria_listado.LastUpdateHora,
-telemetria_listado.GeoLatitud, 
-telemetria_listado.GeoLongitud, 
+telemetria_listado.GeoLatitud,
+telemetria_listado.GeoLongitud,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores,
-telemetria_listado.NAlertas, 
-telemetria_listado.idGenerador, 
-telemetria_listado.idTelGenerador, 
-telemetria_listado.SensorActivacionID, 
-telemetria_listado.SensorActivacionValor, 
-telemetria_listado.idUsoFTP, 
+telemetria_listado.NAlertas,
+telemetria_listado.idGenerador,
+telemetria_listado.idTelGenerador,
+telemetria_listado.SensorActivacionID,
+telemetria_listado.SensorActivacionValor,
+telemetria_listado.idUsoFTP,
 telemetria_listado.FTP_Carpeta,
 telemetria_listado.idUbicacion,
 telemetria_listado.cantSensores,
@@ -90,7 +90,7 @@ $SIS_where.= ' AND telemetria_listado.idTab = 6';          //CrossCrane
 //Filtro el sistema al cual pertenece
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){ $SIS_where.= ' AND telemetria_listado.idSistema = '.$idSistema;}
 //Filtro la zona si existe
-if(isset($idZona)&&$idZona!=''&&$idZona!=9999){ 
+if(isset($idZona)&&$idZona!=''&&$idZona!=9999){
 	//Selecciono el tipo
 	switch ($idZona) {
 		case 1: $SIS_where .= " AND telemetria_listado.NumSerie LIKE 'gr%'"; break;
@@ -100,8 +100,8 @@ if(isset($idZona)&&$idZona!=''&&$idZona!=9999){
 }
 //Filtro por el tipo de usuario
 if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-	$SIS_join .= 'INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria';	
-	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario; 	
+	$SIS_join .= 'INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria';
+	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 }
 $SIS_order = 'telemetria_listado.Nombre ASC';
 //Realizo la consulta
@@ -141,16 +141,16 @@ if(isset($_SESSION['usuario']['menu'])){
 		}
 	}
 }
-/**************************************************************************/								
-foreach ($arrEquipo as $data) { 
-			
+/**************************************************************************/
+foreach ($arrEquipo as $data) {
+
 	/**********************************************/
 	//Se resetean
 	$in_eq_alertas     = 0;
 	$in_eq_fueralinea  = 0;
 	$in_eq_ok          = 1;
 	$in_sens_activ     = 0;
-				
+
 	/**********************************************/
 	//veo si tiene configurado el sensor de activacion y si esta encendido
 	if(isset($data['SensorActivacionID'])&&$data['SensorActivacionID']!=0){
@@ -162,7 +162,7 @@ foreach ($arrEquipo as $data) {
 	}else{
 		$in_sens_activ = 0; //inactivo
 	}
-																				
+
 	/**********************************************/
 	//Fuera de linea
 	$diaInicio   = $data['LastUpdateFecha'];
@@ -170,32 +170,32 @@ foreach ($arrEquipo as $data) {
 	$tiempo1     = $data['LastUpdateHora'];
 	$tiempo2     = $HoraSistema;
 	$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-	
+
 	//Comparaciones de tiempo
 	$Time_Tiempo     = horas2segundos($Tiempo);
 	$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 	$Time_Tiempo_Max = horas2segundos('48:00:00');
 	//comparacion
-	if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){	
+	if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
 		$in_eq_fueralinea++;
 	}
-				
+
 	/**********************************************/
 	//Equipos Errores
 	if($data['NErrores']>0){ $in_eq_alertas++; }
-				
+
 	/*******************************************************/
 	//rearmo
 	if($in_eq_alertas>0){    $in_eq_ok = 0;  $in_eq_alertas    = 1;    }
 	if($in_eq_fueralinea>0){ $in_eq_ok = 0;  $in_eq_fueralinea = 1; $in_eq_alertas = 0;  }
-				
+
 	/*******************************************************/
 	//se guardan estados
 	$danger = '';
 	$xdanger = 1;
 	if($in_eq_alertas>0){    $danger = 'warning';  $xdanger = 2; $dataex = '<a href="#" title="Equipo con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';}
 	if($in_eq_fueralinea>0){ $danger = 'danger';   $xdanger = 3; $dataex = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';}
-																
+
 	/*******************************************************/
 	//traspasan los estados
 	if($in_eq_ok==1){
@@ -207,7 +207,7 @@ foreach ($arrEquipo as $data) {
 	//El icono de estado de encendido apagado
 	$idSensorResp = 38; //sensor que guarda la respuesta del equipo
 	//si tiene los permisos
-	if(isset($data['SensoresMedActual_'.$idSensorResp])&&$data['SensoresMedActual_'.$idSensorResp]!=''){												
+	if(isset($data['SensoresMedActual_'.$idSensorResp])&&$data['SensoresMedActual_'.$idSensorResp]!=''){
 		switch ($data['SensoresMedActual_'.$idSensorResp]) {
 			//inactivo
 			case 0:
@@ -231,7 +231,7 @@ foreach ($arrEquipo as $data) {
 		$status_icon = '';
 		$wid_status = 35;
 	}
-	
+
 	/*************************************************************************/
 	//Unidad de medida
 	if(isset($arrFinalUnimed[$data['SensoresUniMed_37']])){
@@ -244,7 +244,7 @@ foreach ($arrEquipo as $data) {
 		$UniMed_39 = $arrFinalUnimed[$data['SensoresUniMed_39']];
 	}else{
 		$UniMed_39 = '';
-	}	
+	}
 	//Guardo todos los datos
 	$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['tr_color']     = $danger;
 	$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['wid_status']   = $wid_status;
@@ -263,7 +263,7 @@ foreach ($arrEquipo as $data) {
 		$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['Viento'] = 'N/A';
 	}
 	//si tiene los permisos
-	if(isset($prm_xa)&&$prm_xa==1){												
+	if(isset($prm_xa)&&$prm_xa==1){
 		switch ($in_sens_activ) {
 			//inactivo
 			case 0:
@@ -294,7 +294,7 @@ foreach ($arrEquipo as $data) {
 				break;
 		}
 	}
-	
+
 	/****************************************************/
 	//busco el tipo de equipo
 	$Nombre_equipo = $data['Identificador'];
@@ -303,15 +303,15 @@ foreach ($arrEquipo as $data) {
 	$buscado_2     = 'gen';
 	$s_pos_1       = strpos($NumSerie, $buscado_1);
 	$s_pos_2       = strpos($NumSerie, $buscado_2);
-	
+
 	/****************************************************/
 	//Si esta en Planta
 	if(isset($data['idUbicacion'])&&$data['idUbicacion']==1){
-		$show_map = '&ShowMap=True';	
+		$show_map = '&ShowMap=True';
 	}else{
-		$show_map = '';	
+		$show_map = '';
 	}
-			
+
 	/****************************************************/
 	// Nótese el uso de ===. Puesto que == simple no funcionará como se espera
 	// porque la posición de 'elv-' está en el 1° (primer) caracter.
@@ -324,9 +324,9 @@ foreach ($arrEquipo as $data) {
 	}else{
 		$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['crosscrane_estado'] = '<a href="view_crosscrane_estado_elev.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).$show_map.'" title="Estado Equipo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-tasks" aria-hidden="true"></i></a>';
 	}
-			
+
 	/****************************************************/
-	//el resto de los botones					
+	//el resto de los botones
 	$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['CenterMap']             = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
 	$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['informe_activaciones']  = '<li><a href="view_telemetria_uso.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" class="iframe" style="white-space: normal;" ><i class="fa fa-clock-o" aria-hidden="true"></i> Uso Grua</a></li>';
 	$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['AlarmasPersonalizadas'] = '<li><a href="view_alertas_personalizadas.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas Personalizadas</a></li>';
@@ -342,7 +342,7 @@ foreach ($arrEquipo as $data) {
 	}else{
 		$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['CarpetaFTP'] = '';
 	}
-	
+
 	//boton de alertas pendientes de ver
 	if(isset($data['NAlertas'])&&$data['NAlertas']!=''&&$data['NAlertas']!=0){
 		//Alertas
@@ -351,34 +351,34 @@ foreach ($arrEquipo as $data) {
 		//$link_Alertas .= '&f_inicio='.$Fecha_inicio;
 		//$link_Alertas .= '&f_termino='.$Fecha_fin;
 		$link_Alertas .= '&idTelemetria='.$data['idTelemetria'];
-		$link_Alertas .= '&idLeido=0';		
-		$link_Alertas .= '&submit_filter=+Filtrar';	
+		$link_Alertas .= '&idLeido=0';
+		$link_Alertas .= '&submit_filter=+Filtrar';
 		//boton
 		$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['NAlertas']         = '<a href="'.$link_Alertas.'" title="'.$data['NAlertas'].' Alertas Pendientes de ver" class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-exclamation-triangle faa-horizontal animated" aria-hidden="true"></i></a>';
 	}else{
 		$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['NAlertas']         = '';
 	}
-				
-	$nicon++;		
-} 
 
-//Cuento los totales		
+	$nicon++;
+}
+
+//Cuento los totales
 $Count_Alerta      = 0;
 $Count_Ok          = 0;
 $Count_FueraLinea  = 0;
 $Count_Total       = 0;
 $Count_Planta      = 0;
-		
-//obra		
-if(isset($arrGruas[2][2])){foreach ( $arrGruas[2][2] as $categoria=>$grua ) { /*$Count_Alerta++;*/$Count_Ok++;$Count_Total++;}}
-if(isset($arrGruas[2][1])){foreach ( $arrGruas[2][1] as $categoria=>$grua ) { $Count_Ok++;$Count_Total++;}}
-if(isset($arrGruas[2][3])){foreach ( $arrGruas[2][3] as $categoria=>$grua ) { $Count_FueraLinea++;$Count_Total++;}}
-		
+
+//obra
+if(isset($arrGruas[2][2])){foreach ( $arrGruas[2][2] as $categoria=>$grua ) {/*$Count_Alerta++;*/$Count_Ok++;$Count_Total++;}}
+if(isset($arrGruas[2][1])){foreach ( $arrGruas[2][1] as $categoria=>$grua ) {$Count_Ok++;$Count_Total++;}}
+if(isset($arrGruas[2][3])){foreach ( $arrGruas[2][3] as $categoria=>$grua ) {$Count_FueraLinea++;$Count_Total++;}}
+
 //planta
-if(isset($arrGruas[1][1])){foreach ( $arrGruas[1][1] as $categoria=>$grua ) { $Count_Planta++;$Count_Total++;}}
-if(isset($arrGruas[1][2])){foreach ( $arrGruas[1][2] as $categoria=>$grua ) { $Count_Planta++;$Count_Total++;}}
-if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) { $Count_Planta++;$Count_Total++;}}
-		
+if(isset($arrGruas[1][1])){foreach ( $arrGruas[1][1] as $categoria=>$grua ) {$Count_Planta++;$Count_Total++;}}
+if(isset($arrGruas[1][2])){foreach ( $arrGruas[1][2] as $categoria=>$grua ) {$Count_Planta++;$Count_Total++;}}
+if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) {$Count_Planta++;$Count_Total++;}}
+
 ?>
 
 <script>
@@ -389,7 +389,6 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) { $C
 	document.getElementById('updt_Count_Planta').innerHTML=<?php echo $Count_Planta; ?>;
 	document.getElementById('updt_Count_Total').innerHTML=<?php echo $Count_Total; ?>;
 </script>
-					
 
 <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 	<thead>
@@ -398,14 +397,13 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) { $C
 				<div class="field">
 					<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >
 						<option value="9999" <?php if($idZona==9999){ echo 'selected="selected"';} ?>>Todas las Zonas</option>
-						<?php foreach ( $arrZonas as $select ) { 
-							$w = '';
+						<?php foreach ( $arrZonas as $select ) {
+							$selected = '';
 							if($idZona==$select['idZona']){
-								$w .= 'selected="selected"';
+								$selected = 'selected="selected"';
 							}
-							?>
-							<option value="<?php echo $select['idZona']?>" <?php echo $w; ?> ><?php echo $select['Nombre']?></option>
-						<?php } ?> 
+							echo '<option value="'.$select['idZona'].'" '.$selected.' >'.$select['Nombre'].'</option>';
+						} ?>
 					</select>
 				</div>
 			</th>
@@ -420,17 +418,17 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) { $C
 		</tr>
 	</thead>
 	<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered_1">
-		
-		<?php 
+
+		<?php
 		/*************************************************************/
 		//Alertas
 		if(isset($arrGruas[2][2])){
-			foreach ( $arrGruas[2][2] as $categoria=>$grua ) { ?>
+			foreach ( $arrGruas[2][2] as $categoria=>$grua ) {?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
 					<div class="btn-group" style="width: <?php echo $grua['wid_status']; ?>px;" >
 						<?php echo $grua['eq_ok_icon'].$grua['status_icon']; ?>
-					</div> 
+					</div>
 				</td>
 				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
 				<td><?php echo $grua['Voltaje'];?></td>
@@ -441,7 +439,7 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) { $C
 						echo $grua['in_sens_activ'];
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];
-						echo $grua['CenterMap'];			
+						echo $grua['CenterMap'];
 						?>
 						<button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<span class="caret"></span>
@@ -456,16 +454,16 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) { $C
 				</td>
 			</tr>
 		<?php }
-		} 
+		}
 		/*************************************************************/
 		//Ok
 		if(isset($arrGruas[2][1])){
-			foreach ( $arrGruas[2][1] as $categoria=>$grua ) { ?>
+			foreach ( $arrGruas[2][1] as $categoria=>$grua ) {?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
 					<div class="btn-group" style="width: <?php echo $grua['wid_status']; ?>px;" >
 						<?php echo $grua['eq_ok_icon'].$grua['status_icon']; ?>
-					</div> 
+					</div>
 				</td>
 				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
 				<td><?php echo $grua['Voltaje'];?></td>
@@ -476,7 +474,7 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) { $C
 						echo $grua['in_sens_activ'];
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];
-						echo $grua['CenterMap'];			
+						echo $grua['CenterMap'];
 						?>
 						<button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<span class="caret"></span>
@@ -491,16 +489,16 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) { $C
 				</td>
 			</tr>
 		<?php }
-		} 
+		}
 		/*************************************************************/
 		//Fuera de linea
 		if(isset($arrGruas[2][3])){
-			foreach ( $arrGruas[2][3] as $categoria=>$grua ) { ?>
+			foreach ( $arrGruas[2][3] as $categoria=>$grua ) {?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
 					<div class="btn-group" style="width: <?php echo $grua['wid_status']; ?>px;" >
 						<?php echo $grua['eq_ok_icon'].$grua['status_icon']; ?>
-					</div> 
+					</div>
 				</td>
 				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
 				<td><?php echo $grua['Voltaje'];?></td>
@@ -511,7 +509,7 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) { $C
 						echo $grua['in_sens_activ'];
 						echo $grua['NAlertas'];
 						echo $grua['crosscrane_estado'];
-						echo $grua['CenterMap'];			
+						echo $grua['CenterMap'];
 						?>
 						<button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<span class="caret"></span>
@@ -526,14 +524,14 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) { $C
 				</td>
 			</tr>
 		<?php }
-		} ?> 
-		               
+		} ?>
+
 	</tbody>
 </table>
 
 <script>
 	var HoraRefresco = '<?php echo hora_actual(); ?>';
-	
+
 	<?php
 	$GPS = 'var new_locations = [ ';
 			foreach ( $arrEquipo as $data ) {
@@ -567,10 +565,10 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) { $C
 						$GPS .= ", ".$data['GeoLongitud'];
 						$GPS .= ", '".$explanation."'";
 					$GPS .= "], ";
-				}					
+				}
 			}
 		$GPS .= '];';
-		
+
 		echo $GPS;
 	?>
 </script>

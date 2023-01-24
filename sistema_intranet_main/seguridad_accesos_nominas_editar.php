@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "seguridad_accesos_nominas_editar.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -19,42 +19,42 @@ $location .='?id='.$_GET['id'];
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_modBase']) )  { 
+if (!empty($_POST['submit_modBase'])){
 	//Llamamos al formulario
 	$form_trabajo= 'Edit_mod_nomina';
 	require_once 'A1XRXS_sys/xrxs_form/z_seguridad_accesos_nominas.php';
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_persona']) )  { 
+if (!empty($_POST['submit_persona'])){
 	//Llamamos al formulario
 	$form_trabajo= 'Edit_new_persona_nomina';
 	require_once 'A1XRXS_sys/xrxs_form/z_seguridad_accesos_nominas.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_edit_persona']) )  { 
+if (!empty($_POST['submit_edit_persona'])){
 	//Llamamos al formulario
 	$form_trabajo= 'Edit_edit_persona_nomina';
 	require_once 'A1XRXS_sys/xrxs_form/z_seguridad_accesos_nominas.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_persona']) )     {
+if (!empty($_GET['del_persona'])){
 	//Llamamos al formulario
 	$form_trabajo= 'Edit_del_persona_nomina';
-	require_once 'A1XRXS_sys/xrxs_form/z_seguridad_accesos_nominas.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_seguridad_accesos_nominas.php';
 }
 /**********************************************/
 //formulario para crear
-if ( !empty($_POST['submit_file']) )  { 
+if (!empty($_POST['submit_file'])){
 	//Llamamos al formulario
 	$form_trabajo= 'Edit_new_file_nomina';
 	require_once 'A1XRXS_sys/xrxs_form/z_seguridad_accesos_nominas.php';
 }
 //se borra un dato
-if ( !empty($_GET['del_file']) )     {
+if (!empty($_GET['del_file'])){
 	//Llamamos al formulario
 	$form_trabajo= 'Edit_del_file_nomina';
-	require_once 'A1XRXS_sys/xrxs_form/z_seguridad_accesos_nominas.php';	
+	require_once 'A1XRXS_sys/xrxs_form/z_seguridad_accesos_nominas.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -69,63 +69,63 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Boleta de Honorarios M
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Boleta de Honorarios borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['addFile']) ) { ?>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['addFile'])){ ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php           
+				<?php 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 				
 				$Form_Inputs->form_input_hidden('idAcceso', $_GET['id'], 2);
 					
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>              
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>	
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['editPersona']) ) {  
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['editPersona'])){  
 // consulto los datos
-$SIS_query = 'Nombre, Rut, NDocCedula';
+$SIS_query = 'Nombre,Rut, NDocCedula';
 $SIS_join  = '';
 $SIS_where = 'idNomina ='.$_GET['editPersona'];
 $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 	
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Persona</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;       }else{$x1  = $row_data['Nombre'];}
-				if(isset($Rut)) {         $x2  = $Rut;          }else{$x2  = $row_data['Rut'];}
-				if(isset($NDocCedula)) {  $x3  = $NDocCedula;   }else{$x3  = $row_data['NDocCedula'];}
-				
+				if(isset($Nombre)){      $x1  = $Nombre;       }else{$x1  = $row_data['Nombre'];}
+				if(isset($Rut)){         $x2  = $Rut;          }else{$x2  = $row_data['Rut'];}
+				if(isset($NDocCedula)){  $x3  = $NDocCedula;   }else{$x3  = $row_data['NDocCedula'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -137,33 +137,33 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_persona"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_persona"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>                
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['addPersona']) ) {  ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['addPersona'])){  ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Persona</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {      $x1  = $Nombre;      }else{$x1  = '';}
-				if(isset($Rut)) {         $x2  = $Rut;         }else{$x2  = '';}
-				if(isset($NDocCedula)) {  $x3  = $NDocCedula;  }else{$x3  = '';}
-				
+				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = '';}
+				if(isset($Rut)){         $x2  = $Rut;         }else{$x2  = '';}
+				if(isset($NDocCedula)){  $x3  = $NDocCedula;  }else{$x3  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -176,18 +176,18 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_persona"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_persona"> 
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>                
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['modBase']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['modBase'])){
 // consulto los datos
 $SIS_query = 'FechaProgramada, HoraInicioProgramada, HoraTerminoProgramada, idUbicacion,idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4,idUbicacion_lvl_5, PersonaReunion';
 $SIS_join  = '';
@@ -196,28 +196,28 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 	 	 
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos del Ingreso</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($FechaProgramada)) {        $x1  = $FechaProgramada;         }else{$x1  = $row_data['FechaProgramada'];}
-				if(isset($HoraInicioProgramada)) {   $x2  = $HoraInicioProgramada;    }else{$x2  = $row_data['HoraInicioProgramada'];}
-				if(isset($HoraTerminoProgramada)) {  $x3  = $HoraTerminoProgramada;   }else{$x3  = $row_data['HoraTerminoProgramada'];}
-				if(isset($idUbicacion)) {            $x4  = $idUbicacion;             }else{$x4  = $row_data['idUbicacion'];}
-				if(isset($idUbicacion_lvl_1)) {      $x5  = $idUbicacion_lvl_1;       }else{$x5  = $row_data['idUbicacion_lvl_1'];}
-				if(isset($idUbicacion_lvl_2)) {      $x6  = $idUbicacion_lvl_2;       }else{$x6  = $row_data['idUbicacion_lvl_2'];}
-				if(isset($idUbicacion_lvl_3)) {      $x7  = $idUbicacion_lvl_3;       }else{$x7  = $row_data['idUbicacion_lvl_3'];}
-				if(isset($idUbicacion_lvl_4)) {      $x8  = $idUbicacion_lvl_4;       }else{$x8  = $row_data['idUbicacion_lvl_4'];}
-				if(isset($idUbicacion_lvl_5)) {      $x9  = $idUbicacion_lvl_5;       }else{$x9  = $row_data['idUbicacion_lvl_5'];}
-				if(isset($PersonaReunion)) {         $x10 = $PersonaReunion;          }else{$x10 = $row_data['PersonaReunion'];}
-				
+				if(isset($FechaProgramada)){        $x1  = $FechaProgramada;         }else{$x1  = $row_data['FechaProgramada'];}
+				if(isset($HoraInicioProgramada)){   $x2  = $HoraInicioProgramada;    }else{$x2  = $row_data['HoraInicioProgramada'];}
+				if(isset($HoraTerminoProgramada)){  $x3  = $HoraTerminoProgramada;   }else{$x3  = $row_data['HoraTerminoProgramada'];}
+				if(isset($idUbicacion)){            $x4  = $idUbicacion;             }else{$x4  = $row_data['idUbicacion'];}
+				if(isset($idUbicacion_lvl_1)){      $x5  = $idUbicacion_lvl_1;       }else{$x5  = $row_data['idUbicacion_lvl_1'];}
+				if(isset($idUbicacion_lvl_2)){      $x6  = $idUbicacion_lvl_2;       }else{$x6  = $row_data['idUbicacion_lvl_2'];}
+				if(isset($idUbicacion_lvl_3)){      $x7  = $idUbicacion_lvl_3;       }else{$x7  = $row_data['idUbicacion_lvl_3'];}
+				if(isset($idUbicacion_lvl_4)){      $x8  = $idUbicacion_lvl_4;       }else{$x8  = $row_data['idUbicacion_lvl_4'];}
+				if(isset($idUbicacion_lvl_5)){      $x9  = $idUbicacion_lvl_5;       }else{$x9  = $row_data['idUbicacion_lvl_5'];}
+				if(isset($PersonaReunion)){         $x10 = $PersonaReunion;          }else{$x10 = $row_data['PersonaReunion'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','FechaProgramada', $x1, 2);
@@ -233,20 +233,20 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 				$Form_Inputs->form_input_text('Persona Reunion', 'PersonaReunion', $x10, 2);
 				
 				$Form_Inputs->form_input_hidden('idAcceso', $_GET['id'], 2);
-				?> 
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase"> 
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['id']) ) {  
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['id'])){ 
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -277,14 +277,14 @@ LEFT JOIN `core_estado_caja`            ON core_estado_caja.idEstado            
 $SIS_where = 'seguridad_accesos_nominas.idAcceso ='.$_GET['id'];
 $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con todos los otros
 $SIS_query = '
 seguridad_accesos_nominas_listado.idNomina,
 seguridad_accesos_nominas_listado.Fecha, 
 seguridad_accesos_nominas_listado.HoraEntrada, 
 seguridad_accesos_nominas_listado.HoraSalida, 
-seguridad_accesos_nominas_listado.Nombre, 
+seguridad_accesos_nominas_listado.Nombre,
 seguridad_accesos_nominas_listado.Rut, 
 seguridad_accesos_nominas_listado.NDocCedula,
 core_estado_nomina_asistencia.Nombre AS Estado';
@@ -294,7 +294,7 @@ $SIS_order = 'seguridad_accesos_nominas_listado.Fecha ASC';
 $arrPersonas = array();
 $arrPersonas = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPersonas');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con todos los archivos adjuntos
 $SIS_query = 'idFile, Nombre';
 $SIS_join  = '';
@@ -305,7 +305,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 	 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> Nomina de Control de Accesos</div>
@@ -313,11 +313,11 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 		
 		<div id="customer">
 			
-			<table id="meta" class="fleft otdata">
+			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip fright" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Usuario</td>
@@ -374,7 +374,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
-				</tr>		  
+				</tr>
 				
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Personas a Ingresar</td>
@@ -398,7 +398,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Persona" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
 								</div>
 							</td>
-						</tr> 
+						</tr>
 					 <?php 	
 					}
 				}
@@ -413,7 +413,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td colspan="5">Archivos Adjuntos</td>
                 <td width="160"><a href="<?php echo $location.'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></td>
-            </tr>		  
+            </tr>
             
 			<?php 
 			if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){
@@ -448,12 +448,12 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 <div class="clearfix"></div>
 
 <div class="clearfix"></div>
-	<div class="col-sm-12" style="margin-bottom:30px">
-	<a href="seguridad_accesos_nominas.php?pagina=1" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+	<a href="seguridad_accesos_nominas.php?pagina=1" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
 </div>
 	
-<?php } ?>          
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

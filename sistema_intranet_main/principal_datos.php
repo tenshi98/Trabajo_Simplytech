@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "principal_datos.php";
 $location = $original;
 /**********************************************************************************************************************************/
@@ -29,18 +29,18 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Perfil editado correct
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Perfil borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = '
-usuarios_listado.usuario, 
+usuarios_listado.usuario,
 usuarios_tipos.Nombre AS Usuario_Tipo,
-usuarios_listado.email, 
-usuarios_listado.Nombre, 
-usuarios_listado.Rut, 
-usuarios_listado.fNacimiento, 
-usuarios_listado.Direccion, 
-usuarios_listado.Fono, 
-core_ubicacion_ciudad.Nombre AS Ciudad, 
+usuarios_listado.email,
+usuarios_listado.Nombre,
+usuarios_listado.Rut,
+usuarios_listado.fNacimiento,
+usuarios_listado.Direccion,
+usuarios_listado.Fono,
+core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
 usuarios_listado.Direccion_img';
 $SIS_join  = '
@@ -54,15 +54,15 @@ $rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SI
 /**********************************/
 //Permisos asignados
 $SIS_query = '
-core_permisos_categorias.Nombre AS CategoriaNombre, 
+core_permisos_categorias.Nombre AS CategoriaNombre,
 core_font_awesome.Codigo AS CategoriaIcono,
 core_permisos_listado.Direccionbase AS TransaccionURLBase,
-core_permisos_listado.Direccionweb AS TransaccionURL, 
-core_permisos_listado.Nombre AS TransaccionNombre,					
+core_permisos_listado.Direccionweb AS TransaccionURL,
+core_permisos_listado.Nombre AS TransaccionNombre,
 usuarios_permisos.level';
 $SIS_join  = '
 INNER JOIN core_permisos_listado      ON core_permisos_listado.idAdmpm        = usuarios_permisos.idAdmpm
-INNER JOIN core_permisos_categorias   ON core_permisos_categorias.id_pmcat    = core_permisos_listado.id_pmcat 
+INNER JOIN core_permisos_categorias   ON core_permisos_categorias.id_pmcat    = core_permisos_listado.id_pmcat
 LEFT JOIN `core_font_awesome`         ON core_font_awesome.idFont             = core_permisos_categorias.idFont';
 $SIS_where = 'usuarios_permisos.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
 $SIS_order = 'CategoriaNombre ASC, TransaccionNombre ASC';
@@ -76,7 +76,7 @@ $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = usuarios_si
 $SIS_where = 'usuarios_sistemas.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
 $SIS_order = 'core_sistemas.Nombre ASC';
 $arrSistemas = array();
-$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
+$arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
 
 /**********************************/
 //Permisos a bodegas
@@ -152,12 +152,12 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Perfil', $_SESSION['usuario']['basic_data']['Nombre'], 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -172,21 +172,21 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 							<li class=""><a href="<?php echo 'principal_datos_documentos_pago.php'?>" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Documentos Pago</a></li>
 						<?php } ?>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos" style="padding-top:5px;">
 				
-				<div class="col-sm-4">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<?php if ($rowdata['Direccion_img']=='') { ?>
-						<img class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
+						<img class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 					<?php }else{  ?>
-						<img class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+						<img class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 					<?php }?>
 				</div>
-				<div class="col-sm-8">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Perfil</h2>
 					<p class="text-muted">
 						<strong>Usuario : </strong><?php echo $rowdata['usuario']; ?><br/>
@@ -211,10 +211,10 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 							<strong><?php echo ' - '.$sis['Sistema']; ?></strong><br/>
 						<?php } ?>
 					</p>
-				</div>	
+				</div>
 				
 				<?php if($arrMenu!=false && !empty($arrMenu) && $arrMenu!=''){ ?>
-					<div class="col-sm-6">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos Asignados</h2>
 							
 						<ul class="tree">
@@ -240,12 +240,12 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 								echo '</ul>
 								</li>';
 							}
-							?>				
+							?>			
 						</ul>
 					</div>
 				<?php } ?>
 					
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Bodegas</h2>
 					<?php
 					echo '<ul class="tree">';
@@ -358,7 +358,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 				</div>
 				
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 

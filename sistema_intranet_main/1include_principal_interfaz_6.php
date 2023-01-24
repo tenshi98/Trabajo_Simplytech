@@ -23,10 +23,10 @@ $x_nperm++; $trans[$x_nperm] = "cross_checking_monitor_aplicaciones.php";       
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_errores_2.php";              //13 - Alerta Sensores
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_4.php";    //14 - Exportar Datos
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_fuera_linea_2.php";          //15 - Fuera de Linea
-$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_4.php";   //16 - Max – Min Camara 
+$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_4.php";   //16 - Max – Min Camara
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_2.php";   //17 - Max – Min Sensor
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_6.php";   //18 - Promedio Diario
-$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_6.php";    //19 - Registro Camara 
+$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_6.php";    //19 - Registro Camara
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_2.php";    //20 - Registro Sensores
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_12.php";   //21 - Trazabilidad
 
@@ -58,7 +58,7 @@ $x_nperm++; $trans[$x_nperm] = "informe_telemetria_errores_6.php";              
 
 //CrossEnergy
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_errores_7.php";              //42 - Alerta Sensores
-$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_18.php";   //43 - Trazabilidad Sensor 
+$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_18.php";   //43 - Trazabilidad Sensor
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_19.php";   //44 - Trazabilidad Grupo
 $x_nperm++; $trans[$x_nperm] = "informe_crossenergy_01.php";                    //45 - Resumen Dia
 $x_nperm++; $trans[$x_nperm] = "informe_crossenergy_02.php";                    //46 - Resumen Hora
@@ -95,7 +95,7 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 // Listado con los nombres del tab
 $arrTabMenu = array();
 $arrTabMenu = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTabMenu');
-//Recorro																						
+//Recorro
 foreach ($arrTabMenu as $tab) {
 	$arrOrderTabMenu[$tab['idTab']] = $tab['Nombre'];
 }
@@ -162,7 +162,7 @@ foreach ($arrTabMenu as $tab) {
 				<?php if($Tab_4!=0){ ?><li>   <a href="principal_6_4.php"><?php echo $arrOrderTabMenu[4]; ?></a></li><?php } ?>
 				<?php if($Tab_7!=0){ ?><li>   <a href="principal_6_7.php"><?php echo $arrOrderTabMenu[9]; ?></a></li><?php } ?>
 				<li><a href="principal_6_8.php"><span style="color: #9900ff;"><i class="fa fa-book" aria-hidden="true"></i> Tutoriales</span></a></li>
-			</ul>	
+			</ul>
 		</header>
         <div class="tab-content">
 			<div class="col-md-12 fcenter clearfix">
@@ -177,86 +177,86 @@ foreach ($arrTabMenu as $tab) {
 			
 			<div class="col-md-12 fcenter">
 				
-				<a href="<?php if($Tab_2!=0){echo 'principal_6_2.php'; } ?>">
+				<a href="<?php if($Tab_2!=0){echo 'principal_6_2.php';} ?>">
 					<div class="tile color_1 tile-medium col-md-3 col-xs-12"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
-								<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossC.png">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossC.png">
 								<p><strong>Ambientes <br/>Controlados</strong></p>
 							</div>
 						</div>
 						<span class="tile-label">
-							<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_clima.png">
+							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_clima.png">
 						</span>
 					</div>
 				</a>
 				
-				<a href="<?php if($Tab_1!=0){echo 'principal_6_1.php'; } ?>">
+				<a href="<?php if($Tab_1!=0){echo 'principal_6_1.php';} ?>">
 					<div class="tile color_2 tile-medium col-md-3 col-xs-12"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
-								<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossChecking.png">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossChecking.png">
 								<p><strong>Aplicaciones <br/>Agroquimicas</strong></p>
 							</div>
 						</div>
 						<span class="tile-label">
-							<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_tractor.png">
+							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_tractor.png">
 						</span>
 					</div>
 				</a>
 				
-				<a href="<?php if($Tab_6!=0){echo 'principal_6_6.php'; } ?>">
+				<a href="<?php if($Tab_6!=0){echo 'principal_6_6.php';} ?>">
 					<div class="tile color_3 tile-medium col-md-3 col-xs-12"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
-								<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossCrane.png">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossCrane.png">
 								<p><strong>Gruas de <br/>Construccion</strong></p>
 							</div>
 						</div>
 						<span class="tile-label">
-							<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_grua.png">
+							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_grua.png">
 						</span>
 					</div>
 				</a>
 				
-				<a href="<?php if($Tab_3!=0){echo 'principal_6_3.php'; } ?>">
+				<a href="<?php if($Tab_3!=0){echo 'principal_6_3.php';} ?>">
 					<div class="tile color_4 tile-medium col-md-3 col-xs-12"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
-								<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossTrack.png">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossTrack.png">
 								<p><strong>Gestion de <br/>Flota GPS</strong></p>
 							</div>
 						</div>
 						<span class="tile-label">
-							<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_alfiler.png">
+							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_alfiler.png">
 						</span>
 					</div>
 				</a>
 				
-				<a href="<?php if($Tab_4!=0){echo 'principal_6_4.php'; } ?>">
+				<a href="<?php if($Tab_4!=0){echo 'principal_6_4.php';} ?>">
 					<div class="tile color_5 tile-medium col-md-3 col-xs-12"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
-								<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossWheather.png">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossWheather.png">
 								<p><strong>Unidad <br/>Meteorologica</strong></p>
 							</div>
 						</div>
 						<span class="tile-label">
-							<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_wheater.png">
+							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_wheater.png">
 						</span>
 					</div>
 				</a>
 				
-				<a href="<?php if($Tab_7!=0){echo 'principal_6_7.php'; } ?>">
+				<a href="<?php if($Tab_7!=0){echo 'principal_6_7.php';} ?>">
 					<div class="tile color_6 tile-medium col-md-3 col-xs-12"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
-								<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossEnergy.png">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossEnergy.png">
 								<p><strong>Consumo <br/>Eléctrico</strong></p>
 							</div>
 						</div>
 						<span class="tile-label">
-							<img alt="User Picture" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_destello.png">
+							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_destello.png">
 						</span>
 					</div>
 				</a>
@@ -265,7 +265,7 @@ foreach ($arrTabMenu as $tab) {
 					<div class="tile-content">
 						<div class="tile-icon-large">
 							<p style="color:#ffffff;"><strong>Asistencia <br/>Tecnica</strong></p>
-							<a href="mailto:soporte@crosstech.cl?Subject=Asistencia"><img alt="User Picture" class="imgx" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_asistencia_tecnica.png"></a>
+							<a href="mailto:soporte@crosstech.cl?Subject=Asistencia"><img alt="Imagen Referencia" class="imgx" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_asistencia_tecnica.png"></a>
 						</div>
 					</div>
 				</div>
@@ -274,7 +274,7 @@ foreach ($arrTabMenu as $tab) {
 					<div class="tile-content">
 						<div class="tile-icon-large">
 							<p style="color:#ffffff;"><strong>Cotizar <br/>Servicio</strong></p>
-							<a href="mailto:ventas@crosstech.cl?Subject=Cotizacion"><img alt="User Picture" class="imgx" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_cotizar.png"></a>
+							<a href="mailto:ventas@crosstech.cl?Subject=Cotizacion"><img alt="Imagen Referencia" class="imgx" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_cotizar.png"></a>
 						</div>
 					</div>
 				</div>
@@ -310,7 +310,7 @@ foreach ($arrTabMenu as $tab) {
 				?>
 			</div>
 			
-        </div>	
+        </div>
 	</div>
 </div>
 

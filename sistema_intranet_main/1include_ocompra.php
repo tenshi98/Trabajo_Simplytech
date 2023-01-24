@@ -38,7 +38,7 @@ $SIS_where = 'ocompra_listado.idOcompra ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
 
-/*****************************************/				
+/*****************************************/
 //Insumos
 $SIS_query = '
 insumos_listado.Nombre,
@@ -54,7 +54,7 @@ $SIS_order = 'insumos_listado.Nombre ASC';
 $arrInsumos = array();
 $arrInsumos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
 
-/*****************************************/				
+/*****************************************/
 //Productos
 $SIS_query = '
 productos_listado.Nombre,
@@ -70,7 +70,7 @@ $SIS_order = 'productos_listado.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
-/*****************************************/				
+/*****************************************/
 //Arriendos
 $SIS_query = '
 equipos_arriendo_listado.Nombre,
@@ -86,7 +86,7 @@ $SIS_order = 'equipos_arriendo_listado.Nombre ASC';
 $arrArriendos = array();
 $arrArriendos = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_arriendos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArriendos');
 
-/*****************************************/				
+/*****************************************/
 //Servicios
 $SIS_query = '
 servicios_listado.Nombre,
@@ -102,7 +102,7 @@ $SIS_order = 'servicios_listado.Nombre ASC';
 $arrServicios = array();
 $arrServicios = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_servicios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrServicios');
 
-/*****************************************/				
+/*****************************************/
 //Otros
 $SIS_query = '
 ocompra_listado_existencias_otros.Nombre,
@@ -116,7 +116,7 @@ $SIS_order = 'ocompra_listado_existencias_otros.Nombre ASC';
 $arrOtros = array();
 $arrOtros = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_otros', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOtros');
 
-/*****************************************/				
+/*****************************************/
 //Boletas Trabajadores
 $SIS_query = '
 ocompra_listado_existencias_boletas.N_Doc,
@@ -131,7 +131,7 @@ $SIS_order = 'trabajadores_listado.ApellidoPat ASC';
 $arrBoletas = array();
 $arrBoletas = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_boletas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrBoletas');
 
-/*****************************************/				
+/*****************************************/
 //Boletas Empresas
 $SIS_query = 'idExistencia, Descripcion, Valor';
 $SIS_join  = '';
@@ -140,7 +140,7 @@ $SIS_order = 'Descripcion ASC';
 $arrBoletasEmp = array();
 $arrBoletasEmp = db_select_array (false, $SIS_query, 'ocompra_listado_existencias_boletas_empresas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrBoletasEmp');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con todos los documentos acompañantes
 $SIS_query = '
 ocompra_listado_documentos.NDocPago,
@@ -153,7 +153,7 @@ $SIS_order = 'ocompra_listado_documentos.Fpago ASC';
 $arrDocumentos = array();
 $arrDocumentos = db_select_array (false, $SIS_query, 'ocompra_listado_documentos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDocumentos');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con todos los archivos adjuntos
 $SIS_query = 'Nombre';
 $SIS_join  = '';
@@ -162,7 +162,7 @@ $SIS_order = 'Nombre ASC';
 $arrArchivo = array();
 $arrArchivo = db_select_array (false, $SIS_query, 'ocompra_listado_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
-/*****************************************/		
+/*****************************************/
 // Se trae un con los materiales de las solicitudes
 $SIS_query = '
 ocompra_listado_sol_rel.Type,
@@ -209,7 +209,7 @@ $arrSolMat = array();
 $arrSolMat = db_select_array (false, $SIS_query, 'ocompra_listado_sol_rel', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSolMat');
 
 
-/*****************************************/		
+/*****************************************/
 // Se trae un listado con el historial
 $SIS_query = '
 ocompra_listado_historial.Creacion_fecha, 
@@ -269,7 +269,7 @@ foreach ($arrHistorial as $doc){
 				<i class="fa fa-globe" aria-hidden="true"></i> Orden de Compra <?php echo n_doc($X_Puntero , 5); ?>.
 				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha'])?></small>
 			</h2>
-		</div>   
+		</div>
 	</div>
 	
 	<div class="row invoice-info">
@@ -327,7 +327,7 @@ foreach ($arrHistorial as $doc){
 				<tbody>
 					<?php if ($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Insumos</strong></td></tr>
-						<?php foreach ($arrInsumos as $prod) { ?>
+						<?php foreach ($arrInsumos as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
@@ -338,7 +338,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Productos</strong></td></tr>
-						<?php foreach ($arrProductos as $prod) { ?>
+						<?php foreach ($arrProductos as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
@@ -349,7 +349,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrArriendos!=false && !empty($arrArriendos) && $arrArriendos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Arriendos</strong></td></tr>
-						<?php foreach ($arrArriendos as $prod) { ?>
+						<?php foreach ($arrArriendos as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -360,7 +360,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrServicios!=false && !empty($arrServicios) && $arrServicios!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Servicios</strong></td></tr>
-						<?php foreach ($arrServicios as $prod) { ?>
+						<?php foreach ($arrServicios as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -371,7 +371,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Otros</strong></td></tr>
-						<?php foreach ($arrOtros as $prod) { ?>
+						<?php foreach ($arrOtros as $prod) {?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -382,7 +382,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrBoletas!=false && !empty($arrBoletas) && $arrBoletas!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Boletas de Honorarios Trabajadores</strong></td></tr>
-						<?php foreach ($arrBoletas as $prod) { ?>
+						<?php foreach ($arrBoletas as $prod) {?>
 							<tr>
 								<td><?php echo $prod['TrabRut'].' - '.$prod['TrabNombre'].' '.$prod['TrabApellidoPat']; ?></td>
 								<td><?php echo $prod['Descripcion']; ?></td>
@@ -393,7 +393,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrBoletasEmp!=false && !empty($arrBoletasEmp) && $arrBoletasEmp!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Boletas de Honorarios Empresas</strong></td></tr>
-						<?php foreach ($arrBoletasEmp as $prod) { ?>
+						<?php foreach ($arrBoletasEmp as $prod) {?>
 							<tr>
 								<td colspan="3"><?php echo $prod['Descripcion']; ?></td>
 								<td align="right"><?php echo valores($prod['Valor'], 0); ?></td>
@@ -419,7 +419,7 @@ foreach ($arrHistorial as $doc){
       
 </section>
 
-<div class="col-xs-12" style="margin-bottom:15px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 	
 	<table id="items">
         <tbody>
@@ -437,7 +437,7 @@ foreach ($arrHistorial as $doc){
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
 						<td><?php echo '<i class="'.$doc['FonAwesome'].'" aria-hidden="true"></i> '.$doc['Observacion']; ?></td>
-					</tr> 
+					</tr>
 				 <?php 	
 				}
 			}?>
@@ -455,7 +455,7 @@ foreach ($arrHistorial as $doc){
 					<th>N° Solicitud</th>
 					<th>Producto</th>
 					<th>Cantidad</th>
-				</tr>		  
+				</tr>
 				<?php 
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrSolMat as $producto){

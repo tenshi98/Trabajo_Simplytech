@@ -1,5 +1,4 @@
 <style>
-.formLogin{}
 .formLogin .form-horizontal .form-group {margin-left: 0px;margin-right: 0px;}
 .formLogin .formbox {background-color: #ffffff;border-radius: 3px;border: 1px solid #6F777F;}
 .formLogin .formbox .leftPanel{height: 500px;background: linear-gradient(0deg, rgba(44, 62, 80,1) 0%, rgba(66, 86, 105,1) 100%);border-top-left-radius: 3px;border-bottom-left-radius: 3px;}
@@ -18,7 +17,7 @@
 	<div class="row formbox">
 		<div class="col-md-6 leftPanel">
 			<div class="row">
-				<img src="<?php echo $nombre_fichero; ?>" alt="icon" height="160" width="160" class="img-logo img-responsive center-block"> 
+				<img src="<?php echo $nombre_fichero; ?>" alt="icon" height="160" width="160" class="img-logo img-responsive center-block">
 				<h2><span><?php echo DB_SOFT_NAME; ?></span></h2>
 				<p><?php echo DB_SOFT_SLOGAN; ?></p>
 				<img class="imgLeft" src="http://res.cloudinary.com/dpcloudinary/image/upload/v1506186248/dots.png" alt="icon" > 
@@ -40,9 +39,9 @@
 						<p class="text-center color-gray-light">Ingrese su nombre de usuario y contraseña para acceder</p>
 						<?php 
 						//Se verifican si existen los datos
-						if(isset($usuario)) {    $x1  = $usuario;   }else{$x1  = '';}
-						if(isset($password)) {   $x2  = $password;  }else{$x2  = '';}
-						
+						if(isset($usuario)){    $x1  = $usuario;   }else{$x1  = '';}
+						if(isset($password)){   $x2  = $password;  }else{$x2  = '';}
+
 						//se dibujan los inputs
 						$Form_Inputs = new Inputs();
 						$Form_Inputs->input_login_usr('Usuario', 'usuario', $x1);
@@ -72,12 +71,12 @@
 						<p class="text-center color-gray-light">Ingresa tu Email para recuperar tu contraseña.Revisa la bandeja de entrada o spam de tu correo.</p>
 						<?php 
 						//Se verifican si existen los datos
-						if(isset($email)) {    $x1  = $email;   }else{$x1  = '';}
-						
+						if(isset($email)){    $x1  = $email;   }else{$x1  = '';}
+
 						//se dibujan los inputs
 						$Form_Inputs->input_login_mail('mimail@midominio.cl', 'email', $x1);
 						
-						$Form_Inputs->input_hidden('fkinput2', '', 1);	  
+						$Form_Inputs->input_hidden('fkinput2', '', 1);
 						?>
 						
 						<input type="submit" name="submit_pass" class="btn btn-lg btn-danger btn-block fa-input" value="&#xf003; Recuperar contraseña" />

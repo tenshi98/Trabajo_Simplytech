@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "principal.php";
 $location = $original;
 //oculto el menu
@@ -25,7 +25,7 @@ require_once 'core/Web.Header.Main.php';
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso
 $SIS_query = 'idOpcionesGen_6';
 $SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'n_permisos');
+$n_permisos = db_select_data (false, $SIS_query, 'core_sistemas','', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'n_permisos');
 /************************************************************************************/
 //variable de numero de permiso
 $x_nperm = 0;
@@ -48,10 +48,10 @@ $x_nperm++; $trans[$x_nperm] = "cross_checking_monitor_aplicaciones.php";       
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_errores_2.php";              //13 - Alerta Sensores
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_4.php";    //14 - Exportar Datos
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_fuera_linea_2.php";          //15 - Fuera de Linea
-$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_4.php";   //16 - Max – Min Camara 
+$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_4.php";   //16 - Max – Min Camara
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_2.php";   //17 - Max – Min Sensor
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_promedios_6.php";   //18 - Promedio Diario
-$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_6.php";    //19 - Registro Camara 
+$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_6.php";    //19 - Registro Camara
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_2.php";    //20 - Registro Sensores
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_12.php";   //21 - Trazabilidad
 
@@ -83,7 +83,7 @@ $x_nperm++; $trans[$x_nperm] = "informe_telemetria_errores_6.php";              
 
 //CrossEnergy
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_errores_7.php";              //42 - Alerta Sensores
-$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_18.php";   //43 - Trazabilidad Sensor 
+$x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_18.php";   //43 - Trazabilidad Sensor
 $x_nperm++; $trans[$x_nperm] = "informe_telemetria_registro_sensores_19.php";   //44 - Trazabilidad Grupo
 $x_nperm++; $trans[$x_nperm] = "informe_crossenergy_01.php";                    //45 - Resumen Dia
 $x_nperm++; $trans[$x_nperm] = "informe_crossenergy_02.php";                    //46 - Resumen Hora
@@ -120,7 +120,7 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 // Listado con los nombres del tab
 $arrTabMenu = array();
 $arrTabMenu = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTabMenu');
-//Recorro																						
+//Recorro
 foreach ($arrTabMenu as $tab) {
 	$arrOrderTabMenu[$tab['idTab']] = $tab['Nombre'];
 }
@@ -165,7 +165,7 @@ foreach ($arrTabMenu as $tab) {
 				/**************************************************************************/
 				
 				echo '
-					<div class="col-sm-12">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<span class="panel-title" style="color: #1E90FF;font-weight: 700 !important;" id="update_text_HoraRefresco">Hora Refresco: '.hora_actual().'</span>';
 									
 						echo widget_Gestion_Flota_CrossTech_Transportes_AB('Gestion de Flota',

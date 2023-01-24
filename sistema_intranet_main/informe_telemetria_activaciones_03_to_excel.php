@@ -17,24 +17,24 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "telemetria_listado_historial_activaciones.idEstado=1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){    $SIS_where.= " AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];}
-if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino'] != ''){ 
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){    $SIS_where.= " AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];}
+if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){ 
 	$SIS_where.= " AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
-}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''){ 
+}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){ 
 	$SIS_where.= " AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /**********************************************************/
@@ -143,7 +143,7 @@ foreach($arrConsulta as $categoria=>$permisos){
 					$TiempoColacionTot = $Tiempo;
 				}
 										
-			}						
+			}
 			/***************************************/
 			//Verifico el tiempo muerto
 			if($con['EquipoValor']!=$con['EquipoActivacionValor']){
@@ -205,7 +205,7 @@ foreach($arrConsulta as $categoria=>$permisos){
 						->setCellValue('I'.$nn, $TiempoPerdido)
 						->setCellValue('J'.$nn, sumahoras($SobreTiempo_1,$SobreTiempo_2));
 			$nn++;
-			
+
 			//redeclaro variables
 			$fecha              = $con['EquipoFecha'];
 			$HoraInicio         = $con['EquipoHora'];

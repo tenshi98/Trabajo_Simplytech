@@ -12,7 +12,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "core_sistemas.php";
 $location = $original;
 /**********************************************************************************************************************************/
@@ -25,16 +25,16 @@ require_once 'core/Web.Header.Main.php';
 ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#glyphicons" data-toggle="tab">Glyphicons</a></li>
 				<li class=""><a href="#fontawesome" data-toggle="tab">Font Awesome</a></li>
 				<li class=""><a href="#elegantfont" data-toggle="tab">Elegant Font</a></li>
-			</ul>	
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="glyphicons">
 
@@ -3605,12 +3605,12 @@ require_once 'core/Web.Header.Main.php';
 				</div>
 
 
-			</div>		
+			</div>
 			
 			
 			
 			
-        </div>	
+        </div>
 	</div>
 </div>
 

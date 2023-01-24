@@ -10,12 +10,12 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "comunicaciones_calendario_listado.php";
 $location = $original;
 //Se agregan ubicaciones
-if(isset($_GET['Mes']) && $_GET['Mes'] != ''){  $location .= "?Mes=".$_GET['Mes']; } else { $location .= "?Mes=".mes_actual(); }
-if(isset($_GET['Ano']) && $_GET['Ano'] != ''){  $location .= "&Ano=".$_GET['Ano']; } else { $location .= "&Ano=".ano_actual(); }
+if(isset($_GET['Mes']) && $_GET['Mes']!=''){  $location .= "?Mes=".$_GET['Mes'];} else { $location .= "?Mes=".mes_actual();}
+if(isset($_GET['Ano']) && $_GET['Ano']!=''){  $location .= "&Ano=".$_GET['Ano'];} else { $location .= "&Ano=".ano_actual();}
 
 
 
@@ -26,24 +26,24 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/principal_calendario_listado.php';
 }
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Se agregan ubicaciones
-	$location .= "&view=".$_GET['id']; 
+	$location .= "&view=".$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'update';
 	require_once 'A1XRXS_sys/xrxs_form/principal_calendario_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/principal_calendario_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/principal_calendario_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -58,8 +58,8 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Evento Modificado corr
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evento borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -70,29 +70,29 @@ $rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $S
 
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del Evento</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {      $x1 = $Fecha;       }else{$x1 = $rowdata['Fecha'];}
-				if(isset($Titulo)) {     $x2 = $Titulo;      }else{$x2 = $rowdata['Titulo'];}
-				if(isset($Cuerpo)) {     $x3 = $Cuerpo;      }else{$x3 = $rowdata['Cuerpo'];}
-				if(isset($idOpciones)) { $x4 = $idOpciones;  }else{$x4 = $rowdata['idOpciones'];}
-				
+				if(isset($Fecha)){      $x1 = $Fecha;       }else{$x1 = $rowdata['Fecha'];}
+				if(isset($Titulo)){     $x2 = $Titulo;      }else{$x2 = $rowdata['Titulo'];}
+				if(isset($Cuerpo)){     $x3 = $Cuerpo;      }else{$x3 = $rowdata['Cuerpo'];}
+				if(isset($idOpciones)){ $x4 = $idOpciones;  }else{$x4 = $rowdata['idOpciones'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha del Evento','Fecha', $x1, 2);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 2);
 				$Form_Inputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
 				$Form_Inputs->form_post_data(2, '<strong>Tipo de evento: </strong>En el caso de que sea un evento publico, todos pueden verlo, en caso de que no sea un evento publico, solo podra verlo quien lo creo.' );
-				$Form_Inputs->form_select('Es un evento Publico','idOpciones', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Es un evento Publico','idOpciones', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -102,21 +102,21 @@ $rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $S
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 
-					<a href="<?php echo $location.'&view='.$_GET['id']; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+					<a href="<?php echo $location.'&view='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['view']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['view'])){
 //consulto
 $SIS_query = '
-principal_calendario_listado.Fecha, 
-principal_calendario_listado.Titulo, 
+principal_calendario_listado.Fecha,
+principal_calendario_listado.Titulo,
 principal_calendario_listado.Cuerpo,
 usuarios_listado.Nombre AS Autor,
 principal_calendario_listado.idUsuario';
@@ -126,21 +126,21 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 	 
 ?>
  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Evento</h5>	
+			<h5>Evento</h5>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					
-					<div class="col-sm-4" style="margin-bottom:5px;">
-						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/calendario.jpg">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="margin-bottom:5px;">
+						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/calendario.jpg">
 					</div>
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos del Evento</h2>
 						<p class="text-muted">
 							<strong>Autor: </strong><?php if($row_data['idUsuario']!=9999){echo $row_data['Autor'];}else{echo 'Sistema';}?><br/>
@@ -153,20 +153,20 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 					
 					
 						<div class="form-group" >
-							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$_GET["view"]; ?>" class="btn btn-default fright margin_width" >Editar Evento</a><?php }?>
+							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$_GET["view"]; ?>" class="btn btn-default pull-right margin_width" >Editar Evento</a><?php }?>
 							<?php if ($rowlevel['level']>=4){
 								$ubicacion = $location.'&del='.simpleEncode($_GET['view'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger fright margin_width" ><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Evento</a>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger pull-right margin_form_btn" ><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Evento</a>
 							<?php } ?>
 						</div>
 					
-					</div>	
+					</div>
 					<div class="clearfix" style="margin-bottom:5px;"></div>
 			
 				</div>
 			</div>
-        </div>	
+        </div>
 	</div>
 </div> 
  
@@ -174,42 +174,42 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div> 
 	  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['new'])){
 //valido los permisos
 if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
-	validaPermisoUser($rowlevel['level'], 3, $dbConn); 
+	validaPermisoUser($rowlevel['level'], 3, $dbConn);
 }
 ?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Evento</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Fecha)) {       $x1 = $Fecha;       }else{$x1 = '';}
-				if(isset($Titulo)) {      $x2 = $Titulo;      }else{$x2 = '';}
-				if(isset($Cuerpo)) {      $x3 = $Cuerpo;      }else{$x3 = '';}
-				if(isset($idOpciones)) {  $x4 = $idOpciones;  }else{$x4 = '';}
-				
+				if(isset($Fecha)){       $x1 = $Fecha;       }else{$x1 = '';}
+				if(isset($Titulo)){      $x2 = $Titulo;      }else{$x2 = '';}
+				if(isset($Cuerpo)){      $x3 = $Cuerpo;      }else{$x3 = '';}
+				if(isset($idOpciones)){  $x4 = $idOpciones;  }else{$x4 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha del Evento','Fecha', $x1, 2);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 2);
 				$Form_Inputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
 				$Form_Inputs->form_post_data(2, '<strong>Tipo de evento: </strong>En el caso de que sea un evento publico, todos pueden verlo, en caso de que no sea un evento publico, solo podra verlo quien lo creo.' );
-				$Form_Inputs->form_select('Es un evento Publico','idOpciones', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Es un evento Publico','idOpciones', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -218,26 +218,26 @@ if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Se definen las variables
-if(isset($_GET["Mes"])){   $Mes = $_GET["Mes"];   } else { $Mes  = mes_actual(); }
-if(isset($_GET["Ano"])){   $Ano = $_GET["Ano"];   } else { $Ano  = ano_actual(); }
+if(isset($_GET['Mes'])){   $Mes = $_GET['Mes'];   } else { $Mes  = mes_actual();}
+if(isset($_GET['Ano'])){   $Ano = $_GET['Ano'];   } else { $Ano  = ano_actual();}
 $diaActual = dia_actual();
 
 //calculo de los dias del mes, cuando inicia y cuando termina
-$diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7; 
+$diaSemana      = date("w",mktime(0,0,0,$Mes,1,$Ano))+7;
 $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 
 //Traigo los eventos guardados en la base de datos
@@ -250,11 +250,11 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 
 ?>
 
-<div class="col-sm-12">
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&new=true'; ?>" class="btn btn-default fright margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evento</a><?php }?>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evento</a><?php }?>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<h5>Agenda General</h5>
@@ -267,9 +267,9 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 					<tbody>
 						<tr>
 							<?php
-							if(isset($_GET["Ano"])){
-								$Ano_a  = $_GET["Ano"];
-								$Ano_b  = $_GET["Ano"];	
+							if(isset($_GET['Ano'])){
+								$Ano_a  = $_GET['Ano'];
+								$Ano_b  = $_GET['Ano'];
 							} else {
 								$Ano_a  = date("Y");
 								$Ano_b  = date("Y");
@@ -287,9 +287,9 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 				<div class="fc-content" style="position: relative;margin-left: -10px;margin-right: -10px;">
 					<div class="fc-view fc-view-Mes fc-grid" style="position:relative" unselectable="on">
 
-						<table class="fc-border-separate correct_border" style="width:100%" cellspacing="0"> 
+						<table class="fc-border-separate correct_border" style="width:100%" cellspacing="0">
 							<thead>
-								<tr class="fc-first fc-last"> 
+								<tr class="fc-first fc-last">
 									<th class="fc-day-header fc-sun fc-widget-header" width="14%">Lunes</th>
 									<th class="fc-day-header fc-sun fc-widget-header" width="14%">Martes</th>
 									<th class="fc-day-header fc-sun fc-widget-header" width="14%">Miercoles</th>
@@ -300,7 +300,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="fc-week"> 
+								<tr class="fc-week">
 									<?php
 									$last_cell = $diaSemana + $ultimoDiaMes;
 									// hacemos un bucle hasta 42, que es el máximo de valores que puede
@@ -314,12 +314,12 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 										if($i<$diaSemana || $i>=$last_cell){
 											echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 										// mostramos el dia
-										}else{ ?>  
-											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight'; }?>">
+										}else{?>
+											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';}?>">
 												<div class="calendar_min">
 													<div class="fc-Dia-number"><?php echo $Dia; ?></div>
 													<div class="fc-Dia-content">
-														<?php foreach ($arrEventos as $evento) { 
+														<?php foreach ($arrEventos as $evento) {
 															if ($evento['Dia']==$Dia) {
 																if ($rowlevel['level']>=1){ $ver = $location.'&view='.$evento['idCalendario'];}else{$ver = '';}
 																if ($evento['idUsuario']==9999){
@@ -327,8 +327,8 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 																}else{
 																	echo '<a class="event_calendar evcal_color1" href="'.$ver.'">'.cortar('Usuario : '.$evento['Titulo'], 20).'</a>';
 																}
-															} 
-														} ?>    
+															}
+														}?>
 													</div>
 												</div>
 											</td>
@@ -352,7 +352,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 	</div>
 </div>
 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

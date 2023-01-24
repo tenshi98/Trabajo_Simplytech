@@ -11,48 +11,48 @@ require_once 'core/Load.Utils.Views.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                      Consulta                                                                  */
 /**********************************************************************************************************************************/
 //Obtengo datos configuracion
 
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
-	$idTelemetria  = $_GET['idTelemetria'];	
-	$_SESSION['usuario']['widget_CrossC']['idTelemetria']  = $_GET['idTelemetria'];	
+	$idTelemetria = $_GET['idTelemetria'];
+	$_SESSION['usuario']['widget_CrossC']['idTelemetria'] = $_GET['idTelemetria'];
 }else{
-	$idTelemetria  = $_SESSION['usuario']['widget_CrossC']['idTelemetria'];	
+	$idTelemetria = $_SESSION['usuario']['widget_CrossC']['idTelemetria'];
 }
 if(isset($_GET['cantSensores'])&&$_GET['cantSensores']!=''){
-	$cantSensores  = $_GET['cantSensores'];	
-	$_SESSION['usuario']['widget_CrossC']['cantSensores']  = $_GET['cantSensores'];	
+	$cantSensores = $_GET['cantSensores'];
+	$_SESSION['usuario']['widget_CrossC']['cantSensores'] = $_GET['cantSensores'];
 }else{
-	$cantSensores  = $_SESSION['usuario']['widget_CrossC']['cantSensores'];
+	$cantSensores = $_SESSION['usuario']['widget_CrossC']['cantSensores'];
 }
 if(isset($_GET['idGrupoUso'])&&$_GET['idGrupoUso']!=''){
-	$idGrupoUso  = $_GET['idGrupoUso'];	
+	$idGrupoUso = $_GET['idGrupoUso'];
 }
 if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
-	$idGrupo  = $_GET['idGrupo'];	
+	$idGrupo = $_GET['idGrupo'];
 }
-	
-$timeBack      = $_SESSION['usuario']['widget_CrossC']['timeBack'];	
-$seguimiento   = $_SESSION['usuario']['widget_CrossC']['seguimiento'];	
-$idSistema     = $_SESSION['usuario']['widget_CrossC']['idSistema'];	
-$idTipoUsuario = $_SESSION['usuario']['widget_CrossC']['idTipoUsuario'];	
-$idUsuario     = $_SESSION['usuario']['widget_CrossC']['idUsuario'];	
+
+$timeBack      = $_SESSION['usuario']['widget_CrossC']['timeBack'];
+$seguimiento   = $_SESSION['usuario']['widget_CrossC']['seguimiento'];
+$idSistema     = $_SESSION['usuario']['widget_CrossC']['idSistema'];
+$idTipoUsuario = $_SESSION['usuario']['widget_CrossC']['idTipoUsuario'];
+$idUsuario     = $_SESSION['usuario']['widget_CrossC']['idUsuario'];
 
 //variables
 $HoraInicio     = restahoras($timeBack,hora_actual());
 $FechaInicio    = fecha_actual();
-$HoraTermino    = hora_actual(); 
+$HoraTermino    = hora_actual();
 $FechaTermino   = fecha_actual();
 if($HoraTermino<$timeBack){
 	$FechaInicio = restarDias($FechaTermino,1);
-}																
-	
+}
+
 /*************************************************************/
 //Se consulta
 //numero sensores equipo
@@ -70,7 +70,7 @@ $SIS_query = 'idTelemetria'.$consql;
 $SIS_join  = '';
 $SIS_where = 'idTelemetria='.$idTelemetria;
 $rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
-	
+
 /*************************************************************/
 //Se consulta
 //numero sensores equipo
@@ -100,11 +100,11 @@ foreach ($arrGrupos as $gru) {
 //Variables
 $Temp_1        = '';
 $arrData       = array();
-	
+
 //Se recorren las mediciones
 foreach($arrMediciones as $cli) {
-	
-	//Guardo la fecha							
+
+	//Guardo la fecha
 	$Temp_1 .= "'".Fecha_estandar($cli['FechaSistema'])." - ".$cli['HoraSistema']."',";
 	//Variables
 	$Mandatory = '';
@@ -141,7 +141,7 @@ foreach($arrMediciones as $cli) {
 					if(isset($cli['SensorValue_'.$i])&&$cli['SensorValue_'.$i]<99900){
 						//guardo dato de la tabla
 						switch ($cli['SensorValue_'.$i]) {
-							case 0: 
+							case 0:
 								//si existe adjunta
 								if(isset($arrData[$Mandatory]['Text'])&&$arrData[$Mandatory]['Text']!=''){
 									$arrData[$Mandatory]['Text'] .= ", 'Cerrado'";
@@ -150,23 +150,23 @@ foreach($arrMediciones as $cli) {
 									$arrData[$Mandatory]['Text'] = "'Cerrado'";
 								}
 								break;
-							case 1: 
+							case 1:
 								//si existe adjunta
 								if(isset($arrData[$Mandatory]['Text'])&&$arrData[$Mandatory]['Text']!=''){
 									$arrData[$Mandatory]['Text'] .= ", 'Abierto'";
 								//si no lo crea
 								}else{
 									$arrData[$Mandatory]['Text'] = "'Abierto'";
-								} 
+								}
 								break;
 						}
 					}
 				}
 			}
-		}	
+		}
 	}
 }
-	
+
 //variables
 $x_graph_count        = 0;
 $Graphics_xData       = 'var xData = [';
@@ -199,7 +199,7 @@ for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
 		//contador
 		$x_graph_count++;
 	}
-} 
+}
 $Graphics_xData      .= '];';
 $Graphics_yData      .= '];';
 $Graphics_names      .= '];';
@@ -208,23 +208,23 @@ $Graphics_texts      .= '];';
 $Graphics_lineColors .= '];';
 $Graphics_lineDash   .= '];';
 $Graphics_lineWidth  .= '];';
-	
+
 $widget = '
 <script type="text/javascript" src="'.DB_SITE_REPO.'/LIBS_js/plotly_js/dist/plotly.min.js"></script>
 <script type="text/javascript" src="'.DB_SITE_REPO.'/LIBS_js/plotly_js/dist/plotly-locale-es-ar.js"></script>
-';		
+';
 
 //si hay datos
 if(isset($x_graph_count)&&$x_graph_count!=0){
 	$gr_tittle = 'Grafico '.$arrGruposTemp[$idGrupo].' últimas '.horas2decimales($timeBack).' horas.';
 	$gr_unimed = '°C';
 	$widget .= GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 1);
-//si no hay datos	
+//si no hay datos
 }else{
-	$widget .= '<div class="col-sm-12"><br/>';
+	$widget .= '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><br/>';
 	$widget .= '<div class="alert alert-danger alert-white rounded alert_box_correction" role="alert"><div class="icon"><i class="fa fa-info-circle faa-bounce animated" aria-hidden="true"></i></div><span id="alert_post_data">No hay datos para desplegar el grafico</span><div class="clearfix"></div></div>';
 	$widget .= '</div>';
-}			
+}
 
 echo $widget;
 ?>

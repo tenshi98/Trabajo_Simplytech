@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "principal.php";
 $location = $original;
 header('Access-Control-Allow-Origin: *');
@@ -42,14 +42,14 @@ if(isset($SistOp)&&$SistOp!=''&&$SistOp!='Debian'&&$SistOp!='Ubuntu'&&$SistOp!='
 		$Alert_Text .= 'Windows 8,Windows 7,Debian,Ubuntu,Slackware,Linux Mint,Gentoo,ELementary OS,Fedora,Kubuntu,Linux.';
 		alert_post_data(4,2,2, $Alert_Text);
 	echo '</div>';
-}								
+}
 
 
 /*****************************************************************************************************************/
 /*                                Se verifica si se ha cambiado la clave de inicio                               */
 /*****************************************************************************************************************/
-if($_SESSION['usuario']['basic_data']['password']=='81dc9bdb52d04dc20036dbd8313ed055') {  ?>	
-	
+if($_SESSION['usuario']['basic_data']['password']=='81dc9bdb52d04dc20036dbd8313ed055') {  ?>
+
 	<script type="text/javascript">
 		$(window).on('load',function(){
 			$('#ModalPass').modal('show');
@@ -64,9 +64,7 @@ if($_SESSION['usuario']['basic_data']['password']=='81dc9bdb52d04dc20036dbd8313e
 					<h4 class="modal-title" id="myModalLabel">Cambio de Contraseña</h4>
 				</div>
 				<div class="modal-body">
-					<p>Aun no ha cambiado su contraseña inicial, 
-					por seguridad debe cambiarla ahora, recuerde ingresar una 
-					contraseña que le sea facil de recordar.</p>
+					<p>Aun no ha cambiado su contraseña inicial, por seguridad debe cambiarla ahora, recuerde ingresar una contraseña que le sea facil de recordar.</p>
 				</div>
 				<div class="modal-footer">
 					<a href="principal_datos_password.php" class="btn btn-primary">Cambiar</a>
@@ -74,8 +72,8 @@ if($_SESSION['usuario']['basic_data']['password']=='81dc9bdb52d04dc20036dbd8313e
 			</div>
 		</div>
 	</div>
-<?php } ?>	
-	
+<?php } ?>
+
 
 
 			<!-- InstanceBeginEditable name="Bodytext" -->

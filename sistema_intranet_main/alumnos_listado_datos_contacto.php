@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "alumnos_listado.php";
 $location = $original;
 $new_location = "alumnos_listado_datos_contacto.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para editar
-if ( !empty($_POST['submit_edit']) )  { 
+if (!empty($_POST['submit_edit'])){
 	//Llamamos al formulario
 	$location.='&id='.$_GET['id'];
 	$form_trabajo= 'update';
@@ -42,9 +42,9 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Alumno editado correct
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Alumno borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Se traen todos los datos de mi Alumno
-$query = "SELECT Fono1,Fono2, Fax, email, Web, Nombre, ApellidoPat 
+$query = "SELECT Fono1,Fono2, Fax, email, Web, Nombre,ApellidoPat 
 FROM `alumnos_listado`
 WHERE idAlumno = ".$_GET['id'];
 //Consulta
@@ -62,12 +62,12 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'], 'Editar Datos de contacto');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -83,20 +83,20 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						<li class=""><a href="<?php echo 'alumnos_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'alumnos_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>		
+			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 
 					//Se verifican si existen los datos
-					if(isset($Fono1)) {            $x1 = $Fono1;             }else{$x1 = $rowdata['Fono1'];}
-					if(isset($Fono2)) {            $x2 = $Fono2;             }else{$x2 = $rowdata['Fono2'];}
-					if(isset($Fax)) {              $x3 = $Fax;               }else{$x3 = $rowdata['Fax'];}
-					if(isset($email)) {            $x4 = $email;             }else{$x4 = $rowdata['email'];}
-					if(isset($Web)) {              $x5 = $Web;               }else{$x5 = $rowdata['Web'];}
+					if(isset($Fono1)){            $x1 = $Fono1;             }else{$x1 = $rowdata['Fono1'];}
+					if(isset($Fono2)){            $x2 = $Fono2;             }else{$x2 = $rowdata['Fono2'];}
+					if(isset($Fax)){              $x3 = $Fax;               }else{$x3 = $rowdata['Fax'];}
+					if(isset($email)){            $x4 = $email;             }else{$x4 = $rowdata['email'];}
+					if(isset($Web)){              $x5 = $Web;               }else{$x5 = $rowdata['Web'];}
 					
 
 					//se dibujan los inputs
@@ -111,19 +111,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_input_hidden('idAlumno', $_GET['id'], 2);
 					?>
 
-					<div class="form-group">		
-						<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit"> 		
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-		</div>	
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 

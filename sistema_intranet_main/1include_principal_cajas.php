@@ -1,15 +1,15 @@
 <?php
 /**********************************************************/
 //Variable con la ubicacion
-$SIS_where="caja_chica_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where="caja_chica_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCajaChica']) && $_GET['idCajaChica'] != ''){                            $SIS_where .= " AND caja_chica_facturacion.idCajaChica=".$_GET['idCajaChica'];}
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != ''){                          $SIS_where .= " AND caja_chica_facturacion.idTrabajador=".$_GET['idTrabajador'];}
-if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha'] != ''){                      $SIS_where .= " AND caja_chica_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada'] != ''){  $SIS_where .= " AND caja_chica_facturacion.idFacturacionRelacionada='".$_GET['idFacturacionRelacionada']."'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                                      $SIS_where .= " AND caja_chica_facturacion.idTipo='".$_GET['idTipo']."'";}
-if(isset($_GET['idEstado']) && $_GET['idEstado'] != ''){                                  $SIS_where .= " AND caja_chica_facturacion.idEstado='".$_GET['idEstado']."'";}
+if(isset($_GET['idCajaChica']) && $_GET['idCajaChica']!=''){                     $SIS_where .= " AND caja_chica_facturacion.idCajaChica=".$_GET['idCajaChica'];}
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){                   $SIS_where .= " AND caja_chica_facturacion.idTrabajador=".$_GET['idTrabajador'];}
+if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){               $SIS_where .= " AND caja_chica_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
+if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada']!=''){  $SIS_where .= " AND caja_chica_facturacion.idFacturacionRelacionada='".$_GET['idFacturacionRelacionada']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                               $SIS_where .= " AND caja_chica_facturacion.idTipo='".$_GET['idTipo']."'";}
+if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){                           $SIS_where .= " AND caja_chica_facturacion.idEstado='".$_GET['idEstado']."'";}
 /**********************************************************/
 // Se trae un listado con todos los elementos
 $SIS_query = '
@@ -36,12 +36,12 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Movimientos de <?php echo $arrTipo[0]['Caja']?></h5>
 		</header>
-		<div class="table-responsive"> 
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -103,7 +103,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 								</div>
 							</td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>

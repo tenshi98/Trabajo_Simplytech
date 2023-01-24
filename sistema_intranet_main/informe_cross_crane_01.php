@@ -10,18 +10,18 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_cross_crane_01.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
 $location .= "?submit_filter=Filtrar";
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''){          $location .= "&f_inicio=".$_GET['f_inicio'];          $search .= "&f_inicio=".$_GET['f_inicio'];}
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''){          $location .= "&h_inicio=".$_GET['h_inicio'];          $search .= "&h_inicio=".$_GET['h_inicio'];}
-if(isset($_GET['f_termino']) && $_GET['f_termino'] != ''){        $location .= "&f_termino=".$_GET['f_termino'];        $search .= "&f_termino=".$_GET['f_termino'];}
-if(isset($_GET['h_termino']) && $_GET['h_termino'] != ''){        $location .= "&h_termino=".$_GET['h_termino'];        $search .= "&h_termino=".$_GET['h_termino'];}
-if(isset($_GET['idGrafico']) && $_GET['idGrafico'] != ''){        $location .= "&idGrafico=".$_GET['idGrafico'];        $search .= "&idGrafico=".$_GET['idGrafico'];}
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];  $search .= "&idTelemetria=".$_GET['idTelemetria'];}
+if(isset($_GET['f_inicio']) && $_GET['f_inicio']!=''){   $location .= "&f_inicio=".$_GET['f_inicio'];          $search .= "&f_inicio=".$_GET['f_inicio'];}
+if(isset($_GET['h_inicio']) && $_GET['h_inicio']!=''){   $location .= "&h_inicio=".$_GET['h_inicio'];          $search .= "&h_inicio=".$_GET['h_inicio'];}
+if(isset($_GET['f_termino']) && $_GET['f_termino']!=''){ $location .= "&f_termino=".$_GET['f_termino'];        $search .= "&f_termino=".$_GET['f_termino'];}
+if(isset($_GET['h_termino']) && $_GET['h_termino']!=''){ $location .= "&h_termino=".$_GET['h_termino'];        $search .= "&h_termino=".$_GET['h_termino'];}
+if(isset($_GET['idGrafico']) && $_GET['idGrafico']!=''){ $location .= "&idGrafico=".$_GET['idGrafico'];        $search .= "&idGrafico=".$_GET['idGrafico'];}
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];  $search .= "&idTelemetria=".$_GET['idTelemetria'];}
 						     
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -32,17 +32,17 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 $SIS_where_1 = "telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_where_2 = "telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino'] != ''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){ 
 	$SIS_where_1.= " AND telemetria_listado_errores.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
-}elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''){ 
+}elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
 	$SIS_where_1.= " AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){  
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  
 	$SIS_where_1.= " AND telemetria_listado_errores.idTelemetria=".$_GET['idTelemetria'];
 	$SIS_where_2.= " AND telemetria_listado_errores.idTelemetria=".$_GET['idTelemetria'];
 }
@@ -50,10 +50,10 @@ if(isset($_GET['idTelemetria']) && $_GET['idTelemetria'] != ''){
 $SIS_where_1.=" AND (telemetria_listado_errores.idUniMed=4 OR telemetria_listado_errores.idUniMed=5 OR telemetria_listado_errores.idUniMed=10)";
 $SIS_where_2.=" AND (telemetria_listado_errores.idUniMed=4 OR telemetria_listado_errores.idUniMed=5 OR telemetria_listado_errores.idUniMed=10)";
 //Agrupo
-$SIS_where_1.= " GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Descripcion, telemetria_listado_errores.Fecha, telemetria_listado_errores.idUniMed";
-$SIS_where_2.= " GROUP BY telemetria_listado.Nombre, telemetria_listado_errores.Fecha";
+$SIS_where_1.= " GROUP BY telemetria_listado.Nombre,telemetria_listado_errores.Descripcion, telemetria_listado_errores.Fecha, telemetria_listado_errores.idUniMed";
+$SIS_where_2.= " GROUP BY telemetria_listado.Nombre,telemetria_listado_errores.Fecha";
 
-/*********************************************************/									
+/*********************************************************/					
 $SIS_query = '
 COUNT(telemetria_listado_errores.idErrores) AS Cuenta,
 telemetria_listado.Nombre AS Equipo,
@@ -69,7 +69,7 @@ $SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Descripc
 $arrEquipos1 = array();
 $arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos1');
 
-/*********************************************************/	
+/*********************************************************/
 $SIS_query = '
 COUNT(telemetria_listado_errores.idErrores) AS Cuenta,
 telemetria_listado.Nombre AS Equipo,
@@ -85,13 +85,13 @@ $arrEquipos2 = db_select_array (false, $SIS_query, 'telemetria_listado_errores',
 	<?php
 	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
-	?>			
+	?>		
 	<a target="new" href="<?php echo 'informe_cross_crane_01_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Recuento Total de alertas fuera de rango</h5>
 		</header>
 		<div class="table-responsive">
@@ -116,16 +116,16 @@ $arrEquipos2 = db_select_array (false, $SIS_query, 'telemetria_listado_errores',
 							<td><?php echo Cantidades($equip['Valor_min'], 2).' '.$equip['Unimed']; ?></td>
 							<td><?php echo Cantidades($equip['Valor_max'], 2).' '.$equip['Unimed']; ?></td>
 						</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
 
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Recuento Total de alertas fuera de rango por Dia</h5>
 		</header>
 		<div class="table-responsive">
@@ -172,17 +172,17 @@ $arrEquipos2 = db_select_array (false, $SIS_query, 'telemetria_listado_errores',
 								}
 							}
 						}
-						
+
 						//recorro los datos guardados
 						for ($i = 1; $i <= $ndias; $i++) {
 							echo '<td>'.$DiaActual[$i]['valor'].'</td>';
-						}	
+						}
 						$ss_to = 0;
 						if($ndias!=0){$ss_to = $TotalErrores/$ndias;}	
 						echo '<td><strong>'.$TotalErrores.'</strong></td>';
 						echo '<td><strong>'.cantidades($ss_to, 2).'</strong></td>';
 						echo '</tr>';
-					} ?>                    
+					} ?>        
 				</tbody>
 			</table>
 		</div>
@@ -190,64 +190,64 @@ $arrEquipos2 = db_select_array (false, $SIS_query, 'telemetria_listado_errores',
 </div>
   
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 //Filtro de busqueda
 $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $z .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];		
+	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=6";//CrossCrane	
 }
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($f_inicio)) {      $x1  = $f_inicio;      }else{$x1  = '';}
-				if(isset($h_inicio)) {      $x2  = $h_inicio;      }else{$x2  = '';}
-				if(isset($f_termino)) {     $x3  = $f_termino;     }else{$x3  = '';}
-				if(isset($h_termino)) {     $x4  = $h_termino;     }else{$x4  = '';}
-				//if(isset($idGrafico)) {     $x5  = $idGrafico;     }else{$x5  = '';}
-				if(isset($idTelemetria)) {  $x6  = $idTelemetria;  }else{if(isset($_GET['idTel'])&&$_GET['idTel']!=''){$x6  = $_GET['idTel'];}else{$x6  = '';}}
-				
+				if(isset($f_inicio)){      $x1  = $f_inicio;      }else{$x1  = '';}
+				if(isset($h_inicio)){      $x2  = $h_inicio;      }else{$x2  = '';}
+				if(isset($f_termino)){     $x3  = $f_termino;     }else{$x3  = '';}
+				if(isset($h_termino)){     $x4  = $h_termino;     }else{$x4  = '';}
+				//if(isset($idGrafico)){     $x5  = $idGrafico;     }else{$x5  = '';}
+				if(isset($idTelemetria)){  $x6  = $idTelemetria;  }else{if(isset($_GET['idTel'])&&$_GET['idTel']!=''){$x6  = $_GET['idTel'];}else{$x6  = '';}}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
 				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x2, 1, 2);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 2);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 2);
-				//$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);		
+				//$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x6, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);	
+					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x6, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x6, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
-				}		
-				?> 
+				}
+				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "prospectos_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,32 +18,32 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                              $location .= "&idTipo=".$_GET['idTipo'];                               $search .= "&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                              $location .= "&Nombre=".$_GET['Nombre'];                               $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                                    $location .= "&Rut=".$_GET['Rut'];                                     $search .= "&Rut=".$_GET['Rut'];}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){                    $location .= "&fNacimiento=".$_GET['fNacimiento'];                     $search .= "&fNacimiento=".$_GET['fNacimiento'];}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){                          $location .= "&idCiudad=".$_GET['idCiudad'];                           $search .= "&idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){                          $location .= "&idComuna=".$_GET['idComuna'];                           $search .= "&idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){                        $location .= "&Direccion=".$_GET['Direccion'];                         $search .= "&Direccion=".$_GET['Direccion'];}
-if(isset($_GET['Giro']) && $_GET['Giro'] != ''){                                  $location .= "&Giro=".$_GET['Giro'];                                   $search .= "&Giro=".$_GET['Giro'];}
-if(isset($_GET['idEstadoFidelizacion']) && $_GET['idEstadoFidelizacion'] != ''){  $location .= "&idEstadoFidelizacion=".$_GET['idEstadoFidelizacion'];   $search .= "&idEstadoFidelizacion=".$_GET['idEstadoFidelizacion'];}
-if(isset($_GET['idEtapa']) && $_GET['idEtapa'] != ''){                            $location .= "&idEtapa=".$_GET['idEtapa'];                             $search .= "&idEtapa=".$_GET['idEtapa'];}
-if(isset($_GET['FModificacion']) && $_GET['FModificacion'] != ''){                $location .= "&FModificacion=".$_GET['FModificacion'];                 $search .= "&FModificacion=".$_GET['FModificacion'];}
-if(isset($_GET['idTab_1']) && $_GET['idTab_1'] != ''){                            $location .= "&idTab_1=".$_GET['idTab_1'];                             $search .= "&idTab_1=".$_GET['idTab_1'];}
-if(isset($_GET['idTab_2']) && $_GET['idTab_2'] != ''){                            $location .= "&idTab_2=".$_GET['idTab_2'];                             $search .= "&idTab_2=".$_GET['idTab_2'];}
-if(isset($_GET['idTab_3']) && $_GET['idTab_3'] != ''){                            $location .= "&idTab_3=".$_GET['idTab_3'];                             $search .= "&idTab_3=".$_GET['idTab_3'];}
-if(isset($_GET['idTab_4']) && $_GET['idTab_4'] != ''){                            $location .= "&idTab_4=".$_GET['idTab_4'];                             $search .= "&idTab_4=".$_GET['idTab_4'];}
-if(isset($_GET['idTab_5']) && $_GET['idTab_5'] != ''){                            $location .= "&idTab_5=".$_GET['idTab_5'];                             $search .= "&idTab_5=".$_GET['idTab_5'];}
-if(isset($_GET['idTab_6']) && $_GET['idTab_6'] != ''){                            $location .= "&idTab_6=".$_GET['idTab_6'];                             $search .= "&idTab_6=".$_GET['idTab_6'];}
-if(isset($_GET['idTab_7']) && $_GET['idTab_7'] != ''){                            $location .= "&idTab_7=".$_GET['idTab_7'];                             $search .= "&idTab_7=".$_GET['idTab_7'];}
-if(isset($_GET['idTab_8']) && $_GET['idTab_8'] != ''){                            $location .= "&idTab_8=".$_GET['idTab_8'];                             $search .= "&idTab_8=".$_GET['idTab_8'];}
-if(isset($_GET['idTab_9']) && $_GET['idTab_9'] != ''){                            $location .= "&idTab_9=".$_GET['idTab_9'];                             $search .= "&idTab_9=".$_GET['idTab_9'];}
-if(isset($_GET['idTab_10']) && $_GET['idTab_10'] != ''){                          $location .= "&idTab_10=".$_GET['idTab_10'];                           $search .= "&idTab_10=".$_GET['idTab_10'];}
-if(isset($_GET['idTab_11']) && $_GET['idTab_11'] != ''){                          $location .= "&idTab_11=".$_GET['idTab_11'];                           $search .= "&idTab_11=".$_GET['idTab_11'];}
-if(isset($_GET['idTab_12']) && $_GET['idTab_12'] != ''){                          $location .= "&idTab_12=".$_GET['idTab_12'];                           $search .= "&idTab_12=".$_GET['idTab_12'];}
-if(isset($_GET['idTab_13']) && $_GET['idTab_13'] != ''){                          $location .= "&idTab_13=".$_GET['idTab_13'];                           $search .= "&idTab_13=".$_GET['idTab_13'];}
-if(isset($_GET['idTab_14']) && $_GET['idTab_14'] != ''){                          $location .= "&idTab_14=".$_GET['idTab_14'];                           $search .= "&idTab_14=".$_GET['idTab_14'];}
-if(isset($_GET['idTab_15']) && $_GET['idTab_15'] != ''){                          $location .= "&idTab_15=".$_GET['idTab_15'];                           $search .= "&idTab_15=".$_GET['idTab_15'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                       $location .= "&idTipo=".$_GET['idTipo'];                               $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                       $location .= "&Nombre=".$_GET['Nombre'];                               $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                             $location .= "&Rut=".$_GET['Rut'];                                     $search .= "&Rut=".$_GET['Rut'];}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){             $location .= "&fNacimiento=".$_GET['fNacimiento'];                     $search .= "&fNacimiento=".$_GET['fNacimiento'];}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){                   $location .= "&idCiudad=".$_GET['idCiudad'];                           $search .= "&idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){                   $location .= "&idComuna=".$_GET['idComuna'];                           $search .= "&idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){                 $location .= "&Direccion=".$_GET['Direccion'];                         $search .= "&Direccion=".$_GET['Direccion'];}
+if(isset($_GET['Giro']) && $_GET['Giro']!=''){                           $location .= "&Giro=".$_GET['Giro'];                                   $search .= "&Giro=".$_GET['Giro'];}
+if(isset($_GET['idEstadoFidelizacion']) && $_GET['idEstadoFidelizacion']!=''){  $location .= "&idEstadoFidelizacion=".$_GET['idEstadoFidelizacion'];   $search .= "&idEstadoFidelizacion=".$_GET['idEstadoFidelizacion'];}
+if(isset($_GET['idEtapa']) && $_GET['idEtapa']!=''){                     $location .= "&idEtapa=".$_GET['idEtapa'];                             $search .= "&idEtapa=".$_GET['idEtapa'];}
+if(isset($_GET['FModificacion']) && $_GET['FModificacion']!=''){         $location .= "&FModificacion=".$_GET['FModificacion'];                 $search .= "&FModificacion=".$_GET['FModificacion'];}
+if(isset($_GET['idTab_1']) && $_GET['idTab_1']!=''){                     $location .= "&idTab_1=".$_GET['idTab_1'];                             $search .= "&idTab_1=".$_GET['idTab_1'];}
+if(isset($_GET['idTab_2']) && $_GET['idTab_2']!=''){                     $location .= "&idTab_2=".$_GET['idTab_2'];                             $search .= "&idTab_2=".$_GET['idTab_2'];}
+if(isset($_GET['idTab_3']) && $_GET['idTab_3']!=''){                     $location .= "&idTab_3=".$_GET['idTab_3'];                             $search .= "&idTab_3=".$_GET['idTab_3'];}
+if(isset($_GET['idTab_4']) && $_GET['idTab_4']!=''){                     $location .= "&idTab_4=".$_GET['idTab_4'];                             $search .= "&idTab_4=".$_GET['idTab_4'];}
+if(isset($_GET['idTab_5']) && $_GET['idTab_5']!=''){                     $location .= "&idTab_5=".$_GET['idTab_5'];                             $search .= "&idTab_5=".$_GET['idTab_5'];}
+if(isset($_GET['idTab_6']) && $_GET['idTab_6']!=''){                     $location .= "&idTab_6=".$_GET['idTab_6'];                             $search .= "&idTab_6=".$_GET['idTab_6'];}
+if(isset($_GET['idTab_7']) && $_GET['idTab_7']!=''){                     $location .= "&idTab_7=".$_GET['idTab_7'];                             $search .= "&idTab_7=".$_GET['idTab_7'];}
+if(isset($_GET['idTab_8']) && $_GET['idTab_8']!=''){                     $location .= "&idTab_8=".$_GET['idTab_8'];                             $search .= "&idTab_8=".$_GET['idTab_8'];}
+if(isset($_GET['idTab_9']) && $_GET['idTab_9']!=''){                     $location .= "&idTab_9=".$_GET['idTab_9'];                             $search .= "&idTab_9=".$_GET['idTab_9'];}
+if(isset($_GET['idTab_10']) && $_GET['idTab_10']!=''){                   $location .= "&idTab_10=".$_GET['idTab_10'];                           $search .= "&idTab_10=".$_GET['idTab_10'];}
+if(isset($_GET['idTab_11']) && $_GET['idTab_11']!=''){                   $location .= "&idTab_11=".$_GET['idTab_11'];                           $search .= "&idTab_11=".$_GET['idTab_11'];}
+if(isset($_GET['idTab_12']) && $_GET['idTab_12']!=''){                   $location .= "&idTab_12=".$_GET['idTab_12'];                           $search .= "&idTab_12=".$_GET['idTab_12'];}
+if(isset($_GET['idTab_13']) && $_GET['idTab_13']!=''){                   $location .= "&idTab_13=".$_GET['idTab_13'];                           $search .= "&idTab_13=".$_GET['idTab_13'];}
+if(isset($_GET['idTab_14']) && $_GET['idTab_14']!=''){                   $location .= "&idTab_14=".$_GET['idTab_14'];                           $search .= "&idTab_14=".$_GET['idTab_14'];}
+if(isset($_GET['idTab_15']) && $_GET['idTab_15']!=''){                   $location .= "&idTab_15=".$_GET['idTab_15'];                           $search .= "&idTab_15=".$_GET['idTab_15'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -51,16 +51,16 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/prospectos_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/prospectos_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/prospectos_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -75,14 +75,14 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Prospecto editado corr
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Prospecto borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- if ( ! empty($_GET['id']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
 $query = "SELECT  
 prospectos_listado.email, 
-prospectos_listado.Nombre, 
+prospectos_listado.Nombre,
 prospectos_listado.Rut, 
 prospectos_listado.RazonSocial, 
 prospectos_listado.fNacimiento, 
@@ -160,12 +160,12 @@ foreach ($arrTabs as $tab) {
 	$arrTabsSorter[$tab['idTab']] = $tab['Nombre'];
 }
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Resumen');?>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -183,15 +183,15 @@ foreach ($arrTabs as $tab) {
 						<li class=""><a href="<?php echo 'prospectos_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 						<li class=""><a href="<?php echo 'prospectos_listado_crear_cliente.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Crear Cliente</a></li>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
-						<div class="col-sm-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Prospecto</h2>
 							<p class="text-muted word_break">
 								<strong>Vendedor : </strong><?php echo $rowdata['prospectoVendedor']; ?><br/>
@@ -232,7 +232,7 @@ foreach ($arrTabs as $tab) {
 										if(isset($rowdata['idTab_14'])&&$rowdata['idTab_14']==2&&isset($arrTabsSorter[14])){ echo ' - '.$arrTabsSorter[14].'<br/>';} 
 										if(isset($rowdata['idTab_15'])&&$rowdata['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].'<br/>';} 
 									?>
-								</p>			
+								</p>		
 							<?php } ?>
 									
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
@@ -262,7 +262,7 @@ foreach ($arrTabs as $tab) {
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-6">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php 
 							//se arma la direccion
@@ -283,55 +283,55 @@ foreach ($arrTabs as $tab) {
 				<div class="clearfix"></div>
 				
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
-	<div class="box dark">	
-		<header>		
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>		
-			<h5>Crear Prospecto</h5>	
-		</header>	
-		<div id="div-1" class="body">	
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+	<div class="box dark">
+		<header>
+			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+			<h5>Crear Prospecto</h5>
+		</header>
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipo)) {           $x1  = $idTipo;            }else{$x1  = '';}
-				if(isset($Nombre)) {           $x2  = $Nombre;            }else{$x2  = '';}
-				if(isset($Rut)) {              $x3  = $Rut;               }else{$x3  = '';}
-				if(isset($fNacimiento)) {      $x4  = $fNacimiento;       }else{$x4  = '';}
-				if(isset($idCiudad)) {         $x5  = $idCiudad;          }else{$x5  = '';}
-				if(isset($idComuna)) {         $x6  = $idComuna;          }else{$x6  = '';}
-				if(isset($Direccion)) {        $x7  = $Direccion;         }else{$x7  = '';}
-				if(isset($Giro)) {             $x8  = $Giro;              }else{$x8  = '';}
-				if(isset($idTab_1)) {          $x9  = $idTab_1;           }else{$x9  = '';}
-				if(isset($idTab_2)) {          $x9 .= ','.$idTab_2;       }else{$x9 .= ',';}
-				if(isset($idTab_3)) {          $x9 .= ','.$idTab_3;       }else{$x9 .= ',';}
-				if(isset($idTab_4)) {          $x9 .= ','.$idTab_4;       }else{$x9 .= ',';}
-				if(isset($idTab_5)) {          $x9 .= ','.$idTab_5;       }else{$x9 .= ',';}
-				if(isset($idTab_6)) {          $x9 .= ','.$idTab_6;       }else{$x9 .= ',';}
-				if(isset($idTab_7)) {          $x9 .= ','.$idTab_7;       }else{$x9 .= ',';}
-				if(isset($idTab_8)) {          $x9 .= ','.$idTab_8;       }else{$x9 .= ',';}
-				if(isset($idTab_9)) {          $x9 .= ','.$idTab_9;       }else{$x9 .= ',';}
-				if(isset($idTab_10)) {         $x9 .= ','.$idTab_10;      }else{$x9 .= ',';}
-				if(isset($idTab_11)) {         $x9 .= ','.$idTab_11;      }else{$x9 .= ',';}
-				if(isset($idTab_12)) {         $x9 .= ','.$idTab_12;      }else{$x9 .= ',';}
-				if(isset($idTab_13)) {         $x9 .= ','.$idTab_13;      }else{$x9 .= ',';}
-				if(isset($idTab_14)) {         $x9 .= ','.$idTab_14;      }else{$x9 .= ',';}
-				if(isset($idTab_15)) {         $x9 .= ','.$idTab_15;      }else{$x9 .= ',';}
+				if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = '';}
+				if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = '';}
+				if(isset($Rut)){              $x3  = $Rut;               }else{$x3  = '';}
+				if(isset($fNacimiento)){      $x4  = $fNacimiento;       }else{$x4  = '';}
+				if(isset($idCiudad)){         $x5  = $idCiudad;          }else{$x5  = '';}
+				if(isset($idComuna)){         $x6  = $idComuna;          }else{$x6  = '';}
+				if(isset($Direccion)){        $x7  = $Direccion;         }else{$x7  = '';}
+				if(isset($Giro)){             $x8  = $Giro;              }else{$x8  = '';}
+				if(isset($idTab_1)){          $x9  = $idTab_1;           }else{$x9  = '';}
+				if(isset($idTab_2)){          $x9 .= ','.$idTab_2;       }else{$x9 .= ',';}
+				if(isset($idTab_3)){          $x9 .= ','.$idTab_3;       }else{$x9 .= ',';}
+				if(isset($idTab_4)){          $x9 .= ','.$idTab_4;       }else{$x9 .= ',';}
+				if(isset($idTab_5)){          $x9 .= ','.$idTab_5;       }else{$x9 .= ',';}
+				if(isset($idTab_6)){          $x9 .= ','.$idTab_6;       }else{$x9 .= ',';}
+				if(isset($idTab_7)){          $x9 .= ','.$idTab_7;       }else{$x9 .= ',';}
+				if(isset($idTab_8)){          $x9 .= ','.$idTab_8;       }else{$x9 .= ',';}
+				if(isset($idTab_9)){          $x9 .= ','.$idTab_9;       }else{$x9 .= ',';}
+				if(isset($idTab_10)){         $x9 .= ','.$idTab_10;      }else{$x9 .= ',';}
+				if(isset($idTab_11)){         $x9 .= ','.$idTab_11;      }else{$x9 .= ',';}
+				if(isset($idTab_12)){         $x9 .= ','.$idTab_12;      }else{$x9 .= ',';}
+				if(isset($idTab_13)){         $x9 .= ','.$idTab_13;      }else{$x9 .= ',';}
+				if(isset($idTab_14)){         $x9 .= ','.$idTab_14;      }else{$x9 .= ',';}
+				if(isset($idTab_15)){         $x9 .= ','.$idTab_15;      }else{$x9 .= ',';}
 				
 				
 				//se dibujan los inputs
@@ -342,7 +342,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
 				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x8, 1,'fa fa-industry');
@@ -364,32 +364,26 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_hidden('idUsuarioMod', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
 								
-				<div class="form-group">	
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">	
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>		
+				<div class="form-group">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-			</form> 
+			</form>
 			<?php widget_validator(); ?>
 			
 			
 		</div>
 	</div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-} else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){$num_pag = $_GET["pagina"];	
-} else {$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -425,20 +419,20 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		$SIS_where.= " AND prospectos_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
 	}
 }
-	
+
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){                              $SIS_where .= " AND prospectos_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){                              $SIS_where .= " AND prospectos_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                                    $SIS_where .= " AND prospectos_listado.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento'] != ''){                    $SIS_where .= " AND prospectos_listado.fNacimiento='".$_GET['fNacimiento']."'";}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != ''){                          $SIS_where .= " AND prospectos_listado.idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna'] != ''){                          $SIS_where .= " AND prospectos_listado.idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion'] != ''){                        $SIS_where .= " AND prospectos_listado.Direccion LIKE '%".$_GET['Direccion']."%'";}
-if(isset($_GET['Giro']) && $_GET['Giro'] != ''){                                  $SIS_where .= " AND prospectos_listado.Giro LIKE '%".$_GET['Giro']."%'";}
-if(isset($_GET['idEstadoFidelizacion']) && $_GET['idEstadoFidelizacion'] != ''){  $SIS_where .= " AND prospectos_listado.idEstadoFidelizacion=".$_GET['idEstadoFidelizacion'];}
-if(isset($_GET['idEtapa']) && $_GET['idEtapa'] != ''){                            $SIS_where .= " AND prospectos_listado.idEtapa=".$_GET['idEtapa'];}
-if(isset($_GET['FModificacion']) && $_GET['FModificacion'] != ''){                $SIS_where .= " AND prospectos_listado.FModificacion='".$_GET['FModificacion']."'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                       $SIS_where .= " AND prospectos_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                       $SIS_where .= " AND prospectos_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                             $SIS_where .= " AND prospectos_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){             $SIS_where .= " AND prospectos_listado.fNacimiento='".$_GET['fNacimiento']."'";}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){                   $SIS_where .= " AND prospectos_listado.idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){                   $SIS_where .= " AND prospectos_listado.idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){                 $SIS_where .= " AND prospectos_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
+if(isset($_GET['Giro']) && $_GET['Giro']!=''){                           $SIS_where .= " AND prospectos_listado.Giro LIKE '%".EstandarizarInput($_GET['Giro'])."%'";}
+if(isset($_GET['idEstadoFidelizacion']) && $_GET['idEstadoFidelizacion']!=''){  $SIS_where .= " AND prospectos_listado.idEstadoFidelizacion=".$_GET['idEstadoFidelizacion'];}
+if(isset($_GET['idEtapa']) && $_GET['idEtapa']!=''){                     $SIS_where .= " AND prospectos_listado.idEtapa=".$_GET['idEtapa'];}
+if(isset($_GET['FModificacion']) && $_GET['FModificacion']!=''){         $SIS_where .= " AND prospectos_listado.FModificacion='".$_GET['FModificacion']."'";}
 if(isset($_GET['idTab_1']) && $_GET['idTab_1'] != 1){                             $SIS_where .= " AND prospectos_listado.idTab_1='".$_GET['idTab_1']."'";}
 if(isset($_GET['idTab_2']) && $_GET['idTab_2'] != 1){                             $SIS_where .= " AND prospectos_listado.idTab_2='".$_GET['idTab_2']."'";}
 if(isset($_GET['idTab_3']) && $_GET['idTab_3'] != 1){                             $SIS_where .= " AND prospectos_listado.idTab_3='".$_GET['idTab_3']."'";}
@@ -447,19 +441,19 @@ if(isset($_GET['idTab_5']) && $_GET['idTab_5'] != 1){                           
 if(isset($_GET['idTab_6']) && $_GET['idTab_6'] != 1){                             $SIS_where .= " AND prospectos_listado.idTab_6='".$_GET['idTab_6']."'";}
 if(isset($_GET['idTab_7']) && $_GET['idTab_7'] != 1){                             $SIS_where .= " AND prospectos_listado.idTab_7='".$_GET['idTab_7']."'";}
 if(isset($_GET['idTab_8']) && $_GET['idTab_8'] != 1){                             $SIS_where .= " AND prospectos_listado.idTab_8='".$_GET['idTab_8']."'";}
-if(isset($_GET['idTab_9']) && $_GET['idTab_9'] != ''){                            $SIS_where .= " AND prospectos_listado.idTab_9='".$_GET['idTab_9']."'";}
-if(isset($_GET['idTab_10']) && $_GET['idTab_10'] != ''){                          $SIS_where .= " AND prospectos_listado.idTab_10='".$_GET['idTab_10']."'";}
-if(isset($_GET['idTab_11']) && $_GET['idTab_11'] != ''){                          $SIS_where .= " AND prospectos_listado.idTab_11='".$_GET['idTab_11']."'";}
-if(isset($_GET['idTab_12']) && $_GET['idTab_12'] != ''){                          $SIS_where .= " AND prospectos_listado.idTab_12='".$_GET['idTab_12']."'";}
-if(isset($_GET['idTab_13']) && $_GET['idTab_13'] != ''){                          $SIS_where .= " AND prospectos_listado.idTab_13='".$_GET['idTab_13']."'";}
-if(isset($_GET['idTab_14']) && $_GET['idTab_14'] != ''){                          $SIS_where .= " AND prospectos_listado.idTab_14='".$_GET['idTab_14']."'";}
-if(isset($_GET['idTab_15']) && $_GET['idTab_15'] != ''){                          $SIS_where .= " AND prospectos_listado.idTab_15='".$_GET['idTab_15']."'";}
+if(isset($_GET['idTab_9']) && $_GET['idTab_9']!=''){                     $SIS_where .= " AND prospectos_listado.idTab_9='".$_GET['idTab_9']."'";}
+if(isset($_GET['idTab_10']) && $_GET['idTab_10']!=''){                   $SIS_where .= " AND prospectos_listado.idTab_10='".$_GET['idTab_10']."'";}
+if(isset($_GET['idTab_11']) && $_GET['idTab_11']!=''){                   $SIS_where .= " AND prospectos_listado.idTab_11='".$_GET['idTab_11']."'";}
+if(isset($_GET['idTab_12']) && $_GET['idTab_12']!=''){                   $SIS_where .= " AND prospectos_listado.idTab_12='".$_GET['idTab_12']."'";}
+if(isset($_GET['idTab_13']) && $_GET['idTab_13']!=''){                   $SIS_where .= " AND prospectos_listado.idTab_13='".$_GET['idTab_13']."'";}
+if(isset($_GET['idTab_14']) && $_GET['idTab_14']!=''){                   $SIS_where .= " AND prospectos_listado.idTab_14='".$_GET['idTab_14']."'";}
+if(isset($_GET['idTab_15']) && $_GET['idTab_15']!=''){                   $SIS_where .= " AND prospectos_listado.idTab_15='".$_GET['idTab_15']."'";}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idProspecto', 'prospectos_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 prospectos_listado.idProspecto,
@@ -505,53 +499,53 @@ foreach ($arrTabs as $tab) {
 	$arrTabsSorter[$tab['idTab']] = $tab['Nombre'];
 }
 ?>
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Prospecto</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Prospecto</a><?php }?>
 
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idTipo)) {                $x1  = $idTipo;                 }else{$x1  = '';}
-				if(isset($Nombre)) {                $x2  = $Nombre;                 }else{$x2  = '';}
-				if(isset($Rut)) {                   $x3  = $Rut;                    }else{$x3  = '';}
-				if(isset($fNacimiento)) {           $x4  = $fNacimiento;            }else{$x4  = '';}
-				if(isset($idCiudad)) {              $x5  = $idCiudad;               }else{$x5  = '';}
-				if(isset($idComuna)) {              $x6  = $idComuna;               }else{$x6  = '';}
-				if(isset($Direccion)) {             $x7  = $Direccion;              }else{$x7  = '';}
-				if(isset($Giro)) {                  $x9  = $Giro;                   }else{$x9  = '';}
-				if(isset($idEstadoFidelizacion)) {  $x10 = $idEstadoFidelizacion;   }else{$x10 = '';}
-				if(isset($idEtapa)) {               $x11 = $idEtapa;                }else{$x11 = '';}
-				if(isset($FModificacion)) {         $x12 = $FModificacion;          }else{$x12 = '';}
-				if(isset($idTab_1)) {               $x13  = $idTab_1;               }else{$x13  = '';}
-				if(isset($idTab_2)) {               $x13 .= ','.$idTab_2;           }else{$x13 .= ',';}
-				if(isset($idTab_3)) {               $x13 .= ','.$idTab_3;           }else{$x13 .= ',';}
-				if(isset($idTab_4)) {               $x13 .= ','.$idTab_4;           }else{$x13 .= ',';}
-				if(isset($idTab_5)) {               $x13 .= ','.$idTab_5;           }else{$x13 .= ',';}
-				if(isset($idTab_6)) {               $x13 .= ','.$idTab_6;           }else{$x13 .= ',';}
-				if(isset($idTab_7)) {               $x13 .= ','.$idTab_7;           }else{$x13 .= ',';}
-				if(isset($idTab_8)) {               $x13 .= ','.$idTab_8;           }else{$x13 .= ',';}
-				if(isset($idTab_9)) {               $x13 .= ','.$idTab_9;           }else{$x13 .= ',';}
-				if(isset($idTab_10)) {              $x13 .= ','.$idTab_10;          }else{$x13 .= ',';}
-				if(isset($idTab_11)) {              $x13 .= ','.$idTab_11;          }else{$x13 .= ',';}
-				if(isset($idTab_12)) {              $x13 .= ','.$idTab_12;          }else{$x13 .= ',';}
-				if(isset($idTab_13)) {              $x13 .= ','.$idTab_13;          }else{$x13 .= ',';}
-				if(isset($idTab_14)) {              $x13 .= ','.$idTab_14;          }else{$x13 .= ',';}
-				if(isset($idTab_15)) {              $x13 .= ','.$idTab_15;          }else{$x13 .= ',';}
-				
+				if(isset($idTipo)){                $x1  = $idTipo;                 }else{$x1  = '';}
+				if(isset($Nombre)){                $x2  = $Nombre;                 }else{$x2  = '';}
+				if(isset($Rut)){                   $x3  = $Rut;                    }else{$x3  = '';}
+				if(isset($fNacimiento)){           $x4  = $fNacimiento;            }else{$x4  = '';}
+				if(isset($idCiudad)){              $x5  = $idCiudad;               }else{$x5  = '';}
+				if(isset($idComuna)){              $x6  = $idComuna;               }else{$x6  = '';}
+				if(isset($Direccion)){             $x7  = $Direccion;              }else{$x7  = '';}
+				if(isset($Giro)){                  $x9  = $Giro;                   }else{$x9  = '';}
+				if(isset($idEstadoFidelizacion)){  $x10 = $idEstadoFidelizacion;   }else{$x10 = '';}
+				if(isset($idEtapa)){               $x11 = $idEtapa;                }else{$x11 = '';}
+				if(isset($FModificacion)){         $x12 = $FModificacion;          }else{$x12 = '';}
+				if(isset($idTab_1)){               $x13  = $idTab_1;               }else{$x13  = '';}
+				if(isset($idTab_2)){               $x13 .= ','.$idTab_2;           }else{$x13 .= ',';}
+				if(isset($idTab_3)){               $x13 .= ','.$idTab_3;           }else{$x13 .= ',';}
+				if(isset($idTab_4)){               $x13 .= ','.$idTab_4;           }else{$x13 .= ',';}
+				if(isset($idTab_5)){               $x13 .= ','.$idTab_5;           }else{$x13 .= ',';}
+				if(isset($idTab_6)){               $x13 .= ','.$idTab_6;           }else{$x13 .= ',';}
+				if(isset($idTab_7)){               $x13 .= ','.$idTab_7;           }else{$x13 .= ',';}
+				if(isset($idTab_8)){               $x13 .= ','.$idTab_8;           }else{$x13 .= ',';}
+				if(isset($idTab_9)){               $x13 .= ','.$idTab_9;           }else{$x13 .= ',';}
+				if(isset($idTab_10)){              $x13 .= ','.$idTab_10;          }else{$x13 .= ',';}
+				if(isset($idTab_11)){              $x13 .= ','.$idTab_11;          }else{$x13 .= ',';}
+				if(isset($idTab_12)){              $x13 .= ','.$idTab_12;          }else{$x13 .= ',';}
+				if(isset($idTab_13)){              $x13 .= ','.$idTab_13;          }else{$x13 .= ',';}
+				if(isset($idTab_14)){              $x13 .= ','.$idTab_14;          }else{$x13 .= ',';}
+				if(isset($idTab_15)){              $x13 .= ','.$idTab_15;          }else{$x13 .= ',';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo de Prospecto','idTipo', $x1, 1, 'idTipo', 'Nombre', 'prospectos_tipos', 0, '', $dbConn);
@@ -559,7 +553,7 @@ foreach ($arrTabs as $tab) {
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
 				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
-										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0, 
+										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
@@ -572,25 +566,25 @@ foreach ($arrTabs as $tab) {
 				}
 				
 				
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>  
-<div class="clearfix"></div>                  
+<div class="clearfix"></div>
                                  
-<div class="col-sm-12">
-	<div class="box">	
-		<header>		
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Prospectos</h5>	
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+	<div class="box">
+		<header>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Prospectos</h5>
 			<div class="toolbar">
 				<?php 
 				//se llama al paginador
@@ -651,13 +645,13 @@ foreach ($arrTabs as $tab) {
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrProspecto as $prospect) { ?>
-					<tr class="odd">		
-						<td><?php echo $prospect['Rut']; ?></td>		
-						<td><?php echo $prospect['Nombre']; ?></td>		
-						<td><label class="label <?php if(isset($prospect['idEstado'])&&$prospect['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $prospect['estado']; ?></label></td>		
-						<td><?php echo $prospect['Etapa']; ?></td>		
+					<tr class="odd">
+						<td><?php echo $prospect['Rut']; ?></td>
+						<td><?php echo $prospect['Nombre']; ?></td>
+						<td><label class="label <?php if(isset($prospect['idEstado'])&&$prospect['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $prospect['estado']; ?></label></td>	
+						<td><?php echo $prospect['Etapa']; ?></td>
 						<td><?php echo fecha_estandar($prospect['FModificacion']).' - '.$prospect['HModificacion']; ?></td>
-						<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){ ?>		
+						<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){ ?>	
 							<td>
 								<?php 
 									if(isset($prospect['idTab_1'])&&$prospect['idTab_1']==2&&isset($arrTabsSorter[1])){    echo ' - '.$arrTabsSorter[1].'<br/>';}
@@ -676,7 +670,7 @@ foreach ($arrTabs as $tab) {
 									if(isset($prospect['idTab_14'])&&$prospect['idTab_14']==2&&isset($arrTabsSorter[14])){ echo ' - '.$arrTabsSorter[14].'<br/>';} 
 									if(isset($prospect['idTab_15'])&&$prospect['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].'<br/>';} 
 								?>
-							</td>		
+							</td>
 						<?php } ?>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $prospect['sistema']; ?></td><?php } ?>
 						<td>
@@ -687,19 +681,19 @@ foreach ($arrTabs as $tab) {
 									$ubicacion = $location.'&del='.simpleEncode($prospect['idProspecto'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al prospecto '.$prospect['Nombre'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
-						</td>	
+						</td>
 					</tr>
-					<?php } ?>                    
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div>   
+		</div>
 	</div>
 </div>
 	

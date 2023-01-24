@@ -17,30 +17,30 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //obtengo los datos de la empresa
-$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas', '', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+$rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /*******************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Filtros
-if (isset($_GET['idSector']) && $_GET['idSector'] != ''){               $SIS_where .=" AND aguas_analisis_aguas.idSector='".$_GET['idSector']."'"; }
-if (isset($_GET['idPuntoMuestreo']) && $_GET['idPuntoMuestreo'] != ''){ $SIS_where .=" AND aguas_analisis_aguas.idPuntoMuestreo='".$_GET['idPuntoMuestreo']."'"; }
-if (isset($_GET['idTipoMuestra']) && $_GET['idTipoMuestra'] != ''){     $SIS_where .=" AND aguas_analisis_aguas.idTipoMuestra='".$_GET['idTipoMuestra']."'"; }
-if (isset($_GET['idParametros']) && $_GET['idParametros'] != ''){       $SIS_where .=" AND aguas_analisis_aguas.idParametros='".$_GET['idParametros']."'"; }
-if (isset($_GET['idSigno']) && $_GET['idSigno'] != ''){                 $SIS_where .=" AND aguas_analisis_aguas.idSigno='".$_GET['idSigno']."'"; }
-if (isset($_GET['idLaboratorio']) && $_GET['idLaboratorio'] != ''){     $SIS_where .=" AND aguas_analisis_aguas.idLaboratorio='".$_GET['idLaboratorio']."'"; }
+if (isset($_GET['idSector']) && $_GET['idSector']!=''){        $SIS_where .=" AND aguas_analisis_aguas.idSector='".$_GET['idSector']."'"; }
+if (isset($_GET['idPuntoMuestreo']) && $_GET['idPuntoMuestreo']!=''){ $SIS_where .=" AND aguas_analisis_aguas.idPuntoMuestreo='".$_GET['idPuntoMuestreo']."'"; }
+if (isset($_GET['idTipoMuestra']) && $_GET['idTipoMuestra']!=''){     $SIS_where .=" AND aguas_analisis_aguas.idTipoMuestra='".$_GET['idTipoMuestra']."'"; }
+if (isset($_GET['idParametros']) && $_GET['idParametros']!=''){$SIS_where .=" AND aguas_analisis_aguas.idParametros='".$_GET['idParametros']."'"; }
+if (isset($_GET['idSigno']) && $_GET['idSigno']!=''){          $SIS_where .=" AND aguas_analisis_aguas.idSigno='".$_GET['idSigno']."'"; }
+if (isset($_GET['idLaboratorio']) && $_GET['idLaboratorio']!=''){     $SIS_where .=" AND aguas_analisis_aguas.idLaboratorio='".$_GET['idLaboratorio']."'"; }
 
-if(isset($_GET['f_muestra_inicio']) && $_GET['f_muestra_inicio'] != ''&&isset($_GET['f_muestra_termino']) && $_GET['f_muestra_termino'] != ''){ 
+if(isset($_GET['f_muestra_inicio']) && $_GET['f_muestra_inicio'] != ''&&isset($_GET['f_muestra_termino']) && $_GET['f_muestra_termino']!=''){ 
 	$SIS_where .= " AND aguas_analisis_aguas.f_muestra BETWEEN '".$_GET['f_muestra_inicio']."' AND '".$_GET['f_muestra_termino']."'";
 }
-if(isset($_GET['f_recibida_inicio']) && $_GET['f_recibida_inicio'] != ''&&isset($_GET['f_recibida_termino']) && $_GET['f_recibida_termino'] != ''){ 
+if(isset($_GET['f_recibida_inicio']) && $_GET['f_recibida_inicio'] != ''&&isset($_GET['f_recibida_termino']) && $_GET['f_recibida_termino']!=''){ 
 	$SIS_where .= " AND aguas_analisis_aguas.f_recibida BETWEEN '".$_GET['f_recibida_inicio']."' AND '".$_GET['f_recibida_termino']."'";
 }
 
@@ -117,7 +117,7 @@ $nn  = 2;
 $var = "";
 foreach ($arrProductos as $productos) { 
 	
-	if($productos['periodo_remuestreo']!='0000-00-00'){$var = fecha2Ano($productos['periodo_remuestreo']).fecha2NdiaMesCon0($productos['periodo_remuestreo']); }
+	if($productos['periodo_remuestreo']!='0000-00-00'){$var = fecha2Ano($productos['periodo_remuestreo']).fecha2NdiaMesCon0($productos['periodo_remuestreo']);}
 						
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($productos['codigoProceso']))
@@ -141,7 +141,7 @@ foreach ($arrProductos as $productos) {
 				->setCellValue('P'.$nn, $productos['valor'])
 				->setCellValue('Q'.$nn, $productos['rutLaboratorio'])
 				->setCellValue('R'.$nn, DeSanitizar($productos['idLaboratorio']));				
-	$nn++;           
+	$nn++;
 	   
 } 
 

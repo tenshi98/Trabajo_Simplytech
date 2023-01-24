@@ -10,12 +10,12 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "ocompra_generacion.php";
 $location = $original;
 //Se agregan ubicaciones
 if(isset($_GET['idSistema'])){                         $location .= "?idSistema=".$_GET['idSistema']; 	}
-if(isset($_GET['submit']) && $_GET['submit'] != ''){   $location .= "&submit=".$_GET['submit']; 	}
+if(isset($_GET['submit']) && $_GET['submit']!=''){   $location .= "&submit=".$_GET['submit']; 	}
 
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -23,37 +23,37 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit_Productos']) )  { 
+if (!empty($_POST['submit_Productos'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_Productos';
 	require_once 'A1XRXS_sys/xrxs_form/z_solicitud_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_Insumos']) )  { 
+if (!empty($_POST['submit_Insumos'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_Insumos';
 	require_once 'A1XRXS_sys/xrxs_form/z_solicitud_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_Arriendos']) )  { 
+if (!empty($_POST['submit_Arriendos'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_Arriendos';
 	require_once 'A1XRXS_sys/xrxs_form/z_solicitud_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_Servicios']) )  { 
+if (!empty($_POST['submit_Servicios'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_Servicios';
 	require_once 'A1XRXS_sys/xrxs_form/z_solicitud_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_Otros']) )  { 
+if (!empty($_POST['submit_Otros'])){
 	//Llamamos al formulario
 	$form_trabajo= 'edit_Otros';
 	require_once 'A1XRXS_sys/xrxs_form/z_solicitud_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_OC']) )  { 
+if (!empty($_POST['submit_OC'])){
 	//Llamamos al formulario
 	$form_trabajo= 'crear_oc';
 	require_once 'A1XRXS_sys/xrxs_form/z_solicitud_listado.php';
@@ -71,23 +71,23 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Proveedor Editado corr
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Proveedor borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['new_oc']) ) {  ?>
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['new_oc'])){  ?>
 	 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Datos Nueva Orden de Compra</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Creacion_fecha)) {   $x2  = $Creacion_fecha; }else{$x2  = '';}
-				if(isset($Observaciones)) {    $x3  = $Observaciones;  }else{$x3  = '';}
-				
+				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = '';}
+				if(isset($Observaciones)){    $x3  = $Observaciones;  }else{$x3  = '';}
+
 				//se dibujan los inputs	
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
@@ -102,19 +102,19 @@ if ( ! empty($_GET['new_oc']) ) {  ?>
 				?>
 				
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf046; Crear Documento" name="submit_OC">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit_OC">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>          
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_Otros']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_Otros'])){ 
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 // Se traen todos los datos
@@ -137,19 +137,19 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Proveedor</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProveedor)) {      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
-				
+				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
@@ -158,18 +158,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_Otros">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_Otros">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-}elseif ( ! empty($_GET['edit_Productos']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+}elseif(!empty($_GET['edit_Productos'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 // Se traen todos los datos
@@ -192,19 +192,19 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Proveedor</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProveedor)) {      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
-				
+				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
@@ -213,19 +213,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_Productos">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_Productos">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_Insumos']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_Insumos'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
 // Se traen todos los datos
@@ -248,19 +248,19 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Proveedor</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProveedor)) {      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
-				
+				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
@@ -269,19 +269,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_Insumos">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_Insumos">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_Arriendos']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_Arriendos'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 // Se traen todos los datos
@@ -304,19 +304,19 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Proveedor</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProveedor)) {      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
-				
+				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
@@ -325,19 +325,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_Arriendos">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_Arriendos">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['edit_Servicios']) ) {
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['edit_Servicios'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 // Se traen todos los datos
@@ -360,19 +360,19 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Proveedor</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idProveedor)) {      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
-				
+				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
@@ -381,19 +381,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_Servicios">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_Servicios">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['submit']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['submit'])){ 
 //Se verifica si se creo sistema
 $aa1 = '';
 $aa2 = '';
@@ -442,7 +442,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 }
 // Se trae un listado con todos los insumos
@@ -475,7 +475,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrInsumos,$row );
 }
 
@@ -509,7 +509,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrMaquinasArriendo,$row );
 }
 
@@ -543,7 +543,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrServicios,$row );
 }	 
 
@@ -575,7 +575,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrOtros,$row );
 }
 
@@ -599,19 +599,19 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProveedores,$row );
 }
 	 
 ?>
 
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Solicitudes Agrupadas por proveedor</h5>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -659,7 +659,7 @@ array_push( $arrProveedores,$row );
 								</tr>
 								<?php
 								//Productos
-								foreach ($arrProductos as $prod) { 
+								foreach ($arrProductos as $prod) {
 									if($prov['idProveedor']==$prod['idProveedor']){ ?>
 										<tr class="odd">
 											<td><?php echo $prod['idSolicitud']; ?></td>
@@ -677,7 +677,7 @@ array_push( $arrProveedores,$row );
 									}
 								}
 								//Insumos
-								foreach ($arrInsumos as $prod) { 
+								foreach ($arrInsumos as $prod) {
 									if($prov['idProveedor']==$prod['idProveedor']){ ?>
 										<tr class="odd">
 											<td><?php echo $prod['idSolicitud']; ?></td>
@@ -695,7 +695,7 @@ array_push( $arrProveedores,$row );
 									}
 								}
 								//Arriendos
-								foreach ($arrMaquinasArriendo as $prod) { 
+								foreach ($arrMaquinasArriendo as $prod) {
 									if($prov['idProveedor']==$prod['idProveedor']){ ?>
 										<tr class="odd">
 											<td><?php echo $prod['idSolicitud']; ?></td>
@@ -713,7 +713,7 @@ array_push( $arrProveedores,$row );
 									}
 								}
 								//Servicios
-								foreach ($arrServicios as $prod) { 
+								foreach ($arrServicios as $prod) {
 									if($prov['idProveedor']==$prod['idProveedor']){ ?>
 										<tr class="odd">
 											<td><?php echo $prod['idSolicitud']; ?></td>
@@ -731,7 +731,7 @@ array_push( $arrProveedores,$row );
 									}
 								}
 								//Otros
-								foreach ($arrOtros as $prod) { 
+								foreach ($arrOtros as $prod) {
 									if($prov['idProveedor']==$prod['idProveedor']){ ?>
 										<tr class="odd">
 											<td><?php echo $prod['idSolicitud']; ?></td>
@@ -756,12 +756,12 @@ array_push( $arrProveedores,$row );
 	</div>
 </div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Solicitudes Sin proveedor</h5>
 		</header>
-		<div class="table-responsive">   
+		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -774,7 +774,7 @@ array_push( $arrProveedores,$row );
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<?php
 							//Productos
-							foreach ($arrProductos as $prod) { 
+							foreach ($arrProductos as $prod) {
 								if($prod['idProveedor']==0){ ?>
 									<tr class="odd">
 										<td><?php echo $prod['idSolicitud']; ?></td>
@@ -791,7 +791,7 @@ array_push( $arrProveedores,$row );
 								}
 							}
 							//Insumos
-							foreach ($arrInsumos as $prod) { 
+							foreach ($arrInsumos as $prod) {
 								if($prod['idProveedor']==0){ ?>
 									<tr class="odd">
 										<td><?php echo $prod['idSolicitud']; ?></td>
@@ -808,7 +808,7 @@ array_push( $arrProveedores,$row );
 								}
 							}
 							//Arriendos
-							foreach ($arrMaquinasArriendo as $prod) { 
+							foreach ($arrMaquinasArriendo as $prod) {
 								if($prod['idProveedor']==0){ ?>
 									<tr class="odd">
 										<td><?php echo $prod['idSolicitud']; ?></td>
@@ -825,7 +825,7 @@ array_push( $arrProveedores,$row );
 								}
 							}
 							//Servicios
-							foreach ($arrServicios as $prod) { 
+							foreach ($arrServicios as $prod) {
 								if($prod['idProveedor']==0){ ?>
 									<tr class="odd">
 										<td><?php echo $prod['idSolicitud']; ?></td>
@@ -842,7 +842,7 @@ array_push( $arrProveedores,$row );
 								}
 							}
 							//Otros
-							foreach ($arrOtros as $prod) { 
+							foreach ($arrOtros as $prod) {
 								if($prod['idProveedor']==0){ ?>
 									<tr class="odd">
 										<td><?php echo $prod['idSolicitud']; ?></td>
@@ -858,7 +858,7 @@ array_push( $arrProveedores,$row );
 								<?php
 								}
 							}
-						?>  
+						?>
 					                 
 				</tbody>
 			</table>
@@ -866,47 +866,47 @@ array_push( $arrProveedores,$row );
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>	
+<?php widget_modal(80, 95); ?>
 
 	 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $original ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $original ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  {  ?>
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else { ?>
 	 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtrar Solicitudes</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location; ?>" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idSistema)) {        $x1  = $idSistema;      }else{$x1  = '';}
+				if(isset($idSistema)){        $x1  = $idSistema;      }else{$x1  = '';}
 
 				//se dibujan los inputs	
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select('Sistema','idSistema', $x1, 1, 'idSistema', 'Nombre', 'core_sistemas', 0, '', $dbConn);
+				$Form_Inputs->form_select('Sistema','idSistema', $x1, 1, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
 				
 				?>
 				
 				<div class="form-group">
-					<input type="submit" id="text2"  class="btn btn-primary fright margin_width fa-input" value="&#xf046; Filtrar" name="submit">
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Filtrar" name="submit">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>          
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

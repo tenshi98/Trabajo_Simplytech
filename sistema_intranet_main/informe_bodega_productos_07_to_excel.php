@@ -17,9 +17,9 @@ require_once 'core/Load.Utils.Excel.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
@@ -77,7 +77,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$graficoMain[$xcontador]['año'] = $xaño;
 		
 		foreach ($arrCategoria as $cat) { 
-			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']]; }else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
+			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
 		}
 									
 	}else{
@@ -87,7 +87,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$graficoMain[$xcontador]['año'] = $xaño;
 		
 		foreach ($arrCategoria as $cat) { 
-			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']]; }else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
+			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
 		}	
 	}
 	$xmes = $xmes-1;								
@@ -141,7 +141,7 @@ foreach ($arrBodega as $bod) {
 			$grafico[$bod['idBodega']][$xcontador]['año'] = $xaño;
 
 			foreach ($arrCategoria as $cat) { 
-				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']]; }else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
+				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
 			}
 										
 		}else{
@@ -151,8 +151,8 @@ foreach ($arrBodega as $bod) {
 			$grafico[$bod['idBodega']][$xcontador]['año'] = $xaño;
 			
 			foreach ($arrCategoria as $cat) { 
-				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']]; }else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
-			}	
+				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
+			}
 		}
 		$xmes = $xmes-1;								
 	}
@@ -373,7 +373,7 @@ foreach($arrExistencias as $empresa=>$datos) {
 						->setCellValue('L'.$nn, $grafico[$datos[0]['BodegaID']][11][$cat['idCategoria']])
 						->setCellValue('M'.$nn, $grafico[$datos[0]['BodegaID']][12][$cat['idCategoria']])
 						->setCellValue('N'.$nn, $SubTotalGen);
-			$nn++; 
+			$nn++;
 			
 		} 
 	} 

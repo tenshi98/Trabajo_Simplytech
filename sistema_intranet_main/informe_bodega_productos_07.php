@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "informe_bodega_productos_07.php";
 $location = $original;    
 //Verifico los permisos del usuario sobre la transaccion
@@ -22,8 +22,8 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['submit_filter']) ) { 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['submit_filter'])){
 //Variables
 $año_pasado = ano_actual()-1;
 
@@ -63,7 +63,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCategoria,$row );
 }
 /****************************************************/
@@ -83,7 +83,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrBodega,$row );
 }
 // Se trae un listado con los valores de las existencias actuales	
@@ -130,7 +130,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrExistenciasMain,$row );
 }
 
@@ -153,7 +153,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$graficoMain[$xcontador]['año'] = $xaño;
 		
 		foreach ($arrCategoria as $cat) { 
-			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']]; }else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
+			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
 		}
 									
 	}else{
@@ -163,7 +163,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$graficoMain[$xcontador]['año'] = $xaño;
 		
 		foreach ($arrCategoria as $cat) { 
-			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']]; }else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
+			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
 		}	
 	}
 	$xmes = $xmes-1;								
@@ -218,7 +218,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrExistencias,$row );
 }
 
@@ -243,7 +243,7 @@ foreach ($arrBodega as $bod) {
 			$grafico[$bod['idBodega']][$xcontador]['año'] = $xaño;
 
 			foreach ($arrCategoria as $cat) { 
-				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']]; }else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
+				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
 			}
 										
 		}else{
@@ -253,8 +253,8 @@ foreach ($arrBodega as $bod) {
 			$grafico[$bod['idBodega']][$xcontador]['año'] = $xaño;
 			
 			foreach ($arrCategoria as $cat) { 
-				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']]; }else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
-			}	
+				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
+			}
 		}
 		$xmes = $xmes-1;								
 	}
@@ -267,7 +267,7 @@ foreach ($arrBodega as $bod) {
 		<?php
 		$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 		$zz .= '&idBodegaOrigen='.$_GET['idBodegaOrigen'];
-		?>			
+		?>		
 		<a target="new" href="<?php echo 'informe_bodega_productos_07_to_excel.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	</div>
 </div>
@@ -279,7 +279,7 @@ foreach ($arrBodega as $bod) {
 	
 	
 	
-	<div class="col-sm-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo 'Traspasos desde '.$rowBodega['Nombre']; ?></h5>
@@ -452,7 +452,7 @@ foreach ($arrBodega as $bod) {
 									<td align="right"><strong><?php echo valores($SubTotal_11, 0); ?></strong></td>
 									<td align="right"><strong><?php echo valores($SubTotal_12, 0); ?></strong></td>
 									<td align="right"><strong><?php echo valores($Total, 0); ?></strong></td>
-								</tr>                     
+								</tr> 
 							</tbody>
 						</table>
 					
@@ -610,7 +610,7 @@ foreach ($arrBodega as $bod) {
 									<td align="right"><strong><?php echo valores($SubTotal_11, 0); ?></strong></td>
 									<td align="right"><strong><?php echo valores($SubTotal_12, 0); ?></strong></td>
 									<td align="right"><strong><?php echo valores($Total, 0); ?></strong></td>
-								</tr>                     
+								</tr> 
 							</tbody>
 						</table>
 					
@@ -631,48 +631,48 @@ foreach ($arrBodega as $bod) {
 	
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
-$z1 = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
+$z1 = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z1 .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
 }
 
  ?>
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idBodegaOrigen)) {       $x1  = $idBodegaOrigen;        }else{$x1  = '';}
-				
+				if(isset($idBodegaOrigen)){       $x1  = $idBodegaOrigen;        }else{$x1  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x1, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 'usuarios_bodegas_productos', $z1, $dbConn);
 				
-				?>        
+				?>
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="submit_filter"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>         
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
-<?php } ?> 
+<?php } ?>
 
 
 <?php

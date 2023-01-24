@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "trabajadores_listado.php";
 $location = $original;
 //Se agregan ubicaciones
@@ -18,13 +18,13 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){             $location .= "&Nombre=".$_GET['Nombre'];            $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat'] != ''){   $location .= "&ApellidoPat=".$_GET['ApellidoPat'];  $search .= "&ApellidoPat=".$_GET['ApellidoPat'];}
-if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat'] != ''){   $location .= "&ApellidoMat=".$_GET['ApellidoMat'];  $search .= "&ApellidoMat=".$_GET['ApellidoMat'];}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                   $location .= "&Rut=".$_GET['Rut'];                  $search .= "&Rut=".$_GET['Rut'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){             $location .= "&idTipo=".$_GET['idTipo'];            $search .= "&idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Cargo']) && $_GET['Cargo'] != ''){               $location .= "&Cargo=".$_GET['Cargo'];              $search .= "&Cargo=".$_GET['Cargo'];}
-if(isset($_GET['Fono']) && $_GET['Fono'] != ''){                 $location .= "&Fono=".$_GET['Fono'];                $search .= "&Fono=".$_GET['Fono'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){      $location .= "&Nombre=".$_GET['Nombre'];            $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat']!=''){   $location .= "&ApellidoPat=".$_GET['ApellidoPat'];  $search .= "&ApellidoPat=".$_GET['ApellidoPat'];}
+if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat']!=''){   $location .= "&ApellidoMat=".$_GET['ApellidoMat'];  $search .= "&ApellidoMat=".$_GET['ApellidoMat'];}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){            $location .= "&Rut=".$_GET['Rut'];                  $search .= "&Rut=".$_GET['Rut'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){      $location .= "&idTipo=".$_GET['idTipo'];            $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Cargo']) && $_GET['Cargo']!=''){        $location .= "&Cargo=".$_GET['Cargo'];              $search .= "&Cargo=".$_GET['Cargo'];}
+if(isset($_GET['Fono']) && $_GET['Fono']!=''){          $location .= "&Fono=".$_GET['Fono'];                $search .= "&Fono=".$_GET['Fono'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -32,22 +32,22 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_POST['submit']) )  { 
+if (!empty($_POST['submit'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert';
 	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';
 }
 //formulario para crear
-if ( !empty($_POST['submit_plant']) )  { 
+if (!empty($_POST['submit_plant'])){
 	//Llamamos al formulario
 	$form_trabajo= 'insert_plant';
 	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['del']) )     {
+if (!empty($_GET['del'])){
 	//Llamamos al formulario
 	$form_trabajo= 'del';
-	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/trabajadores_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -62,55 +62,55 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Trabajador Modificado 
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Trabajador borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-if ( ! empty($_GET['new_plantilla']) ) {  
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!empty($_GET['new_plantilla'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
-//cuadro para descargar	 
+//cuadro para descargar
 $Alert_Text  = 'Descargar Plantilla';
 $Alert_Text .= '<a href="1download.php?dir='.simpleEncode('templates', fecha_actual()).'&file='.simpleEncode('plantilla_trabajador.xlsx', fecha_actual()).'" title="Descargar Plantilla" class="btn btn-primary btn-sm pull-right" ><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>';
-alert_post_data(2,1,2, $Alert_Text);		
+alert_post_data(2,1,2, $Alert_Text);
 	
 ?>
  
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Trabajador con Plantilla</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($idOpciones)) {  $x1 = $idOpciones;   }else{$x1 = '';}
-				
+				if(isset($idOpciones)){  $x1 = $idOpciones;   }else{$x1 = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','FileTrabajador', 1, '"xlsx"');
-				$Form_Inputs->form_select('¿Envio de correos?','idOpciones', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('¿Envio de correos?','idOpciones', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				$Form_Inputs->form_input_hidden('idTipoTrabajo', 1, 2); 
+				$Form_Inputs->form_input_hidden('idTipoTrabajo', 1, 2);
 				
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit_plant">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_plant">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div> 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['id']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ } elseif(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -119,7 +119,7 @@ trabajadores_listado.Direccion_img,
 
 trabajadores_listado.Nombre,
 trabajadores_listado.ApellidoPat,
-trabajadores_listado.ApellidoMat, 
+trabajadores_listado.ApellidoMat,
 trabajadores_listado.Rut,
 core_sexo.Nombre AS Sexo,
 trabajadores_listado.FNacimiento,
@@ -130,7 +130,7 @@ core_ubicacion_comunas.Nombre AS nombre_comuna,
 trabajadores_listado.Direccion,
 core_estado_civil.Nombre AS EstadoCivil,
 core_estados.Nombre AS Estado,
-core_sistemas.Nombre AS Sistema,				
+core_sistemas.Nombre AS Sistema,
 
 trabajadores_listado.ContactoPersona,
 trabajadores_listado.ContactoFono,
@@ -213,7 +213,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 // Se trae un listado con todas las cargas familiares
 $arrCargas = array();
-$query = "SELECT  Nombre, ApellidoPat, ApellidoMat
+$query = "SELECT  Nombre,ApellidoPat, ApellidoMat
 FROM `trabajadores_listado_cargas`
 WHERE idTrabajador = ".$_GET['id']."
 ORDER BY idCarga ASC ";
@@ -230,16 +230,16 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-while ( $row = mysqli_fetch_assoc ($resultado)) {
+while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCargas,$row );
 }
 ?>
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Resumen');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -262,22 +262,22 @@ array_push( $arrCargas,$row );
 						<li class=""><a href="<?php echo 'trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
 						
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
-        <div id="div-3" class="tab-content">
+        <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					
-					<div class="col-sm-4">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
-							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="User Picture" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
+							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
 						<?php }?>
 					</div>
-					<div class="col-sm-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
@@ -307,7 +307,7 @@ array_push( $arrCargas,$row );
 									echo '<strong>Carga #'.$n_carga.' : </strong>'.$carga['Nombre'].' '.$carga['ApellidoPat'].' '.$carga['ApellidoMat'].'<br/>';
 									$n_carga++;
 								}
-							//si no existen cargas se muestra mensaje	
+							//si no existen cargas se muestra mensaje
 							}else{
 								echo 'Trabajador sin cargas familiares';
 							}
@@ -319,11 +319,11 @@ array_push( $arrCargas,$row );
 						<p class="text-muted">
 							<strong>Persona de Contacto : </strong><?php echo $rowdata['ContactoPersona']; ?><br/>
 							<strong>Fono de Persona de Contacto : </strong><?php echo formatPhone($rowdata['ContactoFono']); ?><br/>
-						</p>	
+						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Laborales</h2>
 						<p class="text-muted word_break">
-							<?php if(isset($rowdata['Contratista'])&&$rowdata['Contratista']!=''){ ?><strong>Contratista : </strong><?php echo $rowdata['Contratista']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Contratista'])&&$rowdata['Contratista']!=''){?><strong>Contratista : </strong><?php echo $rowdata['Contratista']; ?><br/><?php } ?>
 							<strong>Tipo Trabajador : </strong><?php echo $rowdata['TipoTrabajador']; ?><br/>
 							<strong>Cargo : </strong><?php echo $rowdata['Cargo']; ?><br/>
 							<strong>AFP : </strong><?php echo $rowdata['nombre_afp']; ?><br/>
@@ -335,13 +335,13 @@ array_push( $arrCargas,$row );
 							<strong>Sueldo Liquido a Pago : </strong><?php echo valores($rowdata['SueldoLiquido'], 0); ?><br/>
 							<strong>Ubicacion Trabajo : </strong><?php echo $rowdata['UbicacionTrabajo']; ?><br/>
 							<?php
-							if(isset($rowdata['CentroCosto_Nombre'])&&$rowdata['CentroCosto_Nombre']!=''){ 
+							if(isset($rowdata['CentroCosto_Nombre'])&&$rowdata['CentroCosto_Nombre']!=''){
 								echo '<strong>Centro de Costo : </strong>'.$rowdata['CentroCosto_Nombre'];
-								if(isset($rowdata['CentroCosto_Level_1'])&&$rowdata['CentroCosto_Level_1']!=''){echo ' - '.$rowdata['CentroCosto_Level_1']; }
-								if(isset($rowdata['CentroCosto_Level_2'])&&$rowdata['CentroCosto_Level_2']!=''){echo ' - '.$rowdata['CentroCosto_Level_2']; }
-								if(isset($rowdata['CentroCosto_Level_3'])&&$rowdata['CentroCosto_Level_3']!=''){echo ' - '.$rowdata['CentroCosto_Level_3']; }
-								if(isset($rowdata['CentroCosto_Level_4'])&&$rowdata['CentroCosto_Level_4']!=''){echo ' - '.$rowdata['CentroCosto_Level_4']; }
-								if(isset($rowdata['CentroCosto_Level_5'])&&$rowdata['CentroCosto_Level_5']!=''){echo ' - '.$rowdata['CentroCosto_Level_5']; }
+								if(isset($rowdata['CentroCosto_Level_1'])&&$rowdata['CentroCosto_Level_1']!=''){echo ' - '.$rowdata['CentroCosto_Level_1'];}
+								if(isset($rowdata['CentroCosto_Level_2'])&&$rowdata['CentroCosto_Level_2']!=''){echo ' - '.$rowdata['CentroCosto_Level_2'];}
+								if(isset($rowdata['CentroCosto_Level_3'])&&$rowdata['CentroCosto_Level_3']!=''){echo ' - '.$rowdata['CentroCosto_Level_3'];}
+								if(isset($rowdata['CentroCosto_Level_4'])&&$rowdata['CentroCosto_Level_4']!=''){echo ' - '.$rowdata['CentroCosto_Level_4'];}
+								if(isset($rowdata['CentroCosto_Level_5'])&&$rowdata['CentroCosto_Level_5']!=''){echo ' - '.$rowdata['CentroCosto_Level_5'];}
 								echo '<br/>';
 							}
 							?>
@@ -357,7 +357,7 @@ array_push( $arrCargas,$row );
 							<strong>Banco : </strong><?php echo $rowdata['Pago_Banco']; ?><br/>
 							<strong>Tipo de cuenta deposito : </strong><?php echo $rowdata['Pago_TipoCuenta']; ?><br/>
 							<strong>Nro. Cta. Deposito : </strong><?php echo $rowdata['Pago_N_Cuenta']; ?><br/>
-						</p>	
+						</p>
 							
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Licencia de Conducir</h2>
 						<p class="text-muted">
@@ -461,44 +461,44 @@ array_push( $arrCargas,$row );
 						<?php widget_modal(80, 95); ?>
 						
 										
-					</div>	
+					</div>
 					<div class="clearfix"></div>
 			
 				</div>
 			</div>
-        </div>	
+        </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } elseif ( ! empty($_GET['new']) ) { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
-<div class="col-sm-8 fcenter">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Trabajador</h5>
 		</header>
-		<div id="div-1" class="body">
+		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {              $x1  = $Nombre;               }else{$x1  = '';}
-				if(isset($ApellidoPat)) {         $x2  = $ApellidoPat;          }else{$x2  = '';}
-				if(isset($ApellidoMat)) {         $x3  = $ApellidoMat;          }else{$x3  = '';}
-				if(isset($Rut)) {                 $x4  = $Rut;                  }else{$x4  = '';}
-				if(isset($N_Documento)) {         $x5  = $N_Documento;          }else{$x5  = '';}
-				if(isset($idTipo)) {              $x6  = $idTipo;               }else{$x6  = '';}
-				if(isset($Cargo)) {               $x7  = $Cargo;                }else{$x7  = '';}
+				if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = '';}
+				if(isset($ApellidoPat)){         $x2  = $ApellidoPat;          }else{$x2  = '';}
+				if(isset($ApellidoMat)){         $x3  = $ApellidoMat;          }else{$x3  = '';}
+				if(isset($Rut)){                 $x4  = $Rut;                  }else{$x4  = '';}
+				if(isset($N_Documento)){         $x5  = $N_Documento;          }else{$x5  = '';}
+				if(isset($idTipo)){              $x6  = $idTipo;               }else{$x6  = '';}
+				if(isset($Cargo)){               $x7  = $Cargo;                }else{$x7  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -515,40 +515,31 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Inputs->form_input_hidden('idEstado', 1, 2); 
-				$Form_Inputs->form_input_hidden('idTipoTrabajo', 1, 2); 
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+				$Form_Inputs->form_input_hidden('idTipoTrabajo', 1, 2);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $location; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
                       
-			</form> 
-            <?php widget_validator(); ?>        
+			</form>
+            <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 
  
-<?php ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
- } else  { 
+<?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+} else {
 /**********************************************************/
 //paginador de resultados
-if(isset($_GET["pagina"])){
-	$num_pag = $_GET["pagina"];	
-} else {
-	$num_pag = 1;	
-}
+if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
 $cant_reg = 30;
 //resto de variables
-if (!$num_pag){
-	$comienzo = 0 ;
-	$num_pag = 1 ;
-} else {
-	$comienzo = ( $num_pag - 1 ) * $cant_reg ;
-}
+if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 /**********************************************************/
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
@@ -571,27 +562,27 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Variable de busqueda
 $SIS_where = "trabajadores_listado.idTrabajador!=0";
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where.= " AND trabajadores_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$SIS_where.= " AND trabajadores_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Nombre']) && $_GET['Nombre'] != ''){            $SIS_where .= " AND trabajadores_listado.Nombre LIKE '%".$_GET['Nombre']."%'";}
-if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat'] != ''){  $SIS_where .= " AND trabajadores_listado.ApellidoPat LIKE '%".$_GET['ApellidoPat']."%'";}
-if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat'] != ''){  $SIS_where .= " AND trabajadores_listado.ApellidoMat LIKE '%".$_GET['ApellidoMat']."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut'] != ''){                  $SIS_where .= " AND trabajadores_listado.Rut LIKE '%".$_GET['Rut']."%'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo'] != ''){            $SIS_where .= " AND trabajadores_listado.idTipo=".$_GET['idTipo'];}
-if(isset($_GET['Cargo']) && $_GET['Cargo'] != ''){              $SIS_where .= " AND trabajadores_listado.Cargo LIKE '%".$_GET['Cargo']."%'";}
-if(isset($_GET['Fono']) && $_GET['Fono'] != ''){                $SIS_where .= " AND trabajadores_listado.Fono LIKE '%".$_GET['Fono']."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){     $SIS_where .= " AND trabajadores_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat']!=''){  $SIS_where .= " AND trabajadores_listado.ApellidoPat LIKE '%".EstandarizarInput($_GET['ApellidoPat'])."%'";}
+if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat']!=''){  $SIS_where .= " AND trabajadores_listado.ApellidoMat LIKE '%".EstandarizarInput($_GET['ApellidoMat'])."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){           $SIS_where .= " AND trabajadores_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){     $SIS_where .= " AND trabajadores_listado.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Cargo']) && $_GET['Cargo']!=''){       $SIS_where .= " AND trabajadores_listado.Cargo LIKE '%".EstandarizarInput($_GET['Cargo'])."%'";}
+if(isset($_GET['Fono']) && $_GET['Fono']!=''){         $SIS_where .= " AND trabajadores_listado.Fono LIKE '%".EstandarizarInput($_GET['Fono'])."%'";}
 				
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idTrabajador', 'trabajadores_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
 //Realizo la operacion para saber la cantidad de paginas que hay
-$total_paginas = ceil($cuenta_registros / $cant_reg);	
+$total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 trabajadores_listado.idTrabajador,
 trabajadores_listado.Rut, 
-trabajadores_listado.Nombre, 
+trabajadores_listado.Nombre,
 trabajadores_listado.ApellidoPat, 
 trabajadores_listado.ApellidoMat,
 trabajadores_listado_tipos.Nombre AS Tipo,
@@ -608,35 +599,35 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 
 ?>
 
-<div class="col-sm-12 breadcrumb-bar">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
-		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
+		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
-		<?php } ?>		
+		<?php } ?>
 	</ul>
 	
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Trabajador</a><?php } ?>
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new_plantilla=true" class="btn btn-default fright margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear con Plantilla</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Trabajador</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new_plantilla=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear con Plantilla</a><?php } ?>
 	
 </div>
-<div class="clearfix"></div> 
-<div class="collapse col-sm-12" id="collapseExample">
+<div class="clearfix"></div>
+<div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
-		<div class="col-sm-8 fcenter">
+		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php 
 				//Se verifican si existen los datos
-				if(isset($Nombre)) {              $x1  = $Nombre;               }else{$x1  = '';}
-				if(isset($ApellidoPat)) {         $x2  = $ApellidoPat;          }else{$x2  = '';}
-				if(isset($ApellidoMat)) {         $x3  = $ApellidoMat;          }else{$x3  = '';}
-				if(isset($Rut)) {                 $x4  = $Rut;                  }else{$x4  = '';}
-				if(isset($idTipo)) {              $x5  = $idTipo;               }else{$x5  = '';}
-				if(isset($Cargo)) {               $x6  = $Cargo;                }else{$x6  = '';}
-				if(isset($Fono)) {                $x7  = $Fono;                 }else{$x7  = '';}
-				
+				if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = '';}
+				if(isset($ApellidoPat)){         $x2  = $ApellidoPat;          }else{$x2  = '';}
+				if(isset($ApellidoMat)){         $x3  = $ApellidoMat;          }else{$x3  = '';}
+				if(isset($Rut)){                 $x4  = $Rut;                  }else{$x4  = '';}
+				if(isset($idTipo)){              $x5  = $idTipo;               }else{$x5  = '';}
+				if(isset($Cargo)){               $x6  = $Cargo;                }else{$x6  = '';}
+				if(isset($Fono)){                $x7  = $Fono;                 }else{$x7  = '';}
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
@@ -647,24 +638,24 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 				$Form_Inputs->form_input_text('Cargo', 'Cargo', $x6, 1);
 				$Form_Inputs->form_input_phone('Fono', 'Fono', $x7, 1);
 					
-				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 1);
+				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 				
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary fright margin_width fa-input" value="&#xf002; Filtrar" name="filtro_form">
-					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger fright margin_width"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
+					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
                       
-			</form> 
+			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
+<div class="clearfix"></div>
 
                      
                                  
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Trabajadores</h5>
@@ -709,7 +700,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>			  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrTrabajador as $trab) { ?>
 					<tr class="odd">
@@ -726,24 +717,24 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 									$ubicacion = $location.'&del='.simpleEncode($trab['idTrabajador'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el trabajador '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?';?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>								
+								<?php } ?>
 							</div>
 						</td>
 					</tr>
-				<?php } ?>                    
+				<?php } ?>
 				</tbody>
 			</table>
 		</div>
-		<div class="pagrow">	
+		<div class="pagrow">
 			<?php 
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
-		</div> 
+		</div>
 	</div>
 </div>
 
 <?php widget_modal(80, 95); ?>
-<?php } ?>           
+<?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

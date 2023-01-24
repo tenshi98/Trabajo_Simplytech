@@ -11,20 +11,20 @@ require_once 'core/Load.Utils.PDF.php';
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
 //Tiempo Maximo de la consulta, 40 minutos por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim); }else{set_time_limit(2400);}             
+if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
-if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M'); }else{ini_set('memory_limit', '4096M');}  
+if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Se revisan los datos
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){    $idSistema   = simpleDecode($_GET['idSistema'], fecha_actual());  }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){   $idSistema   = simpleDecode($_POST['idSistema'], fecha_actual());}
-if(isset($_GET['view'])&&$_GET['view']!=''){              $view        = simpleDecode($_GET['view'], fecha_actual());       }elseif(isset($_POST['view'])&&$_POST['view']!=''){             $view        = simpleDecode($_POST['view'], fecha_actual());}
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){   $idSistema   = simpleDecode($_GET['idSistema'], fecha_actual());  }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){  $idSistema   = simpleDecode($_POST['idSistema'], fecha_actual());}
+if(isset($_GET['view'])&&$_GET['view']!=''){      $view        = simpleDecode($_GET['view'], fecha_actual());       }elseif(isset($_POST['view'])&&$_POST['view']!=''){     $view        = simpleDecode($_POST['view'], fecha_actual());}
 
 //Se buscan la imagen i el tipo de PDF
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
 	//Consulta
-	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas', '', 'idSistema ='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
+	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas','', 'idSistema ='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 
 //se recorre deacuerdo a la cantidad de sensores
@@ -221,7 +221,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 			// set some language-dependent strings (optional)
-			if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+			if (@file_exists(dirname(__FILE__).'/lang/eng.php')){
 				require_once(dirname(__FILE__).'/lang/eng.php');
 				$pdf->setLanguageArray($l);
 			}
@@ -229,9 +229,9 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			//Se crea el archivo
 			$pdf->SetFont('helvetica', '', 10);
 			$pdf->AddPage($OpcTcpOrt, $OpcTcpPg);
-			
-			//se imprime la imagen 
-			if(isset($_POST["img_adj"]) && $_POST["img_adj"] != ''){
+
+			//se imprime la imagen
+			if(isset($_POST["img_adj"]) && $_POST["img_adj"]!=''){
 				$imgdata = base64_decode(str_replace('data:image/png;base64,', '',$_POST["img_adj"]));
 				// The '@' character is used to indicate that follows an image data stream and not an image file name
 				$pdf->Image('@'.$imgdata, 15, 130, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);

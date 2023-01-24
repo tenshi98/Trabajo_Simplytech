@@ -4,9 +4,9 @@ session_start();
 
 if ($options['general']['locale']) {
     $locale = $options['general']['locale'];
-} else if (isset($_GET["locale"])) {
+} else if (isset($_GET["locale"])){
     $locale = $_GET["l10n"];
-} else if (isset($_SESSION["l10n"])) {
+} else if (isset($_SESSION["l10n"])){
     $locale = $_SESSION["l10n"];
 } else {
     $locale = "en_US";

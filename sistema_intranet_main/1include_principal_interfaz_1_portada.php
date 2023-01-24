@@ -1,7 +1,7 @@
 <?php
 
 echo '<div class="wrapper">';
-	//Variables			
+	//Variables
 	$currentTime  = strtotime(hora_actual());
 	$startTime    = strtotime('21:00:00');
 	$endTime      = strtotime('07:00:00');
@@ -24,7 +24,7 @@ echo '<div class="wrapper">';
 				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
 					<div id="card_weather">	
 					</div>
-				</div>		
+				</div>
 			</div>
 		</div>';
 	} else {
@@ -56,7 +56,7 @@ echo '<div class="wrapper">';
 	}
 	
 	
-	/******************************* Meteo *******************************/			
+	/******************************* Meteo *******************************/		
 	//se llama a la libreria			
 	echo '
 	<script src="'.DB_SITE_REPO.'/Legacy/gestion_modular/lib/weather/jquery.simpleWeather.js"></script>

@@ -10,7 +10,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                          Modulo de identificacion del documento                                                */
 /**********************************************************************************************************************************/
-//Cargamos la ubicacion 
+//Cargamos la ubicacion original
 $original = "usuarios_listado.php";
 $location = $original;
 $new_location = "usuarios_listado_sistemas.php";
@@ -23,7 +23,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //formulario para crear
-if ( !empty($_GET['sistema_add']) )  { 
+if (!empty($_GET['sistema_add'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -32,16 +32,16 @@ if ( !empty($_GET['sistema_add']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['sistema_del']) )     {
+if (!empty($_GET['sistema_del'])){
 	//Nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'sistema_del';
-	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 //formulario para crear
-if ( !empty($_GET['prm_add_all']) )  { 
+if (!empty($_GET['prm_add_all'])){
 	//nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
@@ -50,13 +50,13 @@ if ( !empty($_GET['prm_add_all']) )  {
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 //se borra un dato
-if ( !empty($_GET['prm_del_all']) )     {
+if (!empty($_GET['prm_del_all'])){
 	//nueva ubicacion
 	$location = $new_location;
 	$location.='&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'prm_del_all_sys';
-	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';	
+	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
@@ -69,7 +69,7 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Permiso asignado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
 $SIS_query = 'Nombre';
 $SIS_join  = '';
@@ -87,7 +87,7 @@ $SIS_join  = '';
 $SIS_where = 'core_sistemas.idSistema!=0';
 $SIS_order = 'core_sistemas.Nombre ASC';
 $arrSistemas = array();
-$arrSistemas = db_select_array (false, $SIS_query, 'core_sistemas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
+$arrSistemas = db_select_array (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
 
 /********************************************************************************/
 //Se verifican los permisos que tiene el usuario seleccionado
@@ -103,7 +103,7 @@ $arrPer = array();
 foreach ($arrPermiso as $ins) {
 	$arrPer[$ins['Direccionbase']] = 1;
 }
-	
+
 /******************************************************/
 //variable de numero de permiso
 $x_nperm = 0;
@@ -219,12 +219,12 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
 ?>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Permisos de acceso a Sistemas');?>
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
@@ -258,13 +258,11 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 							<li class=""><a href="<?php echo 'usuarios_listado_camaras.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-video-camera" aria-hidden="true"></i> Camaras de Seguridad</a></li>
 						<?php } ?>
 					</ul>
-                </li>           
-			</ul>	
+                </li>
+			</ul>
 		</header>
         <div class="table-responsive">
-			
-			
-			
+
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -274,47 +272,47 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 					<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){$colspan=2;}else{$colspan=3;} ?>
 					<?php echo widget_sherlock(1, $colspan, 'TableFiltered');?>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<tr class="odd" >
 						<td style="background-color:#DDD">
 							<strong>Asignar Todos los permisos</strong>
 						</td>
 						<td style="background-color:#DDD">
-							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">	
-								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_del_all=true'.'&idUsuario='.$_GET['id'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema']; ?>" title="Quitar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">OFF</a>
-								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_add_all=true'.'&idUsuario='.$_GET['id'].'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema']; ?>" title="Asignar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">ON</a>
-							</div>	
+							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
+								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_del_all=true'.'&idUsuario='.simpleEncode($_GET['id'], fecha_actual()).'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema']; ?>" title="Quitar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">OFF</a>
+								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&prm_add_all=true'.'&idUsuario='.simpleEncode($_GET['id'], fecha_actual()).'&idSistema='.$_SESSION['usuario']['basic_data']['idSistema']; ?>" title="Asignar todos los permisos" class="btn btn-sm btn-default unlocked_inactive tooltip">ON</a>
+							</div>
 						</td>
 					</tr>
-					<?php 
+					<?php
 					foreach ($arrSistemas as $equipos) { ?>
 					<tr class="odd">
 						<td><?php echo '<strong>Sistema: </strong>'.$equipos['Nombre']; ?></td>
 						<td>
-							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">	
-								<?php if ( isset($equipos['contar'])&&$equipos['contar']!='0' ) {?>    
+							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
+								<?php if ( isset($equipos['contar'])&&$equipos['contar']!='0' ){ ?>
 									<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&sistema_del='.simpleEncode($equipos['idpermiso'], fecha_actual()); ?>">OFF</a>
 									<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
 								<?php } else {?>
 									<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 									<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&sistema_add='.$equipos['idSistema']; ?>">ON</a>
-								<?php }?>    
-							</div> 
+								<?php } ?>
+							</div>
 						</td>
 					</tr>
-					<?php } ?>  
-                 
+					<?php } ?>
+
 				</tbody>
 			</table>
-			
-		</div>	
+
+		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
-<div class="col-sm-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger fright"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
 
