@@ -198,7 +198,7 @@ foreach ($arrTemporal as $fac) {
 /***********************************************************/
 // Rename worksheet
 $spreadsheet->getActiveSheet(0)->setTitle(cortar(DeSanitizar($rowEquipo['Nombre']), 25));
-	
+
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 

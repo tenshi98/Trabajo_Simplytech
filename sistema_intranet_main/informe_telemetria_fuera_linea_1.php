@@ -43,7 +43,7 @@ $SIS_where  = "telemetria_listado_error_fuera_linea.idSistema=".$_SESSION['usuar
 $SIS_where .= " AND telemetria_listado.id_Geo=1";                                                                  //Geolocalizacion activa
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$SIS_where .= " AND telemetria_listado.idTab=3";//CrossTrack			
+	$SIS_where .= " AND telemetria_listado.idTab=3";//CrossTrack
 }
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
@@ -159,7 +159,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=3";//CrossTrack			
+	$z .= " AND telemetria_listado.idTab=3";//CrossTrack
 }
  ?>		
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">

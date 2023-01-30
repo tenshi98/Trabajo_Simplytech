@@ -408,7 +408,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						});
 					});
 					
-				</script>	
+				</script>
 					
 								
 				<div class="form-group">
@@ -637,7 +637,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						});
 					});
 					
-				</script>	
+				</script>
 					
 								
 				<div class="form-group">

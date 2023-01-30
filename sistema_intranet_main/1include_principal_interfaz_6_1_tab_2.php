@@ -110,7 +110,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 				<div id="loading"></div>
 
 				<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-				<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table', 'gauge']});</script>	
+				<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table', 'gauge']});</script>
 
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
 					<h5 class="panel-title" id="txtEquipo"><?php echo "Equipo: <strong>".$arrEquipo[0]['Nombre']." - ".$arrEquipo[0]['Identificador']."</strong>"; ?></h5>

@@ -92,7 +92,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$m_table .= '<td>'.Cantidades($fac['SensorValue'], 2).' '.$fac['Unimed'].'</td>';
 			$m_table .= '</tr>';
 
-			//contador									
+			//contador
 			$count++;
 		}
 	} 

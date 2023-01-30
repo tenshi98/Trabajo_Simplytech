@@ -156,7 +156,7 @@ foreach ($arrTemporal as $temp) {
 		</header>
         <div class="tab-content">
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-			<script type="text/javascript">google.charts.load('current', {'packages':['corechart']});</script>	
+			<script type="text/javascript">google.charts.load('current', {'packages':['corechart']});</script>
 
 			
 			<div class="tab-pane fade active in" id="totales" style="padding-top:5px;">

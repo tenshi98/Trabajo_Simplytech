@@ -158,7 +158,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$m_table .= '</tr>';
 		}
 		
-		//contador									
+		//contador
 		$count++;			
 	} 
 
@@ -307,7 +307,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					, 3000);
 				}
 
-			</script>	
+			</script>
 		</div>
 	<?php } ?>
 
@@ -354,7 +354,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=3";//CrossTrack			
+	$z .= " AND telemetria_listado.idTab=3";//CrossTrack
 } 
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';

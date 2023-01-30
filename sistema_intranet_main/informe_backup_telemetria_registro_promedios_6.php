@@ -226,7 +226,7 @@ foreach ($arrTemporal as $fac) {
 	}
 	//cierro tabla
 	$m_table .= '</tr>';	
-	//contador									
+	//contador
 	$count++;		
 }  
 /******************************************/  
@@ -286,7 +286,7 @@ if(isset($count)&&$count>9000){
 <script>
 //oculto el loader
 document.getElementById("loading").style.display = "none";
-</script>			
+</script>		
 
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -379,7 +379,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				, 3000);
 			}
 
-		</script>	
+		</script>
 	</div>
 <?php } ?>
 			

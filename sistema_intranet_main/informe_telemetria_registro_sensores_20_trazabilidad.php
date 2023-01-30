@@ -133,7 +133,7 @@ foreach ($arrEquipos as $fac) {
 		$m_table .= '<td>'.cantidades($New_Humedad, 2).' %</td>';
 		$m_table .= '</tr>';*/
 	}	
-	//contador									
+	//contador
 	//$count++;
 } 
 	

@@ -171,7 +171,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	$spreadsheet->getActiveSheet(0)->setTitle($super_titulo);
 		
 	
-//Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
+//Si no se slecciono se traen todos los equipos a los cuales tiene permiso
 }else{
 	//Inicia variable
 	$SIS_where = "vehiculos_listado.idVehiculo>0"; 

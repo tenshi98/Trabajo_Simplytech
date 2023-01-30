@@ -57,7 +57,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	alert_post_data(1,1,1, $Alert_Text);
 
 	$total_files = ceil($row_data['Total']/5000);
-	for ($i = 1; $i <= $total_files; $i++) { 
+	for ($i = 1; $i <= $total_files; $i++) {
 		$reg_ini = (5000*$i)-4999;
 		$reg_fin = 5000*$i;
 		$datosx  = '&idTelemetria='.$_GET['idTelemetria'];
@@ -70,7 +70,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		alert_post_data(2,1,1, $Alert_Text);
 	 
 	}
-//Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
+//Si no se slecciono se traen todos los equipos a los cuales tiene permiso
 }else{
 	//Inicia variable
 	$z = "WHERE telemetria_listado.idTelemetria>0"; 
@@ -154,7 +154,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	/*****************************************/
 	//Se escribe el dato
 	$total_files = ceil($s_max/5000);
-	for ($i = 1; $i <= $total_files; $i++) { 
+	for ($i = 1; $i <= $total_files; $i++) {
 		$reg_ini = (5000*$i)-4999;
 		$reg_fin = 5000*$i;
 		

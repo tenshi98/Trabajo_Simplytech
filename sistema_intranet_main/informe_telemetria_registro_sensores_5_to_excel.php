@@ -153,7 +153,7 @@ $arrData[125] = "DW";
 $arrData[126] = "DX";
 $arrData[127] = "DY";
 $arrData[128] = "DZ";
-	
+
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = '';
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){

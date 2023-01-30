@@ -179,7 +179,7 @@ foreach ($arrTemporal as $fac) {
 		$m_table .= '</tr>';
 	}
 	
-	//contador									
+	//contador
 	$count++;			
 } 
 
@@ -290,7 +290,7 @@ if(isset($_GET['idGraficos'])&&$_GET['idGraficos']==1){ ?>
 				, 3000);
 			}
 
-		</script>	
+		</script>
 	</div>
 <?php } ?>
 
@@ -337,7 +337,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=3";//CrossTrack			
+	$z .= " AND telemetria_listado.idTab=3";//CrossTrack
 }
 ?>
 		

@@ -291,7 +291,7 @@ array_push( $arrReversa,$row );
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
-//Verifico el tipo de usuario que esta ingresando 
+//Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
 ?>
 

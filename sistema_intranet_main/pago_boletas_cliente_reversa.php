@@ -154,7 +154,7 @@ array_push( $arrBoletas,$row );
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
-//Verifico el tipo de usuario que esta ingresando 
+//Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">

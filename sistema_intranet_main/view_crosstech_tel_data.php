@@ -127,7 +127,7 @@ if($in_eq_fueralinea!=0){
 
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google;?>&sensor=false"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table', 'gauge']});</script>	
+<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table', 'gauge']});</script>
 
 <style>
 .float_table table{margin-right: auto !important;margin-left: auto !important;float: none !important;}
@@ -621,7 +621,7 @@ if($in_eq_fueralinea!=0){
 				
 				/* ************************************************************************** */
 				google.maps.event.addDomListener(window, "load", initialize());
-			</script>	
+			</script>
 				
 					
 			';

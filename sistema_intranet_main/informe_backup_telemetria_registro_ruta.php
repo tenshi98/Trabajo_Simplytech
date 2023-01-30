@@ -227,11 +227,11 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=3";//CrossTrack			
+	$z .= " AND telemetria_listado.idTab=3";//CrossTrack
 }
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
-alert_post_data(2,1,1, $Alert_Text); 
+alert_post_data(2,1,1, $Alert_Text);
 ?>	
 	
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">

@@ -210,7 +210,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$m_table .= '</tr>';
 			
 		}
-		//contador										
+		//contador	
 		$count++;
 	}  
 	//variables
@@ -368,7 +368,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					, 3000);
 				}
 
-			</script>	
+			</script>
 		</div>
 	<?php } ?>
 

@@ -965,7 +965,7 @@ input[type="date"].form-control{
 	});
     
     
-</script>	
+</script>
 	
 
 <div class="clearfix"></div>

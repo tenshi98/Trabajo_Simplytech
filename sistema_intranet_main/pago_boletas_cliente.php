@@ -635,7 +635,7 @@ array_push( $arrBoletas,$row );
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
-//Verifico el tipo de usuario que esta ingresando 
+//Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
  
  ?>

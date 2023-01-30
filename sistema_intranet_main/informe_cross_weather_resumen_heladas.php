@@ -286,7 +286,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 					}
 				, 3000);
 			}
-		</script>	
+		</script>
 	</div>
 <?php } ?>
 

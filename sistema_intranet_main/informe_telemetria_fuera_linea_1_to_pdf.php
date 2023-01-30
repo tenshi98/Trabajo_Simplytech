@@ -27,7 +27,7 @@ $SIS_where = "telemetria_listado_error_fuera_linea.idFueraLinea>0";
 $SIS_where.= " AND telemetria_listado.id_Geo='1'";
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$SIS_where .= " AND telemetria_listado.idTab=3";//CrossTrack			
+	$SIS_where .= " AND telemetria_listado.idTab=3";//CrossTrack
 }
 $zn = '';
 //verifico si existen los parametros de fecha

@@ -279,10 +279,10 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$spreadsheet->getActiveSheet(0)->setTitle($super_titulo);
 		
 	
-//Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
+//Si no se slecciono se traen todos los equipos a los cuales tiene permiso
 }else{
 	//Inicia variable
-	$SIS_where = "telemetria_listado.idTelemetria>0"; 
+	$SIS_where = "telemetria_listado.idTelemetria>0";
 	$SIS_where.= " AND telemetria_listado.id_Geo='1'";
 	$SIS_where.= " AND telemetria_listado.idSistema=".$_GET['idSistema'];
 

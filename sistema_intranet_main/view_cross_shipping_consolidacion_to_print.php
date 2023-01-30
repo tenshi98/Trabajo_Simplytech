@@ -286,7 +286,7 @@ require_once 'core/Web.Header.Print.php';
 			</table>
 			
 		</div>
-		
+
 		<div class="row">
 			<?php 
 			filtrar($arrEstibas, 'Estiba');  

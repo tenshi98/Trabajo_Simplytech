@@ -28,7 +28,7 @@ $SIS_where = "telemetria_listado_error_detenciones.idDetencion>0";
 $SIS_where.= " AND telemetria_listado_error_detenciones.idSistema=".$_GET['idSistema'];	
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$SIS_where.= " AND telemetria_listado.idTab=3";//CrossTrack			
+	$SIS_where.= " AND telemetria_listado.idTab=3";//CrossTrack
 }
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){

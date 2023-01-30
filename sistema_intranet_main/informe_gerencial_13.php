@@ -249,7 +249,7 @@ $Total_4 = 0;
 		</header>
         <div class="tab-content">
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>	
+			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>
 
 			<div class="tab-pane fade active in" id="netos" style="padding-top:5px;">
 				
@@ -683,7 +683,7 @@ $Total_4 = 0;
 		</header>
         <div class="tab-content">
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>	
+			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>
 
 			<div class="tab-pane fade active in" id="netos" style="padding-top:5px;">
 				
@@ -1118,7 +1118,7 @@ $Total_4 = 0;
 		</header>
         <div class="tab-content">
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>	
+			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>
 
 			<div class="tab-pane fade active in" id="netos" style="padding-top:5px;">
 				
@@ -1566,7 +1566,7 @@ $Total_4 = 0;
 		</header>
         <div class="tab-content">
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>	
+			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>
 
 			<div class="tab-pane fade active in" id="netos" style="padding-top:5px;">
 				

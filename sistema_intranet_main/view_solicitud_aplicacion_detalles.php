@@ -338,7 +338,7 @@ document.getElementById("loading").style.display = "none";
 				}
 			, 3000);
 		}
-	</script>	
+	</script>
 </div>
 
 <?php 

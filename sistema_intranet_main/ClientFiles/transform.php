@@ -171,7 +171,7 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 			alert_post_data(1,1,1, $Alert_Text);
 			?>
 		</div>
-		
+
 		<div class="text-center" style="padding:50px;">
 			<?php
 			//enlace
@@ -180,14 +180,14 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 			?>
 			<a href="<?php echo DB_SITE_MAIN.'/1download.php?dir='.simpleEncode($Directorio, fecha_actual()).'&file='.simpleEncode($Archivo, fecha_actual()); ?>" title="Descargar Archivo MP4" class="buttonDownload">Descargar Archivo MP4</a>
 		</div>
-		
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<?php 
 			$Alert_Text = 'En algunos casos el archivo transformado no reproduce sonido, puede descargar el archivo original y reproducirlo con VLC Player.';
 			alert_post_data(4,1,1, $Alert_Text);
 			?>
 		</div>
-		
+
 		<div class="text-center" style="padding:50px;">
 			<?php
 			//enlace

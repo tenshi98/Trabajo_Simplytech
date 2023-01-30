@@ -113,7 +113,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 ?>
  
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>	
+<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>
 
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

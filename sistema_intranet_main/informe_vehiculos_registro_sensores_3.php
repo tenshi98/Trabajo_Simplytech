@@ -57,7 +57,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	alert_post_data(1,1,1, $Alert_Text);
 	
 	$total_files = ceil($row_data['Total']/5000);
-	for ($i = 1; $i <= $total_files; $i++) { 
+	for ($i = 1; $i <= $total_files; $i++) {
 		$reg_ini = (5000*$i)-4999;
 		$reg_fin = 5000*$i;
 		$datosx  = '&idVehiculo='.$_GET['idVehiculo'];
@@ -71,7 +71,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		alert_post_data(2,1,1, $Alert_Text);
 		 
 	}
-//Si no se slecciono se traen todos los equipos a los cuales tiene permiso	
+//Si no se slecciono se traen todos los equipos a los cuales tiene permiso
 }else{
 	//Inicia variable
 	$z = "WHERE vehiculos_listado.idVehiculo>0"; 
@@ -147,7 +147,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	/*****************************************/
 	//Se escribe el dato
 	$total_files = ceil($s_max/5000);
-	for ($i = 1; $i <= $total_files; $i++) { 
+	for ($i = 1; $i <= $total_files; $i++) {
 		$reg_ini = (5000*$i)-4999;
 		$reg_fin = 5000*$i;
 		
