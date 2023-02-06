@@ -228,8 +228,8 @@ switch ($_GET['type']) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				
 				//se dibujan los inputs	
 				$Form_Inputs = new Form_Inputs();
@@ -299,8 +299,7 @@ switch ($_GET['type']) {
 				</div>
 			</form>
 			<?php widget_validator(); ?>
-			
-			
+
 		</div>
 	</div>
 </div>	
@@ -697,7 +696,7 @@ array_push( $arrBoletasEmp,$row );
 		</div>
 	</div>
 </div>
-<?php widget_modal(80, 95); ?>
+
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -822,7 +821,7 @@ foreach ($arrPermisos as $prod) {
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>

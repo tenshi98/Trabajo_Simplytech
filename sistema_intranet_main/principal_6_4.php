@@ -186,7 +186,7 @@ foreach ($arrTabMenu as $tab) {
 				
 
 			?>
-			<?php widget_modal(80, 95); ?>
+			
 		</div>
 	</div>
 </div>

@@ -89,8 +89,8 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){  $x1 = $idTrabajador;  }else{$x1 = $rowdata['idTrabajador'];}
 				if(isset($Fecha)){         $x2 = $Fecha;         }else{$x2 = $rowdata['Fecha'];}
@@ -143,8 +143,8 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){  $x1 = $idTrabajador;  }else{$x1 = '';}
 				if(isset($Fecha)){         $x2 = $Fecha;         }else{$x2 = '';}
@@ -283,7 +283,7 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
         </div>
@@ -343,14 +343,14 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

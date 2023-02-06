@@ -35,7 +35,7 @@
 		<script>
 			$(document).ready(function(){
 				//Examples of how to assign the Colorbox event to elements
-				$(".iframe").colorbox({iframe:true, width:"80%", height:"95%"});
+				$(".iframe").colorbox({iframe:true, width:"90%", height:"95%"});
 				$(".callbacks").colorbox({
 					onOpen:function(){ alert('onOpen: colorbox is about to open');},
 					onLoad:function(){ alert('onLoad: colorbox has started to load the targeted content');},

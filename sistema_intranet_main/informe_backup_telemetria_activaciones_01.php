@@ -151,7 +151,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>

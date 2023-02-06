@@ -573,5 +573,5 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) {$Co
 	?>
 </script>
 
-<?php widget_modal(80, 95); ?>
+
 <?php widget_tooltipster();?>

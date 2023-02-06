@@ -108,8 +108,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				
 				//Se verifican si existen los datos
 				if(isset($Nombre)){           $x1  = $Nombre;           }else{$x1  = $rowdata['Nombre'];}
@@ -186,8 +186,8 @@ $rowConfig = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){           $x1  = $Nombre;           }else{$x1  = '';}
 				if(isset($idTipoCamara)){     $x2  = $idTipoCamara;     }else{$x2  = '';}
@@ -354,7 +354,7 @@ foreach ($arrCamaras as $zona) {
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">

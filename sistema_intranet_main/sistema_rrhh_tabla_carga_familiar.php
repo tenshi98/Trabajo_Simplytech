@@ -91,7 +91,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>

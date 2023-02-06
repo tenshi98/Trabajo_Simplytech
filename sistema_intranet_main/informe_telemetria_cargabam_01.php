@@ -175,7 +175,7 @@ $arrCarga = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_joi
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
@@ -238,7 +238,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>

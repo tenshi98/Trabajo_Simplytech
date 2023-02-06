@@ -102,8 +102,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = $rowdata['idCliente'];}
 				if(isset($idTipo)){           $x2  = $idTipo;            }else{$x2  = $rowdata['idTipo'];}
@@ -146,8 +146,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				</div>
 			</form>
 			<?php widget_validator(); ?>
-			
-			
+
 		</div>
 	</div>
 </div>
@@ -167,8 +166,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = '';}
 				if(isset($idTipo)){           $x2  = $idTipo;            }else{$x2  = '';}
@@ -198,8 +197,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				</div>
 			</form>
 			<?php widget_validator(); ?>
-			
-			
+
 		</div>
 	</div>
 </div>
@@ -309,14 +307,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
-</div>  
+</div>
 <div class="clearfix"></div>
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -396,14 +394,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
-	
-<?php widget_modal(80, 95); ?>
+
+
 <?php } ?>
 
 <?php

@@ -159,7 +159,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		</div>
 	</div>
 
-	<?php widget_modal(80, 95); ?>
+	
 <?php } ?>
 
 

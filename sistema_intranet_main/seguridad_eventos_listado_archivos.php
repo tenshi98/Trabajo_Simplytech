@@ -179,7 +179,7 @@ array_push( $arrArchivos,$row );
 			</table>
 
 	
-			<?php widget_modal(80, 95); ?>
+			
 					
 					
 		</div>

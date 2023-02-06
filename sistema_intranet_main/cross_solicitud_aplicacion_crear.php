@@ -185,7 +185,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 $rowData = db_select_data (false, 'NSolicitud, f_programacion, horaProg, f_programacion_fin, horaProg_fin', 'cross_solicitud_aplicacion_listado', '', 'idSolicitud = '.$_GET['clone_idSolicitud'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowData');
 					
 ?>
-								
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -194,8 +194,8 @@ $rowData = db_select_data (false, 'NSolicitud, f_programacion, horaProg, f_progr
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){           $x1 = $NSolicitud;           }else{$x1 = $rowData['NSolicitud'];}
 				if(isset($f_programacion)){       $x2 = $f_programacion;       }else{$x2 = $rowData['f_programacion'];}
@@ -227,7 +227,7 @@ $rowData = db_select_data (false, 'NSolicitud, f_programacion, horaProg, f_progr
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c5; Clonar" name="clone_Solicitud">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -283,7 +283,7 @@ if(isset($_SESSION['sol_apli_basicos']['idProducto'])&&$_SESSION['sol_apli_basic
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_cuartel"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -382,7 +382,7 @@ array_push( $arrTipo,$row );
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_producto"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -481,7 +481,7 @@ array_push( $arrTipo,$row );
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_producto"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -538,7 +538,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_tractor"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -594,7 +594,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tractor"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -627,7 +627,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_material"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -1188,7 +1188,7 @@ array_push( $arrCuenta2,$row );
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase_Tract"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -1310,7 +1310,7 @@ foreach ($arrPermisos as $prod) {
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -2144,7 +2144,7 @@ array_push( $arrCuenta2,$row );
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="Siguiente &#xf061;" name="submit_new_2"> 
 					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver Paso 1</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -2265,7 +2265,7 @@ foreach ($arrPermisos as $prod) {
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="Siguiente &#xf061;" name="submit"> 
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -2413,7 +2413,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
         </div>
@@ -2492,13 +2492,13 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
-<?php widget_modal(80, 95); ?>
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

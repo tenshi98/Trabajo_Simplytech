@@ -381,7 +381,7 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 <div class="clearfix"></div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

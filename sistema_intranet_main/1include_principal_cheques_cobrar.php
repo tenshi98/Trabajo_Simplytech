@@ -189,7 +189,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'pagos_facturas_clientes', $SI
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 
 
 <?php

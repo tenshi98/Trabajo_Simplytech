@@ -215,7 +215,7 @@ array_push( $arrArchivos,$row );
 		</div>
 	</div>
 </div>
-<?php widget_modal(80, 95); ?>
+
 
 
 <div class="clearfix"></div>

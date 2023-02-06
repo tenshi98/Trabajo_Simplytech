@@ -190,7 +190,7 @@ if(!empty($_GET['addFile'])){ ?>
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -208,8 +208,8 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idServicio)){     $x1  = $idServicio;    }else{$x1  = $_SESSION['cotizacion_servicios'][$_GET['editServicios']]['idServicio'];}
 				if(isset($Cantidad)){       $x2  = $Cantidad;      }else{$x2  = Cantidades_decimales_justos($_SESSION['cotizacion_servicios'][$_GET['editServicios']]['Cantidad']);}
@@ -239,7 +239,7 @@ if(!empty($_GET['addFile'])){ ?>
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_servicio"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -256,8 +256,8 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idServicio)){     $x1  = $idServicio;    }else{$x1  = '';}
 				if(isset($Cantidad)){       $x2  = $Cantidad;      }else{$x2  = '';}
@@ -282,7 +282,7 @@ if(!empty($_GET['addFile'])){ ?>
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_servicio"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -299,8 +299,8 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idEquipo)){       $x1  = $idEquipo;      }else{$x1  = $_SESSION['cotizacion_arriendos'][$_GET['editArriendo']]['idEquipo'];}
 				if(isset($Cantidad)){       $x2  = $Cantidad;      }else{$x2  = Cantidades_decimales_justos($_SESSION['cotizacion_arriendos'][$_GET['editArriendo']]['Cantidad']);}
@@ -327,7 +327,7 @@ if(!empty($_GET['addFile'])){ ?>
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_arriendo"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -344,8 +344,8 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idEquipo)){       $x1  = $idEquipo;      }else{$x1  = '';}
 				if(isset($Cantidad)){       $x2  = $Cantidad;      }else{$x2  = '';}
@@ -371,7 +371,7 @@ if(!empty($_GET['addFile'])){ ?>
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_arriendo"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -437,8 +437,8 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $_SESSION['cotizacion_insumos'][$_GET['editIns']]['idProducto'];}
 				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = Cantidades_decimales_justos($_SESSION['cotizacion_insumos'][$_GET['editIns']]['Cantidad']);}
@@ -465,7 +465,7 @@ foreach ($arrPermisos as $prod) {
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_ins"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -510,8 +510,8 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
 				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = '';}
@@ -537,7 +537,7 @@ foreach ($arrPermisos as $prod) {
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_ins"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -603,8 +603,8 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $_SESSION['cotizacion_productos'][$_GET['editProd']]['idProducto'];}
 				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = Cantidades_decimales_justos($_SESSION['cotizacion_productos'][$_GET['editProd']]['Cantidad']);}
@@ -631,7 +631,7 @@ foreach ($arrPermisos as $prod) {
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -675,8 +675,8 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
 				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = '';}
@@ -703,7 +703,7 @@ foreach ($arrPermisos as $prod) {
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -735,7 +735,7 @@ foreach ($arrPermisos as $prod) {
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_impuesto"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -779,7 +779,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Modificar Documento" name="submit_modBase">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -1118,7 +1118,7 @@ $vtotal_iva   = 0;
     </table>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  } elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -1161,7 +1161,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -1272,14 +1272,14 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
 <div class="clearfix"></div>
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -1340,14 +1340,14 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

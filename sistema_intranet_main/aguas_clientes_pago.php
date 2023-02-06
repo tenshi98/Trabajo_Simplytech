@@ -510,7 +510,7 @@ array_push( $arrFacturaciones,$row );
 		<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
 	</div>
-<?php widget_modal(80, 95); ?>
+
 
 <?php } else{ ?>
 <p class="bg-primary" style="padding: 10px;">Este cliente no registra ninguna deuda</p>
@@ -560,8 +560,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				</div>
 			</form>
 			<?php widget_validator(); ?>
-			
-			
+
 		</div>
 	</div>
 </div>
@@ -665,14 +664,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
-</div>  
+</div>
 <div class="clearfix"></div>
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -746,14 +745,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
-	
-<?php widget_modal(80, 95); ?>
+
+
 <?php } ?>
 
 <?php

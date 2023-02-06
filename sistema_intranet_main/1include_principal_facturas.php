@@ -245,4 +245,4 @@ $arrFacturas_4 = db_select_array (false, $SIS_query, 'bodegas_servicios_facturac
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+

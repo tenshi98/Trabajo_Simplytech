@@ -42,9 +42,6 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 
 ?>
 
-
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -55,12 +52,11 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			</ul>
 		</header>
         <div class="tab-content">
-			
-			
+
 			<div class="tab-pane fade active in" id="data0">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-						
+
 						<?php
 						//verifica la capa de desarrollo
 						$whitelist = array( 'localhost', '127.0.0.1', '::1' );
@@ -73,7 +69,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 							$DB_NAME_1 = DB_COMPARE;
 							$DB_NAME_2 = DB_NAME;
 						}
-	
+
 						//Funcion para conectarse
 						function conectar_ex ($servidor, $usuario, $password, $base_datos) {
 							$db_con = mysqli_connect($servidor, $usuario, $password, $base_datos);
@@ -91,14 +87,14 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 						$w = 0;
 						$z = 0;
 						//Obtengo el listado de tablas de Main
-						$res = mysqli_query($dbConn1,"SHOW TABLES WHERE `Tables_in_".$DB_NAME_1."` NOT LIKE '%_listado_tablarelacionada_%'");
+						$res = mysqli_query($dbConn1,"SHOW TABLES WHERE `Tables_in_".$DB_NAME_1."` NOT LIKE '%_listado_tablarelacionada_%' AND `Tables_in_".$DB_NAME_1."` NOT LIKE 'backup_telemetria_%' AND `Tables_in_".$DB_NAME_1."` NOT LIKE '%_respaldo_%'");
 						$num_tables_1 = mysqli_num_rows($res);
 						while($cRow = mysqli_fetch_array($res)){
 							$w++;
 							$tableList_1[$w] = $cRow[0];
 						}
 						//Obtengo el listado de tablas de la segunda tabla
-						$res = mysqli_query($dbConn,"SHOW TABLES WHERE `Tables_in_".$DB_NAME_2."` NOT LIKE '%_listado_tablarelacionada_%'");
+						$res = mysqli_query($dbConn,"SHOW TABLES WHERE `Tables_in_".$DB_NAME_2."` NOT LIKE '%_listado_tablarelacionada_%' AND `Tables_in_".$DB_NAME_2."` NOT LIKE 'backup_telemetria_%' AND `Tables_in_".$DB_NAME_2."` NOT LIKE '%_respaldo_%'");
 						$num_tables_2 = mysqli_num_rows($res);
 						while($cRow = mysqli_fetch_array($res)){
 							$z++;
@@ -117,9 +113,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 									</tr>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all">';
-								
-								
-									
+
 									$widget .= '
 									<tr class="odd">
 										<td>'.$DB_NAME_1.'</td>
@@ -129,8 +123,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 										<td></td>
 										<td></td>
 									</tr>';
-					
-					
+
 								for ($x = 1; $x < $w; $x++) {
 									if(isset($tableList_2[$x])){
 										//Comparo ambas tablas
@@ -140,12 +133,10 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 										$te_2 = mysqli_num_rows($na_2);
 										if($te_1 > 0){ $cs = mysqli_query($dbConn1,"describe ".$tableList_1[$x]."");$nc1 = mysqli_num_rows($cs);}else{$nc1 = 0;}
 										if($te_2 > 0){ $cs = mysqli_query($dbConn,"describe ".$tableList_2[$x]."");$nc2 = mysqli_num_rows($cs);}else{$nc2 = 0;}
-										
+
 										if($te_1 > 0){ $cnt1 = mysqli_num_rows(mysqli_query($dbConn1,"SELECT * FROM ".$tableList_1[$x].""));  }else{$cnt1 = 0;}
 										if($te_2 > 0){ $cnt2 = mysqli_num_rows(mysqli_query($dbConn,"SELECT * FROM ".$tableList_2[$x].""));   }else{$cnt2 = 0;}
-										
 
-										
 										//error
 										$var_err = '';
 										if($nc1!=$nc2){$var_err = 'danger';}
@@ -153,7 +144,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 									}else{
 										$var_err = 'danger';
 									}
-									
+
 									$widget .= '
 									<tr class="odd">
 										<td class="'.$var_err.'">'.$tableList_1[$x].'</td>
@@ -171,20 +162,15 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 
 							echo $widget;
 						?>
-							
+
 					</div>
 				</div>
 			</div>
-			
-			
+
         </div>
 	</div>
 </div>
 
-		
-
-
-           
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

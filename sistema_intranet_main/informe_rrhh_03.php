@@ -138,7 +138,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</div>
 
 
-	<?php widget_modal(80, 95); ?>
+	
 
 <?php } ?>
 
@@ -187,7 +187,7 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>

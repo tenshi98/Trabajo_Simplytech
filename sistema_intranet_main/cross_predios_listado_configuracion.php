@@ -740,8 +740,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){           $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
 				if(isset($Codigo)){           $x2  = $Codigo;            }else{$x2  = $rowdata['Codigo'];}
@@ -800,8 +800,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){           $x1  = $Nombre;            }else{$x1  = '';}
 				if(isset($Codigo)){           $x2  = $Codigo;            }else{$x2  = '';}
@@ -976,7 +976,7 @@ array_push( $arrZonas,$row );
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">

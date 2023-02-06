@@ -66,7 +66,7 @@ require_once '0_validate_user_1.php';
 	if(isset($email_principal)&&contar_palabras_censuradas($email_principal)!=0){  $error['email_principal'] = 'error/Edita email principal, contiene palabras no permitidas';}
 	if(isset($GmailUsuario)&&contar_palabras_censuradas($GmailUsuario)!=0){        $error['GmailUsuario']    = 'error/Edita Gmail Usuario, contiene palabras no permitidas';}
 	if(isset($GmailPassword)&&contar_palabras_censuradas($GmailPassword)!=0){      $error['GmailPassword']   = 'error/Edita Gmail Password, contiene palabras no permitidas';}
-					
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -80,18 +80,18 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 		case 'send_mail':
 			//Envio de correo
-			$rmail = tareas_envio_correo($email_principal, DB_EMPRESA_NAME, 
-                                         $email, 'Receptor', 
-                                         '', '', 
-                                         'Notificacion', 
-                                         $texto,'', 
-                                         '', 
+			$rmail = tareas_envio_correo($email_principal, DB_EMPRESA_NAME,
+                                         $email, 'Receptor',
+                                         '', '',
+                                         'Notificacion',
+                                         $texto,'',
+                                         '',
                                          1,
 										 $GmailUsuario,
 										 $GmailPassword);
             //se guarda el log
 			log_response(1, $rmail, $email.' (Asunto:Notificacion)');
-		         
+
             //Envio del mensaje
 			if ($rmail!=1) {
 				echo '<pre>';
@@ -116,18 +116,18 @@ require_once '0_validate_user_1.php';
 			$Body .= $texto;
 
 			//Envio de correo
-			$rmail = tareas_envio_correo($email_principal, 'Exilon360', 
-                                         $email, 'Receptor', 
-                                         '', '', 
-                                         'Notificacion', 
-                                         $Body,'', 
-                                         '', 
-                                         1, 
-										 '', 
+			$rmail = tareas_envio_correo($email_principal, 'Exilon360',
+                                         $email, 'Receptor',
+                                         '', '',
+                                         'Notificacion',
+                                         $Body,'',
+                                         '',
+                                         1,
+										 '',
 										 '');
             //se guarda el log
 			log_response(1, $rmail, $email.' (Asunto:Notificacion)');
-		         
+
             //Envio del mensaje
 			if ($rmail!=1) {
 				header( 'Location: '.$location.'?error='.$rmail );
@@ -188,19 +188,19 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'send_mail_google':
-		
+
 			//Envio de correo
-			$rmail = tareas_envio_correo_google($GmailUsuario, $GmailPassword, 'Exilon360', 
-												$email, 'Receptor', 
-												'', '', 
-												'Notificacion', 
-												$texto,'', 
-												'', 
+			$rmail = tareas_envio_correo_google($GmailUsuario, $GmailPassword, 'Exilon360',
+												$email, 'Receptor',
+												'', '',
+												'Notificacion',
+												$texto,'',
+												'',
 												1);
-																				
+
             //se guarda el log
 			log_response(1, $rmail, $email.' (Asunto:Notificacion)');
-		         
+
             //Envio del mensaje
 			if ($rmail!=1) {
 				echo '<pre>';
@@ -219,7 +219,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'send_whatsapp':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -229,25 +229,22 @@ require_once '0_validate_user_1.php';
 				//envio mensaje
 				if(isset($fono)&&$fono!=''){
 					$resultado =  WhatsappSendMessage($Token, $InstanceId, $fono, $mensaje);
-					
+
 					echo '<pre>';
 						var_dump($resultado);
 					echo '</pre>';
 				}elseif(isset($grupo)&&$grupo!=''){
 					$resultado =  WhatsappGroupSendMessage($Token, $InstanceId, $grupo, $mensaje);
-					
+
 					echo '<pre>';
 						var_dump($resultado);
 					echo '</pre>';
 				}else{
 					echo '<pre>nada</pre>';
 				}
-				
-				
-	
+
 			}
-		
-			
+
 		break;
 /*******************************************************************************************************************/
 	}

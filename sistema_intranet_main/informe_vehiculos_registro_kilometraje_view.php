@@ -48,8 +48,6 @@ $rowdata = db_select_data (false, $SIS_query, 'vehiculos_listado_tablarelacionad
 	</div>
 </div>
 
-
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

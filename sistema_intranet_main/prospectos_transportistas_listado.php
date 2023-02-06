@@ -112,7 +112,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 					</div>
@@ -155,8 +155,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){       $x1  = $Nombre;       }else{$x1  = '';}
 				if(isset($Fono)){         $x2  = $Fono;         }else{$x2  = '';}
@@ -186,8 +186,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				</div>
 			</form>
 			<?php widget_validator(); ?>
-			
-			
+
 		</div>
 	</div>
 </div>
@@ -284,14 +283,14 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_transportistas_lista
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
-</div>  
+</div>
 <div class="clearfix"></div>
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -347,14 +346,14 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_transportistas_lista
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
-	
-<?php widget_modal(80, 95); ?>
+
+
 <?php } ?>
 
 <?php

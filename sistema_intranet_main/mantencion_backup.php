@@ -299,7 +299,7 @@ $arrBackup = db_select_array (false, $SIS_query, 'mantencion_backup', $SIS_join,
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>

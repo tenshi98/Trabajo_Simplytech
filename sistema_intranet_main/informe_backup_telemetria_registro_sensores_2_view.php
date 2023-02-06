@@ -60,8 +60,6 @@ $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablare
 	</div>
 </div>
 
-
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

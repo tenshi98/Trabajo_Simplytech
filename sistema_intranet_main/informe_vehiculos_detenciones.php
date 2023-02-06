@@ -120,7 +120,7 @@ $arrErrores = db_select_array (false, $SIS_query, 'vehiculos_listado_error_deten
 </div>
 
 
-<?php widget_modal(80, 95); ?>
+
 	
 
 

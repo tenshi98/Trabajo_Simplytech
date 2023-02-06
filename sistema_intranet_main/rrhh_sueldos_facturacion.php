@@ -300,7 +300,7 @@ array_push( $arrArchivos,$row );
 
 </div>
  
-<?php widget_modal(80, 95); ?>
+
 
 
 <div class="clearfix"></div>
@@ -333,7 +333,7 @@ array_push( $arrArchivos,$row );
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -344,7 +344,7 @@ array_push( $arrArchivos,$row );
 } elseif(!empty($_GET['modBase'])){?>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<a target="_blank" rel="noopener noreferrer" href="https://www.previred.com/web/previred/indicadores-previsionales" class="btn btn-default pull-right margin_width" ><i class="fa fa-search" aria-hidden="true"></i> Indicadores Previsionales</a>
-</div>  
+</div>
 <div class="clearfix"></div>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -400,7 +400,7 @@ array_push( $arrArchivos,$row );
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -551,7 +551,7 @@ array_push( $arrArchivos,$row );
 
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <div class="clearfix"></div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -561,7 +561,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<a target="_blank" rel="noopener noreferrer" href="https://www.previred.com/web/previred/indicadores-previsionales" class="btn btn-default pull-right margin_width" ><i class="fa fa-search" aria-hidden="true"></i> Indicadores Previsionales</a>
-</div>  
+</div>
 <div class="clearfix"></div>
 
 
@@ -624,7 +624,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -711,7 +711,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'rrhh_sueldos_facturacion', $SIS_
 			<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Facturacion</a>
 		<?php } ?>
 	<?php } ?>
-</div>  
+</div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
@@ -737,14 +737,14 @@ $arrTipo = db_select_array (false, $SIS_query, 'rrhh_sueldos_facturacion', $SIS_
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
 </div>
 <div class="clearfix"></div>
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -795,14 +795,14 @@ $arrTipo = db_select_array (false, $SIS_query, 'rrhh_sueldos_facturacion', $SIS_
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

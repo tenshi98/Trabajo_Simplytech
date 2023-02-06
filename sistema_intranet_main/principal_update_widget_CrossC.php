@@ -521,4 +521,4 @@ $widget = '
 echo $widget;
 ?>
 
-<?php widget_modal(80, 95); ?>
+

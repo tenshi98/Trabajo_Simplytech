@@ -176,8 +176,6 @@ $arrAnexos = db_select_array (false, $SIS_query, 'trabajadores_listado_anexos', 
 				</tbody>
 			</table>
 
-			<?php widget_modal(80, 95); ?>
-
 		</div>
 	</div>
 </div>

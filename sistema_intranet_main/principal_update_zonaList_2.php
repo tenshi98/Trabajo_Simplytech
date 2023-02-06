@@ -185,5 +185,5 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 		<?php } ?>
 	</tbody>
 </table>
-<?php widget_modal(80, 95); ?>
+
 <?php widget_tooltipster();?>

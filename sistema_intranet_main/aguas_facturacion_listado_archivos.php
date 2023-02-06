@@ -75,7 +75,7 @@ alert_post_data(2,1,2, $Alert_Text);
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>

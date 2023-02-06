@@ -277,7 +277,7 @@ $arrCarousel = db_select_array (false, $SIS_query, 'sitios_listado_carousel', $S
 <div class="clearfix"></div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

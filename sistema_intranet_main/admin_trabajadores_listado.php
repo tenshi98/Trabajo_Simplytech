@@ -527,7 +527,6 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 								?>
 							</tbody>
 						</table>
-						<?php widget_modal(80, 95); ?>
 
 					</div>
 					<div class="clearfix"></div>
@@ -793,7 +792,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

@@ -151,7 +151,7 @@ foreach ($arrUnimed as $sen) {
 </div>
 
 
-<?php widget_modal(80, 95); ?>
+
 	
 
 

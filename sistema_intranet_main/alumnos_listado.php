@@ -18,14 +18,14 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idCurso']) && $_GET['idCurso']!=''){   $location .= "&idCurso=".$_GET['idCurso'];              $search .= "&idCurso=".$_GET['idCurso'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){     $location .= "&Nombre=".$_GET['Nombre'];              $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat']!=''){  $location .= "&ApellidoPat=".$_GET['ApellidoPat'];              $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat']!=''){  $location .= "&ApellidoMat=".$_GET['ApellidoMat'];              $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['Rut']) && $_GET['Rut']!=''){           $location .= "&Rut=".$_GET['Rut'];                    $search .= "&Rut=".$_GET['Rut'];}
+if(isset($_GET['idCurso']) && $_GET['idCurso']!=''){          $location .= "&idCurso=".$_GET['idCurso'];            $search .= "&idCurso=".$_GET['idCurso'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){            $location .= "&Nombre=".$_GET['Nombre'];              $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat']!=''){  $location .= "&ApellidoPat=".$_GET['ApellidoPat'];    $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat']!=''){  $location .= "&ApellidoMat=".$_GET['ApellidoMat'];    $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                  $location .= "&Rut=".$_GET['Rut'];                    $search .= "&Rut=".$_GET['Rut'];}
 if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){  $location .= "&fNacimiento=".$_GET['fNacimiento'];    $search .= "&fNacimiento=".$_GET['fNacimiento'];}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){ $location .= "&idCiudad=".$_GET['idCiudad'];          $search .= "&idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){ $location .= "&idComuna=".$_GET['idComuna'];          $search .= "&idComuna=".$_GET['idComuna'];}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){        $location .= "&idCiudad=".$_GET['idCiudad'];          $search .= "&idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){        $location .= "&idComuna=".$_GET['idComuna'];          $search .= "&idComuna=".$_GET['idComuna'];}
 if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){      $location .= "&Direccion=".$_GET['Direccion'];        $search .= "&Direccion=".$_GET['Direccion'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
@@ -136,7 +136,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         <div class="tab-content">
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
@@ -157,8 +157,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 						</p>
-									
-										
+
 						<h2 class="text-primary">Datos de Contacto</h2>
 						<p class="text-muted">
 							<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
@@ -167,22 +166,20 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
 							<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
 						</p>
-									
+
 						<h2 class="text-primary">Persona de Contacto</h2>
 						<p class="text-muted">
 							<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
 							<strong>Telefono : </strong><?php echo formatPhone($rowdata['PersonaContacto_Fono']); ?><br/>
 							<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
 						</p>
-							
-		
-										
+
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
-		
+
         </div>
 	</div>
 </div>
@@ -209,8 +206,8 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCurso)){          $x1  = $idCurso;           }else{$x1  = '';}
 				if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = '';}
@@ -228,21 +225,20 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x4, 1);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x5, 2);
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 2,'fa fa-envelope-o');
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('password', 1234, 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
 			<?php widget_validator(); ?>
-			
-			
+
 		</div>
 	</div>
 </div>
@@ -267,7 +263,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'estado_desc':   $order_by = 'alumnos_listado.idEstado DESC ';                                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		case 'curso_asc':     $order_by = 'cursos_listado.Nombre ASC ';                                            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Curso Ascendente';break;
 		case 'curso_desc':    $order_by = 'cursos_listado.Nombre DESC ';                                           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Curso Descendente';break;
-		
+
 		default: $order_by = 'cursos_listado.Nombre ASC, alumnos_listado.ApellidoPat ASC, alumnos_listado.ApellidoMat ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -276,19 +272,19 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "alumnos_listado.idAlumno!=0";
-$SIS_where.= " AND alumnos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//verifico que sea un administrador	
+$SIS_where.= " AND alumnos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//verifico que sea un administrador
 
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCurso']) && $_GET['idCurso']!=''){    $SIS_where .= " AND alumnos_listado.idCurso=".$_GET['idCurso'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){      $SIS_where .= " AND alumnos_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['idCurso']) && $_GET['idCurso']!=''){           $SIS_where .= " AND alumnos_listado.idCurso=".$_GET['idCurso'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){             $SIS_where .= " AND alumnos_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
 if(isset($_GET['ApellidoPat']) && $_GET['ApellidoPat']!=''){   $SIS_where .= " AND alumnos_listado.ApellidoPat LIKE '%".EstandarizarInput($_GET['ApellidoPat'])."%'";}
 if(isset($_GET['ApellidoMat']) && $_GET['ApellidoMat']!=''){   $SIS_where .= " AND alumnos_listado.ApellidoMat LIKE '%".EstandarizarInput($_GET['ApellidoMat'])."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut']!=''){            $SIS_where .= " AND alumnos_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                   $SIS_where .= " AND alumnos_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
 if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){   $SIS_where .= " AND alumnos_listado.fNacimiento='".$_GET['fNacimiento']."'";}
-if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){  $SIS_where .= " AND alumnos_listado.idCiudad=".$_GET['idCiudad'];}
-if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){  $SIS_where .= " AND alumnos_listado.idComuna=".$_GET['idComuna'];}
-if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){$SIS_where .= " AND alumnos_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
+if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){         $SIS_where .= " AND alumnos_listado.idCiudad=".$_GET['idCiudad'];}
+if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){         $SIS_where .= " AND alumnos_listado.idComuna=".$_GET['idComuna'];}
+if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){       $SIS_where .= " AND alumnos_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
@@ -316,9 +312,9 @@ $arrUsers = db_select_array (false, $SIS_query, 'alumnos_listado', $SIS_join, $S
 
 //filtro para el curso
 $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-		
+
 ?>
-								
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -328,7 +324,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Alumno</a><?php }?>
 
 </div>
@@ -337,7 +333,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCurso)){          $x1  = $idCurso;           }else{$x1  = '';}
 				if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = '';}
@@ -360,29 +356,29 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x7, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x8, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x9, 1,'fa fa-map');	 
-				
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x9, 1,'fa fa-map');
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
         </div>
 	</div>
-</div>  
+</div>
 <div class="clearfix"></div>
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Alumnos</h5>
 			<div class="toolbar">
-				<?php 
+				<?php
 				//se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
@@ -448,14 +444,14 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
-	
-<?php widget_modal(80, 95); ?>
+
+<?php widget_modal(40, 95); ?>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

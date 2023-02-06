@@ -167,7 +167,7 @@ $Form_Inputs = new Inputs();
 		
 	
 		 
-<?php widget_modal(80, 95); ?>
+
 
 <script>
 	//////////////////////////////////////////////////////////
@@ -453,7 +453,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 				</div>
 			</div>
 		</div> 
-		<?php widget_modal(80, 95); ?>
+		
 		
 <script>
 
@@ -620,7 +620,7 @@ $_SESSION['form_require'].=',idFacturacion';
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>

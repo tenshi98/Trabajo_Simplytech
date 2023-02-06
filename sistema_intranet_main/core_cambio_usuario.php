@@ -43,8 +43,8 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idUsuario)){   $x1  = $idUsuario;   }else{$x1  = '';}
 
@@ -58,8 +58,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 				</div>
 			</form>
 			<?php widget_validator(); ?>
-			
-			
+
 		</div>
 	</div>
 </div>

@@ -122,7 +122,7 @@ array_push( $arrProductos,$row );
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -330,7 +330,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_listado', $SIS
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>

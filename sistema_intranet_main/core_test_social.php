@@ -68,15 +68,15 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
         <div class="tab-content">
 			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Token)){       $x1 = $Token;        }else{$x1 = '';}
 					if(isset($InstanceId)){  $x2 = $InstanceId;   }else{$x2 = '';}
 					if(isset($fono)){        $x3 = $fono;         }else{$x3 = '';}
 					if(isset($grupo)){       $x4 = $grupo;        }else{$x4 = '';}
 					if(isset($mensaje)){     $x5 = $mensaje;      }else{$x5 = '';}
-								
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_icon('Token', 'Token', $x1, 2,'fa fa-key');
@@ -84,27 +84,25 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 					$Form_Inputs->form_input_icon('Telefono', 'fono', $x3, 1,'fa fa-phone ');
 					//$Form_Inputs->form_input_icon('Grupo', 'grupo', $x4, 1,'fa fa-phone ');
 					$Form_Inputs->form_textarea('Mensaje','mensaje', $x5, 2);
-								
+
 					$Form_Inputs->form_input_hidden('email_principal', $rowEmpresa['email_principal'], 2);
-								
+
 					?>
-					   
+
 					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_whatsapp"> 
 					</div>
-									  
+
 				</form>
-							
+
 			</div>
-				
+
         </div>
 	</div>
 </div>
 
-		
 <?php widget_validator(); ?>
 
-           
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

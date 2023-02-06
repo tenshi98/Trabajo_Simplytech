@@ -177,7 +177,7 @@ $arrArchivos = db_select_array (false, 'telemetria_listado_archivos.idArchivos, 
 				<?php } ?>
 				</tbody>
 			</table>
-			<?php widget_modal(80, 95); ?>
+			
 		</div>
 	</div>
 </div>

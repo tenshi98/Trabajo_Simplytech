@@ -398,7 +398,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	<?php } ?>
 <?php } ?>
 
-<?php widget_modal(80, 95); ?>    
+    
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -455,7 +455,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>

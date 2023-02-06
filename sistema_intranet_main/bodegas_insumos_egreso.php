@@ -660,10 +660,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <div class="clearfix"></div>
-
-
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  } elseif(!empty($_GET['new'])){
@@ -892,7 +890,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

@@ -203,7 +203,7 @@ array_push( $arrArchivos,$row );
 				<?php } ?>
 				</tbody>
 			</table>
-			<?php widget_modal(80, 95); ?>
+			
 		</div>
 	</div>
 </div>

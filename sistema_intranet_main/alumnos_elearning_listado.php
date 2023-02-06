@@ -148,8 +148,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idQuiz)){      $x1  = $idQuiz;      }else{$x1  = $rowdata['idQuiz'];}
 					
@@ -187,8 +187,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idQuiz)){      $x1  = $idQuiz;      }else{$x1  = '';}
 					
@@ -229,8 +229,8 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
 				if(isset($Resumen)){     $x2  = $Resumen;     }else{$x2  = $rowdata['Resumen'];}
@@ -291,7 +291,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_file">
 					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -308,8 +308,8 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($N_Unidad)){   $x1  = $N_Unidad;   }else{$x1  = '';}
 				if(isset($Nombre)){     $x2  = $Nombre;     }else{$x2  = '';}
@@ -352,8 +352,8 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($N_Unidad)){   $x1  = $N_Unidad;   }else{$x1  = $rowdata['N_Unidad'];}
 				if(isset($Nombre)){     $x2  = $Nombre;     }else{$x2  = $rowdata['Nombre'];}
@@ -390,8 +390,8 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idUnidad)){   $x1  = $idUnidad;   }else{$x1  = '';}
 				if(isset($Nombre)){     $x2  = $Nombre;     }else{$x2  = '';}
@@ -435,8 +435,8 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
-				<?php 
+
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idUnidad)){   $x1  = $idUnidad;   }else{$x1  = $rowdata['idUnidad'];}
 				if(isset($Nombre)){     $x2  = $Nombre;     }else{$x2  = $rowdata['Nombre'];}
@@ -709,7 +709,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 	
 </div>
 
-<?php widget_modal(80, 95); ?> 
+ 
  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -750,7 +750,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -843,7 +843,7 @@ $arrCurso = db_select_array (false, $SIS_query, 'alumnos_elearning_listado', $SI
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
         </div>
@@ -906,14 +906,14 @@ $arrCurso = db_select_array (false, $SIS_query, 'alumnos_elearning_listado', $SI
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

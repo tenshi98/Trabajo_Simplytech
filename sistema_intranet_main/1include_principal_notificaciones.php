@@ -134,14 +134,14 @@ echo '
 			</div>
 			
 			<div class="pagrow">
-				<?php 
+				<?php
 				//Paginador
 				echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 			
 		</div>
 	</div>  
-	<?php widget_modal(80, 95); ?>
+	
 	
 	<div class="col-sm-4 mail-left-box">
   		<div class="list-group inbox-options">

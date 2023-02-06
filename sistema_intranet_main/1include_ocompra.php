@@ -554,4 +554,4 @@ foreach ($arrHistorial as $doc){
 		</tbody>
     </table>
 </div>
-<?php widget_modal(80, 95); ?>
+

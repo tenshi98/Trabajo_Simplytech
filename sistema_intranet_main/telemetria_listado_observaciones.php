@@ -233,7 +233,7 @@ $arrObservaciones = db_select_array (false, 'telemetria_listado_observaciones.id
 <div class="clearfix"></div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

@@ -666,8 +666,6 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

@@ -333,7 +333,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 				</div>
 			</div>
 				
-			<?php widget_modal(80, 95); ?>
+			
 					
 					
 		</div>

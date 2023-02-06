@@ -357,7 +357,7 @@ foreach ($arrUnimed as $sen) {
 </div>
 
 
-<?php widget_modal(80, 95); ?>
+
 
   
 <div class="clearfix"></div>

@@ -131,7 +131,7 @@ $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_dete
 </div>
 
 
-<?php widget_modal(80, 95); ?>
+
 	
 
 

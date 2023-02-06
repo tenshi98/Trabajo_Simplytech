@@ -242,7 +242,7 @@ $arrLinks = db_select_array (false, $SIS_query, 'sitios_listado_links', $SIS_joi
 <div class="clearfix"></div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

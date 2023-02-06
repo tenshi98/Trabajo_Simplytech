@@ -152,7 +152,7 @@ $arrFacturaciones = db_select_array (false, $SIS_query, 'apoderados_listado', $S
 			</div>
 		</div>
 	</div>
-	<?php widget_modal(80, 95); ?>
+	
 </div>
 	
 <?php } ?>

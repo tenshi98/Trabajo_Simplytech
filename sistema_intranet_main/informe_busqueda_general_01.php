@@ -185,7 +185,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''&&$_GET['type']==1){
 }
 
 ?>
-<?php widget_modal(80, 95); ?>
+
 
   
 <div class="clearfix"></div>

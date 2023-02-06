@@ -126,14 +126,12 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Ejecutar" name="submit_test"> 
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
-
-
 
 <?php
 /**********************************************************************************************************************************/

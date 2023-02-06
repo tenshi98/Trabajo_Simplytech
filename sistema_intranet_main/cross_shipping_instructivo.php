@@ -108,7 +108,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -147,7 +147,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -181,7 +181,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "cross_shipping_instructivo.idInstructivo!=0";
-$SIS_where.= " AND cross_shipping_instructivo.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//verifico que sea un administrador	
+$SIS_where.= " AND cross_shipping_instructivo.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//verifico que sea un administrador
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){  $SIS_where .= " AND cross_shipping_instructivo.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
@@ -240,7 +240,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'cross_shipping_instructivo
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
         </div>
@@ -303,7 +303,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'cross_shipping_instructivo
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>

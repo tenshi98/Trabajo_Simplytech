@@ -506,5 +506,5 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) {$Count_Fu
 
 	</tbody>
 </table>
-<?php widget_modal(80, 95); ?>
+
 <?php widget_tooltipster();?>

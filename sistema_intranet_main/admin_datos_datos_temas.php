@@ -213,8 +213,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

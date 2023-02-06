@@ -139,7 +139,7 @@ $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuer
 </div>
 
 
-<?php widget_modal(80, 95); ?>
+
 
 
 <div class="clearfix"></div>

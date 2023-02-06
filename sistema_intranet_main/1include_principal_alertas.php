@@ -144,4 +144,4 @@ $arrAlertas = db_select_array (false, $SIS_query, 'analisis_listado_alertas', $S
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+

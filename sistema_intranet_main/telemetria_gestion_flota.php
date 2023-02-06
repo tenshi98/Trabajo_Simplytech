@@ -453,7 +453,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 	</div>
 </div>
 
-<?php widget_modal(80, 95); ?>
+
 
   
 <div class="clearfix"></div>

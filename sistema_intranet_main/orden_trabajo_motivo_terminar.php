@@ -102,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf023; Cerrar" name="submit_cerrar"> 
 					<a href="<?php echo $location.'&submit_filter=Filtrar'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
@@ -218,7 +218,7 @@ array_push( $arrOTS,$row );
 		</div>
 	</div>
 </div>
-<?php widget_modal(80, 95); ?>
+
 
 <div class="clearfix"></div>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -272,7 +272,7 @@ array_push( $arrOTS,$row );
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
-                      
+
 			</form>
             <?php widget_validator(); ?>
 		</div>

@@ -80,7 +80,7 @@ if($_SESSION['usuario']['basic_data']['password']=='81dc9bdb52d04dc20036dbd8313e
 
 			<?php include '1include_principal.php'; ?>
 			<?php widget_validator(); ?>
-			<?php widget_modal(80, 95); ?>
+			
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
