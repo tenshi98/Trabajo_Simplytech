@@ -79,7 +79,7 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 			
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<?php if ($rowdata['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">

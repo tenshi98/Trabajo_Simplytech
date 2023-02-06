@@ -266,8 +266,6 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 
 </div>
 
-
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){

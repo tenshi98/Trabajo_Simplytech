@@ -148,7 +148,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 							<strong>Fecha inicio Contrato : </strong><?php echo $rowdata['Contrato_Fecha']; ?><br/>
 							<strong>Duracion Contrato(Meses) : </strong><?php echo $rowdata['Contrato_Duracion']; ?>
 						</p>
-									
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
 							<h3 class="text-muted" style="font-size: 16px!important;color: #337ab7;">Visualizacion General</h3>
 							<p class="text-muted word_break">
@@ -180,7 +180,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								<strong>Whatsapp Token : </strong><?php echo $rowdata['Config_WhatsappToken']; ?><br/>
 								<strong>Whatsapp Instance Id : </strong><?php echo $rowdata['Config_WhatsappInstanceId']; ?><br/>
 							</p>
-									
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> APIS</h2>
 						<p class="text-muted word_break">
 							<strong>ID Google (Mapas) : </strong><?php echo $rowdata['Config_IDGoogle']; ?><br/>
@@ -194,7 +194,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 							<strong>Bodega Productos : </strong><?php echo $rowdata['BodegaProd']; ?><br/>
 							<strong>Bodega Insumos : </strong><?php echo $rowdata['BodegaIns']; ?><br/>
 						</p>
-									
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Social</h2>
 						<p class="text-muted word_break">
 							<strong>Uso de widget Sociales : </strong><?php echo $rowdata['SocialUso']; ?><br/>

@@ -93,8 +93,6 @@ $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuer
 	</div>
 </div>
 
-
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
