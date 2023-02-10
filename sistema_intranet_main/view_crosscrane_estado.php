@@ -533,7 +533,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				<div class="row">
 					
 					<?php /*
-					<div class="col-sm-3">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<h3 style="text-align: center;"><?php echo $icon_alimentacion.' Alimentacion';?></h3>
 						<div class="float_table" id="chart_gauge_alimentacion" ></div> 
 						<div class="clearfix"></div>

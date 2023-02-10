@@ -89,7 +89,7 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 			</form>
 			
 		</div>
-		<div class="col-sm-3">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<button id="open-room" class="btn btn-primary pull-right margin_form_btn fmrbtn" ><i class="fa fa-video-camera" aria-hidden="true"></i> Iniciar Reunion</button>
 		</div>
 	</div>
@@ -115,7 +115,7 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 				<div id="videos-container" style="margin: 20px 0;padding:10px;"></div>
 			</div>
 		</div>
-		<div class="col-sm-3">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<div class="row">
 				<div class="chating">
 					<div class="headind_srch">

@@ -191,7 +191,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="row">
 							
-							<div class="col-sm-3">
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 								<div class="box box-blue box-solid">
 									<div class="box-header with-border">
 										<h3 class="box-title">Kilometros Recorridos</h3>
@@ -206,7 +206,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								</div>
 							</div>
 							
-							<div class="col-sm-3">
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 								<div class="box box-blue box-solid">
 									<div class="box-header with-border">
 										<h3 class="box-title">Tiempo de Uso Referencial</h3>
@@ -221,7 +221,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								</div>
 							</div>
 							
-							<div class="col-sm-3">
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 								<div class="box box-blue box-solid">
 									<div class="box-header with-border">
 										<h3 class="box-title">Velocidad Promedio en Aplicacion</h3>
@@ -236,7 +236,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								</div>
 							</div>
 							
-							<div class="col-sm-3">
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 								<div class="box box-blue box-solid">
 									<div class="box-header with-border">
 										<h3 class="box-title">Litros Totales Aplicados</h3>

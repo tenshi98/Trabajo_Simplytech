@@ -106,7 +106,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<div id="videos-container" style="margin: 20px 0;padding:10px;"></div>
 			</div>
 		</div>
-		<div class="col-sm-3">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<div class="row">
 				<div class="chating">
 					<div class="headind_srch">

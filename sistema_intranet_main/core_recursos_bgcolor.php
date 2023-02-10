@@ -125,7 +125,7 @@ require_once 'core/Web.Header.Main.php';
 
 			<div class="tab-pane fade" id="tema">
 				<div class="">
-					<div class="col-sm-3">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<ul class="list-unstyled bg-danger" rel="bg-">
 							<li>.bg-danger</li>
 							<li class="dker">.dker</li>
@@ -134,7 +134,7 @@ require_once 'core/Web.Header.Main.php';
 							<li class="lter">.lter</li>
 						</ul>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<ul class="list-unstyled bg-warning" rel="bg-">
 							<li>.bg-warning</li>
 							<li class="dker">.dker</li>
@@ -143,7 +143,7 @@ require_once 'core/Web.Header.Main.php';
 							<li class="lter">.lter</li>
 						</ul>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<ul class="list-unstyled bg-primary" rel="bg-">
 							<li>.bg-primary</li>
 							<li class="dker">.dker</li>
@@ -152,7 +152,7 @@ require_once 'core/Web.Header.Main.php';
 							<li class="lter">.lter</li>
 						</ul>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<ul class="list-unstyled bg-success" rel="bg-">
 							<li>.bg-success</li>
 							<li class="dker">.dker</li>
@@ -161,7 +161,7 @@ require_once 'core/Web.Header.Main.php';
 							<li class="lter">.lter</li>
 						</ul>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<ul class="list-unstyled bg-info" rel="bg-">
 							<li>.bg-info</li>
 							<li class="dker">.dker</li>
@@ -170,7 +170,7 @@ require_once 'core/Web.Header.Main.php';
 							<li class="lter">.lter</li>
 						</ul>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<ul class="list-unstyled bg-black" rel="bg-">
 							<li>.bg-black</li>
 							<li class="dker">.dker</li>
@@ -179,7 +179,7 @@ require_once 'core/Web.Header.Main.php';
 							<li class="lter">.lter</li>
 						</ul>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<ul class="list-unstyled bg-dark" rel="bg-">
 							<li>.bg-dark</li>
 							<li class="dker">.dker</li>
@@ -188,7 +188,7 @@ require_once 'core/Web.Header.Main.php';
 							<li class="lter">.lter</li>
 						</ul>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<ul class="list-unstyled bg-light" rel="bg-">
 							<li>.bg-light</li>
 							<li class="dker">.dker</li>
@@ -202,7 +202,7 @@ require_once 'core/Web.Header.Main.php';
 			</div>
 			
 			<div class="tab-pane fade" id="bootstrap">
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="btn-default">Default</li>
 						<li class="btn-primary">Primary</li>
@@ -217,7 +217,7 @@ require_once 'core/Web.Header.Main.php';
 			
 			<div class="tab-pane fade" id="mycolors">
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bg-purple">purple</li>
 						<li class="bg-green">green</li>
@@ -229,7 +229,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bg-pastel_magenta">pastel_magenta</li>
 						<li class="bg-pastel_violet">pastel_violet</li>
@@ -251,7 +251,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="mdb-color">color</li>
 						<li class="mdb-color-lighten-1">color-lighten-1</li>
@@ -270,7 +270,7 @@ require_once 'core/Web.Header.Main.php';
 				<div class="clearfix"></div>
 
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-red">color</li>
 						<li class="bkg-red-red-1">red-lighten-1</li>
@@ -289,7 +289,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-pink">pink</li>
 						<li class="bkg-pink-lighten-1">pink-lighten-1</li>
@@ -308,7 +308,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-purple">purple</li>
 						<li class="bkg-purple-lighten-1">purple-lighten-1</li>
@@ -327,7 +327,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-deep-purple">-deep-purple</li>
 						<li class="bkg-deep-purple-lighten-1">-deep-purple-lighten-1</li>
@@ -346,7 +346,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-indigo">-indigo</li>
 						<li class="bkg-indigo-lighten-1">-indigo-lighten-1</li>
@@ -365,7 +365,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-blue">-blue</li>
 						<li class="bkg-blue-lighten-1">-blue-lighten-1</li>
@@ -384,7 +384,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-light-blue">-light-blue</li>
 						<li class="bkg-light-blue-lighten-1">-light-blue-lighten-1</li>
@@ -403,7 +403,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-cyan">-cyan</li>
 						<li class="bkg-cyan-lighten-1">-cyan-lighten-1</li>
@@ -422,7 +422,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-teal">-teal</li>
 						<li class="bkg-teal-lighten-1">-teal-lighten-1</li>
@@ -441,7 +441,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-green">-green</li>
 						<li class="bkg-green-lighten-1">-green-lighten-1</li>
@@ -460,7 +460,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-light-green">-light-green</li>
 						<li class="bkg-light-green-lighten-1">-light-green-lighten-1</li>
@@ -479,7 +479,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-lime">-lime</li>
 						<li class="bkg-lime-lighten-1">-lime-lighten-1</li>
@@ -498,7 +498,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-yellow">-yellow</li>
 						<li class="bkg-yellow-lighten-1">-yellow-lighten-1</li>
@@ -517,7 +517,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-amber">-amber</li>
 						<li class="bkg-amber-lighten-1">-amber-lighten-1</li>
@@ -536,7 +536,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-orange">-orange</li>
 						<li class="bkg-orange-lighten-1">-orange-lighten-1</li>
@@ -555,7 +555,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-deep-orange">-deep-orange</li>
 						<li class="bkg-deep-orange-lighten-1">-deep-orange-lighten-1</li>
@@ -574,7 +574,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-brown">-brown</li>
 						<li class="bkg-brown-lighten-1">-brown-lighten-1</li>
@@ -589,7 +589,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-blue-grey">-blue-grey</li>
 						<li class="bkg-blue-grey-lighten-1">-blue-grey-lighten-1</li>
@@ -604,7 +604,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-grey">-grey</li>
 						<li class="bkg-grey-lighten-1">-grey-lighten-1</li>
@@ -621,7 +621,7 @@ require_once 'core/Web.Header.Main.php';
 
 				<div class="clearfix"></div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-mdb-color-slight">rgba-mdb-color-slight</li>
 						<li class="rgba-mdb-color-light">rgba-mdb-color-light</li>
@@ -629,7 +629,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-red-slight">rgba-red-slight</li>
 						<li class="rgba-red-light">rgba-red-light</li>
@@ -637,7 +637,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-pink-slight">rgba-pink-slight</li>
 						<li class="rgba-pink-light">rgba-pink-light</li>
@@ -645,7 +645,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-purple-slight">rgba-purple-slight</li>
 						<li class="rgba-purple-light">rgba-purple-light</li>
@@ -653,7 +653,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-deep-purple-slight">rgba-deep-purple-slight</li>
 						<li class="rgba-deep-purple-light">rgba-deep-purple-light</li>
@@ -661,7 +661,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-indigo-slight">rgba-indigo-slight</li>
 						<li class="rgba-indigo-light">rgba-indigo-light</li>
@@ -669,7 +669,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-blue-slight">rgba-blue-slight</li>
 						<li class="rgba-blue-light">rgba-blue-light</li>
@@ -677,7 +677,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-light-blue-slight">rgba-light-blue-slight</li>
 						<li class="rgba-light-blue-light">rgba-light-blue-light</li>
@@ -685,7 +685,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-cyan-slight">rgba-cyan-slight</li>
 						<li class="rgba-cyan-light">rgba-cyan-light</li>
@@ -693,7 +693,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-teal-slight">rgba-teal-slight</li>
 						<li class="rgba-teal-light">rgba-teal-light</li>
@@ -701,7 +701,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-green-slight">rgba-green-slight</li>
 						<li class="rgba-green-light">rgba-green-light</li>
@@ -709,7 +709,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-light-green-slight">rgba-light-green-slight</li>
 						<li class="rgba-light-green-light">rgba-light-green-light</li>
@@ -717,7 +717,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-lime-slight">rgba-lime-slight</li>
 						<li class="rgba-lime-light">rgba-lime-light</li>
@@ -725,7 +725,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-yellow-slight">rgba-yellow-slight</li>
 						<li class="rgba-yellow-light">rgba-yellow-light</li>
@@ -733,7 +733,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-amber-slight">rgba-amber-slight</li>
 						<li class="rgba-amber-light">rgba-amber-light</li>
@@ -741,7 +741,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-orange-slight">rgba-orange-slight</li>
 						<li class="rgba-orange-light">rgba-orange-light</li>
@@ -749,7 +749,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-deep-orange-slight">rgba-deep-orange-slight</li>
 						<li class="rgba-deep-orange-light">rgba-deep-orange-light</li>
@@ -757,7 +757,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-brown-slight">rgba-brown-slight</li>
 						<li class="rgba-brown-light">rgba-brown-light</li>
@@ -765,7 +765,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-blue-grey-slight">rgba-blue-grey-slight</li>
 						<li class="rgba-blue-grey-light">rgba-blue-grey-light</li>
@@ -773,7 +773,7 @@ require_once 'core/Web.Header.Main.php';
 					</ul>
 				</div>
 				
-				<div class="col-sm-3">
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-grey-slight">rgba-grey-slight</li>
 						<li class="rgba-grey-light">rgba-grey-light</li>

@@ -88,7 +88,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 							<span><?php echo $soft['Descripcion']; ?></span>
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<div class="task-info">
 							<span><span class="label label-success"><?php echo $soft['Licencia']; ?></span></span>
 						</div>

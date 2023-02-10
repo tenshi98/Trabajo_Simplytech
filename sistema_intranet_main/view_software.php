@@ -66,7 +66,7 @@ $rowdata = db_select_data (false, $SIS_query, 'soporte_software_listado', $SIS_j
 							<span><?php echo $rowdata['Descripcion']; ?></span>
 						</div>
 					</div>
-					<div class="col-sm-3">
+					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 						<div class="task-info">
 							<span><?php echo $rowdata['Licencia']; ?></span>
 

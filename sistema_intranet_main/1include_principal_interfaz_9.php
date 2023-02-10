@@ -19,7 +19,7 @@ $arrSitio = db_select_array (false, $SIS_query, 'sitios_listado', $SIS_join, $SI
 
 //muestro los sitios
 foreach ($arrSitio as $trab) { ?>
-	<div class="col-sm-3">
+	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 		<div class="panel panel-primary">
 			<div class="panel-heading panel-altura">
 				<?php if (isset($trab['Config_Logo_Archivo'])&&$trab['Config_Logo_Archivo']!='') { ?>

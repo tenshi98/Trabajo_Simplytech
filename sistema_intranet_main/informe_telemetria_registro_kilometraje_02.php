@@ -108,7 +108,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	?>
 
 	<div class="row">
-		<div class="col-sm-3">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<div class="box box-blue box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title">Kilometros Recorridos</h3>
