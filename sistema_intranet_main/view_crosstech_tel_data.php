@@ -102,8 +102,10 @@ $Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
 $Time_Tiempo     = horas2segundos($Tiempo);
 $Time_Tiempo_FL  = horas2segundos($rowTel['TiempoFueraLinea']);
 $Time_Tiempo_Max = horas2segundos('48:00:00');
+$Time_Fake_Ini   = horas2segundos('23:59:50');
+$Time_Fake_Fin   = horas2segundos('24:00:00');
 //comparacion
-if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 	$in_eq_fueralinea++;
 }
 
@@ -142,10 +144,10 @@ if($in_eq_fueralinea!=0){
 		<div class="tab-content">
 			
 			<div class="">
-				<div class="col-sm-3"><div class="float_table" id="chart_gauge_2" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 1, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
-				<div class="col-sm-3"><div class="float_table" id="chart_gauge_3" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 2, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
-				<div class="col-sm-3"><div class="float_table" id="chart_gauge_1" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 3, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
-				<div class="col-sm-3"><div class="float_table" id="chart_gauge_4" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 4, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><div class="float_table" id="chart_gauge_2" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 1, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><div class="float_table" id="chart_gauge_3" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 2, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><div class="float_table" id="chart_gauge_1" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 3, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
+				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><div class="float_table" id="chart_gauge_4" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 4, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
 					
 			</div>
 			<?php

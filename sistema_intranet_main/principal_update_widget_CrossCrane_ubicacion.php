@@ -175,8 +175,10 @@ foreach ($arrEquipo as $data) {
 	$Time_Tiempo     = horas2segundos($Tiempo);
 	$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 	$Time_Tiempo_Max = horas2segundos('48:00:00');
+	$Time_Fake_Ini   = horas2segundos('23:59:50');
+	$Time_Fake_Fin   = horas2segundos('24:00:00');
 	//comparacion
-	if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+	if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 		$in_eq_fueralinea++;
 	}
 

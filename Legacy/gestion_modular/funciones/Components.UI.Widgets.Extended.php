@@ -1067,8 +1067,10 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 			$Time_Tiempo     = horas2segundos($Tiempo);
 			$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 			$Time_Tiempo_Max = horas2segundos('48:00:00');
+			$Time_Fake_Ini   = horas2segundos('23:59:50');
+			$Time_Fake_Fin   = horas2segundos('24:00:00');
 			//comparacion
-			if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+			if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 				$in_eq_fueralinea++;
 			}
 
@@ -1466,8 +1468,10 @@ function widget_Equipos($nombreEquipo, $seguimiento, $equipo, $enlace, $idSistem
 		$Time_Tiempo     = horas2segundos($Tiempo);
 		$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 		$Time_Tiempo_Max = horas2segundos('48:00:00');
+		$Time_Fake_Ini   = horas2segundos('23:59:50');
+		$Time_Fake_Fin   = horas2segundos('24:00:00');
 		//comparacion
-		if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+		if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 				$in_eq_fueralinea++;
 		}
 
@@ -1608,8 +1612,10 @@ function widget_Resumen_GPS_equipos($titulo, $seguimiento, $idSistema, $idTipoUs
 											$Time_Tiempo     = horas2segundos($Tiempo);
 											$Time_Tiempo_FL  = horas2segundos($equip['TiempoFueraLinea']);
 											$Time_Tiempo_Max = horas2segundos('48:00:00');
+											$Time_Fake_Ini   = horas2segundos('23:59:50');
+											$Time_Fake_Fin   = horas2segundos('24:00:00');
 											//comparacion
-											if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+											if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 												$xz = 1;
 											}
 
@@ -1806,8 +1812,10 @@ $GPS = '
 													$Time_Tiempo     = horas2segundos($Tiempo);
 													$Time_Tiempo_FL  = horas2segundos($equip['TiempoFueraLinea']);
 													$Time_Tiempo_Max = horas2segundos('48:00:00');
+													$Time_Fake_Ini   = horas2segundos('23:59:50');
+													$Time_Fake_Fin   = horas2segundos('24:00:00');
 													//comparacion
-													if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+													if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 														$in_eq_fueralinea++;
 													}
 
@@ -2108,8 +2116,10 @@ $GPS = '
 								$Time_Tiempo     = horas2segundos($Tiempo);
 								$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 								$Time_Tiempo_Max = horas2segundos('48:00:00');
+								$Time_Fake_Ini   = horas2segundos('23:59:50');
+								$Time_Fake_Fin   = horas2segundos('24:00:00');
 								//comparacion
-								if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+								if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 									$in_eq_fueralinea++;
 								}
 
@@ -2280,8 +2290,10 @@ $GPS = '
 								$Time_Tiempo     = horas2segundos($Tiempo);
 								$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 								$Time_Tiempo_Max = horas2segundos('48:00:00');
+								$Time_Fake_Ini   = horas2segundos('23:59:50');
+								$Time_Fake_Fin   = horas2segundos('24:00:00');
 								//comparacion
-								if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+								if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 									$in_eq_fueralinea++;
 								}
 
@@ -2444,8 +2456,10 @@ $GPS = '
 		$Time_Tiempo     = horas2segundos($Tiempo);
 		$Time_Tiempo_FL  = horas2segundos($equip['TiempoFueraLinea']);
 		$Time_Tiempo_Max = horas2segundos('48:00:00');
+		$Time_Fake_Ini   = horas2segundos('23:59:50');
+		$Time_Fake_Fin   = horas2segundos('24:00:00');
 		//comparacion
-		if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+		if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 			$wd_color = 'box-red';
 		//sino con azul normal
 		}else{
@@ -2674,8 +2688,10 @@ $GPS = '
 		$Time_Tiempo     = horas2segundos($Tiempo);
 		$Time_Tiempo_FL  = horas2segundos($equip['TiempoFueraLinea']);
 		$Time_Tiempo_Max = horas2segundos('48:00:00');
+		$Time_Fake_Ini   = horas2segundos('23:59:50');
+		$Time_Fake_Fin   = horas2segundos('24:00:00');
 		//comparacion
-		if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+		if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 			$wd_color = 'box-red';
 		//sino con azul normal
 		}else{
@@ -3338,8 +3354,10 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 										$Time_Tiempo     = horas2segundos($Tiempo);
 										$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 										$Time_Tiempo_Max = horas2segundos('48:00:00');
+										$Time_Fake_Ini   = horas2segundos('23:59:50');
+										$Time_Fake_Fin   = horas2segundos('24:00:00');
 										//comparacion
-										if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+										if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 											$in_eq_fueralinea++;
 										}
 
@@ -3770,8 +3788,10 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 										$Time_Tiempo     = horas2segundos($Tiempo);
 										$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 										$Time_Tiempo_Max = horas2segundos('48:00:00');
+										$Time_Fake_Ini   = horas2segundos('23:59:50');
+										$Time_Fake_Fin   = horas2segundos('24:00:00');
 										//comparacion
-										if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+										if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 											$in_eq_fueralinea++;
 										}
 
@@ -4200,8 +4220,10 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 												$Time_Tiempo     = horas2segundos($Tiempo);
 												$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 												$Time_Tiempo_Max = horas2segundos('48:00:00');
+												$Time_Fake_Ini   = horas2segundos('23:59:50');
+												$Time_Fake_Fin   = horas2segundos('24:00:00');
 												//comparacion
-												if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+												if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 													$in_eq_fueralinea++;
 												}
 
@@ -4685,8 +4707,10 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 												$Time_Tiempo     = horas2segundos($Tiempo);
 												$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 												$Time_Tiempo_Max = horas2segundos('48:00:00');
+												$Time_Fake_Ini   = horas2segundos('23:59:50');
+												$Time_Fake_Fin   = horas2segundos('24:00:00');
 												//comparacion
-												if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+												if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 													$in_eq_fueralinea++;
 												}
 
@@ -5333,8 +5357,10 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 												$Time_Tiempo     = horas2segundos($Tiempo);
 												$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 												$Time_Tiempo_Max = horas2segundos('48:00:00');
+												$Time_Fake_Ini   = horas2segundos('23:59:50');
+												$Time_Fake_Fin   = horas2segundos('24:00:00');
 												//comparacion
-												if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+												if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 													$in_eq_fueralinea++;
 												}
 
@@ -5859,8 +5885,10 @@ function widget_Equipos_Crosstech($nombreEquipo, $seguimiento, $equipo, $enlace,
 		$Time_Tiempo     = horas2segundos($Tiempo);
 		$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 		$Time_Tiempo_Max = horas2segundos('48:00:00');
+		$Time_Fake_Ini   = horas2segundos('23:59:50');
+		$Time_Fake_Fin   = horas2segundos('24:00:00');
 		//comparacion
-		if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+		if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 			$in_eq_fueralinea++;
 		}
 
@@ -5973,8 +6001,10 @@ $GPS = '
 		$Time_Tiempo     = horas2segundos($Tiempo);
 		$Time_Tiempo_FL  = horas2segundos($equip['TiempoFueraLinea']);
 		$Time_Tiempo_Max = horas2segundos('48:00:00');
+		$Time_Fake_Ini   = horas2segundos('23:59:50');
+		$Time_Fake_Fin   = horas2segundos('24:00:00');
 		//comparacion
-		if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+		if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 			$wd_color = 'box-red';
 		//sino con azul normal
 		}else{
@@ -6323,8 +6353,10 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 										$Time_Tiempo     = horas2segundos($Tiempo);
 										$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 										$Time_Tiempo_Max = horas2segundos('48:00:00');
+										$Time_Fake_Ini   = horas2segundos('23:59:50');
+										$Time_Fake_Fin   = horas2segundos('24:00:00');
 										//comparacion
-										if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+										if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 											$in_eq_fueralinea++;
 										}
 
@@ -6781,8 +6813,10 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			$Time_Tiempo     = horas2segundos($Tiempo);
 			$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 			$Time_Tiempo_Max = horas2segundos('48:00:00');
+			$Time_Fake_Ini   = horas2segundos('23:59:50');
+			$Time_Fake_Fin   = horas2segundos('24:00:00');
 			//comparacion
-			if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+			if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 				$in_eq_fueralinea++;
 			}
 
@@ -7404,8 +7438,10 @@ foreach ($arrEquipo as $data) {
 	$Time_Tiempo     = horas2segundos($Tiempo);
 	$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 	$Time_Tiempo_Max = horas2segundos('48:00:00');
+	$Time_Fake_Ini   = horas2segundos('23:59:50');
+	$Time_Fake_Fin   = horas2segundos('24:00:00');
 	//comparacion
-	if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+	if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 		$in_eq_fueralinea++;
 	}
 
@@ -7557,8 +7593,10 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 			$Time_Tiempo     = horas2segundos($Tiempo);
 			$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 			$Time_Tiempo_Max = horas2segundos('48:00:00');
+			$Time_Fake_Ini   = horas2segundos('23:59:50');
+			$Time_Fake_Fin   = horas2segundos('24:00:00');
 			//comparacion
-			if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+			if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 				$in_eq_fueralinea++;
 			}
 
@@ -8476,7 +8514,7 @@ function widget_Ficha_7($icon, $bg_color, $titulo, $value){
 }
 /*******************************************************************************************************************/
 //Muestra los widget sociales
-function widget_Ficha_8($bg_color, $number, $titulo, $porcentaje, $subtitulo1, $subtitulo2){
+function widget_Ficha_8($bg_color, $number, $titulo, $porcentaje, $subtitulos){
 
 	/********************************************************/
 	//Definicion de errores
@@ -8496,9 +8534,13 @@ function widget_Ficha_8($bg_color, $number, $titulo, $porcentaje, $subtitulo1, $
 					<div style="width: '.$porcentaje.'%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="'.$porcentaje.'" role="progressbar" class="progress-bar">
 						<span class="sr-only">'.$porcentaje.'% Complete</span>
 					</div>
-				</div>
-				<span class="subinfo">'.$subtitulo1.'</span>
-				<span class="subinfo">'.$subtitulo2.'</span>
+				</div>';
+				if(!empty($subtitulos) && $subtitulos!=''){
+					foreach ($subtitulos as $datos) {
+						$widget.= '<span class="subinfo">'.$datos['dato'].'</span>';
+					}
+				}
+				$widget.= '
 			</div>
 		</div>';
 
@@ -9186,8 +9228,10 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 											$Time_Tiempo     = horas2segundos($Tiempo);
 											$Time_Tiempo_FL  = horas2segundos($rowEquipo['TiempoFueraLinea']);
 											$Time_Tiempo_Max = horas2segundos('48:00:00');
+											$Time_Fake_Ini   = horas2segundos('23:59:50');
+											$Time_Fake_Fin   = horas2segundos('24:00:00');
 											//comparacion
-											if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+											if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 												$in_eq_fueralinea = '<i class="fa fa-exclamation-triangle faa-bounce animated" style="color: #a94442;" aria-hidden="true"></i>';
 											}
 
@@ -9528,8 +9572,10 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 			$Time_Tiempo     = horas2segundos($Tiempo);
 			$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
 			$Time_Tiempo_Max = horas2segundos('48:00:00');
+			$Time_Fake_Ini   = horas2segundos('23:59:50');
+			$Time_Fake_Fin   = horas2segundos('24:00:00');
 			//comparacion
-			if(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0)){
+			if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 				$in_eq_fueralinea++;
 			}
 
