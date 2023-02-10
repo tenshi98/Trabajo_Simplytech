@@ -13,15 +13,15 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 //si estoy en ambiente de produccion
 }else{
 	$CON_Base      = 'crosstec_pe_clientes';
-}	
-			
+}
+
 //Funcion para conectarse
 function conectarDB ($servidor, $usuario, $password, $base_datos) {
 	$db_con = mysqli_connect($servidor, $usuario, $password, $base_datos);
 	$db_con->set_charset("utf8");
 	return $db_con;
-}	
-			
+}
+
 //verifico si existen datos
 if($CON_Base!=''){
 	//ejecuto conexion
@@ -239,7 +239,7 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 ?>
 
 <div class="row">
-	
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="cover profile">
 			<?php include '1include_principal_interfaz_7_portada.php'; ?>
@@ -251,25 +251,22 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 			<li class=""><a href="#Menu_tab_2" data-toggle="tab"><i class="fa fa-fw fa-bars" aria-hidden="true"></i> Operacional</a></li>
 			<li class=""><a href="#Menu_tab_3" data-toggle="tab"><i class="fa fa-fw fa-bars" aria-hidden="true"></i> Calendario</a></li>
 			<li class=""><a href="#Menu_tab_4" data-toggle="tab"><i class="fa fa-fw fa-bars" aria-hidden="true"></i> Tareas</a></li>
-				
+
 		</ul>
-				
-					
+
 	</header>
-			
+
 			<div class="tab-content">
-				
+
 				<?php
 				//contenido en tabs
 				include '1include_principal_interfaz_7_tab_1.php';
 				include '1include_principal_interfaz_7_tab_2.php';
 				include '1include_principal_interfaz_7_tab_3.php';
 				include '1include_principal_interfaz_7_tab_4.php';
-				
+
 				?>
-				
-				
-				
+
 			</div>
 		</div>
 	</div>
