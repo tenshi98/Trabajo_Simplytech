@@ -109,10 +109,13 @@ echo widget_Ficha_7('fa-money', 'main-box_green-bg', 'Users', '2562');
 echo widget_Ficha_7('fa-eye', 'main-box_yellow-bg', 'Users', '2562');
 echo '<div class="clearfix"></div>';
 
-//widget_Ficha_8($bg_color, $number, $titulo, $porcentaje, $subtitulo1, $subtitulo2)
-echo widget_Ficha_8('main-box_red-bg', '2.562', 'Users', '60', '<i class="fa fa-arrow-circle-o-up"></i> 10% higher than last week', '<i class="fa fa-users"></i> 29 new users');
-echo widget_Ficha_8('main-box_emerald-bg', '2.562', 'Users', '84', '<i class="fa fa-arrow-circle-o-up"></i> 10% higher than last week', '<i class="fa fa-users"></i> 29 new users');
-echo widget_Ficha_8('main-box_green-bg', '2.562', 'Users', '42', '<i class="fa fa-arrow-circle-o-up"></i> 10% higher than last week', '<i class="fa fa-users"></i> 29 new users');
+$arrDatos[1]['dato']   = '<i class="fa fa-arrow-circle-o-up"></i> 10% higher than last week';
+$arrDatos[2]['dato']   = '<i class="fa fa-users"></i> 29 new users';
+$arrDatos[3]['dato']   = '<i class="fa fa-users"></i> 29 new users';
+//widget_Ficha_8($bg_color, $number, $titulo, $porcentaje, $subtitulos)
+echo widget_Ficha_8('main-box_red-bg', '2.562', 'Users', '60', $arrDatos);
+echo widget_Ficha_8('main-box_emerald-bg', '2.562', 'Users', '84', $arrDatos);
+echo widget_Ficha_8('main-box_green-bg', '2.562', 'Users', '42', $arrDatos);
 echo '<div class="clearfix"></div>';
 
 /*widget_Ficha_9($hover_color, $bg_color, $titulo, 
