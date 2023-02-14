@@ -66,7 +66,7 @@ $Form_Inputs = new Inputs();
 ?>
 
 <div class="row inbox"> 
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2>
 			<strong>Facturacion : </strong><?php echo numero_a_mes($rowFacturacion['Creacion_mes']).' '.$rowFacturacion['Creacion_ano'].' ('.Fecha_estandar($rowFacturacion['Creacion_fecha']).')' ?><br/>
 			<?php echo 'Desde el '.Fecha_estandar($rowFacturacion['Fecha_desde']).' hasta el '.Fecha_estandar($rowFacturacion['Fecha_hasta'])?>
@@ -77,7 +77,7 @@ $Form_Inputs = new Inputs();
 										
 <div class="row inbox">
 								
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -249,7 +249,7 @@ $Form_Inputs = new Inputs();
 
 							
 <?php if($Registro_total==$Registro_ok){ ?>	
-	<div class="col-md-7">
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
 		<div class="box">
 			<header>
@@ -371,7 +371,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 
 
 <div class="row inbox"> 
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2>
 			<strong>Facturacion : </strong><?php echo numero_a_mes($rowFacturacion['Creacion_mes']).' '.$rowFacturacion['Creacion_ano'].' ('.Fecha_estandar($rowFacturacion['Creacion_fecha']).')' ?><br/>
 			<?php echo 'Desde el '.Fecha_estandar($rowFacturacion['Fecha_desde']).' hasta el '.Fecha_estandar($rowFacturacion['Fecha_hasta'])?>
@@ -389,7 +389,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 </div>
 
 							
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Liquidaciones Pendientes de Pago</h5>

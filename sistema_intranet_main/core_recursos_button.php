@@ -27,7 +27,7 @@ require_once 'core/Web.Header.Main.php';
 <h3>Buttons</h3>
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box danger">
 	<header>
 	<div class="icons">
@@ -97,7 +97,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 	<header>
 	<div class="icons">
@@ -167,7 +167,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box warning">
 	<header>
 	<div class="icons">
@@ -237,7 +237,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box danger">
 	<header>
 	<div class="icons">
@@ -307,7 +307,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box success">
 	<header>
 	<div class="icons">
@@ -377,7 +377,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box inverse">
 	<header>
 	<div class="icons">
@@ -447,7 +447,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box danger">
 	<header>
 	<div class="icons">
@@ -517,7 +517,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box danger">
 	<header>
 	<div class="icons">
@@ -587,7 +587,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box primary">
 	<header>
 	<div class="icons">
@@ -657,7 +657,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box danger">
 	<header>
 	<div class="icons">
@@ -727,7 +727,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box danger">
 	<header>
 	<div class="icons">
@@ -797,7 +797,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box danger">
 	<header>
 	<div class="icons">
@@ -867,7 +867,7 @@ require_once 'core/Web.Header.Main.php';
 	</div>
 	</div>
 	</div>
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box inverse">
 	<header>
 	<div class="icons">

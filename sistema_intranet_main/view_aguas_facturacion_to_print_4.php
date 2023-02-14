@@ -20,7 +20,7 @@
 <section class="invoice">
 
 	<div class="invoice-info">
-	<div class="col-sm-6 invoice-col">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 		<p class="well well-sm no-shadow" style="background-color: #fff;text-align: center;font-size: 16px !important;" >
 		
 		<?php echo $rowDatos['ClienteNombre']; ?><br>
@@ -30,7 +30,7 @@
 		</p>
 	</div>
 		
-	<div class="col-sm-6 invoice-col">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 		<p class="well well-sm no-shadow" style="background-color: #fff;text-align: center;margin-bottom: 1px;font-size: 14px !important;" >
 		N° Cliente: <?php echo $rowDatos['ClienteIdentificador'] ?>
 		</p>
@@ -52,7 +52,7 @@
 	
 	
 	
-	<div class="col-sm-12 well well-sm no-shadow invoice-detalis">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 well well-sm no-shadow invoice-detalis">
 	<table class="table">
 		<thead>
 		<tr>
@@ -204,9 +204,9 @@
 	
 	
 	<div class="row"  >
-	<div class="col-sm-12 invoice-footer">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 invoice-footer">
 		<div class="row"  >
-		<div class="col-sm-5 footer-left pull-left">
+		<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 footer-left pull-left">
 			<div class="well well-sm no-shadow" style="background-color: #fff;">
 		
 			<div class="pull-left"><?php echo Devolver_mes($rowDatos['GraficoMes1Fecha']); ?></div>   <small class="pull-right"><?php echo Cantidades($rowDatos['GraficoMes1Valor'], 2); ?> m3</small> <br/> 
@@ -276,7 +276,7 @@
 		</div>
 
 
-		<div class="col-sm-6 footer-right well well-sm no-shadow pull-right" >
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 footer-right well well-sm no-shadow pull-right" >
 			<br/>
 			<p>
 				Los Valores proporcionales con IVA para los consumos realizados a partir del 20-01-2016 <br/>

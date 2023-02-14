@@ -90,7 +90,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
+			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 				
 				<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
         

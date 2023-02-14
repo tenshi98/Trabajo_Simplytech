@@ -145,7 +145,7 @@ if(!empty($_GET['moddatos'])){ ?>
 </div> 
 
 
-<div class="col-sm-11 fcenter table-responsive">
+<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 
 	<div id="page-wrap">
 		<div id="header"> Ingreso Datos </div>

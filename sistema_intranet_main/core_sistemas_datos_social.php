@@ -94,7 +94,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 			
 			echo '</div>';
 			?>
-			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
 					<?php 

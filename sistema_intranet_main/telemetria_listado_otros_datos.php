@@ -93,7 +93,7 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;margin-bottom: 400px;">
+			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;margin-bottom: 400px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 					<?php

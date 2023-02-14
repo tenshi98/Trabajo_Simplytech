@@ -303,7 +303,7 @@ if($row_data['MontoPagado']!=0){?>
 			//Boleta Trabajadores
 			case 1:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Emisor
 					<address>
 						<strong>'.$row_data['Trab_Nombre'].' '.$row_data['Trab_ApellidoPat'].' '.$row_data['Trab_ApellidoMat'].'</strong><br/>
@@ -315,7 +315,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -327,7 +327,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
 
@@ -347,7 +347,7 @@ if($row_data['MontoPagado']!=0){?>
 			//Boleta Clientes
 			case 2:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Emisor
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -359,7 +359,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
 						<strong>'.$row_data['Cliente_Nombre'].'</strong><br/>
@@ -375,7 +375,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
 
@@ -395,7 +395,7 @@ if($row_data['MontoPagado']!=0){?>
 			//Boleta Empresas
 			case 3:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Emisor
 					<address>
 						<strong>'.$row_data['Proveedor_Nombre'].'</strong><br/>
@@ -411,7 +411,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -423,7 +423,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
 
@@ -502,8 +502,8 @@ if($row_data['MontoPagado']!=0){?>
 	//Gasto de Productos
 	if($row_data['idTipo']==3){?>
 		<div class="row firma">
-			<div class="col-sm-6 fcont"><p>Firma Emisor</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Emisor</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
 		</div>
 	<?php } ?>
 	
@@ -511,8 +511,8 @@ if($row_data['MontoPagado']!=0){?>
 	//Traspaso de Productos a otra Empresa
 	if($row_data['idTipo']==6){?>
 		<div class="row firma">
-			<div class="col-sm-6 fcont"><p>Firma Transportista</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Transportista</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
 		</div>
 	<?php } ?>
 

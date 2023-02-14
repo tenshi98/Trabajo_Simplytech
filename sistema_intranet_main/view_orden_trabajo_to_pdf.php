@@ -178,7 +178,7 @@ $html ='<style>
 .otdata{width: 65% !important;}
 .otdata2{width: 30% !important;}
 </style> 
-<div class="col-sm-11 fcenter table-responsive">
+<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 
 <div id="page-wrap">
     <div id="header"> ORDEN DE TRABAJO N° '.n_doc($_GET['view'], 8).'</div>

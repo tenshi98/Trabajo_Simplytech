@@ -15,14 +15,14 @@ require_once 'core/Web.Header.Error.php';
 
 
 <div class="container">
-	<div class="col-lg-8 col-lg-offset-2 text-center">
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-lg-offset-2 text-center">
 		<div class="logo">
 			<h1>404</h1>
 		</div>
 		<p class="lead text-muted">Lo sentimos, pero la pagina que busca no existe.</p>
 		<div class="clearfix"></div>
 		<br/>
-		<div class="col-lg-6 col-lg-offset-3">
+		<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-lg-offset-3">
 			<div class="btn-group btn-group-justified">
 				<a href="principal.php" class="btn btn-info">Volver a Principal</a>
 				<a href="index.php" class="btn btn-warning">Volver a Inicio</a>

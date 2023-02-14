@@ -260,7 +260,7 @@ array_push( $arrHistorial,$row );
 	<div class="row invoice-info">
 		
 		<?php echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Empresa Origen</strong>
 					<address>
 						Empresa: '.$row_data['SistemaOrigen'].'<br/>
@@ -271,7 +271,7 @@ array_push( $arrHistorial,$row );
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Identificacion</strong>
 					<address>
 						Predio: '.$row_data['NombrePredio'].'<br/>
@@ -282,7 +282,7 @@ array_push( $arrHistorial,$row );
 						Variedad: '.$row_data['VariedadNombre'].'<br/>
 					</address>
 				</div>
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Datos de Solicitud</strong>
 					<address>
 						N° Solicitud: '.n_doc($row_data['idSolicitud'], 5).'<br/>

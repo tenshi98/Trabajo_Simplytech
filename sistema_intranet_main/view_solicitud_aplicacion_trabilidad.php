@@ -129,7 +129,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 	<div class="row invoice-info">
 		
 		<?php echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Identificacion</strong>
 					<address>
 						Predio: '.$row_data['PredioNombre'].'<br/>
@@ -140,7 +140,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 						Nebulizador: '.$row_data['NebNombre'].'<br/>
 					</address>
 				</div>
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Velocidad Tractores (Km/hr)</strong>
 					<address>
 						Minima: '.Cantidades($row_data['GeoVelocidadMin'], 2).'<br/>
@@ -149,7 +149,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 						Programada: '.Cantidades($row_data['VelTractor'], 2).'<br/>
 					</address>
 				</div>
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Distancia Recorrida(Metros)</strong>
 					<address>
 						Recorrida: '.Cantidades($row_data['GeoDistance'], 2).'<br/>

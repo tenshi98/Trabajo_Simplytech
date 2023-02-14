@@ -91,7 +91,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 <div class="clearfix"></div>
 
-<div class="col-sm-12 messaging">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 messaging">
 	<div class="row inbox_msg">
 		<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 			<div class="row">

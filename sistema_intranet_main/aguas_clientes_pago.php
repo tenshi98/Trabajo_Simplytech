@@ -98,7 +98,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
  
  
 <div class="row inbox"> 
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2><strong>Cliente : </strong><?php echo $rowCliente['Identificador']; ?></h2>
 		<hr>	
 	</div>
@@ -109,7 +109,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
   						
 	  
 	
-	<div class="col-md-4">
+	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 		<ul class="list-group inbox-options">
 			<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Facturacion <?php echo Fecha_estandar($rowFacturacion['Fecha']);?></li>
 			<li class="list-group-item">		
@@ -218,7 +218,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 	
 
 	
-	<div class="col-lg-8">
+	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
 		<div class="">
 			
 			<ul class="list-group inbox-options">
@@ -346,7 +346,7 @@ array_push( $arrFacturaciones,$row );
 	
 	
 <div class="row inbox"> 
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2><strong>Cliente : </strong><?php echo $rowCliente['Identificador']; ?></h2>
 		<hr>	
 	</div>
@@ -355,7 +355,7 @@ array_push( $arrFacturaciones,$row );
 <?php if(isset($rowFacturacion['DetalleTotalAPagar'])&&$rowFacturacion['DetalleTotalAPagar']!=''){?>
 	<div class="row inbox">
 							
-		<div class="col-lg-8">
+		<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
 			<div class="box">
 				<header>
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Facturaciones Pendientes de Pago</h5>
@@ -394,7 +394,7 @@ array_push( $arrFacturaciones,$row );
 
 
 		
-		<div class="col-md-4 mail-left-box">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 mail-left-box">
 			<ul class="list-group inbox-options">
 				<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Detalle Ultima Facturacion</li>
 				<li class="list-group-item">		
@@ -503,7 +503,7 @@ array_push( $arrFacturaciones,$row );
 	</div>
 	
 	<div class="clearfix"></div>
-	<div class="col-lg-12 fcenter" >
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 		<?php if($rowFacturacion['DetalleTotalAPagar']!=0){?>
 		<a href="<?php echo $location.'&idCliente='.$_GET['idCliente'].'&pagar=true'; ?>"  class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Pagar</a>
 		<?php } ?>

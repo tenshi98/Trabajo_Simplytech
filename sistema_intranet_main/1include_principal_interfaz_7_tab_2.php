@@ -4,14 +4,14 @@
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
 		<div class="row">
 
-			<div class="col-lg-3 col-md-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 				<div class="panel panel-warning">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="col-xs-3">
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 								<i class="fa fa-exclamation-triangle fa-5x" aria-hidden="true"></i>
 							</div>
-							<div class="col-xs-9 text-right">
+							<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 text-right">
 								<div class="huge" id="AlertNumber">0</div>
 								<div>Con Alertas</div>
 							</div>
@@ -23,14 +23,14 @@
 				</div>
 			</div>
 
-			<div class="col-lg-3 col-md-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 				<div class="panel panel-danger">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="col-xs-3">
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 								<i class="fa fa-chain-broken fa-5x" aria-hidden="true"></i>
 							</div>
-							<div class="col-xs-9 text-right">
+							<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 text-right">
 								<div class="huge" id="FueraNumber">0</div>
 								<div>Fuera de Linea</div>
 							</div>
@@ -42,14 +42,14 @@
 				</div>
 			</div>
 
-			<div class="col-lg-3 col-md-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 				<div class="panel panel-success">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="col-xs-3">
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 								<i class="fa fa-check fa-5x" aria-hidden="true"></i>
 							</div>
-							<div class="col-xs-9 text-right">
+							<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 text-right">
 								<div class="huge" id="OnlineNumber">0</div>
 								<div>En Linea</div>
 							</div>
@@ -61,14 +61,14 @@
 				</div>
 			</div>
 
-			<div class="col-lg-3 col-md-6">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<div class="row">
-							<div class="col-xs-3">
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 								<i class="fa fa-cog fa-5x" aria-hidden="true"></i>
 							</div>
-							<div class="col-xs-9 text-right">
+							<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 text-right">
 								<div class="huge" id="TotalNumber">0</div>
 								<div>Total</div>
 							</div>

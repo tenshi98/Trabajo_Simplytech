@@ -98,7 +98,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 
 					<?php
@@ -117,7 +117,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 
 					if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){
 
-						echo '<div class="col-sm-10 fcenter"><h3>Archivo</h3>';
+						echo '<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter"><h3>Archivo</h3>';
 						echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Licencia'], '');
 						echo '</div>
 						<a href="'.$new_location.'&id='.$_GET['id'].'&del_File_Licencia='.$_GET['id'].'" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>

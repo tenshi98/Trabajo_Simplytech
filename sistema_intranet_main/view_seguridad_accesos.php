@@ -92,7 +92,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $S
 								
 								
 		echo '
-		<div class="col-sm-12 invoice-col">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 invoice-col">
 			Datos del acceso
 			<address>
 				<strong>Usuario: </strong>'.$rowdata['Usuario'].'<br/>
@@ -113,7 +113,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $S
 	<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
 		<div class="row">
 			<div class="col-xs-12">
-				<div class="col-sm-10 fcenter">
+				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 					<h3>Archivo Adjunto</h3>
 					<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Direccion_img'], ''); ?>
 				</div>

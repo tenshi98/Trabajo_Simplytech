@@ -505,7 +505,7 @@
 		
 		<div class="row">
 		<div class="col-xs-12">
-			<div class="col-sm-12 well well-sm no-shadow" style="background-color: #fff;">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 well well-sm no-shadow" style="background-color: #fff;">
 			<p><?php echo 'Son: '.numtoletras($rowDatos['DetalleTotalAPagar']); ?></p>
 			</div>
 		</div>

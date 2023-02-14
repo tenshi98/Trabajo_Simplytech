@@ -183,13 +183,13 @@ foreach($arrContenidos as $categoria=>$permisos){
 														//verifico que el archivo sea del contenido
 														if(isset($preg['Unidad_ID'])&&$preg['Unidad_ID']==$file['idUnidad']&&isset($preg['Contenido_ID'])&&$preg['Contenido_ID']==$file['idContenido']){ ?>
 															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:2px;">
-																<div class="col-sm-11">
+																<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11">
 																	<?php 
 																	$f_file = str_replace('elearning_files_'.$file['idContenido'].'_','',$file['File']);
 																	echo $f_file; 
 																	?>
 																</div>
-																<div class="col-sm-1">
+																<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
 																	<div class="btn-group" style="width: 35px;" >
 																		<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($file['File'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Documento" class="btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 																	</div>
@@ -217,8 +217,8 @@ foreach($arrContenidos as $categoria=>$permisos){
 														//verifico que el archivo sea del contenido
 														if(isset($preg['Unidad_ID'])&&$preg['Unidad_ID']==$file['idUnidad']&&isset($preg['Contenido_ID'])&&$preg['Contenido_ID']==$file['idContenido']){ ?>
 															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:2px;">
-																<div class="col-sm-11"><?php echo $file['Cuestionario'];  ?></div>
-																<div class="col-sm-1">
+																<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11"><?php echo $file['Cuestionario'];  ?></div>
+																<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
 																	<div class="btn-group" style="width: 35px;" >
 																		<a href="<?php echo 'view_quiz.php?view='.simpleEncode($file['idQuiz'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 																	</div>

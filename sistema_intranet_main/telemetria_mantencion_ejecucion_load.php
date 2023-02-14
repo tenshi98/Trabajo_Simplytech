@@ -110,7 +110,7 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre
 		</div>
 		
 		<div class="row invoice-info">
-			<div class="col-sm-6 invoice-col">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 				<strong>Datos Mantencion</strong>
 				<address>
 					Fecha Inicio: <?php echo fecha_estandar($rowdata['Tel_Fecha']); ?><br/>
@@ -119,7 +119,7 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre
 				</address>
 			</div>
 					
-			<div class="col-sm-6 invoice-col">
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 						
 			</div>
 		</div>

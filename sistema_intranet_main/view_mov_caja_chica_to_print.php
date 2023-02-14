@@ -114,7 +114,7 @@ $html = '
 			//Ingreso
 			case 1:
 				$html .= '
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Datos del Movimiento
 					<address>
 						<strong>'.$row_data['CajaNombre'].'</strong><br/>
@@ -126,7 +126,7 @@ $html = '
 					</address>
 				</div>
 				
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 
 				</div>';
 
@@ -134,7 +134,7 @@ $html = '
 			//Egreso
 			case 2:
 				$html .= '
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Datos del Movimiento
 					<address>
 						<strong>'.$row_data['CajaNombre'].'</strong><br/>
@@ -146,7 +146,7 @@ $html = '
 					</address>
 				</div>
 				
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Trabajador
 					<address>
 						<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br/>
@@ -247,8 +247,8 @@ $html = '
 	
 	if($row_data['idTipo']==2){
 		$html .= '<div class="row firma">
-			<div class="col-sm-6 fcont"><p>Firma Transportista</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Transportista</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
 		</div>';
 	}
     

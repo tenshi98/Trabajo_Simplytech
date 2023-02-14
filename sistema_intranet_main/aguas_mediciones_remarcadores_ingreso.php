@@ -360,7 +360,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 </div>
 
 <div class="clearfix"></div>
-<div class="col-lg-12 fcenter" style="margin-bottom:30px; margin-top:30px">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
 <a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
@@ -404,16 +404,16 @@ $Form_Inputs = new Inputs();
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 					
 					<div> 	
-						<div class="col-sm-6 nopadding">
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Nombre Cliente'); ?>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Cod Medidor'); ?>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Cod Remarcador'); ?>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Consumo'); ?>
 						</div>
 						<div class="clearfix"></div>
@@ -424,22 +424,22 @@ $Form_Inputs = new Inputs();
 						$NClientes++;
 						?>
 						<div> 	
-							<div class="col-sm-6 nopadding">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 nopadding">
 								<div class="form-group">
 									<?php $Form_Inputs->input_disabled('text', 'Cliente', 'Cliente_'.$NClientes, $cli['ClienteIdentificador'].' '.$cli['ClienteNombre'], 1);?>
 								</div>
 							</div>
-							<div class="col-sm-2 nopadding">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 								<div class="form-group">
 									<?php $Form_Inputs->input_disabled('text', 'Medidor', 'Medidor_'.$NClientes, $cli['Medidor'], 1);?>
 								</div>
 							</div>
-							<div class="col-sm-2 nopadding">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 								<div class="form-group">
 									<?php $Form_Inputs->input_disabled('text', 'Remarcador', 'Remarcador_'.$NClientes, $cli['Remarcador'], 1);?>
 								</div>
 							</div>
-							<div class="col-sm-2 nopadding">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 								<div class="form-group">
 									<?php $Form_Inputs->input_number('Consumo','Consumo_'.$NClientes, 0, 2);?>
 								</div>
@@ -475,7 +475,7 @@ $Form_Inputs = new Inputs();
 <div class="clearfix"></div>
 
 <div class="clearfix"></div>
-<div class="col-lg-12 fcenter" style="margin-bottom:30px; margin-top:30px">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
 <a href="<?php echo $location.'&view=true'; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>	
@@ -651,7 +651,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 </div>
 
 <div class="clearfix"></div>
-<div class="col-lg-12 fcenter" style="margin-bottom:30px; margin-top:30px">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
 <a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>

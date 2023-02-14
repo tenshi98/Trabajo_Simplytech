@@ -11,7 +11,7 @@
 			
 			<div class="row invoice-info">
 			
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					<address>
 						RUT : <?php echo $_SESSION['Facturacion_basicos']['SistemaRut']?><br>
 						<?php echo $_SESSION['Facturacion_basicos']['SistemaRubro']?><br>
@@ -21,7 +21,7 @@
 					</address>
 				</div>
 						
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					<br><br><br>
 					<?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DocFacturable'].' '.$_SESSION['Facturacion_clientes'][$X_Puntero]['SII_NDoc'] ?>
 				</div>
@@ -29,7 +29,7 @@
 			</div>
 			
 			<div class="row invoice-info">
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					<p class="well well-sm no-shadow" style="background-color: #fff;text-align: center;" >
 						<br>
 						<?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteNombre']?><br>
@@ -39,7 +39,7 @@
 					</p>
 				</div>
 						
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					<p class="well well-sm no-shadow" style="background-color: #fff;text-align: center;" >
 						N° Cliente: <?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteIdentificador']?>
 					</p>
@@ -280,7 +280,7 @@
 			<div class="row">
 				<div class="col-xs-12">
 					
-					<div class="col-sm-6" style="padding-left: 0px;">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3" style="padding-left: 0px;">
 						<div class="well well-sm no-shadow" style="background-color: #fff;">
 							
 							<div class="graficos">
@@ -385,7 +385,7 @@
 						
 					</div>
 							
-					<div class="col-sm-6 well well-sm no-shadow" style="background-color: #fff;">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 well well-sm no-shadow" style="background-color: #fff;">
 						<strong>Aguas Informa</strong>
 							<p>
 								Los Valores proporcionales con IVA para los consumos realizados<br/>
@@ -506,7 +506,7 @@
 		
 		<div class="">
 			<div class="col-xs-12">
-				<div class="col-sm-12 well well-sm no-shadow" style="background-color: #fff;">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 well well-sm no-shadow" style="background-color: #fff;">
 					<p><?php echo 'Son: '.numtoletras($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalAPagar']); ?></p>
 				</div>
 			</div>

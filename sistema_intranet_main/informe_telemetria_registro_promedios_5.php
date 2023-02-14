@@ -205,7 +205,7 @@ document.getElementById("loading").style.display = "none";
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Informe Promedio Camara', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']);?>
-	<div class="col-md-6 col-sm-6 col-xs-12 clearfix">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 		<a target="new" href="<?php echo 'informe_telemetria_registro_promedios_5_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	
 		<?php if(isset($_GET['idGraficos'])&&$_GET['idGraficos']==1){ ?>

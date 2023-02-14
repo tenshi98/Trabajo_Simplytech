@@ -134,7 +134,7 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 	echo '<div class="clearfix"></div>';
 } ?>
 		
-<div class="col-sm-12 table-responsive" style="margin-bottom:30px!important;margin-top:30px!important;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive" style="margin-bottom:30px!important;margin-top:30px!important;">
 	
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div id="page-wrap">

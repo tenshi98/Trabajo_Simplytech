@@ -1088,7 +1088,7 @@ foreach ($arrProductos as $prod) {
 
 ?>
  
-<div class="col-sm-11 fcenter table-responsive" style="margin-bottom:30px">
+<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive" style="margin-bottom:30px">
 
 	<div id="page-wrap">
 		<div id="header"> SOLICITUD DE APLICACIONES N° <?php echo n_doc($row_data['NSolicitud'], 5); ?></div>

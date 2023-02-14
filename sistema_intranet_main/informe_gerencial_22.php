@@ -1097,7 +1097,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 	$arrCC_lv2[$trab['idLevel_2']] = $trab['Nombre'];
 }
 ?>
-<div class="col-sm-12 clearfix">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_22_to_excel.php'.$search?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 

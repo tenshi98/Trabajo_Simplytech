@@ -77,7 +77,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join,
 
 
 	
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Informe Fecha <?php echo Fecha_estandar($rowdata['f_muestra']); ?></h5>

@@ -97,7 +97,7 @@ foreach ($arrGrupos as $sen) {
 		</header>
         <div class="table-responsive">
 			
-			<div class="col-sm-7">
+			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 				<div class="row">
 					<div id="consulta">
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -257,7 +257,7 @@ foreach ($arrGrupos as $sen) {
 				</div>
 			</div>
 			
-			<div class="col-sm-5">
+			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 				<div class="row">	
 					<?php if ($rowDatos['Direccion_img']=='') { ?>
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">

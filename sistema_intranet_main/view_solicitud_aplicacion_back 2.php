@@ -358,7 +358,7 @@ array_push( $arrHistorial,$row );
 	<div class="row invoice-info">
 		
 		<?php echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Datos Empresa</strong>
 					<address>
 						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
@@ -369,7 +369,7 @@ array_push( $arrHistorial,$row );
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Identificacion</strong>
 					<address>
 						Predio: '.$row_data['NombrePredio'].'<br/>
@@ -381,7 +381,7 @@ array_push( $arrHistorial,$row );
 						echo '
 					</address>
 				</div>
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Datos de Solicitud</strong>
 					<address>
 						Prioridad: '.$row_data['NombrePrioridad'].'<br/>
@@ -399,7 +399,7 @@ array_push( $arrHistorial,$row );
 					</address>
 				</div>
 				<div class="clearfix"></div>
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Parámetros de Aplicación</strong>
 					<address>
 						Mojamiento: '.Cantidades_decimales_justos($row_data['Mojamiento']).' L/ha<br/>

@@ -206,7 +206,7 @@ $Form_Inputs = new Inputs();
 
 <?php if(isset($row_data['Cliente'])&&$row_data['Cliente']!=''){?>
 	<div class="row inbox"> 
-		<div class="col-lg-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<h3>
 				<strong>Cliente : </strong><?php echo $row_data['Cliente']; ?><br/>
 			</h3>
@@ -219,7 +219,7 @@ $Form_Inputs = new Inputs();
 										
 <div class="row inbox">
 								
-		<div class="col-lg-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
 				<header>
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -759,7 +759,7 @@ $Form_Inputs = new Inputs();
 
 								
 <?php if(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda==0&&$TotalGeneral==0&&$TotalNCUtilizado==$NCCancelado&&$TotalNCUtilizado!=0){ ?>							
-	<div class="col-md-7">
+	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
@@ -790,7 +790,7 @@ $Form_Inputs = new Inputs();
 <?php }else{ ?>
 	
 	<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda!=0&&$TotalGeneral!=0){ ?>	
-		<div class="col-md-7">
+		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
 			<div class="box">
 				<header>
@@ -878,7 +878,7 @@ $Form_Inputs = new Inputs();
 			
 		</div>
 	<?php }elseif(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda==0&&$TotalGeneral==0){ ?>
-		<div class="col-md-7">
+		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 			<div class="box">
 				<header>
 					<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
@@ -1266,7 +1266,7 @@ array_push( $arrTipo4,$row );
 
 <?php if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){?>
 	<div class="row inbox"> 
-		<div class="col-lg-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<h2><strong>cliente : </strong><?php echo $rowCliente['Nombre']; ?></h2>
 			<hr>	
 		</div>
@@ -1281,7 +1281,7 @@ array_push( $arrTipo4,$row );
 </div>
 
 							
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Facturaciones Pendientes de Pago</h5>

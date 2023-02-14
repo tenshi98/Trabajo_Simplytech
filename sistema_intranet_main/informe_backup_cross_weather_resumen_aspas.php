@@ -182,7 +182,7 @@ foreach($arrConsulta as $temp) {
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="row">
 		
-		<div class="col-md-4">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 			<div class="box box-blue box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title">Tiempo Temperatura Bajo <?php echo $rowdata['TempMinima']; ?> C°</h3>
@@ -196,7 +196,7 @@ foreach($arrConsulta as $temp) {
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 			<div class="box box-blue box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title">Cubrimiento Aspa/Helada</h3>
@@ -210,7 +210,7 @@ foreach($arrConsulta as $temp) {
 				</div>
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 			<div class="box box-blue box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title">Funcionamiento Total Aspa</h3>

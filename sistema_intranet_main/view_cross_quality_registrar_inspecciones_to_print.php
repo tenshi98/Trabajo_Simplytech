@@ -144,7 +144,7 @@ $html .= '
 		</div>
 	
 		<div class="row invoice-info">
-			<div class="col-sm-4 invoice-col">
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 				Datos Basicos
 				<address>
 					<strong>Producto</strong><br/>
@@ -160,7 +160,7 @@ $html .= '
 				</address>
 			</div>
 				
-			<div class="col-sm-4 invoice-col">
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 				Fecha Creacion
 				<address>
 					Fecha Ingreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
@@ -168,7 +168,7 @@ $html .= '
 				</address>
 			</div>
 			   
-			<div class="col-sm-4 invoice-col">
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 				Datos Creacion
 				<address>
 					Sistema: '.$row_data['Sistema'].'<br/>

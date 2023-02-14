@@ -350,7 +350,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 	
 	<div class="row invoice-info">
 		
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Datos Basicos
 			<address>
 				<strong>Producto</strong><br/>
@@ -367,7 +367,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 			</address>
 		</div>
 				
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Fecha Creacion
 			<address>
 				Fecha Ingreso: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?><br/>
@@ -375,7 +375,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 			</address>
 		</div>
 			   
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Datos Creacion
 			<address>
 				Sistema: <?php echo $row_data['Sistema']; ?><br/>

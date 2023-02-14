@@ -67,7 +67,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 
 	$GPS .= '
 	<div class="row">
-		<div class="col-sm-12 clearfix">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 			<a target="new" href="informe_gerencial_17_to_excel.php" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 		</div>
 	</div>

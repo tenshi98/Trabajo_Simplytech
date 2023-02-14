@@ -276,7 +276,7 @@ foreach ($arrHistorial as $doc){
 		
 		<?php 
 		echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Solicitante
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -289,7 +289,7 @@ foreach ($arrHistorial as $doc){
 				</div>
 				
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Receptora
 					<address>
 						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
@@ -305,7 +305,7 @@ foreach ($arrHistorial as $doc){
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<b>Estado: </b>'.$row_data['Estado'].'<br/>
 				</div>';
 		?>

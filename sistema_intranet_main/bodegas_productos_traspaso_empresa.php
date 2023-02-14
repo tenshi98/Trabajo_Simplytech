@@ -262,27 +262,27 @@ $Form_Inputs = new Inputs();
 				
 <div style="display: none;">
 	<div id="clone_producto" class="prod_container">
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select_change('Producto','idProducto[]', 2, 'idProducto', 'Nombre', 'productos_listado', $zx1,'', 'OnSelectionChange',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Cantidad','Number[]', '', 2);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Unidad de medida', 'escribeme1', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Valor Unitario', 'escribeme2', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<div class="input-group">
 					<?php $Form_Inputs->input_disabled('text', 'Existencias', 'escribeme3', 0, 1);?>

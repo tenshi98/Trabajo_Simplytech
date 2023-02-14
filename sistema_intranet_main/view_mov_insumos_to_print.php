@@ -245,7 +245,7 @@ $html .= '<div class="row">
 			case 10:
 			case 11:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
@@ -261,7 +261,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -273,7 +273,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
@@ -323,7 +323,7 @@ $html .= '<div class="row">
 			case 12:
 			case 13:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -335,7 +335,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['NombreCliente'].'</strong><br/>
@@ -351,7 +351,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Vendedor: </strong>'.$row_data['Nombre_trab'].' '.$row_data['ApellidoPat_trab'].'<br/>';
@@ -400,7 +400,7 @@ $html .= '<div class="row">
 			//Gasto de Productos
 			case 3:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -412,7 +412,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Datos del Trabajador
 					<address>
 						<strong>'.$row_data['Nombre_trab'].' '.$row_data['ApellidoPat_trab'].' '.$row_data['ApellidoMat_trab'].'</strong><br/>
@@ -423,7 +423,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 			 
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Entrega de insumos a Personal</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>';
 					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
@@ -441,7 +441,7 @@ $html .= '<div class="row">
 			//Traspaso de Productos entre bodegas
 			case 4:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -453,11 +453,11 @@ $html .= '<div class="row">
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
 					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
@@ -476,7 +476,7 @@ $html .= '<div class="row">
 			//Transformacion de Productos
 			case 5:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -488,11 +488,11 @@ $html .= '<div class="row">
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
 					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
@@ -511,7 +511,7 @@ $html .= '<div class="row">
 			//Transpaso de insumos otras empresas
 			case 6:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -523,7 +523,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['SistemaDestino'].'</strong><br/>
@@ -536,7 +536,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 			 
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega de destino:</strong> '.$row_data['BodegaHacia'].'<br/>';
 					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
@@ -554,7 +554,7 @@ $html .= '<div class="row">
 			//Gasto de Productos en una Orden de Trabajo
 			case 7:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -566,11 +566,11 @@ $html .= '<div class="row">
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega utilizada:</strong> '.$row_data['BodegaDesde'].'<br/>
 					<strong>Orden de Trabajo N°:</strong> '.N_doc($row_data['idOT'], 5).'<br/>';
@@ -589,7 +589,7 @@ $html .= '<div class="row">
 			//Traspaso Manual de Insumos a otra Empresa
 			case 8:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -601,7 +601,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['SistemaDestino'].'</strong><br/>
@@ -614,7 +614,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 			 
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>';
 					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
 						$html .= '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
@@ -631,7 +631,7 @@ $html .= '<div class="row">
 			//Ingreso manual de insumos
 			case 9:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
@@ -647,7 +647,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -659,7 +659,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
 					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
@@ -846,15 +846,15 @@ $html .= '<div class="row">
 	
 	if($row_data['idTipo']==3){
 		$html .= '<div class="row firma">
-			<div class="col-sm-6 fcont"><p>Firma Emisor</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Emisor</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
 		</div>';
 	} 
 	
 	if($row_data['idTipo']==6){
 		$html .= '<div class="row firma">
-			<div class="col-sm-6 fcont"><p>Firma Transportista</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Transportista</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
 		</div>';
 	}
  

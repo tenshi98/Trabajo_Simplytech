@@ -103,7 +103,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 
 ?>
 
-<div class="col-sm-11 fcenter table-responsive">
+<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 
 	<div id="page-wrap">
 		

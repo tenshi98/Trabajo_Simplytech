@@ -143,7 +143,7 @@ echo '
 	</div>  
 	
 	
-	<div class="col-sm-4 mail-left-box">
+	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 mail-left-box">
   		<div class="list-group inbox-options">
 				<?php 
 				$todos = 0;

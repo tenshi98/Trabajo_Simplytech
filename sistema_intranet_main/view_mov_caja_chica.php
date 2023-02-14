@@ -156,7 +156,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 			//Ingreso
 			case 1:
 				echo '
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Datos del Movimiento
 					<address>
 						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br/>
@@ -168,7 +168,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 					</address>
 				</div>
 				
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					
 				</div>';
 
@@ -178,7 +178,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 			case 2:
 				
 				echo '
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Datos del Movimiento
 					<address>
 						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br/>
@@ -190,7 +190,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 					</address>
 				</div>
 				
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Trabajador
 					<address>
 						<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br/>
@@ -206,7 +206,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 			case 3:
 				
 				echo '
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Datos del Movimiento
 					<address>
 						Caja: <strong>'.$row_data['CajaNombre'].'</strong><br/>
@@ -218,7 +218,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 					</address>
 				</div>
 				
-				<div class="col-sm-6 invoice-col">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Documento Relacionado
 					<address>
 						<strong>Doc N°'.$row_data['idFacturacionRelacionada'].'</strong><br/>
@@ -317,17 +317,17 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 	//Egreso
 	if($row_data['idTipo']==2){?>
 		<div class="row firma">
-			<div class="col-sm-6 fcont"><p>Firma Emisor</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Emisor</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
 		</div>
 	<?php }
 	//Si es una rendicion
 	if($row_data['idTipo']==3&&isset($row_data['idSolicitado'])&&$row_data['idSolicitado']!=''&&isset($row_data['idRevisado'])&&$row_data['idRevisado']!=''&&isset($row_data['idAprobado'])&&$row_data['idAprobado']!=''){?>
 		
 		<div class="row firma">
-			<div class="col-sm-4 fcont"><p>Solicitado Por:<br/><?php echo $row_data['SolicitadoNombre'].' '.$row_data['SolicitadoApellidoPat']; ?><br/>Firma</p></div>
-			<div class="col-sm-4 fcont"><p>Revisado Por:<br/><?php echo $row_data['RevisadoNombre'].' '.$row_data['RevisadoApellidoPat']; ?><br/>Firma</p></div>
-			<div class="col-sm-4 fcont"><p>Aprobado Por:<br/><?php echo $row_data['AprobadoNombre'].' '.$row_data['AprobadoApellidoPat']; ?><br/>Firma</p></div> 
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Solicitado Por:<br/><?php echo $row_data['SolicitadoNombre'].' '.$row_data['SolicitadoApellidoPat']; ?><br/>Firma</p></div>
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Revisado Por:<br/><?php echo $row_data['RevisadoNombre'].' '.$row_data['RevisadoApellidoPat']; ?><br/>Firma</p></div>
+			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Aprobado Por:<br/><?php echo $row_data['AprobadoNombre'].' '.$row_data['AprobadoApellidoPat']; ?><br/>Firma</p></div> 
 		</div>
 	<?php } ?>
 	

@@ -1991,7 +1991,7 @@ array_push( $arrTrabajo,$row );
 		<div class="clearfix"></div>
 	</div>
 <?php } ?>
-<div class="col-sm-11 fcenter table-responsive">
+<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 	<div id="page-wrap">
 		<div id="header"> ORDEN DE TRABAJO N° <?php echo $_GET['view'];?></div>
 	

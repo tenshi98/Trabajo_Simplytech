@@ -103,10 +103,10 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 			</ul>
 		</header>
         <div class="table-responsive">
-			<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
+			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 				<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
 				
-					<div class="col-sm-10 fcenter">
+					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" class="img-thumbnail" >
 						<br/>
 						<a href="<?php echo $location.'&id_usuario='.$_SESSION['usuario']['basic_data']['idUsuario'].'&del_img=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
@@ -133,10 +133,10 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 								</div>
 								<div class="modal-body">
 									<div class="row">
-										<div class="col-md-8 text-center">
+										<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 text-center">
 											  <div id="image_demo" style="width:350px; margin-top:30px"></div>
 										</div>
-										<div class="col-md-4" style="padding-top:30px;">
+										<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="padding-top:30px;">
 											<br/>
 											<br/>
 											<br/>

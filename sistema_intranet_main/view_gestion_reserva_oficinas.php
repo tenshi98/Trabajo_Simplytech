@@ -76,7 +76,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_j
 		
 		<?php				
 		echo '
-		<div class="col-sm-6 invoice-col">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos Reserva
 			<address>
 				<strong>Usuario: </strong>'.$rowdata['Usuario'].'<br/>
@@ -87,7 +87,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_j
 				<strong>Cantidad Asistentes: </strong>'.$rowdata['CantidadAsistentes'].' personas<br/>
 			</address>
 		</div>
-		<div class="col-sm-6 invoice-col">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Otros Datos
 			<address>
 				<strong>Servicio de Cafeteria: </strong>'.$rowdata['Cafeteria'].'<br/>

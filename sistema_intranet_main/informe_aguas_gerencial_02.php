@@ -84,7 +84,7 @@ array_push( $arrFacturacion,$row );
 
 ?>
 
-<div class="col-sm-12 clearfix">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<?php
 	$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 	$zz .= '&f_inicio='.$_GET['f_inicio'];
@@ -187,7 +187,7 @@ array_push( $arrFacturacion,$row );
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['corechart']});</script>
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>

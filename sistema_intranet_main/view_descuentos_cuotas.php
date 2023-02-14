@@ -102,7 +102,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 	
 	<div class="row invoice-info">
 		
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Datos del Trabajador
 			<address>
 				<strong><?php echo $row_data['Nombre_trab'].' '.$row_data['ApellidoPat_trab'].' '.$row_data['ApellidoMat_trab']; ?></strong><br/>
@@ -113,7 +113,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 			</address>
 		</div>
 				
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Empresa
 			<address>
 				<strong><?php echo $row_data['SistemaOrigen']; ?></strong><br/>
@@ -125,7 +125,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 			</address>
 		</div>
 				
-		<div class="col-sm-4 invoice-col">';
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">';
 			<?php 		
 			if(isset($row_data['Usuario'])&&$row_data['Usuario']!=''){
 				echo '<strong>Usuario creador: </strong>'.$row_data['Usuario'].'<br/>';

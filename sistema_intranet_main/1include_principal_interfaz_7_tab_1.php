@@ -1,7 +1,7 @@
 
 <div class="tab-pane fade active in" id="Menu_tab_1">
 
-	<div class="col-sm-12 admin-grid">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 admin-grid">
 		<div class="sort-disable">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row">
@@ -97,22 +97,22 @@
 							</div>
 						</div>
 						
-						<div class="col-sm-12 info-buttons block">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 info-buttons block">
 							<div class="row">
-								<a href="principal_ayuda.php?pagina=1" class="col-sm-3 color-blue tooltip tooltipstered">
+								<a href="principal_ayuda.php?pagina=1" class="col-xs-12 col-sm-3 col-md-3 col-lg-3 color-blue tooltip tooltipstered">
 									<i class="fa fa-question" aria-hidden="true"></i>
 									<span>Archivos de ayuda</span>
 								</a>
-								<a href="principal_procedimientos.php?pagina=1" class="col-sm-3 color-green tooltip tooltipstered">
+								<a href="principal_procedimientos.php?pagina=1" class="col-xs-12 col-sm-3 col-md-3 col-lg-3 color-green tooltip tooltipstered">
 									<i class="fa fa-file-word-o" aria-hidden="true"></i>
 									<span>Procedimientos</span>
 								</a>
-								<a href="principal_agenda_telefonica.php?pagina=1" class="col-sm-3 color-yellow tooltip tooltipstered">
+								<a href="principal_agenda_telefonica.php?pagina=1" class="col-xs-12 col-sm-3 col-md-3 col-lg-3 color-yellow tooltip tooltipstered">
 									<i class="fa fa-phone" aria-hidden="true"></i>
 									<span>Contactos</span>
 									<strong class="label label-warning"><?php echo $CContactos; ?></strong>
 								</a>
-								<a href="principal_software.php?pagina=1" class="col-sm-3 color-red tooltip tooltipstered">
+								<a href="principal_software.php?pagina=1" class="col-xs-12 col-sm-3 col-md-3 col-lg-3 color-red tooltip tooltipstered">
 									<i class="fa fa-desktop" aria-hidden="true"></i>
 									<span>Programas Recomendados</span>
 									<strong class="label label-info"><?php echo $CProgramas; ?></strong>

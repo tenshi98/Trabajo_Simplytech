@@ -235,7 +235,7 @@ $Total_4 = 0;
 
 
 ?>
-<div class="col-sm-12 clearfix">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_15_to_excel_4.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
@@ -677,7 +677,7 @@ $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
 ?>
-<div class="col-sm-12 clearfix">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_15_to_excel_3.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
@@ -1112,7 +1112,7 @@ $Total_4 = 0;
 
 
 ?>
-<div class="col-sm-12 clearfix">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_15_to_excel_2.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
@@ -1519,7 +1519,7 @@ $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
 ?>
-<div class="col-sm-12 clearfix">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_15_to_excel_1.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 

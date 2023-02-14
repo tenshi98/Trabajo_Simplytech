@@ -129,7 +129,7 @@ echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.
 	echo '<div class="tab-pane fade" id="Menu_tab_4">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-				<div class="col-sm-12 admin-grid">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 admin-grid">
 					<div class="sort-disable">
 					
 					

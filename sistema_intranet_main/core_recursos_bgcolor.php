@@ -44,7 +44,7 @@ require_once 'core/Web.Header.Main.php';
         <div class="tab-content">
 			
 			<div class="tab-pane fade active in" id="fuentes">
-				<div class="col-lg-4">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 					<div class="box">
 						<header>
 							<h5>Bootstrap</h5>
@@ -60,7 +60,7 @@ require_once 'core/Web.Header.Main.php';
 					</div>
 				</div>
 				
-				<div class="col-lg-4">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 					<div class="box">
 						<header>
 							<h5>Propias 1</h5>
@@ -89,7 +89,7 @@ require_once 'core/Web.Header.Main.php';
 					</div>
 				</div>
 				
-				<div class="col-lg-4">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 					<div class="box">
 						<header>
 							<h5>Propias 2</h5>

@@ -74,7 +74,7 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 	
 	
 	<div class="row">
-		<div class="col-sm-9">
+		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<form class="form-horizontal" id="form1" name="form1" novalidate>
 				<div class="field">
 					<div class="input-group">
@@ -108,9 +108,9 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 
 <div class="clearfix"></div>
 
-<div class="col-sm-12 messaging" id="messaging">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 messaging" id="messaging">
 	<div class="row inbox_msg">
-		<div class="col-sm-9">
+		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<div class="row">
 				<div id="videos-container" style="margin: 20px 0;padding:10px;"></div>
 			</div>

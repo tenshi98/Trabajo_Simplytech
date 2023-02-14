@@ -141,7 +141,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			<div class="tab-pane fade" id="data2">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-						<iframe class="col-sm-12 col-md-12 col-sm-12" frameborder="0" height="500" src="1phpinfo.php"></iframe>
+						<iframe class="col-xs-12 col-sm-12 col-md-12 col-lg-12" frameborder="0" height="500" src="1phpinfo.php"></iframe>
 					</div>
 				</div>
 			</div>
@@ -149,7 +149,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			<div class="tab-pane fade" id="data3">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-						<iframe class="col-sm-12 col-md-12 col-sm-12" frameborder="0" height="1200" src="<?php echo DB_SITE_REPO ?>/EXTERNAL_LIBS/linfo/index.php"></iframe>
+						<iframe class="col-xs-12 col-sm-12 col-md-12 col-lg-12" frameborder="0" height="1200" src="<?php echo DB_SITE_REPO ?>/EXTERNAL_LIBS/linfo/index.php"></iframe>
 					</div>
 				</div>
 			</div>

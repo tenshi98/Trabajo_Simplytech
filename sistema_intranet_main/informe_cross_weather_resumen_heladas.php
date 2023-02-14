@@ -187,7 +187,7 @@ document.getElementById("loading").style.display = "none";
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Resumen Heladas', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Del dia '.Fecha_completa($_GET['fecha']));?>
-	<div class="col-md-6 col-sm-6 col-xs-12 clearfix">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 		<a target="new" href="<?php echo 'informe_cross_weather_resumen_heladas_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	
 		<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
@@ -293,7 +293,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="row">
 		
-		<div class="col-md-3">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<div class="box box-blue box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title">Temperatura Minima</h3>
@@ -307,7 +307,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<div class="box box-blue box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title">Duracion Temp Min</h3>
@@ -321,7 +321,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<div class="box box-blue box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title">Hora Temp Minima</h3>
@@ -334,7 +334,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<div class="box box-blue box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title"><?php echo 'Tiempo bajo '.$arrHistorial[0]['CrossTech_TempMin'].'°C'; ?></h3>

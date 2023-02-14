@@ -397,28 +397,28 @@ input[type="date"].form-control{
 <div style="display: none;">
 	
 	<div id="clone_pago_afp" class="pago_afp_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','AFP_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','AFP_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','AFP_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','AFP_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_afp" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -427,28 +427,28 @@ input[type="date"].form-control{
 	</div>
 	
 	<div id="clone_pago_salud" class="pago_salud_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','SALUD_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','SALUD_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','SALUD_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','SALUD_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_salud" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -457,28 +457,28 @@ input[type="date"].form-control{
 	</div>
 	
 	<div id="clone_pago_seguridad" class="pago_seguridad_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','SEGURIDAD_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','SEGURIDAD_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','SEGURIDAD_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','SEGURIDAD_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_seguridad" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -623,28 +623,28 @@ input[type="date"].form-control{
 <div style="display: none;">
 	
 	<div id="clone_pago_afp" class="pago_afp_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','AFP_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','AFP_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','AFP_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','AFP_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_afp" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -653,28 +653,28 @@ input[type="date"].form-control{
 	</div>
 	
 	<div id="clone_pago_salud" class="pago_salud_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','SALUD_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','SALUD_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','SALUD_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','SALUD_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_salud" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -683,28 +683,28 @@ input[type="date"].form-control{
 	</div>
 	
 	<div id="clone_pago_seguridad" class="pago_seguridad_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','SEGURIDAD_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','SEGURIDAD_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','SEGURIDAD_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','SEGURIDAD_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_seguridad" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>

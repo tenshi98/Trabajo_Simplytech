@@ -26,7 +26,7 @@ require_once 'core/Web.Header.Main.php';
 
 
 <div class="row">
-<div class="col-lg-4">
+<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 <div class="box">
 <header>
 <h5>Heading</h5>
@@ -46,7 +46,7 @@ require_once 'core/Web.Header.Main.php';
 </div>
 </div>
 </div>
-<div class="col-lg-8">
+<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
 <div class="box">
 <header>
 <h5>Paragraph</h5>
@@ -70,7 +70,7 @@ require_once 'core/Web.Header.Main.php';
 </div>
 </div>
 <div class="row">
-<div class="col-lg-6">
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 <div class="box">
 <header>
 <h5>Blockquotes</h5>
@@ -95,7 +95,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id eleifend nun
 </div>
 </div>
 </div>
-<div class="col-lg-6">
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 <div class="box">
 <header>
 <div class="icons">
@@ -150,7 +150,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id eleifend nun
 </div>
 </div>
 <div class="row">
-<div class="col-lg-6">
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 <div class="box">
 <header>
 <h5>Box &gt; Body
@@ -167,7 +167,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id eleifend nun
 </div>
 </div>
 </div>
-<div class="col-lg-6">
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 <div class="box">
 <header>
 <h5>Box &gt; Block
@@ -186,7 +186,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id eleifend nun
 </div>
 </div>
 <div class="row">
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <div class="box">
 <header>
 <h5>Label</h5>
@@ -250,7 +250,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer id eleifend nun
 </div>
 </div>
 <div class="row">
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <div class="box">
 <header>
 <h5>Badge</h5>

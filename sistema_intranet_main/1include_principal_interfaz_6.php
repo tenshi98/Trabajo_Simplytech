@@ -165,20 +165,20 @@ foreach ($arrTabMenu as $tab) {
 			</ul>
 		</header>
         <div class="tab-content">
-			<div class="col-md-12 fcenter clearfix">
-				<div class="col-md-8">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fcenter clearfix">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<h1>¡Hola <?php echo $_SESSION['usuario']['basic_data']['Nombre'] ?>!</h1>
 				</div>
-				<div class="col-md-4">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<p class="xtabtext">Bienvenido a CrossTech. Toma decisiones oportunas, rápidas
 					y eficaces. Te apoyamos para que seas más eficiente en los procesos de medición.</p>
 				</div>
 			</div>
 			
-			<div class="col-md-12 fcenter">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fcenter">
 				
 				<a href="<?php if($Tab_2!=0){echo 'principal_6_2.php';} ?>">
-					<div class="tile color_1 tile-medium col-md-3 col-xs-12"  >
+					<div class="tile color_1 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
 								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossC.png">
@@ -192,7 +192,7 @@ foreach ($arrTabMenu as $tab) {
 				</a>
 				
 				<a href="<?php if($Tab_1!=0){echo 'principal_6_1.php';} ?>">
-					<div class="tile color_2 tile-medium col-md-3 col-xs-12"  >
+					<div class="tile color_2 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
 								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossChecking.png">
@@ -206,7 +206,7 @@ foreach ($arrTabMenu as $tab) {
 				</a>
 				
 				<a href="<?php if($Tab_6!=0){echo 'principal_6_6.php';} ?>">
-					<div class="tile color_3 tile-medium col-md-3 col-xs-12"  >
+					<div class="tile color_3 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
 								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossCrane.png">
@@ -220,7 +220,7 @@ foreach ($arrTabMenu as $tab) {
 				</a>
 				
 				<a href="<?php if($Tab_3!=0){echo 'principal_6_3.php';} ?>">
-					<div class="tile color_4 tile-medium col-md-3 col-xs-12"  >
+					<div class="tile color_4 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
 								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossTrack.png">
@@ -234,7 +234,7 @@ foreach ($arrTabMenu as $tab) {
 				</a>
 				
 				<a href="<?php if($Tab_4!=0){echo 'principal_6_4.php';} ?>">
-					<div class="tile color_5 tile-medium col-md-3 col-xs-12"  >
+					<div class="tile color_5 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
 								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossWheather.png">
@@ -248,7 +248,7 @@ foreach ($arrTabMenu as $tab) {
 				</a>
 				
 				<a href="<?php if($Tab_7!=0){echo 'principal_6_7.php';} ?>">
-					<div class="tile color_6 tile-medium col-md-3 col-xs-12"  >
+					<div class="tile color_6 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
 							<div class="tile-icon-large">
 								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossEnergy.png">
@@ -261,7 +261,7 @@ foreach ($arrTabMenu as $tab) {
 					</div>
 				</a>
 
-				<div class="tile color_7 tile-medium col-md-3 col-xs-12"  >
+				<div class="tile color_7 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 					<div class="tile-content">
 						<div class="tile-icon-large">
 							<p style="color:#ffffff;"><strong>Asistencia <br/>Tecnica</strong></p>
@@ -270,7 +270,7 @@ foreach ($arrTabMenu as $tab) {
 					</div>
 				</div>
 				
-				<div class="tile color_8 tile-medium col-md-3 col-xs-12"  >
+				<div class="tile color_8 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 					<div class="tile-content">
 						<div class="tile-icon-large">
 							<p style="color:#ffffff;"><strong>Cotizar <br/>Servicio</strong></p>
@@ -282,8 +282,8 @@ foreach ($arrTabMenu as $tab) {
 				
 			</div>
 			
-			<div class="col-md-12 fcenter clearfix">
-				<div class="col-md-8">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fcenter clearfix">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<br/>
 					<p class="xtabtext">
 						Si tienes alguna consulta con tu servicio contratado, puedes escribirnos a soporte@crosstech.cl 
@@ -292,7 +292,7 @@ foreach ($arrTabMenu as $tab) {
 				</div>
 			</div>
 			
-			<div class="col-md-12 fcenter clearfix">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fcenter clearfix">
 				<?php
 				/******************************************************/
 				//Widget Sociales

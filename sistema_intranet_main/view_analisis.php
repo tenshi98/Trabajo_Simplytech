@@ -210,7 +210,7 @@ foreach ($arrFlashpoint as $datos) {
 				//Si es interno muestro los datos de la empresa
 				if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
 					echo '
-					<div class="col-sm-4 invoice-col">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 						Laboratorio
 						<address>
 							<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -224,7 +224,7 @@ foreach ($arrFlashpoint as $datos) {
 				//si es externo muestro los datos del laboratorio	
 				}else{
 					echo '
-					<div class="col-sm-4 invoice-col">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 						Laboratorio
 						<address>
 							<strong>'.$row_data['LaboratorioNombre'].'</strong><br/>
@@ -240,7 +240,7 @@ foreach ($arrFlashpoint as $datos) {
 				}
 
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Maquina
 					<address>
 						<strong>'.$row_data['MaquinaNombre'].'</strong><br/>
@@ -268,7 +268,7 @@ foreach ($arrFlashpoint as $datos) {
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Datos</strong><br/>
 					<strong>Estado: </strong>'.$row_data['Analisis_Estado'].'<br/>
 					<strong>Sistema: </strong>'.$row_data['Analisis_Sistema'].'<br/>';

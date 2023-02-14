@@ -72,7 +72,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_quejas', $SIS_join, $SIS_
 		
 		<?php				
 		echo '
-		<div class="col-sm-12 invoice-col">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 invoice-col">
 			Datos de la queja
 			<address>
 				<strong>Usuario: </strong>'.$rowdata['Usuario'].'<br/>

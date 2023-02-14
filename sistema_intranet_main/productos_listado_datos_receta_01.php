@@ -498,7 +498,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 ?>
 
 <div class="row">
-	<div class="col-sm-8 pull-left">
+	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 pull-left">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Paso 2: Seleccion de Productos</h5>

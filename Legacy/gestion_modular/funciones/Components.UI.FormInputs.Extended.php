@@ -303,7 +303,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 		$input = '
 			<div class="form-group" id="div_'.$name.'">
 				<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_'.$name.'">'.$placeholder.'</label>
-				<div class="col-sm-8 field autocomplete">
+				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field autocomplete">
 					<input type="text" placeholder="'.$placeholder.'" class="form-control"  name="'.$name.'" id="'.$name.'" value="'.$valor.'"  '.$requerido.' onkeypress="return soloLetras(event)" autocomplete="off">
 					<input type="hidden" name="rev_'.$name.'" id="rev_'.$name.'" value="'.$aValidar.'" >
 				</div>

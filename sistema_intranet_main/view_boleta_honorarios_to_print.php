@@ -140,7 +140,7 @@ $html .= '<div class="row">
 			//Boleta Trabajadores
 			case 1:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Emisor
 					<address>
 						<strong>'.$row_data['Trab_Nombre'].' '.$row_data['Trab_ApellidoPat'].' '.$row_data['Trab_ApellidoMat'].'</strong><br/>
@@ -152,7 +152,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -164,7 +164,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
 
@@ -184,7 +184,7 @@ $html .= '<div class="row">
 			//Boleta Clientes
 			case 2:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Emisor
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -196,7 +196,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
 						<strong>'.$row_data['Cliente_Nombre'].'</strong><br/>
@@ -212,7 +212,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
 
@@ -233,7 +233,7 @@ $html .= '<div class="row">
 			//Boleta Empresas
 			case 3:
 				$html .= '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Emisor
 					<address>
 						<strong>'.$row_data['Proveedor_Nombre'].'</strong><br/>
@@ -249,7 +249,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -261,7 +261,7 @@ $html .= '<div class="row">
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
 

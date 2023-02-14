@@ -27,7 +27,7 @@ require_once 'core/Web.Header.Main.php';
 
 
 <div class="row">
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <div class="box">
 <header>
 <h5>Basic Progress Bar
@@ -70,7 +70,7 @@ require_once 'core/Web.Header.Main.php';
 </div>
 </div>
 <div class="row">
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <div class="box">
 <header>
 <h5>Striped Progress Bar
@@ -113,7 +113,7 @@ require_once 'core/Web.Header.Main.php';
 </div>
 </div>
 <div class="row">
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <div class="box">
 <header>
 <h5>Animated Striped Progress Bar
@@ -156,7 +156,7 @@ require_once 'core/Web.Header.Main.php';
 </div>
 </div>
 <div class="row">
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <div class="box">
 <header>
 <h5>Stacked Progress Bar
@@ -187,7 +187,7 @@ require_once 'core/Web.Header.Main.php';
 </div>
 </div>
 <div class="row">
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <div class="box">
 <header>
 <h5>Progress Bar Size
@@ -201,8 +201,8 @@ require_once 'core/Web.Header.Main.php';
 </header>
 <div class="body">
 <div class="row">
-<div class="col-lg-3">Default</div>
-<div class="col-lg-9">
+<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">Default</div>
+<div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
 <div class="progress">
 <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;" data-original-title="" title="">
 <span class="sr-only">60% Complete</span>
@@ -211,8 +211,8 @@ require_once 'core/Web.Header.Main.php';
 </div>
 </div>
 <div class="row">
-<div class="col-lg-3">large</div>
-<div class="col-lg-9">
+<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">large</div>
+<div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
 <div class="progress lg">
 <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;" data-original-title="" title="">
 <span class="sr-only">60% Complete</span>
@@ -221,8 +221,8 @@ require_once 'core/Web.Header.Main.php';
  </div>
 </div>
 <div class="row">
-<div class="col-lg-3">Middle</div>
-<div class="col-lg-9">
+<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">Middle</div>
+<div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
 <div class="progress md">
 <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;" data-original-title="" title="">
 <span class="sr-only">20% Complete</span>
@@ -231,8 +231,8 @@ require_once 'core/Web.Header.Main.php';
 </div>
 </div>
 <div class="row">
-<div class="col-lg-3">Mini</div>
-<div class="col-lg-9">
+<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">Mini</div>
+<div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
 <div class="progress xs">
 <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;" data-original-title="" title="">
 <span class="sr-only">40% Complete (success)</span>

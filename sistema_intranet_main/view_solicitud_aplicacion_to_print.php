@@ -217,7 +217,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 
 	<div class="row invoice-info">
 		
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Datos Empresa</strong>
 			<address>
 				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
@@ -228,7 +228,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
 			</address>
 		</div>
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Identificacion</strong>
 			<address>
 				Predio: <?php echo $row_data['NombrePredio']; ?><br/>
@@ -241,7 +241,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 				?>
 			</address>
 		</div>
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Datos de Solicitud</strong>
 			<address>
 				Prioridad: <?php echo $row_data['NombrePrioridad']; ?><br/>
@@ -259,7 +259,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 			</address>
 		</div>
 		<div class="clearfix"></div>
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Parámetros de Aplicación</strong>
 			<address>
 				Mojamiento: <?php echo Cantidades_decimales_justos($row_data['Mojamiento']); ?> L/ha<br/>

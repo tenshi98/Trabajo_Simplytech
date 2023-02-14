@@ -843,7 +843,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			
 			<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
         
-				<div class="col-sm-10 fcenter">
+				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 					 <img src="upload/<?php echo $rowdata['Direccion_img']; ?>" width="100%" >
 				</div>
 				

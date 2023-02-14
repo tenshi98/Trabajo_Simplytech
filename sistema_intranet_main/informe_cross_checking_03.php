@@ -192,7 +192,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 
 ?>
 
-<div class="col-sm-12 clearfix">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<?php
 	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];

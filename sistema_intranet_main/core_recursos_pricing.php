@@ -26,7 +26,7 @@ require_once 'core/Web.Header.Main.php';
 
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<h2>Dark
 	<small>primary</small>
 	</h2>
@@ -51,7 +51,7 @@ require_once 'core/Web.Header.Main.php';
 	</label>
 	</div>
 	<ul class="pricing-table dark" contenteditable="">
-	<li class="col-lg-4">
+	<li class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 	<h3>Starter</h3>
 	<div class="price-body">
 	<div class="price">
@@ -95,7 +95,7 @@ require_once 'core/Web.Header.Main.php';
 	<a href="#" class="btn btn-metis-1 btn-lg btn-rect">Get Started</a>
 	</div>
 	</li>
-	<li class="col-lg-4">
+	<li class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 	<h3>Premium</h3>
 	<div class="price-body">
 	<div class="price">
@@ -123,7 +123,7 @@ require_once 'core/Web.Header.Main.php';
 </div>
 
 <div class="row">
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <h2>Light
 <small>warning</small>
 </h2>
@@ -148,7 +148,7 @@ require_once 'core/Web.Header.Main.php';
 </label>
 </div>
 <ul class="pricing-table" id="light" contenteditable="">
-<li class="col-lg-3">
+<li class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 <h3>Starter</h3>
 <div class="price-body">
  <div class="price">
@@ -192,7 +192,7 @@ Free
 <a href="#" class="btn btn-metis-1 btn-lg btn-rect">Get Started</a>
 </div>
 </li>
-<li class="col-lg-3">
+<li class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 <h3>Premium</h3>
 <div class="price-body">
 <div class="price">
@@ -214,7 +214,7 @@ Free
 <a href="#" class="btn btn-info btn-rect">Get Started</a>
 </div>
 </li>
-<li class="col-lg-3">
+<li class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 <h3>Ultra</h3>
 <div class="price-body">
 <div class="price">

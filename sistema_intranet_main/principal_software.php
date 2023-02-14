@@ -81,7 +81,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 		<?php foreach ($arrSoftware as $soft) { ?>
 			<div class="block task task-high boxsoftware">
 				<div class="row with-padding">
-					<div class="col-sm-9">
+					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<div class="task-description">
 							<a href="#"><?php echo $soft['Nombre']; ?></a>
 							<i><?php echo $soft['Categoria']; ?></i>
@@ -111,7 +111,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 	</div>
 	
 	
-	<div class="col-sm-4 mail-left-box">
+	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 mail-left-box">
   		<div class="list-group inbox-options">
 			<?php $todos = 0; foreach ($arrCategorias as $cat) { $todos = $todos + $cat['cuenta'];} ?>
 					

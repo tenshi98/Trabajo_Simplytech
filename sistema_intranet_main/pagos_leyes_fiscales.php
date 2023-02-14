@@ -476,28 +476,28 @@ input[type="date"].form-control{
 <div style="display: none;">
 	
 	<div id="clone_pago_iva" class="pago_iva_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','IVA_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','IVA_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','IVA_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','IVA_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_iva" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -506,28 +506,28 @@ input[type="date"].form-control{
 	</div>
 	
 	<div id="clone_pago_ppm" class="pago_ppm_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','PPM_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','PPM_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','PPM_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','PPM_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_ppm" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -536,28 +536,28 @@ input[type="date"].form-control{
 	</div>
 	
 	<div id="clone_pago_ret" class="pago_ret_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','RET_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','RET_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','RET_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','RET_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_ret" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -566,28 +566,28 @@ input[type="date"].form-control{
 	</div>
 	
 	<div id="clone_pago_impuesto_renta" class="pago_impuesto_renta_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','IMPRENT_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','IMPRENT_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','IMPRENT_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','IMPRENT_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_impuesto_renta" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -758,28 +758,28 @@ input[type="date"].form-control{
 <div style="display: none;">
 	
 	<div id="clone_pago_iva" class="pago_iva_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','IVA_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','IVA_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','IVA_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','IVA_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_iva" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -788,28 +788,28 @@ input[type="date"].form-control{
 	</div>
 	
 	<div id="clone_pago_ppm" class="pago_ppm_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','PPM_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','PPM_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','PPM_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','PPM_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_ppm" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -818,28 +818,28 @@ input[type="date"].form-control{
 	</div>
 	
 	<div id="clone_pago_ret" class="pago_ret_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','RET_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','RET_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','RET_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','RET_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_ret" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
@@ -848,28 +848,28 @@ input[type="date"].form-control{
 	</div>
 	
 	<div id="clone_pago_impuesto_renta" class="pago_impuesto_renta_container"> 
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Documento de Pago','IMPRENT_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('N° Documento de Pago','IMPRENT_N_DocPago[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-3 nopadding">
+		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_icon('date','F Vencimiento','IMPRENT_F_Pago[]', '', 2, 'fa fa-calendar');?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Monto','IMPRENT_Monto[]', '', 2);?>
 			</div>
 		</div>
 		
-		<div class="col-sm-1 nopadding">
+		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
 				<button class="btn btn-metis-1 tooltip remove_pago_impuesto_renta" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>

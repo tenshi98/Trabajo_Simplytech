@@ -83,7 +83,7 @@ $html = '
 	</div>
 	
 	<div class="row invoice-info">
-		<div class="col-sm-6 invoice-col">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos basicos
 			<address>
 				<strong>Trabajador: </strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'<br/>
@@ -92,7 +92,7 @@ $html = '
 				<strong>Fono: </strong>'.formatPhone($row_data['TrabajadorFono']).'<br/>
 			</address>
 		</div>
-		<div class="col-sm-6 invoice-col">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Detalle
 			<address>
 				<strong>Fecha Creacion: </strong>'.fecha_estandar($row_data['Creacion_fecha']).'<br/>

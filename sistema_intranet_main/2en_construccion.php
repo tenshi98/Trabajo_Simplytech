@@ -15,7 +15,7 @@ require_once 'core/Web.Header.Error.php';
 
 
 <div class="container">
-	<div class="col-lg-8 col-lg-offset-2 text-center">
+	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-lg-offset-2 text-center">
 		<div class="logo">
 			<h1>En construccion</h1>
 		</div>

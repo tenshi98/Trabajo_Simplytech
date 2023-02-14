@@ -93,7 +93,7 @@ $html ='
 	</div>
 	
 	<div class="row invoice-info">
-		<div class="col-sm-6 invoice-col">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos Basicos
 			<address>
 				<strong>Usuario:</strong> '.$row_data['Usuario'].'<br/>
@@ -111,7 +111,7 @@ $html ='
 			</address>
 		</div>
 				
-		<div class="col-sm-6 invoice-col">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Programacion
 			<address>
 				<strong>Fecha:</strong> '.Fecha_estandar($row_data['FechaProgramada']).'<br/>

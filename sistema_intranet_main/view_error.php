@@ -54,7 +54,7 @@ $rowdata = db_select_data (false, $SIS_query, 'error_log', $SIS_join, $SIS_where
 		</header>
 		<div class="tab-content">
 			<div class="table-responsive">
-				<div class="col-md-12 col-sm-12">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<h4>Errores detectados</h4>
 					<?php
 

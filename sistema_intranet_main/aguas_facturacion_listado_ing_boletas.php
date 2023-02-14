@@ -89,16 +89,16 @@ $Form_Inputs = new Inputs();
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 					
 					<div> 	
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Identificador'); ?>
 						</div>
-						<div class="col-sm-4 nopadding">
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Cliente'); ?>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Documento'); ?>
 						</div>
-						<div class="col-sm-4 nopadding">
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'N° Documento'); ?>
 						</div>
 						<div class="clearfix"></div>
@@ -109,22 +109,22 @@ $Form_Inputs = new Inputs();
 						$NClientes++;
 						?>
 						<div> 	
-							<div class="col-sm-2 nopadding">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 								<div class="form-group">
 									<?php $Form_Inputs->input_disabled('text', 'Identificador', 'Identificador_'.$NClientes, $cli['ClienteIdentificador'], 1);?>
 								</div>
 							</div>
-							<div class="col-sm-4 nopadding">
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 								<div class="form-group">
 									<?php $Form_Inputs->input_disabled('text', 'Cliente', 'Cliente_'.$NClientes, $cli['ClienteNombre'], 1);?>
 								</div>
 							</div>
-							<div class="col-sm-2 nopadding">
+							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 								<div class="form-group">
 									<?php $Form_Inputs->input_disabled('text', 'Documento', 'Documento_'.$NClientes, $cli['DocFacturable'], 1);?>
 								</div>
 							</div>
-							<div class="col-sm-4 nopadding">
+							<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 								<div class="form-group">
 									<?php $Form_Inputs->input_number('N° Doc','SII_NDoc_'.$NClientes, $cli['SII_NDoc'], 2);?>
 								</div>

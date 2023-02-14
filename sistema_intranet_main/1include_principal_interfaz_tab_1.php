@@ -5,7 +5,7 @@ echo '
 
 	<div>
 
-		<div class="col-sm-12 admin-grid">';
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 admin-grid">';
 
 			//Si existe alguna mantencion se muestra por pantalla
 			if(isset($Mantenciones['Fecha'])&&(strtotime($Mantenciones['Fecha'])>=strtotime(fecha_actual()))){
@@ -29,7 +29,7 @@ echo '
 						/**********************************************************************************/
 						//Lado izquierdo
 						echo '
-						<div class="col-sm-9">
+						<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 							<div class="row">
 								<div class="panel-body mnw700 of-a">
 									<div class="row">
@@ -433,16 +433,16 @@ echo '
 
 							/******************************************************/
 							//Recomendados
-							echo '<div class="col-sm-12 info-buttons block">';
+							echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 info-buttons block">';
 								echo '<div class="row">';
 									$CContactos = 0;
 									$CProgramas = 0;
 									if(isset($subconsulta['CuentaContactos'])&&$subconsulta['CuentaContactos']!=''){$CContactos = $subconsulta['CuentaContactos'];}
 									if(isset($subconsulta['CuentaProgramas'])&&$subconsulta['CuentaProgramas']!=''){$CProgramas = $subconsulta['CuentaProgramas'];}
-									echo '<a href="principal_ayuda.php?pagina=1"              class="col-sm-3 color-blue tooltip"    title="Ver Archivos de ayuda">        <i class="fa fa-question" aria-hidden="true"></i>     <span>Archivos de ayuda</span>        </a>';
-									echo '<a href="principal_procedimientos.php?pagina=1"     class="col-sm-3 color-green tooltip"   title="Ver Procedimientos">           <i class="fa fa-file-word-o" aria-hidden="true"></i>  <span>Procedimientos</span>           </a>';
-									echo '<a href="principal_agenda_telefonica.php?pagina=1"  class="col-sm-3 color-yellow tooltip"  title="Ver Contactos">                <i class="fa fa-phone" aria-hidden="true"></i>        <span>Contactos</span>                <strong class="label label-warning">'.$CContactos.'</strong></a>';
-									echo '<a href="principal_software.php?pagina=1"           class="col-sm-3 color-red tooltip"     title="Ver Programas Recomendados">   <i class="fa fa-desktop" aria-hidden="true"></i>      <span>Programas Recomendados</span>   <strong class="label label-info">'.$CProgramas.'</strong></a>';
+									echo '<a href="principal_ayuda.php?pagina=1"              class="col-xs-12 col-sm-3 col-md-3 col-lg-3 color-blue tooltip"    title="Ver Archivos de ayuda">        <i class="fa fa-question" aria-hidden="true"></i>     <span>Archivos de ayuda</span>        </a>';
+									echo '<a href="principal_procedimientos.php?pagina=1"     class="col-xs-12 col-sm-3 col-md-3 col-lg-3 color-green tooltip"   title="Ver Procedimientos">           <i class="fa fa-file-word-o" aria-hidden="true"></i>  <span>Procedimientos</span>           </a>';
+									echo '<a href="principal_agenda_telefonica.php?pagina=1"  class="col-xs-12 col-sm-3 col-md-3 col-lg-3 color-yellow tooltip"  title="Ver Contactos">                <i class="fa fa-phone" aria-hidden="true"></i>        <span>Contactos</span>                <strong class="label label-warning">'.$CContactos.'</strong></a>';
+									echo '<a href="principal_software.php?pagina=1"           class="col-xs-12 col-sm-3 col-md-3 col-lg-3 color-red tooltip"     title="Ver Programas Recomendados">   <i class="fa fa-desktop" aria-hidden="true"></i>      <span>Programas Recomendados</span>   <strong class="label label-info">'.$CProgramas.'</strong></a>';
 								echo '</div>';
 							echo '</div>';
 

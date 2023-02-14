@@ -137,7 +137,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 	
 	<div class="row invoice-info">
 		
-		<div class="col-sm-12 invoice-col">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 invoice-col">
 			Empresa Origen
 			<address>
 				<strong><?php echo $row_data['SistemaOrigen']; ?></strong><br/>

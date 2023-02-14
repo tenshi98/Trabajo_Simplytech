@@ -452,7 +452,7 @@ if($row_data['MontoPagado']!=0){?>
 			case 10:
 			case 11:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
@@ -468,7 +468,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -480,7 +480,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
@@ -530,7 +530,7 @@ if($row_data['MontoPagado']!=0){?>
 			case 12:
 			case 13:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -542,7 +542,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['NombreCliente'].'</strong><br/>
@@ -558,7 +558,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
@@ -608,7 +608,7 @@ if($row_data['MontoPagado']!=0){?>
 			//Gasto de Productos
 			case 3:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -620,11 +620,11 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.n_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>';
 					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
@@ -641,7 +641,7 @@ if($row_data['MontoPagado']!=0){?>
 			//Traspaso de Productos entre bodegas
 			case 4:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -653,11 +653,11 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
 					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
@@ -675,7 +675,7 @@ if($row_data['MontoPagado']!=0){?>
 			//Transformacion de Productos
 			case 5:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -687,11 +687,11 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
 					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
@@ -709,7 +709,7 @@ if($row_data['MontoPagado']!=0){?>
 			//traspaso maeriales a otra empresa
 			case 6:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -721,7 +721,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['SistemaDestino'].'</strong><br/>
@@ -734,7 +734,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 			 
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega de destino:</strong> '.$row_data['BodegaHacia'].'<br/>';
 					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
@@ -751,7 +751,7 @@ if($row_data['MontoPagado']!=0){?>
 			//Gasto de Productos en una Orden de Trabajo
 			case 7:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -763,11 +763,11 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega utilizada:</strong> '.$row_data['BodegaDesde'].'<br/>
 					<strong>Orden de Trabajo N°:</strong> '.N_doc($row_data['idOT'], 5).'<br/>';
@@ -785,7 +785,7 @@ if($row_data['MontoPagado']!=0){?>
 			//Traspaso de Productos Manual a otra Empresa
 			case 8:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -797,7 +797,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['SistemaDestino'].'</strong><br/>
@@ -810,7 +810,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 			 
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>';
 					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
 						echo '<strong>Centro de Costo : </strong>'.$row_data['CentroCosto_Nombre'];
@@ -826,7 +826,7 @@ if($row_data['MontoPagado']!=0){?>
 			//Ingreso manual de productos
 			case 9:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
@@ -842,7 +842,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -854,7 +854,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';
 					if(isset($row_data['CentroCosto_Nombre'])&&$row_data['CentroCosto_Nombre']!=''){
@@ -1035,8 +1035,8 @@ if($row_data['MontoPagado']!=0){?>
 	if($row_data['idTipo']==6){?>
 		
 		<div class="row firma">
-			<div class="col-sm-6 fcont"><p>Firma Transportista</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Transportista</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
 		</div>
 		
 	<?php } ?>

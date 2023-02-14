@@ -139,7 +139,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_
 
 				if(isset($rowdata['ScriptFile'])&&$rowdata['ScriptFile']!=''){?>
 
-					<div class="col-sm-10 fcenter">
+					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
 						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['ScriptFile'], ''); ?>
 						<br/>

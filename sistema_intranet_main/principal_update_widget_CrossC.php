@@ -379,7 +379,7 @@ if($HoraTermino<$timeBack){
 /*************************************************************/
 //Se dibuja
 $widget = '
-<div class="col-sm-7">
+<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 						<div class="row">
 							<div class="table-wrapper-scroll-y my-custom-scrollbar">
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -503,7 +503,7 @@ $widget = '
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-5">
+					<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 						<div class="row" id="update_graphics">';
 							//si hay datos
 							if(isset($x_graph_count)&&$x_graph_count!=0){

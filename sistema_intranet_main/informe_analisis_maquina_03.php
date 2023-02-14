@@ -212,7 +212,7 @@ array_push( $arrGrupo,$row );
 		<?php
 
 			echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Maquina
 					<address>
 						<strong>'.$rowMaquina['MaquinaNombre'].'</strong><br/>
@@ -241,7 +241,7 @@ array_push( $arrGrupo,$row );
 				</div>';
 				
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa
 					<address>
 						<strong>'.$rowMaquina['SistemaOrigen'].'</strong><br/>

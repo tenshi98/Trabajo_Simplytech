@@ -431,7 +431,7 @@ if($row_data['MontoPagado']!=0){?>
 			case 10:
 			case 11:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['NombreProveedor'].'</strong><br/>
@@ -447,7 +447,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -459,7 +459,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>';
 
@@ -508,7 +508,7 @@ if($row_data['MontoPagado']!=0){?>
 			case 12:
 			case 13:
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Origen
 					<address>
 						<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -520,7 +520,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
 						<strong>'.$row_data['NombreCliente'].'</strong><br/>
@@ -536,7 +536,7 @@ if($row_data['MontoPagado']!=0){?>
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Vendedor: </strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellido'].'<br/>';
@@ -736,8 +736,8 @@ if($row_data['MontoPagado']!=0){?>
 	if($row_data['idTipo']==6){?>
 		
 		<div class="row firma">
-			<div class="col-sm-6 fcont"><p>Firma Transportista</p></div>
-			<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Transportista</p></div>
+			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
 		</div>
 		
 	<?php } ?>

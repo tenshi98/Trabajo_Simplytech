@@ -110,7 +110,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_eventos', $SIS_joi
 					<tr><th>Archivo</th></tr>		  
 					<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
 						<td>
-							<div class="col-sm-10 fcenter">
+							<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 								<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Archivo'], ''); ?>
 							</div>
 						</td>

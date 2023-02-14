@@ -31,7 +31,7 @@ require_once 'core/Web.Header.Views.php';
 
 <div class="invoice">
 	<div class="row">
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Indicadores
 			<address>
 				<strong>UF</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['UF'], 0); ?></span><br/>
@@ -45,7 +45,7 @@ require_once 'core/Web.Header.Views.php';
 			</address>
 		</div>
 		
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Pago Empresa
 			<address>
 				<?php
@@ -109,7 +109,7 @@ require_once 'core/Web.Header.Views.php';
     </div>
     
     <div class="row">
-    	<div class="col-md-12">
+    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     		<div class="panel panel-default">
     			<div class="panel-heading">
     				<h4 class="panel-title text-center"><strong>Haberes</strong></h4>

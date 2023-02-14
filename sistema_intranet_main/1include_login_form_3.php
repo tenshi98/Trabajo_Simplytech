@@ -15,7 +15,7 @@
 
 <div class="formLogin col-md-6 fcenter clearfix">
 	<div class="row formbox">
-		<div class="col-md-6 leftPanel">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 leftPanel">
 			<div class="row">
 				<img src="<?php echo $nombre_fichero; ?>" alt="icon" height="160" width="160" class="img-logo img-responsive center-block">
 				<h2><span><?php echo DB_SOFT_NAME; ?></span></h2>
@@ -23,7 +23,7 @@
 				<img class="imgLeft" src="http://res.cloudinary.com/dpcloudinary/image/upload/v1506186248/dots.png" alt="icon" > 
 			</div>
 		</div>
-		<div class="col-md-6 rightPanel">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 rightPanel">
 			
 			<div class="text-center">
 				<ul class="list-inline">

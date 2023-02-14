@@ -133,7 +133,7 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listad
 
 ?>
 
-<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="margin-bottom:350px;">
+<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="margin-bottom:350px;">
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>

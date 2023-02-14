@@ -126,7 +126,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
         
-					<div class="col-sm-10 fcenter">
+					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 					  <img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" > 
 					</div>
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_img='.$_GET['edit'].'&edit='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>

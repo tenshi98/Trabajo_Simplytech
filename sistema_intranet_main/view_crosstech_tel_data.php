@@ -191,7 +191,7 @@ if($in_eq_fueralinea!=0){
 					.tipnoabs{position: initial;}
 				</style>	
 					
-				<div class="col-sm-7">
+				<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 					<div class="box box-blue box-solid ">
 						<div class="box-header with-border text-center">
 							<h3 class="box-title">Temperatura Proyectada</h3>
@@ -208,7 +208,7 @@ if($in_eq_fueralinea!=0){
 					</div>
 				</div>
 						
-				<div class="col-sm-5">
+				<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 					<div title="Unidades de frio acumuladas de acuerdo a tabla de unidades de frío de la Universidad de Utah-USA (Modelo del Dr. Richardson) desde la fecha '.fecha_estandar($CrossTech_FechaUnidadFrio).'" class="box box-blue box-solid tooltip">
 						<div class="box-header with-border text-center">
 							<h3 class="box-title">Unidades de Frio</h3>
@@ -245,11 +245,11 @@ if($in_eq_fueralinea!=0){
 							<h3 class="box-title">Dias - Grados C°</h3>
 						</div>
 						<div class="box-body">
-							<div title="Horas de temperaturas sobre '.$CrossTech_DiasTempMin.'°C acumuladas desde el '.fecha_estandar($CrossTech_FechaDiasTempMin).' a la fecha." class="col-sm-6 value tooltip tipnoabs">
+							<div title="Horas de temperaturas sobre '.$CrossTech_DiasTempMin.'°C acumuladas desde el '.fecha_estandar($CrossTech_FechaDiasTempMin).' a la fecha." class="col-xs-12 col-sm-6 col-md-6 col-lg-6 value tooltip tipnoabs">
 								<span><i class="fa fa-area-chart" aria-hidden="true"></i></span>
 								<span id="update_text_Dias_acumulado">'.cantidades($Dias_acumulado, 0).'</span>
 							</div>
-							<div title="Horas de temperaturas sobre '.$CrossTech_DiasTempMin.'°C de las últimas 24 horas" class="col-sm-6 value tooltip tipnoabs">
+							<div title="Horas de temperaturas sobre '.$CrossTech_DiasTempMin.'°C de las últimas 24 horas" class="col-xs-12 col-sm-6 col-md-6 col-lg-6 value tooltip tipnoabs">
 								<span><i class="fa fa-pagelines" aria-hidden="true"></i></span>
 								<span id="update_text_Dias_anterior">'.cantidades($Dias_anterior, 0).'</span>
 							</div>

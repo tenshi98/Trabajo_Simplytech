@@ -92,7 +92,7 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 ?>
 
 <div class="row inbox"> 
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h3>
 			<strong>Proveedor : </strong><?php echo $row_data['Nombre']; ?><br/>
 		</h3>
@@ -102,7 +102,7 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 									
 <div class="row inbox">
 								
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
@@ -276,7 +276,7 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 
 	
 	<?php if(isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalGeneral!=0){ ?>	
-		<div class="col-md-7">
+		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
 			<div class="box">
 				<header>
@@ -461,7 +461,7 @@ array_push( $arrBoletas,$row );
 
 	
 <div class="row inbox"> 
-	<div class="col-lg-12">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2><strong>Proveedor : </strong><?php echo $rowProveedor['Nombre']; ?></h2>
 		<hr>	
 	</div>
@@ -476,7 +476,7 @@ array_push( $arrBoletas,$row );
 </div>
 
 							
-<div class="col-lg-12">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Boletas Pendientes de Pago</h5>

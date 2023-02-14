@@ -246,12 +246,12 @@ $usrfil .= $responsables;
 
 	<div id="clone_tarea" class="tarea_container">
 
-		<div class="col-sm-8 nopadding">
+		<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_hold('text','Observacion','Observacion[]', '', 1);?>
 			</div>
 		</div>
-		<div class="col-sm-4 nopadding">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 				<div class="input-group">
 					<?php
@@ -347,7 +347,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 <div style="display: none;">
 
 	<div id="clone_responsable" class="responsable_container">
-		<div class="col-sm-4 nopadding">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 				<div class="input-group">
 					<?php
@@ -463,7 +463,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 </div>
 
 
-<div class="col-sm-12 table-responsive" style="margin-bottom:30px!important;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive" style="margin-bottom:30px!important;">
 
 	<div id="page-wrap">
 		<div id="header"> TAREAS PENDIENTES</div>

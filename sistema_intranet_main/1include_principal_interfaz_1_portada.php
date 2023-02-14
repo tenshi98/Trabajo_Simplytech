@@ -21,7 +21,7 @@ echo '<div class="wrapper">';
 				<div class="crane">
 					<div class="logo"></div>
 				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 					<div id="card_weather">	
 					</div>
 				</div>
@@ -36,7 +36,7 @@ echo '<div class="wrapper">';
 				<div class="crane">
 					<div class="logo"></div>
 				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 					<div id="card_weather">	
 					</div>
 				</div>

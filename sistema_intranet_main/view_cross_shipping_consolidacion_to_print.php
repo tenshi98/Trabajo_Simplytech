@@ -293,7 +293,7 @@ require_once 'core/Web.Header.Print.php';
 			foreach($arrEstibas as $categoria=>$estibas){ 
 				echo '
 						
-				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="box box-normal box-solid">
 						<div class="box-header with-border">
 							<h3 class="box-title"><span style="color: #333;">Estiba '.$categoria.'</span></h3>
@@ -377,7 +377,7 @@ require_once 'core/Web.Header.Print.php';
 				foreach ($archivos as $arch) { ?>
 					
 	
-				<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 					<img src="upload/<?php echo $arch['Nombre']; ?>" class="img-responsive">
 				</div>
 						

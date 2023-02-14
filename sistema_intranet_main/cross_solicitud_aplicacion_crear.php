@@ -716,37 +716,37 @@ array_push( $arrCuenta2,$row );
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 					<h3>Parámetros de Aplicación</h3>
 					<div> 	
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Mojamiento L/ha'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('Mojamiento L/ha','Mojamiento', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['Mojamiento']), 2);?>
 							</div>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Velocidad Tractor Km/hr'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('Velocidad Tractor Km/hr','VelTractor', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['VelTractor']), 2);?>
 							</div>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Velocidad Viento Km/hr'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('Velocidad Viento Km/hr','VelViento', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['VelViento']), 2);?>
 							</div>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'T° Minima'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('T° Minima','TempMin', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['TempMin']), 2);?>
 							</div>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'T° Maxima'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('T° Maxima','TempMax', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['TempMax']), 2);?>
 							</div>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Humedad'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('Humedad','HumTempMax', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['HumTempMax']), 2);?>
@@ -803,32 +803,32 @@ array_push( $arrCuenta2,$row );
 <div style="display: none;">
 	
 	<div id="clone_cuartel" class="cuartel_container"> 
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select_change('Cuarteles','idZona[]', 2, 'idZona', 'Nombre', 'cross_predios_listado_zonas', $z,'', 'ChangePredio',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Codigo', 'escribeme1', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Hectareas', 'escribeme2', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Hileras', 'escribeme3', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Dist Plantas', 'escribeme4', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<div class="input-group">
 					<?php $Form_Inputs->input_disabled('text', 'Dist Hileras', 'escribeme5', 0, 1);?>
@@ -843,27 +843,27 @@ array_push( $arrCuenta2,$row );
 	
 	
 	<div id="clone_producto" class="prod_container">
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select_change('Producto Químico','idProducto[]', 2, 'idProducto', 'Nombre', 'productos_listado', $x,'', 'OnSelectionChange',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Dosis Recomendada', 'escribeme1', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Dosis a aplicar','DosisAplicar[]', '', 2);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Unidad de medida', 'escribeme2', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-4 nopadding">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 				<div class="input-group">
 					<?php $Form_Inputs->input_hold('text','Objetivo','Objetivo[]', '', 1); ?>
@@ -878,7 +878,7 @@ array_push( $arrCuenta2,$row );
 	
 	
 	<div id="clone_tractor"> 	
-		<div class="col-sm-4 nopadding">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 			<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				$Form_Inputs->select('Tractor','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);	
@@ -887,12 +887,12 @@ array_push( $arrCuenta2,$row );
 			} ?>
 			</div>
 		</div>
-		<div class="col-sm-4 nopadding">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Equipo Aplicacion','idVehiculo[]', 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $y,'', $dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-4 nopadding">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 				<div class="input-group">
 					<?php $Form_Inputs->select('Trabajador Asignado','idTrabajador[]', 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $m,'', $dbConn); ?>
@@ -906,7 +906,7 @@ array_push( $arrCuenta2,$row );
 	</div>
 	
 	<div id="clone_material"> 	
-		<div class="col-sm-12 nopadding">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
 			<div class="form-group">
 				<div class="input-group">
 					<?php $Form_Inputs->select('Material de Seguridad','idMatSeguridad[]', 2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1','', $dbConn); ?>
@@ -1341,7 +1341,7 @@ foreach ($arrPermisos as $prod) {
 </div> 
 
 
-<div class="col-sm-11 fcenter table-responsive" style="margin-bottom:30px">
+<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive" style="margin-bottom:30px">
 
 	<div id="page-wrap">
 		<div id="header"> SOLICITUD DE APLICACIONES</div>
@@ -1672,37 +1672,37 @@ array_push( $arrCuenta2,$row );
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 					<h3>Parámetros de Aplicación</h3>
 					<div> 	
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Mojamiento L/ha'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('Mojamiento L/ha','Mojamiento', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['Mojamiento']), 2);?>
 							</div>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Velocidad Tractor Km/hr'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('Velocidad Tractor Km/hr','VelTractor', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['VelTractor']), 2);?>
 							</div>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Velocidad Viento Km/hr'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('Velocidad Viento Km/hr','VelViento', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['VelViento']), 2);?>
 							</div>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'T° Minima'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('T° Minima','TempMin', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['TempMin']), 2);?>
 							</div>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'T° Maxima'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('T° Maxima','TempMax', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['TempMax']), 2);?>
 							</div>
 						</div>
-						<div class="col-sm-2 nopadding">
+						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Humedad'); ?>
 							<div class="form-group">
 								<?php $Form_Inputs->input_number('Humedad','HumTempMax', Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['HumTempMax']), 2);?>
@@ -1759,32 +1759,32 @@ array_push( $arrCuenta2,$row );
 <div style="display: none;">
 	
 	<div id="clone_cuartel" class="cuartel_container"> 
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select_change('Cuarteles','idZona[]', 2, 'idZona', 'Nombre', 'cross_predios_listado_zonas', $z,'', 'ChangePredio',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Codigo', 'escribeme1', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Hectareas', 'escribeme2', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Hileras', 'escribeme3', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Dist Plantas', 'escribeme4', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<div class="input-group">
 					<?php $Form_Inputs->input_disabled('text', 'Dist Hileras', 'escribeme5', 0, 1);?>
@@ -1799,27 +1799,27 @@ array_push( $arrCuenta2,$row );
 	
 	
 	<div id="clone_producto" class="prod_container">
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select_change('Producto Químico','idProducto[]', 2, 'idProducto', 'Nombre', 'productos_listado', $x,'', 'OnSelectionChange',$dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Dosis Recomendada', 'escribeme1', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_number('Dosis a aplicar','DosisAplicar[]', '', 2);?>
 			</div>
 		</div>
-		<div class="col-sm-2 nopadding">
+		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->input_disabled('text', 'Unidad de medida', 'escribeme2', 0, 1);?>
 			</div>
 		</div>
-		<div class="col-sm-4 nopadding">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 				<div class="input-group">
 					<?php $Form_Inputs->input_hold('text','Objetivo','Objetivo[]', '', 1); ?>
@@ -1834,7 +1834,7 @@ array_push( $arrCuenta2,$row );
 	
 	
 	<div id="clone_tractor"> 	
-		<div class="col-sm-4 nopadding">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 			<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				$Form_Inputs->select('Tractor','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);	
@@ -1843,12 +1843,12 @@ array_push( $arrCuenta2,$row );
 			} ?>
 			</div>
 		</div>
-		<div class="col-sm-4 nopadding">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 				<?php $Form_Inputs->select('Equipo Aplicacion','idVehiculo[]', 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $y,'', $dbConn); ?>
 			</div>
 		</div>
-		<div class="col-sm-4 nopadding">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 				<div class="input-group">
 					<?php $Form_Inputs->select('Trabajador Asignado','idTrabajador[]', 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $m,'', $dbConn); ?>
@@ -1862,7 +1862,7 @@ array_push( $arrCuenta2,$row );
 	</div>
 	
 	<div id="clone_material"> 	
-		<div class="col-sm-12 nopadding">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
 			<div class="form-group">
 				<div class="input-group">
 					<?php $Form_Inputs->select('Material de Seguridad','idMatSeguridad[]', 2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1','', $dbConn); ?>

@@ -629,13 +629,13 @@ foreach($arrContenidos as $categoria=>$permisos){
 														//verifico que el archivo sea del contenido
 														if(isset($preg['Unidad_ID'])&&$preg['Unidad_ID']==$file['idUnidad']&&isset($preg['Contenido_ID'])&&$preg['Contenido_ID']==$file['idContenido']){ ?>
 															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:2px;">
-																<div class="col-sm-10">
+																<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10">
 																	<?php 
 																	$f_file = str_replace('elearning_files_'.$file['idContenido'].'_','',$file['File']);
 																	echo $f_file; 
 																	?>
 																</div>
-																<div class="col-sm-2">
+																<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 																	<div class="btn-group pull-right" style="width: 70px;" >
 																		<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($file['File'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 																		<?php 
@@ -667,8 +667,8 @@ foreach($arrContenidos as $categoria=>$permisos){
 														//verifico que el archivo sea del contenido
 														if(isset($preg['Unidad_ID'])&&$preg['Unidad_ID']==$file['idUnidad']&&isset($preg['Contenido_ID'])&&$preg['Contenido_ID']==$file['idContenido']){ ?>
 															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:2px;">
-																<div class="col-sm-10"><?php echo $file['Cuestionario'];  ?></div>
-																<div class="col-sm-2">
+																<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10"><?php echo $file['Cuestionario'];  ?></div>
+																<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 																	<div class="btn-group pull-right" style="width: 105px;" >
 																		<a href="<?php echo 'view_quiz.php?view='.simpleEncode($file['idQuiz'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 																		<a href="<?php echo $location.'&id_curso='.$_GET['id_curso'].'&Unidad_ID='.$preg['Unidad_ID'].'&Contenido_ID='.$preg['Contenido_ID'].'&editCuestionario='.$file['idCuestionario']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>

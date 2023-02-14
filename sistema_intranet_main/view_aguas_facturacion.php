@@ -172,7 +172,7 @@ $arrPagosRel = db_select_array (false, $SIS_query, 'aguas_clientes_pagos_relacio
 
 ?>
 
-<div class="col-sm-12 clearfix" style="margin-bottom:5px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix" style="margin-bottom:5px;">
 	<a target="new" href="<?php echo 'view_aguas_facturacion_to_pdf.php?view='.$_GET['view']; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 	<a target="new" href="<?php echo 'view_aguas_facturacion_to_print.php?view='.$_GET['view']; ?>" class="btn btn-sm btn-metis-5 pull-right margin_width"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>
 </div>

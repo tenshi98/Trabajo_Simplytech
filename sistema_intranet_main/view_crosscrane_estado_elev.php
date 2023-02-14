@@ -602,10 +602,10 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						
 						<div  class="box box-blue box-solid tooltip">
 							<div class="box-header with-border">
-								<div class="col-sm-6 text-center">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
 									<h3 class="box-title">Actual</h3>
 								</div>
-								<div class="col-sm-6 text-center">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
 									<h3 class="box-title">Promedio</h3>
 								</div>
 								<div class="clearfix"></div>
@@ -624,11 +624,11 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 							
 							?>
 							<div class="box-body">
-								<div class="col-sm-6 value tipnoabs">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 value tipnoabs">
 									<span><i class="fa fa-bolt" aria-hidden="true"></i></span>
 									<span><?php echo cantidades($ndata_x1, 0);?></span>
 								</div>
-								<div class="col-sm-6 value tipnoabs">
+								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 value tipnoabs">
 									<span><i class="fa fa-bolt" aria-hidden="true"></i></span>
 									<span><?php echo cantidades($ndata_x2, 0);?></span>
 								</div>

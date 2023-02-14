@@ -77,7 +77,7 @@ array_push( $arrAccesos,$row );
 
 ?>
 
-<div class="col-sm-12 clearfix">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<?php
 	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
 	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];

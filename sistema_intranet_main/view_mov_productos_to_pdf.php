@@ -443,7 +443,7 @@ $html .= '
 										
 									</td>
 									
-									<div class="col-sm-4 invoice-col">
+									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 										<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 										<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
 										<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';

@@ -52,14 +52,14 @@ $rowdata = db_select_data (false, $SIS_query, 'soporte_software_listado', $SIS_j
 
 ?>
 
-<div class="col-md-12" style="margin-top:50px;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:50px;">
 	<div class="row">
-		<div class="col-md-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 								
 			<div class="block task task-high boxsoftware">
 				<div class="row with-padding">
-					<div class="col-sm-9">
+					<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 						<div class="task-description">
 							<a href="#"><?php echo $rowdata['Nombre']; ?></a>
 							<i><?php echo $rowdata['Categoria']; ?></i>

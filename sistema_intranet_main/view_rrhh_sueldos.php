@@ -250,7 +250,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
     </div>
     
     <div class="row">
-    	<div class="col-md-12">
+    	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     		<div class="panel panel-default">
     			<div class="panel-heading">
     				<h4 class="panel-title text-center"><strong>Haberes</strong></h4>

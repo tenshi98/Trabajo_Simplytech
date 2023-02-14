@@ -127,7 +127,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 
 
 				echo '
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Empresa Visitada</strong>
 					<address>
 						Nombre: '.$row_data['SistemaOrigen'].'<br/>
@@ -143,7 +143,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 					</address>
 				</div>
 				
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Tecnico a Cargo</strong>
 					<address>
 						Nombre: '.$row_data['NombreEncargado'].'<br/>
@@ -154,7 +154,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 					</address>
 				</div>
 			   
-				<div class="col-sm-4 invoice-col">
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Trabajo</strong>
 					<address>
 						Servicio: '.$row_data['Servicio'].'<br/>
@@ -222,15 +222,15 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 
 	<div class="row firma">
 		
-		<div class="col-sm-6 fcont">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont">
 			<?php if(isset($row_data['Path_Firma'])&&$row_data['Path_Firma']!=''){?>
-				<div class="col-sm-6 fcenter">
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcenter">
 					<img style="" class="media-object user-img width100" alt="Imagen Referencia" src="upload/<?php echo $row_data['Path_Firma']; ?>">
 				</div>
 			<?php } ?>
 			<p>Firma Aprobador</p>
 		</div>
-		<div class="col-sm-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
 	</div>
 
       

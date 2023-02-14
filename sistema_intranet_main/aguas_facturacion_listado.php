@@ -244,7 +244,7 @@ array_push( $arrFacturacion,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-lg-12 fcenter" style="margin-bottom:30px; margin-top:30px">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
 <a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>	
@@ -372,7 +372,7 @@ array_push( $arrFacturacion,$row );
 
 
 <div class="clearfix"></div>
-<div class="col-lg-12 fcenter" style="margin-bottom:30px; margin-top:30px">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
 <a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>

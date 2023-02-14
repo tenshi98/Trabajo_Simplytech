@@ -329,7 +329,7 @@ array_push( $arrFacturaciones,$row );
 
 
 		
-		<div class="col-sm-4 mail-left-box">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 mail-left-box">
 			<ul class="list-group inbox-options">
 				<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Detalle Ultima Facturacion</li>
 				<li class="list-group-item">		

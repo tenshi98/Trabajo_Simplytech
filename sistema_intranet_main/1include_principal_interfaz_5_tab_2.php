@@ -119,7 +119,7 @@ $arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablare
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Flujos Caudales</strong></h5>        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_caudales_flujos" style="height: 200px;"></div></div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Caudales Promedios</strong></h5>     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_caudales" style="height: 200px;"></div></div>
-				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Dispersión de Flujos</strong></h5>   <div class="col-sm-12 float_table" id="chart_gauge" style="height: 200px;"></div></div>
+				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Dispersión de Flujos</strong></h5>   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float_table" id="chart_gauge" style="height: 200px;"></div></div>
 
 				<div id="update_content_graphics"></div>
 

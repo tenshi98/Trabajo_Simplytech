@@ -191,7 +191,7 @@ foreach ($arrImpuestos as $impto) {
 	
 	<div class="row invoice-info">
 		
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Empresa Emisora
 			<address>
 				<strong><?php echo $row_data['SistemaOrigen']; ?></strong><br/>
@@ -203,7 +203,7 @@ foreach ($arrImpuestos as $impto) {
 			</address>
 		</div>
 				
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Empresa Receptora
 			<address>
 				<strong><?php echo $row_data['NombreProveedor']; ?></strong><br/>
@@ -219,7 +219,7 @@ foreach ($arrImpuestos as $impto) {
 			</address>
 		</div>
 			   
-		<div class="col-sm-4 invoice-col">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Vendedor: <?php echo $row_data['NombreUsuario']; ?><br/>
 		</div>
 		

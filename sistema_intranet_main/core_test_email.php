@@ -87,7 +87,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 			<div class="tab-pane fade active in" id="data1">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-						<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+						<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 							<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
 								<?php 
@@ -119,7 +119,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 			<div class="tab-pane fade" id="data2">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-						<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+						<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 							<form class="form-horizontal" method="post" id="form2" name="form2" novalidate>
 				
 								<?php 
@@ -150,7 +150,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 			<div class="tab-pane fade" id="data3">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-						<div class="col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+						<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 							<form class="form-horizontal" method="post" id="form3" name="form3" novalidate>
 				
 								<?php 

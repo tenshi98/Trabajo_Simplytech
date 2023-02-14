@@ -247,7 +247,7 @@ function widget_comunes($com_tras, $Wheater, $NombreUsuario, $Notificacion,$Cuen
 		<script src="'.DB_SITE_REPO.'/Legacy/gestion_modular/lib/weather/jquery.simpleWeather.js"></script>
 		<script src="'.DB_SITE_REPO.'/Legacy/gestion_modular/lib/skycons/skycons.js"></script>
 
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 			<div class="info-box bg-aqua" id="weather">
 			</div>
 		</div>';
@@ -769,7 +769,7 @@ $Graficos = '';
 	}
         $Graficos .= '
 					<div class="row">
-						<div class="col-md-8">
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<div class="chart">';
 
 		$Graficos .= "
@@ -832,7 +832,7 @@ $Graficos = '';
 
 							</div>
 						</div>
-						<div class="col-md-4">';
+						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">';
 
 			//Se crean los widget de forma dinamica
 			if(count($datos)==1){
@@ -1630,7 +1630,7 @@ function widget_Resumen_GPS_equipos($titulo, $seguimiento, $idSistema, $idTipoUs
 											}
 
 											$GPS .= '
-												<div class="col-md-4">
+												<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 													<div class="box '.$danger.' box-solid">
 														<div class="box-header with-border">
 															<h3 class="box-title">'.$equip['Nombre'].'</h3>
@@ -1779,7 +1779,7 @@ $GPS = '
 						<div class="wmd-panel">
 							<div class="table-responsive">
 
-								<div class="col-sm-7">
+								<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 									<div class="row">
 										<div id="consulta">
 											<table id="dataTable" class="table table-bordered table-condensed table-hover dataTable">
@@ -1989,7 +1989,7 @@ $GPS = '
 									</div>
 								</div>
 
-								<div class="col-sm-5">
+								<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 									<div class="row">';
 									if(isset($enlace)&&$enlace!=''&&$enlace!=0){
 										if ($equip['Direccion_img']=='') {
@@ -2477,7 +2477,7 @@ $GPS = '
 		}
 
 		$GPS .= '
-		<div class="col-md-4">
+		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 			<div class="box '.$wd_color.' box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title">'.$equip['Nombre'].'</h3>
@@ -2699,7 +2699,7 @@ $GPS = '
 		}
 
 		$GPS .= '
-		<div class="col-md-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box '.$wd_color.' box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title">'.$equip['Nombre'].'</h3>
@@ -2811,7 +2811,7 @@ $GPS = '
 
 							/*************************************************/
 							$GPS .= '
-							<div class="col-md-3">
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 								<div class="box box-'.$xs_Color.' box-solid">
 									<div class="box-header with-border">
 										<h3 class="box-title">Grupo</h3>
@@ -2888,7 +2888,7 @@ function widget_superadmin($dbConn, $DB_SERVER, $DB_USER, $DB_PASS, $DB_NAME_1, 
 
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
         <div class="box superadmin_box">
             <div class="box-header with-border">
 				<h3 class="box-title">Informacion del Sistema</h3>
@@ -2896,14 +2896,14 @@ function widget_superadmin($dbConn, $DB_SERVER, $DB_USER, $DB_PASS, $DB_NAME_1, 
 
 			<div class="box-body" style="padding-top:5px;">
 				<div class="row">
-					<div class="col-md-8">
+					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<div class="chart">
-							<iframe class="col-sm-12 col-md-12 col-sm-12" frameborder="0" height="400" src="'.DB_SITE_REPO.'/EXTERNAL_LIBS/linfo/index.php"></iframe>
+							<iframe class="col-xs-12 col-sm-12 col-md-12 col-lg-12" frameborder="0" height="400" src="'.DB_SITE_REPO.'/EXTERNAL_LIBS/linfo/index.php"></iframe>
 						</div>
 					</div>
 
-					<div class="col-md-4">
-						<div class="col-md-12">
+					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<p class="text-center">
 								<strong>Tamaño de Carpetas</strong>
 							</p>
@@ -4646,7 +4646,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 						<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>
 					</header>
 					<div class="table-responsive">
-						<div class="col-sm-7">
+						<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 							<div class="row">
 								<div id="vehiContent_'.$idTab.'" class="table-wrapper-scroll-y my-custom-scrollbar">
 									<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -4807,7 +4807,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-5">
+						<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 							<div class="row">
 								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 								<div id="map_content_'.$idTab.'"></div>
@@ -5296,7 +5296,7 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 						<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>
 					</header>
 					<div class="table-responsive">
-						<div class="col-sm-7">
+						<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 							<div class="row">
 								<div id="vehiContent_'.$idTab.'" class="table-wrapper-scroll-y my-custom-scrollbar">
 									<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -5457,7 +5457,7 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-5">
+						<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 							<div class="row">
 								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 								<div id="map_content_'.$idTab.'"></div>
@@ -6012,7 +6012,7 @@ $GPS = '
 		}
 
 		$GPS .= '
-		<div class="col-md-12">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box '.$wd_color.' box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title">'.$equip['Nombre'].'</h3>';
@@ -6022,7 +6022,7 @@ $GPS = '
 					$GPS .= '
 				</div>
 				<div class="box-body">
-					<div class="col-md-12">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<h4 class="box-title">Medicion el '.fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs</h4>
 					</div>';
 
@@ -6140,7 +6140,7 @@ $GPS = '
 								$sy_color = 'btn-warning';
 							}
 							$GPS .= '
-							<div class="col-md-3">
+							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 								<div class="box box-'.$ss_color.' box-solid">
 									<div class="box-header with-border">
 										<h3 class="box-title">Grupo</h3>
@@ -6299,7 +6299,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>
 			</header>
 			<div class="table-responsive">
-				<div class="col-sm-7">
+				<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 					<div class="row">
 						<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -6436,7 +6436,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-5">
+				<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 					<div class="row">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<div id="consulta"></div>
@@ -7025,7 +7025,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>
 			</header>
 			<div class="table-responsive">
-				<div class="col-sm-7">
+				<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 					<div class="row">
 						<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -7181,7 +7181,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-5">
+				<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 					<div class="row">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<div id="consulta"></div>
@@ -7719,7 +7719,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>'.$titulo.'</h5>
 			</header>
 			<div class="table-responsive">
-				<div class="col-sm-7">
+				<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 					<div class="row">
 						<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -7843,7 +7843,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 						</div>
 					</div>
 				</div>
-				<div class="col-sm-5">
+				<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 					<div class="row">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<div id="consulta"></div>
@@ -8065,7 +8065,7 @@ function widget_Social( $Social_facebook,
 
 
 
-	$GPS = '<div class="col-sm-12 ">';
+	$GPS = '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 	$GPS .= '<div class="row">';
 
 	$GPS .= '
@@ -8210,7 +8210,7 @@ function widget_Ficha_1($bg_color, $icon, $porcentaje,
 
 		//se crea el widget
 		$widget = '
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 			<div class="info-box '.$bg_color.'">
 				<span class="info-box-icon"><i class="fa '.$icon.'" aria-hidden="true"></i></span>
 				<div class="info-box-content">
@@ -8277,7 +8277,7 @@ function widget_Ficha_2($bg_color, $icon, $number, $width,
 
 		//se crea el widget
 		$widget = '
-		<div class="col-lg-'.$width.' col-md-'.$width.' col-sm-6 col-xs-12">
+		<div class="col-xs-12 col-sm-6 col-md-'.$width.' col-lg-'.$width.'">
 			<div class="box '.$bg_color.' box-solid">
 				<div class="box-header with-border">
 					<h3 class="box-title">'.$titulo.'</h3>';
@@ -8354,7 +8354,7 @@ function widget_Ficha_3($bg_color, $icon, $number,
 
 		//se crea el widget
 		$widget = '
-		<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 			<div class="small-box '.$bg_color.'">
 				<div class="innerbox">
 					<h3>'.$number.'</h3>
@@ -8388,7 +8388,7 @@ function widget_Ficha_4($bg_color, $icon, $titulo, $subtitulo1, $subtitulo2){
 
 		//se crea el widget
 		$widget = '
-		<div class="col-md-3 col-sm-6 col-xs-12 pull-left">
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 pull-left">
 			<div class="info-box '.$bg_color.'" >
 				<span class="info-box-icon">
 					<i class="fa '.$icon.'" aria-hidden="true"></i>
@@ -8419,14 +8419,14 @@ function widget_Ficha_5($bg_color, $icon, $titulo, $subtitulo, $link, $linktext)
 
 		//se crea el widget
 		$widget = '
-		<div class="col-lg-3 col-md-6">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-3">
 			<div class="panel '.$bg_color.'">
 				<div class="panel-heading">
 					<div class="row">
-						<div class="col-xs-3">
+						<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
 							<i class="fa '.$icon.' fa-5x" aria-hidden="true"></i>
 						</div>
-						<div class="col-xs-9 text-right">
+						<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 text-right">
 							<div class="huge">'.$titulo.'</div>
 							<div>'.$subtitulo.'</div>
 						</div>
@@ -8460,7 +8460,7 @@ function widget_Ficha_6($link, $bg_color, $icon, $titulo, $subtitulo, $linktext)
 
 		//se crea el widget
 		$widget = '
-		<div class="col-lg-2 col-sm-6">
+		<div class="col-xs-6 col-sm-6 col-md-3 col-lg-2">
             <div class="circle-tile">
                 <a href="'.$link.'">
                     <div class="circle-tile-heading '.$bg_color.'">
@@ -8498,7 +8498,7 @@ function widget_Ficha_7($icon, $bg_color, $titulo, $value){
 
 		//se crea el widget
 		$widget = '
-		<div class="col-lg-3 col-sm-6 col-xs-12">
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 			<div class="main-box infographic-box">
 				<i class="fa '.$icon.' '.$bg_color.'"></i>
 				<span class="headline">'.$titulo.'</span>
@@ -8526,7 +8526,7 @@ function widget_Ficha_8($bg_color, $number, $titulo, $porcentaje, $subtitulos){
 
 		//se crea el widget
 		$widget = '
-		<div class="col-md-4 col-sm-6 col-xs-12">
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
 			<div class="main-box small-graph-box '.$bg_color.'">
 				<span class="value">'.$number.'</span>
 				<span class="headline">'.$titulo.'</span>
@@ -8567,7 +8567,7 @@ function widget_Ficha_9($hover_color, $bg_color, $titulo,
 
 		//se crea el widget
 		$widget = '
-		<div class="col-lg-4 col-md-6 col-sm-6">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
 			<div class="main-box clearfix project-box '.$hover_color.'">
 				<div class="main-box-body clearfix">
 					<div class="project-box-header '.$bg_color.'">
@@ -8624,7 +8624,7 @@ function widget_Ficha_10($bg_color, $img_direction, $Nombre,$trabajo, $arrDatos,
 
 		//se crea el widget
 		$widget = '
-		<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
 			<div class="main-box clearfix profile-box-contact">
 				<div class="main-box-body clearfix">
 					<div class="profile-box-header '.$bg_color.' clearfix">
@@ -8672,7 +8672,7 @@ function widget_Ficha_11($color, $bg_color, $text_color, $icon_color, $type, $po
 
 		//se crea el widget
 		$widget = '
-		<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+		<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
 			<div class="databox '.$color.' radius-bordered">
 				<div class="databox-left '.$bg_color.'">
 					<div class="databox-piechart">
@@ -8721,7 +8721,7 @@ function widget_title($bg_color, $icon, $porcentaje, $titulo, $subtitulo_1, $sub
 
 		//se crea el widget
 		$widget = '
-		<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" style="padding-left: 0px;">
 			<div class="info-box '.$bg_color.'">
 				<span class="info-box-icon"><i class="fa '.$icon.' faa-spin animated " aria-hidden="true"></i></span>
 				<div class="info-box-content">
@@ -8760,7 +8760,7 @@ function widget_titleIMG($bg_color, $img, $porcentaje, $titulo, $subtitulo_1, $s
 
 		//se crea el widget
 		$widget = '
-		<div class="col-md-6 col-sm-6 col-xs-12" style="padding-left: 0px;">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" style="padding-left: 0px;">
 			<div class="info-box '.$bg_color.'">
 				<span class="info-box-icon">
 					<img src="'.$img.'" alt="info-box-icon" width="60" height="60">
@@ -9197,7 +9197,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 					<div id="loading"></div>
 
 					<div class="table-responsive" id="update_content">
-						<div class="col-sm-7">
+						<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 							<div class="row">
 								<div class="table-wrapper-scroll-y my-custom-scrollbar">
 									<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -9321,7 +9321,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-5">
+						<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 							<div class="row" id="update_graphics">';
 								//si hay datos
 								if(isset($x_graph_count)&&$x_graph_count!=0){
@@ -9810,7 +9810,7 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 							<div class="wmd-panel">
 
 								<div class="table-responsive">
-									<div class="col-sm-7">
+									<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 										<div class="row">
 											<div id="vehiContent" class="table-wrapper-scroll-y my-custom-scrollbar">
 												<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -9966,7 +9966,7 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 											</div>
 										</div>
 									</div>
-									<div class="col-sm-5">
+									<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 										<div class="row">
 											<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 										</div>

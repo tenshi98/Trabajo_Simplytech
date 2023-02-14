@@ -194,7 +194,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 	
 	<div class="row invoice-info">
 		
-		<div class="col-sm-6 invoice-col">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos Basicos
 			<address>
 				<strong>Usuario: </strong><?php echo $row_data['Usuario']; ?><br/>
@@ -209,7 +209,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 				
 			</address>
 		</div>
-		<div class="col-sm-6 invoice-col">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Empresa Relacionada
 			<address>
 				<strong>Nombre: </strong><?php echo $row_data['SistemaOrigen']; ?><br/>

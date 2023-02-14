@@ -247,7 +247,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 								//Se existen cargas estas se despliegan
 								if($nn!=0){
 									foreach ($arrCargas as $carga) { ?>
-										<div class="col-md-6 col-sm-6 col-xs-12 pull-left">
+										<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 pull-left">
 											<div class="info-box" style="box-shadow:none; color:#999 !important;">
 												<span class="info-box-icon">
 													 <img src="upload/<?php echo $carga['Direccion_img']; ?>" alt="hijo" height="100%" width="100%"> 

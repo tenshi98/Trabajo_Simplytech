@@ -107,7 +107,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 	
 	<div class="row invoice-info">
 		
-		<div class="col-sm-6 invoice-col">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos basicos
 			<address>
 				<strong>Trabajador: </strong><?php echo $row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat']; ?><br/>
@@ -118,7 +118,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 			</address>
 		</div>
 				
-		<div class="col-sm-6 invoice-col">
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Detalle
 			<address>
 				<strong>Fecha Creacion: </strong><?php echo fecha_estandar($row_data['Creacion_fecha']); ?><br/>
