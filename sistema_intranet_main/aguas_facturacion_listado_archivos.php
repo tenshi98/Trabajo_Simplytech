@@ -58,7 +58,7 @@ alert_post_data(2,1,2, $Alert_Text);
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				
 				//se dibujan los inputs

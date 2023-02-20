@@ -83,7 +83,7 @@ if(!empty($_GET['new_oc'])){  ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = '';}
 				if(isset($Observaciones)){    $x3  = $Observaciones;  }else{$x3  = '';}
@@ -146,7 +146,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
 
@@ -201,7 +201,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
 
@@ -257,7 +257,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
 
@@ -313,7 +313,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
 
@@ -369,7 +369,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
 
@@ -887,7 +887,7 @@ array_push( $arrProveedores,$row );
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location; ?>" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idSistema)){        $x1  = $idSistema;      }else{$x1  = '';}
 

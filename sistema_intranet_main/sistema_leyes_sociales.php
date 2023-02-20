@@ -91,7 +91,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($AFP_idCentroCosto)){            $x2  = $AFP_idCentroCosto;            }else{$x2  = $rowdata['AFP_idCentroCosto'];}
 				if(isset($AFP_idLevel_1)){                $x3  = $AFP_idLevel_1;                }else{$x3  = $rowdata['AFP_idLevel_1'];}
@@ -176,7 +176,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($AFP_idCentroCosto)){        $x2  = $AFP_idCentroCosto;          }else{$x2  = '';}
 				if(isset($AFP_idLevel_1)){            $x3  = $AFP_idLevel_1;              }else{$x3  = '';}

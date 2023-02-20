@@ -86,7 +86,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 			</ul>
 		</header>
 		<div class="table-responsive">
-			
+
 			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				<div class="row">
 					<?php
@@ -111,7 +111,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						
 						?>
 						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=places"></script>
-						
+
 						<input id="pac-input" class="pac-controls" type="text" placeholder="Buscar Direccion">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						
@@ -213,7 +213,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 					<?php } ?>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>

@@ -71,7 +71,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_j
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">
 		
 		<?php				

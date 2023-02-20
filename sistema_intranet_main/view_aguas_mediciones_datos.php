@@ -107,7 +107,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 					</tr>
 					
 					<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==2){ ?>
-						
+
 						<tr>
 							<td class="meta-head">Cliente</td>
 							<td><?php echo $rowdata['ClienteIdentificador'].' '.$rowdata['ClienteNombre']; ?></td>

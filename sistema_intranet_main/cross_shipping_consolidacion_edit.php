@@ -125,7 +125,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idArchivoTipo)){    $x1  = $idArchivoTipo;  }else{$x1  = '';}
 
@@ -183,7 +183,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idEstiba)){           $x1  = $idEstiba;           }else{$x1  = $rowEstiba['idEstiba'];}
 				if(isset($idEstibaUbicacion)){  $x2  = $idEstibaUbicacion;  }else{$x2  = $rowEstiba['idEstibaUbicacion'];}
@@ -255,7 +255,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idEstiba)){           $x1  = $idEstiba;           }else{$x1  = $rowEstiba['idEstiba'];}
 				if(isset($idEstibaUbicacion)){  $x2  = $idEstibaUbicacion;  }else{$x2  = $rowEstiba['idEstibaUbicacion'];}
@@ -385,7 +385,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($CTNNombreCompañia)){     $x1  = $CTNNombreCompañia;     }else{$x1  = $rowConso['CTNNombreCompañia'];}
 				if(isset($Creacion_fecha)){        $x2  = $Creacion_fecha;        }else{$x2  = $rowConso['Creacion_fecha'];}

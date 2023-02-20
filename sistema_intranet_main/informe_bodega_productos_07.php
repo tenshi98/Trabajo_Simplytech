@@ -508,7 +508,7 @@ foreach ($arrBodega as $bod) {
 						
 						</script>
 						<div id="chart_<?php echo $datos[0]['BodegaID'];?>" style="height: 500px; width: 100%;"></div>
-						
+
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
 								<tr role="row">
@@ -653,7 +653,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idBodegaOrigen)){       $x1  = $idBodegaOrigen;        }else{$x1  = '';}
 

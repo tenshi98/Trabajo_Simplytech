@@ -81,8 +81,8 @@ if(!empty($_GET['addFile'])){ ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php 
-				//se dibujan los inputs
+				<?php
+				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 				
@@ -205,7 +205,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($FechaProgramada)){        $x1  = $FechaProgramada;         }else{$x1  = $row_data['FechaProgramada'];}
 				if(isset($HoraInicioProgramada)){   $x2  = $HoraInicioProgramada;    }else{$x2  = $row_data['HoraInicioProgramada'];}

@@ -91,7 +91,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){          $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
 				if(isset($UbicacionHora)){   $x2  = $Ubicacion;   }else{$x2  = $rowdata['Ubicacion'];}
@@ -242,7 +242,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'oficinas_listado', $SIS_join, $
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idEstado)){    $x1  = $idEstado;    }else{$x1  = '';}
 				if(isset($Nombre)){      $x2  = $Nombre;      }else{$x2  = '';}
@@ -276,8 +276,8 @@ $arrUsers = db_select_array (false, $SIS_query, 'oficinas_listado', $SIS_join, $
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Oficinas</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

@@ -102,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			</ul>
 		</header>
         <div class="table-responsive">
-			
+
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="row">
 					<?php
@@ -112,9 +112,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						alert_post_data(4,2,2, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						
+
 						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-						
+
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
 
@@ -162,17 +162,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<?php } ?>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
-						<?php 
-						//se dibujan los inputs
+						<?php
+						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowdata['GeoLatitud']);
 						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowdata['GeoLongitud']);
-						
+
 						$Form_Inputs->form_input_hidden('GeoLatitud', $rowdata['GeoLatitud'], 2);
 						$Form_Inputs->form_input_hidden('GeoLongitud', $rowdata['GeoLongitud'], 2);
 						$Form_Inputs->form_input_hidden('idApoderado', $_GET['id'], 2);

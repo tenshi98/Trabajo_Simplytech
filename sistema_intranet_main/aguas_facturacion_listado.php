@@ -254,7 +254,7 @@ array_push( $arrFacturacion,$row );
 	
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
-	
+
 		<?php 
 		$ubicacion = $location.'&clear_all=true';
 		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
@@ -398,7 +398,7 @@ alert_post_data(2,1,2, $Alert_Text);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate >
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){     $x1  = $Fecha;               }else{$x1  = '';}
 				if(isset($intAnual)){            $x2  = $intAnual;            }else{$x2  = '';}
@@ -511,7 +511,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				//Se verifican si existen los datos
 				if(isset($Ano)){       $x1  = $Ano;       }else{$x1  = '';}
@@ -545,8 +545,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Facturaciones</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

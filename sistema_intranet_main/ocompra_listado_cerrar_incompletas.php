@@ -250,7 +250,7 @@ switch ($_GET['type']) {
 						$Form_Inputs->form_input_disabled('Producto','Producto_fake', $x1);
 						$Form_Inputs->form_input_disabled('Cantidad Solicitada','Cantidad_fake', $x2);
 						$Form_Inputs->form_input_number('Cantidad Recibida', 'cant_ingresada', $x3, 2);
-						
+
 						$Form_Inputs->form_input_hidden('CantComp', $x2, 2);	
 					break;
 					/********************************************************/
@@ -266,7 +266,7 @@ switch ($_GET['type']) {
 						$Form_Inputs->form_input_disabled('Boleta Honorarios N°','Boleta_fake', $x2);
 						$Form_Inputs->form_input_disabled('Monto Boleta','Cantidad_fake', $x3);
 						$Form_Inputs->form_input_number('Monto Declarado', 'cant_ingresada', $x4, 2);
-						
+
 						$Form_Inputs->form_input_hidden('CantComp', $x3, 2);
 						
 				    break;
@@ -281,7 +281,7 @@ switch ($_GET['type']) {
 						$Form_Inputs->form_input_disabled('Descripcion','Producto_fake', $x1);
 						$Form_Inputs->form_input_disabled('Monto Boleta','Cantidad_fake', $x2);
 						$Form_Inputs->form_input_number('Monto Declarado', 'cant_ingresada', $x3, 2);
-						
+
 						$Form_Inputs->form_input_hidden('CantComp', $x2, 2);
 					
 					
@@ -778,7 +778,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idOcompra)){           $x1  = $idOcompra;           }else{$x1  = '';}
 				if(isset($idProveedor)){         $x2  = $idProveedor;         }else{$x2  = '';}

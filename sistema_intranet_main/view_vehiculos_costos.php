@@ -57,7 +57,7 @@ $row_data = db_select_data (false, $SIS_query, 'vehiculos_costos', $SIS_join, $S
 			<h5>Costos Asociados</h5>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					
@@ -72,7 +72,7 @@ $row_data = db_select_data (false, $SIS_query, 'vehiculos_costos', $SIS_join, $S
 							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Creacion_fecha']);?><br/>
 							<strong>Valor: </strong><?php echo valores($row_data['Valor'],0);?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Observaciones</h2>
 						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Observaciones'];?></p>
 					

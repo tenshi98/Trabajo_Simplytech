@@ -94,7 +94,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipo)){             $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
 				if(isset($idVehiculo)){         $x2  = $idVehiculo;        }else{$x2  = $rowdata['idVehiculo'];}
@@ -142,7 +142,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipo)){             $x1  = $idTipo;            }else{$x1  = '';}
 				if(isset($idVehiculo)){         $x2  = $idVehiculo;        }else{$x2  = '';}
@@ -254,7 +254,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'vehiculos_costos', $SIS_jo
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipo)){             $x1  = $idTipo;            }else{$x1  = '';}
 				if(isset($idVehiculo)){         $x2  = $idVehiculo;        }else{$x2  = '';}
@@ -291,8 +291,8 @@ $arrCategorias = db_select_array (false, $SIS_query, 'vehiculos_costos', $SIS_jo
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Costos Asociados</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

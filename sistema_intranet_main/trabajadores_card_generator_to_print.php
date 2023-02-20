@@ -379,7 +379,7 @@ $html ='
 					<tr><td><strong>Sexo</strong></td><td>: '.$rowTrabajador['Sexo'].'</td></tr>
 					<tr><td><strong>Fono</strong></td><td>: '.formatPhone($rowTrabajador['Fono']).'</td></tr>
 					<tr><td><strong>Email</strong></td><td>: '.$rowTrabajador['email'].'</td></tr>
-				</table> 
+				</table>
 			</div>';
 		}
 		
@@ -408,7 +408,7 @@ $html ='
 					<tr><td><strong>Sexo</strong></td><td>: '.$rowTrabajador['Sexo'].'</td></tr>
 					<tr><td><strong>Fono</strong></td><td>: '.formatPhone($rowTrabajador['Fono']).'</td></tr>
 					<tr><td><strong>Email</strong></td><td>: '.$rowTrabajador['email'].'</td></tr>
-				</table> 
+				</table>
 			</div>';
 		}
 	$html .= '</div>';

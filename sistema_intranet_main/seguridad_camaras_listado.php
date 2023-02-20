@@ -156,7 +156,7 @@ array_push( $arrCamaras,$row );
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
@@ -214,7 +214,7 @@ array_push( $arrCamaras,$row );
 							</table>
 							
 							<br/>
-						
+
 						</div>
 					</div>
 				</div>
@@ -374,7 +374,7 @@ $arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="min-height:500px;">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){              $x1  = $Nombre;              }else{$x1  = '';}
 				if(isset($N_Camaras)){           $x2  = $N_Camaras;           }else{$x2  = '';}
@@ -422,8 +422,8 @@ $arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Grupo Camaras</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

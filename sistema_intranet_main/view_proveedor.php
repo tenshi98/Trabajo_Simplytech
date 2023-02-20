@@ -144,7 +144,7 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
@@ -227,7 +227,7 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 				<div class="clearfix"></div>
 				
 			</div>
-			
+
 			<div class="tab-pane fade" id="observaciones">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -252,7 +252,7 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="productos">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -309,7 +309,7 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="servicios">
 				<div class="wmd-panel">
 					<div class="table-responsive">

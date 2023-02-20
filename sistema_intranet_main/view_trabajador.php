@@ -213,7 +213,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				
 				<div class="wmd-panel">
@@ -363,7 +363,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<strong>Fecha Ultimo Control : </strong><?php if(isset($rowdata['LicenciaControlUlt'])&&$rowdata['LicenciaControlUlt']!='0000-00-00'){echo Fecha_estandar($rowdata['LicenciaControlUlt']);}else{echo 'Sin fecha de ultimo control';} ?><br/>
 							<strong>Fecha Control : </strong><?php if(isset($rowdata['LicenciaControl'])&&$rowdata['LicenciaControl']!='0000-00-00'){echo Fecha_estandar($rowdata['LicenciaControl']);}else{echo 'Sin fecha de control';} ?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>

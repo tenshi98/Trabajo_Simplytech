@@ -557,7 +557,7 @@ array_push( $arrHistorial,$row );
 						}
 						
 						?>
-						
+
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><strong>Totales</strong></td>
 							
@@ -635,7 +635,7 @@ array_push( $arrHistorial,$row );
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
@@ -682,7 +682,7 @@ array_push( $arrHistorial,$row );
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">

@@ -146,7 +146,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductoRel)){    $x1  = $idProductoRel;   }else{$x1  = '';}
 				if(isset($Number)){           $x2  = $Number;          }else{$x2  = '';}
@@ -247,7 +247,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductoRel)){    $x1  = $idProductoRel;   }else{$x1  = $row_data['idProductoRel'];}
 				if(isset($Number)){           $x2  = $Number;          }else{$x2  = Cantidades_decimales_justos($row_data['Cantidad']);}
@@ -342,7 +342,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $_SESSION['receta_productos'][$_GET['editProd']]['idProducto'];}
 				if(isset($Number)){           $x2  = $Number;          }else{$x2  = $_SESSION['receta_productos'][$_GET['editProd']]['Number'];}
@@ -426,7 +426,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
 				if(isset($Number)){           $x2  = $Number;          }else{$x2  = '';}
@@ -519,7 +519,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
@@ -531,7 +531,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-						
+
 						<tr>
 							<th colspan="3">Detalle</th>
 							<th width="10">Acciones</th>
@@ -614,7 +614,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($medida)){     $x1  = $medida;    }else{$x1  = '';}
 

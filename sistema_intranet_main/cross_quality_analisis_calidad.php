@@ -143,8 +143,8 @@ if(!empty($_GET['addFile'])){ ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php 
-				//se dibujan los inputs
+				<?php
+				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 					
@@ -222,7 +222,7 @@ array_push( $arrGrupo,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductor)){     $x1  = $idProductor;     }else{$x1  = $_SESSION['cross_quality_ana_cali_muestras'][$_GET['cloneMuestra']]['idProductor'];}
 				if(isset($n_folio_pallet)){  $x2  = $n_folio_pallet;  }else{$x2  = $_SESSION['cross_quality_ana_cali_muestras'][$_GET['cloneMuestra']]['n_folio_pallet'];}
@@ -406,7 +406,7 @@ array_push( $arrGrupo,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductor)){     $x1  = $idProductor;     }else{$x1  = $_SESSION['cross_quality_ana_cali_muestras'][$_GET['editMuestra']]['idProductor'];}
 				if(isset($n_folio_pallet)){  $x2  = $n_folio_pallet;  }else{$x2  = $_SESSION['cross_quality_ana_cali_muestras'][$_GET['editMuestra']]['n_folio_pallet'];}
@@ -590,7 +590,7 @@ array_push( $arrGrupo,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductor)){     $x1  = $idProductor;     }else{$x1  = '';}
 				if(isset($n_folio_pallet)){  $x2  = $n_folio_pallet;  }else{$x2  = '';}
@@ -727,7 +727,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idMaquina)){        $x1  = $idMaquina;        }else{$x1  = '';}
 
@@ -761,7 +761,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
 
@@ -794,7 +794,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){      $x1  = $Creacion_fecha;    }else{$x1  = $_SESSION['cross_quality_ana_cali_basicos']['Creacion_fecha'];}
 				if(isset($idTipo)){              $x2  = $idTipo;            }else{$x2  = $_SESSION['cross_quality_ana_cali_basicos']['idTipo'];}
@@ -1257,7 +1257,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad',
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){      $x1  = $Creacion_fecha;    }else{$x1  = '';}
 				if(isset($idTipo)){              $x2  = $idTipo;            }else{$x2  = '';}
@@ -1308,8 +1308,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad',
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Inspecciones</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

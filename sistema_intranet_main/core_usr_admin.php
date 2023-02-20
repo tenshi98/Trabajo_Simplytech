@@ -81,7 +81,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 		
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){          $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
 				if(isset($Fono)){            $x2  = $Fono;          }else{$x2  = $rowdata['Fono'];}
@@ -133,7 +133,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($usuario)){         $x1  = $usuario;       }else{$x1  = '';}
 				if(isset($password)){        $x2  = $password;      }else{$x2  = '';}
@@ -247,7 +247,7 @@ array_push( $arrAccess,$row );
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -265,7 +265,7 @@ array_push( $arrAccess,$row );
 							<strong>Estado : </strong><?php echo $rowdata['estado']; ?><br/>
 							<strong>Ultimo Acceso : </strong><?php echo $rowdata['Ultimo_acceso']; ?>
 						</p>
-						
+
 						<h2 class="text-primary">Datos Personales</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -282,7 +282,7 @@ array_push( $arrAccess,$row );
 			
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="ingresos">
 				<div class="wmd-panel">
 					

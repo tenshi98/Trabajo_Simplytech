@@ -88,7 +88,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 		<a target="new" href="<?php echo 'informe_rrhh_03_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	</div>
-	
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
@@ -162,7 +162,7 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;        }else{$x1  = '';}
 				if(isset($h_inicio)){      $x2  = $h_inicio;        }else{$x2  = '';}

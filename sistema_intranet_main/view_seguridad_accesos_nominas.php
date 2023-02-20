@@ -99,7 +99,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">
 		
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
@@ -131,7 +131,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 		</div>
 		
 	</div>
-	
+
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">

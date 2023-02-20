@@ -152,7 +152,7 @@ $w = 'idUtilizable=1';
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idLicitacion)){     $x0  = $idLicitacion;     }else{$x0  = '';}
 				if(isset($idLevel_1)){        $x1  = $idLevel_1;        }else{$x1  = '';}
@@ -1844,7 +1844,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 			<?php //Se imprime el arbol
 			echo arrayToUL($array3d, $TipoMaq, $Trabajo, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'], $nmax);
 			?>
-			
+
 			<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">              

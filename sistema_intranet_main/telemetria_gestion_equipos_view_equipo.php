@@ -141,7 +141,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -169,7 +169,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 							<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
 						</p>
-						
+
 						<h2 class="text-primary">Datos de Configuracion</h2>
 						<p class="text-muted">
 							<?php if($rowdata['id_Sensores']==1){ ?>
@@ -233,7 +233,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<div class="tab-pane fade" id="alertas">
 				<div class="wmd-panel">
 					<div class="table-responsive">

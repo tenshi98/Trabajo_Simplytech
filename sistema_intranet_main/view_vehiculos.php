@@ -159,7 +159,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 			<h5>Datos del vehiculo</h5>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -208,7 +208,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 							
 					
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Caracteristicos</h2>
 						<p class="text-muted">
 							<strong>Zona de Trabajo : </strong><?php echo $rowdata['Zona']; ?><br/>
@@ -217,13 +217,13 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 							<strong>Metros Cubicos (M3) : </strong><?php echo Cantidades_decimales_justos($rowdata['MCubicos']); ?><br/>
 							<strong>Tipo de Carga : </strong><?php echo $rowdata['VehiculoTipoCarga']; ?><br/>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Movilizacion</h2>
 						<p class="text-muted">
 							<strong>Velocidad Maxima : </strong><?php echo Cantidades_decimales_justos($rowdata['LimiteVelocidad']); ?><br/>
 							<strong>N° Maximo Alertas de Velocidad : </strong><?php echo $rowdata['AlertLimiteVelocidad']; ?><br/>
 						</p>
-						
+
 						<?php if(isset($rowdata['idOpciones_6'])&&$rowdata['idOpciones_6']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de acceso a la APP</h2>
 							<p class="text-muted">
@@ -232,8 +232,8 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 							</p>
 						<?php } ?>
 
-						<?php 
-						//se verifica si se transportan personas
+						<?php
+						//Se verifica si se transportan personas
 						if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Personas Transportadas</h2>
 							<div class="row">
@@ -270,9 +270,9 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 							</div>
 							<div class="clearfix"></div>
 						<?php } ?>
-						
-						<?php 
-						//se verifica si se tiene peonetas
+
+						<?php
+						//Se verifica si se tiene peonetas
 						if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Peonetas Asignados</h2>
 							<p class="text-muted">
@@ -296,7 +296,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 								?>
 							</p>
 						<?php } ?>
-						
+
 						<?php //se verifica si se tiene colegios
 						if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Colegios Asignados</h2>
@@ -310,7 +310,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 								</tbody>
 							</table>
 						<?php } ?>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>

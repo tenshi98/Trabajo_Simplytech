@@ -1123,17 +1123,17 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 						<th>Area</th>
 						<th>Servicio</th>
 						<th>Cliente</th>
-						
+
 						<th>Telemetría</th>
 						<th>Instalación</th>
 						<th>Servicio Técnico</th>
-						
+
 						<th>Telemetría</th>
 						<th>Instalación</th>
 						<th>Servicio Técnico</th>
-						
+
 						<th>Costos</th>
-						
+
 						<th>Margen pesos telemetría</th>
 						<th>%</th>
 						<th>Margen pesos Instalación</th>
@@ -1770,7 +1770,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){       $x1  = $f_inicio;       }else{$x1  = '';}
 				if(isset($f_termino)){      $x2  = $f_termino;      }else{$x2  = '';}

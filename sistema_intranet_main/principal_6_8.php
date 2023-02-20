@@ -163,7 +163,7 @@ foreach ($arrTabMenu as $tab) {
 				}
 			</script>
 			 
-			<?php 
+			<?php
 				//Se dibuja el explorador de archivos
 				echo file_explorer(1, 'connector_tutoriales', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
 

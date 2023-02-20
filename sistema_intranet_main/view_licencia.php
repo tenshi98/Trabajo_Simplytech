@@ -64,7 +64,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_licencias', $SIS_joi
 			<h5>Datos de la Licencia</h5>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -90,7 +90,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_licencias', $SIS_joi
 								<div class="clearfix"></div>
 							</div>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos Relacionados</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>

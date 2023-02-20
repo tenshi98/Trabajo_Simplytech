@@ -99,7 +99,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){        $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
 				if(isset($idUsuario)){     $x2  = $idUsuario;     }else{$x2  = $rowdata['idUsuario'];}
@@ -157,7 +157,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){        $x1  = $Nombre;        }else{$x1  = '';}
 				if(isset($idUsuario)){     $x2  = $idUsuario;     }else{$x2  = '';}
@@ -292,7 +292,7 @@ array_push( $arrVideo,$row );
 						<th>Nombre</th>
 						<th>Profesor</th>
 						<th>Horario</th>
-						
+
 						<th>Lunes</th>
 						<th>Martes</th>
 						<th>Miercoles</th>
@@ -300,7 +300,7 @@ array_push( $arrVideo,$row );
 						<th>Viernes</th>
 						<th>Sabado</th>
 						<th>Domingo</th>
-						
+
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>

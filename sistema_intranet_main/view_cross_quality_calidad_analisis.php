@@ -347,7 +347,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">
 		
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
@@ -384,7 +384,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 		</div>
     
 	</div>
-	
+
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table">
@@ -437,7 +437,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>

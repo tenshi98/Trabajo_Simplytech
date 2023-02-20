@@ -118,7 +118,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Programada_fecha)){   $x1  = $Programada_fecha;  }else{$x1  = $rowdata['Programada_fecha'];}
 
@@ -151,7 +151,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Programada_fecha)){   $x1  = $Programada_fecha;  }else{$x1  = '';}
 
@@ -345,7 +345,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idAsignar)){          $x1  = $idAsignar;         }else{$x1  = '';}
 				if(isset($idCurso)){            $x2  = $idCurso;           }else{$x2  = '';}
@@ -520,8 +520,8 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Evaluaciones</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

@@ -176,7 +176,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos" style="padding-top:5px;">
 				
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">

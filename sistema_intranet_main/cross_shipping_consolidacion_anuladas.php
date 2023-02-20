@@ -124,7 +124,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){      $x1  = $Creacion_fecha;    }else{$x1  = '';}
 				if(isset($idCategoria)){         $x2  = $idCategoria;       }else{$x2  = '';}
@@ -159,8 +159,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consolidaciones Anuladas</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

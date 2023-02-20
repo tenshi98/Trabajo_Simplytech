@@ -202,7 +202,7 @@ require_once 'core/Web.Header.Print.php';
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-						
+
 						<?php 
 						//Recorro el total de preguntas
 						for ($i = 1; $i <= $rowdata['Total_Preguntas']; $i++) {

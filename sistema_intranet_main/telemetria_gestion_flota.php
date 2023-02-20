@@ -83,7 +83,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Gestion de Flota en Tiempo Real</h5>
 		</header>
         <div class="table-responsive">
-			
+
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div class="row">
 					<div id="consulta">
@@ -163,7 +163,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				<div class="row">
 					<?php
@@ -175,7 +175,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
 						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-						
+
 						<script>
 							
 							var map;

@@ -277,7 +277,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 				</table>
 				<table id="meta" class="otdata2">
 					<tbody>
-						
+
 						<?php if($rowdata['f_creacion']!='0000-00-00'){?>
 							<tr>
 								<td class="meta-head">Fecha creacion</td>

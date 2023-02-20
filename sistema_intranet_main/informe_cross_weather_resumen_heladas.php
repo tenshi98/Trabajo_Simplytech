@@ -189,7 +189,7 @@ document.getElementById("loading").style.display = "none";
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Resumen Heladas', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Del dia '.Fecha_completa($_GET['fecha']));?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 		<a target="new" href="<?php echo 'informe_cross_weather_resumen_heladas_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
-	
+
 		<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 			<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>
 		<?php }else{ ?>
@@ -419,7 +419,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){ $x1  = $fecha;           }else{$x1  = '';}
 				if(isset($idGrafico)){       $x2  = $idGrafico;       }else{$x2  = '';}

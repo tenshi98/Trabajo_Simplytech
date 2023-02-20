@@ -121,7 +121,7 @@ if($temp!=0) {
 
 	echo '
 	<div class="tab-pane fade" id="Menu_tab_6">
-	
+
 		<div class="table-responsive">
 								
 			<div class="sort-disable">

@@ -217,7 +217,7 @@
 					</strong>
 				</div>
 			</div>
-			
+
 			<div class="row">
 				<div class="col-xs-6">
 					<div class="row">
@@ -250,7 +250,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="col-xs-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">

@@ -96,7 +96,7 @@ alert_post_data(2,1,2, $Alert_Text);
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){   $x1  = $Observacion;   }else{$x1  = '';}
 
@@ -193,7 +193,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){      $x1  = $idCliente;      }else{$x1  = '';}
 				if(isset($idTipo)){         $x2  = $idTipo;         }else{$x2  = '';}

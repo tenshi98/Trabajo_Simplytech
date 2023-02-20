@@ -50,13 +50,13 @@
 			';
 		?>
 	</div>
-	
+
 	<div class="tab-content" style="min-height: 200px !important;">
 		<div id="login" class="tab-pane active">
 			<form class="" method="post"  name="form1" novalidate>
 				<h1 class="login_text1">Iniciar sesión</h1>
 				<p class="text-muted text-center">Ingrese su nombre de usuario y contraseña para acceder</p>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($usuario)){    $x1  = $usuario;   }else{$x1  = '';}
 				if(isset($password)){   $x2  = $password;  }else{$x2  = '';}
@@ -65,11 +65,11 @@
 				$Form_Inputs = new Inputs();
 				$Form_Inputs->input_login_usr('Usuario', 'usuario', $x1);
 				$Form_Inputs->input('password','Contraseña', 'password', $x2, 2);
-				
+
 				$Form_Inputs->input_hidden('fkinput1', '', 1);
 
 				?>
-				
+
 				<input type="submit" name="submit_login" class="btn btn-lg btn-primary btn-block fa-input" value="&#xf007; Iniciar sesión" />
 			</form>
 		</div>
@@ -77,17 +77,17 @@
 			<form class="" method="post"  name="form2" novalidate>
 				<h1 class="login_text1">¿Olvidaste tu contraseña?</h1>
 				<p class="text-muted text-center">Ingresa tu Email para recuperar tu contraseña.Revisa la bandeja de entrada o spam de tu correo.</p>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($email)){    $x1  = $email;   }else{$x1  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs->input_login_mail('mimail@midominio.cl', 'email', $x1);
-				
+
 				$Form_Inputs->input_hidden('fkinput2', '', 1);
 				?>
 				<br>
-				
+
 				<input type="submit" name="submit_pass" class="btn btn-lg btn-danger btn-block fa-input" value="&#xf003; Recuperar contraseña" />
 			</form>
 		</div>

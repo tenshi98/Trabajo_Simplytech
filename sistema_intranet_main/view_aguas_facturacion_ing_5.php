@@ -8,7 +8,7 @@
 					</h2>
 				</div>
 			</div>
-			
+
 			<div class="row invoice-info">
 			
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
@@ -27,7 +27,7 @@
 				</div>
 
 			</div>
-			
+
 			<div class="row invoice-info">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					<p class="well well-sm no-shadow" style="background-color: #fff;text-align: center;" >
@@ -162,7 +162,7 @@
 								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleInteresDeuda']/1.19), 0)?></td>
 							</tr>
 						<?php } ?>
-						
+
 						<?php 
 						//Otros Cargos 1
 						if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos1Valor'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos1Valor']!=0){?>

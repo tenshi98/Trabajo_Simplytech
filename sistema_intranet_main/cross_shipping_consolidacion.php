@@ -116,7 +116,7 @@ if(!empty($_GET['addFile'])){ ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idArchivoTipo)){    $x1  = $idArchivoTipo;  }else{$x1  = '';}
 
@@ -152,7 +152,7 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idEstiba)){           $x1  = $idEstiba;           }else{$x1  = $_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']][$_GET['cloneEstiba']]['idEstiba'];}
 				if(isset($idEstibaUbicacion)){  $x2  = $idEstibaUbicacion;  }else{$x2  = $_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']][$_GET['cloneEstiba']]['idEstibaUbicacion'];}
@@ -201,7 +201,7 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idEstiba)){           $x1  = $idEstiba;           }else{$x1  = $_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']][$_GET['editEstiba']]['idEstiba'];}
 				if(isset($idEstibaUbicacion)){  $x2  = $idEstibaUbicacion;  }else{$x2  = $_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']][$_GET['editEstiba']]['idEstibaUbicacion'];}
@@ -306,7 +306,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($CTNNombreCompañia)){     $x1  = $CTNNombreCompañia;     }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia']=='Sin Datos'){    $x1  = '';}else{$x1  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia'];}
 				if(isset($Creacion_fecha)){        $x2  = $Creacion_fecha;        }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Creacion_fecha']=='0000-00-00'){      $x2  = '';}else{$x2  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Creacion_fecha'];}
@@ -679,7 +679,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($CTNNombreCompañia)){   $x2 = $CTNNombreCompañia;  }else{$x2 = '';}
 				
@@ -717,7 +717,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){      $x1 = $Creacion_fecha;     }else{$x1 = '';}
 				if(isset($CTNNombreCompañia)){   $x2 = $CTNNombreCompañia;  }else{$x2 = '';}
@@ -840,7 +840,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){      $x1  = $Creacion_fecha;    }else{$x1  = '';}
 				if(isset($idCategoria)){         $x2  = $idCategoria;       }else{$x2  = '';}
@@ -927,8 +927,8 @@ if(isset($pasa)&&$pasa!=0){ ?>
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Consolidaciones En espera de Aprobacion</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

@@ -70,7 +70,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Tramo)){      $x1  = $Tramo;         }else{$x1  = $rowdata['Tramo'];}
 				if(isset($UTM_Desde)){  $x2  = $UTM_Desde;     }else{$x2  = Cantidades_decimales_justos($rowdata['UTM_Desde']);}

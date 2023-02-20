@@ -145,7 +145,7 @@ if(!empty($_GET['addDetalle'])){?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){      $x1  = $Observacion;        }else{$x1  = '';}
 
@@ -278,7 +278,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = $row_data['idProducto'];}
 				if(isset($DosisAplicar)){   $x2  = $DosisAplicar;  }else{$x2  = $row_data['DosisAplicar'];}
@@ -361,7 +361,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = '';}
 				if(isset($DosisAplicar)){   $x2  = $DosisAplicar;  }else{$x2  = '';}
@@ -450,7 +450,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  = $row_data['idVehiculo'];}
 				if(isset($idTelemetria)){   $x2  = $idTelemetria;  }else{$x2  = $row_data['idTelemetria'];}
@@ -509,7 +509,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  = '';}
 				if(isset($idTelemetria)){   $x2  = $idTelemetria;  }else{$x2  = '';}
@@ -577,7 +577,7 @@ if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){$z.= " AN
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idZona)){         $x1  = $idZona;        }else{$x1  = $row_data['idZona'];}
 				if(isset($Mojamiento)){     $x2  = $Mojamiento;    }else{$x2  = $row_data['Mojamiento'];}
@@ -665,7 +665,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idZona)){         $x1  = $idZona;        }else{$x1  = '';}
 				if(isset($Mojamiento)){     $x2  = $Mojamiento;    }else{$x2  = $row_data['Mojamiento'];}
@@ -765,7 +765,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idMatSeguridad)){     $x1  = $idMatSeguridad;    }else{$x1  = '';}
 
@@ -812,7 +812,7 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idPrioridad)){          $x0  = $idPrioridad;          }else{$x0  = $row_data['idPrioridad'];}
 				if(isset($idPredio)){             $x1  = $idPredio;             }else{$x1  = $row_data['idPredio'];}
@@ -1360,7 +1360,7 @@ foreach ($arrProductos as $prod) {
 		<div class="clearfix"></div>
 			
 	</div>
-	
+
 	<div id="page-wrap">
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>

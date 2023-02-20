@@ -106,7 +106,7 @@ $html = '
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">';
 		
 		//se verifica el tipo de movimiento
@@ -237,7 +237,7 @@ $html = '
 
 		</div>
 	</div>
-	
+
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>

@@ -599,7 +599,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<h3 style="text-align: center;"><?php echo $icon_voltaje.' Voltaje';?></h3>
-						
+
 						<div  class="box box-blue box-solid tooltip">
 							<div class="box-header with-border">
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-center">
@@ -635,7 +635,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 								<div class="clearfix"></div>
 							</div>
 						</div>
-						
+
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo $link_voltaje; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>

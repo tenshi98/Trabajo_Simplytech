@@ -106,7 +106,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="uso">
 				<div class="wmd-panel">
 

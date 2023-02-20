@@ -174,7 +174,7 @@ foreach ($arrTabMenu as $tab) {
 					y eficaces. Te apoyamos para que seas más eficiente en los procesos de medición.</p>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fcenter">
 				
 				<a href="<?php if($Tab_2!=0){echo 'principal_6_2.php';} ?>">
@@ -281,7 +281,7 @@ foreach ($arrTabMenu as $tab) {
 				
 				
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fcenter clearfix">
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<br/>
@@ -291,7 +291,7 @@ foreach ($arrTabMenu as $tab) {
 					</p>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fcenter clearfix">
 				<?php
 				/******************************************************/

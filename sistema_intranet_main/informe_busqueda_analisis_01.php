@@ -235,7 +235,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($n_muestra)){        $x1  = $n_muestra;        }else{$x1  = '';}
 				if(isset($idMaquina)){        $x2  = $idMaquina;        }else{$x2  = '';}

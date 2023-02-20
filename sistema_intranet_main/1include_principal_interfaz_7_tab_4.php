@@ -27,7 +27,7 @@
 			<div class="body">
 				<div class="row">
 					<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-						
+
 						<h5 style="color: #666;font-weight: 600 !important;">Tareas
 							<small class="pull-right fw600 text-primary"></small>
 						</h5>
@@ -133,7 +133,7 @@
 									?>
 								</div>
 							<?php } ?>
-						
+
 						</div>
 					</div>
 				</div>

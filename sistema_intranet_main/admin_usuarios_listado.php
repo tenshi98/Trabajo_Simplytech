@@ -99,7 +99,7 @@ $arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -118,7 +118,7 @@ $arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join
 							<strong>Estado : </strong><?php echo $rowdata['estado']; ?><br/>
 							<strong>Ultimo Acceso : </strong><?php echo $rowdata['Ultimo_acceso']; ?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Personales</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -130,7 +130,7 @@ $arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join
 							<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
 							<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistemas Asignados</h2>
 						<p class="text-muted">
 							<?php foreach($arrSistemas as $sis) { ?>
@@ -245,7 +245,7 @@ foreach ($arrSistemas as $sis) {
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($usuario)){        $x1  = $usuario;        }else{$x1  = '';}
 				if(isset($idTipoUsuario)){  $x3  = $idTipoUsuario;  }else{$x3  = '';}
@@ -291,8 +291,8 @@ foreach ($arrSistemas as $sis) {
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Usuarios</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

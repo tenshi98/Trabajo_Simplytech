@@ -173,26 +173,26 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<button type="button" id="giro_stop"  class="btn btn-default"><i class="fa fa-stop-circle" aria-hidden="true"></i></button>
 							<button type="button" id="giro_right" class="btn btn-default"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 						</div>
-						
+
 						<div class="carro btn-group btn-group-xs" role="group" aria-label="...">
 							<button type="button" id="carro_left"  class="btn btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
 							<button type="button" id="carro_stop"  class="btn btn-default"><i class="fa fa-stop-circle" aria-hidden="true"></i></button>
 							<button type="button" id="carro_right" class="btn btn-default"><i class="fa fa-arrow-right" aria-hidden="true"></i></button>
 						</div>
-						
+
 						<div class="elevacion btn-group-vertical btn-group-xs" role="group" aria-label="...">
 							<button type="button" id="elevacion_up"   class="btn btn-default"><i class="fa fa-arrow-up" aria-hidden="true"></i></button>
 							<button type="button" id="elevacion_down" class="btn btn-default"><i class="fa fa-arrow-down" aria-hidden="true"></i></button>
 						</div>
-						
+
 						<div class="carga btn-group-vertical btn-group-xs" role="group" aria-label="...">
 							<button type="button" id="carga"   class="btn btn-default"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></button>
 						</div>
-						
+
 						<div class="carga_maxima btn-group-vertical btn-group-xs" role="group" aria-label="...">
 							<button type="button" id="carga_maxima"   class="btn btn-default"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></button>
 						</div>
-						
+
 						<div class="partida btn-group-vertical btn-group-xs" role="group" aria-label="...">
 							<button type="button" id="partida"   class="btn btn-default"><i class="fa fa-toggle-on" aria-hidden="true"></i></button>
 							<button type="button" id="parada"   class="btn btn-default"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></button>
@@ -495,7 +495,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTelemetria)){    $x1  = $idTelemetria;  }else{$x1  = '';}
 				if(isset($fecha_desde)){     $x2  = $fecha_desde;   }else{$x2  = '';}

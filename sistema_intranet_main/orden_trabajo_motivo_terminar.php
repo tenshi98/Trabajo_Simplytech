@@ -84,7 +84,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
 
@@ -237,7 +237,7 @@ array_push( $arrOTS,$row );
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idOT)){                     $x0  = $idOT;                     }else{$x0  = '';}
 				if(isset($idUbicacion)){              $x1  = $idUbicacion;              }else{$x1  = '';}

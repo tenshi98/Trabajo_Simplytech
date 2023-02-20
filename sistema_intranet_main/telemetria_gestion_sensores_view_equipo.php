@@ -73,7 +73,7 @@ foreach ($arrUnimed as $sen) {
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -90,7 +90,7 @@ foreach ($arrUnimed as $sen) {
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
 							<strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/>
 						</p>
-						
+
 						<h2 class="text-primary">Datos de Configuracion</h2>
 						<p class="text-muted">
 							<?php if($rowdata['id_Sensores']==1){ ?>
@@ -145,7 +145,7 @@ foreach ($arrUnimed as $sen) {
 						$rowMed = mysqli_fetch_assoc ($resultado);
 						
 						?>
-						
+
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
@@ -185,7 +185,7 @@ foreach ($arrUnimed as $sen) {
 										<?php } ?>
 									</tbody>
 								</table>
-						
+
 						</div>
 					</div>
 				</div>
@@ -243,7 +243,7 @@ foreach ($arrUnimed as $sen) {
 						}
 						
 						?>
-						
+
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
@@ -318,7 +318,7 @@ foreach ($arrUnimed as $sen) {
 						array_push( $arrFlinea,$row );
 						}
 						?>
-						
+
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">

@@ -322,7 +322,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idBodegaOrigen)){       $x1  = $idBodegaOrigen;        }else{$x1  = '';}
 				if(isset($idBodegaDestino)){      $x2  = $idBodegaDestino;       }else{$x2  = '';}

@@ -208,7 +208,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="tab1">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -225,7 +225,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="tab2">
 				<div class="wmd-panel">
 					<div class="table-responsive">

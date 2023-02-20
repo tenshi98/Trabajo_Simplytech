@@ -143,7 +143,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idSistemaFil)){   $x1 = $idSistemaFil;   }else{$x1 = '';}
 				if(isset($idUsuario)){      $x2 = $idUsuario;      }else{$x2 = '';}

@@ -93,7 +93,7 @@ require_once 'core/Web.Header.Main.php';
 				
 				?>
 			</div>
-			
+
 			<div class="tab-pane fade" id="barra">
 				<?php 
 				/***************************************************************/
@@ -135,7 +135,7 @@ require_once 'core/Web.Header.Main.php';
 				
 				?>
 			</div>
-			
+
 			<div class="tab-pane fade" id="barraLat">
 				<?php
 				/***************************************************************/
@@ -185,7 +185,7 @@ require_once 'core/Web.Header.Main.php';
 				
 				?>
 			</div>
-			
+
 			<div class="tab-pane fade" id="embudo">
 				<?php
 				$Graphics_xData = 'var xData = [225, 220, 100, 88, 78, 65, 56, 46, 43, 25, 13, 7];';

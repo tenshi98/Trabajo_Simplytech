@@ -93,7 +93,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idEtapa)){      $x1  = $idEtapa;        }else{$x1  = $rowdata['idEtapa'];}
 				if(isset($Observacion)){  $x2  = $Observacion;    }else{$x2  = $rowdata['Observacion'];}
@@ -131,7 +131,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idEtapa)){      $x1  = $idEtapa;        }else{$x1  = '';}
 				if(isset($Observacion)){  $x2  = $Observacion;    }else{$x2  = '';}

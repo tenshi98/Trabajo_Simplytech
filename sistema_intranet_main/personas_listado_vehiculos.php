@@ -119,7 +119,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Marca)){          $x1 = $Marca;         }else{$x1 = '';}
 				if(isset($Modelo)){    $x2 = $Modelo;   }else{$x2 = '';}

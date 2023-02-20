@@ -129,7 +129,7 @@ if($arrProducto!=false && !empty($arrProducto) && $arrProducto!=''){?>
 				
 					<div class="wmd-panel">
 						<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-						
+
 						<div class="table-responsive">		
 							<script>
 								google.charts.load('current', {'packages':['corechart']});
@@ -191,7 +191,7 @@ if($arrProducto!=false && !empty($arrProducto) && $arrProducto!=''){?>
 							<div id="curve_chart1" style="height: 500px"></div>
 												
 						</div>
-						
+
 						<div class="table-responsive">
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 								<thead>

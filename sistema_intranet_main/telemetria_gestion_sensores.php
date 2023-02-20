@@ -92,7 +92,7 @@ foreach ($arrUnimed as $sen) {
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Gestion de Sensores en Tiempo Real</h5>
 		</header>
         <div class="table-responsive">
-			
+
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div class="row">
 					<div id="consulta">
@@ -164,7 +164,7 @@ foreach ($arrUnimed as $sen) {
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				<div class="row">	
 					
@@ -176,7 +176,7 @@ foreach ($arrUnimed as $sen) {
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
 						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-						
+
 						<script type="text/javascript">
 							
 							var marker;	

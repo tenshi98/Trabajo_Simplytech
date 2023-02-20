@@ -292,7 +292,7 @@ if(!empty($_GET['addFile'])){ ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idSistema)){   $x1  = $idSistema;  }else{$x1  = '';}
 
@@ -1440,7 +1440,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
 				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = $rowdata['Creacion_fecha'];}

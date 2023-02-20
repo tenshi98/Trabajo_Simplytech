@@ -91,7 +91,7 @@ $w = "telemetria_listado.idSistema=".$rowdata['idSistema']." AND telemetria_list
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTelemetria)){     $x1  = $idTelemetria;    }else{$x1  = '';}
 

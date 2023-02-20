@@ -352,7 +352,7 @@ $html .= '
 				<br/>
 				<table style="text-align: left; width: 100%; margin-top:20px;" cellpadding="0" cellspacing="0">
 					<tbody>
-						
+
 						<tr style="background-color: #f1f1f1;">
 							<td colspan="8">Archivos Adjuntos</td>
 						</tr>';		  

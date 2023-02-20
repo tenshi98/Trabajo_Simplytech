@@ -440,7 +440,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTelemetria)){  $x1  = $idTelemetria;  }else{$x1  = '';}
 				if(isset($F_inicio)){      $x2  = $F_inicio;      }else{$x2  = '';}

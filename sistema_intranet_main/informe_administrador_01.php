@@ -204,7 +204,7 @@ array_push( $arrCarga,$row );
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){       $x1  = $Fecha;       }else{$x1  = '';}
 				if(isset($usuario)){     $x2  = $usuario;     }else{$x2  = '';}

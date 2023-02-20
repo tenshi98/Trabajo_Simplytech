@@ -150,7 +150,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -178,7 +178,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 							<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
 						</p>
-						
+
 						<h2 class="text-primary">Datos de Configuracion</h2>
 						<p class="text-muted">
 							<?php if($rowdata['id_Sensores']==1){ ?>
@@ -287,7 +287,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="error999">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -322,7 +322,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="gps0">
 				<div class="wmd-panel">
 					<div class="table-responsive">

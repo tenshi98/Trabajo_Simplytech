@@ -142,7 +142,7 @@ if($in_eq_fueralinea!=0){
 			<h5>Ver Datos de <?php echo $rowTel['Nombre']; ?></h5>
 		</header>
 		<div class="tab-content">
-			
+
 			<div class="">
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><div class="float_table" id="chart_gauge_2" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 1, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><div class="float_table" id="chart_gauge_3" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 2, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
@@ -262,7 +262,7 @@ if($in_eq_fueralinea!=0){
 			
 			echo $GPS;		
 			?>
-			
+
 			<div class="">
 				<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 				<div id="consulta"></div>

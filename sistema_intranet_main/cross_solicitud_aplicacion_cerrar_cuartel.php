@@ -58,7 +58,7 @@ if(!empty($_GET['addDetalle'])){?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){      $x1  = $Observacion;        }else{$x1  = '';}
 
@@ -277,7 +277,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 		<div class="clearfix"></div>
 			
 	</div>
-	
+
 	<div id="page-wrap">
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>

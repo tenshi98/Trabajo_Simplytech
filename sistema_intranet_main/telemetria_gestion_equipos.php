@@ -96,7 +96,7 @@ foreach ($arrGrupos as $sen) {
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Gestion de Equipos en Tiempo Real</h5>
 		</header>
         <div class="table-responsive">
-			
+
 			<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 				<div class="row">
 					<div id="consulta">
@@ -256,7 +256,7 @@ foreach ($arrGrupos as $sen) {
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 				<div class="row">	
 					<?php if ($rowDatos['Direccion_img']=='') { ?>
@@ -338,7 +338,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $original; ?>" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTelemetria)){     $x1  = $idTelemetria;      }else{$x1  = '';}
 

@@ -81,7 +81,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join,
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idUsuario)){     $x1  = $idUsuario;   }else{$x1  = $rowdata['idUsuario'];}
 
@@ -117,7 +117,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join,
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idUsuario)){     $x1  = $idUsuario;   }else{$x1  = '';}
 

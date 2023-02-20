@@ -308,7 +308,7 @@ array_push( $arrInsumos2,$row );
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
@@ -379,7 +379,7 @@ array_push( $arrInsumos2,$row );
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
@@ -449,7 +449,7 @@ array_push( $arrInsumos2,$row );
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
@@ -523,7 +523,7 @@ array_push( $arrInsumos2,$row );
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
@@ -649,7 +649,7 @@ array_push( $arrInsumos2,$row );
 			</div>
 		</div>
 	</div>
-	
+
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
@@ -748,7 +748,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;    }else{$x1  = '';}
 				if(isset($f_termino)){     $x2  = $f_termino;   }else{$x2  = '';}

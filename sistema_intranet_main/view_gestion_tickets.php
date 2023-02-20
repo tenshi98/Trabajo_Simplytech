@@ -75,7 +75,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">
 		
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">

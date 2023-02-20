@@ -725,7 +725,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 			<h5>Cumplimiento del Contrato</h5>
 		</header>
 		<div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<table id="dataTable" class="table table-bordered table-condensed dataTable">
@@ -817,7 +817,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 			<h5>Flujo Mensual Cumplimiento del Contrato</h5>
 		</header>
 		<div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 						
@@ -1117,7 +1117,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 			<h5>Gasto Materiales</h5>
 		</header>
 		<div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 						
@@ -1284,7 +1284,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 			<h5>Pagos del Cliente</h5>
 		</header>
 		<div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 						
@@ -1399,7 +1399,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){       $x0  = $idCliente;     }else{$x0  = '';}
 				if(isset($idLicitacion)){    $x1  = $idLicitacion;  }else{$x1  = '';}

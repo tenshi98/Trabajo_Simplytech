@@ -82,7 +82,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = $rowdata['Fecha'];}
 				if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = $rowdata['Hora'];}
@@ -125,7 +125,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = '';}
 				if(isset($Hora)){       $x2  = $Hora;       }else{$x2  = '';}

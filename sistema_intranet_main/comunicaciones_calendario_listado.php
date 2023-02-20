@@ -79,7 +79,7 @@ $rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $S
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){      $x1 = $Fecha;       }else{$x1 = $rowdata['Fecha'];}
 				if(isset($Titulo)){     $x2 = $Titulo;      }else{$x2 = $rowdata['Titulo'];}
@@ -133,7 +133,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 			<h5>Evento</h5>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					
@@ -147,7 +147,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 							<strong>Titulo: </strong><?php echo $row_data['Titulo'];?><br/>
 							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Fecha']);?>
 						</p>
-						
+
 						<h2 class="text-primary">Mensaje</h2>
 						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Cuerpo'];?></p>
 					
@@ -196,7 +196,7 @@ if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){       $x1 = $Fecha;       }else{$x1 = '';}
 				if(isset($Titulo)){      $x2 = $Titulo;      }else{$x2 = '';}

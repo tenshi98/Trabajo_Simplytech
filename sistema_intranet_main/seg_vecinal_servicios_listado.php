@@ -97,7 +97,7 @@ echo '</div>';
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Modificar Posicion de <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div class="table-responsive">
-			
+
 			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				<div class="row">
 					<?php
@@ -122,7 +122,7 @@ echo '</div>';
 						
 						?>
 						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=places"></script>
-						
+
 						<input id="pac-input" class="pac-controls" type="text" placeholder="Buscar Direccion">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						
@@ -203,13 +203,13 @@ echo '</div>';
 					<?php } ?>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
-						<?php 
-						//se dibujan los inputs
+						<?php
+						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_input_icon('Direccion', 'Direccion_fake', $rowdata['Direccion'], 1,'fa fa-map');
 						$Form_Inputs->form_input_disabled('Latitud', 'Latitud_fake', $rowdata['GeoLatitud']);
@@ -450,7 +450,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_servicios_listado',
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = '';}
 				if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = '';}
@@ -487,8 +487,8 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_servicios_listado',
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Servicios</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

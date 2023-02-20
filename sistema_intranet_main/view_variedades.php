@@ -62,7 +62,7 @@ $rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $
 			<h5>Datos de la variedad <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -74,7 +74,7 @@ $rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $
 						}?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Producto</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -102,7 +102,7 @@ $rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $
 								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Hoja de Seguridad</a>';
 							}
 							?>
-						
+
 						</p>
 						
 						

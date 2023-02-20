@@ -190,7 +190,7 @@ if(!empty($_GET['clone_idMaquina'])){
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){           $x1  = $Nombre;           }else{$x1  = '';}
 
@@ -225,7 +225,7 @@ if(!empty($_GET['clone_idMaquina'])){
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){           $x1  = $Nombre;           }else{$x1  = '';}
 
@@ -287,8 +287,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
-				//se dibujan los inputs
+				<?php
+				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'PuntoNombre', $rowdata['Nombre'], 1);
 				$Form_Inputs->form_select_depend1('Tipo', 'PuntoidTipo',  $rowdata['Tipo'],  1, 'idTipo', 'Nombre', 'core_analisis_tipos', 0,  0,
@@ -590,7 +590,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;       }else{$x1  = $rowdata['Nombre'];}
 				if(isset($cantPuntos)){  $x2  = $cantPuntos;   }else{$x2  = $rowdata['cantPuntos'];}
@@ -630,7 +630,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;       }else{$x1  = '';}
 				if(isset($cantPuntos)){  $x2  = $cantPuntos;   }else{$x2  = '';}
@@ -808,7 +808,7 @@ $w = 'idUtilizable=1';
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idLicitacion)){     $x0  = $idLicitacion;     }else{$x0  = '';}
 				if(isset($idLevel_1)){        $x1  = $idLevel_1;        }else{$x1  = '';}
@@ -2412,7 +2412,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idConfig_1)){  $x1  = $idConfig_1;  }else{$x1  = $rowdata['idConfig_1'];}
 				if(isset($idConfig_2)){  $x2  = $idConfig_2;  }else{$x2  = $rowdata['idConfig_2'];}
@@ -2476,7 +2476,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Codigo)){           $x2  = $Codigo;          }else{$x2  = $rowdata['Codigo'];}
 				if(isset($Nombre)){           $x3  = $Nombre;          }else{$x3  = $rowdata['Nombre'];}
@@ -2532,7 +2532,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Codigo)){     $x1  = $Codigo;      }else{$x1  = '';}
 				if(isset($Nombre)){     $x2  = $Nombre;      }else{$x2  = '';}

@@ -344,7 +344,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="#alertas" data-toggle="tab"><i class="fa fa-bullhorn"  aria-hidden="true"></i> Alertas</a></li>
 						<li class=""><a href="#flinea" data-toggle="tab"><i class="fa fa-power-off" aria-hidden="true"></i> Fuera de Linea</a></li>
-						
+
 						<li class=""><a href="#carga" data-toggle="tab"><i class="fa fa-money" aria-hidden="true"></i> Cargas</a></li>
 						<li class=""><a href="#mantencion" data-toggle="tab"><i class="fa fa-wrench" aria-hidden="true"></i> Mantenciones</a></li>
 						
@@ -353,7 +353,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -380,7 +380,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 							<?php if(isset($rowdata['Estado'])&&$rowdata['Estado']!=''){?>                              <strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/><?php } ?>
 							
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Configuracion</h2>
 						<p class="text-muted">
 							<strong class="color-red-dark">Basicos</strong><br/>
@@ -428,7 +428,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 								<?php if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){?>   <strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/><?php } ?>
 							<?php } ?>
 						</p>
-						
+
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos GPS</h2>
 							<p class="text-muted">
@@ -545,7 +545,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 									<?php } ?>
 								</tbody>
 							</table>
-						
+
 						</div>
 					</div>
 				</div>
@@ -618,7 +618,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<div class="tab-pane fade" id="alertas">
 				<div class="wmd-panel">
 					<div class="table-responsive">

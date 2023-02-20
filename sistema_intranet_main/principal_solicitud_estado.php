@@ -173,7 +173,7 @@ $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicaci
 								</td>
 							</tr>
 						<?php } ?>
-						
+
 						<tr class="odd">
 							<td><strong>Totales</strong></td>
 							<td></td>
@@ -222,7 +222,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idPredio)){              $x1  = $idPredio;               }else{$x1  = '';}
 				if(isset($idZona)){                $x2  = $idZona;                 }else{$x2  = '';}

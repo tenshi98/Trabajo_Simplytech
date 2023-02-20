@@ -113,11 +113,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
 					
-						<?php 
-						//se dibujan los inputs
+						<?php
+						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','FichaTecnica', 1, '"pdf"');
-						
+
 						$Form_Inputs->form_input_hidden('idBodega', $_GET['id'], 2);
 						?>
 

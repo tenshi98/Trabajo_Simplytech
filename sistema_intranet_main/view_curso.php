@@ -95,7 +95,7 @@ $arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia
 			<h5>Datos del Grupo</h5>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -113,7 +113,7 @@ $arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia
 							<strong>Sistema Relacionado : </strong><?php echo $rowdata['CursoSistema']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['CursoEstado']; ?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Asignaturas  Relacionadas</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
@@ -140,7 +140,7 @@ $arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia
 								<?php } ?>
 							</tbody>
 						</table>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> VideoConferencias  Relacionadas</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<thead>

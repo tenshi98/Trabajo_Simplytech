@@ -212,7 +212,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 									
 							</td>
 						</tr>
-						
+
 						<tr>
 							<td></td>
 							<td style="text-align: right;">Cotizacion Nº '.n_doc($_GET['view'], 5).'</td>

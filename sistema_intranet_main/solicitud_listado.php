@@ -657,7 +657,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = $_SESSION['solicitud_basicos']['Creacion_fecha'];}
 				if(isset($Observaciones)){    $x2  = $Observaciones;  }else{$x2  = $_SESSION['solicitud_basicos']['Observaciones'];}
@@ -923,7 +923,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = '';}
 				if(isset($Observaciones)){    $x2  = $Observaciones;  }else{$x2  = '';}
@@ -1034,7 +1034,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'solicitud_listado', $SIS_
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = '';}
 				if(isset($Observaciones)){    $x2  = $Observaciones;  }else{$x2  = '';}
@@ -1066,8 +1066,8 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'solicitud_listado', $SIS_
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Solicitudes</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

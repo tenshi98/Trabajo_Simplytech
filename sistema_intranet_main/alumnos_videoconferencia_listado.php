@@ -115,7 +115,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCurso)){     $x1  = $idCurso;     }else{$x1  = '';}
 				if(isset($idUsuario)){   $x2  = $idUsuario;   }else{$x2  = '';}

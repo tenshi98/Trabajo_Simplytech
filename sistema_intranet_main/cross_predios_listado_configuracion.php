@@ -184,7 +184,7 @@ array_push( $arrPuntos,$row );
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
-			
+
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="row">
 					<?php
@@ -310,17 +310,17 @@ array_push( $arrPuntos,$row );
 					<?php } ?>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
-						<?php 
-						//se dibujan los inputs
+						<?php
+						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowUbicacion['Latitud']);
 						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowUbicacion['Longitud']);
-						
+
 						$Form_Inputs->form_input_hidden('Latitud', $rowUbicacion['Latitud'], 2);
 						$Form_Inputs->form_input_hidden('Longitud', $rowUbicacion['Longitud'], 2);
 						$Form_Inputs->form_input_hidden('idPredio', $_GET['id'], 2);
@@ -465,7 +465,7 @@ array_push( $arrZonas,$row );
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Puntos del Cuartel <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
-			
+
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="row">
 					<?php
@@ -642,17 +642,17 @@ array_push( $arrZonas,$row );
 					<?php } ?>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
-						<?php 
-						//se dibujan los inputs
+						<?php
+						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', '');
 						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', '');
-						
+
 						$Form_Inputs->form_input_hidden('Latitud', 0, 2);
 						$Form_Inputs->form_input_hidden('Longitud', 0, 2);
 						$Form_Inputs->form_input_hidden('idPredio', $_GET['id'], 2);

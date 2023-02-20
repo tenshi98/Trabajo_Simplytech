@@ -76,7 +76,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'alumnos_cursos_documentacion
 			<h5>Datos del Grupo</h5>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -94,7 +94,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'alumnos_cursos_documentacion
 							<strong>Sistema Relacionado : </strong><?php echo $rowdata['CursoSistema']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['CursoEstado']; ?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Elearnings  Relacionados</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>

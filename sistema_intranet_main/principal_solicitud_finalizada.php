@@ -323,7 +323,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		</div>
 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			
+
 			<div class="box noborderbox">
 				
 				<div id="loading"></div>
@@ -362,12 +362,12 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 				</header>
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane fade in active" id="resumen">
-						
+
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>% Mojamiento</strong></h5>          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float_table" id="chart_mojamiento" style="height: 200px;"></div></div>
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Dispersión de Flujos</strong></h5>  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float_table" id="chart_gauge" style="height: 200px;"></div></div>
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Velocidad Promedio</strong></h5>    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float_table" id="chart_velocidades" style="height: 200px;"></div></div>			
 						<div class="clearfix"></div>
-						
+
 						<?php //<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Porcentaje Plantas Aplicadas</strong></h5>     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_plantas_aplicadas" style="height: 200px;"></div></div> ?>
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Litros Programados vs Aplicados</strong></h5>  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_litros_aplicados" style="height: 200px;"></div></div>			
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Caudales Promedios</strong></h5>               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_caudales" style="height: 200px;"></div></div>
@@ -616,7 +616,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							}
 						</script>';
 						?>
-						
+
 						<div class="">
 							<div class="col-xs-12" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 								<?php
@@ -1277,8 +1277,8 @@ if($ndata_1==0) {
 				</table>
 			</div>
 			<div class="pagrow">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</div>
@@ -1304,7 +1304,7 @@ if($ndata_1==0) {
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){             $x1  = $NSolicitud;             }else{$x1  = '';}
 				/*if(isset($idPredio)){               $x2  = $idPredio;               }else{$x2  = '';}

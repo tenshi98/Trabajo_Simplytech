@@ -121,7 +121,7 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){         $x1  = $idTrabajador;        }else{$x1  = '';}
 				if(isset($f_creacion_inicio)){    $x2  = $f_creacion_inicio;   }else{$x2  = '';}

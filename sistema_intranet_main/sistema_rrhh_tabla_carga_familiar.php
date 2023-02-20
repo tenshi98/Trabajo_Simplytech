@@ -70,7 +70,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Tramo)){         $x1  = $Tramo;           }else{$x1  = $rowdata['Tramo'];}
 				if(isset($Valor_Desde)){   $x2  = $Valor_Desde;     }else{$x2  = $rowdata['Valor_Desde'];}

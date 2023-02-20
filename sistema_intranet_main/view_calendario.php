@@ -141,7 +141,7 @@ function arrayToUL(array $array, $lv, $nmax){
 			<h5>Ver Datos de Centro de Costo</h5>
 		</header>
 		<div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<table id="dataTable" class="table table-bordered table-condensed dataTable">

@@ -22,7 +22,7 @@ echo '<div class="wrapper">';
 					<div class="logo"></div>
 				</div>
 			</div>
-			
+
 			<div class="cover_avatar">
 				<div class="avatar">';
 					if ($_SESSION['usuario']['basic_data']['Direccion_img']=='') {
@@ -56,7 +56,7 @@ echo '<div class="wrapper">';
 				<div class="car5"></div>
 				<div class="car6"></div>
 			</div>
-			
+
 			<div class="cover_avatar">
 				<div class="avatar">';
 					if ($_SESSION['usuario']['basic_data']['Direccion_img']=='') {
@@ -68,7 +68,7 @@ echo '<div class="wrapper">';
 				</div>
 				<div class="name"><a href="#">'.$_SESSION['usuario']['basic_data']['Nombre'].'</a></div>
 			</div>
-	
+
 		</div>';
 	}
 		

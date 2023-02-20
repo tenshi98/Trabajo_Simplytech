@@ -144,7 +144,7 @@ document.getElementById("loading").style.display = "none";
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Informe Ejecutivo', $_SESSION['usuario']['basic_data']['RazonSocial'], 'De '.Fecha_completa($_GET['fecha_desde']).' a '.Fecha_completa($_GET['fecha_hasta']));?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 		<a target="new" href="<?php echo 'informe_cross_weather_ejecutivo_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
-	
+
 		<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 			<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>
 		<?php }else{ ?>
@@ -326,14 +326,14 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 
 					<form method="post" id="make_pdf" action="informe_cross_weather_ejecutivo_to_pdf.php">
 						<input type="hidden" name="img_adj" id="img_adj" />
-						
+
 						<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
 						<input type="hidden" name="fecha_desde"   id="fecha_desde"  value="<?php echo $_GET['fecha_desde']; ?>" />
 						<input type="hidden" name="fecha_hasta"   id="fecha_hasta"  value="<?php echo $_GET['fecha_hasta']; ?>" />
 						<?php if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){?>
 							<input type="hidden" name="idTelemetria"   id="idTelemetria"  value="<?php echo $_GET['idTelemetria']; ?>" />
 						<?php }?>
-						
+
 						<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
 					
 					</form>
@@ -411,7 +411,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($fecha_desde)){    $x1  = $fecha_desde;    }else{$x1  = '';}
 				if(isset($fecha_hasta)){    $x2  = $fecha_hasta;    }else{$x2  = '';}

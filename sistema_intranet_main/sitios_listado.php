@@ -230,14 +230,14 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 						<?php if(isset($rowdata['Config_MenuOtros'])&&$rowdata['Config_MenuOtros']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_menu_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list" aria-hidden="true"></i> Menu Otros</a></li><?php } ?>
 						<?php if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==1){ ?>    <li class=""><a href="<?php echo 'sitios_listado_carousel.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Carousel</a></li><?php } ?>
 						<?php if(isset($rowdata['Config_Links_Rel'])&&$rowdata['Config_Links_Rel']==1){ ?>  <li class=""><a href="<?php echo 'sitios_listado_links.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-link" aria-hidden="true"></i> Links Relacionados</a></li><?php } ?>
-						
+
 						<li class=""><a href="<?php echo 'sitios_listado_body.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Body</a></li>
 					</ul>
                 </li>
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -246,20 +246,20 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 						<?php if (isset($rowdata['Config_Logo_Archivo'])&&$rowdata['Config_Logo_Archivo']!='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO.'/'.$rowdata['Config_Root_Folder'].'/upload/'.$rowdata['Config_Logo_Archivo'] ?>">
 						<?php } ?>
-						
+
 						<p class="text-muted">
 							<strong>Estado : </strong><label class="label <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $rowdata['Estado']; ?></label><br/>
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
 							<strong>Dominio : </strong><?php echo $rowdata['Domain']; ?><br/>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Whatsapp</h2>
 						<p class="text-muted">
 							<strong>Titulo : </strong><?php echo $rowdata['Whatsapp_tittle']; ?><br/>
 							<strong>Numero Whatsapp 1 : </strong><?php echo $rowdata['Whatsapp_number_1']; ?><br/>
 							<strong>Numero Whatsapp 2 : </strong><?php echo $rowdata['Whatsapp_number_2']; ?><br/>
 						</p>
-						
+
 						<?php if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==2){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Header</h2>
 							<p class="text-muted">
@@ -269,7 +269,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 								<strong>Link URL : </strong><?php echo $rowdata['Header_LinkURL']; ?><br/>
 							</p>
 						<?php } ?>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Contacto</h2>
 						<p class="text-muted">
 							<strong>Contacto - Titulo : </strong><?php echo $rowdata['Contact_Tittle']; ?><br/>
@@ -284,7 +284,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 							<strong>Receptor - Email : </strong><?php echo $rowdata['Contact_Recep_mail']; ?><br/>
 							<strong>Receptor - Nombre : </strong><?php echo $rowdata['Contact_Recep_name']; ?><br/>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Social</h2>
 						<p class="text-muted">
 							<strong>Titulo : </strong><?php echo $rowdata['Social_Tittle']; ?><br/>
@@ -294,7 +294,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 							<strong>Googleplus : </strong><?php echo $rowdata['Social_Googleplus']; ?><br/>
 							<strong>Linkedin : </strong><?php echo $rowdata['Social_Linkedin']; ?><br/>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Nosotros</h2>
 						<p class="text-muted">
 							<strong>Titulo : </strong><?php echo $rowdata['Nosotros_Titulo']; ?><br/>
@@ -302,7 +302,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 							<strong>Texto : </strong><?php echo $rowdata['Nosotros_Texto']; ?><br/>
 							<strong>Link Video : </strong><?php echo $rowdata['Nosotros_Link']; ?><br/>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
 						<p class="text-muted">
 							<strong>Uso Menu : </strong><?php echo $rowdata['Menu']; ?><br/>
@@ -325,7 +325,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 					</div>
 					
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						
+
 						<?php if(isset($rowdata['Config_Menu'])&&$rowdata['Config_Menu']==1){ ?>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<h2 class="text-primary">Menu</h2>
@@ -355,7 +355,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 								</table>
 							</div>
 						<?php } ?>
-						
+
 						<?php if(isset($rowdata['Config_MenuOtros'])&&$rowdata['Config_MenuOtros']==1){ ?>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<h2 class="text-primary">Menu Desplegable</h2>
@@ -385,7 +385,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 								</table>
 							</div>
 						<?php } ?>
-						
+
 						<?php if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==1){ ?>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<h2 class="text-primary">Carousel</h2>
@@ -470,7 +470,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){        $x1 = $Nombre;       }else{$x1 = '';}
 
@@ -570,7 +570,7 @@ $arrSitio = db_select_array (false, $SIS_query, 'sitios_listado', $SIS_join, $SI
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = '';}
 
@@ -598,8 +598,8 @@ $arrSitio = db_select_array (false, $SIS_query, 'sitios_listado', $SIS_join, $SI
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Sitios</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

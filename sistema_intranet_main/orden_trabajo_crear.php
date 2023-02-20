@@ -158,7 +158,7 @@ if(!empty($_GET['clone'])){  ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_programacion)){    $x1  = $f_programacion;   }else{$x1  = '';}
 
@@ -221,7 +221,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         		
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idSubTipo)){            $x1 = $idSubTipo;              }else{$x1 = $_SESSION['ot_trabajos'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['idSubTipo'];}
 				if(isset($idProducto)){           $x2 = $idProducto;             }else{$x2 = $_SESSION['ot_trabajos'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['idProducto'];}
@@ -501,7 +501,7 @@ $z="idMaquina=".$_SESSION['ot_basicos']['idMaquina'];
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idLevel_1)){        $x1  = $idLevel_1;        }else{$x1  = '';}
 				if(isset($idLevel_2)){        $x2  = $idLevel_2;        }else{$x2  = '';}
@@ -613,7 +613,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
 				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = '';}
@@ -725,7 +725,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
 				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = '';}
@@ -812,7 +812,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
 
@@ -849,7 +849,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x0 = $idCliente;        }else{$x0 = $_SESSION['ot_basicos']['idCliente'];}
 				if(isset($idMaquina)){        $x1 = $idMaquina;        }else{$x1 = $_SESSION['ot_basicos']['idMaquina'];}
@@ -1113,7 +1113,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 			</tbody>
 		</table>
 	</div>
-	
+
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
@@ -1144,7 +1144,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x0  = $idCliente;        }else{$x0  = '';}
 				if(isset($idMaquina)){        $x1  = $idMaquina;        }else{$x1  = '';}
@@ -1291,7 +1291,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x0  = $idCliente;        }else{$x0  = '';}
 				if(isset($idMaquina)){        $x1  = $idMaquina;        }else{$x1  = '';}
@@ -1336,8 +1336,8 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Ordenes de Trabajo</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

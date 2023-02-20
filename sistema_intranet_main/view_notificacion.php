@@ -74,7 +74,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 			<h5>Notificacion</h5>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					
@@ -92,7 +92,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 							<strong>Titulo: </strong><?php echo $row_data['Titulo'];?><br/>
 							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Fecha']);?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Mensaje</h2>
 						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Notificacion'];?></p>
 					

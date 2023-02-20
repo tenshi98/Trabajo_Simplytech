@@ -67,7 +67,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_quejas', $SIS_join, $SIS_
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">
 		
 		<?php				

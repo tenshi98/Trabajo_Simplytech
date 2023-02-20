@@ -165,7 +165,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -198,13 +198,13 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 							<strong>Aporte Nutricional : </strong><?php echo $rowdata['AporteNutricional']; ?><br/>
 							
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
 						<p class="text-muted">
 							<strong>Sistema Mantenlubric : </strong><?php echo $rowdata['SistemaMantenlubric']; ?><br/>
 							<strong>Sistema CROSS: </strong><?php echo $rowdata['SistemaCROSS']; ?><br/>
 						</p>
-						
+
 						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistema Mantenlubric</h2>
 							<p class="text-muted">
@@ -221,7 +221,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
 						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 						<p class="text-muted">
 							<strong>Proveedor predefinido : </strong><?php echo $rowdata['ProveedorFijo']; ?><br/>
@@ -229,7 +229,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 							<strong>Valor promedio Ingreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowdata['ValorIngreso']), 0); ?><br/>
 							<strong>Valor promedio Egreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowdata['ValorEgreso']), 0); ?><br/>
 						</p>
-						
+
 						<?php if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Receta</h2>
 							<table  class="table table-bordered">
@@ -244,7 +244,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 								<?php }?>
 							</table>
 						<?php } ?>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
@@ -315,7 +315,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){         $x1  = $Nombre;           }else{$x1  = '';}
 				if(isset($idTipo)){         $x2  = $idTipo;           }else{$x2  = '';}
@@ -494,7 +494,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){         $x1  = $Nombre;           }else{$x1  = '';}
 				if(isset($idTipo)){         $x2  = $idTipo;           }else{$x2  = '';}
@@ -540,8 +540,8 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Productos</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

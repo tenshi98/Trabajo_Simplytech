@@ -197,7 +197,7 @@ foreach ($arrTemporal as $temp) {
 					</tbody>
 				</table>
 			</div>
-			
+
 			<div class="tab-pane fade" id="netos" style="padding-top:5px;">
 				
 				<script>
@@ -303,7 +303,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idAlumno)){         $x1  = $idAlumno;          }else{$x1  = '';}
 				if(isset($idEstado)){         $x2  = $idEstado;          }else{$x2  = '';}

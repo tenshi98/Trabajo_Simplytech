@@ -133,7 +133,7 @@ array_push( $arrFacturacion,$row );
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Ano)){    $x1  = $Ano;   }else{$x1  = '';}
 				if(isset($idMes)){  $x2  = $idMes; }else{$x2  = '';}

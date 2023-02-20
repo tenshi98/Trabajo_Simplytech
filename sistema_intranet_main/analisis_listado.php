@@ -195,7 +195,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_muestreo)){         $x1  = $f_muestreo;        }else{$x1  = $rowdata['f_muestreo'];}
 				if(isset($f_recibida)){         $x2  = $f_recibida;        }else{$x2  = $rowdata['f_recibida'];}
@@ -410,7 +410,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipo)){             $x1  = $idTipo;            }else{$x1  = '';}
 				if(isset($idLaboratorio)){      $x2  = $idLaboratorio;     }else{$x2  = '';}
@@ -531,7 +531,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_2
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_muestreo)){         $x1  = $f_muestreo;        }else{$x1  = '';}
 				if(isset($f_recibida)){         $x2  = $f_recibida;        }else{$x2  = '';}
@@ -656,7 +656,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_muestreo)){         $x1  = $f_muestreo;        }else{$x1  = '';}
 				if(isset($f_recibida)){         $x2  = $f_recibida;        }else{$x2  = '';}
@@ -694,8 +694,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Analisis</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

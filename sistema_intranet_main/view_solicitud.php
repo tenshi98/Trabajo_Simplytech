@@ -134,7 +134,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">
 		
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 invoice-col">
@@ -150,7 +150,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 		</div>
 
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table table-striped">
@@ -210,7 +210,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>

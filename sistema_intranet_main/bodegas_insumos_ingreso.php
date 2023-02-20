@@ -193,7 +193,7 @@ if(!empty($_GET['addOC'])){ ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idOcompra)){   $x1  = $idOcompra;    }else{$x1  = $_SESSION['insumos_ing_basicos']['idOcompra'];}
 
@@ -224,7 +224,7 @@ if(!empty($_GET['addOC'])){ ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = $_SESSION['insumos_ing_descuentos'][$_GET['editDescuentos']]['Nombre'];}
 				if(isset($vTotal)){      $x2  = $vTotal;     }else{$x2  = $_SESSION['insumos_ing_descuentos'][$_GET['editDescuentos']]['vTotal'];}
@@ -260,7 +260,7 @@ if(!empty($_GET['addOC'])){ ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = '';}
 				if(isset($vTotal)){      $x2  = $vTotal;     }else{$x2  = '';}
@@ -294,8 +294,8 @@ if(!empty($_GET['addOC'])){ ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php 
-				//se dibujan los inputs
+				<?php
+				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 					
@@ -376,7 +376,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $_SESSION['insumos_ing_productos'][$_GET['editProd']]['idProducto'];}
 				if(isset($Number)){           $x2  = $Number;          }else{$x2  = $_SESSION['insumos_ing_productos'][$_GET['editProd']]['Number'];}
@@ -606,7 +606,7 @@ $z=" idDocumentos = 1 AND idEstado = 1 AND idProveedor = ".$_SESSION['insumos_in
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idGuia )){       $x1  = $idGuia ;      }else{$x1  = '';}
 
@@ -638,7 +638,7 @@ $z=" idDocumentos = 1 AND idEstado = 1 AND idProveedor = ".$_SESSION['insumos_in
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idImpuesto )){       $x1  = $idImpuesto ;      }else{$x1  = '';}
 
@@ -673,7 +673,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCentroCosto)){  $x1  = $idCentroCosto;  }else{$x1  = $_SESSION['insumos_ing_basicos']['idCentroCosto'];}
 				if(isset($idLevel_1)){      $x2  = $idLevel_1;      }else{$x2  = $_SESSION['insumos_ing_basicos']['idLevel_1'];}
@@ -723,7 +723,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){        $x1  = $idProveedor;      }else{$x1  = $_SESSION['insumos_ing_basicos']['idProveedor'];}
 				if(isset($idDocumentos)){       $x2  = $idDocumentos;     }else{$x2  = $_SESSION['insumos_ing_basicos']['idDocumentos'];}
@@ -1191,7 +1191,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = $rowdata['Creacion_fecha'];}
 
@@ -1234,7 +1234,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){        $x1  = $idProveedor;      }else{$x1  = '';}
 				if(isset($idDocumentos)){       $x2  = $idDocumentos;     }else{$x2  = '';}
@@ -1410,7 +1410,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = '';}
 				if(isset($idDocumentos)){     $x2  = $idDocumentos;   }else{$x2  = '';}
@@ -1456,8 +1456,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Compras</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

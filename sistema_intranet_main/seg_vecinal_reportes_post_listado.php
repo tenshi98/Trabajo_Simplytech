@@ -91,7 +91,7 @@ $ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){       $x1 = $Fecha;       }else{$x1 = '';}
 				if(isset($Descripcion)){ $x2 = $Descripcion; }else{$x2 = '';}
@@ -311,7 +311,7 @@ array_push( $arrReportes,$row );
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
@@ -337,8 +337,8 @@ array_push( $arrReportes,$row );
 								<?php } ?>
 							</p>
 						</div>
-						<?php 
-						//se arma la direccion
+						<?php
+						//Se arma la direccion
 						$direccion = "";
 						if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){   $direccion .= $rowdata["Direccion"];}
 						if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){         $direccion .= ', '.$rowdata["Comuna"];}
@@ -380,7 +380,7 @@ array_push( $arrReportes,$row );
 				</div>
 				<div class="clearfix"></div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="reportes">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<thead>
@@ -497,7 +497,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){   $x1 = $idCliente;   }else{$x1  = '';}
 				if(isset($idTipo)){      $x2 = $idTipo;      }else{$x2  = '';}

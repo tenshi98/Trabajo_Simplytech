@@ -116,15 +116,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
 					
-						<?php 
-						//se dibujan los inputs
+						<?php
+						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','Direccion_img', 1, '"jpg", "png", "gif", "jpeg"');
 						
 						if(isset($idTipoImagen)){  $x1  = $idTipoImagen;  }else{$x1  = '';}
 						
 						$Form_Inputs->form_select('Tipo Imagen','idTipoImagen', $x1, 2, 'idTipoImagen', 'Nombre', 'core_tipo_producto_imagen', 0, '', $dbConn);
-						
+
 						$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 						?>
 

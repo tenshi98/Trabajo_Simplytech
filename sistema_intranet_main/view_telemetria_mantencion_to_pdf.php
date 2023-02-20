@@ -122,7 +122,7 @@ $html .= '
 						<tr class="oddrow">
 							<td colspan="4" rowspan="1" style="text-align: center;background-color:#DDD;padding:5px;"><br/><strong>Empresa Visitada.</strong></td>
 						</tr>
-						
+
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Nombre</td>
 							<td style="vertical-align: top; width:80%;" colspan="3">'.$row_data['SistemaOrigen'].'</td>
@@ -255,7 +255,7 @@ $html .= '
 				<br/>
 				<table style="text-align: left; width: 100%; margin-top:20px;" cellpadding="0" cellspacing="0">
 					<tbody>
-						
+
 						<tr style="background-color: #f1f1f1;">
 							<td colspan="8">Archivos Adjuntos</td>
 						</tr>

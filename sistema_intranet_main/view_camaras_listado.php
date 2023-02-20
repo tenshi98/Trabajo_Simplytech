@@ -73,7 +73,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Camaras de seguridad</h5>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">

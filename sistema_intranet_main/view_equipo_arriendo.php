@@ -76,7 +76,7 @@ $rowdata = db_select_data (false, $SIS_query, 'equipos_arriendo_listado', $SIS_j
 							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
 						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
 						
@@ -93,7 +93,7 @@ $rowdata = db_select_data (false, $SIS_query, 'equipos_arriendo_listado', $SIS_j
 								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Hoja de Seguridad</a>';
 							}
 							?>
-						
+
 						</p>
 						
 						

@@ -436,7 +436,7 @@
 						}
 						echo $bla.' m3';?>
 						</small>
-						
+
 						<br/>
 						<div class="pull-left">Porcentaje Prorrateo</div>
 						<small class="pull-right"><?php echo $rowDatos['AguasInfProcProrrateo'] ?> %</small>	

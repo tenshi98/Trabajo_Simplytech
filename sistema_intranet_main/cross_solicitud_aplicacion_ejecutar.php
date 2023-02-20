@@ -86,7 +86,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_ejecucion)){        $x1  = $f_ejecucion;        }else{$x1  = $row_data['f_ejecucion'];}
 				if(isset($horaEjecucion)){      $x2  = $horaEjecucion;      }else{$x2  = $row_data['horaEjecucion'];}
@@ -274,8 +274,8 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de solicitudes a programar</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

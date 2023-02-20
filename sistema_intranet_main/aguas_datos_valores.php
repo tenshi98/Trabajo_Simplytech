@@ -84,7 +84,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($valorCargoFijo)){      $x1  = $valorCargoFijo;      }else{$x1  = $rowdata['valorCargoFijo'];}
 				if(isset($valorAgua)){           $x2  = $valorAgua;           }else{$x2  = $rowdata['valorAgua'];}
@@ -142,7 +142,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($valorCargoFijo)){      $x1  = $valorCargoFijo;      }else{$x1  = '';}
 				if(isset($valorAgua)){           $x2  = $valorAgua;           }else{$x2  = '';}

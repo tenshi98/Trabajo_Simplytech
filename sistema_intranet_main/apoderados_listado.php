@@ -196,7 +196,7 @@ array_push( $arrSubcuentas,$row );
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -221,7 +221,7 @@ array_push( $arrSubcuentas,$row );
 							<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowdata['F_Inicio_Contrato'])&&$rowdata['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
 							<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowdata['F_Termino_Contrato'])&&$rowdata['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
 						</p>
-						
+
 						<?php
 						//Si se utiliza la APP 
 						if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){
@@ -337,7 +337,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = '';}
 				if(isset($ApellidoPat)){         $x2  = $ApellidoPat;          }else{$x2  = '';}
@@ -449,7 +449,7 @@ $arrApoderado = db_select_array (false, $SIS_query, 'apoderados_listado', $SIS_j
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = '';}
 				if(isset($ApellidoPat)){         $x2  = $ApellidoPat;          }else{$x2  = '';}
@@ -484,8 +484,8 @@ $arrApoderado = db_select_array (false, $SIS_query, 'apoderados_listado', $SIS_j
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Apoderados</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

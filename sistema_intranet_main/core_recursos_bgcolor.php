@@ -42,7 +42,7 @@ require_once 'core/Web.Header.Main.php';
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="fuentes">
 				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 					<div class="box">
@@ -200,7 +200,7 @@ require_once 'core/Web.Header.Main.php';
 				</div>
 
 			</div>
-			
+
 			<div class="tab-pane fade" id="bootstrap">
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
@@ -214,7 +214,7 @@ require_once 'core/Web.Header.Main.php';
 				</div>
 					
 			</div>
-			
+
 			<div class="tab-pane fade" id="mycolors">
 				
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">

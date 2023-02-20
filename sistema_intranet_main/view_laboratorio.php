@@ -88,7 +88,7 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'laboratorio_observacion
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
@@ -141,7 +141,7 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'laboratorio_observacion
 				<div class="clearfix"></div>
 				
 			</div>
-			
+
 			<div class="tab-pane fade" id="observaciones">
 				<div class="wmd-panel">
 					<div class="table-responsive">

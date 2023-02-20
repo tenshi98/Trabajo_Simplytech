@@ -60,7 +60,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			<div class="tab-pane fade active in" id="data0">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-						
+
 						<?php
 						$DB_NAME_1 = DB_NAME;
 

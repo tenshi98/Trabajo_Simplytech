@@ -271,7 +271,7 @@ foreach ($arrHistorial as $doc){
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">
 		
 		<?php 

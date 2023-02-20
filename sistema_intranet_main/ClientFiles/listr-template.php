@@ -22,7 +22,7 @@ require_once '../A1XRXS_sys/xrxs_configuracion/config.php';
 		<style>body {background-color: #FFF!important;}</style>
 	</head>
 	<body <?php echo $body_style.$direction?>>
-	
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 			<?php echo $breadcrumbs?>
 			<?php echo $search ?>

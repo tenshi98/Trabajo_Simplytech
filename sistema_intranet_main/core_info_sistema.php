@@ -137,7 +137,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="data2">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -145,7 +145,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="data3">
 				<div class="wmd-panel">
 					<div class="table-responsive">

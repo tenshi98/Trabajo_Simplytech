@@ -135,11 +135,11 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 			<h5>Datos</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#datos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-	
+
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="datos">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -265,7 +265,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){             $x1  = $NSolicitud;             }else{$x1  = '';}
 				if(isset($idPredio)){               $x2  = $idPredio;               }else{$x2  = '';}

@@ -98,7 +98,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idUsuario)){     $x1  = $idUsuario;    }else{$x1  = $rowdata['idUsuario'];}
 
@@ -140,7 +140,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idUsuario)){     $x1  = $idUsuario;    }else{$x1  = '';}
 

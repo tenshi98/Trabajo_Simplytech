@@ -388,7 +388,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipoMov)){      $x1  = $idTipoMov;     }else{$x1  = '';}
 				if(isset($idProveedor)){    $x2  = $idProveedor;   }else{$x2  = '';}

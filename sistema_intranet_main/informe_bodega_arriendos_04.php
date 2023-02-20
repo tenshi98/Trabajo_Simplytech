@@ -133,7 +133,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="tab_arr_1">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -150,7 +150,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="tab_arr_2">
 				<div class="wmd-panel">
 					<div class="table-responsive">

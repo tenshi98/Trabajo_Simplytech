@@ -135,7 +135,7 @@ array_push( $arrUsuarios,$row );
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -176,7 +176,7 @@ array_push( $arrUsuarios,$row );
 							}
 							?>
 						</p>
-						
+
 						<div class="row">
 								
 						</div>
@@ -212,7 +212,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipo)){       $x1  = $idTipo;        }else{$x1  = '';}
 				if(isset($Nombre)){       $x2  = $Nombre;        }else{$x2  = '';}
@@ -333,7 +333,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = '';}
 				if(isset($Fecha)){       $x2  = $Fecha;       }else{$x2  = '';}

@@ -631,7 +631,7 @@ array_push( $arrFlashpoint,$row );
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">
 		
 		<?php
@@ -838,7 +838,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idMaquina)){     $x1  = $idMaquina;   }else{$x1  = '';}
 				if(isset($idMatriz)){      $x2  = $idMatriz;    }else{$x2  = '';}

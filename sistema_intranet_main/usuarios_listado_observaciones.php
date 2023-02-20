@@ -81,7 +81,7 @@ $rowdata = db_select_data (false, $SIS_query, 'usuarios_observaciones', $SIS_joi
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){     $x1  = $Observacion;    }else{$x1  = $rowdata['Observacion'];}
 
@@ -116,7 +116,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){     $x1  = $Observacion;    }else{$x1  = '';}
 

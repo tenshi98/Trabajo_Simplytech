@@ -194,7 +194,7 @@ foreach ($arrTemporal_7 as $temp) {
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="tab1">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -240,7 +240,7 @@ foreach ($arrTemporal_7 as $temp) {
 							}
 						</script>
 						<div id="chart_div" style="height: 500px; width: 100%;"></div>
-						
+
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div class="box">
 								<header>
@@ -375,7 +375,7 @@ foreach ($arrTemporal_7 as $temp) {
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="tab3">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -454,7 +454,7 @@ foreach ($arrTemporal_7 as $temp) {
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idSistema)){   $x1  = $idSistema;      }else{$x1  = '';}
 

@@ -193,7 +193,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos5Valor'], 0)?></small>
 					<br/>
 				<?php } ?>
-	
+
 			</li>
 			<?php if($rowFacturacion['montoPago']!=0){?>
 				<li class="list-group-item">
@@ -225,7 +225,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate >
 					<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Pago</li>
 					<li class="list-group-item">		
-						<?php 
+						<?php
 						//Se verifican si existen los datos
 						if(isset($fechaPago)){    $x1  = $fechaPago;     }else{$x1  = '';}
 						if(isset($idTipoPago)){   $x2  = $idTipoPago;    }else{$x2  = '';}
@@ -239,7 +239,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 						$Form_Inputs->form_input_number('N° Documento', 'nDocPago', $x3, 1);
 						$Form_Inputs->form_input_disabled('Total a Pagar','fake_emp', Valores($calculo, 0));
 						$Form_Inputs->form_values('Monto Pagado', 'montoPago', $x4, 2);
-						
+
 						$Form_Inputs->form_input_hidden('idUsuarioPago', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 						$Form_Inputs->form_input_hidden('idCliente', $_GET['idCliente'], 2);
 						$Form_Inputs->form_input_hidden('idFacturacionDetalle', $rowFacturacion['idFacturacionDetalle'], 2);
@@ -481,7 +481,7 @@ array_push( $arrFacturaciones,$row );
 				</li>
 				<?php if($rowFacturacion['montoPago']!=0){?>
 					<li class="list-group-item">
-						
+
 						<div class="pull-left">Pagado</div>
 						<small class="pull-right"><?php echo '(-) '.Valores($rowFacturacion['montoPago'], 0); ?></small>
 						<br/>
@@ -501,7 +501,7 @@ array_push( $arrFacturaciones,$row );
 		</div>
 								
 	</div>
-	
+
 	<div class="clearfix"></div>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 		<?php if($rowFacturacion['DetalleTotalAPagar']!=0){?>
@@ -542,7 +542,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
             	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = '';}
 
@@ -647,7 +647,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idClienteFilt)){   $x1  = $idClienteFilt;    }else{$x1  = '';}
 				if(isset($fechaPago)){       $x2  = $fechaPago;        }else{$x2  = '';}
@@ -677,8 +677,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Pagos</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

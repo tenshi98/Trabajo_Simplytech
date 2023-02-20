@@ -94,8 +94,8 @@ $arrIpRelacionadas = db_select_array (false, $SIS_query, $xtabla, $SIS_join, $SI
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Relacion <?php echo $yrelacion; ?></h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
@@ -166,7 +166,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idSeguridad)){   $x0 = $idSeguridad;   }else{$x0 = '';}
 				if(isset($idUsuario)){     $x1 = $idUsuario;     }else{$x1 = '';}

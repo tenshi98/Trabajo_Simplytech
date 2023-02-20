@@ -146,7 +146,7 @@ foreach ($arrGrupos as $sen) {
 			</ul>
 		</header>
 		 <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="99900">
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -183,7 +183,7 @@ foreach ($arrGrupos as $sen) {
 					</table>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="99901">
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -220,7 +220,7 @@ foreach ($arrGrupos as $sen) {
 					</table>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="fuera">
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -254,7 +254,7 @@ foreach ($arrGrupos as $sen) {
 				</div>
 				
 			</div>
-			
+
 			<div class="tab-pane fade" id="fuera_actual">
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -332,7 +332,7 @@ $z  = "telemetria_listado.idTelemetria!=0";   //Siempre pasa
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;      }else{$x1  = '';}
 				if(isset($h_inicio)){      $x2  = $h_inicio;      }else{$x2  = '';}

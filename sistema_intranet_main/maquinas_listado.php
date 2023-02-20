@@ -77,7 +77,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){           $x1  = $Nombre;           }else{$x1  = '';}
 
@@ -647,7 +647,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			</ul>
 		</header>
 		<div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -679,7 +679,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 								<?php if(isset($rowdata['Ubicacion_lvl_5'])&&$rowdata['Ubicacion_lvl_5']!=''){echo ' - '.$rowdata['Ubicacion_lvl_5'];}?>
 							<?php }?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
 						<p class="text-muted">
 							<strong>Componentes : </strong><?php echo $rowdata['Componentes']; ?><br/>
@@ -689,7 +689,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
 						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
@@ -806,7 +806,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				//if(isset($idCliente)){  $x1  = $idCliente;   }else{$x1  = '';}
 				if(isset($Codigo)){     $x2  = $Codigo;      }else{$x2  = '';}
@@ -920,7 +920,7 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){  $x0  = $idCliente;   }else{$x0  = '';}
 				if(isset($Codigo)){     $x1  = $Codigo;      }else{$x1  = '';}
@@ -953,8 +953,8 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Maquinas</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

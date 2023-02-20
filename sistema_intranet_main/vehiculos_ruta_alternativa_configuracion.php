@@ -142,7 +142,7 @@ array_push( $arrRutas,$row );
 			</ul>
 		</header>
         <div class="table-responsive">
-			
+
 			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 				<div class="row">
 					<?php
@@ -348,18 +348,18 @@ array_push( $arrRutas,$row );
 					<?php } ?>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
-						<?php 
-						//se dibujan los inputs
+						<?php
+						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowUbicacion['Latitud']);
 						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowUbicacion['Longitud']);
 						$Form_Inputs->form_input_disabled( 'Direccion', 'direccion_fake', $rowUbicacion['direccion']);
-						
+
 						$Form_Inputs->form_input_hidden('Latitud', $rowUbicacion['Latitud'], 2);
 						$Form_Inputs->form_input_hidden('Longitud', $rowUbicacion['Longitud'], 2);
 						$Form_Inputs->form_input_hidden('direccion', $rowUbicacion['direccion'], 2);
@@ -469,7 +469,7 @@ array_push( $arrRutasAlt,$row );
 			</ul>
 		</header>
         <div class="table-responsive">
-			
+
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div class="row">
 					<?php
@@ -650,18 +650,18 @@ array_push( $arrRutasAlt,$row );
 					<?php } ?>
 				</div>
 			</div>
-			
+
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 				
-						<?php 
-						//se dibujan los inputs
+						<?php
+						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', '');
 						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', '');
 						$Form_Inputs->form_input_disabled( 'Direccion', 'direccion_fake', '');
-						
+
 						$Form_Inputs->form_input_hidden('Latitud', 0, 2);
 						$Form_Inputs->form_input_hidden('Longitud', 0, 2);
 						$Form_Inputs->form_input_hidden('direccion', 0, 2);

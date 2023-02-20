@@ -133,7 +133,7 @@ require_once 'core/Web.Header.Print.php';
 $html ='<section class="invoice">';
 $html .= '
 	<section class="invoice">
-	
+
 		<div class="row">
 			<div class="col-xs-12">
 				<h2 class="page-header">
@@ -142,7 +142,7 @@ $html .= '
 				</h2>
 			</div>
 		</div>
-	
+
 		<div class="row invoice-info">
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 				Datos Basicos
@@ -177,7 +177,7 @@ $html .= '
 					
 			</div>
 		</div>
-	
+
 		<div class="">
 			<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 				<table class="table">

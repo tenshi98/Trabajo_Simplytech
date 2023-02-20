@@ -84,9 +84,9 @@ array_push( $arrRutas,$row );
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
 						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-						
+
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-						
+
 						<script>
 							
 							var map;
@@ -247,7 +247,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
                
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
 				if(isset($f_termino)){     $x2  = $f_termino;    }else{$x2  = '';}

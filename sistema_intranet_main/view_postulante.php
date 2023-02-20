@@ -76,7 +76,7 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ver Datos del Postulante</h5>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -106,9 +106,9 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 						</p>
 					
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Estudios</h2>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Cursos</h2>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Experiencia Laboral</h2>
 						
 						

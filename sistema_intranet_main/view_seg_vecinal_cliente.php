@@ -97,7 +97,7 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'seg_vecinal_clientes_ob
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">

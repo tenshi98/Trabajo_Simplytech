@@ -165,7 +165,7 @@ foreach ($arrPromedioProd as $productos) {
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -177,7 +177,7 @@ foreach ($arrPromedioProd as $productos) {
 						}?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Producto</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -206,7 +206,7 @@ foreach ($arrPromedioProd as $productos) {
 							<strong>Sistema Mantenlubric : </strong><?php echo $rowdata['SistemaMantenlubric']; ?><br/>
 							<strong>Sistema CROSS: </strong><?php echo $rowdata['SistemaCROSS']; ?><br/>
 						</p>
-						
+
 						<?php if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistema Mantenlubric</h2>
 							<p class="text-muted">
@@ -223,7 +223,7 @@ foreach ($arrPromedioProd as $productos) {
 						
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
 						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 						<p class="text-muted">
 							<strong>Proveedor predefinido : </strong><?php echo $rowdata['ProveedorFijo']; ?><br/>
@@ -231,7 +231,7 @@ foreach ($arrPromedioProd as $productos) {
 							<strong>Valor promedio Ingreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowdata['ValorIngreso']), 0); ?><br/>
 							<strong>Valor promedio Egreso : </strong><?php echo Valores(Cantidades_decimales_justos($rowdata['ValorEgreso']), 0); ?><br/>
 						</p>
-						
+
 						<?php if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Receta</h2>
 							<table  class="table table-bordered">
@@ -246,7 +246,7 @@ foreach ($arrPromedioProd as $productos) {
 								<?php }?>
 							</table>
 						<?php } ?>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<p class="text-muted">
 							<?php 
@@ -259,7 +259,7 @@ foreach ($arrPromedioProd as $productos) {
 								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Hoja de Seguridad</a>';
 							}
 							?>
-						
+
 						</p>
 						
 						

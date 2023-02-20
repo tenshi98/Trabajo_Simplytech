@@ -158,7 +158,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -177,7 +177,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 							<strong>Estado : </strong><?php echo $rowdata['estado']; ?><br/>
 							<strong>Ultimo Acceso : </strong><?php echo $rowdata['Ultimo_acceso']; ?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Personales</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -189,7 +189,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 							<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
 							<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistemas Asignados</h2>
 						<p class="text-muted">
 							<?php foreach($arrSistemas as $sis) { ?>
@@ -230,7 +230,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 					<?php } ?>
 					
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-						
+
 						<?php
 						
 							echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Bodegas</h2>';
@@ -346,7 +346,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 			
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="ingresos">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -369,7 +369,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="tab-pane fade" id="observaciones">
 				<div class="wmd-panel">
 					<div class="table-responsive">

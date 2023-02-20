@@ -179,8 +179,8 @@ if(!empty($_GET['addFile'])){ ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
 			
-				<?php 
-				//se dibujan los inputs
+				<?php
+				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 					
@@ -719,7 +719,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idImpuesto )){       $x1  = $idImpuesto ;      }else{$x1  = '';}
 
@@ -754,7 +754,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProspecto)){      $x1  = $idProspecto;    }else{$x1  = $_SESSION['cotizacion_prospectos_basicos']['idProspecto'];}
 				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'];}
@@ -1072,7 +1072,7 @@ $vtotal_iva   = 0;
 		</table>
 
 	</div>
-	
+
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Condiciones Comerciales:</p>
@@ -1134,7 +1134,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProspecto)){      $x1  = $idProspecto;    }else{$x1  = '';}
 				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = '';}
@@ -1250,7 +1250,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_prospectos_li
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProspecto)){      $x1  = $idProspecto;    }else{$x1  = '';}
 				if(isset($Creacion_fecha)){   $x2  = $Creacion_fecha; }else{$x2  = '';}
@@ -1281,8 +1281,8 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_prospectos_li
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Cotizaciones</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

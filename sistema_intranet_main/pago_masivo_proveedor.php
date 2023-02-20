@@ -804,7 +804,7 @@ $Form_Inputs = new Inputs();
 				<div class="body">
 					<form class="form-horizontal" method="post" name="form1" id="form1">
 					
-						<?php 
+						<?php
 						//Se verifican si existen los datos
 						if(isset($idDocPago)){         $x1  = $idDocPago;          }else{$x1  = '';}
 						if(isset($N_DocPago)){         $x2  = $N_DocPago;          }else{$x2  = '';}
@@ -828,7 +828,7 @@ $Form_Inputs = new Inputs();
 						$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 						
 						?>
-						
+
 						<div class="form-group">
 							<input type="submit" id="submitCadastroHidden" style="display: none;" name="submit_form">
 							<input type="button" id="submitBtn" data-toggle="modal" data-target="#confirm-submit"  class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Ingresar Pago" name="submit2">
@@ -838,7 +838,7 @@ $Form_Inputs = new Inputs();
 							
 				</div>
 			</div>
-	
+
 			<div class="modal fade" id="confirm-submit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
@@ -890,8 +890,8 @@ $Form_Inputs = new Inputs();
 				</header>
 				<div class="body">
 					<form class="form-horizontal" method="post" name="form1" id="form1">
-						
-						<?php 
+
+						<?php
 						//Se verifican si existen los datos
 						if(isset($F_Pago)){     $x3  = $F_Pago;   }else{$x3  = '';}
 
@@ -1657,7 +1657,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){   $x1  = $idProveedor;  }else{$x1  = '';}
 				if(isset($idDocumentos)){  $x2  = $idDocumentos; }else{$x2  = '';}

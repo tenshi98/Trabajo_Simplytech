@@ -486,7 +486,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			<h5>Ver Datos de la Maquina</h5>
 		</header>
 		<div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -518,17 +518,17 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 								<?php if(isset($rowdata['Ubicacion_lvl_5'])&&$rowdata['Ubicacion_lvl_5']!=''){echo ' - '.$rowdata['Ubicacion_lvl_5'];}?>
 							<?php }?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
 						<p class="text-muted">
 							<strong>Componentes : </strong><?php echo $rowdata['Componentes']; ?><br/>
 							<strong>Matriz de Analisis: </strong><?php echo $rowdata['Matriz']; ?><br/>
 							<strong>Dependencia Cliente: </strong><?php echo $rowdata['DependenciaCliente']; ?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
 						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<p class="text-muted">
 							<?php 
@@ -541,7 +541,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['HDS'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Hoja de Seguridad</a>';
 							}
 							?>
-						
+
 						</p>
 						
 

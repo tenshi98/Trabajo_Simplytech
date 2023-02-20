@@ -61,7 +61,7 @@ $my_html ='
 			Stock al '.fecha_actual().'<br/>
 			<br/>
 			<br/>
-			
+
 			<div class="row">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<table class="table table-bordered">
@@ -96,7 +96,7 @@ $my_html ='
 					</table>
 				</div>
 			</div>
-			
+
 			<div class="clear"></div>
 
 		</div>

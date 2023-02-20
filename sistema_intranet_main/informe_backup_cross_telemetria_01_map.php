@@ -67,7 +67,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Identificacion</strong>
@@ -78,7 +78,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 			</address>
 		</div>	
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<?php

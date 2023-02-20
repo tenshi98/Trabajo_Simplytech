@@ -214,7 +214,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){    $x1  = $Observacion;    }else{$x1  = $rowdata['Observacion'];}
 
@@ -267,7 +267,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idAnalisis)){    $x1  = $idAnalisis;    }else{$x1  = $rowdata['idAnalisis'];}
 
@@ -327,7 +327,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         		
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idSubTipo)){            $x1 = $idSubTipo;              }else{$x1 = $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['idSubTipo'];}
 				if(isset($idProducto)){           $x2 = $idProducto;             }else{$x2 = $_SESSION['ot_trabajos_temp'][$_GET['tabla']][$_GET['id_tabla']][$_GET['idInterno']]['idProducto'];}
@@ -624,7 +624,7 @@ $z="idMaquina={$rowdata['idMaquina']}";
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idLevel_1)){        $x1  = $idLevel_1;        }else{$x1  = '';}
 				if(isset($idLevel_2)){        $x2  = $idLevel_2;        }else{$x2  = '';}
@@ -761,7 +761,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         		
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idSubTipo)){            $x1 = $idSubTipo;              }else{$x1 = $rowdata['idSubTipo'];}
 				if(isset($idProducto)){           $x2 = $idProducto;             }else{$x2 = $rowdata['idProducto'];}
@@ -965,7 +965,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
 				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = '';}
@@ -1109,7 +1109,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
 				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
@@ -1243,7 +1243,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
 				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = '';}
@@ -1390,7 +1390,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
 				if(isset($Cantidad)){         $x2  = $Cantidad;        }else{$x2  = $rowdata['Cantidad'];}
@@ -1499,7 +1499,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
 
@@ -1563,7 +1563,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
 
@@ -1616,7 +1616,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
 
@@ -1672,7 +1672,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idPrioridad)){      $x1  = $idPrioridad;      }else{$x1  = $rowdata['idPrioridad'];}
 				if(isset($idTipo)){           $x2  = $idTipo;           }else{$x2  = $rowdata['idTipo'];}
@@ -1994,7 +1994,7 @@ array_push( $arrTrabajo,$row );
 <div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 	<div id="page-wrap">
 		<div id="header"> ORDEN DE TRABAJO N° <?php echo $_GET['view'];?></div>
-	
+
 		<div id="customer">
 			
 			<table id="meta" class="pull-left otdata">

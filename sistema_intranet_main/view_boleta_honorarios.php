@@ -294,7 +294,7 @@ if($row_data['MontoPagado']!=0){?>
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">
 		
 		<?php

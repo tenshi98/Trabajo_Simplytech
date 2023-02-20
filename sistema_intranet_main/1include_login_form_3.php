@@ -20,24 +20,24 @@
 				<img src="<?php echo $nombre_fichero; ?>" alt="icon" height="160" width="160" class="img-logo img-responsive center-block">
 				<h2><span><?php echo DB_SOFT_NAME; ?></span></h2>
 				<p><?php echo DB_SOFT_SLOGAN; ?></p>
-				<img class="imgLeft" src="http://res.cloudinary.com/dpcloudinary/image/upload/v1506186248/dots.png" alt="icon" > 
+				<img class="imgLeft" src="http://res.cloudinary.com/dpcloudinary/image/upload/v1506186248/dots.png" alt="icon" >
 			</div>
 		</div>
-		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 rightPanel">
-			
+		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 rightPanel" style="min-height: 400px;">
+
 			<div class="text-center">
 				<ul class="list-inline">
 					<li class="active"> <a class="text-muted" href="#login"  data-toggle="tab" aria-expanded="true">Ingresar</a>  </li>
 					<li class="">       <a class="text-muted" href="#forgot" data-toggle="tab" aria-expanded="false">Recuperar contraseña</a>  </li>
 				</ul>
 			</div>
-	
+
 			<div class="tab-content" style="min-height: 200px !important;">
 				<div id="login" class="tab-pane active">
 					<form class="" method="post"  name="form1" novalidate>
 						<h1 class="text-center text-info">Iniciar sesión</h1>
 						<p class="text-center color-gray-light">Ingrese su nombre de usuario y contraseña para acceder</p>
-						<?php 
+						<?php
 						//Se verifican si existen los datos
 						if(isset($usuario)){    $x1  = $usuario;   }else{$x1  = '';}
 						if(isset($password)){   $x2  = $password;  }else{$x2  = '';}
@@ -62,28 +62,28 @@
 								break;
 						}
 						?>
-						
+
 					</form>
 				</div>
 				<div id="forgot" class="tab-pane">
 					<form class="" method="post"  name="form2" novalidate>
 						<h1 class="text-center text-info">¿Olvidaste tu contraseña?</h1>
 						<p class="text-center color-gray-light">Ingresa tu Email para recuperar tu contraseña.Revisa la bandeja de entrada o spam de tu correo.</p>
-						<?php 
+						<?php
 						//Se verifican si existen los datos
 						if(isset($email)){    $x1  = $email;   }else{$x1  = '';}
 
 						//se dibujan los inputs
 						$Form_Inputs->input_login_mail('mimail@midominio.cl', 'email', $x1);
-						
+
 						$Form_Inputs->input_hidden('fkinput2', '', 1);
 						?>
-						
+
 						<input type="submit" name="submit_pass" class="btn btn-lg btn-danger btn-block fa-input" value="&#xf003; Recuperar contraseña" />
 					</form>
 				</div>
 			</div>
-	
+
 		</div>
 	</div>
 </div>

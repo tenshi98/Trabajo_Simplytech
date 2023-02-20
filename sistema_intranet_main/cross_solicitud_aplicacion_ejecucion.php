@@ -69,7 +69,7 @@ if(!empty($_GET['cancel_ejecution'])){ ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){  $x1  = $Observacion;    }else{$x1  = '';}
 
@@ -133,7 +133,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_termino)){        $x1  = $f_termino;        }else{$x1  = $row_data['f_termino'];}
 				if(isset($horaTermino)){      $x2  = $horaTermino;      }else{$x2  = $row_data['horaTermino'];}
@@ -330,8 +330,8 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de solicitudes a cerrar</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

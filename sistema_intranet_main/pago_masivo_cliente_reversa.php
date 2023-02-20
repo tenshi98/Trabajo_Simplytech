@@ -304,7 +304,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idDocPago)){   $x1  = $idDocPago;  }else{$x1  = '';}
 				if(isset($N_DocPago)){   $x2  = $N_DocPago;  }else{$x2  = '';}
@@ -454,8 +454,8 @@ $arrAFP = db_select_array (false, $SIS_query, 'pagos_facturas_clientes_reversa',
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Reversas</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

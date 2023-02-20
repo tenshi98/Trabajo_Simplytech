@@ -218,7 +218,7 @@ $zz .= '&view='.$_GET['view'];
 							<td class="meta-head">Estado</td>
 							<td><?php echo $rowdata['NombreEstado']?></td>
 						</tr>
-						
+
 						<?php if(isset($rowdata['idSupervisor'])&&$rowdata['idSupervisor']!=''&&$rowdata['idSupervisor']!=0){?>
 							<tr>
 								<td class="meta-head">Supervisor</td>
@@ -230,14 +230,14 @@ $zz .= '&view='.$_GET['view'];
 				</table>
 				<table id="meta" class="otdata2">
 					<tbody>
-						
+
 						<?php if($rowdata['f_creacion']!='0000-00-00'){?>
 							<tr>
 								<td class="meta-head">Fecha creacion</td>
 								<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);}?></td>
 							</tr>
 						<?php }?>
-						
+
 						<?php if($rowdata['f_programacion']!='0000-00-00'){?>
 							<tr>
 								<td class="meta-head">Fecha programada</td>
@@ -250,21 +250,21 @@ $zz .= '&view='.$_GET['view'];
 								<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);}?></td>
 							</tr>
 						<?php }?>
-						
+
 						<?php if($rowdata['horaInicio']!='00:00:00'){?>
 							<tr>
 								<td class="meta-head">Hora inicio</td>
 								<td><?php if($rowdata['horaInicio']!='00:00:00'){echo $rowdata['horaInicio'];}?></td>
 							</tr>
 						<?php }?>
-						
+
 						<?php if($rowdata['horaTermino']!='00:00:00'){?>
 							<tr>
 								<td class="meta-head">Hora termino</td>
 								<td><?php if($rowdata['horaTermino']!='00:00:00'){echo $rowdata['horaTermino'];}?></td>
 							</tr>
 						<?php }?>
-						
+
 						<?php if($rowdata['horaProg']!='00:00:00'){?>
 							<tr>
 								<td class="meta-head">Tiempo Programado</td>

@@ -65,8 +65,8 @@ if(!empty($_GET['new_file'])){ ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
 					
-				<?php 
-				//se dibujan los inputs
+				<?php
+				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','event_file', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
 				

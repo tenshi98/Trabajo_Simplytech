@@ -35,7 +35,7 @@ require_once 'core/Web.Header.Main.php';
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="glyphicons">
 
 				<ul class="the-icons clearfix">
@@ -643,7 +643,7 @@ require_once 'core/Web.Header.Main.php';
 
 
 			</div>
-			
+
 			<div class="tab-pane fade" id="fontawesome">
 				<ul class="the-icons clearfix">
 				<li class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
@@ -2159,7 +2159,7 @@ require_once 'core/Web.Header.Main.php';
 
 
 			</div>
-			
+
 			<div class="tab-pane fade" id="elegantfont">
 				<div class="mtm clearfix" id="glyphs">
 					<div class="glyph">

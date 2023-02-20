@@ -92,7 +92,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){            $x1  = $idCliente;             }else{$x1  = $rowdata['idCliente'];}
 				if(isset($idTipo)){               $x2  = $idTipo;                }else{$x2  = $rowdata['idTipo'];}
@@ -206,7 +206,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){   $x1 = $idCliente;   }else{$x1  = '';}
 				if(isset($idTipo)){      $x2 = $idTipo;      }else{$x2  = '';}

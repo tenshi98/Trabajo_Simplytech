@@ -345,12 +345,12 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 				</header>
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane fade in active" id="resumen">
-						
+
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>% Mojamiento</strong></h5>          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float_table" id="chart_mojamiento" style="height: 200px;"></div></div>
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Dispersión de Flujos</strong></h5>  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float_table" id="chart_gauge" style="height: 200px;"></div></div>
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Velocidad Promedio</strong></h5>    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 float_table" id="chart_velocidades" style="height: 200px;"></div></div>			
 						<div class="clearfix"></div>
-						
+
 						<?php //<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Porcentaje Plantas Aplicadas</strong></h5>     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_plantas_aplicadas" style="height: 200px;"></div></div> ?>
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Litros Programados vs Aplicados</strong></h5>  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_litros_aplicados" style="height: 200px;"></div></div>			
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Caudales Promedios</strong></h5>               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_caudales" style="height: 200px;"></div></div>
@@ -600,7 +600,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							}
 						</script>';
 						?>
-						
+
 						<div class="">
 							<div class="col-xs-12" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 								<?php

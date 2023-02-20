@@ -438,7 +438,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
                
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){  $x1  = $idTrabajador;  }else{$x1  = '';}
 				if(isset($idCard)){        $x2  = $idCard;        }else{$x2  = '';}

@@ -88,7 +88,7 @@ require_once 'core/Web.Header.PrintFact.php';
 						<th>Mes</th>
 						<th>N° Clientes</th>
 						<th>M3 Consumidos</th>
-						
+
 						<th class="active">Total Servicio</th>
 						<th class="active">Intereses</th>
 						<th class="active">Otros Cargos</th>
@@ -132,7 +132,7 @@ require_once 'core/Web.Header.PrintFact.php';
 							
 							
 						</tr>
-						<?php 
+						<?php
 						//Se suman totales
 						$x1 = $x1 + $fact['M3Consumidos'];
 						$x2 = $x2 + $fact['DetalleSubtotalServicio'];
@@ -151,7 +151,7 @@ require_once 'core/Web.Header.PrintFact.php';
 						<td><strong>TOTALES</strong></td>
 						<td></td>
 						<td><strong><?php echo $x1.' M3'; ?></strong></td>
-						
+
 						<td align="right" class="active"><strong><?php echo Valores($x2, 0); ?></strong></td>
 						<td align="right" class="active"><strong><?php echo Valores($x3, 0); ?></strong></td>
 						<td align="right" class="active"><strong><?php echo Valores($x4, 0); ?></strong></td>

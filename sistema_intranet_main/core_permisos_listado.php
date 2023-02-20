@@ -84,7 +84,7 @@ mysqli_free_result($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($id_pmcat)){         $x1  = $id_pmcat;       }else{$x1  = $rowdata['id_pmcat'];}
 				if(isset($Nombre)){           $x2  = $Nombre;         }else{$x2  = $rowdata['Nombre'];}
@@ -146,7 +146,7 @@ mysqli_free_result($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($id_pmcat)){         $x1  = $id_pmcat;       }else{$x1  = '';}
 				if(isset($Nombre)){           $x2  = $Nombre;         }else{$x2  = '';}

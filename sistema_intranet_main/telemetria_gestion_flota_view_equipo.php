@@ -103,7 +103,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -213,7 +213,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<?php } ?>
 									</tbody>
 								</table>
-						
+
 						</div>
 					</div>
 				</div>
@@ -222,7 +222,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 			<?php if($arrAlertas!=false && !empty($arrAlertas) && $arrAlertas!=''){ ?>
 				<div class="tab-pane fade" id="alertas">
 					<div class="wmd-panel">
-						
+
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
@@ -276,7 +276,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 			<?php if($arrFlinea!=false && !empty($arrFlinea) && $arrFlinea!=''){ ?>
 				<div class="tab-pane fade" id="flinea">
 					<div class="wmd-panel">
-						
+
 						<div class="table-responsive">
 							
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">

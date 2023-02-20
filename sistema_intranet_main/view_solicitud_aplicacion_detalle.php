@@ -146,7 +146,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 			</h2>
 		</div>
 	</div>
-	
+
 	<div class="row invoice-info">
 		
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
@@ -217,7 +217,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 		</div>
 				
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<div class="table-responsive">
@@ -257,7 +257,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 							<th></th>
 									
 						</tr>
-						
+
 						<?php 
 						//recorro el lsiatdo entregado por la base de datos
 						if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {

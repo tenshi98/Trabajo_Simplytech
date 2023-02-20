@@ -299,7 +299,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 		</div>
 
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table" style="white-space: nowrap;">
@@ -405,7 +405,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 								<?php //echo '<td class="item-name">'.Cantidades($aplicadas, 0).'</td>'; ?>
                             </tr> 
 						<?php } ?>
-						
+
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><strong>Totales</strong></td>
 							<td class="item-name"><strong></strong></td>
@@ -427,7 +427,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
@@ -471,7 +471,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
@@ -518,7 +518,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
@@ -561,7 +561,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">

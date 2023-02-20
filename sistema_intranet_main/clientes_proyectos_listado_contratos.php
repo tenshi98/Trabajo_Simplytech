@@ -907,7 +907,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Codigo)){                $x2  = $Codigo;              }else{$x2  = $rowdata['Codigo'];}
 				if(isset($Nombre)){                $x3  = $Nombre;              }else{$x3  = $rowdata['Nombre'];}
@@ -1013,7 +1013,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
    
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Codigo)){                $x1  = $Codigo;              }else{$x1  = '';}
 				if(isset($Nombre)){                $x2  = $Nombre;              }else{$x2  = '';}

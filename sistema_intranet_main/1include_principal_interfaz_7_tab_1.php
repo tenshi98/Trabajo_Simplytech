@@ -6,7 +6,7 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						
+
 						<div class="row">
 							<div class="panel-body mnw700 of-a">
 								<div class="row">
@@ -96,7 +96,7 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 info-buttons block">
 							<div class="row">
 								<a href="principal_ayuda.php?pagina=1" class="col-xs-12 col-sm-3 col-md-3 col-lg-3 color-blue tooltip tooltipstered">

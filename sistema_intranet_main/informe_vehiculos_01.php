@@ -160,10 +160,10 @@ array_push( $arrVehiculos,$row );
 						<td style="background-color: #ccc;">Marca</td>
 						<td style="background-color: #ccc;">Modelo</td>
 						<td style="background-color: #ccc;">Tipo</td>
-						
+
 						<td style="background-color: #ccc;">Total Pasajeros</td>
 						<td style="background-color: #ccc;">Recoleccion Planificada</td>
-						
+
 						<td style="background-color: #ccc;">Sueldo Chofer</td>
 						<?php foreach ($arrCostos as $cost) { 
 							echo '<td style="background-color: #ccc;">'.$cost['Nombre'].'</td>';

@@ -272,7 +272,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 		</div>
 
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
@@ -375,7 +375,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 							<td class="item-name"><strong></strong></td>
 							<td class="item-name"><strong></strong></td>
 						</tr>
-						
+
 						<?php
 					}else{
 						echo '<tr class="item-row linea_punteada"><td colspan="10">No hay cuarteles asignados</td></tr>';
@@ -384,7 +384,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
@@ -428,7 +428,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
@@ -473,7 +473,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
@@ -517,7 +517,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 			</table>
 		</div>
 	</div>
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">

@@ -367,13 +367,13 @@ $Total_4 = 0;
 					<tr role="row">
 						<th>Trabajador</th>
 						<th>Mes</th>
-						
+
 						<th>Arriendos</th>
 						<th>Insumos</th>
 						<th>Productos</th>
 						<th>Servicios</th>
 						<th>Subtotal</th>
-						
+
 						<th>Arriendos</th>
 						<th>Insumos</th>
 						<th>Productos</th>
@@ -437,7 +437,7 @@ $Total_4 = 0;
 						<td align="right"><strong><?php echo Valores($Neto_3, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Neto_4, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
-						
+
 						<td align="right"><strong><?php echo Valores($Total_1, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Total_2, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Total_3, 0);?></strong></td>
@@ -808,13 +808,13 @@ $Total_4 = 0;
 					<tr role="row">
 						<th>Trabajador</th>
 						<th>Fecha</th>
-						
+
 						<th>Arriendos</th>
 						<th>Insumos</th>
 						<th>Productos</th>
 						<th>Servicios</th>
 						<th>Subtotal</th>
-						
+
 						<th>Arriendos</th>
 						<th>Insumos</th>
 						<th>Productos</th>
@@ -877,7 +877,7 @@ $Total_4 = 0;
 						<td align="right"><strong><?php echo Valores($Neto_3, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Neto_4, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
-						
+
 						<td align="right"><strong><?php echo Valores($Total_1, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Total_2, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Total_3, 0);?></strong></td>
@@ -1246,13 +1246,13 @@ $Total_4 = 0;
 					<tr role="row">
 						<th>Trabajador</th>
 						<th>Semana</th>
-						
+
 						<th>Arriendos</th>
 						<th>Insumos</th>
 						<th>Productos</th>
 						<th>Servicios</th>
 						<th>Subtotal</th>
-						
+
 						<th>Arriendos</th>
 						<th>Insumos</th>
 						<th>Productos</th>
@@ -1316,7 +1316,7 @@ $Total_4 = 0;
 						<td align="right"><strong><?php echo Valores($Neto_3, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Neto_4, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
-						
+
 						<td align="right"><strong><?php echo Valores($Total_1, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Total_2, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Total_3, 0);?></strong></td>
@@ -1688,19 +1688,19 @@ $Total_4 = 0;
 					</tr>
 					<tr role="row">
 						<th>Trabajador</th>
-						
+
 						<th>Arriendos</th>
 						<th>Insumos</th>
 						<th>Productos</th>
 						<th>Servicios</th>
 						<th>Subtotal</th>
-						
+
 						<th>Arriendos</th>
 						<th>Insumos</th>
 						<th>Productos</th>
 						<th>Servicios</th>
 						<th>Subtotal</th>
-						
+
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
@@ -1761,13 +1761,13 @@ $Total_4 = 0;
 						<td align="right"><strong><?php echo Valores($Neto_3, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Neto_4, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
-						
+
 						<td align="right"><strong><?php echo Valores($Total_1, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Total_2, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Total_3, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Total_4, 0);?></strong></td>
 						<td align="right"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0);?></strong></td>
-						
+
 						<td></td>
 					</tr>
 					<tr class="invoice-total" bgcolor="#f1f1f1">

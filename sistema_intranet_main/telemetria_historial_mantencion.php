@@ -209,7 +209,7 @@ array_push( $arrArchivos,$row );
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -230,7 +230,7 @@ array_push( $arrArchivos,$row );
 							<strong>Persona Recepcion Rut : </strong><?php echo $rowdata['Recepcion_Rut']; ?><br/>
 							<strong>Persona Recepcion Email : </strong><?php echo $rowdata['Recepcion_Email']; ?><br/>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Tecnico a Cargo</h2>
 						<p class="text-muted">
 							<strong>Tecnico Encargado : </strong><?php echo $rowdata['NombreEncargado']; ?><br/>
@@ -239,7 +239,7 @@ array_push( $arrArchivos,$row );
 							<strong>Hora Termino : </strong><?php echo $rowdata['h_Termino']; ?><br/>
 							<strong>Duracion : </strong><?php echo $rowdata['Duracion']; ?><br/>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Trabajo</h2>
 						<p class="text-muted">
 							<strong>Servicio : </strong><?php echo $rowdata['Servicio']; ?><br/>
@@ -252,7 +252,7 @@ array_push( $arrArchivos,$row );
 								?>
 							<br/>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Equipos</h2>
 						<table  class="table table-bordered">
 							<?php 
@@ -263,10 +263,10 @@ array_push( $arrArchivos,$row );
 								</tr>
 							<?php }?>
 						</table>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Diagnostico tecnico y acciones realizadas</h2>
 						<div class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Resumen'];?></div>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Resumen de Visita</h2>
 						<div class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Resolucion'];?></div>
 						
@@ -325,7 +325,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idSistema)){         $x0  = $idSistema;          }else{$x0  = '';}
 				if(isset($idServicio)){        $x1  = $idServicio;         }else{$x1  = '';}
@@ -473,7 +473,7 @@ foreach ($arrOpciones as $mant) {
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idServicio)){     $x1  = $idServicio;         }else{$x1  = '';}
 				if(isset($idOpciones_1)){   $x2  = $idOpciones_1;       }else{$x2  = '';}
@@ -513,8 +513,8 @@ foreach ($arrOpciones as $mant) {
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Mantenciones</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

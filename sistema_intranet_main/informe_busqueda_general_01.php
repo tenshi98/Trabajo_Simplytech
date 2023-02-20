@@ -212,7 +212,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<div class="tab-content">
 				
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idOcompra)){      $x1  = $idOcompra;      }else{$x1  = '';}
 				if(isset($idDocumentos)){   $x2  = $idDocumentos;   }else{$x2  = '';}

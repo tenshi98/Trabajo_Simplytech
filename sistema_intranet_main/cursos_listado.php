@@ -209,7 +209,7 @@ array_push( $arrVideo,$row );
 							<strong>Sistema Relacionado : </strong><?php echo $rowdata['CursoSistema']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['CursoEstado']; ?>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Asignaturas  Relacionadas</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
@@ -236,7 +236,7 @@ array_push( $arrVideo,$row );
 								<?php } ?>
 							</tbody>
 						</table>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> VideoConferencias  Relacionadas</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<thead>
@@ -313,7 +313,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x2  = $Nombre;      }else{$x2  = '';}
 				if(isset($Semanas)){     $x3  = $Semanas;     }else{$x3  = '';}
@@ -427,7 +427,7 @@ $arrCiudad = db_select_array (false, $SIS_query, 'cursos_listado', $SIS_join, $S
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = '';}
 				if(isset($Semanas)){     $x2  = $Semanas;    }else{$x2  = '';}
@@ -464,8 +464,8 @@ $arrCiudad = db_select_array (false, $SIS_query, 'cursos_listado', $SIS_join, $S
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Cursos</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

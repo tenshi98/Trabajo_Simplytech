@@ -105,7 +105,7 @@ array_push( $arrFacturacion,$row );
 						<th>Mes</th>
 						<th>N° Clientes</th>
 						<th>M3 Consumidos</th>
-						
+
 						<th class="active">Total Servicio</th>
 						<th class="active">Intereses</th>
 						<th class="active">Otros Cargos</th>
@@ -149,7 +149,7 @@ array_push( $arrFacturacion,$row );
 							
 							
 						</tr>
-						<?php 
+						<?php
 						//Se suman totales
 						$x1 = $x1 + $fact['M3Consumidos'];
 						$x2 = $x2 + $fact['DetalleSubtotalServicio'];
@@ -168,7 +168,7 @@ array_push( $arrFacturacion,$row );
 						<td><strong>TOTALES</strong></td>
 						<td></td>
 						<td><strong><?php echo $x1.' M3'; ?></strong></td>
-						
+
 						<td align="right" class="active"><strong><?php echo Valores($x2, 0); ?></strong></td>
 						<td align="right" class="active"><strong><?php echo Valores($x3, 0); ?></strong></td>
 						<td align="right" class="active"><strong><?php echo Valores($x4, 0); ?></strong></td>
@@ -293,7 +293,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){    $x1  = $f_inicio;   }else{$x1  = '';}
 				if(isset($f_termino)){   $x2  = $f_termino;  }else{$x2  = '';}

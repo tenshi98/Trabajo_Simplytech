@@ -253,7 +253,7 @@ if(isset($_SESSION['sol_apli_basicos']['idProducto'])&&$_SESSION['sol_apli_basic
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idZona)){         $x1  = $idZona;        }else{$x1  = $_SESSION['sol_apli_cuarteles'][$_GET['cuartel_id']]['idZona'];}
 				/*if(isset($Mojamiento)){     $x2  = $Mojamiento;    }else{$x2  = Cantidades_decimales_justos($_SESSION['sol_apli_cuarteles'][$_GET['cuartel_id']]['Mojamiento']);}
@@ -328,7 +328,7 @@ array_push( $arrTipo,$row );
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = $_SESSION['sol_apli_productos'][$_GET['cuartel_id']][$_GET['edit_prod']]['idProducto'];}
 				if(isset($DosisAplicar)){   $x2  = $DosisAplicar;  }else{$x2  = $_SESSION['sol_apli_productos'][$_GET['cuartel_id']][$_GET['edit_prod']]['DosisAplicar'];}
@@ -427,7 +427,7 @@ array_push( $arrTipo,$row );
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = '';}
 				if(isset($DosisAplicar)){   $x2  = $DosisAplicar;  }else{$x2  = '';}
@@ -511,7 +511,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  =  $_SESSION['sol_apli_tractores'][$_GET['cuartel_id']][$_GET['edit_trac']]['idVehiculo'];}
 				if(isset($idTelemetria)){   $x2  = $idTelemetria;  }else{$x2  =  $_SESSION['sol_apli_tractores'][$_GET['cuartel_id']][$_GET['edit_trac']]['idTelemetria'];}
@@ -568,7 +568,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  = '';}
 				if(isset($idTelemetria)){   $x2  = $idTelemetria;  }else{$x2  = '';}
@@ -613,7 +613,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idMatSeguridad)){     $x1  = $idMatSeguridad;    }else{$x1  = '';}
 
@@ -904,7 +904,7 @@ array_push( $arrCuenta2,$row );
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	
+
 	<div id="clone_material"> 	
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
 			<div class="form-group">
@@ -1155,7 +1155,7 @@ array_push( $arrCuenta2,$row );
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Mojamiento)){    $x0 = $Mojamiento;    }else{$x0 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['Mojamiento']);}
 				if(isset($VelTractor)){    $x1 = $VelTractor;    }else{$x1 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['VelTractor']);}
@@ -1264,7 +1264,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){           $x1  = $NSolicitud;           }else{$x1  = $_SESSION['sol_apli_basicos']['NSolicitud'];}
 				if(isset($idPrioridad)){          $x2  = $idPrioridad;          }else{$x2  = $_SESSION['sol_apli_basicos']['idPrioridad'];}
@@ -1452,7 +1452,7 @@ foreach ($arrPermisos as $prod) {
 				//recorro el lsiatdo entregado por la base de datos
 				if(isset($_SESSION['sol_apli_materiales'])&&$_SESSION['sol_apli_materiales']!=''){
 					foreach ($_SESSION['sol_apli_materiales'] as $key => $material){ ?>
-						
+
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="6"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $material['Nombre'];?></td>
 							<td class="item-name" colspan="2"><?php echo $material['Codigo'];?></td>
@@ -1488,7 +1488,7 @@ foreach ($arrPermisos as $prod) {
 				//recorro el lsiatdo entregado por la base de datos
 				if(isset($_SESSION['sol_apli_cuarteles'])&&$_SESSION['sol_apli_cuarteles']!=''){
 					foreach ($_SESSION['sol_apli_cuarteles'] as $key => $cuartel){ ?>
-						
+
 						<tr class="item-row linea_punteada" style="background: #eee;">
 							<td class="item-name"><?php echo $cuartel['CuartelNombre'];?></td>
 							<td class="item-name"><?php echo $cuartel['CuartelEspecie'].' '.$cuartel['CuartelVariedad'];?></td>
@@ -1510,7 +1510,7 @@ foreach ($arrPermisos as $prod) {
 								</div>
 							</td>
 						</tr>
-						
+
 						<?php 
 						/****************************************************************/
 						if($_SESSION['sol_apli_tractores'][$cuartel['valor_id']]){
@@ -1573,7 +1573,7 @@ foreach ($arrPermisos as $prod) {
 			</tbody>
 		</table>
 	</div>
-	
+
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
@@ -1860,7 +1860,7 @@ array_push( $arrCuenta2,$row );
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	
+
 	<div id="clone_material"> 	
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
 			<div class="form-group">
@@ -2111,7 +2111,7 @@ array_push( $arrCuenta2,$row );
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Mojamiento)){    $x0 = $Mojamiento;    }else{$x0 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['Mojamiento']);}
 				if(isset($VelTractor)){    $x1 = $VelTractor;    }else{$x1 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['VelTractor']);}
@@ -2222,7 +2222,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){           $x1  = $NSolicitud;           }else{$x1  = '';}
 				if(isset($idPrioridad)){          $x2  = $idPrioridad;          }else{$x2  = '';}
@@ -2380,7 +2380,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){       $x1  = $NSolicitud;       }else{$x1  = '';}
 				if(isset($idPredio)){         $x2  = $idPredio;         }else{$x2  = '';}
@@ -2427,8 +2427,8 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Solicitudes de Aplicacion</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

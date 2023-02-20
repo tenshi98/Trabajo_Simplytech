@@ -134,7 +134,7 @@ array_push( $arrArchivos,$row );
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 
@@ -152,7 +152,7 @@ array_push( $arrArchivos,$row );
 							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?><br/>
 							
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Observacion</h2>
 						<p class="text-muted word_break">
 							<div class="text-muted well well-sm no-shadow">
@@ -160,7 +160,7 @@ array_push( $arrArchivos,$row );
 								<div class="clearfix"></div>
 							</div>
 						</p>
-						
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos Adjuntos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
@@ -361,7 +361,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'orden_trabajo_eventos_listado', 
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($idUsuario)){    $x1  = $idUsuario;     }else{$x1  = '';}
 				if(isset($idTrabajador)){ $x2  = $idTrabajador;  }else{$x2  = '';}
@@ -409,8 +409,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'orden_trabajo_eventos_listado', 
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Eventos</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

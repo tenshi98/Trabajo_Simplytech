@@ -124,7 +124,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos_detalle', 
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Consumo)){  $x1  = $Consumo;  }else{$x1  = cantidades_decimales_justos($rowdata['Consumo']);}
 
@@ -269,7 +269,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 					</tr>
 					
 					<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==2){ ?>
-						
+
 						<tr>
 							<td class="meta-head">Cliente</td>
 							<td><?php echo $rowdata['ClienteIdentificador'].' '.$rowdata['ClienteNombre']; ?></td>
@@ -494,7 +494,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate >
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){  $x1  = $Fecha;            }else{$x1  = $_SESSION['rem_basicos']['Fecha'];}
 				if(isset($idCliente)){        $x2  = $idCliente;        }else{$x2  = $_SESSION['rem_basicos']['idCliente'];}
@@ -528,7 +528,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
-	
+
 		<?php 
 		$ubicacion = $location.'&clear_all=true';
 		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
@@ -673,7 +673,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate >
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){  $x1  = $Fecha;            }else{$x1  = '';}
 				if(isset($idCliente)){        $x2  = $idCliente;        }else{$x2  = '';}
@@ -790,7 +790,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				//Se verifican si existen los datos
 				if(isset($Ano)){       $x1  = $Ano;       }else{$x1  = '';}
@@ -824,8 +824,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Mediciones</h5>
 			<div class="toolbar">
-				<?php 
-				//se llama al paginador
+				<?php
+				//Se llama al paginador
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>

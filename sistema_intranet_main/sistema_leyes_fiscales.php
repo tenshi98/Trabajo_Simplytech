@@ -79,7 +79,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 			
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Porcentaje_PPM)){           $x0  = $Porcentaje_PPM;           }else{$x0  = $rowdata['Porcentaje_PPM'];}
 				if(isset($Porcentaje_Ret_Boletas)){   $x1  = $Porcentaje_Ret_Boletas;   }else{$x1  = $rowdata['Porcentaje_Ret_Boletas'];}
@@ -184,7 +184,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
         	
-				<?php 
+				<?php
 				//Se verifican si existen los datos
 				if(isset($Porcentaje_PPM)){         $x0  = $Porcentaje_PPM;         }else{$x0  = '';}
 				if(isset($Porcentaje_Ret_Boletas)){ $x1  = $Porcentaje_Ret_Boletas; }else{$x1  = '';}

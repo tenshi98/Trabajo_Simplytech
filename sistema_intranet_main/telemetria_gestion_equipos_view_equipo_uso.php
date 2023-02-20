@@ -62,7 +62,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="uso">
 				<div class="wmd-panel">
 

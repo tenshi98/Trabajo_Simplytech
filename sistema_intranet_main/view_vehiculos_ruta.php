@@ -57,7 +57,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 			<h5>Ruta <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="tab-content">
-			
+
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					

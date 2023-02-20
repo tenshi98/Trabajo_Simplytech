@@ -251,7 +251,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						</div>
 					</div>
 				</div>
-	
+
 			</div>
 		</div>
 			
