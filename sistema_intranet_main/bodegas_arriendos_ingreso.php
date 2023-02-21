@@ -740,7 +740,7 @@ $Form_Inputs = new Inputs(); ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar fecha de Vencimiento" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 									</div>
 								</td>
-							<?php }else{?>
+							<?php }else{ ?>
 								<td><?php $Form_Inputs->input_date('Fecha Vencimiento','f_pago', 2);?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >

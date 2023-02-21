@@ -892,7 +892,7 @@ $Form_Inputs = new Inputs();
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar fecha de Vencimiento" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 									</div>
 								</td>
-							<?php }else{?>
+							<?php }else{ ?>
 								<td><?php $Form_Inputs->input_date('Fecha Vencimiento','f_pago', 2);?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
@@ -1328,7 +1328,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</a>
 		
 		<a href="<?php echo $location; ?>&view=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-arrow-right" aria-hidden="true"></i> Continuar Venta</a>
-	<?php }else{?>
+	<?php }else{ ?>
 		<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Venta</a>
 	<?php }
 	 }?>

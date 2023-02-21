@@ -113,7 +113,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 					</div>
 					<div class="clearfix"></div>
 					
-				<?php }else{?>
+				<?php }else{ ?>
 
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
 					

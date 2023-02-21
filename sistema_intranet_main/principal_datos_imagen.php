@@ -17,12 +17,6 @@ $location .= '?d=d';
 /**********************************************************************************************************************************/
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
-//formulario para editar
-if (!empty($_POST['submit_img'])){
-	//Llamamos al formulario
-	$form_trabajo= 'submit_img';
-	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
-}
 //se borra un dato
 if (!empty($_GET['del_img'])){
 	//datos extra

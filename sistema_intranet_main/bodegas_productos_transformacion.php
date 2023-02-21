@@ -557,7 +557,7 @@ $Form_Inputs = new Inputs();
 					<td>
 						<?php if (isset($_SESSION['productos_transform_productos'])){?>
 							<a href="<?php echo $location.'&clear_prod=true' ?>" title="Borrar Producto" class="btn btn-xs btn-danger tooltip" style="position: initial;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Producto</a>
-						<?php }else{?>
+						<?php }else{ ?>
 							<a href="<?php echo $location.'&trans1=true' ?>" title="Agregar Producto" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Seleccionar Producto</a>
 						<?php }?>
 					
@@ -813,7 +813,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</a>
 		
 		<a href="<?php echo $location; ?>&view=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-arrow-right" aria-hidden="true"></i> Continuar Transformacion</a>
-	<?php }else{?>
+	<?php }else{ ?>
 		<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Transformacion</a>
 	<?php }
 	 }?>

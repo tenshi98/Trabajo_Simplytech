@@ -110,7 +110,7 @@ $rowdata = db_select_data (false, 'idTelemetria, Direccion_img,id_Geo,id_Sensore
 					</div>
 					<div class="clearfix"></div>
 
-				<?php }else{?>
+				<?php }else{ ?>
 
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
 

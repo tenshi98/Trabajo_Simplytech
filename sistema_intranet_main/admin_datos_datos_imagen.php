@@ -200,7 +200,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					</div>
 					<div class="clearfix"></div>
 
-				<?php }else{?>
+				<?php }else{ ?>
 
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
 
